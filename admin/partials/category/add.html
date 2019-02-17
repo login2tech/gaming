@@ -1,0 +1,34 @@
+<div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                          <div ng-if="messages.error" role="alert" class="alert alert-danger">
+                            <div ng-repeat="error in messages.error">{{error.msg}}</div>
+                          </div>
+                          <div ng-if="messages.success" role="alert" class="alert alert-success">
+                            <div ng-repeat="success in messages.success">{{success.msg}}</div>
+                          </div>
+                          <form ng-submit="submitForm()">
+                            <div class="card stacked-form">
+                                <div class="card-header ">
+                                    <h4 class="card-title">{{title}}</h4>
+                                </div>
+                                <div class="card-body ">
+
+                                <div class="form-group">
+                                    <label>Category Title</label>
+                                    <input type="text" ng-model="category.title" placeholder="Enter Category Title" class="form-control">
+                                </div>
+ 
+
+                                </div>
+                                <div class="card-footer ">
+                                    <button type="submit" class="btn btn-fill btn-info">Submit</button>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+
+
+
+                    </div>
+                </div>

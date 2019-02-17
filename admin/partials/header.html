@@ -1,0 +1,253 @@
+<div class="sidebar-wrapper"  ng-controller="HeaderCtrl">
+    <div class="logo" style=" width: 100%;    padding-bottom: 100px;
+ "> <img src="/imgs/logo.png" style=" width: 100%; padding: 20px; "> </div>
+    <div class="user">
+      <div class="photo">
+        <img ng-src="{{currentUser.picture || currentUser.gravatar}}" />
+      </div>
+      <div class="info ">
+        <span>{{currentUser.name || currentUser.email || currentUser.id}}
+        </span>
+      </div>
+    </div>
+    <ul class="nav">
+
+
+      <li class="nav-item ">
+          <a class="nav-link" href="/admin_panel/">
+              <i class="fa fa-chart-line"></i>
+              <p>Dashboard</p>
+          </a>
+      </li>
+
+
+
+      <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" data-target="#user_menu_item">
+              <i class="fa fa-users"></i>
+              <p>
+                  Users
+                  <b class="caret"></b>
+              </p>
+          </a>
+          <div ng-class="{'show' : urlhas('users'),  'collapse': true}"  id="user_menu_item">
+              <ul class="nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/users/">
+                        <span class="sidebar-mini fa fa-list"></span>
+                        <span class="sidebar-normal">List Users</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/users/admins">
+                        <span class="sidebar-mini fa fa-list"></span>
+                        <span class="sidebar-normal">List Admins</span>
+                    </a>
+                </li>
+              </ul>
+          </div>
+      </li>
+
+
+      <!-- <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" data-target="#sub_menu_item">
+              <i class="fa fa-users"></i>
+              <p>
+                  Submissions
+                  <b class="caret"></b>
+              </p>
+          </a>
+          <div ng-class="{'show' : urlhas('submissions'),  'collapse': true}"  id="sub_menu_item">
+              <ul class="nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/submissions/">
+                        <span class="sidebar-mini fa fa-list"></span>
+                        <span class="sidebar-normal">List Submissions</span>
+                    </a>
+                </li>
+
+              </ul>
+          </div>
+      </li> -->
+
+      <li class="nav-item">
+          <a class="nav-link" data-toggle="collapse" data-target="#cms_pages_menu_item">
+              <i class="fas fa-folder-open"></i>
+              <p>
+                  CMS Pages
+                  <b class="caret"></b>
+              </p>
+          </a>
+          <div ng-class="{'show' : urlhas('cms_pages'),  'collapse': true}"  id="cms_pages_menu_item">
+              <ul class="nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/cms_pages/">
+                        <span class="sidebar-mini fa fa-list"> </span>
+                        <span class="sidebar-normal">List All</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/cms_pages/add">
+                        <span class="sidebar-mini  fa fa-plus"></span>
+                        <span class="sidebar-normal">Add New</span>
+                    </a>
+                </li>
+              </ul>
+          </div>
+      </li>
+
+
+      <!-- <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" data-target="#plans_menu_item">
+          <i class="fas fa-folder-open"></i>
+          <p>
+              Plans
+              <b class="caret"></b>
+          </p>
+      </a>
+      <div ng-class="{'show' : urlhas('plans'),  'collapse': true}"  id="plans_menu_item">
+          <ul class="nav">
+            <li class="nav-item ">
+                <a class="nav-link" href="/admin_panel/plans/">
+                    <span class="sidebar-mini fa fa-list"> </span>
+                    <span class="sidebar-normal">List All</span>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="/admin_panel/plans/add">
+                    <span class="sidebar-mini  fa fa-plus"></span>
+                    <span class="sidebar-normal">Add New</span>
+                </a>
+            </li>
+          </ul>
+      </div>
+      </li> -->
+
+
+      <!-- <li class="nav-item">
+          <a class="nav-link  " data-toggle="collapse" data-target="#faq_menu_item">
+              <i class="fa fa-question-circle"></i>
+              <p>
+                  FAQs
+                  <b class="caret"></b>
+              </p>
+          </a>
+          <div ng-class="{'show' : urlhas('faq'),  'collapse': true}" id="faq_menu_item">
+              <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin_panel/faq/">
+                        <span class="sidebar-mini fa fa-list"></span>
+                        <span class="sidebar-normal">List All</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/faq/add">
+                        <span class="sidebar-mini fa fa-plus"></span>
+                        <span class="sidebar-normal">Add New</span>
+                    </a>
+                </li>
+              </ul>
+          </div>
+      </li> -->
+
+                  <li class="nav-item ">
+                      <a class="nav-link" href="/admin_panel/invoices/">
+                          <i class="fa fa-credit-card"></i>
+                          <p>Invoices</p>
+                      </a>
+                  </li>
+
+                  <li class="nav-item ">
+                      <a class="nav-link" href="/admin_panel/translations/">
+                          <i class="fa fa-language"></i>
+                          <p>Translations</p>
+                      </a>
+                  </li>
+
+                  <li class="nav-item ">
+                      <a class="nav-link" href="/clearTranslationCache">
+                          <i class="fa fa-language"></i>
+                          <p>Clear Translation Cache</p>
+                      </a>
+                  </li>
+
+
+<!--
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" data-target="#blog_menu_item">
+                <i class="fa fa-rss-square"></i>
+                <p>
+                    Blog Posts
+                    <b class="caret"></b>
+                </p>
+            </a>
+            <div ng-class="{'show' : urlhas('blog-posts') || urlhas('category'),  'collapse': true}"   id="blog_menu_item">
+                <ul class="nav">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/blog-posts/">
+                        <span class="sidebar-mini fa fa-list"></span>
+                        <span class="sidebar-normal">List All</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/blog-posts/add">
+                        <span class="sidebar-mini fa fa-plus"></span>
+                        <span class="sidebar-normal">Add New</span>
+                    </a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/category/">
+                        <span class="sidebar-mini fa fa-plus"></span>
+                        <span class="sidebar-normal">Categories</span>
+                    </a>
+                </li>
+
+                                    <li class="nav-item ">
+                    <a class="nav-link" href="/admin_panel/category/add">
+                        <span class="sidebar-mini fa fa-plus"></span>
+                        <span class="sidebar-normal">Add Categories</span>
+                    </a>
+                </li>
+                </ul>
+            </div>
+        </li> -->
+
+
+
+
+
+
+
+
+
+      <li class="nav-item ">
+          <a class="nav-link" href="/admin_panel/settings/">
+              <i class="fa fa-cog"></i>
+              <p>Settings</p>
+          </a>
+      </li>
+
+      <!-- <li class="nav-item ">
+          <a class="nav-link" href="/admin_panel/bookings/">
+              <i class="fa fa-bookmark"></i>
+              <p>Bookings</p>
+          </a>
+      </li>
+
+      <li class="nav-item ">
+          <a class="nav-link" href="/admin_panel/upload_invoices/">
+              <i class="fa fa-bookmark"></i>
+              <p>Upload Invoices</p>
+          </a>
+      </li>
+
+      <li class="nav-item ">
+          <a class="nav-link" href="/admin_panel/atm_machine_requests/">
+              <i class="fa fa-desktop"></i>
+              <p>ATM Machine Requests</p>
+          </a>
+      </li> -->
+
+    </ul>
+</div>

@@ -1,0 +1,14 @@
+<div class="container-fluid">
+
+
+<div ng-class="{'alert':true, 'alert-danger' : (notif.type=='ORDER_CANCEL'), 'alert-success':(notif.type == 'ORDER_NEW')}" ng-repeat="notif in notifs" style=" position: relative; ">
+  <button type="button" aria-hidden="true" class="close" data-dismiss="alert" ng-click="delete(notif.id)">
+      <i class="nc-icon nc-simple-remove"></i>
+  </button>
+  <span>
+      <b> MESSAGE - </b> {{notif.description}} <span style="float:right">{{notif.created_at | date:'MMM dd, yyyy hh:mm a'}}</span></span>
+</div>
+
+
+
+</div>

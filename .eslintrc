@@ -1,0 +1,21 @@
+{
+    "parser": "babel-eslint",
+    "extends": "tschaub/react",
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "jquery": true
+    },
+    "rules": {
+        "react/prop-types": "off",
+        "eqeqeq": "off",
+        "react/no-unescaped-entities": "off"
+    },
+    "globals": {
+        "Stripe": true,
+        "introJs": true,
+        "Mousetrap": true,
+        "chartToolTipInit": true
+    }
+}

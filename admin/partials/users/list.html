@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-head">
+        <h3>Users</h3>
+      </div>
+      <div class="card data-tables">
+        <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
+          <div class="toolbar">
+          </div>
+          <div class="fresh-datatables" ng-if="show">
+            <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%"
+              style="width:100%">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>User Since</th>
+                  <th>Status</th>
+
+                  <th class="disabled-sorting text-right">Actions</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>User Since</th>
+                  <th>Status</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr ng-repeat="user in users track by $index" ng-if="user.role == 'user' ">
+
+                  <td>{{user.id}}</td>
+                  <td>{{user.first_name}} {{user.last_name}}</td>
+                  <td>{{user.email}}</td>
+                  <td>{{user.age}}</td>
+                  <td>{{user.gender}}</td>
+                  <td style="width:100px">{{user.created_at | date:'short'}}</td>
+                  <td>
+                    <span ng-if="!user.status" class='badge badge-danger'>In-Active</span>
+                    <span ng-if="user.status" class='badge badge-success'>Active</span>
+                  </td>
+                  <td class="text-right">
+
+
+
+
+                    <a ng-if="user.role == 'admin' && user.id!=cur_id" ng-click="requestToMember(user.id)" class="btn  btn-success "
+                      title="Remove Admin Permissions"> <i class="fa fa-user-shield"></i></a>
+                    <a ng-if="user.role != 'admin' " ng-click="requestToAdmin(user.id)" class="btn  btn-danger "
+                      title="Make Admin"> <i class="fa fa-user-shield"></i></a>
+                    <a ng-if="user.status" ng-click="requestToBan(user.id)" class="btn  btn-warning " title="Ban User">
+                      <i class="fa fa-ban"></i></a>
+                    <a ng-if="!user.status" ng-click="requestToUnBan(user.id)" class="btn  btn-warning " title="Un-Ban User">
+                      <i class="fa fa-thumbs-up"></i></a>
+                      <a title="Delete User" ng-if="user.role!='admin' " ng-click="requestToDelete(user.id)" class="btn  btn-danger remove"><i
+                          class="fa fa-trash-alt"></i></a>
+
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

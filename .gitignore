@@ -1,0 +1,36 @@
+public/css/main.css
+public/js/bundle.js
+.vscode
+lib-cov
+*.seed
+*.log
+*.csv
+*.sublime-*
+package-lock.json
+*.dat
+*.out
+*.pid
+*.gz
+*.swp
+*.sh
+
+pids
+logs
+results
+tmp
+coverage
+
+# API keys
+.env
+
+# Dependency directory
+node_modules
+bower_components
+
+# Editors
+.idea
+*.iml
+
+# OS metadata
+.DS_Store
+Thumbs.db

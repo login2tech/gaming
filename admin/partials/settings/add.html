@@ -1,0 +1,103 @@
+<div class="container-fluid">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.min.css" integrity="sha256-Qo9dfxjSvWBpcONv1klYEjbmw13NfsOC+oARxiq49/A=" crossorigin="anonymous" />
+
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                          <div ng-if="messages.error" role="alert" class="alert alert-danger">
+                            <div ng-repeat="error in messages.error">{{error.msg}}</div>
+                          </div>
+                          <div ng-if="messages.success" role="alert" class="alert alert-success">
+                            <div ng-repeat="success in messages.success">{{success.msg}}</div>
+                          </div>
+													  <div class="card stacked-form">
+														  <div class="card-header ">
+                                    <h4 class="card-title">{{title}}</h4>
+                              </div>
+															<div class="card-body ">
+																<div class="form-group">
+																	<label>Title</label>
+																	<br />
+																	{{settings.label}}  ( {{settings.key}} )
+																</div>
+																<form ng-submit="submitForm()" ng-if="settings.type!='file'">
+                                  <div class="form-group">
+																		<label>Content</label>
+																		<textarea ng-if="settings.type == 'textarea'" style="height: auto;min-height: 200px;" ng-model="settings.content" placeholder="Content" class="form-control"></textarea>
+
+
+
+                                  <summernote  ng-if="settings.type == 'wysiwyg'"  ng-model="settings.content"></summernote>
+
+
+
+
+																		<input required ng-if="settings.type == 'text'"  type="text" ng-model="settings.content" placeholder="Content" class="form-control" />
+																		<input required ng-if="settings.type == 'number'"  type="number" ng-model="settings.content" placeholder="Content" class="form-control" />
+																		<input required ng-if="settings.type == 'url'"  type="url" ng-model="settings.content" placeholder="Content" class="form-control" />
+																		<input required ng-if="settings.type == 'email'"  type="email" ng-model="settings.content" placeholder="Content" class="form-control" />
+																	</div>
+
+
+                                 
+
+                                  <button type="submit" class="btn btn-fill btn-info">Submit</button>
+
+																</form>
+
+																<form ng-submit="submitForm()" ng-if="settings.type=='file'">
+																	<div class="form-group">
+																		<label>Content</label>
+																		 <input data-id_key="{{settings.key}}" id="inv" type="file" name="file" onchange="angular.element(this).scope().uploadedFile(this)" />
+																		 <span ng-if="file_upload_started">please wait....</span>
+																	</div>
+
+                                    <!-- <button type="submit" class="btn btn-fill btn-info">Submit</button> -->
+
+																</form>
+
+															</div>
+														</div>
+
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+
+
+
+
+                <style>
+
+                .glyphicon{
+                      font-family: Font Awesome\ 5 Free;
+                      font-weight: 900;
+                }
+                .glyphicon-quote:before{ content: "\f10e" !important;}
+                .glyphicon-quote:after{content: '';content: "\f10e";}
+                .glyphicon-list:before {
+                    content: "\f03a";
+                }
+                .glyphicon-th-list:before {
+                    content: "\f0cb";
+                }.glyphicon-indent-right:before {
+                    content: "\f101";
+                }.glyphicon-indent-left:before {
+                    content: "\f100";
+                }
+
+                .glyphicon-share:before {
+                    content: "\f0c1";
+                }
+                .glyphicon-picture:before {
+                    content: "\f03e";
+                }
+
+
+                </style>

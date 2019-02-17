@@ -1,0 +1,8 @@
+/public/.well-known
+/public/css/vendor
+/public/css/main.css
+/public/fonts
+/public/img
+/public/js
+/public/js/bundle.js
+/test/
