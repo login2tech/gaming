@@ -8,10 +8,6 @@ import NotFound from './components/Pages/NotFound';
 import FAQ from './components/Pages/FAQ';
 
 import CMSPage from './components/CMSPage';
-import Order from './components/Pages/Order';
-import Vote from './components/Pages/Vote';
-import Results from './components/Pages/Results';
-
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
 import Posts from './components/Blog/Posts';
@@ -41,19 +37,6 @@ export default function getRoutes(store) {
       <IndexRoute component={Home} onLeave={clearMessages} />
       <Route path="/contact" component={Contact} onLeave={clearMessages} />
       <Route path="/faq" component={FAQ} onLeave={clearMessages} />
-      <Route path="/order" component={Order} onLeave={clearMessages} />
-      <Route
-        path="/vote"
-        component={Vote}
-        onEnter={ensureAuthenticated}
-        onLeave={clearMessages}
-      />
-      <Route
-        path="/result"
-        component={Results}
-        onEnter={ensureAuthenticated}
-        onLeave={clearMessages}
-      />
 
       <Route
         path="/blog/post/:id/:slug"

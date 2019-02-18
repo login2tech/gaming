@@ -75,7 +75,9 @@ class Profile extends React.Component {
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>KasuaaliTV</h3>
+                  <h3>
+                    {this.props.user.first_name} {this.props.user.last_name}
+                  </h3>
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-4">

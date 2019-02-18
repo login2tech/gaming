@@ -14633,7 +14633,7 @@ body:before {
     position: absolute;
     left: 0;
     top: 0;
-    background: #009688;
+    background: #2545bf;
     opacity: 1;
 }
 a {
@@ -15302,14 +15302,14 @@ a.btn .fa{
 
 .main-panel .navbar {
     margin-bottom: 0;
-    background: #009688;
+    background: #2545bf;
     color: #ffff;
     user-select: none;
     position: relative;
     padding: 40px 45px;
     margin-bottom: 20px;
     z-index: 10;
-    background-color: #009688;
+    background-color: #2545bf;
     box-sizing: border-box;
     border: 0;
     box-shadow: none;

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
-import {Translate} from 'react-localize-redux';
+// import {Link} from 'react-router';
+// import {Translate} from 'react-localize-redux';
 
 class Home extends React.Component {
   language = {};
@@ -10,349 +10,587 @@ class Home extends React.Component {
 
     return (
       <div>
-        <section id="slider-area" className="slider-area">
-          <div className="overlay" />
-          <div className="container">
-            <div className="row sbanner">
-              <div className="col-lg-7">
-                <div className="slide-item">
-                  <div className="slide-caption">
-                    <div className="slider-inner">
-                      <div className="innerSize">
-                        <h1 className="caption-title">
-                          <Translate id="main_heading" />
-                        </h1>
-
-                        <p className="caption-desc">
-                          <Translate id="main_content_para_1" />
-                        </p>
-                        <p className="caption-desc">
-                          <Translate id="main_content_para_2" />
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+        <div className="main_slider_home">
+          <div id="demo" className="carousel slide" data-ride="carousel">
+            <ul className="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" className="active" />
+              <li data-target="#demo" data-slide-to="1" />
+            </ul>
+            <div className="carousel-inner">
+              <div className="carousel-item active">
+                <img src="images/game-1.jpg" alt="" />
+                <div className="carousel-caption">
+                  <h3>Play Video Games </h3>
+                  <p>Win Cash</p>
+                  <a className="play_match_btn" href="#">
+                    Play Match
+                  </a>
                 </div>
               </div>
-              <div className="col-lg-5">
-                <div className="slider_wrap">
-                  <div className="slider">
-                    <div className="slide1">
-                      <img className="img-fluid show" src="/imgs/box_pic.png" />
-                    </div>
-                    <div className="slide2">
-                      <img className="img-fluid" src="/imgs/box_pic_2.png" />
-                    </div>
-                    <div className="slide3">
-                      <img className="img-fluid" src="/imgs/box_pic_3.png" />
-                    </div>
-                  </div>
-                  <div className="slide-btn">
-                    <Link className="mybtn" to="/order">
-                      <i className="fa fa-upload" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <div className="about">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-9">
-                <div className="sectionHeader">
-                  <div className="icon_co">
-                    <i className="far fa-comments" />
-                  </div>
-                  <h2>
-                    <Translate id="testimonial_heading" />
-                  </h2>
-                </div>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-12">
-                <div id="testimonial-slider" className="owl-carousel">
-                  <div className="testimonial">
-                    <div className="testimonial-content">
-                      <div className="testimonial-icon">
-                        <i className="fa fa-quote-left" />
-                      </div>
-                      <p className="description">
-                        <Translate id="testimonial_1" />
-                      </p>
-                    </div>
-                    <h3 className="title">
-                      <Translate id="testimonial_1_name" />
-                    </h3>
-                  </div>
-
-                  <div className="testimonial">
-                    <div className="testimonial-content">
-                      <div className="testimonial-icon">
-                        <i className="fa fa-quote-left" />
-                      </div>
-                      <p className="description">
-                        <Translate id="testimonial_2" />
-                      </p>
-                    </div>
-                    <h3 className="title">
-                      <Translate id="testimonial_2_name" />
-                    </h3>
-                  </div>
-
-                  <div className="testimonial">
-                    <div className="testimonial-content">
-                      <div className="testimonial-icon">
-                        <i className="fa fa-quote-left" />
-                      </div>
-                      <p className="description">
-                        <Translate id="testimonial_3" />
-                      </p>
-                    </div>
-                    <h3 className="title">
-                      <Translate id="testimonial_3_name" />
-                    </h3>
-                  </div>
-
-                  <div className="testimonial">
-                    <div className="testimonial-content">
-                      <div className="testimonial-icon">
-                        <i className="fa fa-quote-left" />
-                      </div>
-                      <p className="description">
-                        <Translate id="testimonial_4" />
-                      </p>
-                    </div>
-                    <h3 className="title">
-                      <Translate id="testimonial_4_name" />
-                    </h3>
-                  </div>
+              <div className="carousel-item">
+                <img src="images/game-2.jpg" alt="" />
+                <div className="carousel-caption">
+                  <h3>Play Video Games </h3>
+                  <p>Win Cash</p>
+                  <a className="play_match_btn" href="#">
+                    Play Match
+                  </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <section id="serviceSection" className="serviceSection">
+        <section className="featruedboxes">
           <div className="container">
-            <div className="row justify-content-center" />
             <div className="row">
-              <div className="col-md-6 col-lg-6">
-                <div className="box">
-                  <div className="icon">
-                    <i className="fas fa-gift" />
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-center">
+                  <h3>Upcoming tournaments</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <ul id="upcoming-tournament" className="tournament-list active">
+                  <li
+                    className="tournament-box"
+                    style={{
+                      'background-image':
+                        "url('images/thumbnail_tournament.jpg')"
+                    }}
+                  >
+                    <div className="tournament-body">
+                      <a href="#" className="tournament-name">
+                        Manila masters Toronto 4v4
+                      </a>
+
+                      <span className="date">Oct.09.2018 - 02:35 PM</span>
+
+                      <figure>
+                        <img src="images/test.png" alt="Fortnite" />
+                      </figure>
+                    </div>
+
+                    <div className="tournament-footer">
+                      <div className="col">
+                        <div className="col-item">
+                          <h5>2 Groups</h5>
+                          <p>62 Teams</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>PLAYOUT</h5>
+                          <p>ROUND ROBIN</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>Prize pool</h5>
+                          <p>$ 450 USD</p>
+                        </div>
+                      </div>
+
+                      <div className="col align-right">
+                        <a href="#" className="btn-default">
+                          More details
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li
+                    className="tournament-box"
+                    style={{
+                      'background-image': "url('images/base-copy-2.jpg')"
+                    }}
+                  >
+                    <div className="tournament-body">
+                      <a href="#" className="tournament-name">
+                        EU WINNERS League - Starter Division{' '}
+                      </a>
+
+                      <span className="date">Oct.25.2018 - 01:06 PM</span>
+
+                      <figure>
+                        <img src="images/csgo_logo.png" alt="" />
+                      </figure>
+                    </div>
+
+                    <div className="tournament-footer">
+                      <div className="col">
+                        <div className="col-item">
+                          <h5>2 Groups</h5>
+                          <p>32 Teams</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>PLAYOUT</h5>
+                          <p>ROUND ROBIN</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>Prize pool</h5>
+                          <p>$ 300 USD</p>
+                        </div>
+                      </div>
+
+                      <div className="col align-right">
+                        <a href="#" className="btn-default">
+                          More details
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="col-md-12 col-sm-12 col-xs-12 text-center">
+                <a className="play_match_btn" href="#">
+                  View All
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="games">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-center">
+                  <h3>Find Your Game</h3>
+                  <p>Play Your Favourite Games</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_1.jpg" />
                   </div>
-                  <h4>
-                    <Translate id="home_free_heading" />
-                  </h4>
-                  <p>
-                    <Translate id="home_free_content" />
-                  </p>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
                 </div>
               </div>
 
-              <div className="col-md-6 col-lg-6">
-                <div className="box">
-                  <div className="icon">
-                    <i className="fas fa-chess-queen" />
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_2.jpg" />
                   </div>
-                  <h4>
-                    <Translate id="home_premium_heading" />
-                  </h4>
-                  <p>
-                    <Translate id="home_premium_content" />
-                  </p>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_3.jpg" />
+                  </div>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_4.jpg" />
+                  </div>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_4.jpg" />
+                  </div>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_1.jpg" />
+                  </div>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_2.jpg" />
+                  </div>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
+                </div>
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <div className="game_c_box">
+                  <div className="game_pic">
+                    <img src="images/play_game_3.jpg" />
+                  </div>
+
+                  <a href="#" className="game_platform">
+                    Play
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="tournaments">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-center">
+                  <h3>Tournaments</h3>
+                  <p>Watch latest tournaments</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <ul id="upcoming-tournament" className="tournament-list active">
+                  <li
+                    className="tournament-box"
+                    style={{
+                      'background-image':
+                        "url('images/thumbnail_tournament.jpg')"
+                    }}
+                  >
+                    <div className="tournament-body">
+                      <a href="#" className="tournament-name">
+                        Manila masters Toronto 4v4
+                      </a>
+
+                      <span className="date">Oct.09.2018 - 02:35 PM</span>
+
+                      <figure>
+                        <img src="images/test.png" alt="Fortnite" />
+                      </figure>
+                    </div>
+
+                    <div className="tournament-footer">
+                      <div className="col">
+                        <div className="col-item">
+                          <h5>2 Groups</h5>
+                          <p>62 Teams</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>PLAYOUT</h5>
+                          <p>ROUND ROBIN</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>Prize pool</h5>
+                          <p>$ 450 USD</p>
+                        </div>
+                      </div>
+
+                      <div className="col align-right">
+                        <a href="#" className="btn-default">
+                          More details
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li
+                    className="tournament-box"
+                    style={{
+                      'background-image': "url('images/base-copy-2.jpg')"
+                    }}
+                  >
+                    <div className="tournament-body">
+                      <a href="#" className="tournament-name">
+                        EU WINNERS League - Starter Division{' '}
+                      </a>
+
+                      <span className="date">Oct.25.2018 - 01:06 PM</span>
+
+                      <figure>
+                        <img src="images/csgo_logo.png" alt="" />
+                      </figure>
+                    </div>
+
+                    <div className="tournament-footer">
+                      <div className="col">
+                        <div className="col-item">
+                          <h5>2 Groups</h5>
+                          <p>32 Teams</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>PLAYOUT</h5>
+                          <p>ROUND ROBIN</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>Prize pool</h5>
+                          <p>$ 300 USD</p>
+                        </div>
+                      </div>
+
+                      <div className="col align-right">
+                        <a href="#" className="btn-default">
+                          More details
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li
+                    className="tournament-box"
+                    style={{
+                      'background-image': "url('images/tournament_sasas.jpg')"
+                    }}
+                  >
+                    <div className="tournament-body">
+                      <a href="#" className="tournament-name">
+                        ENDPOINTGG VS CEX ESPORTS [2]{' '}
+                      </a>
+
+                      <span className="date">Oct.10.2018 - 02:35 PM</span>
+
+                      <figure>
+                        <img src="images/ww2logo.png" alt="Call of Duty WW2" />
+                      </figure>
+                    </div>
+
+                    <div className="tournament-footer">
+                      <div className="col">
+                        <div className="col-item">
+                          <h5>2 Groups</h5>
+                          <p>22 Teams</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>PLAYOUT</h5>
+                          <p>ROUND ROBIN</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>Prize pool</h5>
+                          <p>$ 1000 USD</p>
+                        </div>
+                      </div>
+
+                      <div className="col align-right">
+                        <a href="#" className="btn-default">
+                          More details
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                  <li
+                    className="tournament-box"
+                    style={{
+                      'background-image': "url('images/tournament_card.jpg')"
+                    }}
+                  >
+                    <div className="tournament-body">
+                      <a href="#" className="tournament-name">
+                        TORNEO SPANISH PRO LEAGUE{' '}
+                      </a>
+
+                      <span className="date">Oct.09.2018 - 02:35 PM</span>
+
+                      <figure>
+                        <img src="images/test.png" alt="Fortnite" />
+                      </figure>
+                    </div>
+
+                    <div className="tournament-footer">
+                      <div className="col">
+                        <div className="col-item">
+                          <h5>2 Groups</h5>
+                          <p>62 Teams</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>PLAYOUT</h5>
+                          <p>ROUND ROBIN</p>
+                        </div>
+                        <div className="col-item">
+                          <h5>Prize pool</h5>
+                          <p>$ 4500 USD</p>
+                        </div>
+                      </div>
+
+                      <div className="col align-right">
+                        <a href="#" className="btn-default">
+                          More details
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="teams">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-center">
+                  <h3>Monthly Leaderboards</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-6">
+                <div className="wind_heading">
+                  <i className="fa fa-gamepad" aria-hidden="true" /> MATCH WINS
+                </div>
+
+                <div className="win_player_info">
+                  <div className="player_pic">
+                    <img src="images/img.jpg" />
+                  </div>
+                  <div className="player_name">
+                    1. <a href="#">Cambert</a>
+                  </div>
+                  <div className="wind_count">
+                    36 <span>Wins</span>
+                  </div>
+                </div>
+
+                <div className="outer_win_list">
+                  <ul>
+                    <li>
+                      <span className="usernames">
+                        <strong>2. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+                    <li>
+                      <span className="usernames">
+                        <strong>3. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+
+                    <li>
+                      <span className="usernames">
+                        <strong>4. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+
+                    <li>
+                      <span className="usernames">
+                        <strong>5. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="col-md-6">
+                <div className="wind_heading">
+                  <i className="fa fa-trophy" aria-hidden="true" /> TOURNAMENT
+                  WINS
+                </div>
+
+                <div className="win_player_info">
+                  <div className="player_pic">
+                    <img src="images/play_game_1.jpg" />
+                  </div>
+                  <div className="player_name">
+                    1. <a href="#">Cambert</a>
+                  </div>
+                  <div className="wind_count">
+                    48 <span>Wins</span>
+                  </div>
+                </div>
+
+                <div className="outer_win_list">
+                  <ul>
+                    <li>
+                      <span className="usernames">
+                        <strong>2. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+                    <li>
+                      <span className="usernames">
+                        <strong>3. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+
+                    <li>
+                      <span className="usernames">
+                        <strong>4. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+
+                    <li>
+                      <span className="usernames">
+                        <strong>5. </strong>
+                        <a href="#">Da_lemonademan</a>
+                      </span>{' '}
+                      <span className="win_stats">
+                        <strong>415</strong> Wins
+                      </span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="videoSection" className="videoSection">
+        <section className="call_action">
           <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-9">
-                <div className="sectionHeader">
-                  <h2>
-                    <Translate id="how_it_works_heading" />
-                  </h2>
-                </div>
-              </div>
-            </div>
-            <div className="row serviceSection min-height">
-              <div className="col-lg-12">
-                <div className="row">
-                  <div className="col-md-6 col-lg-6">
-                    <div className="box">
-                      <div className="icon">
-                        <i className="fas fa-upload" />
-                      </div>
-                      <h4>
-                        <Translate id="hit_1_heading" />
-                      </h4>
-                      <p>
-                        <Translate id="hit_1_content" />
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6 col-lg-6">
-                    <div className="box">
-                      <div className="icon">
-                        <i className="fas fa-tachometer-alt" />
-                      </div>
-                      <h4>
-                        <Translate id="hit_2_heading" />
-                      </h4>
-                      <p>
-                        <Translate id="hit_2_content" />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6 col-lg-6">
-                    <div className="box">
-                      <div className="icon">
-                        <i className="fas fa-ok" />
-                      </div>
-                      <h4>
-                        <Translate id="hit_3_heading" />
-                      </h4>
-                      <p>
-                        <Translate id="hit_3_content" />
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6 col-lg-6">
-                    <div className="box">
-                      <div className="icon">
-                        <i className="fas fa-chart-pie" />
-                      </div>
-                      <h4>
-                        <Translate id="hit_4_heading" />
-                      </h4>
-                      <p>
-                        <Translate id="hit_4_content" />
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="pricing_box">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-9">
-                <div className="sectionHeader">
-                  <h2>
-                    <Translate id="pricing_plan_heading" />
-                  </h2>
-                </div>
-              </div>
-            </div>
-
             <div className="row">
-              <div className="col-md-12">
-                <table
-                  className="table table-striped"
-                  width="100%"
-                  align="left"
-                >
-                  <thead>
-                    <tr>
-                      <th align="left">&nbsp;</th>
-                      <th align="center">
-                        <span className="head">
-                          <Translate id="home_free_heading" />
-                        </span>
-                      </th>
-                      <th align="center">
-                        <span className="head">
-                          <Translate id="home_premium_heading" />
-                        </span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td align="left">
-                        <Translate id="pricing_table_1" />
-                      </td>
-                      <td align="center">
-                        <Translate id="pricing_table_1_free" />
-                      </td>
-                      <td align="center">
-                        <Translate id="pricing_table_1_paid" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left">
-                        <Translate id="pricing_table_2" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-cancel" aria-hidden="true" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-ok" aria-hidden="true" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left">
-                        <Translate id="pricing_table_3" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-cancel" aria-hidden="true" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-ok" aria-hidden="true" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left">
-                        <Translate id="pricing_table_4" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-cancel" aria-hidden="true" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-ok" aria-hidden="true" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left">
-                        <Translate id="pricing_table_5" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-ok" aria-hidden="true" />
-                      </td>
-                      <td align="center">
-                        <i className="fa fa-cancel" aria-hidden="true" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td align="left">&nbsp;</td>
-                      <td align="center">
-                        <Link className="plan_bttn" to="/order">
-                          <Translate id="pricing_table_free_btn" />
-                        </Link>
-                      </td>
-                      <td align="center">
-                        <Link className="plan_bttn" to="/order">
-                          <Translate id="pricing_table_paid_btn" />
-                        </Link>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-center">
+                  <h3>Go Prime, Get More Out of OnlyCompGaming Gaming.</h3>
+                  <a className="play_match_btn" href="#">
+                    View Plans
+                  </a>
+                </div>
               </div>
             </div>
           </div>

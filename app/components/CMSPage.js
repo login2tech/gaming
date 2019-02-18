@@ -12,7 +12,7 @@ class CMSPage extends React.Component {
   }
 
   componentWillUnmount() {
-    this.serverRequest.abort();
+    // this.serverRequest.abort();
   }
   componentDidMount() {
     fetch('/api/cms_pages/slug/' + this.props.params.slug)
