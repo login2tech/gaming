@@ -126,44 +126,66 @@ angular
       }
     };
   })
-  .factory('BlogPost', function($http) {
+
+  .factory('Game', function($http) {
     return {
       list: function() {
-        return $http.get('/api/posts/list');
+        return $http.get('/api/games/list');
       },
       listSingle: function(id) {
-        return $http.get('/api/posts/single/' + id);
+        return $http.get('/api/games/single/' + id);
       },
       add: function(data) {
-        return $http.post('/api/posts/add', data);
+        return $http.post('/api/games/add', data);
       },
       update: function(data) {
-        return $http.post('/api/posts/edit', data);
+        return $http.post('/api/games/edit', data);
       },
       delete: function(data) {
-        return $http.post('/api/posts/delete', data);
+        return $http.post('/api/games/delete', data);
       }
     };
   })
-  .factory('Category', function($http) {
-    return {
-      list: function() {
-        return $http.get('/api/category/list');
-      },
-      listSingle: function(id) {
-        return $http.get('/api/category/single/' + id);
-      },
-      add: function(data) {
-        return $http.post('/api/category/add', data);
-      },
-      update: function(data) {
-        return $http.post('/api/category/edit', data);
-      },
-      delete: function(data) {
-        return $http.post('/api/category/delete', data);
-      }
-    };
-  })
+
+  //
+  // .factory('BlogPost', function($http) {
+  //   return {
+  //     list: function() {
+  //       return $http.get('/api/posts/list');
+  //     },
+  //     listSingle: function(id) {
+  //       return $http.get('/api/posts/single/' + id);
+  //     },
+  //     add: function(data) {
+  //       return $http.post('/api/posts/add', data);
+  //     },
+  //     update: function(data) {
+  //       return $http.post('/api/posts/edit', data);
+  //     },
+  //     delete: function(data) {
+  //       return $http.post('/api/posts/delete', data);
+  //     }
+  //   };
+  // })
+  // .factory('Category', function($http) {
+  //   return {
+  //     list: function() {
+  //       return $http.get('/api/category/list');
+  //     },
+  //     listSingle: function(id) {
+  //       return $http.get('/api/category/single/' + id);
+  //     },
+  //     add: function(data) {
+  //       return $http.post('/api/category/add', data);
+  //     },
+  //     update: function(data) {
+  //       return $http.post('/api/category/edit', data);
+  //     },
+  //     delete: function(data) {
+  //       return $http.post('/api/category/delete', data);
+  //     }
+  //   };
+  // })
   .factory('Invoice', function($http) {
     return {
       list: function(data) {

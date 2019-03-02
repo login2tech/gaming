@@ -120,6 +120,22 @@ angular
         templateUrl: 'partials/cms_pages/add.html'
       })
 
+      .when('/games/', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'GameCtrl',
+        templateUrl: 'partials/games/list.html'
+      })
+      .when('/games/add', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'GameAddCtrl',
+        templateUrl: 'partials/games/add.html'
+      })
+      .when('/games/edit/:id', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'GameEditCtrl',
+        templateUrl: 'partials/games/add.html'
+      })
+
       .when('/blog-posts/', {
         resolve: {loginRequired: loginRequired},
         templateUrl: 'partials/blog/list.html',

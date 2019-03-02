@@ -1,7 +1,5 @@
 {
-  "verbose": true,
-  "ignore": ["public/*", "test/*", ".git", "./node_modules/*", "./admin/*"],
-  "events": {
-        "restart": "osascript -e 'display notification \"App restarted due to:\n'$FILENAME'\" with title \"nodemon\"'"
-    }
+  "verbose": false,
+  "ignore": ["public/*", "admin/*", "test/*", ".git", "./node_modules/*", "./admin/*"]
+
 }

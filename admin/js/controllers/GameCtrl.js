@@ -1,22 +1,22 @@
 angular
   .module('MyApp')
-  .controller('BlogCtrl', function(
+  .controller('GameCtrl', function(
     $scope,
     $location,
     $window,
     $auth,
-    BlogPost,
+    Game,
     SweetAlert
   ) {
-    $scope.blogposts = [];
+    $scope.games = [];
     $scope.show = false;
     $scope.list = function() {
       $scope.show = false;
-      BlogPost.list()
+      Game.list()
         .then(function(response) {
           // console.log(response)
           $scope.show = true;
-          $scope.blogposts = response.data.posts;
+          $scope.items = response.data.items;
           setTimeout(function() {
             $('#datatables').DataTable({
               pagingType: 'full_numbers',
@@ -26,7 +26,7 @@ angular
           }, 300);
         })
         .catch(function(response) {
-          $scope.blogposts = [];
+          $scope.games = [];
           $scope.show = true;
           $scope.messages = {
             error: Array.isArray(response.data)
@@ -51,7 +51,7 @@ angular
           if (!e) {
             return;
           }
-          BlogPost.delete({
+          Game.delete({
             id: id
           })
             .then(function(response) {
@@ -80,53 +80,37 @@ angular
 
 angular
   .module('MyApp')
-  .controller('BlogAddCtrl', function(
+  .controller('GameAddCtrl', function(
     $scope,
     $location,
     $window,
     $auth,
-    BlogPost,
-    $http,
-    Category
+    Game,
+    $http
   ) {
-    $scope.blogpost = {
+    $scope.game = {
       title: '',
       content: '',
       short_content: ''
     };
-    $scope.title = 'New Blog Post';
+    $scope.title = 'New Game';
     $scope.uploaded_images = [];
     $scope.is_new = true;
     $scope.categories = [];
-    $scope.listCat = function() {
-      Category.list()
-        .then(function(response) {
-          // console.log(response)
-          $scope.categories = response.data.categories;
-        })
-        .catch(function(response) {
-          $scope.categories = [];
-          $scope.messages = {
-            error: Array.isArray(response.data)
-              ? response.data
-              : [response.data]
-          };
-        });
-    };
-    $scope.listCat();
+
     $scope.submitForm = function() {
       // $('#textarea').trigger('input');
-      // $scope.blogpost.content = $('#textarea').val();
-      if ($scope.blogpost.title == '' || $scope.blogpost.content == '') {
+      // $scope.game.content = $('#textarea').val();
+      if ($scope.game.title == '') {
         alert('enter all fields');
         return;
       }
-      BlogPost.add($scope.blogpost)
+      Game.add($scope.game)
         .then(function(response) {
           $scope.messages = {
             success: [response.data]
           };
-          $location.path('/blog-posts');
+          $location.path('/games');
         })
         .catch(function(response) {
           if (typeof scrolltoTop !== 'undefined') {
@@ -139,92 +123,9 @@ angular
           };
         });
     };
-  });
-angular
-  .module('MyApp')
-  .controller('BlogEditCtrl', function(
-    $scope,
-    $location,
-    $routeParams,
-    $window,
-    $auth,
-    $http,
-    BlogPost,
-    Category
-  ) {
-    $scope.blogpost = {
-      title: '',
-      content: '',
-      id: $routeParams.id
-    };
-    $scope.title = 'Edit BlogPost';
-    $scope.is_new = false;
-    $scope.categories = [];
-    $scope.listCat = function() {
-      Category.list()
-        .then(function(response) {
-          // console.log(response)
-          $scope.categories = response.data.categories;
-        })
-        .catch(function(response) {
-          $scope.categories = [];
-          $scope.messages = {
-            error: Array.isArray(response.data)
-              ? response.data
-              : [response.data]
-          };
-        });
-    };
-    $scope.listCat();
-    $scope.submitForm = function() {
-      if ($scope.blogpost.title == '' || $scope.blogpost.content == '') {
-        alert('Please enter all fields');
-        return;
-      }
-      BlogPost.update($scope.blogpost)
-        .then(function(response) {
-          if (typeof scrolltoTop !== 'undefined') {
-            scrolltoTop();
-          }
-          $scope.messages = {
-            success: [response.data]
-          };
-          $scope.blogpost = response.data.blogpost;
-        })
-        .catch(function(response) {
-          if (typeof scrolltoTop !== 'undefined') {
-            scrolltoTop();
-          }
-          $scope.messages = {
-            error: Array.isArray(response.data)
-              ? response.data
-              : [response.data]
-          };
-        });
-    };
-    $scope.fetchSingle = function() {
-      BlogPost.listSingle($routeParams.id)
-        .then(function(response) {
-          $scope.blogpost = response.data.blogpost;
-        })
-        .catch(function(response) {
-          $scope.blogpost = {
-            title: '',
-            content: '',
-            id: $routeParams.id
-          };
-          $scope.messages = {
-            error: Array.isArray(response.data)
-              ? response.data
-              : [response.data]
-          };
-        });
-    };
-
-    $scope.fetchSingle();
 
     $scope.removeImage = function() {
-      $scope.blogpost.image_url = '';
+      $scope.game.image_url = '';
     };
 
     $scope.uploaded_images = [];
@@ -264,7 +165,130 @@ angular
           $scope.file_upload_started = false;
           $scope.file_upload_failed = false;
           $scope.file_upload_completed = true;
-          $scope.blogpost.image_url = data.file;
+          $scope.game.image_url = data.file;
+          $scope.messages = {
+            success: [data]
+          };
+        })
+        .error(function(data) {
+          $scope.file_upload_started = false;
+          $scope.file_upload_failed = true;
+          $scope.file_upload_completed = false;
+          $scope.messages = {
+            error: [data]
+          };
+        });
+    };
+  });
+
+angular
+  .module('MyApp')
+  .controller('GameEditCtrl', function(
+    $scope,
+    $location,
+    $routeParams,
+    $window,
+    $auth,
+    $http,
+    Game
+  ) {
+    $scope.game = {
+      title: '',
+      content: '',
+      id: $routeParams.id
+    };
+    $scope.title = 'Edit Game';
+    $scope.is_new = false;
+
+    $scope.submitForm = function() {
+      if ($scope.game.title == '' || $scope.game.content == '') {
+        alert('Please enter all fields');
+        return;
+      }
+      Game.update($scope.game)
+        .then(function(response) {
+          if (typeof scrolltoTop !== 'undefined') {
+            scrolltoTop();
+          }
+          $scope.messages = {
+            success: [response.data]
+          };
+          $scope.game = response.data.game;
+        })
+        .catch(function(response) {
+          if (typeof scrolltoTop !== 'undefined') {
+            scrolltoTop();
+          }
+          $scope.messages = {
+            error: Array.isArray(response.data)
+              ? response.data
+              : [response.data]
+          };
+        });
+    };
+    $scope.fetchSingle = function() {
+      Game.listSingle($routeParams.id)
+        .then(function(response) {
+          $scope.game = response.data.item;
+        })
+        .catch(function(response) {
+          $scope.game = {
+            title: '',
+            content: '',
+            id: $routeParams.id
+          };
+          $scope.messages = {
+            error: Array.isArray(response.data)
+              ? response.data
+              : [response.data]
+          };
+        });
+    };
+
+    $scope.fetchSingle();
+
+    $scope.removeImage = function() {
+      $scope.game.image_url = '';
+    };
+
+    $scope.uploaded_images = [];
+    $scope.file_upload_started = false;
+    $scope.file_upload_failed = false;
+    $scope.file_upload_completed = false;
+
+    $scope.uploadedFile = function(element) {
+      $scope.file_upload_started = true;
+      $scope.file_upload_started = true;
+      $scope.file_upload_failed = false;
+      $scope.file_upload_completed = false;
+      $scope.$apply(function($scope) {
+        $scope.files = element.files;
+      });
+      $scope.__uploadFile($scope.files);
+    };
+    $scope.__uploadFile = function(files) {
+      const fd = new FormData();
+      const url = '/upload';
+      angular.forEach(files, function(file) {
+        fd.append('file', file);
+      });
+      const data = {
+        id: 123
+      };
+      fd.append('data', JSON.stringify(data));
+      $http
+        .post(url, fd, {
+          withCredentials: false,
+          headers: {
+            'Content-Type': undefined
+          },
+          transformRequest: angular.identity
+        })
+        .success(function(data) {
+          $scope.file_upload_started = false;
+          $scope.file_upload_failed = false;
+          $scope.file_upload_completed = true;
+          $scope.game.image_url = data.file;
           $scope.messages = {
             success: [data]
           };

@@ -1,0 +1,130 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+          <div ng-if="messages.error" role="alert" class="alert alert-danger">
+            <div ng-repeat="error in messages.error">{{error.msg}}</div>
+          </div>
+          <div ng-if="messages.success" role="alert" class="alert alert-success">
+            <div ng-repeat="success in messages.success">{{success.msg}}</div>
+          </div>
+          <form ng-submit="submitForm()">
+            <div class="card stacked-form">
+                <div class="card-header ">
+                    <h4 class="card-title">{{title}}</h4>
+                </div>
+                <div class="card-body ">
+
+                <div class="form-group">
+                    <label>{{ELEMENENT}} Title</label>
+                    <input type="text" ng-model="item.title" placeholder="Enter {{ELEMENENT}} Title" class="form-control">
+                </div>
+
+
+                <div class="form-group">
+                    <label>{{ELEMENENT}} Order / Number</label>
+                    <input type="text" pattern="[0-9]*" ng-model="item.order" placeholder="Enter {{ELEMENENT}} Order / Number" class="form-control">
+                </div>
+
+            <div class="form-group">
+                <label>{{ELEMENENT}} Content</label>
+                <summernote ng-model="item.description"></summernote>
+            </div>
+
+            <hr />
+            <h3>Quiz Data</h3>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Question</th>
+                        <th>Choice 1</th>
+                        <th>Choice 2</th>
+                        <th>Choice 3</th>
+                        <th>Choice 4</th>
+                        <th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="q in item.quiz_data track by $index" >
+                        <td>
+                            #{{$index +1}}
+                        </td><td>
+                            <textarea required style="height:50px;min-height:50px" ng-model="item.quiz_data[$index].Q" class="form-control" ></textarea>
+                        </td>
+                        <td>
+                            <input type="text" class='form-control'  ng-model="item.quiz_data[$index].C[1]" />
+                        </td>
+                        <td>
+                            <input type="text" class='form-control'  ng-model="item.quiz_data[$index].C[2]" />
+                        </td>
+                        <td>
+                            <input type="text" class='form-control'  ng-model="item.quiz_data[$index].C[3]" />
+                        </td>
+                        <td>
+                            <input type="text" class='form-control'  ng-model="item.quiz_data[$index].C[4]" />
+                        </td>
+                        <td>
+                            <select required class="form-control" ng-model="item.quiz_data[$index].A">
+                                <option value="">Select</option>
+                                <option value="1">Choice 1</option>
+                                <option value="2">Choice 2</option>
+                                <option value="3">Choice 3</option>
+                                <option value="4">Choice 4</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br />
+            <!-- SHOW ATTACHMENTS HERE -->
+
+            <h3>Attachments</h3>
+
+
+
+          <div class="form-group" ng-if="is_new">
+            <label>Attachments</label>
+            <br />
+            <span>You will be able to add attachments once you save the lesson.</span>
+          </div>
+          <div class="form-group" ng-if="!is_new">
+            <label>Attachments:</label>
+
+            <div class="input-group mb-3" ng-repeat="at in item.attachment_1 track by $index ">
+              <input type="text" ng-model="at" readonly required placeholder="Enter Blog Post Title" class="form-control">
+              <div class="input-group-append">
+                <button class="btn btn-danger" type="button" ng-click="removeImage($index)">Remove</button>
+              </div>
+            </div>
+            <br />
+            <div>
+              <!-- <hr ng-if="uploaded_attachments"   /> -->
+              <label>Featured Image</label>
+              <!-- <img ng-if="item.image_url && item.image_url!='/img/imgs/placeholder.png'"  style="width:70px"  ng-src="{{'/downloads/'+item.image_url}}" /> -->
+
+              <input accept="image/gif, image/jpeg, image/png, application/pdf,video/mp4,video/x-m4v,video/*"  id="inv" type="file" name="file" onchange="angular.element(this).scope().uploadedFile(this)" class="btn btn-warning form-control" />
+              <span ng-if="file_upload_started">please wait....</span>
+              <span ng-if="file_upload_completed">Attachment uploaded successfully...</span>
+              <span ng-if="file_upload_failed">Upload Failed.</span>
+            </div>
+          </div>
+
+
+
+
+
+                </div>
+                <div class="card-footer ">
+                    <button type="submit" disabled="file_upload_started"  class="btn btn-fill btn-info">Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+
+
+
+    </div>
+</div>

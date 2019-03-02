@@ -3001,10 +3001,10 @@ expand-tilde@^2.0.0, expand-tilde@^2.0.2:
   dependencies:
     homedir-polyfill "^1.0.1"
 
-express-fileupload@^1.1.1-alpha.1:
-  version "1.1.1-alpha.1"
-  resolved "https://registry.yarnpkg.com/express-fileupload/-/express-fileupload-1.1.1-alpha.1.tgz#cfb452c971e0cc949cc3ccdb1ef578e8afb64716"
-  integrity sha512-zyZXaguQWdBT6kZL5HIuV//PCpmGKbYlDvu4FEpayeS3ONWwMaELDQPUgyyrEEbCyUhFmqrdHCkCUGL5LMVKEQ==
+express-fileupload@^1.1.1-alpha.3:
+  version "1.1.1-alpha.3"
+  resolved "https://registry.yarnpkg.com/express-fileupload/-/express-fileupload-1.1.1-alpha.3.tgz#a4750267b2b33c1681cbaa796fdf57ae9cee9bde"
+  integrity sha512-2cJInTPEObutPeNqLLRRzOE0G1V52keqDXtqmU9yrlQhQbRBwcSNYvbOiAyVvFX4Sc8GyF9u3ZzU36rD4adSfA==
   dependencies:
     busboy "^0.2.14"
     md5 "^2.2.1"

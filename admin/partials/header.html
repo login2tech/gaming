@@ -49,52 +49,58 @@
       </li>
 
 
-      <!-- <li class="nav-item">
-          <a class="nav-link" data-toggle="collapse" data-target="#sub_menu_item">
-              <i class="fa fa-users"></i>
-              <p>
-                  Submissions
-                  <b class="caret"></b>
-              </p>
-          </a>
-          <div ng-class="{'show' : urlhas('submissions'),  'collapse': true}"  id="sub_menu_item">
-              <ul class="nav">
-                <li class="nav-item ">
-                    <a class="nav-link" href="/admin_panel/submissions/">
-                        <span class="sidebar-mini fa fa-list"></span>
-                        <span class="sidebar-normal">List Submissions</span>
-                    </a>
-                </li>
+           <li class="nav-item">
+               <a class="nav-link" data-toggle="collapse" data-target="#cms_pages_menu_item">
+                   <i class="fas fa-folder-open"></i>
+                   <p>
+                       CMS Pages
+                       <b class="caret"></b>
+                   </p>
+               </a>
+               <div ng-class="{'show' : urlhas('cms_pages'),  'collapse': true}"  id="cms_pages_menu_item">
+                   <ul class="nav">
+                     <li class="nav-item ">
+                         <a class="nav-link" href="/admin_panel/cms_pages/">
+                             <span class="sidebar-mini fa fa-list"> </span>
+                             <span class="sidebar-normal">List All</span>
+                         </a>
+                     </li>
+                     <li class="nav-item ">
+                         <a class="nav-link" href="/admin_panel/cms_pages/add">
+                             <span class="sidebar-mini  fa fa-plus"></span>
+                             <span class="sidebar-normal">Add New</span>
+                         </a>
+                     </li>
+                   </ul>
+               </div>
+           </li>
 
-              </ul>
-          </div>
-      </li> -->
 
-      <li class="nav-item">
-          <a class="nav-link" data-toggle="collapse" data-target="#cms_pages_menu_item">
-              <i class="fas fa-folder-open"></i>
-              <p>
-                  CMS Pages
-                  <b class="caret"></b>
-              </p>
-          </a>
-          <div ng-class="{'show' : urlhas('cms_pages'),  'collapse': true}"  id="cms_pages_menu_item">
-              <ul class="nav">
-                <li class="nav-item ">
-                    <a class="nav-link" href="/admin_panel/cms_pages/">
-                        <span class="sidebar-mini fa fa-list"> </span>
-                        <span class="sidebar-normal">List All</span>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" data-target="#games_pages_menu_item">
+                        <i class="fas fa-folder-open"></i>
+                        <p>
+                            Games
+                            <b class="caret"></b>
+                        </p>
                     </a>
+                    <div ng-class="{'show' : urlhas('cms_pages'),  'collapse': true}"  id="games_pages_menu_item">
+                        <ul class="nav">
+                          <li class="nav-item ">
+                              <a class="nav-link" href="/admin_panel/games/">
+                                  <span class="sidebar-mini fa fa-list"> </span>
+                                  <span class="sidebar-normal">List All</span>
+                              </a>
+                          </li>
+                          <li class="nav-item ">
+                              <a class="nav-link" href="/admin_panel/games/add">
+                                  <span class="sidebar-mini  fa fa-plus"></span>
+                                  <span class="sidebar-normal">Add New</span>
+                              </a>
+                          </li>
+                        </ul>
+                    </div>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="/admin_panel/cms_pages/add">
-                        <span class="sidebar-mini  fa fa-plus"></span>
-                        <span class="sidebar-normal">Add New</span>
-                    </a>
-                </li>
-              </ul>
-          </div>
-      </li>
 
 
       <!-- <li class="nav-item">

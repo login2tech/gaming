@@ -79,6 +79,30 @@ app.use(function(req, res, next) {
   }
 });
 
+app.post('/upload', (req, res, next) => {
+  const mkdirp = require('mkdirp');
+  const uploadFile = req.files.file;
+  const fileName = req.files.file.name;
+  const rand = Math.floor(Math.random() * 100000) + 1;
+
+  const dt = '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';
+
+  mkdirp.sync(__dirname + '/public/files/' + dt);
+
+  uploadFile.mv(
+    `${__dirname}/public/files/${dt}/f_${rand}_${fileName}`,
+    function(err) {
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      res.json({
+        file: `/files/${dt}/f_${rand}_${req.files.file.name}`
+      });
+    }
+  );
+});
+
 app.post('/contact', contactController.contactPost);
 app.get('/me', userController.ensureAuthenticated, function(req, res, next) {
   // console.log()
@@ -280,6 +304,11 @@ app.post(
 const blogroutes = require('./routes/blogposts/blogposts.route.js');
 
 app.use('/api/posts', blogroutes);
+
+const gamesRoutes = require('./routes/games/games.route.js');
+
+app.use('/api/games', gamesRoutes);
+
 app.post('/auth/facebook', userController.authFacebook);
 app.get('/auth/facebook/callback', userController.authFacebookCallback);
 

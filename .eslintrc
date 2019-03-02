@@ -16,6 +16,8 @@
         "Stripe": true,
         "introJs": true,
         "Mousetrap": true,
-        "chartToolTipInit": true
+        "chartToolTipInit": true,
+        "angular" : true,
+        "scrolltoTop":true
     }
 }

@@ -3,27 +3,6 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {logout} from '../../actions/auth';
 import {Translate} from 'react-localize-redux';
-//
-// let LanguageToggle = ({languages, activeLanguage, setActiveLanguage}) => {
-//   // console.log(activeLanguage);
-//   return [
-//     languages.map(lang => {
-//       if (activeLanguage && activeLanguage.code == lang.code) {
-//         return false;
-//       }
-//       return (
-//         <li className="nav-item is_lang_link" key={lang.code}>
-//           <a  onClick={() => setActiveLanguage(lang.code)}>
-//             <i className="fa fa-language" />
-//             {lang.code}
-//           </a>
-//         </li>
-//       );
-//     })
-//   ];
-// };
-//
-// LanguageToggle = withLocalize(LanguageToggle);
 
 const Header = props => {
   const handleLogout = event => {
@@ -79,9 +58,7 @@ const Header = props => {
                   {props.user
                     ? [
                         <li key={1}>
-                          <Link to="/account">
-                            <Translate id="profile_link_title" />
-                          </Link>
+                          <Link to="/account">Profile</Link>
                         </li>,
                         <li key={2}>
                           <Link

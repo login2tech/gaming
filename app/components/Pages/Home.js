@@ -56,8 +56,7 @@ class Home extends React.Component {
                   <li
                     className="tournament-box"
                     style={{
-                      'background-image':
-                        "url('images/thumbnail_tournament.jpg')"
+                      backgroundImage: "url('images/thumbnail_tournament.jpg')"
                     }}
                   >
                     <div className="tournament-body">
@@ -98,7 +97,7 @@ class Home extends React.Component {
                   <li
                     className="tournament-box"
                     style={{
-                      'background-image': "url('images/base-copy-2.jpg')"
+                      backgroundImage: "url('images/base-copy-2.jpg')"
                     }}
                   >
                     <div className="tournament-body">
@@ -277,8 +276,7 @@ class Home extends React.Component {
                   <li
                     className="tournament-box"
                     style={{
-                      'background-image':
-                        "url('images/thumbnail_tournament.jpg')"
+                      backgroundImage: "url('images/thumbnail_tournament.jpg')"
                     }}
                   >
                     <div className="tournament-body">
@@ -319,7 +317,7 @@ class Home extends React.Component {
                   <li
                     className="tournament-box"
                     style={{
-                      'background-image': "url('images/base-copy-2.jpg')"
+                      backgroundImage: "url('images/base-copy-2.jpg')"
                     }}
                   >
                     <div className="tournament-body">
@@ -360,7 +358,7 @@ class Home extends React.Component {
                   <li
                     className="tournament-box"
                     style={{
-                      'background-image': "url('images/tournament_sasas.jpg')"
+                      backgroundImage: "url('images/tournament_sasas.jpg')"
                     }}
                   >
                     <div className="tournament-body">
@@ -401,7 +399,7 @@ class Home extends React.Component {
                   <li
                     className="tournament-box"
                     style={{
-                      'background-image': "url('images/tournament_card.jpg')"
+                      backgroundImage: "url('images/tournament_card.jpg')"
                     }}
                   >
                     <div className="tournament-body">
