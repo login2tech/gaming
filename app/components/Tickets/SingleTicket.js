@@ -178,12 +178,6 @@ class SingleTicket extends React.Component {
                     <div className="row">
                       <div className="col-sm-3 user">
                         <div className="text-center">
-                          <img
-                            src={item.user && item.user.gravatar}
-                            width="90"
-                            height="140"
-                            className="img-fluid center-block"
-                          />
                           <h3>
                             {item.is_user
                               ? item.user.first_name + ' ' + item.user.last_name
