@@ -51,9 +51,9 @@ export default function getRoutes(store) {
         component={SingleTicket}
       />
       <Route
-        path="/support/tickets/new"
+        path="/support/tickets/create"
         onEnter={ensureAuthenticated}
-        component={NewTickets}
+        component={NewTicket}
       />
       <Route
         path="/support/tickets"

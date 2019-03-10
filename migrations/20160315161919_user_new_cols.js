@@ -6,9 +6,9 @@ exports.up = function(knex, Promise) {
       table.integer('cash_balance').defaultTo(0);
       table.string('stripe_user_id');
       table.boolean('prime');
-      table.text('prime_obj').defaultTo({});
+      table.text('prime_obj').defaultTo('{}');
       table.boolean('double_xp');
-      table.text('double_xp_obj').defaultTo({});
+      table.text('double_xp_obj').defaultTo('{}');
     })
   ]);
 };

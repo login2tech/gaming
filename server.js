@@ -273,15 +273,15 @@ app.use('/api/tournaments', tournamentsRoutes);
 
 const topicRoutes = require('./routes/topics/topic.route.js');
 app.use('/api/topic', topicRoutes);
-//
+
 const threadRoutes = require('./routes/threads/thread.route.js');
 app.use('/api/thread', threadRoutes);
 
 const thread_repliesRoutes = require('./routes/ThreadReplies/threadreply.route.js');
 app.use('/api/thread_replies', thread_repliesRoutes);
 
-// app.post('/auth/facebook', userController.authFacebook);
-// app.get('/auth/facebook/callback', userController.authFacebookCallback);
+const ticketsRoutes = require('./routes/tickets/ticket.route.js');
+app.use('/api/tickets', ticketsRoutes);
 
 app.get(
   '/api/cms_pages/list',

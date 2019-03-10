@@ -67,7 +67,7 @@ class Tickets extends React.Component {
               role="tablist"
             >
               <li role="presentation" className="pull-right text-right">
-                <Link to="/support/ticket/create" role="tab">
+                <Link to="/support/tickets/create" role="tab">
                   <i className="fa fa-plus" /> Create New
                 </Link>
               </li>
@@ -77,11 +77,13 @@ class Tickets extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <table id="table" className="table table-striped table-ongray">
                   <thead>
-                    <th width="30">ID</th>
-                    <th>Title</th>
-                    <th>Department</th>
-                    <th>Last Updated</th>
-                    <th>Status</th>
+                    <tr>
+                      <th width="30">ID</th>
+                      <th>Title</th>
+                      <th>Department</th>
+                      <th>Last Updated</th>
+                      <th>Status</th>
+                    </tr>
                   </thead>
                   <tbody>
                     {this.state.items.map((item, i) => {
@@ -93,7 +95,7 @@ class Tickets extends React.Component {
                               {item.title}
                             </a>
                           </td>
-                          <td>{item.dept}</td>
+                          <td>{item.type}</td>
                           <td>{moment(item.updated_at).fromNow()}</td>
                           <td>{item.status}</td>
                         </tr>
