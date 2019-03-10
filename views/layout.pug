@@ -4,7 +4,7 @@ html
     meta(charset='utf-8')
     meta(http-equiv='x-ua-compatible', content='ie=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    title= title
+    title Only Comp Gaming
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/font-awesome.min.css')
     link(rel='stylesheet', href='/css/style.css')
@@ -13,7 +13,9 @@ html
     #app!= html
     script.
       window.INITIAL_STATE = !{JSON.stringify(initialState)}
+    script(src='https://js.stripe.com/v3/')
     script(src='/js/jquery.min.js')
+
     script(src='/js/bootstrap.min.js')
     script(src='/js/main.js')
     script(src='/js/bundle.js')

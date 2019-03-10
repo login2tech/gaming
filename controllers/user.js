@@ -2,7 +2,7 @@ const async = require('async');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
-const request = require('request');
+// const request = require('request');
 // const qs = require('querystring');
 const User = require('../models/User');
 const mailer = require('./mailer');
@@ -582,95 +582,95 @@ exports.unbanUser = function(req, res, next) {
 /**
  * POST /auth/facebook
  * Sign in with Facebook
- */
-exports.authFacebook = function(req, res) {
-  const profileFields = ['id', 'name', 'email', 'gender', 'location'];
-  const accessTokenUrl = 'https://graph.facebook.com/v2.5/oauth/access_token';
-  const graphApiUrl =
-    'https://graph.facebook.com/v2.5/me?fields=' + profileFields.join(',');
-
-  const params = {
-    code: req.body.code,
-    client_id: req.body.clientId,
-    client_secret: process.env.FACEBOOK_SECRET,
-    redirect_uri: req.body.redirectUri
-  };
-
-  // Step 1. Exchange authorization code for access token.
-  request.get({url: accessTokenUrl, qs: params, json: true}, function(
-    err,
-    response,
-    accessToken
-  ) {
-    if (accessToken.error) {
-      return res.status(500).send({msg: accessToken.error.messdob});
-    }
-
-    // Step 2. Retrieve user's profile information.
-    request.get({url: graphApiUrl, qs: accessToken, json: true}, function(
-      err,
-      response,
-      profile
-    ) {
-      if (profile.error) {
-        return res.status(500).send({msg: profile.error.messdob});
-      }
-
-      // Step 3a. Link accounts if user is authenticated.
-      if (req.isAuthenticated()) {
-        new User({facebook: profile.id}).fetch().then(function(user) {
-          if (user) {
-            return res.status(409).send({
-              msg:
-                'There is already an existing account linked with Facebook that belongs to you.'
-            });
-          }
-          user = req.user;
-          user.set('name', user.get('name') || profile.name);
-          user.set('gender', user.get('gender') || profile.gender);
-          user.set(
-            'picture',
-            user.get('picture') ||
-              'https://graph.facebook.com/' + profile.id + '/picture?type=large'
-          );
-          user.set('facebook', profile.id);
-          user.save(user.changed, {patch: true}).then(function() {
-            res.send({token: generateToken(user), user: user});
-          });
-        });
-      } else {
-        // Step 3b. Create a new user account or return an existing one.
-        new User({facebook: profile.id}).fetch().then(function(user) {
-          if (user) {
-            return res.send({token: generateToken(user), user: user});
-          }
-          new User({email: profile.email}).fetch().then(function(user) {
-            if (user) {
-              return res.status(400).send({
-                msg:
-                  user.get('email') +
-                  ' is already associated with another account.'
-              });
-            }
-            user = new User();
-            user.set('name', profile.name);
-            user.set('email', profile.email);
-            user.set('gender', profile.gender);
-            user.set('location', profile.location && profile.location.name);
-            user.set(
-              'picture',
-              'https://graph.facebook.com/' + profile.id + '/picture?type=large'
-            );
-            user.set('facebook', profile.id);
-            user.save().then(function(user) {
-              return res.send({token: generateToken(user), user: user});
-            });
-          });
-        });
-      }
-    });
-  });
-};
+ //  */
+// exports.authFacebook = function(req, res) {
+//   const profileFields = ['id', 'name', 'email', 'gender', 'location'];
+//   const accessTokenUrl = 'https://graph.facebook.com/v2.5/oauth/access_token';
+//   const graphApiUrl =
+//     'https://graph.facebook.com/v2.5/me?fields=' + profileFields.join(',');
+//
+//   const params = {
+//     code: req.body.code,
+//     client_id: req.body.clientId,
+//     client_secret: process.env.FACEBOOK_SECRET,
+//     redirect_uri: req.body.redirectUri
+//   };
+//
+//   // Step 1. Exchange authorization code for access token.
+//   request.get({url: accessTokenUrl, qs: params, json: true}, function(
+//     err,
+//     response,
+//     accessToken
+//   ) {
+//     if (accessToken.error) {
+//       return res.status(500).send({msg: accessToken.error.messdob});
+//     }
+//
+//     // Step 2. Retrieve user's profile information.
+//     request.get({url: graphApiUrl, qs: accessToken, json: true}, function(
+//       err,
+//       response,
+//       profile
+//     ) {
+//       if (profile.error) {
+//         return res.status(500).send({msg: profile.error.messdob});
+//       }
+//
+//       // Step 3a. Link accounts if user is authenticated.
+//       if (req.isAuthenticated()) {
+//         new User({facebook: profile.id}).fetch().then(function(user) {
+//           if (user) {
+//             return res.status(409).send({
+//               msg:
+//                 'There is already an existing account linked with Facebook that belongs to you.'
+//             });
+//           }
+//           user = req.user;
+//           user.set('name', user.get('name') || profile.name);
+//           user.set('gender', user.get('gender') || profile.gender);
+//           user.set(
+//             'picture',
+//             user.get('picture') ||
+//               'https://graph.facebook.com/' + profile.id + '/picture?type=large'
+//           );
+//           user.set('facebook', profile.id);
+//           user.save(user.changed, {patch: true}).then(function() {
+//             res.send({token: generateToken(user), user: user});
+//           });
+//         });
+//       } else {
+//         // Step 3b. Create a new user account or return an existing one.
+//         new User({facebook: profile.id}).fetch().then(function(user) {
+//           if (user) {
+//             return res.send({token: generateToken(user), user: user});
+//           }
+//           new User({email: profile.email}).fetch().then(function(user) {
+//             if (user) {
+//               return res.status(400).send({
+//                 msg:
+//                   user.get('email') +
+//                   ' is already associated with another account.'
+//               });
+//             }
+//             user = new User();
+//             user.set('name', profile.name);
+//             user.set('email', profile.email);
+//             user.set('gender', profile.gender);
+//             user.set('location', profile.location && profile.location.name);
+//             user.set(
+//               'picture',
+//               'https://graph.facebook.com/' + profile.id + '/picture?type=large'
+//             );
+//             user.set('facebook', profile.id);
+//             user.save().then(function(user) {
+//               return res.send({token: generateToken(user), user: user});
+//             });
+//           });
+//         });
+//       }
+//     });
+//   });
+// };
 
 exports.authFacebookCallback = function(req, res) {
   res.render('loading');

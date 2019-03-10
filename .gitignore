@@ -1,5 +1,6 @@
 public/css/main.css
 public/js/bundle.js
+public/files/*
 .vscode
 lib-cov
 *.seed

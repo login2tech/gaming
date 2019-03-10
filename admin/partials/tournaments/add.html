@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-if="messages.error" role="alert" class="alert alert-danger">
+        <div ng-repeat="error in messages.error">{{error.msg}}</div>
+      </div>
+      <div ng-if="messages.success" role="alert" class="alert alert-success">
+        <div ng-repeat="success in messages.success">{{success.msg}}</div>
+      </div>
+      <form ng-submit="submitForm()">
+        <div class="card stacked-form">
+          <div class="card-header ">
+            <h4 class="card-title">{{title}}</h4>
+          </div>
+          <div class="card-body ">
+            <div class="form-group">
+              <label>Tournament Title</label>
+              <input type="text" ng-model="item.title" required placeholder="Enter Tournament Title" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Tournament Game</label>
+              <select type="text" ng-model="item.game_id"  required class="form-control">
+              <option value="">Select</option>
+              <option value="{{game.id}}" ng-repeat="game in games">{{game.title}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tournament Starts On</label>
+              <input type="datetime" ng-model="item.starts_on" required placeholder="Enter Tournament Start Date Time" class="form-control">
+            </div>
+            
+            <div class="form-group">
+              <label>Tournament Win Price Amount(credit points)</label>
+              <input type="datetime" ng-model="item.price_amount" required placeholder="Enter Tournament Win Price Amount(credit points)" class="form-control">
+            </div>
+
+<!--
+            <div class="form-group">
+              <label>Game Platform</label>
+              <input type="text" ng-model="item.platform" required placeholder="Enter Game Platform" class="form-control">
+            </div> -->
+            <div class="form-group"  >
+              <label>Featured Image</label>
+              <Br >
+              <img ng-if="item.image_url"  style="width:100px"  ng-src="{{item.image_url}}" /><br /><br />
+              <div class="input-group mb-3">
+                <input type="text" ng-model="item.image_url" readonly required placeholder="Enter Game Image Url" class="form-control">
+                <div class="input-group-append">
+                  <button class="btn btn-danger" ng-if="item.image_url" type="button" ng-click="removeImage()">Remove</button>
+                </div>
+                <div>
+                  <input style=" width: 100%; " accept="image/gif, image/jpeg, image/png" data-id_key="{{item.id}}" id="inv" type="file" name="file" onchange="angular.element(this).scope().uploadedFile(this)" class="btn btn-warning form-control" />
+                  <br />
+                  <span ng-if="file_upload_started">please wait....</span>
+                  <span ng-if="file_upload_completed">Image uploaded successfully...</span>
+                  <span ng-if="file_upload_failed">Upload Failed.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer ">
+            <button type="submit" ng-disabled="file_upload_started" class="btn btn-fill btn-info">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<style>
+  .glyphicon{
+  font-family: Font Awesome\ 5 Free;
+  font-weight: 900;
+  }
+  .glyphicon-quote:before{ content: "\f10e" !important;}
+  .glyphicon-quote:after{content: '';content: "\f10e";}
+  .glyphicon-list:before {
+  content: "\f03a";
+  }
+  .glyphicon-th-list:before {
+  content: "\f0cb";
+  }.glyphicon-indent-right:before {
+  content: "\f101";
+  }.glyphicon-indent-left:before {
+  content: "\f100";
+  }
+  .glyphicon-share:before {
+  content: "\f0c1";
+  }
+  .glyphicon-picture:before {
+  content: "\f03e";
+  }
+</style>

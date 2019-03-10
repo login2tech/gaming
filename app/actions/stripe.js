@@ -3,7 +3,7 @@ export function charge(obj, token, cb) {
     dispatch({
       type: 'CLEAR_MESSAGES'
     });
-    return fetch('/api/submission/new', {
+    return fetch('/api/credits/new', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
@@ -15,6 +15,10 @@ export function charge(obj, token, cb) {
         return response.json().then(json => {
           if (json.action && json.action == 'PAYMENT_DONE') {
             cb(true);
+            dispatch({
+              type: 'SUCCESS',
+              messages: [json]
+            });
           } else {
             cb(false);
             dispatch({

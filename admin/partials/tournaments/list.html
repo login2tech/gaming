@@ -4,7 +4,6 @@
          <div class="card data-tables">
              <div class="card-body table-striped table-no-bordered table-hover dataTable dtr-inline table-full-width">
                  <div class="toolbar">
-                     <!--        Here you can write extra buttons/actions for the toolbar              -->
                  </div>
                  <div class="fresh-datatables" ng-if="show">
                      <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -12,29 +11,29 @@
                              <tr>
                                 <th>Id</th>
                                 <th>Title</th>
+                                <th>Game</th>
                                 <th class="disabled-sorting text-right">Actions</th>
                              </tr>
                          </thead>
                          <tfoot>
                              <tr>
-                               <th>Id</th>
-                                <th>Title</th>
-                                 <th class="text-right">Actions</th>
+                              <th>Id</th>
+                              <th>Title</th>
+                              <th>Game</th>
+                              <th class="text-right">Actions</th>
                              </tr>
                          </tfoot>
                          <tbody>
-                             <tr ng-repeat="faq in blogposts track by $index">
+                             <tr ng-repeat="faq in items track by $index">
 
                                  <td>{{faq.id}}</td>
                                  <td>{{faq.title}}</td>
-																 <!-- <td>{{faq.category.title}}</td> -->
+																 <td>{{faq.game.title}}</td>
                                  <td class="text-right">
-                                     <!-- <a href="#" class="btn btn-link btn-info like"><i class="fa fa-heart"></i></a> -->
-                                     <a title="Edit Blog Post" href="/admin_panel/blog-posts/edit/{{faq.id}}" class="btn btn-link btn-warning edit"><i class="fa fa-edit"></i></a>
+                                     <a title="Edit Blog Post" href="/admin_panel/tournaments/edit/{{faq.id}}" class="btn btn-link btn-warning edit"><i class="fa fa-edit"></i></a>
                                      <a title="Delete Blog Post" ng-click="requestToDelete(faq.id)" class="btn btn-link btn-danger remove"><i class="fa fa-times"></i></a>
                                  </td>
                              </tr>
-
                          </tbody>
                      </table>
                  </div>

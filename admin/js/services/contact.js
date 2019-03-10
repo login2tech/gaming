@@ -147,6 +147,26 @@ angular
     };
   })
 
+  .factory('Tournament', function($http) {
+    return {
+      list: function() {
+        return $http.get('/api/tournaments/list');
+      },
+      listSingle: function(id) {
+        return $http.get('/api/tournaments/single/' + id);
+      },
+      add: function(data) {
+        return $http.post('/api/tournaments/add', data);
+      },
+      update: function(data) {
+        return $http.post('/api/tournaments/edit', data);
+      },
+      delete: function(data) {
+        return $http.post('/api/tournaments/delete', data);
+      }
+    };
+  })
+
   //
   // .factory('BlogPost', function($http) {
   //   return {

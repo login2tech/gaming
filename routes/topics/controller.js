@@ -1,28 +1,31 @@
 // const fs = require('fs');
-const Game = require('./Game');
+const Item = require('./Topic');
+const ObjName = 'Topic';
 
-exports.listGame = function(req, res, next) {
-  new Game()
-    .orderBy('id', 'DESC')
+exports.listItem = function(req, res, next) {
+  //{withRelated: ['thread_count']}
+  //todo
+  // TODO:
+  // new Item()
+  //   .orderBy('id', 'DESC')
+  Item.withCount('threads')
     .fetchAll()
-    .then(function(games) {
-      if (!games) {
-        return res.status(200).send([]);
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, items: []});
       }
-      return res.status(200).send({ok: true, items: games.toJSON()});
+      return res.status(200).send({ok: true, items: items.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
-      return res.status(200).send([]);
+      console.log(err);
+      return res.status(200).send({ok: true, items: []});
     });
 };
 
 exports.listPaged = function(req, res, next) {
-  let c = new Game();
+  let c = new Item();
   c = c.orderBy('id', 'DESC');
-  // if (req.query.category_id) {
-  //   c = c.where('category_id', 'LIKE', req.query.category_id);
-  // }
+
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
     p = parseInt(req.query.paged);
@@ -44,17 +47,17 @@ exports.listPaged = function(req, res, next) {
     });
 };
 
-exports.listSingleGame = function(req, res, next) {
-  new Game()
+exports.listSingleItem = function(req, res, next) {
+  new Item()
     .where('id', req.params.id)
     .fetch()
-    .then(function(game) {
-      if (!game) {
+    .then(function(item) {
+      if (!item) {
         return res
           .status(200)
           .send({id: req.params.id, title: '', content: ''});
       }
-      return res.status(200).send({ok: true, item: game.toJSON()});
+      return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
       return res.status(400).send({
@@ -66,7 +69,7 @@ exports.listSingleGame = function(req, res, next) {
     });
 };
 
-exports.addGame = function(req, res, next) {
+exports.addItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
   // req.assert('content', 'Content cannot be blank').notEmpty();
   // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
@@ -74,7 +77,7 @@ exports.addGame = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
-  new Game({
+  new Item({
     title: req.body.title,
     platform: req.body.platform,
     image_url: req.body.image_url
@@ -82,18 +85,18 @@ exports.addGame = function(req, res, next) {
     // short_content: req.body.short_content
   })
     .save()
-    .then(function(game) {
-      res.send({ok: true, msg: 'New Game has been created successfully.'});
+    .then(function(item) {
+      res.send({ok: true, msg: 'New Item has been created successfully.'});
     })
     .catch(function(err) {
       // console.log(err);
       return res
         .status(400)
-        .send({msg: 'Something went wrong while created a new Game'});
+        .send({msg: 'Something went wrong while created a new Item'});
     });
 };
 
-exports.updateGame = function(req, res, next) {
+exports.updateItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
   // req.assert('content', 'Content cannot be blank').notEmpty();
   // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
@@ -105,7 +108,7 @@ exports.updateGame = function(req, res, next) {
     return res.status(400).send(errors);
   }
 
-  const game = new Game({id: req.body.id});
+  const item = new Item({id: req.body.id});
   const obj = {
     title: req.body.title,
     platform: req.body.platform,
@@ -115,42 +118,42 @@ exports.updateGame = function(req, res, next) {
   if (req.body.remove_media) {
     obj.image_url = '';
   }
-  game
+  item
     .save(obj)
     .then(function(blg) {
       blg
         .fetch()
         .then(function(bll) {
           res.send({
-            game: bll.toJSON(),
-            msg: 'Game has been updated.'
+            item: bll.toJSON(),
+            msg: ObjName + ' has been updated.'
           });
         })
         .catch(function(err) {
-          console.log(err);
+          // console.log(err);
           res
             .status(400)
-            .send({msg: 'Something went wrong while updating the Game'});
+            .send({msg: 'Something went wrong while updating the ' + ObjName});
         });
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
 
       res
         .status(400)
-        .send({msg: 'Something went wrong while updating the Game'});
+        .send({msg: 'Something went wrong while updating the ' + ObjName});
     });
 };
 
-exports.deleteGame = function(req, res, next) {
-  new Game({id: req.body.id})
+exports.deleteItem = function(req, res, next) {
+  new Item({id: req.body.id})
     .destroy()
     .then(function(post) {
-      res.send({msg: 'The Game Item has been successfully deleted.'});
+      res.send({msg: 'The ' + ObjName + ' has been successfully deleted.'});
     })
     .catch(function(err) {
       return res
         .status(400)
-        .send({msg: 'Something went wrong while deleting the Game'});
+        .send({msg: 'Something went wrong while deleting the ' + ObjName});
     });
 };

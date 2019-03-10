@@ -28,111 +28,97 @@ class Contact extends React.Component {
 
   render() {
     return (
-      <div>
-        <section className="page_title_bar">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <h2 className="title_heading">
-                  <Translate id="contact_page_heading" />
-                </h2>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="mid_part_content">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="inner-column">
-                  <div className="contact-form">
-                    <Messages messages={this.props.messages} />
-                    <form
-                      onSubmit={this.handleSubmit.bind(this)}
-                      className="form-horizontal"
-                      id="contact-form"
-                    >
-                      <div className="row clearfix">
-                        <div className="form-group col-md-6 col-sm-6 co-xs-12">
-                          <label>
-                            <Translate id="contact_page_name_label" />{' '}
-                            <span className="required">*</span>
-                          </label>
-                          <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            value={this.state.name}
-                            onChange={this.handleChange.bind(this)}
-                            autoFocus
-                          />
-                        </div>
-                        <div className="form-group col-md-6 col-sm-6 co-xs-12">
-                          <label>
-                            <Translate id="contact_page_email_label" />{' '}
-                            <span className="required">*</span>
-                          </label>
-                          <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            className="form-control"
-                            value={this.state.email}
-                            onChange={this.handleChange.bind(this)}
-                          />
-                        </div>
-                        <div className="form-group col-md-12 col-sm-12 co-xs-12">
-                          <label>
-                            <Translate id="contact_page_subject_label" />
-                          </label>
-                          <select
-                            name="subject"
-                            id="subject"
-                            value={this.state.subject}
-                            onChange={this.handleChange.bind(this)}
-                          >
-                            <option value="Question (s) about the service">
-                              Question (s) about the service
-                            </option>
-                            <option value="Technical question">
-                              Technical question
-                            </option>
-                            <option value="Others">Others</option>
-                          </select>
-                        </div>
-
-                        <div className="form-group col-md-12 col-sm-12 co-xs-12">
-                          <label>
-                            <Translate id="contact_page_message_label" />{' '}
-                          </label>
-                          <textarea
-                            name="message"
-                            id="message"
-                            rows="7"
-                            className="form-control"
-                            value={this.state.message}
-                            onChange={this.handleChange.bind(this)}
-                          />
-                        </div>
-
-                        <div className="form-group col-md-12 col-sm-12 co-xs-12">
-                          <button
-                            type="submit"
-                            className="theme-btn btn-style-one"
-                          >
-                            <Translate id="contact_page_send_btn_label" />
-                          </button>
-                        </div>
+      <section className="middle_part_login">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12">
+              <div className="authorize_box">
+                <div className="title_default_dark title_border text-center">
+                  <h4>Contact Us</h4>
+                </div>
+                <div className="field_form authorize_form">
+                  <Messages messages={this.props.messages} />
+                  <br />
+                  <form
+                    onSubmit={this.handleSubmit.bind(this)}
+                    className="form-horizontal"
+                    id="contact-form"
+                  >
+                    <div className="row clearfix">
+                      <div className="form-group col-md-6 col-sm-6 co-xs-12">
+                        <label>
+                          <Translate id="contact_page_name_label" />{' '}
+                          <span className="required">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          id="name"
+                          className="form-control"
+                          value={this.state.name}
+                          onChange={this.handleChange.bind(this)}
+                          autoFocus
+                        />
                       </div>
-                    </form>
-                  </div>
+                      <div className="form-group col-md-6 col-sm-6 co-xs-12">
+                        <label>
+                          <Translate id="contact_page_email_label" />{' '}
+                          <span className="required">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          id="email"
+                          className="form-control"
+                          value={this.state.email}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                      </div>
+                      <div className="form-group col-md-12 col-sm-12 co-xs-12">
+                        <label>
+                          <Translate id="contact_page_subject_label" />
+                        </label>
+
+                        <input
+                          type="text"
+                          name="subject"
+                          id="subject"
+                          className="form-control"
+                          value={this.state.subject}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                      </div>
+
+                      <div className="form-group col-md-12 col-sm-12 co-xs-12">
+                        <label>
+                          <Translate id="contact_page_message_label" />{' '}
+                        </label>
+                        <textarea
+                          name="message"
+                          id="message"
+                          rows="7"
+                          className="form-control"
+                          value={this.state.message}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                      </div>
+
+                      <div className="form-group col-md-12 col-sm-12 co-xs-12">
+                        <button
+                          type="submit"
+                          className="btn btn-default bttn_submit"
+                        >
+                          <Translate id="contact_page_send_btn_label" />
+                        </button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     );
   }
 }

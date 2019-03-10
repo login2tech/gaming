@@ -4,10 +4,29 @@ import {connect} from 'react-redux';
 // import {Translate} from 'react-localize-redux';
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      games: []
+    };
+  }
+  componentDidMount() {
+    this.runQuery(this.props);
+  }
+
+  runQuery(prps) {
+    fetch('/api/games/listPaged').then(res => {
+      if (res) {
+        res.json().then(obj => {
+          this.setState({games: obj.items});
+        });
+      }
+    });
+  }
+
   language = {};
   render() {
     // console.log(this.props);
-
     return (
       <div>
         <div className="main_slider_home">
@@ -159,103 +178,67 @@ class Home extends React.Component {
             </div>
 
             <div className="row">
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_1.jpg" />
+              {this.state.games.map((games, i) => {
+                if (i > 3) {
+                  return false;
+                }
+                return (
+                  <div
+                    className="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                    key={games.id}
+                  >
+                    <div className="game_c_box">
+                      <div className="game_pic">
+                        <img src={games.image_url} />
+                      </div>
+
+                      <a
+                        href={
+                          '/games/' +
+                          games.id +
+                          '/' +
+                          games.title.toLowerCase().replace(/ /g, '-')
+                        }
+                        className="game_platform"
+                      >
+                        Play
+                      </a>
+                    </div>
                   </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_2.jpg" />
-                  </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_3.jpg" />
-                  </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_4.jpg" />
-                  </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
+                );
+              })}
             </div>
 
             <div className="row">
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_4.jpg" />
+              {this.state.games.map((games, i) => {
+                if (i < 4 || i > 7) {
+                  return false;
+                }
+                return (
+                  <div
+                    className="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                    key={games.id}
+                  >
+                    <div className="game_c_box">
+                      <div className="game_pic">
+                        <img src={games.image_url} />
+                      </div>
+
+                      <a
+                        href={
+                          '/games/' +
+                          games.id +
+                          '/' +
+                          games.title.toLowerCase().replace(/ /g, '-')
+                        }
+                        className="game_platform"
+                      >
+                        Play
+                      </a>
+                    </div>
                   </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_1.jpg" />
-                  </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_2.jpg" />
-                  </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                <div className="game_c_box">
-                  <div className="game_pic">
-                    <img src="images/play_game_3.jpg" />
-                  </div>
-
-                  <a href="#" className="game_platform">
-                    Play
-                  </a>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </section>

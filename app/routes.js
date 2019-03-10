@@ -10,11 +10,18 @@ import FAQ from './components/Pages/FAQ';
 import CMSPage from './components/CMSPage';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
-import Posts from './components/Blog/Posts';
-import SinglePost from './components/Blog/SinglePost';
 import Profile from './components/Account/Profile';
+import Dashboard from './components/Account/Dashboard';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
+
+import Topics from './components/Forums/Topic';
+import Threads from './components/Forums/Threads';
+import SingleThread from './components/Forums/SingleThread';
+
+import NewTicket from './components/Tickets/NewTicket';
+import SingleTicket from './components/Tickets/SingleTicket';
+import Tickets from './components/Tickets/MyTickets';
 
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
@@ -37,22 +44,29 @@ export default function getRoutes(store) {
       <IndexRoute component={Home} onLeave={clearMessages} />
       <Route path="/contact" component={Contact} onLeave={clearMessages} />
       <Route path="/faq" component={FAQ} onLeave={clearMessages} />
-
-      <Route
-        path="/blog/post/:id/:slug"
-        component={SinglePost}
-        onLeave={clearMessages}
-      />
-      <Route
-        path="/blog/post/:id"
-        component={SinglePost}
-        onLeave={clearMessages}
-      />
-
-      <Route path="/blog/p/:paged" component={Posts} />
-      <Route path="/blog" component={Posts} />
       <Route path="/p/:slug" component={CMSPage} />
-
+      <Route
+        path="/support/tickets/ticket/:id"
+        onEnter={ensureAuthenticated}
+        component={SingleTicket}
+      />
+      <Route
+        path="/support/tickets/new"
+        onEnter={ensureAuthenticated}
+        component={NewTickets}
+      />
+      <Route
+        path="/support/tickets"
+        onEnter={ensureAuthenticated}
+        component={Tickets}
+      />
+      <Route
+        path="/forums/thread/:thread_id/page/:page"
+        component={props => <SingleThread key={props.params.page} {...props} />}
+      />
+      />
+      <Route path="/forums/:id/:title" component={Threads} />
+      <Route path="/forums" component={Topics} />
       <Route
         path="/login"
         component={Login}
@@ -71,7 +85,12 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
-
+      <Route
+        path="/dashboard"
+        component={Dashboard}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
       <Route
         path="/forgot"
         component={Forgot}

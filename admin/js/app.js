@@ -136,10 +136,20 @@ angular
         templateUrl: 'partials/games/add.html'
       })
 
-      .when('/blog-posts/', {
+      .when('/tournaments/', {
         resolve: {loginRequired: loginRequired},
-        templateUrl: 'partials/blog/list.html',
-        controller: 'BlogCtrl'
+        controller: 'TournamentCtrl',
+        templateUrl: 'partials/tournaments/list.html'
+      })
+      .when('/tournaments/add', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'TournamentAddCtrl',
+        templateUrl: 'partials/tournaments/add.html'
+      })
+      .when('/tournaments/edit/:id', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'TournamentEditCtrl',
+        templateUrl: 'partials/tournaments/add.html'
       })
 
       .when('/invoices/', {
@@ -163,97 +173,6 @@ angular
         resolve: {loginRequired: loginRequired},
         templateUrl: 'partials/invoices/allInvoices.html',
         controller: 'InvoiceCtrl'
-      })
-
-      .when('/blog-posts/add', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'BlogAddCtrl',
-        templateUrl: 'partials/blog/add.html'
-      })
-
-      .when('/blog-posts/edit/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'BlogEditCtrl',
-        templateUrl: 'partials/blog/add.html'
-      })
-      .when('/category/', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'CategoryCtrl',
-        templateUrl: 'partials/category/list.html'
-      })
-      .when('/category/add', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'CategoryAddCtrl',
-        templateUrl: 'partials/category/add.html'
-      })
-      .when('/category/edit/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'CategoryEditCtrl',
-        templateUrl: 'partials/category/add.html'
-      })
-
-      .when('/subjects/', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'SubjectCtrl',
-        templateUrl: 'partials/subject/list.html'
-      })
-      .when('/subjects/add', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'SubjectAddCtrl',
-        templateUrl: 'partials/subject/add.html'
-      })
-      .when('/subjects/edit/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'SubjectEditCtrl',
-        templateUrl: 'partials/subject/add.html'
-      })
-
-      .when('/topics/', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'TopicCtrl',
-        templateUrl: 'partials/topic/list.html'
-      })
-      .when('/topics/add', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'TopicAddCtrl',
-        templateUrl: 'partials/topic/add.html'
-      })
-      .when('/topics/edit/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'TopicEditCtrl',
-        templateUrl: 'partials/topic/add.html'
-      })
-
-      .when('/courses/', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'CourseCtrl',
-        templateUrl: 'partials/course/list.html'
-      })
-      .when('/courses/add', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'CourseAddCtrl',
-        templateUrl: 'partials/course/add.html'
-      })
-      .when('/courses/edit/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'CourseEditCtrl',
-        templateUrl: 'partials/course/add.html'
-      })
-
-      .when('/lessons/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'LessonCtrl',
-        templateUrl: 'partials/lesson/list.html'
-      })
-      .when('/lessons/add/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'LessonAddCtrl',
-        templateUrl: 'partials/lesson/add.html'
-      })
-      .when('/lessons/edit/:id', {
-        resolve: {loginRequired: loginRequired},
-        controller: 'LessonEditCtrl',
-        templateUrl: 'partials/lesson/add.html'
       })
 
       .otherwise({

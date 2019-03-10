@@ -23,6 +23,9 @@ const contactController = require('./controllers/contact');
 const planController = require('./controllers/plan');
 const cmsPageController = require('./controllers/cmspage');
 const submissionsController = require('./controllers/submissions');
+const creditsController = require('./controllers/credits');
+// const topicsController = require('./controllers/topics');
+
 const faqController = require('./controllers/faq');
 const langController = require('./controllers/language');
 const settingsController = require('./controllers/settings');
@@ -158,49 +161,10 @@ app.get(
   userController.ensureAuthenticated,
   submissionsController.my
 );
-
-app.get(
-  '/api/submission/myVotes',
-  userController.ensureAuthenticated,
-  submissionsController.myVotes
-);
-
-app.get(
-  '/api/submission/random',
-  userController.ensureAuthenticated,
-  submissionsController.randomSubmission
-);
 app.post(
-  '/api/submission/report',
+  '/api/credits/new',
   userController.ensureAuthenticated,
-  submissionsController.report
-);
-
-app.post(
-  '/api/votes/new',
-  userController.ensureAuthenticated,
-  submissionsController.newVote
-);
-
-app.get(
-  '/api/submissions',
-  userController.ensureAuthenticated,
-  userController.isAdmin,
-  submissionsController.listSubmissions
-);
-
-app.get(
-  '/api/submissions/:id/votes',
-  userController.ensureAuthenticated,
-  userController.isAdmin,
-  submissionsController.listSubmissionVotes
-);
-
-app.post(
-  '/api/submissions/ban',
-  userController.ensureAuthenticated,
-  userController.isAdmin,
-  submissionsController.submissionBan
+  creditsController.new
 );
 
 app.get('/langController', langController.importLang);
@@ -301,16 +265,23 @@ app.post(
   faqController.deleteFaq
 );
 
-const blogroutes = require('./routes/blogposts/blogposts.route.js');
-
-app.use('/api/posts', blogroutes);
-
 const gamesRoutes = require('./routes/games/games.route.js');
-
 app.use('/api/games', gamesRoutes);
 
-app.post('/auth/facebook', userController.authFacebook);
-app.get('/auth/facebook/callback', userController.authFacebookCallback);
+const tournamentsRoutes = require('./routes/tournaments/tournaments.route.js');
+app.use('/api/tournaments', tournamentsRoutes);
+
+const topicRoutes = require('./routes/topics/topic.route.js');
+app.use('/api/topic', topicRoutes);
+//
+const threadRoutes = require('./routes/threads/thread.route.js');
+app.use('/api/thread', threadRoutes);
+
+const thread_repliesRoutes = require('./routes/ThreadReplies/threadreply.route.js');
+app.use('/api/thread_replies', thread_repliesRoutes);
+
+// app.post('/auth/facebook', userController.authFacebook);
+// app.get('/auth/facebook/callback', userController.authFacebookCallback);
 
 app.get(
   '/api/cms_pages/list',
@@ -433,7 +404,7 @@ app.get('/clearTranslationCache', function(req, res, next) {
         langs[data[i].key] = [data[i].l_1, data[i].l_2];
       }
     } else {
-      console.log('no data');
+      // console.log('no data');
     }
     res.status(302).redirect('/admin_panel');
   });

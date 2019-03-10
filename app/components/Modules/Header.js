@@ -49,16 +49,19 @@ const Header = props => {
                     <Link to="/tournaments">Tournaments</Link>
                   </li>
                   <li>
-                    <Link to="/community">Community</Link>
+                    <Link to="/forums">Community</Link>
                   </li>
                   <li>
-                    <Link to="/support">Support</Link>
+                    <Link to="/support/tickets">Support</Link>
                   </li>
 
                   {props.user
                     ? [
                         <li key={1}>
                           <Link to="/account">Profile</Link>
+                        </li>,
+                        <li key={4}>
+                          <Link to="/dashboard">Dashboard</Link>
                         </li>,
                         <li key={2}>
                           <Link
