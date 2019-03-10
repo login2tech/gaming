@@ -134,6 +134,7 @@ exports.resend = function(req, res, next) {
 exports.signupPost = function(req, res, next) {
   req.assert('first_name', 'First Name cannot be blank').notEmpty();
   req.assert('last_name', 'Last Name cannot be blank').notEmpty();
+  req.assert('username', 'Username cannot be blank').notEmpty();
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('email', 'Email cannot be blank').notEmpty();
   req.assert('password', 'Password must be at least 6 characters long').len(6);
@@ -159,6 +160,7 @@ exports.signupPost = function(req, res, next) {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
+    username: req.body.username,
     password: req.body.password,
     gender: req.body.gender,
     dob: req.body.dob,

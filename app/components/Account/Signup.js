@@ -11,7 +11,7 @@ class Signup extends React.Component {
     this.state = {
       first_name: '',
       last_name: '',
-
+      username: '',
       email: '',
       day: '',
       month: '',
@@ -31,6 +31,7 @@ class Signup extends React.Component {
       signup({
         first_name: this.state.first_name,
         last_name: this.state.last_name,
+        username: this.state.username,
         dob:
           '' + this.state.day + '/' + this.state.month + '/' + this.state.year,
         email: this.state.email,
@@ -93,7 +94,18 @@ class Signup extends React.Component {
                           onChange={this.handleChange.bind(this)}
                         />
                       </div>
-
+                      <div className="form-group col-md-12">
+                        <input
+                          type="text"
+                          className="form-control"
+                          required=""
+                          placeholder="Enter your username"
+                          id="username"
+                          name="username"
+                          value={this.state.username}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                      </div>
                       <div className="form-group col-md-12">
                         <input
                           type="email"
@@ -106,7 +118,6 @@ class Signup extends React.Component {
                           onChange={this.handleChange.bind(this)}
                         />
                       </div>
-
                       <div className="container">
                         <div className="row dobrow">
                           <div className="col-sm-4">

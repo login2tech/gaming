@@ -2,7 +2,6 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {logout} from '../../actions/auth';
-import {Translate} from 'react-localize-redux';
 
 const Header = props => {
   const handleLogout = event => {
@@ -57,9 +56,6 @@ const Header = props => {
 
                   {props.user
                     ? [
-                        <li key={1}>
-                          <Link to="/account">Profile</Link>
-                        </li>,
                         <li key={4}>
                           <Link to="/dashboard">Dashboard</Link>
                         </li>,

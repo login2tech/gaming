@@ -46,7 +46,7 @@ export default function getRoutes(store) {
       <Route path="/faq" component={FAQ} onLeave={clearMessages} />
       <Route path="/p/:slug" component={CMSPage} />
       <Route
-        path="/support/tickets/ticket/:id"
+        path="/support/tickets/ticket/:ticket_id"
         onEnter={ensureAuthenticated}
         component={SingleTicket}
       />

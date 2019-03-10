@@ -1,25 +1,26 @@
-const Item = require('./ThreadReply');
-const ObjName = 'ThreadReply';
+const Item = require('./TicketReply');
+const ObjName = 'TicketReply';
 
 exports.listItem = function(req, res, next) {
   const n = new Item().orderBy('id', 'DESC');
-  n.where({thread_id: req.query.thread_id});
+  n.where({ticket_id: req.query.ticket_id});
   n.fetchAll({withRelated: ['user']})
     .then(function(items) {
       if (!items) {
-        return res.status(200).send([]);
+        return res.status(200).send({ok: true, items: []});
       }
       return res.status(200).send({ok: true, items: items.toJSON()});
     })
     .catch(function(err) {
-      return res.status(200).send([]);
+      console.log(err);
+      return res.status(200).send({ok: true, items: []});
     });
 };
 
 exports.listPaged = function(req, res, next) {
   let c = new Item();
   c = c.orderBy('id', 'DESC');
-  c = c.where({thread_id: req.query.thread_id});
+  c = c.where({ticket_id: req.query.ticket_id});
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
     p = parseInt(req.query.paged);
@@ -75,7 +76,7 @@ exports.listSingleItem = function(req, res, next) {
 
 exports.addItem = function(req, res, next) {
   req.assert('text', 'Content cannot be blank').notEmpty();
-  req.assert('thread_id', 'Thread ID cannot be blank').notEmpty();
+  req.assert('ticket_id', 'Ticket ID cannot be blank').notEmpty();
   // req.assert('content', 'Content cannot be blank').notEmpty();
   // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
   const errors = req.validationErrors();
@@ -84,7 +85,7 @@ exports.addItem = function(req, res, next) {
   }
   new Item({
     content: req.body.text,
-    thread_id: req.body.thread_id,
+    ticket_id: req.body.ticket_id,
     user_id: req.user.id
   })
     .save()
@@ -92,7 +93,7 @@ exports.addItem = function(req, res, next) {
       res.send({ok: true, msg: 'New Comment has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});
