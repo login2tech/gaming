@@ -4,6 +4,48 @@ const ItemChild = require('./TeamUser');
 const User = require('../../models/User');
 const ObjName = 'Team';
 
+exports.approve = function(req, res, next) {
+  //
+  if (!req.body.team_id) {
+    res.status(400).send({ok: false, msg: 'Please enter Team ID'});
+  }
+  new ItemChild({team_id: req.body.team_id, user_id: req.user.id})
+    .fetch()
+    .then(function(teamusr) {
+      if (!teamusr) {
+        res.status(400).send({
+          ok: false,
+          msg: 'You were never invited'
+        });
+        return;
+      }
+      teamusr
+        .save({
+          accepted: true
+        })
+        .then(function() {
+          res.status(200).send({
+            ok: true,
+            msg: 'Accepted successfully.'
+          });
+        })
+        .catch(function(err) {
+          console.log(err);
+          res.status(400).send({
+            ok: false,
+            msg: 'failed to accept invite'
+          });
+        });
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'failed to invite user'
+      });
+    });
+};
+
 exports.invite = function(req, res, next) {
   //
   if (!req.body.username || !req.body.team_id) {

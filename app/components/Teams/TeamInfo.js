@@ -159,6 +159,21 @@ class TeamInfo extends React.Component {
                       <p>Profile Views </p>
                     </div>*/}
                     </div>
+                    {this.state.team_info.team_creator == this.props.user.id ? (
+                      <Link
+                        to={
+                          '/matchfinder/new/' +
+                          this.state.team_info.ladder.id +
+                          '/' +
+                          this.state.team_info.id
+                        }
+                        className="btn btn-default bttn_submit"
+                      >
+                        Create a match
+                      </Link>
+                    ) : (
+                      false
+                    )}
                   </div>
                 </div>
               </div>
@@ -202,10 +217,11 @@ class TeamInfo extends React.Component {
                             <td>
                               {team_user.accepted
                                 ? moment(team_user.created_at).format('lll')
-                                : 'Not Yet'}
+                                : 'Not Yet'}{' '}
                               {!team_user.accepted &&
-                              team_user.user_id == req.user.id ? (
+                              team_user.user_id == this.props.user.id ? (
                                 <button
+                                  className="btn btn-sm btn-success"
                                   onClick={event => {
                                     this.approveRequest(event);
                                   }}

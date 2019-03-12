@@ -26,6 +26,8 @@ import NewTicket from './components/Tickets/NewTicket';
 import SingleTicket from './components/Tickets/SingleTicket';
 import Tickets from './components/Tickets/MyTickets';
 
+import NewMatch from './components/Match/NewMatch';
+
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
     if (!store.getState().auth.token) {
@@ -71,16 +73,22 @@ export default function getRoutes(store) {
       <Route path="/forums/:id/:title" component={Threads} />
       <Route path="/forums" component={Topics} />
       <Route
+        path="/matchfinder/new/:ladder/:id"
+        component={NewMatch}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
         path="/u/:username/teams/new"
         component={NewTeam}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
-      />{' '}
+      />
       <Route
         path="/u/:username/teams/:team_id"
         component={TeamInfo}
         onLeave={clearMessages}
-      />{' '}
+      />
       <Route
         path="/teams/view/:team_id"
         component={TeamInfo}

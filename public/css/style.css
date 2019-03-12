@@ -3611,3 +3611,8 @@ select{
 .example.example4 .success .reset path {
   fill: #d782d9;
 }
+
+
+a.bttn_submit:hover {
+    color: #fff;
+}
