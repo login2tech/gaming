@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {charge} from '../../actions/stripe';
 import Messages from '../Modules/Messages';
 import {Link} from 'react-router';
+import moment from 'moment';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -385,22 +386,28 @@ class Profile extends React.Component {
                     <div className="row">
                       <div className="col-md-4">
                         <span> MEMBER SINCE</span>
-                        <p>10/16/18 11:08AM</p>
+                        <p>
+                          {moment(this.props.user.created_at).format('lll')}
+                        </p>
                       </div>
 
                       <div className="col-md-4">
                         <span> TIME ZONE </span>
-                        <p>12/30/18 2:00PM</p>
+                        <p>
+                          {this.props.user.timezone
+                            ? this.props.user.timezone
+                            : '-'}
+                        </p>
                       </div>
-
+                      {/*}
                       <div className="col-md-4">
                         <span>LIFETIME EARNINGS</span>
                         <p>12/30/18 2:00PM</p>
-                      </div>
+                      </div>*/}
                     </div>
 
                     <div className="row">
-                      <div className="col-md-4">
+                      {/*}<div className="col-md-4">
                         <span> PROFILE VIEWS</span>
                         <p>436</p>
                       </div>
@@ -409,7 +416,7 @@ class Profile extends React.Component {
                         <span>Rank</span>
                         <p>4541</p>
                       </div>
-
+*/}
                       <div className="col-md-4" />
                     </div>
                   </div>
