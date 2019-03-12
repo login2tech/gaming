@@ -122,7 +122,7 @@ class Home extends React.Component {
                         }
                         className="game_platform"
                       >
-                        Play
+                        Play {games.title}
                       </a>
                     </div>
                   </div>
@@ -229,9 +229,9 @@ class Home extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-center">
                   <h3>Go Prime, Get More Out of OnlyCompGaming Gaming.</h3>
-                  <a className="play_match_btn" href="#">
+                  <Link className="play_match_btn" to="/membership">
                     View Plans
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
