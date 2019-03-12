@@ -28,7 +28,7 @@ export function login(email, password) {
               .add(1, 'month')
               .toDate()
           });
-          browserHistory.push('/account');
+          browserHistory.push('/dashboard');
         });
       } else {
         return response.json().then(json => {

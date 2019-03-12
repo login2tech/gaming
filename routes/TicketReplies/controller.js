@@ -86,7 +86,8 @@ exports.addItem = function(req, res, next) {
   new Item({
     content: req.body.text,
     ticket_id: req.body.ticket_id,
-    user_id: req.user.id
+    user_id: req.user.id,
+    is_user: true
   })
     .save()
     .then(function(item) {

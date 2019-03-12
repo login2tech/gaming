@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
-import {inviteToTeam} from '../../actions/team';
+import {inviteToTeam, approveRequest} from '../../actions/team';
 import Messages from '../Modules/Messages';
 
 class TeamInfo extends React.Component {
@@ -14,6 +14,21 @@ class TeamInfo extends React.Component {
       match_played: [],
       new_invite_user_name: ''
     };
+  }
+  approveRequest(event) {
+    event.preventDefault();
+    this.props.dispatch(
+      approveRequest(
+        {
+          team_id: this.state.team_info.id
+        },
+        st => {
+          if (st) {
+            this.fetchTeam();
+          }
+        }
+      )
+    );
   }
 
   invite_user(event) {
@@ -188,6 +203,18 @@ class TeamInfo extends React.Component {
                               {team_user.accepted
                                 ? moment(team_user.created_at).format('lll')
                                 : 'Not Yet'}
+                              {!team_user.accepted &&
+                              team_user.user_id == req.user.id ? (
+                                <button
+                                  onClick={event => {
+                                    this.approveRequest(event);
+                                  }}
+                                >
+                                  Accept
+                                </button>
+                              ) : (
+                                false
+                              )}
                             </td>
                           </tr>
                         );
@@ -196,7 +223,9 @@ class TeamInfo extends React.Component {
                   </table>
                 </div>
 
-                {this.state.team_info.team_creator == this.props.user.id ? (
+                {this.state.team_info.team_creator == this.props.user.id &&
+                parseInt(this.state.team_info.ladder.max_players) >
+                  parseInt(this.state.team_info.team_users) ? (
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">Invite A User</h5>
                     <Messages messages={this.props.messages} />
