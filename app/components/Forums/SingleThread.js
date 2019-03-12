@@ -249,17 +249,25 @@ class SingleThread extends React.Component {
                         '/'
                     );
                   });
+                  const element = document.getElementById('less_padding');
+                  if (element) {
+                    element.scrollIntoView({
+                      behavior: 'smooth',
+                      block: 'end',
+                      inline: 'nearest'
+                    });
+                  }
                   return true;
                 }}
                 previousLinkClassName={'page-link'}
                 nextLinkClassName={'page-link'}
-                hrefBuilder={page =>
-                  '/forums/thread/' +
-                  this.props.params.thread_id +
-                  '/page/' +
-                  page +
-                  '/'
-                }
+                // hrefBuilder={page =>
+                //   '/forums/thread/' +
+                //   this.props.params.thread_id +
+                //   '/page/' +
+                //   page +
+                //   '/'
+                // }
               />
             </div>
 

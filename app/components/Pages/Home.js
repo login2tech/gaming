@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 // import {Link} from 'react-router';
 // import {Translate} from 'react-localize-redux';
+import {Link} from 'react-router';
 
 class Home extends React.Component {
   constructor(props) {
@@ -41,9 +42,9 @@ class Home extends React.Component {
                 <div className="carousel-caption">
                   <h3>Play Video Games </h3>
                   <p>Win Cash</p>
-                  <a className="play_match_btn" href="#">
+                  <Link className="play_match_btn" to="/matchfinder">
                     Play Match
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="carousel-item">
@@ -51,9 +52,9 @@ class Home extends React.Component {
                 <div className="carousel-caption">
                   <h3>Play Video Games </h3>
                   <p>Win Cash</p>
-                  <a className="play_match_btn" href="#">
+                  <Link className="play_match_btn" to="/matchfinder">
                     Play Match
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -71,90 +72,10 @@ class Home extends React.Component {
 
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <ul id="upcoming-tournament" className="tournament-list active">
-                  <li
-                    className="tournament-box"
-                    style={{
-                      backgroundImage: "url('images/thumbnail_tournament.jpg')"
-                    }}
-                  >
-                    <div className="tournament-body">
-                      <a href="#" className="tournament-name">
-                        Manila masters Toronto 4v4
-                      </a>
-
-                      <span className="date">Oct.09.2018 - 02:35 PM</span>
-
-                      <figure>
-                        <img src="images/test.png" alt="Fortnite" />
-                      </figure>
-                    </div>
-
-                    <div className="tournament-footer">
-                      <div className="col">
-                        <div className="col-item">
-                          <h5>2 Groups</h5>
-                          <p>62 Teams</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>PLAYOUT</h5>
-                          <p>ROUND ROBIN</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>Prize pool</h5>
-                          <p>$ 450 USD</p>
-                        </div>
-                      </div>
-
-                      <div className="col align-right">
-                        <a href="#" className="btn-default">
-                          More details
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li
-                    className="tournament-box"
-                    style={{
-                      backgroundImage: "url('images/base-copy-2.jpg')"
-                    }}
-                  >
-                    <div className="tournament-body">
-                      <a href="#" className="tournament-name">
-                        EU WINNERS League - Starter Division{' '}
-                      </a>
-
-                      <span className="date">Oct.25.2018 - 01:06 PM</span>
-
-                      <figure>
-                        <img src="images/csgo_logo.png" alt="" />
-                      </figure>
-                    </div>
-
-                    <div className="tournament-footer">
-                      <div className="col">
-                        <div className="col-item">
-                          <h5>2 Groups</h5>
-                          <p>32 Teams</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>PLAYOUT</h5>
-                          <p>ROUND ROBIN</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>Prize pool</h5>
-                          <p>$ 300 USD</p>
-                        </div>
-                      </div>
-
-                      <div className="col align-right">
-                        <a href="#" className="btn-default">
-                          More details
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                <ul
+                  id="upcoming-tournament"
+                  className="tournament-list active"
+                />
               </div>
 
               <div className="col-md-12 col-sm-12 col-xs-12 text-center">
@@ -233,7 +154,7 @@ class Home extends React.Component {
                         }
                         className="game_platform"
                       >
-                        Play
+                        Play {games.title}
                       </a>
                     </div>
                   </div>
@@ -255,172 +176,10 @@ class Home extends React.Component {
 
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <ul id="upcoming-tournament" className="tournament-list active">
-                  <li
-                    className="tournament-box"
-                    style={{
-                      backgroundImage: "url('images/thumbnail_tournament.jpg')"
-                    }}
-                  >
-                    <div className="tournament-body">
-                      <a href="#" className="tournament-name">
-                        Manila masters Toronto 4v4
-                      </a>
-
-                      <span className="date">Oct.09.2018 - 02:35 PM</span>
-
-                      <figure>
-                        <img src="images/test.png" alt="Fortnite" />
-                      </figure>
-                    </div>
-
-                    <div className="tournament-footer">
-                      <div className="col">
-                        <div className="col-item">
-                          <h5>2 Groups</h5>
-                          <p>62 Teams</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>PLAYOUT</h5>
-                          <p>ROUND ROBIN</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>Prize pool</h5>
-                          <p>$ 450 USD</p>
-                        </div>
-                      </div>
-
-                      <div className="col align-right">
-                        <a href="#" className="btn-default">
-                          More details
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li
-                    className="tournament-box"
-                    style={{
-                      backgroundImage: "url('images/base-copy-2.jpg')"
-                    }}
-                  >
-                    <div className="tournament-body">
-                      <a href="#" className="tournament-name">
-                        EU WINNERS League - Starter Division{' '}
-                      </a>
-
-                      <span className="date">Oct.25.2018 - 01:06 PM</span>
-
-                      <figure>
-                        <img src="images/csgo_logo.png" alt="" />
-                      </figure>
-                    </div>
-
-                    <div className="tournament-footer">
-                      <div className="col">
-                        <div className="col-item">
-                          <h5>2 Groups</h5>
-                          <p>32 Teams</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>PLAYOUT</h5>
-                          <p>ROUND ROBIN</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>Prize pool</h5>
-                          <p>$ 300 USD</p>
-                        </div>
-                      </div>
-
-                      <div className="col align-right">
-                        <a href="#" className="btn-default">
-                          More details
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li
-                    className="tournament-box"
-                    style={{
-                      backgroundImage: "url('images/tournament_sasas.jpg')"
-                    }}
-                  >
-                    <div className="tournament-body">
-                      <a href="#" className="tournament-name">
-                        ENDPOINTGG VS CEX ESPORTS [2]{' '}
-                      </a>
-
-                      <span className="date">Oct.10.2018 - 02:35 PM</span>
-
-                      <figure>
-                        <img src="images/ww2logo.png" alt="Call of Duty WW2" />
-                      </figure>
-                    </div>
-
-                    <div className="tournament-footer">
-                      <div className="col">
-                        <div className="col-item">
-                          <h5>2 Groups</h5>
-                          <p>22 Teams</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>PLAYOUT</h5>
-                          <p>ROUND ROBIN</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>Prize pool</h5>
-                          <p>$ 1000 USD</p>
-                        </div>
-                      </div>
-
-                      <div className="col align-right">
-                        <a href="#" className="btn-default">
-                          More details
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                  <li
-                    className="tournament-box"
-                    style={{
-                      backgroundImage: "url('images/tournament_card.jpg')"
-                    }}
-                  >
-                    <div className="tournament-body">
-                      <a href="#" className="tournament-name">
-                        TORNEO SPANISH PRO LEAGUE{' '}
-                      </a>
-
-                      <span className="date">Oct.09.2018 - 02:35 PM</span>
-
-                      <figure>
-                        <img src="images/test.png" alt="Fortnite" />
-                      </figure>
-                    </div>
-
-                    <div className="tournament-footer">
-                      <div className="col">
-                        <div className="col-item">
-                          <h5>2 Groups</h5>
-                          <p>62 Teams</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>PLAYOUT</h5>
-                          <p>ROUND ROBIN</p>
-                        </div>
-                        <div className="col-item">
-                          <h5>Prize pool</h5>
-                          <p>$ 4500 USD</p>
-                        </div>
-                      </div>
-
-                      <div className="col align-right">
-                        <a href="#" className="btn-default">
-                          More details
-                        </a>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
+                <ul
+                  id="upcoming-tournament"
+                  className="tournament-list active"
+                />
               </div>
             </div>
           </div>
@@ -441,59 +200,10 @@ class Home extends React.Component {
                   <i className="fa fa-gamepad" aria-hidden="true" /> MATCH WINS
                 </div>
 
-                <div className="win_player_info">
-                  <div className="player_pic">
-                    <img src="images/img.jpg" />
-                  </div>
-                  <div className="player_name">
-                    1. <a href="#">Cambert</a>
-                  </div>
-                  <div className="wind_count">
-                    36 <span>Wins</span>
-                  </div>
-                </div>
+                <div className="win_player_info" />
 
                 <div className="outer_win_list">
-                  <ul>
-                    <li>
-                      <span className="usernames">
-                        <strong>2. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-                    <li>
-                      <span className="usernames">
-                        <strong>3. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-
-                    <li>
-                      <span className="usernames">
-                        <strong>4. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-
-                    <li>
-                      <span className="usernames">
-                        <strong>5. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-                  </ul>
+                  <ul />
                 </div>
               </div>
 
@@ -503,59 +213,10 @@ class Home extends React.Component {
                   WINS
                 </div>
 
-                <div className="win_player_info">
-                  <div className="player_pic">
-                    <img src="images/play_game_1.jpg" />
-                  </div>
-                  <div className="player_name">
-                    1. <a href="#">Cambert</a>
-                  </div>
-                  <div className="wind_count">
-                    48 <span>Wins</span>
-                  </div>
-                </div>
+                <div className="win_player_info" />
 
                 <div className="outer_win_list">
-                  <ul>
-                    <li>
-                      <span className="usernames">
-                        <strong>2. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-                    <li>
-                      <span className="usernames">
-                        <strong>3. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-
-                    <li>
-                      <span className="usernames">
-                        <strong>4. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-
-                    <li>
-                      <span className="usernames">
-                        <strong>5. </strong>
-                        <a href="#">Da_lemonademan</a>
-                      </span>{' '}
-                      <span className="win_stats">
-                        <strong>415</strong> Wins
-                      </span>
-                    </li>
-                  </ul>
+                  <ul />
                 </div>
               </div>
             </div>

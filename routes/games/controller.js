@@ -4,7 +4,7 @@ const Game = require('./Game');
 exports.listGame = function(req, res, next) {
   new Game()
     .orderBy('id', 'DESC')
-    .fetchAll()
+    .fetchAll({withRelated: ['ladders']})
     .then(function(games) {
       if (!games) {
         return res.status(200).send([]);

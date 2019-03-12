@@ -19,6 +19,9 @@ import Topics from './components/Forums/Topic';
 import Threads from './components/Forums/Threads';
 import SingleThread from './components/Forums/SingleThread';
 
+import NewTeam from './components/Teams/NewTeam';
+import TeamInfo from './components/Teams/TeamInfo';
+
 import NewTicket from './components/Tickets/NewTicket';
 import SingleTicket from './components/Tickets/SingleTicket';
 import Tickets from './components/Tickets/MyTickets';
@@ -68,6 +71,23 @@ export default function getRoutes(store) {
       <Route path="/forums/:id/:title" component={Threads} />
       <Route path="/forums" component={Topics} />
       <Route
+        path="/u/:username/teams/new"
+        component={NewTeam}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />{' '}
+      <Route
+        path="/u/:username/teams/:team_id"
+        component={TeamInfo}
+        onLeave={clearMessages}
+      />{' '}
+      <Route
+        path="/teams/view/:team_id"
+        component={TeamInfo}
+        onLeave={clearMessages}
+      />
+      <Route path="/u/:username" component={Profile} onLeave={clearMessages} />
+      <Route
         path="/login"
         component={Login}
         onEnter={skipIfAuthenticated}
@@ -77,12 +97,6 @@ export default function getRoutes(store) {
         path="/signup"
         component={Signup}
         onEnter={skipIfAuthenticated}
-        onLeave={clearMessages}
-      />
-      <Route
-        path="/account"
-        component={Profile}
-        onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
       <Route

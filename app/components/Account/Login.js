@@ -81,7 +81,7 @@ class Login extends React.Component {
                       </button>
                     </div>
                     <div className="form-group col-md-12 text-center">
-                      <Link to="/forgot" class="forgot_pass">
+                      <Link to="/forgot" className="forgot_pass">
                         Forgot Password?
                       </Link>
                     </div>

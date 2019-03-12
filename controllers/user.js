@@ -420,6 +420,35 @@ exports.listUsers = function(req, res, next) {
     });
 };
 
+exports.singleUser_info = function(req, res, next) {
+  new User()
+    .where({
+      username: req.query.uid
+    })
+    .fetch()
+    .then(function(user) {
+      if (!user) {
+        // console.log(err);
+        return res.status(200).send({user_info: {}, ok: false});
+      }
+      user = user.toJSON();
+      user.email = '';
+      user.credit_balance = '';
+      user.dob = '';
+      user.role = '';
+      user.stripe_user_id = '';
+      user.cash_balance = '';
+      return res.status(200).send({
+        user_info: user,
+        ok: true
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.status(200).send({user_info: {}, ok: false});
+    });
+};
+
 exports.deleteUser = function(req, res, next) {
   new User({id: req.body.id})
     .destroy()

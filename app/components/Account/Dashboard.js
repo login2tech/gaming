@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {charge} from '../../actions/stripe';
 import Messages from '../Modules/Messages';
+import {Link} from 'react-router';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -291,80 +292,7 @@ class Profile extends React.Component {
                 <th>Level</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>1st</td>
-                <td className="lb-user">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="lb-userimg">
-                          <a href="#">
-                            <img src="images/img.jpg" />
-                          </a>
-                        </td>
-                        <td>
-                          <a href="#">KasuaaliTV</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td>4-1</td>
-                <td>80%</td>
-                <td>0</td>
-                <td>560</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>1st</td>
-                <td className="lb-user">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="lb-userimg">
-                          <a href="#">
-                            <img src="images/img.jpg" />
-                          </a>
-                        </td>
-                        <td>
-                          <a href="#">KasuaaliTV</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td>4-1</td>
-                <td>80%</td>
-                <td>0</td>
-                <td>560</td>
-                <td>1</td>
-              </tr>
-              <tr>
-                <td>1st</td>
-                <td className="lb-user">
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="lb-userimg">
-                          <a href="#">
-                            <img src="images/img.jpg" />
-                          </a>
-                        </td>
-                        <td>
-                          <a href="#">KasuaaliTV</a>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-                <td>4-1</td>
-                <td>80%</td>
-                <td>0</td>
-                <td>560</td>
-                <td>1</td>
-              </tr>
-            </tbody>
+            <tbody />
           </table>
         </div>
       </div>
@@ -376,20 +304,47 @@ class Profile extends React.Component {
       <div className="tab-pane" data-tab="tab1">
         <div className="billing_details">
           <div className="list_pad">
+            <h5 className="credit_summary">Prime Membership</h5>
             <div className="row">
               <div className="col-md-4">
-                <span>Active card:</span>
-                <p>********4541</p>
+                <span>Status:</span>
+                <p>
+                  <span className="text-danger">Disabled</span>{' '}
+                  <Link to="/membership">Click to enable</Link>
+                </p>
               </div>
 
-              <div className="col-md-4">
-                <span>Credit Card expiration date: </span>
-                <p>06/2020</p>
-              </div>
+              {/*  <div className="col-md-4">
+              <span>Credit Card expiration date: </span>
+              <p>06/2020</p>
+            </div>
+
               <div className="col-md-4">
                 <span>Current billing cycle: </span>
-                <p>$45 monthly</p>
+                <p>-</p>
+              </div>*/}
+            </div>
+            <br />
+            <br />
+            <h5 className="credit_summary">Double XP</h5>
+            <div className="row">
+              <div className="col-md-4">
+                <span>Status:</span>
+                <p>
+                  <span className="text-danger">Disabled</span>{' '}
+                  <Link to="/membership">Click to enable</Link>
+                </p>
               </div>
+              {/*  <div className="col-md-4">
+              <span>Credit Card expiration date: </span>
+              <p>06/2020</p>
+            </div>
+
+              <div className="col-md-4">
+                <span>Current billing cycle: </span>
+                <p>-</p>
+              </div>
+          */}{' '}
             </div>
           </div>
         </div>
@@ -399,130 +354,7 @@ class Profile extends React.Component {
   renderStep1() {
     return (
       <div className="tab-pane" data-tab="tab0">
-        <ul id="upcoming-tournament" className="tournament-list active">
-          <li className="tournament-box">
-            <div className="tournament-body">
-              <a href="#" className="tournament-name">
-                Manila masters Toronto 4v4
-              </a>
-
-              <span className="date">Oct.09.2018 - 02:35 PM</span>
-
-              <figure>
-                <img src="images/test.png" alt="Fortnite" />
-              </figure>
-            </div>
-
-            <div className="tournament-footer">
-              <div className="col">
-                <div className="col-item">
-                  <h5>2 Groups</h5>
-                  <p>62 Teams</p>
-                </div>
-                <div className="col-item">
-                  <h5>PLAYOUT</h5>
-                  <p>ROUND ROBIN</p>
-                </div>
-                <div className="col-item">
-                  <h5>Prize pool</h5>
-                  <p>$ 450 USD</p>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li className="tournament-box">
-            <div className="tournament-body">
-              <a href="#" className="tournament-name">
-                EU WINNERS League - Starter Division{' '}
-              </a>
-
-              <span className="date">Oct.25.2018 - 01:06 PM</span>
-
-              <figure>
-                <img src="images/csgo_logo.png" alt="" />
-              </figure>
-            </div>
-
-            <div className="tournament-footer">
-              <div className="col">
-                <div className="col-item">
-                  <h5>2 Groups</h5>
-                  <p>32 Teams</p>
-                </div>
-                <div className="col-item">
-                  <h5>PLAYOUT</h5>
-                  <p>ROUND ROBIN</p>
-                </div>
-                <div className="col-item">
-                  <h5>Prize pool</h5>
-                  <p>$ 300 USD</p>
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li className="tournament-box">
-            <div className="tournament-body">
-              <a href="#" className="tournament-name">
-                EU WINNERS League - Starter Division{' '}
-              </a>
-
-              <span className="date">Oct.25.2018 - 01:06 PM</span>
-
-              <figure>
-                <img src="images/csgo_logo.png" alt="" />
-              </figure>
-            </div>
-
-            <div className="tournament-footer">
-              <div className="col">
-                <div className="col-item">
-                  <h5>2 Groups</h5>
-                  <p>32 Teams</p>
-                </div>
-                <div className="col-item">
-                  <h5>PLAYOUT</h5>
-                  <p>ROUND ROBIN</p>
-                </div>
-                <div className="col-item">
-                  <h5>Prize pool</h5>
-                  <p>$ 300 USD</p>
-                </div>
-              </div>
-            </div>
-          </li>
-
-          <li className="tournament-box">
-            <div className="tournament-body">
-              <a href="#" className="tournament-name">
-                EU WINNERS League - Starter Division{' '}
-              </a>
-
-              <span className="date">Oct.25.2018 - 01:06 PM</span>
-
-              <figure>
-                <img src="images/csgo_logo.png" alt="" />
-              </figure>
-            </div>
-
-            <div className="tournament-footer">
-              <div className="col">
-                <div className="col-item">
-                  <h5>2 Groups</h5>
-                  <p>32 Teams</p>
-                </div>
-                <div className="col-item">
-                  <h5>PLAYOUT</h5>
-                  <p>ROUND ROBIN</p>
-                </div>
-                <div className="col-item">
-                  <h5>Prize pool</h5>
-                  <p>$ 300 USD</p>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
+        <ul id="upcoming-tournament" className="tournament-list active" />
       </div>
     );
   }
@@ -544,7 +376,9 @@ class Profile extends React.Component {
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3>
-                    {this.props.user.first_name} {this.props.user.last_name}
+                    <a href={'/u/' + this.props.user.username}>
+                      {this.props.user.first_name} {this.props.user.last_name}
+                    </a>
                   </h3>
                   <div className="game_platform_icon">About</div>
                   <div className="list_pad">
@@ -610,13 +444,12 @@ class Profile extends React.Component {
                       Billing Details
                     </li>
                     <li
-                      className={this.state.currentStep == 3 ? 'active' : ''}
-                      onClick={() => {
-                        this.setState({currentStep: 3});
-                      }}
                       data-tab="tab2"
+                      className={this.state.currentStep == 3 ? 'active' : ''}
                     >
-                      Win/Loss Details
+                      <Link to={'/u/' + this.props.user.username}>
+                        Win/Loss Details
+                      </Link>
                     </li>
                     <li
                       className={this.state.currentStep == 4 ? 'active' : ''}

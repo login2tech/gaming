@@ -144,6 +144,9 @@ app.put(
   userController.ensureAuthenticated,
   userController.accountPut
 );
+
+app.get('/api/user_info', userController.singleUser_info);
+
 app.delete(
   '/account',
   userController.ensureAuthenticated,
@@ -267,6 +270,8 @@ app.post(
 
 const gamesRoutes = require('./routes/games/games.route.js');
 app.use('/api/games', gamesRoutes);
+const teamsRoutes = require('./routes/teams/team.route');
+app.use('/api/teams', teamsRoutes);
 
 const tournamentsRoutes = require('./routes/tournaments/tournaments.route.js');
 app.use('/api/tournaments', tournamentsRoutes);
@@ -412,7 +417,9 @@ app.get('/clearTranslationCache', function(req, res, next) {
     res.status(302).redirect('/admin_panel');
   });
 });
-
+app.get('/api/*', function(req, res, next) {
+  res.status(404).send({ok: false, route: '404'});
+});
 const renderReact = require('./renderReact.js');
 renderReact(app, langs);
 

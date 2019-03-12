@@ -61,8 +61,8 @@ const Header = props => {
                         </li>,
                         <li key={2}>
                           <Link
-                            onClick={() => {
-                              handleLogout();
+                            onClick={event => {
+                              handleLogout(event);
                             }}
                           >
                             Logout
