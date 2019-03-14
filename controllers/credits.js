@@ -5,15 +5,23 @@ const currency = 'usd';
 
 const __addNewCreditPointTransaction = function(user_id, payment_id, points) {};
 
-const __addNewCredit_points = function(points, user_id, payment_id, cb) {
+const __addNewCredit_points = function(
+  init_transaction_mode,
+  points,
+  user_id,
+  payment_id,
+  cb
+) {
+  const type =
+    init_transaction_mode == 'credit' ? 'credit_balance' : 'cash_balance';
   // console.log('jsdjgwreke');
   new User({id: user_id}).fetch().then(function(user) {
-    const prev_points = user.get('credit_balance');
+    const prev_points = user.get(type);
     const new_points = parseInt(prev_points) + parseInt(points);
     user
       .save(
         {
-          credit_balance: new_points
+          [type]: new_points
         },
         {patch: true}
       )
@@ -64,6 +72,7 @@ const newCredits = function(req, res, next) {
       // console.log('aehwehw');
       if (stripe_data.id) {
         __addNewCredit_points(
+          req.body.init_transaction_mode,
           req.body.points_to_add,
           req.user.id,
           stripe_data.id,

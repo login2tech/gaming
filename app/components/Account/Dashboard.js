@@ -18,6 +18,7 @@ class Profile extends React.Component {
       password: '',
       confirm: '',
       currentStep: 4,
+      init_transaction_mode: '',
       clicked: false,
 
       name_on_card: ''
@@ -34,7 +35,8 @@ class Profile extends React.Component {
       charge(
         {
           stripe_token: tokenObj ? tokenObj.id : null,
-          points_to_add: this.state.add_new_bal_number
+          points_to_add: this.state.add_new_bal_number,
+          init_transaction_mode: this.state.init_transaction_mode
         },
         this.props.token,
         res => {
@@ -164,16 +166,20 @@ class Profile extends React.Component {
       ? 'please wait...'
       : 'Complete purchase';
     return (
-      <form onSubmit={this.handleCheckoutStep3.bind(this)}>
+      <form
+        onSubmit={this.handleCheckoutStep3.bind(this)}
+        className="field_form"
+      >
         <Messages messages={this.props.messages} />
         <div className="form-group row m-t-2">
           <label
             htmlFor="name_on_card"
-            className="col-sm-3 form-control-label text-white"
+            className=" form-control-label text-white"
           >
             Name on Card
           </label>
-          <div className="col-sm-7">
+          <br />
+          <div className="col-sm-12">
             <input
               type="text"
               required
@@ -190,11 +196,12 @@ class Profile extends React.Component {
         <div className="form-group row">
           <label
             htmlFor="card_number"
-            className="col-sm-3 form-control-label  text-white"
+            className="  form-control-label  text-white"
           >
             Card Number
           </label>
-          <div className="col-sm-7">
+          <br />
+          <div className="col-sm-12">
             <div id="card-errors" role="alert" />
             <div id="cardElement" />
           </div>
@@ -208,7 +215,6 @@ class Profile extends React.Component {
             </div>
           </div>
         </div>
-        <hr />
 
         <div className="form-group row">
           <div className="col-md-12 text-center">
@@ -225,53 +231,118 @@ class Profile extends React.Component {
     );
   }
 
+  renderBuyBox(type) {
+    return this.state.buy_balance_init ? (
+      <div className="col-md-12">
+        <hr />
+        <div className="contnet_box_border">{this.renderStripe()}</div>
+      </div>
+    ) : (
+      <form
+        className="col-md-12 field_form"
+        onSubmit={() => {
+          this.setState({buy_balance_init: true}, () => {
+            this.handleStripeCreation();
+          });
+        }}
+      >
+        <Messages messages={this.props.messages} />
+
+        <div className="row">
+          <div className="col-md-8">
+            <input
+              type="number"
+              id="add_new_bal_number"
+              placeholder="Buy Credit Points"
+              className="form-control"
+              name="add_new_bal_number"
+              value={this.state.add_new_bal_number}
+              onChange={this.handleChange.bind(this)}
+            />
+          </div>
+          <div className="col-md-4">
+            <input
+              type="submit"
+              value="Buy Now"
+              disabled={
+                this.state.add_new_bal_number == '' ||
+                this.state.add_new_bal_number == 0
+              }
+              className="btn btn-primary"
+            />
+          </div>
+        </div>
+      </form>
+    );
+  }
+
   renderStep4() {
     return (
-      <div className="tab-pane" data-tab="tab3">
-        <div className="credit_summary">
-          Current Credit Balance: ${this.props.user.credit_balance}
-        </div>
+      <div className="tab-pane  text-center" data-tab="tab3">
         <div className="row">
-          {this.state.buy_balance_init ? (
-            <div className="col-md-12">
-              <div className="contnet_box_border">{this.renderStripe()}</div>
-            </div>
-          ) : (
-            <form
-              className="col-md-12"
-              onSubmit={() => {
-                this.setState({buy_balance_init: true}, () => {
-                  this.handleStripeCreation();
-                });
-              }}
-            >
-              <Messages messages={this.props.messages} />
-              <hr />
-              <div className="row">
-                <div className="col-md-6">
-                  <h3 className=" text-white">Buy more credit points</h3>
-                  <input
-                    type="number"
-                    id="add_new_bal_number"
-                    placeholder="Buy Credit Points"
-                    className="form-control"
-                    name="add_new_bal_number"
-                    value={this.state.add_new_bal_number}
-                    onChange={this.handleChange.bind(this)}
-                  />
-                  <input
-                    type="submit"
-                    value="Buy Now"
-                    disabled={
-                      this.state.add_new_bal_number == '' ||
-                      this.state.add_new_bal_number == 0
-                    }
-                    className="btn btn-default bttn_submit"
-                  />
-                </div>
+          <div className="col-md-6 ">
+            <div className="authorize_box">
+              <div className="credit_summary ">
+                Credit Balance
+                <br />
+                <br /> ${this.props.user.credit_balance}
               </div>
-            </form>
-          )}
+              <div className="row">
+                {this.state.init_transaction_mode == 'credit' ? (
+                  this.renderBuyBox('credit')
+                ) : (
+                  <div className="col-md-6 offset-md-3 text-center">
+                    <input
+                      type="submit"
+                      value="Add Credits"
+                      onClick={() => {
+                        this.setState({init_transaction_mode: 'credit'});
+                      }}
+                      className="btn btn-default bttn_submit"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-6 ">
+            <div className="authorize_box">
+              <div className="credit_summary ">
+                Credit Balance
+                <br /> <br />${this.props.user.cash_balance}
+              </div>
+              <div className="row">
+                {this.state.init_transaction_mode == 'cash' ? (
+                  this.renderBuyBox('cash')
+                ) : (
+                  <div className="row">
+                    <div className="col-md-6">
+                      <input
+                        type="submit"
+                        value="Deposit"
+                        onClick={() => {
+                          this.setState({init_transaction_mode: 'cash'});
+                        }}
+                        className="btn btn-default bttn_submit"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <input
+                        type="submit"
+                        value="Withdraw"
+                        disabled={this.props.user.cash_balance > 0}
+                        onClick={() => {
+                          this.setState({init_transaction_mode: 'Withdraw'});
+                        }}
+                        className="btn btn-default bttn_submit"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
