@@ -13,8 +13,8 @@ class NewTeam extends React.Component {
       title: '',
       ladder: '',
       games: [],
-      team_info: {ladder: {}, team_users: []},
-      game_info: {}
+      team_info: {ladder: {title: ''}, team_users: [], title: ''},
+      game_info: {title: ''}
     };
   }
 
@@ -58,25 +58,14 @@ class NewTeam extends React.Component {
       });
     setTimeout(function() {
       $('#starts_at').datetimepicker({
-        icons: {
-          time: 'glyphicon glyphicon-time',
-          date: 'glyphicon glyphicon-calendar',
-          up: 'glyphicon glyphicon-chevron-up',
-          down: 'glyphicon glyphicon-chevron-down',
-          previous: 'glyphicon glyphicon-chevron-left',
-          next: 'glyphicon glyphicon-chevron-right',
-          today: 'glyphicon glyphicon-screenshot',
-          clear: 'glyphicon glyphicon-trash',
-          close: 'glyphicon glyphicon-remove'
-        }
-        // controlType: 'select',
-        // timeFormat: 'hh:mm tt',
-        // stepMinute: 10, //intervals of minutes
-        // minDate: new Date(new Date().getTime() + 10 * 60 * 1000),
-        // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
-        // maxDateTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000) //number of days
+        controlType: 'select',
+        timeFormat: 'hh:mm tt',
+        stepMinute: 10, //intervals of minutes
+        minDate: new Date(new Date().getTime() + 10 * 60 * 1000),
+        minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
+        maxDateTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000) //number of days
       });
-    }, 1000);
+    }, 2000);
   }
 
   handleCreation(event) {
@@ -105,46 +94,40 @@ class NewTeam extends React.Component {
                   <form onSubmit={this.handleCreation.bind(this)}>
                     <div className="form-group col-md-12">
                       <label htmlFor="title">Team</label>
-                      <input
-                        type="text"
-                        className="form-control hasDatepicker"
-                        required=""
-                        readOnly
-                        // placeholder="Match Start Date & Time"
-                        name="team_id"
-                        value={this.state.team_info.title}
-                        onChange={this.handleChange.bind(this)}
-                      />
+                      <br />
+                      <strong>{this.state.team_info.title}</strong>
                     </div>
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Ladder</label>
-                      <input
-                        type="text"
-                        className="form-control hasDatepicker"
-                        required=""
-                        placeholder="Match Start Date & Time"
-                        name="starts_at"
-                        value={
-                          this.state.game_info.title +
-                          ' - ' +
-                          this.state.team_info.ladder.title
-                        }
-                        onChange={this.handleChange.bind(this)}
-                      />
-                    </div>
+                    <br />
 
                     <div className="form-group col-md-12">
+                      <label htmlFor="title">Ladder</label>
+                      <br />
+                      <strong>
+                        {this.state.game_info.title +
+                          ' - ' +
+                          this.state.team_info.ladder.title}
+                      </strong>
+                    </div>
+                    <br />
+                    <div className="form-group col-md-12">
                       <label htmlFor="title">Match Settings</label>
-                      <input
-                        type="text"
-                        id="starts_at"
-                        className="form-control hasDatepicker"
-                        required=""
-                        placeholder="Match Start Date & Time"
-                        name="starts_at"
-                        value={this.state.title}
-                        onChange={this.handleChange.bind(this)}
-                      />
+                      <div className="input-group date">
+                        <input
+                          type="text"
+                          id="starts_at"
+                          className="form-control"
+                          required=""
+                          data-toggle="datetimepicker"
+                          data-target="#starts_at"
+                          placeholder="Match Start Date & Time"
+                          name="starts_at"
+                          // value={this.state.starts_at}
+                          // onChange={this.handleChange.bind(this)}
+                        />
+                        <span className="input-group-addon">
+                          <span className="glyphicon glyphicon-time" />
+                        </span>
+                      </div>
                     </div>
 
                     <div className="form-group col-md-12">
