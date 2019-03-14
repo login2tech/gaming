@@ -14,7 +14,7 @@ const __addNewCredit_points = function(
 ) {
   const type =
     init_transaction_mode == 'credit' ? 'credit_balance' : 'cash_balance';
-  console.log(type);
+  // console.log(type);
   new User({id: user_id}).fetch().then(function(user) {
     const prev_points = user.get(type);
     const new_points = parseInt(prev_points) + parseInt(points);
@@ -69,6 +69,9 @@ const newCredits = function(req, res, next) {
       source: req.body.stripe_token
     })
     .then(function(stripe_data) {
+      const term =
+        req.body.init_transaction_mode == 'credit' ? 'credits' : 'cash';
+
       // console.log('aehwehw');
       if (stripe_data.id) {
         __addNewCredit_points(
@@ -81,12 +84,12 @@ const newCredits = function(req, res, next) {
               res.status(200).send({
                 ok: true,
                 action: 'PAYMENT_DONE',
-                msg: 'Successfully Added Credits to your account'
+                msg: 'Successfully Added ' + term + ' to your account'
               });
             } else {
               res.status(200).send({
                 ok: true,
-                msg: 'Payment Successfull. Failed to credit.'
+                msg: 'Payment Successfull. Failed to ' + term + '.'
               });
             }
           }

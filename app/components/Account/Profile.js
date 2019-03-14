@@ -14,6 +14,17 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
+    setTimeout(function() {
+      const element = document.getElementById('is_top');
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'end',
+          inline: 'nearest'
+        });
+      }
+    }, 1000);
+
     fetch('/api/user_info?uid=' + this.props.params.username)
       .then(res => res.json())
       .then(json => {
@@ -110,7 +121,7 @@ class Profile extends React.Component {
           </div>
         </section>
 
-        <section className="contet_part single_match_details">
+        <section className="contet_part single_match_details" id="is_top">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">

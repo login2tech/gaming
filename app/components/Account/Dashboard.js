@@ -46,13 +46,16 @@ class Profile extends React.Component {
                 clicked: false,
                 buy_balance_init: false,
                 add_new_bal_number: ''
-                // current_step: 4,
-                // backAllowed: false
               },
               () => {
                 const usr = this.props.user;
-                usr.credit_balance =
-                  parseInt(usr.credit_balance) + parseInt(add_new_bal_number);
+                if (this.state.init_transaction_mode == 'credit') {
+                  usr.credit_balance =
+                    parseInt(usr.credit_balance) + parseInt(add_new_bal_number);
+                } else {
+                  usr.cash_balance =
+                    parseInt(usr.cash_balance) + parseInt(add_new_bal_number);
+                }
                 this.props.dispatch({
                   type: 'UPDATE_USER',
                   user: usr
@@ -289,7 +292,7 @@ class Profile extends React.Component {
               <div className="credit_summary ">
                 Credit Balance
                 <br />
-                <br /> ${this.props.user.credit_balance}
+                <br /> {this.props.user.credit_balance}
               </div>
               {this.state.init_transaction_mode == 'credit' ? (
                 this.renderBuyBox('credit')
