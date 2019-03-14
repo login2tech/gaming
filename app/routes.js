@@ -27,6 +27,7 @@ import SingleTicket from './components/Tickets/SingleTicket';
 import Tickets from './components/Tickets/MyTickets';
 
 import NewMatch from './components/Match/NewMatch';
+import MatchFinder from './components/Match/MatchFinder';
 
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
@@ -72,6 +73,7 @@ export default function getRoutes(store) {
       />
       <Route path="/forums/:id/:title" component={Threads} />
       <Route path="/forums" component={Topics} />
+      <Route path="/MatchFinder" component={MatchFinder} />
       <Route
         path="/matchfinder/new/:ladder/:id"
         component={NewMatch}

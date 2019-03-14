@@ -11,9 +11,12 @@ const __addNewCredit_points = function(points, user_id, payment_id, cb) {
     const prev_points = user.get('credit_balance');
     const new_points = parseInt(prev_points) + parseInt(points);
     user
-      .save({
-        credit_balance: new_points
-      })
+      .save(
+        {
+          credit_balance: new_points
+        },
+        {patch: true}
+      )
       .then(function(new_user) {
         cb(true);
         __addNewCreditPointTransaction(user_id, payment_id, points);
