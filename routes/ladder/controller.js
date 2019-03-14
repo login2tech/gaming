@@ -1,10 +1,13 @@
 // const fs = require('fs');
-const Game = require('./Game');
+const Game = require('../games/Ladder');
 
 exports.listGame = function(req, res, next) {
   new Game()
     .orderBy('id', 'DESC')
-    .fetchAll({withRelated: ['ladders']})
+    .where({
+      game_id: req.params.game_id
+    })
+    .fetchAll()
     .then(function(games) {
       if (!games) {
         return res.status(200).send([]);
@@ -12,7 +15,7 @@ exports.listGame = function(req, res, next) {
       return res.status(200).send({ok: true, items: games.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(200).send([]);
     });
 };
@@ -76,19 +79,19 @@ exports.addGame = function(req, res, next) {
   }
   new Game({
     title: req.body.title,
-    image_url: req.body.image_url
-    // category_id: req.body.category_id,
-    // short_content: req.body.short_content
+    max_players: req.body.max_players,
+    min_players: req.body.min_players,
+    rules: req.body.rules
   })
     .save()
     .then(function(game) {
-      res.send({ok: true, msg: 'New Game has been created successfully.'});
+      res.send({ok: true, msg: 'New Ladder has been created successfully.'});
     })
     .catch(function(err) {
       // console.log(err);
       return res
         .status(400)
-        .send({msg: 'Something went wrong while created a new Game'});
+        .send({msg: 'Something went wrong while created a new Ladder'});
     });
 };
 
@@ -107,12 +110,11 @@ exports.updateGame = function(req, res, next) {
   const game = new Game({id: req.body.id});
   const obj = {
     title: req.body.title,
-    image_url: req.body.image_url
+    max_players: req.body.max_players,
+    min_players: req.body.min_players,
+    rules: req.body.rules
   };
 
-  if (req.body.remove_media) {
-    obj.image_url = '';
-  }
   game
     .save(obj)
     .then(function(blg) {
@@ -121,14 +123,14 @@ exports.updateGame = function(req, res, next) {
         .then(function(bll) {
           res.send({
             game: bll.toJSON(),
-            msg: 'Game has been updated.'
+            msg: 'Ladder has been updated.'
           });
         })
         .catch(function(err) {
           console.log(err);
           res
             .status(400)
-            .send({msg: 'Something went wrong while updating the Game'});
+            .send({msg: 'Something went wrong while updating the Ladder'});
         });
     })
     .catch(function(err) {
@@ -136,7 +138,7 @@ exports.updateGame = function(req, res, next) {
 
       res
         .status(400)
-        .send({msg: 'Something went wrong while updating the Game'});
+        .send({msg: 'Something went wrong while updating the Ladder'});
     });
 };
 
@@ -144,11 +146,11 @@ exports.deleteGame = function(req, res, next) {
   new Game({id: req.body.id})
     .destroy()
     .then(function(post) {
-      res.send({msg: 'The Game Item has been successfully deleted.'});
+      res.send({msg: 'The Ladder Item has been successfully deleted.'});
     })
     .catch(function(err) {
       return res
         .status(400)
-        .send({msg: 'Something went wrong while deleting the Game'});
+        .send({msg: 'Something went wrong while deleting the Ladder'});
     });
 };

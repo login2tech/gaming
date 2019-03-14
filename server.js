@@ -270,6 +270,10 @@ app.post(
 
 const gamesRoutes = require('./routes/games/games.route.js');
 app.use('/api/games', gamesRoutes);
+
+const ladderRoutes = require('./routes/ladder/games.route.js');
+app.use('/api/ladder', ladderRoutes);
+
 const teamsRoutes = require('./routes/teams/team.route');
 app.use('/api/teams', teamsRoutes);
 

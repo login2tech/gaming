@@ -12,6 +12,7 @@
                              <tr>
                                 <th>Id</th>
                                 <th>Title</th>
+                                <th>Edit Ladders</th>
                                 <th class="disabled-sorting text-right">Actions</th>
                              </tr>
                          </thead>
@@ -19,6 +20,7 @@
                              <tr>
                                <th>Id</th>
                                 <th>Title</th>
+                                <th>Edit Ladders</th>
                                  <th class="text-right">Actions</th>
                              </tr>
                          </tfoot>
@@ -27,7 +29,9 @@
 
                                  <td>{{faq.id}}</td>
                                  <td>{{faq.title}}</td>
-																 <!-- <td>{{faq.category.title}}</td> -->
+
+                                 <td> <a title="Edit Blog Post" href="/admin_panel/ladder/{{faq.id}}" class="btn btn-link edit">Edit Ladders</a>
+                                   </td>
                                  <td class="text-right">
                                      <!-- <a href="#" class="btn btn-link btn-info like"><i class="fa fa-heart"></i></a> -->
                                      <a title="Edit Blog Post" href="/admin_panel/games/edit/{{faq.id}}" class="btn btn-link btn-warning edit"><i class="fa fa-edit"></i></a>

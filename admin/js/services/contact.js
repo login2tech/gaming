@@ -290,19 +290,19 @@ angular
   .factory('Lesson', function($http) {
     return {
       list: function(courseId) {
-        return $http.get('/api/lessons/list/' + courseId);
+        return $http.get('/api/ladder/list/' + courseId);
       },
       listSingle: function(id) {
-        return $http.get('/api/lessons/single/' + id);
+        return $http.get('/api/ladder/single/' + id);
       },
       add: function(data) {
-        return $http.post('/api/lessons/add', data);
+        return $http.post('/api/ladder/add', data);
       },
       update: function(data) {
-        return $http.post('/api/lessons/edit', data);
+        return $http.post('/api/ladder/edit', data);
       },
       delete: function(data) {
-        return $http.post('/api/lessons/delete', data);
+        return $http.post('/api/ladder/delete', data);
       }
     };
   });

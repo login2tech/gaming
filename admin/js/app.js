@@ -104,6 +104,22 @@ angular
         controller: 'PlanEditCtrl',
         templateUrl: 'partials/plans/add.html'
       })
+
+      .when('/ladder/:id', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'LessonCtrl',
+        templateUrl: 'partials/lesson/list.html'
+      })
+      .when('/ladder/add/:id', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'LessonAddCtrl',
+        templateUrl: 'partials/lesson/add.html'
+      })
+      .when('/ladder/edit/:id', {
+        resolve: {loginRequired: loginRequired},
+        controller: 'LessonEditCtrl',
+        templateUrl: 'partials/lesson/add.html'
+      })
       .when('/cms_pages/', {
         resolve: {loginRequired: loginRequired},
         controller: 'CMSPageCtrl',
