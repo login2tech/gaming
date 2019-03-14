@@ -106,7 +106,7 @@ angular
           $scope.messages = {
             success: [response.data]
           };
-          $location.path('/lessons/' + $scope.courseId);
+          $location.path('/ladder/' + $scope.courseId);
         })
         .catch(function(response) {
           if (typeof scrolltoTop !== 'undefined') {
