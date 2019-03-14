@@ -80,7 +80,7 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar less_padding">
+        <section className="page_title_bar less_padding" id="is_top">
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
@@ -121,7 +121,7 @@ class Profile extends React.Component {
           </div>
         </section>
 
-        <section className="contet_part single_match_details" id="is_top">
+        <section className="contet_part single_match_details">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">

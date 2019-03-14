@@ -512,6 +512,12 @@ class Profile extends React.Component {
                 <div className="tab-block" id="tab-block">
                   <ul className="tab-mnu">
                     <li
+                      data-tab="tab2"
+                      className={this.state.currentStep == 3 ? 'active' : ''}
+                    >
+                      <Link to={'/u/' + this.props.user.username}>Profile</Link>
+                    </li>
+                    <li
                       className={this.state.currentStep == 1 ? 'active' : ''}
                       onClick={() => {
                         this.setState({currentStep: 1});
@@ -528,14 +534,6 @@ class Profile extends React.Component {
                       data-tab="tab1"
                     >
                       Billing Details
-                    </li>
-                    <li
-                      data-tab="tab2"
-                      className={this.state.currentStep == 3 ? 'active' : ''}
-                    >
-                      <Link to={'/u/' + this.props.user.username}>
-                        Win/Loss Details
-                      </Link>
                     </li>
                     <li
                       className={this.state.currentStep == 4 ? 'active' : ''}
