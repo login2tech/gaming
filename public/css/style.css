@@ -2285,6 +2285,8 @@ a.read-blog {
     text-transform: uppercase;
     font-weight: 600;
 	width:100%;
+}.btn-primary[disabled]{
+  opacity: 0.6;
 }
 .create_account_link{
 	margin-top:25px;

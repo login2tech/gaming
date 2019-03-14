@@ -221,7 +221,7 @@ class Profile extends React.Component {
             <button
               type="submit"
               disabled={this.state.clicked}
-              className="btn-01 btn btn-success"
+              className="btn-01 btn btn-primary"
             >
               {btn_label}
             </button>
@@ -233,46 +233,50 @@ class Profile extends React.Component {
 
   renderBuyBox(type) {
     return this.state.buy_balance_init ? (
-      <div className="col-md-12">
-        <hr />
-        <div className="contnet_box_border">{this.renderStripe()}</div>
+      <div className="row">
+        <div className="col-md-12">
+          <hr />
+          <div className="contnet_box_border">{this.renderStripe()}</div>
+        </div>
       </div>
     ) : (
-      <form
-        className="col-md-12 field_form"
-        onSubmit={() => {
-          this.setState({buy_balance_init: true}, () => {
-            this.handleStripeCreation();
-          });
-        }}
-      >
-        <Messages messages={this.props.messages} />
+      <div className="row">
+        <form
+          className="col-md-12 field_form"
+          onSubmit={() => {
+            this.setState({buy_balance_init: true}, () => {
+              this.handleStripeCreation();
+            });
+          }}
+        >
+          <Messages messages={this.props.messages} />
 
-        <div className="row">
-          <div className="col-md-8">
-            <input
-              type="number"
-              id="add_new_bal_number"
-              placeholder="Buy Credit Points"
-              className="form-control"
-              name="add_new_bal_number"
-              value={this.state.add_new_bal_number}
-              onChange={this.handleChange.bind(this)}
-            />
+          <div className="row">
+            <div className="col-md-8">
+              <input
+                type="number"
+                id="add_new_bal_number"
+                placeholder="Buy Credit Points"
+                className="form-control"
+                name="add_new_bal_number"
+                value={this.state.add_new_bal_number}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
+            <div className="col-md-4">
+              <input
+                type="submit"
+                value="Buy Now"
+                disabled={
+                  this.state.add_new_bal_number == '' ||
+                  this.state.add_new_bal_number == 0
+                }
+                className="btn btn-primary"
+              />
+            </div>
           </div>
-          <div className="col-md-4">
-            <input
-              type="submit"
-              value="Buy Now"
-              disabled={
-                this.state.add_new_bal_number == '' ||
-                this.state.add_new_bal_number == 0
-              }
-              className="btn btn-primary"
-            />
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     );
   }
 
@@ -287,10 +291,10 @@ class Profile extends React.Component {
                 <br />
                 <br /> ${this.props.user.credit_balance}
               </div>
-              <div className="row">
-                {this.state.init_transaction_mode == 'credit' ? (
-                  this.renderBuyBox('credit')
-                ) : (
+              {this.state.init_transaction_mode == 'credit' ? (
+                this.renderBuyBox('credit')
+              ) : (
+                <div className="row">
                   <div className="col-md-6 offset-md-3 text-center">
                     <input
                       type="submit"
@@ -301,21 +305,22 @@ class Profile extends React.Component {
                       className="btn btn-default bttn_submit"
                     />
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
           <div className="col-md-6 ">
             <div className="authorize_box">
               <div className="credit_summary ">
-                Credit Balance
-                <br /> <br />${this.props.user.cash_balance}
+                Cash Balance
+                <br />
+                <br /> ${this.props.user.cash_balance}
               </div>
-              <div className="row">
-                {this.state.init_transaction_mode == 'cash' ? (
-                  this.renderBuyBox('cash')
-                ) : (
+              {this.state.init_transaction_mode == 'cash' ? (
+                this.renderBuyBox('cash')
+              ) : (
+                <div className="row">
                   <div className="row">
                     <div className="col-md-6">
                       <input
@@ -331,7 +336,7 @@ class Profile extends React.Component {
                       <input
                         type="submit"
                         value="Withdraw"
-                        disabled={this.props.user.cash_balance > 0}
+                        disabled={this.props.user.cash_balance < 0.1}
                         onClick={() => {
                           this.setState({init_transaction_mode: 'Withdraw'});
                         }}
@@ -339,8 +344,8 @@ class Profile extends React.Component {
                       />
                     </div>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

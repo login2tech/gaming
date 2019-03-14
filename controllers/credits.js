@@ -14,7 +14,7 @@ const __addNewCredit_points = function(
 ) {
   const type =
     init_transaction_mode == 'credit' ? 'credit_balance' : 'cash_balance';
-  // console.log('jsdjgwreke');
+  console.log(type);
   new User({id: user_id}).fetch().then(function(user) {
     const prev_points = user.get(type);
     const new_points = parseInt(prev_points) + parseInt(points);
