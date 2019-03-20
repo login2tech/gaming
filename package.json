@@ -43,6 +43,7 @@
     "pug": "^2.0.3",
     "react": "16.7.0",
     "react-cookie": "^0.4.5",
+    "react-datetime": "^2.16.3",
     "react-dom": "16.7.0",
     "react-helmet": "^5.2.0",
     "react-localize-redux": "^3.5.2",

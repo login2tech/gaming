@@ -85,7 +85,7 @@ exports.addGame = function(req, res, next) {
       res.send({ok: true, msg: 'New Game has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Game'});

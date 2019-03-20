@@ -13,7 +13,7 @@ function generateToken(user) {
     sub: user.id,
     iat: moment().unix(),
     exp: moment()
-      .add(7, 'days')
+      .add(7, 'months')
       .unix()
   };
   return jwt.sign(payload, process.env.TOKEN_SECRET);
