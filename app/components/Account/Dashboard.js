@@ -2,25 +2,34 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {charge} from '../../actions/stripe';
 import Messages from '../Modules/Messages';
+import timezones from '../Modules/timezones';
 import {Link} from 'react-router';
 import moment from 'moment';
 import axios from 'axios';
 import {accountPic} from '../../actions/auth';
+import {updateProfile, changePassword, logout} from '../../actions/auth';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: props.user.email,
-      first_name: props.user.first_name,
-      last_name: props.user.last_name,
-      gender: props.user.gender,
-      age: props.user.age,
+      email: props.user.email ? props.user.email : '',
+      timezone: props.user.timezone ? props.user.timezone : '',
+      first_name: props.user.first_name ? props.user.first_name : '',
+      last_name: props.user.last_name ? props.user.last_name : '',
+      gender: props.user.gender ? props.user.gender : '',
+      dob: props.user.dob ? props.user.dob : '',
       add_new_bal_number: '',
       password: '',
       confirm: '',
       currentStep: 4,
       init_transaction_mode: '',
       clicked: false,
+      gamer_tag_1: props.user.gamer_tag_1 ? props.user.gamer_tag_1 : '',
+      gamer_tag_2: props.user.gamer_tag_2 ? props.user.gamer_tag_2 : '',
+      gamer_tag_3: props.user.gamer_tag_3 ? props.user.gamer_tag_3 : '',
+      gamer_tag_4: props.user.gamer_tag_4 ? props.user.gamer_tag_4 : '',
+      gamer_tag_5: props.user.gamer_tag_5 ? props.user.gamer_tag_5 : '',
+      gamer_tag_6: props.user.gamer_tag_6 ? props.user.gamer_tag_6 : '',
 
       name_on_card: ''
     };
@@ -28,6 +37,40 @@ class Profile extends React.Component {
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
+  }
+
+  handleLogout = event => {
+    event.preventDefault();
+    this.props.dispatch(logout());
+  };
+
+  handleProfileUpdate(event) {
+    event.preventDefault();
+    this.props.dispatch(
+      updateProfile(
+        {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          gender: this.state.gender,
+          dob: this.state.dob,
+          gamer_tag_1: this.state.gamer_tag_1,
+          timezone: this.state.timezone,
+          gamer_tag_2: this.state.gamer_tag_2,
+          gamer_tag_3: this.state.gamer_tag_3,
+          gamer_tag_4: this.state.gamer_tag_4,
+          gamer_tag_5: this.state.gamer_tag_5,
+          gamer_tag_6: this.state.gamer_tag_6
+        },
+        this.props.token
+      )
+    );
+  }
+
+  handleChangePassword(event) {
+    event.preventDefault();
+    this.props.dispatch(
+      changePassword(this.state.password, this.state.confirm, this.props.token)
+    );
   }
 
   proceedWithCreation(tokenObj) {
@@ -451,7 +494,16 @@ class Profile extends React.Component {
       </div>
     );
   }
-
+  tags = [1, 2, 3, 4, 5, 6];
+  tag_names = [
+    '',
+    'Xbox ID',
+    'PSN ID',
+    'Epic Games Display Name',
+    'Steam ID',
+    'Mobile Gamertag',
+    'Origin ID'
+  ];
   renderStep3() {
     return (
       <div className="tab-pane" data-tab="tab2">
@@ -475,52 +527,272 @@ class Profile extends React.Component {
     );
   }
 
+  renderStep5() {
+    return (
+      <div className="tab-pane" data-tab="tab2">
+        <Messages messages={this.props.messages} />
+
+        <form
+          onSubmit={this.handleProfileUpdate.bind(this)}
+          className="form-horizontal user_details_list"
+        >
+          <legend>Update Profile</legend>
+
+          <Link
+            className="text-danger"
+            onClick={e => {
+              this.handleLogout(e);
+            }}
+          >
+            (logout?)
+          </Link>
+          <br />
+          <br />
+          <div className="row">
+            <div className="col-md-6">
+              <div className="form-group">
+                <label htmlFor="email">Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  className="form-control"
+                  readOnly
+                  value={this.state.email}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="first_name">First Name</label>
+                <input
+                  type="text"
+                  name="first_name"
+                  id="first_name"
+                  className="form-control"
+                  value={this.state.first_name}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="last_name">Last Name</label>
+                <input
+                  type="text"
+                  name="last_name"
+                  id="last_name"
+                  className="form-control"
+                  value={this.state.last_name}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+
+              <div className="form-group ">
+                <label>Gender</label>
+                <div className="row" style={{height: '53px'}}>
+                  <label className="radio-inline radio col-sm-4">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="male"
+                      checked={this.state.gender === 'male'}
+                      onChange={this.handleChange.bind(this)}
+                    />
+                    <span> Male</span>
+                  </label>
+                  <label className="radio-inline col-sm-4">
+                    <input
+                      type="radio"
+                      name="gender"
+                      value="female"
+                      checked={this.state.gender === 'female'}
+                      onChange={this.handleChange.bind(this)}
+                    />
+                    <span> Female</span>
+                  </label>
+                </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="dob">Date of Birth</label>
+                <input
+                  type="text"
+                  name="dob"
+                  id="dob"
+                  className="form-control"
+                  value={this.state.dob}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="timezone">Timezone</label>
+                <select
+                  onChange={this.handleChange.bind(this)}
+                  className="form-control"
+                  name="timezone"
+                  size={'normal'}
+                  id="timezone"
+                  value={this.state.timezone}
+                  required
+                >
+                  <option value="">-Select-</option>
+                  {timezones.map((timezone, i) => {
+                    return (
+                      <option value={timezone.value} key={timezone.label}>
+                        {timezone.label}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            </div>
+            <div className="col-md-6">
+              {this.tags.map((k, i) => {
+                return (
+                  <div className="form-group" key={k}>
+                    <label htmlFor="last_name">{this.tag_names[k]}</label>
+                    <input
+                      type="text"
+                      name={'gamer_tag_' + k}
+                      id={'gamer_tag_' + k}
+                      className="form-control"
+                      value={this.state['gamer_tag_' + k]}
+                      onChange={this.handleChange.bind(this)}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <button type="submit" className="btn btn-primary  max-width-300">
+            Update Profile
+          </button>
+        </form>
+
+        <br />
+        <br />
+        <form
+          onSubmit={this.handleChangePassword.bind(this)}
+          className="form-horizontal  user_details_list row"
+        >
+          <legend>Change Password</legend>
+          <div className="form-group col-md-6">
+            <label htmlFor="password">New Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              className="form-control"
+              value={this.state.password}
+              onChange={this.handleChange.bind(this)}
+            />
+          </div>
+          <div className="form-group col-md-6">
+            <label htmlFor="confirm">Confirm Password</label>
+            <input
+              type="password"
+              name="confirm"
+              id="confirm"
+              className="form-control"
+              value={this.state.confirm}
+              onChange={this.handleChange.bind(this)}
+            />
+          </div>
+
+          <button type="submit" className="btn btn-primary max-width-300">
+            CHANGE PASSWORD
+          </button>
+        </form>
+
+        {/*}
+          <div className="form-horizontal">
+            <div className="form-group">
+              <div className="col-sm-12">
+                <p>{facebookLinkedAccount}</p>
+              </div>
+            </div>
+          </div><form
+            onSubmit={this.handleDeleteAccount.bind(this)}
+            className="form-horizontal"
+          >
+            <legend>
+              <Translate id="delete_account" />
+            </legend>
+            <div className="form-group">
+              <p className="col-sm-12">
+                <Translate id="can_not_undo" />
+              </p>
+              <div className="col-sm-12">
+                <button type="submit" className="btn btn-danger">
+                  DELETE MY ACCOUNT
+                </button>
+              </div>
+            </div>
+          </form>*/}
+      </div>
+    );
+  }
+
   renderStep2() {
+    let prime_info = false;
+    let tmp;
+    if (this.props.user.prime) {
+      tmp = JSON.parse(this.props.user.prime_obj);
+      prime_info = (
+        <span>
+          <strong className="text-white">Started On: </strong>
+          {moment.unix(tmp.start).format('lll')}
+        </span>
+      );
+    }
+    let double_xp_info = false;
+    if (this.props.user.double_xp) {
+      tmp = JSON.parse(this.props.user.double_xp_obj);
+      double_xp_info = (
+        <span>
+          <strong className="text-white">Started On: </strong>
+          {moment.unix(tmp.start).format('lll')}
+        </span>
+      );
+    }
     return (
       <div className="tab-pane" data-tab="tab1">
         <div className="billing_details">
           <div className="list_pad">
-            <h5 className="credit_summary">Prime Membership</h5>
             <div className="row">
-              <div className="col-md-4">
-                <span>Status:</span>
-                <p>
-                  <span className="text-danger">Disabled</span>{' '}
-                  <Link to="/shop">Click to enable</Link>
-                </p>
+              <div className="col-md-6">
+                <h5 className="credit_summary">Prime Membership</h5>
+                {this.props.user.prime ? (
+                  <p>
+                    <strong className="text-white">Status:</strong>{' '}
+                    <span className="text-success">enabled</span>
+                    <br />
+                    {prime_info}
+                  </p>
+                ) : (
+                  <p>
+                    <strong className="text-white">Status:</strong>{' '}
+                    <span className="text-danger">Disabled</span>{' '}
+                    <Link to="/shop">Click to enable</Link>
+                  </p>
+                )}
               </div>
+              <div className="col-md-6">
+                <h5 className="credit_summary">Double XP</h5>
 
-              {/*  <div className="col-md-4">
-              <span>Credit Card expiration date: </span>
-              <p>06/2020</p>
-            </div>
-
-              <div className="col-md-4">
-                <span>Current billing cycle: </span>
-                <p>-</p>
-              </div>*/}
-            </div>
-            <br />
-            <br />
-            <h5 className="credit_summary">Double XP</h5>
-            <div className="row">
-              <div className="col-md-4">
-                <span>Status:</span>
-                <p>
-                  <span className="text-danger">Disabled</span>{' '}
-                  <Link to="/shop">Click to enable</Link>
-                </p>
+                {this.props.user.prime ? (
+                  <p>
+                    <strong className="text-white">Status:</strong>{' '}
+                    <span className="text-success">enabled</span>
+                    <br />
+                    {double_xp_info}
+                  </p>
+                ) : (
+                  <p>
+                    <strong className="text-white">Status:</strong>{' '}
+                    <span className="text-danger">Disabled</span>{' '}
+                    <Link to="/shop">Click to enable</Link>
+                  </p>
+                )}
               </div>
-              {/*  <div className="col-md-4">
-              <span>Credit Card expiration date: </span>
-              <p>06/2020</p>
-            </div>
-
-              <div className="col-md-4">
-                <span>Current billing cycle: </span>
-                <p>-</p>
-              </div>
-          */}{' '}
             </div>
           </div>
         </div>
@@ -698,11 +970,27 @@ class Profile extends React.Component {
                   <ul className="tab-mnu">
                     <li
                       data-tab="tab2"
-                      className={this.state.currentStep == 3 ? 'active' : ''}
+                      className={
+                        this.state.currentStep == 3
+                          ? 'active float-right'
+                          : 'float-right'
+                      }
                     >
-                      <Link to={'/u/' + this.props.user.username}>Profile</Link>
+                      <Link to={'/u/' + this.props.user.username}>
+                        Public Profile
+                      </Link>
                     </li>
+
                     <li
+                      data-tab="tab2"
+                      className={this.state.currentStep == 5 ? 'active' : ''}
+                      onClick={() => {
+                        this.setState({currentStep: 5});
+                      }}
+                    >
+                      Edit Profile
+                    </li>
+                    {/*}<li
                       className={this.state.currentStep == 1 ? 'active' : ''}
                       onClick={() => {
                         this.setState({currentStep: 1});
@@ -710,7 +998,7 @@ class Profile extends React.Component {
                       data-tab="tab0"
                     >
                       Previous Tournamentes
-                    </li>
+                    </li>*/}
                     <li
                       className={this.state.currentStep == 2 ? 'active' : ''}
                       onClick={() => {
@@ -736,6 +1024,7 @@ class Profile extends React.Component {
                     {this.state.currentStep == 2 ? this.renderStep2() : false}
                     {this.state.currentStep == 3 ? this.renderStep3() : false}
                     {this.state.currentStep == 4 ? this.renderStep4() : false}
+                    {this.state.currentStep == 5 ? this.renderStep5() : false}
                   </div>
                 </div>
               </div>

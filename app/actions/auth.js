@@ -161,8 +161,14 @@ export function updateProfile(data, token) {
       if (response.ok) {
         return response.json().then(json => {
           dispatch({
-            type: 'UPDATE_PROFILE_SUCCESS',
+            type: 'SUCCESS',
             messages: [json]
+          });
+          dispatch({
+            type: 'UPDATE_USER',
+            user: json.user
+            // messages: [json]
+            // new_user: json.user
           });
         });
       } else {

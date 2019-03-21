@@ -207,7 +207,7 @@ exports.accountPut = function(req, res, next) {
     req.assert('first_name', 'First Name cannot be blank').notEmpty();
     req.assert('last_name', 'Last Name cannot be blank').notEmpty();
     req.assert('gender', 'Gender cannot be blank').notEmpty();
-    req.assert('dob', 'dob cannot be blank').notEmpty();
+    // req.assert('age', 'Age cannot be blank').notEmpty();
     // req.sanitize('email').normalizeEmail({remove_dots: false});
   }
 
@@ -227,7 +227,14 @@ exports.accountPut = function(req, res, next) {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
         gender: req.body.gender,
-        dob: req.body.dob
+        dob: req.body.dob,
+        gamer_tag_2: req.body.gamer_tag_2,
+        gamer_tag_3: req.body.gamer_tag_3,
+        gamer_tag_1: req.body.gamer_tag_1,
+        gamer_tag_4: req.body.gamer_tag_4,
+        gamer_tag_5: req.body.gamer_tag_5,
+        gamer_tag_6: req.body.gamer_tag_6,
+        timezone: req.body.timezone
       },
       {patch: true}
     );
@@ -252,6 +259,7 @@ exports.accountPut = function(req, res, next) {
         res.redirect('/account');
       })
       .catch(function(err) {
+        // console.log(err);
         if (err.code === 'ER_DUP_ENTRY') {
           res.status(409).send({
             msg:
@@ -259,7 +267,7 @@ exports.accountPut = function(req, res, next) {
           });
         }
       });
-  }, 500);
+  }, 1000);
 };
 
 exports.accountPic = function(req, res, next) {

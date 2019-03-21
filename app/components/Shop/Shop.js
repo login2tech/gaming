@@ -58,6 +58,7 @@ class Shop extends React.Component {
                 clicked: false,
                 buy_balance_init: false,
                 add_new_bal_number: '',
+
                 init_transaction_mode: ''
               },
               () => {
@@ -186,7 +187,6 @@ class Shop extends React.Component {
         onSubmit={this.handleCheckoutStep3.bind(this)}
         className="field_form"
       >
-        <Messages messages={this.props.messages} />
         <div className="form-group row m-t-2">
           <label
             htmlFor="name_on_card"
@@ -306,9 +306,8 @@ class Shop extends React.Component {
   render() {
     return (
       <section className="middle_part_login">
-        <Messages messages={this.props.messages} />
-
         <div className="container text-center">
+          <Messages messages={this.props.messages} />
           <div className="row" style={{marginBottom: '10px'}}>
             <div className="col-md-6">
               <div className="authorize_box text-center">
