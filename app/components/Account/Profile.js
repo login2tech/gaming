@@ -78,17 +78,43 @@ class Profile extends React.Component {
   }
 
   render() {
+    const divStyle = this.state.new_cover_pic
+      ? {
+          backgroundImage: 'url(' + this.state.new_cover_pic + ')'
+        }
+      : this.props.user.cover_picture
+        ? {
+            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+          }
+        : {};
     return (
       <div>
-        <section className="page_title_bar less_padding" id="is_top">
+        <section
+          className="page_title_bar less_padding"
+          id="is_top"
+          style={divStyle}
+        >
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
                 <div className="game_pic_tournament">
-                  <img
-                    className="img-fluid profile_pic_outline"
-                    src="/images/img.jpg"
-                  />
+                  {this.props.user.profile_picture ? (
+                    <img
+                      src={this.props.user.profile_picture}
+                      className="img-fluid profile_pic_outline"
+                    />
+                  ) : (
+                    <img
+                      className="img-fluid profile_pic_outline"
+                      src={
+                        'https://ui-avatars.com/api/?size=512&name=' +
+                        this.props.user.first_name +
+                        ' ' +
+                        this.props.user.last_name +
+                        '&color=223cf3&background=000000'
+                      }
+                    />
+                  )}
                 </div>
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">

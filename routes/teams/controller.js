@@ -4,6 +4,31 @@ const ItemChild = require('./TeamUser');
 const User = require('../../models/User');
 const ObjName = 'Team';
 
+exports.team_pic = function(req, res, next) {
+  if (!req.body.profile_picture && !req.body.cover_picture) {
+    return res.status(400).send({ok: false, msg: 'Image missing'});
+  }
+  const item = new Item({id: req.query.team_id});
+  item.fetch().then(function(item) {
+    if (!item) {
+      return;
+    }
+    item
+      .save(req.body, {patch: true})
+      .then(function(usr) {
+        res.send({
+          // item: user,
+          msg: 'Your Team Info has been updated.'
+        });
+      })
+      .catch(function(err) {
+        // console.log(err);
+        res.status(400).send({
+          msg: 'Some error occoured'
+        });
+      });
+  });
+};
 exports.approve = function(req, res, next) {
   //
   if (!req.body.team_id) {

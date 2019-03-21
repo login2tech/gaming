@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.string('title');
       table.integer('game_id').references('games.id');
+      table.integer('min_players');
       table.integer('max_players');
       table.text('rules');
     })

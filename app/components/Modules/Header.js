@@ -51,6 +51,9 @@ const Header = props => {
                     <Link to="/forums">Community</Link>
                   </li>
                   <li>
+                    <Link to="/shop">Shop</Link>
+                  </li>
+                  <li>
                     <Link to="/support/tickets">Support</Link>
                   </li>
 

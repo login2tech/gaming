@@ -177,6 +177,105 @@ export function updateProfile(data, token) {
   };
 }
 
+export function team_pic(team_id, data) {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/api/teams/pics?' + team_id, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_SUCCESS',
+            user: json.user
+            // messages: [json]
+            // new_user: json.user
+          });
+        });
+      } else {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+export function accountPic(data) {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/accountPics', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_USER',
+            user: json.user
+            // messages: [json]
+            // new_user: json.user
+          });
+        });
+      } else {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+export function teamPic(data) {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/api/teams/pics', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_SUCCESS'
+            //  user: json.user
+            // messages: [json]
+            // new_user: json.user
+          });
+        });
+      } else {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
 export function changePassword(password, confirm, token) {
   return dispatch => {
     dispatch({

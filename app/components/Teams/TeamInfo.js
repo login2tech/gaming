@@ -2,8 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
-import {inviteToTeam, approveRequest} from '../../actions/team';
+import {inviteToTeam, approveRequest, teamPic} from '../../actions/team';
 import Messages from '../Modules/Messages';
+import axios from 'axios';
 
 class TeamInfo extends React.Component {
   constructor(props) {
@@ -103,10 +104,116 @@ class TeamInfo extends React.Component {
       });
   }
 
+  handleCoverFile = event => {
+    this.setState(
+      {
+        cover_image_select: event.target.files[0],
+        loaded: 0
+      },
+      () => {
+        this.askFile('cover_image_select', data => {
+          if (data && data.file) {
+            this.setState({
+              new_cover_pic: data.file,
+              new_cover_pic_saved: false
+            });
+          }
+        });
+      }
+    );
+  };
+
+  doSaveCoverPic(event) {
+    if (!this.state.new_cover_pic) {
+      return;
+    }
+
+    event.preventDefault();
+    this.props.dispatch(
+      teamPic(
+        {
+          cover_picture: this.state.new_cover_pic
+        },
+        this.state.team_info.id
+      )
+    );
+    const team = this.state.team_info;
+    team.cover_picture = this.state.new_cover_pic;
+    this.setState({
+      team_info: team,
+      new_cover_pic: '',
+      new_cover_pic_saved: false
+    });
+  }
+
+  askFile(cls, cb) {
+    // console.log('here');
+    const data = new FormData();
+    data.append('file', this.state[cls], this.state[cls].name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          });
+        }
+      })
+      .then(res => {
+        // console.log(res.data);
+
+        cb && cb(res.data);
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        // console.log(err);
+      });
+  }
+
   render() {
+    const divStyle = this.state.new_cover_pic
+      ? {
+          backgroundImage: 'url(' + this.state.new_cover_pic + ')'
+        }
+      : this.state.team_info && this.state.team_info.cover_picture
+        ? {
+            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+          }
+        : {};
+
     return (
       <div>
-        <section className="page_title_bar less_padding">
+        <section
+          className="page_title_bar less_padding"
+          id="is_top"
+          style={divStyle}
+        >
+          <div className="update_btn cover">
+            <label htmlFor="cover_image_select">
+              <i className="fa fa-edit" /> upload cover
+            </label>
+
+            {this.state.new_cover_pic && !this.state.new_cover_pic_saved ? (
+              <button
+                onClick={event => {
+                  this.doSaveCoverPic(event);
+                }}
+                type="button"
+              >
+                <i className="fa fa-save" /> save new cover
+              </button>
+            ) : (
+              false
+            )}
+
+            <input
+              type="file"
+              name="cover_image_select"
+              id="cover_image_select"
+              className="hidden hide"
+              accept="image/gif, image/jpeg, image/png"
+              onChange={this.handleCoverFile.bind(this)}
+            />
+          </div>
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">

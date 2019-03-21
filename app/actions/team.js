@@ -96,3 +96,36 @@ export function approveRequest(data, cb) {
     });
   };
 }
+
+export function teamPic(data, team_id) {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/api/teams/pics?team_id=' + team_id, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_SUCCESS'
+            //  user: json.user
+            // messages: [json]
+            // new_user: json.user
+          });
+        });
+      } else {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}

@@ -29,6 +29,8 @@ import Tickets from './components/Tickets/MyTickets';
 import NewMatch from './components/Match/NewMatch';
 import MatchFinder from './components/Match/MatchFinder';
 
+import Shop from './components/Shop/Shop';
+
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
     if (!store.getState().auth.token) {
@@ -97,6 +99,7 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route path="/u/:username" component={Profile} onLeave={clearMessages} />
+      <Route path="/shop" component={Shop} onLeave={clearMessages} />
       <Route
         path="/login"
         component={Login}

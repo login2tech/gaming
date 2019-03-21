@@ -57,13 +57,20 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
-  req.isAuthenticated = function() {
-    const token =
-      (req.headers.authorization && req.headers.authorization.split(' ')[1]) ||
-      req.cookies.token;
+  req.isAuthenticated = function(type) {
+    const token = req.headers.authorization
+      ? req.headers.authorization && req.headers.authorization.split(' ')[1]
+      : req.cookies.token
+        ? req.cookies.token
+        : '';
+    // console.log(token);
+    if (!token) {
+      return false;
+    }
     try {
       return jwt.verify(token, process.env.TOKEN_SECRET);
     } catch (err) {
+      // console.log(err);
       return false;
     }
   };
@@ -145,6 +152,11 @@ app.put(
   userController.accountPut
 );
 
+app.post(
+  '/accountPics',
+  userController.ensureAuthenticated,
+  userController.accountPic
+);
 app.get('/api/user_info', userController.singleUser_info);
 
 app.delete(
@@ -152,18 +164,18 @@ app.delete(
   userController.ensureAuthenticated,
   userController.accountDelete
 );
-
-app.post(
-  '/api/submission/new',
-  userController.ensureAuthenticated,
-  submissionsController.newSubmission
-);
-
-app.get(
-  '/api/submission/my',
-  userController.ensureAuthenticated,
-  submissionsController.my
-);
+//
+// app.post(
+//   '/api/submission/new',
+//   userController.ensureAuthenticated,
+//   submissionsController.newSubmission
+// );
+//
+// app.get(
+//   '/api/submission/my',
+//   userController.ensureAuthenticated,
+//   submissionsController.my
+// );
 app.post(
   '/api/credits/new',
   userController.ensureAuthenticated,

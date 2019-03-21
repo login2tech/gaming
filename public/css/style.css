@@ -74,6 +74,37 @@ img {
     z-index: 1;
 }
 
+
+
+.form-control, .StripeElement,
+
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+
+
+
+.form-control:-internal-autofill-selected
+
+
+
+{
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out
+}
+
+
+
 .primary-overlay:after {
     position:  absolute;
     top:  0;
@@ -139,7 +170,7 @@ img {
     transition: all 0.5s ease 0s;
   font-family: 'Montserrat', sans-serif;
   font-size:15px;
-  padding: 0px 28px;
+  padding: 0px 10px;
   font-weight:500;
 }
 .nav-list li:not(.logo)>a:after {
@@ -2256,7 +2287,12 @@ a.read-blog {
     width: 80px;
     top: 45px;
 }
-.field_form .form-control {
+.field_form .form-control, .StripeElement,
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-internal-autofill-selected {
     border-color: #7a7a7a;
     border-radius: 5px;
     padding: 12px 15px;
@@ -2921,13 +2957,20 @@ ul.members li a img {
 	font-size:16px;
 	border-radius:0px;
 }
-.field_form .form-control {
+.field_form .form-control, .StripeElement,
+
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus,
+.form-control:-internal-autofill-selected
+
+ {
     border-color: #7a7a7a;
     border-radius: 5px;
     padding: 12px 15px;
     margin-bottom: 20px;
     border-radius: 0px;
-    background: #333;
+    background: #333 !important;
 	color:#fff;
 }
 .tab-block .tab-mnu {
@@ -3628,4 +3671,43 @@ select{
 
 a.bttn_submit:hover {
     color: #fff;
+}
+
+
+.game_pic_tournament, .page_title_bar {
+    position: relative;
+}
+.update_btn label, .update_btn button {
+    background: #ffffff;
+    border: 0;
+    padding: 0 5px;
+    display: inline-block;
+    margin: 0;
+    color: #000;
+    cursor: pointer;
+}
+
+.update_btn {
+    position: absolute;
+    align-self: center;
+    display:  block;
+    bottom: 5px;
+    right: 5px;
+}
+.hidden{
+  display: none;
+}
+
+
+
+/* .StripeElement--focus { */
+  /* box-shadow: 0 1px 3px 0 #cfd7df; */
+/* } */
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
 }

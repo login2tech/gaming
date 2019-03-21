@@ -146,6 +146,25 @@ angular
       }
     };
   })
+  .factory('Ticket', function($http) {
+    return {
+      list: function() {
+        return $http.get('/api/tickets/list');
+      },
+      listSingle: function(id) {
+        return $http.get('/api/tickets/single/' + id);
+      },
+      add: function(data) {
+        return $http.post('/api/tickets/add', data);
+      },
+      update: function(data) {
+        return $http.post('/api/tickets/edit', data);
+      },
+      delete: function(data) {
+        return $http.post('/api/tickets/delete', data);
+      }
+    };
+  })
 
   .factory('Tournament', function($http) {
     return {

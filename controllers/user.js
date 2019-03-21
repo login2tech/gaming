@@ -38,7 +38,7 @@ function sendMailToActivate(req, user) {
 }
 
 exports.ensureAuthenticated = function(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.user) {
     next();
   } else {
     res.status(401).send({msg: 'Unauthorized'});
@@ -260,6 +260,32 @@ exports.accountPut = function(req, res, next) {
         }
       });
   }, 500);
+};
+
+exports.accountPic = function(req, res, next) {
+  if (!req.body.profile_picture && !req.body.cover_picture) {
+    return res.status(400).send({ok: false, msg: 'Image missing'});
+  }
+  const user = new User({id: req.user.id});
+  user.fetch().then(function(user) {
+    if (!user) {
+      return;
+    }
+    user
+      .save(req.body, {patch: true})
+      .then(function(usr) {
+        res.send({
+          user: user,
+          msg: 'Your profile information has been updated.'
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.status(400).send({
+          msg: 'Some error occoured'
+        });
+      });
+  });
 };
 
 /**
