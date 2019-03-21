@@ -98,19 +98,17 @@ app.post('/upload', (req, res, next) => {
   const dt = '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';
 
   mkdirp.sync(__dirname + '/public/files/' + dt);
-
-  uploadFile.mv(
-    `${__dirname}/public/files/${dt}/f_${rand}_${fileName}`,
-    function(err) {
-      if (err) {
-        return res.status(500).send(err);
-      }
-
-      res.json({
-        file: `/files/${dt}/f_${rand}_${req.files.file.name}`
-      });
+  let final_path = fileName.replace(/ /g, '_');
+  final_path = `/files/${dt}/f_${rand}_${final_path}`;
+  uploadFile.mv(`${__dirname}/public${final_path}`, function(err) {
+    if (err) {
+      return res.status(500).send(err);
     }
-  );
+
+    res.json({
+      file: final_path
+    });
+  });
 });
 
 app.post('/contact', contactController.contactPost);
