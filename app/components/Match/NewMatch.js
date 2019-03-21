@@ -14,7 +14,10 @@ class NewTeam extends React.Component {
       ladder: '',
       games: [],
       team_info: {ladder: {title: ''}, team_users: [], title: ''},
-      game_info: {title: ''}
+      game_info: {title: ''},
+      starts_at: '',
+      match_type: '',
+      match_fee: ''
     };
   }
 
@@ -40,6 +43,11 @@ class NewTeam extends React.Component {
         }
       });
   }
+  newDate(a, b, c) {
+    this.setState({
+      starts_at: b
+    });
+  }
   componentDidMount() {
     fetch('/api/teams/single/' + this.props.params.id)
       .then(res => res.json())
@@ -56,14 +64,17 @@ class NewTeam extends React.Component {
           );
         }
       });
-    setTimeout(function() {
-      $('#starts_at').datetimepicker({
-        controlType: 'select',
-        timeFormat: 'hh:mm tt',
+    setTimeout(() => {
+      $('#starts_at').flatpickr({
+        enableTime: true,
+        dateFormat: 'Y-m-d H:i',
         stepMinute: 10, //intervals of minutes
         minDate: new Date(new Date().getTime() + 10 * 60 * 1000),
-        minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
-        maxDateTime: new Date(new Date().getTime() + 24 * 60 * 60 * 1000) //number of days
+        // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
+        minuteIncrement: 10,
+        maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
+
+        onChange: this.newDate.bind(this)
       });
     }, 2000);
   }
@@ -73,25 +84,77 @@ class NewTeam extends React.Component {
     // ();
     this.props.dispatch(
       createMatch(
-        {title: this.state.title, ladder: this.state.ladder},
+        {
+          team_1_id: this.props.params.id,
+          game_id: this.state.game_info.id,
+          ladder_id: this.state.team_info.ladder_id,
+          starts_at: this.state.starts_at,
+          match_type: this.state.match_type,
+          match_fee: this.state.match_type == 'paid' ? this.state.match_fee : ''
+        },
         this.props.user
       )
     );
+  }
+
+  isEligible() {
+    if (this.state.match_type == '' || this.state.starts_at == '') {
+      return false;
+    }
+    if (this.state.match_type == 'free') {
+      return true;
+    }
+    if (
+      this.state.match_type == 'paid' &&
+      (this.state.match_fee == '' || parseFloat(this.state.match_fee) <= 0)
+    ) {
+      return false;
+    }
+
+    const amount = parseFloat(this.state.match_fee);
+    for (let i = 0; i < this.state.team_info.team_users.length; i++) {
+      if (
+        parseFloat(this.state.team_info.team_users[i].user_info.cash_balance) <
+        amount
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  amIEligible(team_u) {
+    if (this.state.match_type == '') {
+      return '--';
+    }
+    if (this.state.match_type == 'free') {
+      return <span className="text-success">Eligible</span>;
+    }
+
+    const amount = parseFloat(this.state.match_fee);
+
+    if (parseFloat(team_u.user_info.cash_balance) < amount) {
+      return <span className="text-danger">Not Eligible</span>;
+    }
+    return <span className="text-success">Eligible</span>;
   }
   render() {
     return (
       <section className="middle_part_login">
         <div className="container">
           <div className="row">
-            <div className="col-md-12">
-              <div className="authorize_box">
+            <div className="col-md-8 offset-md-2">
+              <div className="authorize_box" style={{maxWidth: '100%'}}>
                 <div className="title_default_dark title_border text-center">
                   <h4>New Match</h4>
                 </div>
                 <div className="field_form authorize_form">
                   <Messages messages={this.props.messages} />
                   <br />
-                  <form onSubmit={this.handleCreation.bind(this)}>
+                  <form
+                    onSubmit={this.handleCreation.bind(this)}
+                    autoComplete="off"
+                  >
                     <div className="form-group col-md-12">
                       <label htmlFor="title">Team</label>
                       <br />
@@ -121,6 +184,8 @@ class NewTeam extends React.Component {
                           data-target="#starts_at"
                           placeholder="Match Start Date & Time"
                           name="starts_at"
+                          onChange={this.handleChange.bind(this)}
+
                           // value={this.state.starts_at}
                           // onChange={this.handleChange.bind(this)}
                         />
@@ -132,15 +197,40 @@ class NewTeam extends React.Component {
 
                     <div className="form-group col-md-12">
                       <label htmlFor="title">Match Type</label>
-                      <select required className="form-control">
+                      <select
+                        required
+                        onChange={this.handleChange.bind(this)}
+                        className="form-control"
+                        name="match_type"
+                        id="match_type"
+                      >
                         <option value="">Select</option>
                         <option value="free">Free</option>
                         <option value="paid">Paid</option>
                       </select>
                     </div>
 
+                    {this.state.match_type == 'paid' ? (
+                      <div className="form-group col-md-12">
+                        <label htmlFor="match_fee">Match Entry Fee</label>
+                        <input
+                          type="text"
+                          id="match_fee"
+                          className="form-control"
+                          onChange={this.handleChange.bind(this)}
+                          required=""
+                          data-toggle="datetimepicker"
+                          data-target="#match_fee"
+                          placeholder="Match Fees"
+                          name="match_fee"
+                        />
+                      </div>
+                    ) : (
+                      false
+                    )}
                     <div className="form-group col-md-12 text-center">
                       <button
+                        disabled={!this.isEligible()}
                         className="btn btn-default bttn_submit"
                         type="submit"
                       >
@@ -148,7 +238,6 @@ class NewTeam extends React.Component {
                       </button>
                     </div>
                   </form>
-
                   <div className="row">
                     <div className="col-md-12 col-sm-12 col-xs-12">
                       <div className="content_box">
@@ -162,7 +251,7 @@ class NewTeam extends React.Component {
                             <tr>
                               <th>Username</th>
                               <th>Role</th>
-                              <th>Date Joined</th>
+                              <th>Eligibility</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -186,13 +275,7 @@ class NewTeam extends React.Component {
                                         ? 'Leader'
                                         : 'Member'}
                                     </td>
-                                    <td>
-                                      {team_user.accepted
-                                        ? moment(team_user.created_at).format(
-                                            'lll'
-                                          )
-                                        : 'Not Yet'}
-                                    </td>
+                                    <td>{this.amIEligible(team_user)}</td>
                                   </tr>
                                 );
                               }

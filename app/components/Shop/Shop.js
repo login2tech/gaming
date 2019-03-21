@@ -312,7 +312,7 @@ class Shop extends React.Component {
             <div className="col-md-6">
               <div className="authorize_box text-center">
                 <div className="credit_summary ">
-                  Prime Membership
+                  Official Comp Membership
                   <br />
                   <br /> $5 / month
                 </div>
@@ -324,12 +324,12 @@ class Shop extends React.Component {
                       {this.props.user ? (
                         this.props.user.prime ? (
                           <p className="text-success">
-                            You are already a prime member
+                            You are already a Official Comp Member
                           </p>
                         ) : (
                           <input
                             type="submit"
-                            value="Buy Prime"
+                            value="Buy Official Comp Membership"
                             onClick={() => {
                               this.setState(
                                 {
@@ -350,7 +350,7 @@ class Shop extends React.Component {
                           to="/login"
                           className="btn btn-default bttn_submit"
                         >
-                          Get Prime
+                          Get Official Comp Membership
                         </Link>
                       )}
                     </div>

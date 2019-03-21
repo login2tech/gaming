@@ -51,6 +51,13 @@ class NewTeam extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="all_t_heading">Upcoming Matches</div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
+
+                <Link
+                  to={'/matchfinder/new/ '}
+                  className="btn btn-default bttn_submit"
+                >
+                  Create a match
+                </Link>
               </div>
             </div>
           </div>

@@ -231,14 +231,14 @@ class TeamInfo extends React.Component {
                     <div className="row">
                       <div className="col-md-4">
                         <span>
-                          <i className="fa fa-bar-chart" aria-hidden="true" />
+                          <i className="fa fa-gamepad" aria-hidden="true" />
                           {this.state.game.title}
                         </span>
                         <p>Game </p>
                       </div>
                       <div className="col-md-4">
                         <span>
-                          <i className="fa fa-bar-chart" aria-hidden="true" />
+                          <i className="fa fa-trophy" aria-hidden="true" />
                           {this.state.team_info.ladder &&
                             this.state.team_info.ladder.title}
                         </span>
@@ -246,7 +246,7 @@ class TeamInfo extends React.Component {
                       </div>
                       <div className="col-md-4">
                         <span>
-                          <i className="fa fa-bar-chart" aria-hidden="true" />
+                          <i className="fa fa-users" aria-hidden="true" />
                           Min:{' '}
                           {this.state.team_info.ladder
                             ? this.state.team_info.ladder.min_players

@@ -759,7 +759,7 @@ class Profile extends React.Component {
           <div className="list_pad">
             <div className="row">
               <div className="col-md-6">
-                <h5 className="credit_summary">Prime Membership</h5>
+                <h5 className="credit_summary">Official Comp Membership</h5>
                 {this.props.user.prime ? (
                   <p>
                     <strong className="text-white">Status:</strong>{' '}

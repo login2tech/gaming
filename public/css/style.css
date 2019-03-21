@@ -4096,3 +4096,39 @@ a.bttn_submit:hover {
 }
 
 .max-width-300{max-width: 300px;}
+.list_pad i.fa {
+    margin-right: 5px;
+}
+
+.bootstrap-datetimepicker-widget .datepicker table, .bootstrap-datetimepicker-widget .datepicker table tr, .bootstrap-datetimepicker-widget .datepicker table th, .bootstrap-datetimepicker-widget .datepicker table thead, .bootstrap-datetimepicker-widget .datepicker table td {
+    border: 0 !important;
+}
+
+.bootstrap-datetimepicker-widget table td a{
+  color: #333;
+}
+
+.bootstrap-datetimepicker-widget .datepicker tr, .bootstrap-datetimepicker-widget .datepicker td {
+    padding: 5px;
+}
+.bootstrap-datetimepicker-widget.dropdown-menu {
+    width: 16rem !important
+}
+
+.bootstrap-datetimepicker-widget .list-unstyled {
+    padding: 1rem;
+}
+
+.bootstrap-datetimepicker-widget .picker-switch td span {
+    color: #333 !important;
+    background: #e8e8e8;
+}
+
+.bootstrap-datetimepicker-widget button[data-action] {
+    padding: 6px !important;
+}
+
+.flatpickr-day.disabled, .flatpickr-day.disabled:hover {
+    cursor: not-allowed;
+    color: rgba(57, 57, 57, 0.29);
+}
