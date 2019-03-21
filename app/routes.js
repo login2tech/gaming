@@ -28,6 +28,7 @@ import Tickets from './components/Tickets/MyTickets';
 
 import NewMatch from './components/Match/NewMatch';
 import MatchFinder from './components/Match/MatchFinder';
+import MatchInfo from './components/Match/MatchInfo';
 
 import Shop from './components/Shop/Shop';
 
@@ -75,7 +76,8 @@ export default function getRoutes(store) {
       />
       <Route path="/forums/:id/:title" component={Threads} />
       <Route path="/forums" component={Topics} />
-      <Route path="/MatchFinder" component={MatchFinder} />
+      <Route path="/matchfinder" component={MatchFinder} />
+      <Route path="/m/:match_id" component={MatchInfo} />
       <Route
         path="/matchfinder/new/:ladder/:id"
         component={NewMatch}

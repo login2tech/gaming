@@ -5,7 +5,7 @@ const moment = require('moment');
 
 // import Messages from '../Modules/Messages';
 
-class MatchFinder extends React.Component {
+class MatchInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,7 +20,7 @@ class MatchFinder extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
   componentDidMount() {
-    fetch('/api/matches/upcoming')
+    fetch('/api/mathes/upcoming')
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -98,38 +98,31 @@ class MatchFinder extends React.Component {
                                 to={this.matchLink('/m/' + match.id)}
                                 className="tournament-name"
                               >
-                                {match.game.title} - {match.ladder.title}
+                                Manila masters Toronto 4v4
                               </Link>
 
                               <span className="date">
-                                {moment(match.starts_at).format('lll')}
+                                Oct.09.2018 - 02:35 PM
                               </span>
-                              <span className="date">
-                                Starts {moment(match.starts_at).fromNow()}
-                              </span>
+
+                              <figure>
+                                <img src="images/test.png" alt="Fortnite" />
+                              </figure>
                             </div>
 
                             <div className="tournament-footer">
                               <div className="col">
                                 <div className="col-item">
-                                  <h5>Status</h5>
-                                  <p>{match.status}</p>
+                                  <h5>2 Groups</h5>
+                                  <p>62 Teams</p>
                                 </div>
                                 <div className="col-item">
-                                  <h5>TYPE</h5>
-                                  <p>
-                                    {match.match_type == 'paid'
-                                      ? 'CASHOUT'
-                                      : 'LADDER'}
-                                  </p>
+                                  <h5>PLAYOUT</h5>
+                                  <p>ROUND ROBIN</p>
                                 </div>
                                 <div className="col-item">
                                   <h5>Prize pool</h5>
-                                  <p>
-                                    {match.match_type == 'paid'
-                                      ? '$ ' + match.match_fee + ' USD'
-                                      : '--'}
-                                  </p>
+                                  <p>$ 450 USD</p>
                                 </div>
                               </div>
 
@@ -166,4 +159,4 @@ const mapStateToProps = state => {
   };
 };
 // export default SingleThread;
-export default connect(mapStateToProps)(MatchFinder);
+export default connect(mapStateToProps)(MatchInfo);

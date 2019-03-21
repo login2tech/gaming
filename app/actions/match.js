@@ -16,7 +16,7 @@ export function createMatch(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          browserHistory.push('/m/' + json.match.id);
+          window.location.href = '/m/' + json.match.id;
         });
       } else {
         return response.json().then(json => {

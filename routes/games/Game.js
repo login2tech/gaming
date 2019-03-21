@@ -8,4 +8,4 @@ const Game = bookshelf.Model.extend({
   }
 });
 
-module.exports = Game;
+module.exports = bookshelf.model('Game', Game);

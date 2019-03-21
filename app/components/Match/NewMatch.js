@@ -15,9 +15,9 @@ class NewTeam extends React.Component {
       games: [],
       team_info: {ladder: {title: ''}, team_users: [], title: ''},
       game_info: {title: ''},
-      starts_at: '',
+      starts_at: new Date(new Date().getTime() + 10 * 60 * 1000),
       match_type: '',
-      match_fee: ''
+      match_fee: 0
     };
   }
 
@@ -69,7 +69,8 @@ class NewTeam extends React.Component {
         enableTime: true,
         dateFormat: 'Y-m-d H:i',
         stepMinute: 10, //intervals of minutes
-        minDate: new Date(new Date().getTime() + 10 * 60 * 1000),
+        minDate: this.state.starts_at,
+        defaultDate: this.state.starts_at,
         // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
         minuteIncrement: 10,
         maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
