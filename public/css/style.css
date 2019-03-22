@@ -4132,3 +4132,69 @@ a.bttn_submit:hover {
     cursor: not-allowed;
     color: rgba(57, 57, 57, 0.29);
 }
+
+
+.baris {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    background: #2847f3;
+}
+
+.baris li {
+    display: inline-block;
+}
+
+.baris li a{
+  padding: 10px 30px;
+    display: inline-block;cursor: pointer;
+}
+
+
+.baris li.active {
+    background: #000;
+}
+
+
+ul.timeline {
+    list-style-type: none;
+    position: relative;
+    padding-left: 3rem;
+}
+ul.timeline:before {
+    content: ' ';
+    background: #d4d9df;
+    display: inline-block;
+    position: absolute;
+    left: 29px;
+    width: 2px;
+    height: 100%;
+    z-index: 400;
+}
+ul.timeline > li {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+ul.timeline > li:before {
+    content: ' ';
+    background: white;
+    display: inline-block;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #22c0e8;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+}
+
+.card.gedf-card {
+    background: #000;
+}
+
+.gedf-card .nav-item .active, .gedf-card .nav-item a:hover {
+    background-color: #2847f3;
+    color: #fff;
+    border-color: #2847f3;
+}

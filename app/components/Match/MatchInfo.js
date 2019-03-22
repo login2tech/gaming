@@ -2,8 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
+import {join_match, saveScores} from '../../actions/match';
 
-// import Messages from '../Modules/Messages';
+import Messages from '../Modules/Messages';
 
 class MatchInfo extends React.Component {
   constructor(props) {
@@ -17,7 +18,9 @@ class MatchInfo extends React.Component {
         team_2_info: {team_users: []}
       },
       ladder: '',
-      games: []
+      games: [],
+      my_score: '',
+      their_score: ''
     };
   }
 
@@ -27,6 +30,17 @@ class MatchInfo extends React.Component {
 
   agreeToTermsForMatchJoin(event) {
     event.preventDefault();
+
+    this.props.dispatch(
+      join_match(
+        {
+          team_2_id: this.state.team_selected.id,
+          match_id: this.state.match.id
+        },
+        this.props.user
+      )
+    );
+
     // diptach
   }
 
@@ -99,6 +113,36 @@ class MatchInfo extends React.Component {
     return '/login';
   }
 
+  saveScore() {
+    // const scrore = '';
+    const val = {};
+    const me = this.props.user.id;
+    console.log(
+      me,
+      this.state.match.team_1_info.team_creator,
+      this.state.match.team_2_info.team_creator,
+      this.state.match.team_2_result
+    );
+    if (
+      me == this.state.match.team_1_info.team_creator &&
+      this.state.match.team_1_result == ''
+    ) {
+      val.team_1_result =
+        '' + this.state.my_score + '-' + this.state.their_score;
+    }
+
+    if (
+      me == this.state.match.team_2_info.team_creator &&
+      this.state.match.team_2_result == ''
+    ) {
+      val.team_2_result =
+        '' + this.state.their_score + '-' + this.state.my_score;
+    }
+    val.id = this.state.match.id;
+    console.log(val);
+    this.props.dispatch(saveScores(val, this.props.user));
+  }
+
   showMatch() {
     fetch(
       '/api/teams/team_of_user/?uid=' +
@@ -135,6 +179,7 @@ class MatchInfo extends React.Component {
     if (this.state.match.team_2_id) {
       return false;
     }
+
     // return false;
     const me = this.props.user.id;
     const users = this.state.match.team_1_info.team_users;
@@ -154,6 +199,143 @@ class MatchInfo extends React.Component {
       >
         Join Match
       </button>
+    );
+  }
+
+  dynamicStatus() {
+    if (!this.state.match.team_2_id) {
+      return 'Expired';
+    }
+    if (!this.state.match.team_1_result && !this.state.match.team_2_result) {
+      return 'Pending Results';
+    }
+    if (!this.state.match.team_1_result || !this.state.match.team_2_result) {
+      return 'Pending Results Confirmation';
+    }
+    if (this.state.match.team_1_result != this.state.match.team_2_result) {
+      return 'Disputed';
+    }
+
+    let result;
+
+    if (this.state.match.result == 'tie') {
+      result = 'Tie';
+    } else {
+      if (this.state.match.result == 'team_1') {
+        result = 'Team 1 Wins';
+      } else {
+        result = 'Team 2 Wins';
+      }
+    }
+
+    return 'Complete - ' + result;
+  }
+
+  renderScoreSubmit() {
+    if (!moment().isAfter(moment(this.state.match.starts_at))) {
+      return 'a';
+    }
+    const me = this.props.user.id;
+    if (
+      me != this.state.match.team_1_info.team_creator &&
+      this.state.match.team_2_info.team_creator != me
+    ) {
+      return 'b';
+    }
+
+    if (
+      me == this.state.match.team_1_info.team_creator &&
+      this.state.match.team_1_result != ''
+    ) {
+      return (
+        <p className="text-success">
+          You have updated score as {this.state.match.team_1_result}
+        </p>
+      );
+    }
+
+    if (
+      me == this.state.match.team_2_info.team_creator &&
+      this.state.match.team_2_result != ''
+    ) {
+      return (
+        <p className="text-success">
+          You have updated score as {this.state.match.team_2_result}
+        </p>
+      );
+    }
+
+    // i have submitted?
+
+    //
+    //     my_score
+    // their_score
+
+    return (
+      <div>
+        <h5 className="prizes_desclaimer">Report Scrore</h5>
+
+        <div className="well well-sm well-dark margin-20">
+          <form
+            className="light-form"
+            onSubmit={event => {
+              event.preventDefault();
+              this.saveScore();
+            }}
+          >
+            <Messages messages={this.props.messages} />
+            <div className="row">
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="my_score">My Team Score</label>
+                  <p>How many rounds did your team win?</p>
+                  <input
+                    className="form-control "
+                    type="text"
+                    name="my_score"
+                    id="my_score"
+                    value={this.state.my_score}
+                    required
+                    placeholder="Your Team Score"
+                    onChange={this.handleChange.bind(this)}
+                  />
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="form-group">
+                  <label htmlFor="their_score">Opponent Team Score</label>
+                  <p>How many rounds did the oppenent team win?</p>
+                  <input
+                    className="form-control "
+                    type="text"
+                    name="their_score"
+                    id="their_score"
+                    value={this.state.their_score}
+                    required
+                    placeholder="Opponent Team Score"
+                    onChange={this.handleChange.bind(this)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <button
+                  type="submit"
+                  className="btn  btn-primary margin-5 max-width-300"
+                  disabled={
+                    this.state.my_score == '' || this.state.their_score == ''
+                  }
+                >
+                  Report Match Score
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <br />
+        <br />
+      </div>
     );
   }
 
@@ -188,7 +370,9 @@ class MatchInfo extends React.Component {
                     {this.state.match.ladder.title}
                   </span>
                   <div className="match_start_date">
-                    Match Starts:{' '}
+                    {moment().isAfter(moment(this.state.match.starts_at))
+                      ? 'Match Started:'
+                      : 'Match Starts'}{' '}
                     {moment(this.state.match.starts_at).format('lll')} ({' '}
                     {moment(this.state.match.starts_at).fromNow()} )
                   </div>
@@ -210,7 +394,11 @@ class MatchInfo extends React.Component {
 
                       <div className="col-md-4">
                         <span> STATUS</span>
-                        <p>{this.state.match.status}</p>
+                        <p>
+                          {moment().isAfter(moment(this.state.match.starts_at))
+                            ? this.dynamicStatus()
+                            : this.state.match.status}
+                        </p>
                       </div>
 
                       <div className="col-md-4">
@@ -234,6 +422,8 @@ class MatchInfo extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
+                {this.renderScoreSubmit()}
+
                 {/*}   <h5 className="prizes_desclaimer">Match Rules</h5>
                 <div className="list_pad">
                 <div className="row">

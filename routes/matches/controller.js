@@ -22,37 +22,62 @@ exports.listupcoming = function(req, res, next) {
       return res.status(200).send({ok: true, items: []});
     });
 };
-
-exports.approve = function(req, res, next) {
-  //
-  if (!req.body.team_id) {
-    res.status(400).send({ok: false, msg: 'Please enter Team ID'});
-  }
-  new Ite({team_id: req.body.team_id, user_id: req.user.id})
+exports.saveScore = function(req, res, next) {
+  new Item({id: req.body.id})
     .fetch()
-    .then(function(teamusr) {
-      if (!teamusr) {
+    .then(function(match) {
+      if (!match) {
         res.status(400).send({
           ok: false,
-          msg: 'You were never invited'
+          msg: 'Match doesnt exist'
         });
         return;
       }
-      teamusr
-        .save({
-          accepted: true
-        })
-        .then(function() {
+      const val = req.body;
+      const tmp = match.toJSON();
+      if (tmp.team_1_result != '' && tmp.team_2_result != '') {
+        return res.status(400).send({ok: false, msg: 'Result already saved'});
+      }
+      if (val.team_1_result && tmp.team_2_result != '') {
+        val.team_2_result = tmp.team_2_result;
+      } else if (val.team_2_result && tmp.team_1_result != '') {
+        val.team_1_result = tmp.team_1_result;
+      }
+
+      console.log(val);
+      if (val.team_1_result != '' && val.team_2_result != '') {
+        if (val.team_1_result != val.team_2_result) {
+          val.status = 'disputed';
+          val.result = 'disputed';
+        } else {
+          const tmp = val.team_1_result.split('-');
+          if (parseInt(tmp[0]) > parseInt(tmp[1])) {
+            val.result = 'team_1';
+            val.status = 'Complete';
+          } else if (parseInt(tmp[1]) > parseInt(tmp[0])) {
+            val.result = 'team_2';
+            val.status = 'Complete';
+          } else {
+            val.status = 'tie';
+            val.result = 'Tie';
+          }
+        }
+      }
+      console.log(val);
+      match
+        .save(val)
+        .then(function(match) {
           res.status(200).send({
             ok: true,
-            msg: 'Accepted successfully.'
+            msg: 'Score Updated successfully.',
+            match: match.toJSON()
           });
         })
         .catch(function(err) {
           console.log(err);
           res.status(400).send({
             ok: false,
-            msg: 'failed to accept invite'
+            msg: 'Failed to Save Score'
           });
         });
     })
@@ -60,71 +85,45 @@ exports.approve = function(req, res, next) {
       console.log(err);
       res.status(400).send({
         ok: false,
-        msg: 'failed to invite user'
+        msg: 'Failed to Save Score'
       });
     });
 };
-
-exports.invite = function(req, res, next) {
+exports.join = function(req, res, next) {
   //
-  if (!req.body.username || !req.body.team_id) {
-    res.status(400).send({ok: false, msg: 'Please enter username'});
+  if (!req.body.team_2_id) {
+    res.status(400).send({ok: false, msg: 'Please enter Team ID'});
   }
-  new Item({id: req.body.team_id})
-    .fetch({withRelated: ['team_users', 'team_users.user_info']})
-    .then(function(team) {
-      team = team.toJSON();
-
-      let team_user;
-      for (let i = 0; i < team.team_users.length; i++) {
-        team_user = team.team_users[i].user_info;
-        if (team_user.username == req.body.username) {
-          res.status(400).send({
-            ok: false,
-            msg: 'User already a part of team or already invited.'
-          });
-          return;
-        }
+  if (!req.body.match_id) {
+    res.status(400).send({ok: false, msg: 'Please enter Match ID'});
+  }
+  new Item({id: req.body.match_id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        res.status(400).send({
+          ok: false,
+          msg: 'Match doesnt exist'
+        });
+        return;
       }
-      new User()
-        .where({
-          username: req.body.username
+      match
+        .save({
+          team_2_id: req.body.team_2_id,
+          status: 'accepted'
         })
-        .fetch()
-        .then(function(user) {
-          if (!user) {
-            res.status(400).send({
-              ok: false,
-              msg: 'Username does not exist.'
-            });
-            return;
-          }
-          const user_id = user.id;
-          new ItemChild({
-            team_id: team.id,
-            user_id: user_id,
-            accepted: false
-          })
-            .save()
-            .then(function() {
-              res.status(200).send({
-                ok: true,
-                msg: 'User invited successfully.'
-              });
-            })
-            .catch(function(err) {
-              console.log(err);
-              res.status(400).send({
-                ok: false,
-                msg: 'failed to invite user'
-              });
-            });
+        .then(function(match) {
+          res.status(200).send({
+            ok: true,
+            msg: 'Joined successfully.',
+            match: match.toJSON()
+          });
         })
         .catch(function(err) {
           console.log(err);
           res.status(400).send({
             ok: false,
-            msg: 'failed to invite user'
+            msg: 'Failed to Save Score'
           });
         });
     })
@@ -132,7 +131,7 @@ exports.invite = function(req, res, next) {
       console.log(err);
       res.status(400).send({
         ok: false,
-        msg: 'failed to invite user'
+        msg: 'Failed to Save Score'
       });
     });
 };

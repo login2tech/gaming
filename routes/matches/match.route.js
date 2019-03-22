@@ -7,8 +7,11 @@ module.exports = routes;
 
 routes.get('/list', ctrl.listItem);
 //routes.get('/team_of_user', ctrl.team_of_user);
-routes.post('/invite', u_ctrl.ensureAuthenticated, ctrl.invite);
-routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
+// routes.post('/invite', u_ctrl.ensureAuthenticated, ctrl.invite);
+routes.post('/join', u_ctrl.ensureAuthenticated, ctrl.join);
+routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);
+
+// routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
 routes.get('/user_info', ctrl.listItem);
 // routes.get('/listPaged', ctrl.listPaged);
 routes.get('/single/:id', ctrl.listSingleItem);
