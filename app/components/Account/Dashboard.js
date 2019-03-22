@@ -917,7 +917,7 @@ class Profile extends React.Component {
                       {this.props.user.first_name} {this.props.user.last_name}
                     </Link>
                   </h3>
-                  <div className="game_platform_icon">About</div>
+                  {/* <div className="game_platform_icon">About</div> */}
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-4">

@@ -18,7 +18,7 @@ exports.listupcoming = function(req, res, next) {
       return res.status(200).send({ok: true, items: item.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -28,7 +28,7 @@ exports.approve = function(req, res, next) {
   if (!req.body.team_id) {
     res.status(400).send({ok: false, msg: 'Please enter Team ID'});
   }
-  new ItemChild({team_id: req.body.team_id, user_id: req.user.id})
+  new Ite({team_id: req.body.team_id, user_id: req.user.id})
     .fetch()
     .then(function(teamusr) {
       if (!teamusr) {
@@ -136,33 +136,16 @@ exports.invite = function(req, res, next) {
       });
     });
 };
-exports.team_of_user = function(req, res, next) {
-  new ItemChild()
-    .where({
-      user_id: req.query.uid
-    })
-    .fetchAll({withRelated: ['team_info']})
-    .then(function(team_info) {
-      res.send({
-        teams: team_info.toJSON(),
-        ok: true
-      });
-    })
-    .catch(function(err) {
-      console.log(err);
-      return res.status(200).send({ok: true, teams: []});
-    });
-};
 
 exports.listItem = function(req, res, next) {
   new Item()
     // .where('id', req.params.id)
-    .fetchAll({withRelated: ['team_users', 'team_users.user_info', 'ladder']})
+    .fetchAll({withRelated: ['ladder', 'game', 'team_1_info']})
     .then(function(item) {
       if (!item) {
         return res.status(200).send({ok: true, items: []});
       }
-      return res.status(200).send({ok: true, items: item.toJSON()});
+      return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
       return res.status(200).send({ok: true, items: []});
@@ -196,7 +179,20 @@ exports.listPaged = function(req, res, next) {
 exports.listSingleItem = function(req, res, next) {
   new Item()
     .where('id', req.params.id)
-    .fetch({withRelated: ['team_users', 'team_users.user_info', 'ladder']})
+    .fetch({
+      withRelated: [
+        'ladder',
+        'game',
+        'team_1_info',
+
+        'team_1_info.team_users',
+        'team_1_info.team_users.user_info',
+        'team_2_info',
+
+        'team_2_info.team_users',
+        'team_2_info.team_users.user_info'
+      ]
+    })
     .then(function(item) {
       if (!item) {
         return res.status(200).send({id: req.params.id});

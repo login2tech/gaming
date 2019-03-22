@@ -6,7 +6,7 @@ const ctrl = require('./controller.js');
 module.exports = routes;
 
 routes.get('/list', ctrl.listItem);
-routes.get('/team_of_user', ctrl.team_of_user);
+//routes.get('/team_of_user', ctrl.team_of_user);
 routes.post('/invite', u_ctrl.ensureAuthenticated, ctrl.invite);
 routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
 routes.get('/user_info', ctrl.listItem);

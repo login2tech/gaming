@@ -143,11 +143,21 @@ exports.invite = function(req, res, next) {
     });
 };
 exports.team_of_user = function(req, res, next) {
-  new ItemChild()
-    .where({
-      user_id: req.query.uid
-    })
-    .fetchAll({withRelated: ['team_info']})
+  const a = new ItemChild().where({
+    user_id: req.query.uid
+  });
+  // if (req.query.filter_ladder) {
+  //   a = a.where({
+  //     ladder_id: req.query.filter_ladder
+  //   });
+  // }
+  a.fetchAll({
+    withRelated: [
+      'team_info',
+      'team_info.team_users',
+      'team_info.team_users.user_info'
+    ]
+  })
     .then(function(team_info) {
       res.send({
         teams: team_info.toJSON(),

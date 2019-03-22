@@ -12,7 +12,8 @@ class MatchFinder extends React.Component {
       title: '',
       matches: [],
       ladder: '',
-      games: []
+      games: [],
+      is_loaded: false
     };
   }
 
@@ -71,13 +72,13 @@ class MatchFinder extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="content">
                   <div id="tab1_content" className="content_boxes selected">
-                    {this.state.matches.length ? (
-                      false
-                    ) : (
+                    {this.state.is_loaded && this.state.matches.length < 1 ? (
                       <div className="alert alert-warning">
                         There are no active matches. Please check back later or
                         start a new match
                       </div>
+                    ) : (
+                      false
                     )}
                     <ul
                       id="upcoming-tournament"

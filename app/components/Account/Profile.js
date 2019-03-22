@@ -123,7 +123,31 @@ class Profile extends React.Component {
                     {this.state.user_info.first_name}{' '}
                     {this.state.user_info.last_name}
                   </h3>
+
                   <div className="list_pad">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <span> MEMBER SINCE</span>
+                        <p>
+                          {moment(this.props.user.created_at).format('lll')}
+                        </p>
+                      </div>
+
+                      <div className="col-md-4">
+                        <span> TIME ZONE </span>
+                        <p>
+                          {this.props.user.timezone
+                            ? this.props.user.timezone
+                            : '-'}
+                        </p>
+                      </div>
+                      {/*}
+                      <div className="col-md-4">
+                        <span>LIFETIME EARNINGS</span>
+                        <p>12/30/18 2:00PM</p>
+                      </div>*/}
+                    </div>
+
                     <div className="row">
                       {/*}<div className="col-md-4">
                         <span>
@@ -195,8 +219,8 @@ class Profile extends React.Component {
                         : {};
                       return (
                         <li className="item" key={team.id}>
-                          <a
-                            href={
+                          <Link
+                            to={
                               '/u/' +
                               this.state.user_info.username +
                               '/teams/' +
@@ -205,7 +229,7 @@ class Profile extends React.Component {
                           >
                             <img src="/images/team_bg.png" />
                             <div className="info">{team.title}</div>
-                          </a>
+                          </Link>
                         </li>
                       );
                     })}
