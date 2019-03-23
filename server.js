@@ -308,6 +308,9 @@ app.use('/api/tickets', ticketsRoutes);
 const ticket_repliesRoutes = require('./routes/TicketReplies/ticketreply.route.js');
 app.use('/api/ticket_replies', ticket_repliesRoutes);
 
+const posts_route = require('./routes/posts/post.route.js');
+app.use('/api/posts', posts_route);
+
 app.get(
   '/api/cms_pages/list',
   userController.ensureAuthenticated,

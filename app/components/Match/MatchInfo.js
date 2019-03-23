@@ -232,15 +232,18 @@ class MatchInfo extends React.Component {
   }
 
   renderScoreSubmit() {
+    if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
+      return false;
+    }
     if (!moment().isAfter(moment(this.state.match.starts_at))) {
-      return 'a';
+      return false;
     }
     const me = this.props.user.id;
     if (
       me != this.state.match.team_1_info.team_creator &&
       this.state.match.team_2_info.team_creator != me
     ) {
-      return 'b';
+      return false;
     }
 
     if (
@@ -268,7 +271,7 @@ class MatchInfo extends React.Component {
     // i have submitted?
 
     //
-    //     my_score
+    // my_score
     // their_score
 
     return (

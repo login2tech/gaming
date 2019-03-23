@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
-
+import {add_post} from '../../actions/social';
+import axios from 'axios';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -10,8 +11,16 @@ class Profile extends React.Component {
       user_info: {},
       user_teams: [],
       renderTab: 'profile',
-      match_played: []
+      match_played: [],
+      new_post_type: 'text',
+      new_post_image: '',
+      new_post_video: '',
+      posts_page: 1
     };
+  }
+
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value});
   }
 
   componentDidMount() {
@@ -53,7 +62,7 @@ class Profile extends React.Component {
               user_teams: json.teams
             },
             () => {
-              // this.fetchMatches();
+              this.fetchPosts();
             }
           );
         }
@@ -61,14 +70,41 @@ class Profile extends React.Component {
   }
 
   fetchMatches() {
-    // return;
-    fetch('/api/matches/matches_of_user?uid=' + this.state.user_info.id)
+    let team_array = [];
+    for (let i = 0; i < this.state.user_teams.length; i++) {
+      const team_parent = this.state.user_teams[i];
+      const team = team_parent.team_info ? team_parent.team_info : {};
+      team_array.push(team.id);
+    }
+    team_array = team_array.join(',');
+
+    fetch(
+      '/api/matches/matches_of_user?=' +
+        this.state.user_info.id +
+        '&teams=' +
+        team_array
+    )
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           this.setState(
             {
-              match_played: json.matches
+              match_played: json.items
+            },
+            () => {}
+          );
+        }
+      });
+  }
+
+  fetchPosts() {
+    fetch('/api/posts/list/my?page=' + this.state.posts_page)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              posts: json.items
             },
             () => {
               this.fetchMatches();
@@ -78,14 +114,98 @@ class Profile extends React.Component {
       });
   }
 
+  doPostNew(event) {
+    event.preventDefault();
+
+    this.props.dispatch(
+      add_post(
+        {
+          post_type: this.state.new_post_type,
+          image_url: this.state.new_post_image,
+          video_url: this.state.new_post_video,
+          content: this.state.new_post_content
+        },
+        this.props.token,
+        (result, post) => {
+          if (result) {
+            const posts = this.state.posts;
+            posts.unshift(post);
+            this.setState({
+              posts: posts,
+              new_post_type: 'text',
+              new_post_image: '',
+              new_post_video: '',
+              new_post_content: ''
+            });
+          }
+        }
+      )
+    );
+  }
+
+  askFile(cls, cb) {
+    // console.log('here');
+    const data = new FormData();
+    data.append('file', this.state[cls], this.state[cls].name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          // this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
+        }
+      })
+      .then(res => {
+        cb && cb(res.data);
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        // console.log(err);
+      });
+  }
+
+  handleImageUpload = event => {
+    this.setState(
+      {
+        post_image_select: event.target.files[0]
+      },
+      () => {
+        this.askFile('post_image_select', data => {
+          if (data && data.file) {
+            this.setState({
+              new_post_image: data.file
+            });
+          }
+        });
+      }
+    );
+  };
+
+  handleVideoUpload = event => {
+    this.setState(
+      {
+        post_video_select: event.target.files[0]
+      },
+      () => {
+        this.askFile('post_video_select', data => {
+          if (data && data.file) {
+            this.setState({
+              new_post_video: data.file
+            });
+          }
+        });
+      }
+    );
+  };
+
   render() {
     const divStyle = this.state.new_cover_pic
       ? {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
-      : this.props.user.cover_picture
+      : this.state.user_info && this.state.user_info.cover_picture
         ? {
-            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+            backgroundImage: 'url(' + this.state.user_info.cover_picture + ')'
           }
         : {};
     return (
@@ -99,9 +219,10 @@ class Profile extends React.Component {
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
                 <div className="game_pic_tournament">
-                  {this.props.user.profile_picture ? (
+                  {this.state.user_info &&
+                  this.state.user_info.profile_picture ? (
                     <img
-                      src={this.props.user.profile_picture}
+                      src={this.state.user_info.profile_picture}
                       className="img-fluid profile_pic_outline"
                     />
                   ) : (
@@ -109,9 +230,9 @@ class Profile extends React.Component {
                       className="img-fluid profile_pic_outline"
                       src={
                         'https://ui-avatars.com/api/?size=512&name=' +
-                        this.props.user.first_name +
+                        this.state.user_info.first_name +
                         ' ' +
-                        this.props.user.last_name +
+                        this.state.user_info.last_name +
                         '&color=223cf3&background=000000'
                       }
                     />
@@ -121,8 +242,8 @@ class Profile extends React.Component {
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3>
-                    {this.state.user_info.first_name}{' '}
-                    {this.state.user_info.last_name}
+                    {this.state.user_info && this.state.user_info.first_name}{' '}
+                    {this.state.user_info && this.state.user_info.last_name}
                   </h3>
 
                   <div className="list_pad">
@@ -130,15 +251,17 @@ class Profile extends React.Component {
                       <div className="col-md-4">
                         <span> MEMBER SINCE</span>
                         <p>
-                          {moment(this.props.user.created_at).format('lll')}
+                          {moment(this.state.user_info.created_at).format(
+                            'lll'
+                          )}
                         </p>
                       </div>
 
                       <div className="col-md-4">
                         <span> TIME ZONE </span>
                         <p>
-                          {this.props.user.timezone
-                            ? this.props.user.timezone
+                          {this.state.user_info.timezone
+                            ? this.state.user_info.timezone
                             : '-'}
                         </p>
                       </div>
@@ -167,6 +290,19 @@ class Profile extends React.Component {
                     </div>
                   </div>
                 </div>
+                {this.props.user &&
+                this.props.user.id != this.state.user_info.id ? (
+                  <Link
+                    onClick={() => {
+                      this.addFriend();
+                    }}
+                    className="btn btn-default bttn_submit"
+                  >
+                    Add as friend
+                  </Link>
+                ) : (
+                  false
+                )}
               </div>
             </div>
           </div>
@@ -337,8 +473,8 @@ class Profile extends React.Component {
                           <th>Match</th>
                           <th>Team</th>
                           <th>Opponent</th>
-                          <th>UserXP</th>
-                          <th>DoubleXP</th>
+                          <th>Result</th>
+                          {/* <th>DoubleXP</th> */}
                           <th>Date</th>
                           <th>Info</th>
                         </tr>
@@ -350,10 +486,26 @@ class Profile extends React.Component {
                               <td>
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
-                              <td>{match.team_1_info.title}</td>
-                              <td>{match.team_2_info.title}</td>
-                              <td>{''}</td>
-                              <td>{''}</td>
+                              <td>
+                                {match.team_1_info
+                                  ? match.team_1_info.title
+                                  : ''}
+                              </td>
+                              <td>
+                                {match.team_2_info
+                                  ? match.team_2_info.title
+                                  : ''}
+                              </td>
+                              <td>
+                                {match.result
+                                  ? match.result == 'team_1'
+                                    ? 'Team 1 Wins'
+                                    : match.result == 'team_2'
+                                      ? 'Team 2 Wins'
+                                      : match.result
+                                  : match.status}
+                              </td>
+                              {/* <td>{''}</td> */}
                               <td>{moment(match.created_at).format('lll')}</td>
                               <td>
                                 {' '}
@@ -400,92 +552,191 @@ class Profile extends React.Component {
                 <div className="col-md-12 col-sm-12 col-xs-12">
                   <div className="row">
                     <div className="col-md-6 offset-md-3">
-                      <div className="card gedf-card">
-                        <div className="card-header">
-                          <ul
-                            className="nav nav-tabs card-header-tabs"
-                            id="myTab"
-                            role="tablist"
-                          >
-                            <li className="nav-item">
-                              <a
-                                className="nav-link active"
-                                id="posts-tab"
-                                data-toggle="tab"
-                                href="#posts"
-                                role="tab"
-                                aria-controls="posts"
-                                aria-selected="true"
-                              >
-                                Make a publication
-                              </a>
-                            </li>
-                            <li className="nav-item">
-                              <a
-                                className="nav-link"
-                                id="images-tab"
-                                data-toggle="tab"
-                                role="tab"
-                                aria-controls="images"
-                                aria-selected="false"
-                                href="#images"
-                              >
-                                Images
-                              </a>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="card-body">
-                          <div className="tab-content" id="myTabContent">
-                            <div
-                              className="tab-pane fade show active"
-                              id="posts"
-                              role="tabpanel"
-                              aria-labelledby="posts-tab"
+                      <form
+                        onSubmit={event => {
+                          this.doPostNew(event);
+                        }}
+                      >
+                        <div className="card gedf-card">
+                          <div className="card-header">
+                            <ul
+                              className="nav nav-tabs card-header-tabs"
+                              id="myTab"
+                              role="tablist"
                             >
-                              <div className="form-group">
-                                <label className="sr-only" htmlFor="message">
-                                  post
-                                </label>
-                                <textarea
-                                  className="form-control"
-                                  id="message"
-                                  rows="3"
-                                  placeholder="What are you thinking?"
-                                />
-                              </div>
-                            </div>
-                            <div
-                              className="tab-pane fade"
-                              id="images"
-                              role="tabpanel"
-                              aria-labelledby="images-tab"
-                            >
-                              <div className="form-group">
-                                <div className="custom-file">
-                                  <input
-                                    type="file"
-                                    className="custom-file-input"
-                                    id="customFile"
+                              <li className="nav-item">
+                                <a
+                                  className={
+                                    'nav-link' +
+                                    (this.state.new_post_type == 'text'
+                                      ? ' active '
+                                      : '')
+                                  }
+                                  id="posts-tab"
+                                  // data-toggle="tab"
+                                  // href="#posts"
+                                  // role="tab"
+                                  // aria-controls="posts"
+                                  // aria-selected="true/"
+                                  onClick={() => {
+                                    this.setState({
+                                      new_post_type: 'text',
+                                      new_post_image: '',
+                                      new_post_video: '',
+                                      post_video_select: ''
+                                    });
+                                  }}
+                                >
+                                  Post
+                                </a>
+                              </li>
+                              <li className="nav-item">
+                                <a
+                                  className={
+                                    'nav-link' +
+                                    (this.state.new_post_type == 'image'
+                                      ? ' active '
+                                      : '')
+                                  }
+                                  id="images-tab"
+                                  onClick={() => {
+                                    this.setState({
+                                      new_post_type: 'image',
+                                      // new_post_image: '',
+                                      new_post_video: '',
+                                      post_image_select: ''
+                                    });
+                                  }}
+                                  // data-toggle="tab"
+                                  // role="tab"
+                                  // aria-controls="images"
+                                  // aria-selected="false"
+                                  // href="#images"
+                                >
+                                  <i className="fa fa-image" />
+                                </a>
+                              </li>
+                              <li className="nav-item">
+                                <a
+                                  className={
+                                    'nav-link' +
+                                    (this.state.new_post_type == 'video'
+                                      ? ' active '
+                                      : '')
+                                  }
+                                  id="videos-tab"
+                                  // data-toggle="tab"
+                                  // role="tab"
+                                  // aria-controls="videos"
+                                  // aria-selected="false"
+                                  // href="#videos"
+                                  onClick={() => {
+                                    this.setState({
+                                      new_post_type: 'video',
+                                      new_post_image: ''
+                                      // new_post_video: ''
+                                    });
+                                  }}
+                                >
+                                  <i className="fa fa-video-camera" />
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="card-body">
+                            <div className="tab-content" id="myTabContent">
+                              <div
+                                className="tab-pane fade show active"
+                                id="posts"
+                                role="tabpanel"
+                                aria-labelledby="posts-tab"
+                              >
+                                {this.state.new_post_type == 'image' ? (
+                                  <div className="custom-file">
+                                    <input
+                                      type="file"
+                                      className="custom-file-input"
+                                      id="customFile"
+                                      onChange={this.handleImageUpload}
+                                    />
+                                    <label
+                                      className="custom-file-label"
+                                      htmlFor="customFile"
+                                    >
+                                      Upload image
+                                    </label>
+                                  </div>
+                                ) : (
+                                  false
+                                )}
+
+                                {this.state.new_post_type == 'video' ? (
+                                  <div className="custom-file">
+                                    <input
+                                      type="file"
+                                      className="custom-file-input"
+                                      id="customFile"
+                                      onChange={this.handleVideoUpload}
+                                    />
+                                    <label
+                                      className="custom-file-label"
+                                      htmlFor="customFile"
+                                    >
+                                      Upload video
+                                    </label>
+                                  </div>
+                                ) : (
+                                  false
+                                )}
+                                {this.state.new_post_image != '' ? (
+                                  <img
+                                    src={this.state.new_post_image}
+                                    className="img-fluid"
+                                    style={{marginBottom: '10px'}}
                                   />
-                                  <label
-                                    className="custom-file-label"
-                                    htmlFor="customFile"
+                                ) : (
+                                  false
+                                )}
+
+                                {this.state.new_post_video != '' ? (
+                                  <div
+                                    className="embed-responsive embed-responsive-21by9"
+                                    style={{marginBottom: '10px'}}
                                   >
-                                    Upload image
-                                  </label>
+                                    <video>
+                                      <source
+                                        src={this.state.new_post_video}
+                                        type="video/mp4"
+                                      />
+                                    </video>
+                                  </div>
+                                ) : (
+                                  false
+                                )}
+                                <div className="form-group">
+                                  <textarea
+                                    className="form-control"
+                                    id="new_post_content"
+                                    required
+                                    rows="3"
+                                    value={this.state.new_post_content}
+                                    placeholder="What are you thinking?"
+                                    name="new_post_content"
+                                    onChange={this.handleChange.bind(this)}
+                                  />
                                 </div>
                               </div>
-                              <div className="py-4" />
                             </div>
-                          </div>
-                          <div className="btn-toolbar justify-content-between">
-                            <div className="btn-group">
-                              <button type="submit" className="btn btn-primary">
-                                share
-                              </button>
-                            </div>
-                            <div className="btn-group">
+                            <div className="btn-toolbar justify-content-between">
+                              <div className="btn-group">
+                                <button
+                                  type="submit"
+                                  className="btn btn-primary"
+                                >
+                                  share
+                                </button>
+                              </div>
+                              {/* <div className="btn-group">
                               <button
                                 id="btnGroupDrop1"
                                 type="button"
@@ -510,22 +761,47 @@ class Profile extends React.Component {
                                   <i className="fa fa-user" /> Just me
                                 </a>
                               </div>
+                            </div> */}
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </form>
 
                       <br />
                       <h4 className="text-white">Latest Posts</h4>
                       <ul className="timeline">
-                        {this.state.timeline &&
-                          this.state.timeline.map((post, i) => {
+                        {this.state.posts &&
+                          this.state.posts.map((post, i) => {
                             return (
                               <li key={post.id}>
-                                <span className="float-right">
+                                <span className="text-date">
                                   {moment(post.created_at).format('lll')}
                                 </span>
-                                <p>{post.content}</p>
+                                {post.image_url ? (
+                                  <img
+                                    src={post.image_url}
+                                    className="img-fluid"
+                                    style={{marginBottom: '10px'}}
+                                  />
+                                ) : (
+                                  false
+                                )}
+                                {post.video_url ? (
+                                  <div
+                                    className="embed-responsive embed-responsive-21by9"
+                                    style={{marginBottom: '10px'}}
+                                  >
+                                    <video controls>
+                                      <source
+                                        src={post.video_url}
+                                        type="video/mp4"
+                                      />
+                                    </video>
+                                  </div>
+                                ) : (
+                                  false
+                                )}
+                                <p>{post.post}</p>
                               </li>
                             );
                           })}

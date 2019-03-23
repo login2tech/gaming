@@ -6,6 +6,28 @@ const Item = require('./Match');
 const User = require('../../models/User');
 const ObjName = 'Match';
 
+exports.matches_of_user = function(req, res, next) {
+  const teams = req.query.teams.split(',');
+  // const uid = req.query.uid;
+  new Item()
+    .orderBy('created_at', 'DESC')
+
+    .query(function(qb) {
+      qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+    })
+    .fetchAll({withRelated: ['ladder', 'game', 'team_1_info', 'team_2_info']})
+    .then(function(item) {
+      if (!item) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      return res.status(200).send({ok: true, items: item.toJSON()});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
 exports.listupcoming = function(req, res, next) {
   new Item()
     .orderBy('created_at', 'DESC')

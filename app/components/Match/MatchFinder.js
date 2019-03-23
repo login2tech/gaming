@@ -55,12 +55,13 @@ class MatchFinder extends React.Component {
                 <div className="all_t_heading">Upcoming Matches</div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
 
-                <Link
+                {/*<Link
                   to={'/matchfinder/new/ '}
                   className="btn btn-default bttn_submit"
                 >
                   Create a match
                 </Link>
+                */}
               </div>
             </div>
           </div>

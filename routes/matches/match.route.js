@@ -11,6 +11,12 @@ routes.get('/list', ctrl.listItem);
 routes.post('/join', u_ctrl.ensureAuthenticated, ctrl.join);
 routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);
 
+routes.get(
+  '/matches_of_user',
+  u_ctrl.ensureAuthenticated,
+  ctrl.matches_of_user
+);
+
 // routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
 routes.get('/user_info', ctrl.listItem);
 // routes.get('/listPaged', ctrl.listPaged);
