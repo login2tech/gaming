@@ -117,12 +117,7 @@ class MatchInfo extends React.Component {
     // const scrore = '';
     const val = {};
     const me = this.props.user.id;
-    console.log(
-      me,
-      this.state.match.team_1_info.team_creator,
-      this.state.match.team_2_info.team_creator,
-      this.state.match.team_2_result
-    );
+
     if (
       me == this.state.match.team_1_info.team_creator &&
       !this.state.match.team_1_result
@@ -139,7 +134,7 @@ class MatchInfo extends React.Component {
         '' + this.state.their_score + '-' + this.state.my_score;
     }
     val.id = this.state.match.id;
-    console.log(val);
+    //console.log(val);
     this.props.dispatch(saveScores(val, this.props.user));
   }
 

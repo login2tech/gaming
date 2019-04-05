@@ -4328,3 +4328,76 @@ ul.submenu li a {
 .nav-list {
     justify-content: space-between;
 }
+
+.t-prizes-place {
+    border-bottom: 1px solid #000000;
+    padding: .5rem;
+    height: 3.7rem;
+    font-family: "Open Sans Condensed", sans-serif;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+}
+
+.t-prizes-place.p1 {
+    border-left: 0.4375rem solid #ecd370;
+}
+
+.t-prizes-amount {
+    font-size: 3rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: -2px;
+    line-height: 2em;
+}
+
+.t-prizes-amount span {
+    display: block;
+    text-align: center;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0px;
+    padding-bottom: .5rem;
+}
+
+.tourn-info-title {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #000000;
+    padding: .5rem;
+    font-family: "Open Sans Condensed", sans-serif;
+    text-transform: uppercase;
+    font-size: 0.9375rem;
+    line-height: 0.9375rem;
+}
+
+.tourn-info {
+    background-color: #2e3842;
+    border: 1px solid #2e3842;
+    margin-bottom: 1.5rem;
+}
+
+.tourn-info-game {
+    border-left: 0.1875rem solid #0065ff;
+}
+
+.tourn-info-box {
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.3rem;
+    padding: .5rem;
+}
+
+.t-prizes {
+    background-color: #2e3741;
+    border: 1px solid #2e3741;
+    margin-bottom: 2rem;
+}
+
+.t-prizes-place.p2 {
+    border-left: 0.4375rem solid #bbbbbb;
+}
+
+.t-prizes-place.p3 {
+    border-left: 0.4375rem solid #c0a290;
+}

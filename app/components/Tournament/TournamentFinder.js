@@ -98,7 +98,7 @@ class TournamentFinder extends React.Component {
                           >
                             <div className="tournament-body">
                               <Link
-                                to={this.matchLink('/m/' + match.id)}
+                                to={this.matchLink('/t/' + match.id)}
                                 className="tournament-name"
                               >
                                 {match.game.title} - {match.ladder.title}
@@ -117,7 +117,7 @@ class TournamentFinder extends React.Component {
                               </span>
 
                               <span className="date">
-                                Tournament Starts{' '}
+                                Tournament Starts
                                 {moment(match.starts_at).fromNow()}
                               </span>
                             </div>
@@ -125,33 +125,35 @@ class TournamentFinder extends React.Component {
                             <div className="tournament-footer">
                               <div className="col">
                                 <div className="col-item">
-                                  <h5>Status</h5>
-                                  <p>{match.status}</p>
+                                  <h5>Registered</h5>
+                                  <p>
+                                    {match.teams_registered
+                                      ? match.teams_registered
+                                      : 0}
+                                    {' / ' + match.total_teams}
+                                  </p>
                                 </div>
                                 <div className="col-item">
-                                  <h5>TYPE</h5>
-                                  <p>
-                                    {match.match_type == 'paid'
-                                      ? 'CASHOUT'
-                                      : 'LADDER'}
-                                  </p>
+                                  <h5>entry_fee</h5>
+                                  <p>${match.entry_fee}</p>
                                 </div>
                                 <div className="col-item">
                                   <h5>Prize pool</h5>
                                   <p>
-                                    {match.match_type == 'paid'
-                                      ? '$ ' + match.match_fee + ' USD'
-                                      : '--'}
+                                    $
+                                    {match.first_winner_price +
+                                      match.second_winner_price +
+                                      match.third_winner_price}
                                   </p>
                                 </div>
                               </div>
 
                               <div className="col align-right">
                                 <Link
-                                  to={this.matchLink('/m/' + match.id)}
+                                  to={this.matchLink('/t/' + match.id)}
                                   className="btn-default"
                                 >
-                                  Join Match
+                                  Join Tournament
                                 </Link>
                               </div>
                             </div>

@@ -31,6 +31,7 @@ import MatchFinder from './components/Match/MatchFinder';
 import MatchInfo from './components/Match/MatchInfo';
 
 import TournamentFinder from './components/Tournament/TournamentFinder';
+import TournamentInfo from './components/Tournament/TournamentInfo';
 
 import Shop from './components/Shop/Shop';
 
@@ -80,6 +81,7 @@ export default function getRoutes(store) {
       <Route path="/forums" component={Topics} />
       <Route path="/matchfinder" component={MatchFinder} />
       <Route path="/tournaments" component={TournamentFinder} />
+      <Route path="/t/:tournament_id" component={TournamentInfo} />
       <Route path="/m/:match_id" component={MatchInfo} />
       <Route
         path="/matchfinder/new/:ladder/:id"

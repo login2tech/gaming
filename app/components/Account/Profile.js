@@ -514,7 +514,7 @@ class Profile extends React.Component {
                                 is_loss = false;
                               }
                             } else {
-                              is_status = true;
+                              // is_status = true;
                             }
                           }
                           {
