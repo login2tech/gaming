@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const bcrypt = require('bcrypt-nodejs');
 const bookshelf = require('../config/bookshelf');
-
+const Team = require('../routes/teams/TeamUser');
 const User = bookshelf.Model.extend({
   tableName: 'users',
   hasTimestamps: true,
@@ -9,6 +9,12 @@ const User = bookshelf.Model.extend({
   initialize: function() {
     this.on('saving', this.hashPassword, this);
   },
+  //
+  teamuser: function() {
+    return this.hasMany(Team);
+  },
+
+  //
 
   hashPassword: function(model, attrs, options) {
     const password = options.patch ? attrs.password : model.get('password');
@@ -51,4 +57,8 @@ const User = bookshelf.Model.extend({
   }
 });
 
-module.exports = User;
+module.exports = bookshelf.model('User', User);
+
+// module.exports = ;
+
+// module.exports = User;

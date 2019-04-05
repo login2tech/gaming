@@ -26,7 +26,8 @@ angular
     'satellizer',
     'oitozero.ngSweetAlert',
     'angularTrix',
-    'autoCompleteModule'
+    'autoCompleteModule',
+    'angularjs-datetime-picker'
   ])
   .config(function($routeProvider, $locationProvider, $authProvider) {
     $locationProvider.html5Mode(true);

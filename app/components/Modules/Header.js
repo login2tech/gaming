@@ -36,16 +36,19 @@ const Header = props => {
                       <img src="/images/logo.png" alt="onlycompgaming" />
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link className="navbar-brand" to="/">
                       Home
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/matchfinder">MatchFinder</Link>
                   </li>
                   <li>
                     <Link to="/tournaments">Tournaments</Link>
+                  </li>
+                  <li>
+                    <Link to="/feed">Social Feed</Link>
                   </li>
                   <li>
                     <Link to="/forums">Community</Link>
@@ -59,17 +62,66 @@ const Header = props => {
 
                   {props.user
                     ? [
-                        <li key={4}>
-                          <Link to="/dashboard">Dashboard</Link>
-                        </li>,
-                        <li key={2}>
-                          <Link
-                            onClick={event => {
-                              handleLogout(event);
-                            }}
-                          >
-                            Logout
+                        <li key={4} className="has_children_m">
+                          <Link className="profile_menu_item">
+                            <span className="profile_menu_item_inner">
+                              <span className="menu_avatar">
+                                {props.user && props.user.profile_picture ? (
+                                  <img
+                                    src={props.user.profile_picture}
+                                    className="img-fluid profile_pic_outline"
+                                  />
+                                ) : (
+                                  <img
+                                    className="img-fluid profile_pic_outline"
+                                    src={
+                                      'https://ui-avatars.com/api/?size=512&name=' +
+                                      props.user.first_name +
+                                      ' ' +
+                                      props.user.last_name +
+                                      '&color=223cf3&background=000000'
+                                    }
+                                  />
+                                )}
+                              </span>
+                              <span className="menu_prof_name_w">
+                                <span className="menu_prof_name_top">
+                                  Hello, {props.user.first_name}
+                                </span>
+                                <span className="menu_prof_name_bot">
+                                  ${props.user.cash_balance} |{' '}
+                                  {props.user.credit_balance} credits
+                                </span>
+                              </span>
+                            </span>
                           </Link>
+                          <ul className="submenu">
+                            <li>
+                              <Link
+                                to="/dashboard"
+                                className="profile_menu_item"
+                              >
+                                Dashboard
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                to={'/u/' + props.user.username}
+                                className="profile_menu_item"
+                              >
+                                Porfile
+                              </Link>
+                            </li>
+                            <li>
+                              <Link
+                                onClick={event => {
+                                  handleLogout(event);
+                                }}
+                              >
+                                Logout
+                              </Link>
+                            </li>
+                          </ul>
                         </li>
                       ]
                     : [

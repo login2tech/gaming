@@ -19,28 +19,85 @@
             </div>
 
             <div class="form-group">
-              <label>Tournament Game</label>
+              <label>Tournament Game & Ladder</label>
+
+
               <select type="text" ng-model="item.game_id"  required class="form-control">
-              <option value="">Select</option>
-              <option value="{{game.id}}" ng-repeat="game in games">{{game.title}}</option>
+                <option value="" >Select Game</option>
+                <option  ng-selected="item.game_id == game.id" ng-repeat="game in games" ng-value="game.id">{{game.title}}</option>
+
               </select>
+              <br />
+
+              <select type="text" ng-model="item.ladder_id"  required class="form-control">
+                <option value="">Select Ladder</option>
+                <optgroup label="{{game.title}}"  ng-repeat="game in games" ng-if="item.game_id == game.id" >
+                  <option ng-selected="item.ladder_id == ladder.id"   ng-repeat="ladder in game.ladders" ng-value="ladder.id">{{ladder.title}}</option>
+                </optgroup>
+              </select>
+
+
+
             </div>
+
+
+
+
             <div class="form-group">
               <label>Tournament Starts On</label>
-              <input type="datetime" ng-model="item.starts_on" required placeholder="Enter Tournament Start Date Time" class="form-control">
+              <input type="text"  datetime-picker ng-model="item.starts_at" required placeholder="Enter Tournament Start Date Time" class="form-control">
             </div>
-            
+
             <div class="form-group">
-              <label>Tournament Win Price Amount(credit points)</label>
-              <input type="datetime" ng-model="item.price_amount" required placeholder="Enter Tournament Win Price Amount(credit points)" class="form-control">
+              <label>Registration Starts On</label>
+              <input type="text"  datetime-picker ng-model="item.registration_start_at" required placeholder="Registration Start Date Time" class="form-control">
             </div>
+
+
+            <div class="form-group">
+              <label>Registration ends on</label>
+              <input type="text"  datetime-picker ng-model="item.registration_end_at" required placeholder="Registration End Date Time" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Total number of Teams</label>
+              <input type="number" ng-model="item.total_teams" required placeholder="Total Number of Teams" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Entry Fee (credits)</label>
+              <input type="number" ng-model="item.entry_fee" required placeholder="Entry Fee" class="form-control">
+            </div>
+
+
+            <div class="form-group">
+              <label>First Price</label>
+              <input type="number" ng-model="item.first_winner_price" required placeholder="First Winner - Price Amount" class="form-control">
+            </div>
+
+
+
+
+            <div class="form-group">
+              <label>First Price</label>
+              <input type="number" ng-model="item.second_winner_price" required placeholder="Second Winner - Price Amount" class="form-control">
+            </div>
+
+
+            <div class="form-group">
+              <label>First Price</label>
+              <input type="number" ng-model="item.third_winner_price" required placeholder="Third Winner - Price Amount" class="form-control">
+            </div>
+
+
+
+
 
 <!--
             <div class="form-group">
               <label>Game Platform</label>
               <input type="text" ng-model="item.platform" required placeholder="Enter Game Platform" class="form-control">
             </div> -->
-            <div class="form-group"  >
+            <!-- <div class="form-group"  >
               <label>Featured Image</label>
               <Br >
               <img ng-if="item.image_url"  style="width:100px"  ng-src="{{item.image_url}}" /><br /><br />
@@ -57,7 +114,7 @@
                   <span ng-if="file_upload_failed">Upload Failed.</span>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="card-footer ">
             <button type="submit" ng-disabled="file_upload_started" class="btn btn-fill btn-info">Submit</button>

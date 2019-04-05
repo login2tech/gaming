@@ -6,7 +6,7 @@ const TeamUser = bookshelf.Model.extend({
   tableName: 'team_users',
   hasTimestamps: true,
   user_info: function() {
-    return this.belongsTo(User);
+    return this.belongsTo('User');
   },
   team_info: function() {
     return this.belongsTo('Team');

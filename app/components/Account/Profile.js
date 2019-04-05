@@ -23,6 +23,22 @@ class Profile extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  getTeams(match) {
+    const team_1_id = match.team_1_id;
+    const team_2_id = match.team_2_id;
+    const {user_teams} = this.state;
+
+    for (let i = 0; i < user_teams.length; i++) {
+      if (team_1_id == user_teams[i].team_info.id) {
+        return [match.team_1_info, match.team_2_info, 1];
+      }
+      if (team_2_id == user_teams[i].team_info.id) {
+        return [match.team_2_info, match.team_1_info, 2];
+      }
+    }
+    return [match.team_1_info, match.team_2_info, 1];
+  }
+
   componentDidMount() {
     setTimeout(function() {
       const element = document.getElementById('is_top');
@@ -332,7 +348,7 @@ class Profile extends React.Component {
                       });
                     }}
                   >
-                    Updates
+                    Timeline
                   </Link>
                 </li>
               </ul>
@@ -474,36 +490,78 @@ class Profile extends React.Component {
                           <th>Team</th>
                           <th>Opponent</th>
                           <th>Result</th>
-                          {/* <th>DoubleXP</th> */}
                           <th>Date</th>
                           <th>Info</th>
                         </tr>
                       </thead>
                       <tbody>
                         {this.state.match_played.map((match, i) => {
+                          const teams = this.getTeams(match);
+                          let is_win = false;
+                          let is_loss = false;
+                          // is_status = true;
+                          if (match.result) {
+                            if (match.result == 'team_1') {
+                              if (teams[2] == 1) {
+                                is_win = true;
+                              } else {
+                                is_loss = false;
+                              }
+                            } else if (match.result == 'team_2') {
+                              if (teams[2] == 2) {
+                                is_win = true;
+                              } else {
+                                is_loss = false;
+                              }
+                            } else {
+                              is_status = true;
+                            }
+                          }
+                          {
+                            is_win ? (
+                              <span className="text-success">W</span>
+                            ) : (
+                              false
+                            );
+                          }
+                          {
+                            is_loss ? (
+                              <span className="text-danger">L</span>
+                            ) : (
+                              false
+                            );
+                          }
+                          {
+                            !is_win && !is_loss ? match.status : false;
+                          }
+
                           return (
                             <tr key={match.id}>
                               <td>
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
+                              <td>{teams[0].title}</td>
+                              <td>{teams[1].title}</td>
                               <td>
-                                {match.team_1_info
-                                  ? match.team_1_info.title
-                                  : ''}
-                              </td>
-                              <td>
-                                {match.team_2_info
-                                  ? match.team_2_info.title
-                                  : ''}
-                              </td>
-                              <td>
-                                {match.result
-                                  ? match.result == 'team_1'
-                                    ? 'Team 1 Wins'
-                                    : match.result == 'team_2'
-                                      ? 'Team 2 Wins'
-                                      : match.result
-                                  : match.status}
+                                {match.result ? (
+                                  match.result == 'team_1' ? (
+                                    teams[2] == 1 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : match.result == 'team_2' ? (
+                                    teams[2] == 2 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : (
+                                    match.result
+                                  )
+                                ) : (
+                                  match.status
+                                )}
                               </td>
                               {/* <td>{''}</td> */}
                               <td>{moment(match.created_at).format('lll')}</td>

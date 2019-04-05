@@ -459,7 +459,7 @@ exports.singleUser_info = function(req, res, next) {
     .where({
       username: req.query.uid
     })
-    .fetch()
+    .fetch({withRelated: 'teamuser'})
     .then(function(user) {
       if (!user) {
         // console.log(err);

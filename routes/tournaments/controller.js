@@ -1,6 +1,7 @@
 // const fs = require('fs');
 const Item = require('./Tournament');
 const ObjName = 'Tournament';
+const moment = require('moment');
 
 exports.listItem = function(req, res, next) {
   new Item()
@@ -65,6 +66,24 @@ exports.listSingleItem = function(req, res, next) {
     });
 };
 
+exports.listupcoming = function(req, res, next) {
+  new Item()
+    .orderBy('created_at', 'DESC')
+    .where('starts_at', '>', moment())
+    // .where('registration_end_at', '>', moment())
+    .fetchAll({withRelated: ['ladder', 'game']})
+    .then(function(item) {
+      if (!item) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      return res.status(200).send({ok: true, items: item.toJSON()});
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
 exports.addItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
   // req.assert('content', 'Content cannot be blank').notEmpty();
@@ -75,17 +94,24 @@ exports.addItem = function(req, res, next) {
   }
   new Item({
     title: req.body.title,
-    platform: req.body.platform,
-    image_url: req.body.image_url
-    // category_id: req.body.category_id,
-    // short_content: req.body.short_content
+    game_id: req.body.game_id,
+    ladder_id: req.body.ladder_id,
+    starts_at: req.body.starts_at,
+    registration_start_at: req.body.registration_start_at,
+    registration_end_at: req.body.registration_end_at,
+    total_teams: req.body.total_teams,
+    entry_fee: req.body.entry_fee,
+    first_winner_price: req.body.first_winner_price,
+    second_winner_price: req.body.second_winner_price,
+    teams_registered: 0,
+    third_winner_price: req.body.third_winner_price
   })
     .save()
     .then(function(item) {
       res.send({ok: true, msg: 'New Item has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});
@@ -107,8 +133,16 @@ exports.updateItem = function(req, res, next) {
   const item = new Item({id: req.body.id});
   const obj = {
     title: req.body.title,
-    platform: req.body.platform,
-    image_url: req.body.image_url
+    game_id: req.body.game_id,
+    ladder_id: req.body.ladder_id,
+    starts_at: req.body.starts_at,
+    registration_start_at: req.body.registration_start_at,
+    registration_end_at: req.body.registration_end_at,
+    total_teams: req.body.total_teams,
+    entry_fee: req.body.entry_fee,
+    first_winner_price: req.body.first_winner_price,
+    second_winner_price: req.body.second_winner_price,
+    third_winner_price: req.body.third_winner_price
   };
 
   if (req.body.remove_media) {

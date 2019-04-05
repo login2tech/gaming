@@ -85,8 +85,25 @@ angular
     $window,
     $auth,
     Tournament,
+    Game,
     $http
   ) {
+    $scope.fetchGames = function() {
+      Game.list()
+        .then(function(response) {
+          $scope.games = response.data.items;
+        })
+        .catch(function(response) {
+          $scope.messages = {
+            error: Array.isArray(response.data)
+              ? response.data
+              : [response.data]
+          };
+        });
+    };
+
+    $scope.fetchGames();
+
     $scope.item = {
       title: ''
     };
@@ -184,8 +201,27 @@ angular
     $window,
     $auth,
     $http,
-    Tournament
+    Tournament,
+    Game
   ) {
+    $scope.fetchGames = function() {
+      Game.list()
+        .then(function(response) {
+          $scope.games = response.data.items;
+          $scope.fetchSingle();
+        })
+        .catch(function(response) {
+          $scope.messages = {
+            error: Array.isArray(response.data)
+              ? response.data
+              : [response.data]
+          };
+          $scope.fetchSingle();
+        });
+    };
+
+    $scope.fetchGames();
+
     $scope.item = {
       title: '',
       content: '',
@@ -224,6 +260,13 @@ angular
       Tournament.listSingle($routeParams.id)
         .then(function(response) {
           $scope.item = response.data.item;
+          $scope.item.registration_start_at = moment(
+            $scope.item.registration_start_at
+          ).format('lll');
+          $scope.item.registration_end_at = moment(
+            $scope.item.registration_end_at
+          ).format('lll');
+          $scope.item.starts_at = moment($scope.item.starts_at).format('lll');
         })
         .catch(function(response) {
           $scope.item = {
@@ -238,8 +281,6 @@ angular
           };
         });
     };
-
-    $scope.fetchSingle();
 
     $scope.removeImage = function() {
       $scope.item.image_url = '';

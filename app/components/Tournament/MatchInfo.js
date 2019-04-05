@@ -630,7 +630,7 @@ class MatchInfo extends React.Component {
                       <br />
                       <label>
                         <input type="checkbox" required /> I agree to the terms
-                        to accept this match.
+                        to join this match.
                       </label>
                       <br />
                       <br />
@@ -638,7 +638,7 @@ class MatchInfo extends React.Component {
                         type="submit"
                         disabled={!this.isEligible.bind(this)}
                         className="btn btn-primary max-width-300"
-                        value={'Accept Match'}
+                        value={'Join Match'}
                       />
                     </form>
                   </div>

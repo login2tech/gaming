@@ -2,9 +2,143 @@
 const moment = require('moment');
 
 const Item = require('./Match');
-// const ItemChild = require('./TeamUser');
+const TeamUser = require('../teams/TeamUser');
 const User = require('../../models/User');
 const ObjName = 'Match';
+
+const giveXpToMember = function(uid, input_val) {
+  return; //  removed temporarily
+  new User()
+    .where({id: uid})
+    .fetch()
+    .then(function(usr) {
+      if (usr) {
+        let xp = usr.get('xp');
+        const double_xp = usr.get('double_xp');
+        xp += parseInt(input_val);
+        if (double_xp) {
+          xp += parseInt(input_val);
+        }
+        usr
+          .save({xp: xp})
+          .then(function(usr) {})
+          .catch(function(err) {
+            console.log(err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+
+const giveMoneyToMember = function(uid, input_val) {
+  new User()
+    .where({id: uid})
+    .fetch()
+    .then(function(usr) {
+      if (usr) {
+        let cash_balance = usr.get('cash_balance');
+        const prime = usr.get('prime');
+        if (prime) {
+          cash_balance += parseFloat(input_val);
+        } else {
+          cash_balance += parseFloat((4 / 5) * input_val);
+        }
+
+        usr
+          .save({cash_balance: cash_balance}, {patch: true})
+          .then(function(usr) {})
+          .catch(function(err) {
+            console.log(err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+const takeMoneyFromMember = function(uid, input_val) {
+  console.log(input_val);
+  new User()
+    .where({id: uid})
+    .fetch()
+    .then(function(usr) {
+      if (usr) {
+        let cash_balance = usr.get('cash_balance');
+
+        console.log(cash_balance);
+        cash_balance -= parseFloat(input_val);
+
+        console.log(cash_balance);
+        usr
+          .save({cash_balance: cash_balance}, {patch: true})
+          .then(function(usr) {})
+          .catch(function(err) {
+            console.log(err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+
+const giveXPtoTeam = function(team_id, input_val) {
+  new TeamUser()
+    .where({
+      team_id: team_id,
+      accepted: true
+    })
+    .fetchAll()
+    .then(function(usrs) {
+      usrs = usrs.toJSON();
+      for (let i = 0; i < usrs.length; i++) {
+        const uid = usrs[i].user_id;
+        giveXpToMember(uid, input_val);
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+const giveMoneyBackToTeam = function(team_id, input_val) {
+  new TeamUser()
+    .where({
+      team_id: team_id,
+      accepted: true
+    })
+    .fetchAll()
+    .then(function(usrs) {
+      usrs = usrs.toJSON();
+      for (let i = 0; i < usrs.length; i++) {
+        const uid = usrs[i].user_id;
+        giveMoneyToMember(uid, input_val);
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+
+const takeMoneyFromTeam = function(team_id, input_val) {
+  new TeamUser()
+    .where({
+      team_id: team_id,
+      accepted: true
+    })
+    .fetchAll()
+    .then(function(usrs) {
+      usrs = usrs.toJSON();
+      for (let i = 0; i < usrs.length; i++) {
+        const uid = usrs[i].user_id;
+        takeMoneyFromMember(uid, input_val);
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
 
 exports.matches_of_user = function(req, res, next) {
   const teams = req.query.teams.split(',');
@@ -44,6 +178,7 @@ exports.listupcoming = function(req, res, next) {
       return res.status(200).send({ok: true, items: []});
     });
 };
+
 exports.saveScore = function(req, res, next) {
   new Item({id: req.body.id})
     .fetch()
@@ -56,16 +191,22 @@ exports.saveScore = function(req, res, next) {
         return;
       }
       const val = req.body;
-      const tmp = match.toJSON();
-      if (tmp.team_1_result != '' && tmp.team_2_result != '') {
+      const tmp_match = match.toJSON();
+      if (tmp_match.team_1_result && tmp_match.team_2_result) {
         return res.status(400).send({ok: false, msg: 'Result already saved'});
       }
-      if (val.team_1_result && tmp.team_2_result != '') {
-        val.team_2_result = tmp.team_2_result;
-      } else if (val.team_2_result && tmp.team_1_result != '') {
-        val.team_1_result = tmp.team_1_result;
+      if (val.team_1_result && tmp_match.team_2_result) {
+        val.team_2_result = tmp_match.team_2_result;
+      } else if (val.team_2_result && tmp_match.team_1_result) {
+        val.team_1_result = tmp_match.team_1_result;
       }
-
+      if (!val.team_1_result && !val.team_2_result) {
+        res.status(400).send({
+          ok: false,
+          msg: 'Match Data doesnt exist'
+        });
+        return;
+      }
       console.log(val);
       if (val.team_1_result != '' && val.team_2_result != '') {
         if (val.team_1_result != val.team_2_result) {
@@ -85,7 +226,7 @@ exports.saveScore = function(req, res, next) {
           }
         }
       }
-      console.log(val);
+      //console.log(val);
       match
         .save(val)
         .then(function(match) {
@@ -94,6 +235,17 @@ exports.saveScore = function(req, res, next) {
             msg: 'Score Updated successfully.',
             match: match.toJSON()
           });
+
+          if (val.result == 'team_1' || val.result == 'team_2') {
+            const award_team_id =
+              val.result == 'team_1'
+                ? tmp_match.team_1_id
+                : tmp_match.team_2_id;
+            giveXPtoTeam(award_team_id);
+            if (tmp_match.match_type == 'paid') {
+              giveMoneyBackToTeam(award_team_id, tmp_match.match_fee);
+            }
+          }
         })
         .catch(function(err) {
           console.log(err);
@@ -140,6 +292,10 @@ exports.join = function(req, res, next) {
             msg: 'Joined successfully.',
             match: match.toJSON()
           });
+
+          if (match.get('match_type') != 'free') {
+            takeMoneyFromTeam(req.body.team_2_id, match.get('match_fee'));
+          }
         })
         .catch(function(err) {
           console.log(err);
@@ -250,7 +406,9 @@ exports.addItem = function(req, res, next) {
         match: item.toJSON()
       });
       if (req.body.match_type == 'paid') {
-        // block amount
+        // if (match.match_type != 'free') {
+        takeMoneyFromTeam(req.body.team_1_id, req.body.match_fee);
+        // }
       }
       // new ItemChild({
       //   team_id: item.id,
