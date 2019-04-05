@@ -6,32 +6,32 @@ const moment = require('moment');
 const User = require('../../models/User');
 const TeamUser = require('../teams/TeamUser');
 
-const giveMoneyToMember = function(uid, input_val) {
-  new User()
-    .where({id: uid})
-    .fetch()
-    .then(function(usr) {
-      if (usr) {
-        let credit_balance = usr.get('credit_balance');
-        const prime = usr.get('prime');
-        if (prime) {
-          credit_balance += parseFloat(input_val);
-        } else {
-          credit_balance += parseFloat((4 / 5) * input_val);
-        }
-
-        usr
-          .save({credit_balance: credit_balance}, {patch: true})
-          .then(function(usr) {})
-          .catch(function(err) {
-            // console.log(err);
-          });
-      }
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
-};
+// const giveMoneyToMember = function(uid, input_val) {
+//   new User()
+//     .where({id: uid})
+//     .fetch()
+//     .then(function(usr) {
+//       if (usr) {
+//         let credit_balance = usr.get('credit_balance');
+//         const prime = usr.get('prime');
+//         if (prime) {
+//           credit_balance += parseFloat(input_val);
+//         } else {
+//           credit_balance += parseFloat((4 / 5) * input_val);
+//         }
+//
+//         usr
+//           .save({credit_balance: credit_balance}, {patch: true})
+//           .then(function(usr) {})
+//           .catch(function(err) {
+//             // console.log(err);
+//           });
+//       }
+//     })
+//     .catch(function(err) {
+//       console.log(err);
+//     });
+// };
 const takeMoneyFromMember = function(uid, input_val) {
   // console.log(input_val);
   new User()
@@ -53,28 +53,28 @@ const takeMoneyFromMember = function(uid, input_val) {
       }
     })
     .catch(function(err) {
-      console.log(err);
-    });
-};
-
-const giveXPtoTeam = function(team_id, input_val) {
-  new TeamUser()
-    .where({
-      team_id: team_id,
-      accepted: true
-    })
-    .fetchAll()
-    .then(function(usrs) {
-      usrs = usrs.toJSON();
-      for (let i = 0; i < usrs.length; i++) {
-        const uid = usrs[i].user_id;
-        // giveXpToMember(uid, input_val);
-      }
-    })
-    .catch(function(err) {
       // console.log(err);
     });
 };
+//
+// const giveXPtoTeam = function(team_id, input_val) {
+//   new TeamUser()
+//     .where({
+//       team_id: team_id,
+//       accepted: true
+//     })
+//     .fetchAll()
+//     .then(function(usrs) {
+//       usrs = usrs.toJSON();
+//       for (let i = 0; i < usrs.length; i++) {
+//         const uid = usrs[i].user_id;
+//         // giveXpToMember(uid, input_val);
+//       }
+//     })
+//     .catch(function(err) {
+//       // console.log(err);
+//     });
+// };
 // const giveMoneyBackToTeam = function(team_id, input_val) {
 //   new TeamUser()
 //     .where({
@@ -182,7 +182,9 @@ exports.join = function(req, res, next) {
         teams = '';
       }
       teams = teams.split(',');
-      if (teams.indexOf(req.body.team_id) >= -1) {
+      // console.log(teams);
+      // console.log(teams.indexOf('' + req.body.team_id));
+      if (teams.indexOf('' + req.body.team_id) > -1) {
         res.status(400).send({
           ok: false,
           msg: 'Team already joined'
@@ -291,7 +293,7 @@ exports.listSingleItem = function(req, res, next) {
           return res.status(200).send({ok: true, item: item});
         })
         .catch(function(err) {
-          console.log(err);
+          // console.log(err);
           return res.status(400).send({
             id: req.params.id,
             title: '',
@@ -301,7 +303,7 @@ exports.listSingleItem = function(req, res, next) {
         });
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res.status(400).send({
         id: req.params.id,
         title: '',
@@ -356,7 +358,7 @@ exports.addItem = function(req, res, next) {
       res.send({ok: true, msg: 'New Item has been created successfully.'});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});

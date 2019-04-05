@@ -5,7 +5,7 @@ const moment = require('moment');
 import {join_tournament} from '../../actions/tournament';
 // import {Bracket} from 'react-tournament-bracket';
 
-// import Messages from '../Modules/Messages';
+import Messages from '../Modules/Messages';
 
 class TournamentInfo extends React.Component {
   constructor(props) {
@@ -667,6 +667,9 @@ class TournamentInfo extends React.Component {
   renderJoinPage() {
     return (
       <div className="col-md-12">
+        <Messages messages={this.props.messages} />
+        <br />
+
         {this.state.team_selected ? (
           <div>
             <button
