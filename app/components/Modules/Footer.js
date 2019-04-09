@@ -64,7 +64,7 @@ class Footer extends React.Component {
                       <Link to="/tournaments">Tournaments </Link>
                     </li>
                     <li>
-                      <Link to="/membership">Membership</Link>
+                      <Link to="/apply_for_staff">Apply For Staff</Link>
                     </li>
                     <li>
                       <Link to="/p/about">About Us</Link>

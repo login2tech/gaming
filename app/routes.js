@@ -4,6 +4,7 @@ import App from './components/App';
 
 import Home from './components/Pages/Home';
 import Contact from './components/Pages/Contact';
+import ApplyForStaff from './components/Pages/ApplyForStaff';
 import NotFound from './components/Pages/NotFound';
 import FAQ from './components/Pages/FAQ';
 
@@ -55,6 +56,11 @@ export default function getRoutes(store) {
     <Route path="/" component={App}>
       <IndexRoute component={Home} onLeave={clearMessages} />
       <Route path="/contact" component={Contact} onLeave={clearMessages} />
+      <Route
+        path="/apply_for_staff"
+        component={ApplyForStaff}
+        onLeave={clearMessages}
+      />
       <Route path="/faq" component={FAQ} onLeave={clearMessages} />
       <Route path="/p/:slug" component={CMSPage} />
       <Route

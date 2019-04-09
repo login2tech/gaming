@@ -1,0 +1,27 @@
+- X.P. Updated document.
+- Ranking
+- Reset Records -  Reference Website to see how it looks.
+- Achievements - Sample/Reference Website to see how it looks.
+- Money 8.
+- Game Specific settings
+- Festival Tournamens - ON HOLD.
+- Advertise with Us
+-
+
+
+- React
+- Nodejs
+- PostgreSQL
+
+- English
+
+
+
+- Add file to tickets
+- Roster to Squad
+- game has banners
+- search profiles - partial match
+- youtube, vimeo, gifhy,
+- countdown
+- number of followers/following in profile banner
+- 
