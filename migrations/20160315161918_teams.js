@@ -4,6 +4,8 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.string('title');
       table.integer('team_creator').references('users.id');
+      table.string('profile_picture');
+      table.string('cover_picture');
       table.timestamps();
     }),
     knex.schema.createTable('team_users', function(table) {
