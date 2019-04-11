@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('tournaments', function(table) {
       table.increments();
       table.string('title');
-      table.string('status');
+      // table.string('status');
       table.integer('game_id').references('games.id');
       table.integer('ladder_id').references('ladders.id');
       table.integer('total_teams');
