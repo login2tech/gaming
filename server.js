@@ -112,6 +112,24 @@ app.post('/upload', (req, res, next) => {
 });
 
 app.post('/contact', contactController.contactPost);
+
+app.get('/api/user_suggest', function(req, res, next) {
+  if (!req.query.q) {
+    res.status(200).send({items: [], ok: true});
+    return;
+  }
+  new User()
+    .where('username', 'LIKE', '%' + req.query.q + '%')
+    .fetchAll()
+    .then(function(items) {
+      res.status(200).send({items: items.toJSON(), ok: true});
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(200).send({items: [], ok: true, msg: 'err'});
+    });
+});
+
 app.get('/me', userController.ensureAuthenticated, function(req, res, next) {
   // console.log()
   res.status(200).send({

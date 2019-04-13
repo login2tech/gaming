@@ -4444,3 +4444,18 @@ ul.submenu li a {
   background: none;
     color: #fff;
 }
+
+.user_sugggestions li:not(:first-child) {
+    background: #333333;
+    padding: 0;
+}
+
+.user_sugggestions li:not(:first-child) span {
+    width: 100%;
+    line-height: 10px;
+}
+
+ul.submenu.notification_list {
+    max-height: 400px;
+    overflow-y: auto;
+}
