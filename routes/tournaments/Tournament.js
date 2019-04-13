@@ -13,7 +13,7 @@ const Tournament = bookshelf.Model.extend({
     return this.belongsTo(Ladder);
   },
   matches: function() {
-    return this.hasMany(TournamentMatch);
+    return this.hasMany(TournamentMatch, 'tournament_id');
   }
 });
 module.exports = Tournament;

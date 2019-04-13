@@ -1,8 +1,8 @@
 const bookshelf = require('../../config/bookshelf');
-// const Game = require('../games/Game');
+// const tournament_matches = require('../games/Game');
 // const Ladder = require('../games/Ladder');
 
-const Tournament = bookshelf.Model.extend({
+const TournamentMatch = bookshelf.Model.extend({
   tableName: 'tournament_matches',
   hasTimestamps: true
   // game: function() {
@@ -12,4 +12,4 @@ const Tournament = bookshelf.Model.extend({
   //   return this.belongsTo(Ladder);
   // }
 });
-module.exports = Tournament;
+module.exports = TournamentMatch;

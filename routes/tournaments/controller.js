@@ -5,7 +5,7 @@ const ObjName = 'Tournament';
 const moment = require('moment');
 const User = require('../../models/User');
 const TeamUser = require('../teams/TeamUser');
-
+//
 // const giveMoneyToMember = function(uid, input_val) {
 //   new User()
 //     .where({id: uid})
@@ -125,7 +125,7 @@ exports.listItem = function(req, res, next) {
     })
     .catch(function(err) {
       // console.log(err);
-      return res.status(200).send([]);
+      return res.status(200).send({ok: false, items: []});
     });
 };
 
@@ -257,14 +257,19 @@ exports.listPaged = function(req, res, next) {
 exports.listSingleItem = function(req, res, next) {
   new Item()
     .where('id', req.params.id)
-    .fetch({withRelated: ['ladder', 'game']})
+    .fetch({withRelated: ['ladder', 'game', 'matches']})
     .then(function(item) {
       if (!item) {
-        return res
-          .status(200)
-          .send({id: req.params.id, title: '', content: ''});
+        return res.status(400).send({
+          ok: false,
+          id: req.params.id,
+          title: '',
+          content: ''
+        });
       }
       item = item.toJSON();
+
+      console.log(item);
 
       let team_ids = item.team_ids;
       if (!team_ids) {
@@ -278,29 +283,37 @@ exports.listSingleItem = function(req, res, next) {
         }
         new_t_id.push(parseInt(team_ids[i]));
       }
-
-      new Team()
-        .where('id', 'in', team_ids)
-        .fetchAll({
-          withRelated: ['team_users', 'team_users.user_info']
-        })
-        .then(function(data) {
-          if (data) {
-            data = data.toJSON();
-            item.teams = data;
-            // return res.status(200).send({ok: true, item: item});
-          }
-          return res.status(200).send({ok: true, item: item});
-        })
-        .catch(function(err) {
-          // console.log(err);
-          return res.status(400).send({
-            id: req.params.id,
-            title: '',
-            content: '',
-            msg: 'Failed to fetch from db'
+      if (!new_t_id) {
+        new_t_id = [];
+      }
+      // console.log(new_t_id);
+      if (new_t_id && new_t_id.length) {
+        new Team()
+          .where('id', 'in', new_t_id)
+          .fetchAll({
+            withRelated: ['team_users', 'team_users.user_info']
+          })
+          .then(function(data) {
+            if (data) {
+              data = data.toJSON();
+              item.teams = data;
+              // return res.status(200).send({ok: true, item: item});
+            }
+            return res.status(200).send({ok: true, item: item});
+          })
+          .catch(function(err) {
+            // console.log(err);
+            return res.status(400).send({
+              id: req.params.id,
+              title: '',
+              content: '',
+              msg: 'Failed to fetch from db'
+            });
           });
-        });
+      } else {
+        item.teams = [];
+        return res.status(200).send({ok: true, item: item});
+      }
     })
     .catch(function(err) {
       // console.log(err);
