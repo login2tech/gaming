@@ -340,9 +340,17 @@ class MatchInfo extends React.Component {
   }
 
   render() {
+    const divStyle =
+      this.state.match &&
+      this.state.match.game &&
+      this.state.match.game.banner_url
+        ? {
+            backgroundImage: 'url(' + this.state.match.game.banner_url + ')'
+          }
+        : {};
     return (
       <div>
-        <section className="page_title_bar">
+        <section className="page_title_bar" style={divStyle}>
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">

@@ -156,7 +156,7 @@ app.post(
   userController.accountPic
 );
 app.get('/api/user_info', userController.singleUser_info);
-
+app.post('/api/user/follower/add', userController.addFollower);
 app.delete(
   '/account',
   userController.ensureAuthenticated,

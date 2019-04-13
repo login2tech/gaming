@@ -5,6 +5,7 @@ const moment = require('moment');
 // const request = require('request');
 // const qs = require('querystring');
 const User = require('../models/User');
+const UserFollower = require('../models/UserFollower');
 const mailer = require('./mailer');
 
 function generateToken(user) {
@@ -288,7 +289,7 @@ exports.accountPic = function(req, res, next) {
         });
       })
       .catch(function(err) {
-        console.log(err);
+        // console.log(err);
         res.status(400).send({
           msg: 'Some error occoured'
         });
@@ -453,13 +454,63 @@ exports.listUsers = function(req, res, next) {
       return res.status(200).send([]);
     });
 };
+exports.addFollower = function(req, res, next) {
+  const me = req.user.id;
+  const follow_to = req.body.follow_to;
+
+  new UserFollower()
+    .where({
+      follower_id: me,
+      user_id: follow_to
+    })
+    .fetch()
+    .then(function(uf) {
+      if (uf) {
+        uf.destroy();
+        res.status(200).send({ok: true, msg: 'Updated!'});
+      } else {
+        new UserFollower({
+          follower_id: me,
+          user_id: follow_to
+        })
+          .save()
+          .then(function(uf) {})
+          .catch(function(err) {
+            // console.log(err);
+          });
+        res.status(200).send({ok: true, msg: 'Updated!'});
+      }
+    })
+    .catch(function(err) {
+      res.status(400).send({ok: false, msg: 'Failed to update'});
+    });
+};
 
 exports.singleUser_info = function(req, res, next) {
+  const cur_u = req.user ? req.user.id : 99999999;
+  // console.log(cur_u);
   new User()
     .where({
       username: req.query.uid
     })
-    .fetch({withRelated: 'teamuser'})
+    .fetch({
+      withRelated: [
+        'teamuser',
+        {
+          followers: function(qb) {
+            qb.where('follower_id', cur_u);
+          }
+        },
+        'followerCount',
+        'followingCount'
+        // 'followerCount'
+        // {
+        //   followersCount: function(qb) {
+        //     qb.count();
+        //   }
+        // }
+      ]
+    })
     .then(function(user) {
       if (!user) {
         // console.log(err);
@@ -472,6 +523,8 @@ exports.singleUser_info = function(req, res, next) {
       user.role = '';
       user.stripe_user_id = '';
       user.cash_balance = '';
+      user.followerCount = user.followerCount.length;
+      user.followingCount = user.followingCount.length;
       return res.status(200).send({
         user_info: user,
         ok: true

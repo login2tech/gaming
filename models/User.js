@@ -2,6 +2,8 @@ const crypto = require('crypto');
 const bcrypt = require('bcrypt-nodejs');
 const bookshelf = require('../config/bookshelf');
 const Team = require('../routes/teams/TeamUser');
+const UserFollower = require('./UserFollower');
+
 const User = bookshelf.Model.extend({
   tableName: 'users',
   hasTimestamps: true,
@@ -13,6 +15,26 @@ const User = bookshelf.Model.extend({
   teamuser: function() {
     return this.hasMany(Team);
   },
+
+  followers: function() {
+    return this.hasMany('UserFollower', 'user_id');
+  },
+
+  followerCount: function() {
+    return this.hasMany('UserFollower', 'user_id');
+  },
+  followingCount: function() {
+    return this.hasMany('UserFollower', 'follower_id');
+  },
+  following: function() {
+    return this.hasMany('UserFollower', 'follower_id');
+  },
+  // followingCount: function() {
+  //   return this.hasMany('UserFollower', 'follower_id').count();
+  // },
+  // following: function() {
+  //   return this.hasOne('UserFollower', 'user_id');
+  // },
 
   //
 

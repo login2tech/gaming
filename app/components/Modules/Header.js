@@ -62,6 +62,15 @@ const Header = props => {
 
                   {props.user
                     ? [
+                        <li key={5} className="has_children_m">
+                          <Link className="profile_menu_item">
+                            <i className="fa fa-bell" />
+                          </Link>
+                          <ul className="submenu notification_list">
+                            <li>Match #123 started</li>
+                          </ul>
+                        </li>,
+
                         <li key={4} className="has_children_m">
                           <Link className="profile_menu_item">
                             <span className="profile_menu_item_inner">

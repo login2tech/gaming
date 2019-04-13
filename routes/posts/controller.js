@@ -1,10 +1,85 @@
 // const fs = require('fs');
 const Item = require('./Post');
-const ObjName = 'Thread';
+const ItemUpvotes = require('./PostUpvotes');
+const ItemComments = require('./PostComments');
+
+exports.new_comment = function(req, res, next) {
+  const uid = req.user.id;
+  const post_id = req.body.post_id;
+  const comment = req.body.comment;
+  new ItemComments()
+    .save({
+      user_id: uid,
+      post_id: post_id,
+      comment: comment
+    })
+    .then(function(ub) {
+      res.send({ok: true, msg: 'Comment Added.', comment: ub.toJSON()});
+      // res.status(200).send({
+      //   ok: true,
+      //   msg: 'Added'
+      // });
+    })
+    .catch(function(err) {
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed'
+      });
+    });
+};
+
+exports.upvote = function(req, res, next) {
+  const uid = req.user.id;
+  const post_id = req.body.post_id;
+
+  new ItemUpvotes()
+    .save({
+      user_id: uid,
+      post_id: post_id
+    })
+    .then(function(ub) {
+      res.status(200).send({
+        ok: true,
+        msg: 'Upvoted'
+      });
+    })
+    .catch(function(err) {
+      // console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed'
+      });
+    });
+};
+
+exports.downvote = function(req, res, next) {
+  const uid = req.user.id;
+  const post_id = req.body.post_id;
+
+  new ItemUpvotes()
+    .where({
+      user_id: uid,
+      post_id: post_id
+    })
+    .destroy()
+    .then(function(ub) {
+      res.status(200).send({
+        ok: true,
+        msg: 'Upvoted'
+      });
+    })
+    .catch(function(err) {
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed'
+      });
+    });
+};
 
 exports.listItemMy = function(req, res, next) {
+  const cur_u = req.user.id ? req.user.id : 99999;
   const n = new Item().orderBy('id', 'DESC').where({
-    user_id: req.user ? req.user.id : 0
+    user_id: req.query.uid ? req.query.uid : 0
   });
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
@@ -12,14 +87,109 @@ exports.listItemMy = function(req, res, next) {
   } else {
     p = 1;
   }
-  n.fetchPage({page: p, pageSize: 10})
+  n.fetchPage({
+    page: p,
+    pageSize: 10,
+    withRelated: [
+      {
+        user: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        upvotes: function(qb) {
+          qb.column('post_id').where('user_id', cur_u);
+          // .where('subject_name', 'Question');
+        }
+      },
+      {
+        'comments.user': function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      'like_count',
+      'comments'
+    ]
+  })
     .then(function(items) {
       if (!items) {
         return res.status(200).send({ok: true, items: []});
       }
-      return res.status(200).send({ok: true, items: items.toJSON()});
+      items = items.toJSON();
+      // console.log(items);
+      // items.like_count = items.like_count ? items.like_count.length : 0;
+      return res.status(200).send({ok: true, items: items});
     })
     .catch(function(err) {
+      console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
+exports.listItemAll = function(req, res, next) {
+  const cur_u = req.user.id ? req.user.id : 99999;
+
+  const n = new Item().orderBy('id', 'DESC');
+  // .where({
+  // user_id: req.user ? req.user.id : 0
+  // });
+  let p;
+  if (req.query.paged && parseInt(req.query.paged) > 1) {
+    p = parseInt(req.query.paged);
+  } else {
+    p = 1;
+  }
+  n.fetchPage({
+    page: p,
+    pageSize: 10,
+    withRelated: [
+      {
+        user: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        upvotes: function(qb) {
+          qb.column('post_id').where('user_id', cur_u);
+          // .where('subject_name', 'Question');
+        }
+      },
+      {
+        'comments.user': function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      'like_count',
+      'comments'
+    ]
+  })
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      items = items.toJSON();
+      // console.log(items);
+      // items.like_count = items.like_count  ?items.like_count.length : 0;
+      return res.status(200).send({ok: true, items: items});
+    })
+    .catch(function(err) {
+      // console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -43,7 +213,7 @@ exports.addItem = function(req, res, next) {
       res.send({ok: true, msg: 'Post Added.', post: item.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});

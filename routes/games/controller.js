@@ -76,7 +76,8 @@ exports.addGame = function(req, res, next) {
   }
   new Game({
     title: req.body.title,
-    image_url: req.body.image_url
+    image_url: req.body.image_url,
+    banner_url: req.body.banner_url
     // category_id: req.body.category_id,
     // short_content: req.body.short_content
   })
@@ -107,7 +108,8 @@ exports.updateGame = function(req, res, next) {
   const game = new Game({id: req.body.id});
   const obj = {
     title: req.body.title,
-    image_url: req.body.image_url
+    image_url: req.body.image_url,
+    banner_url: req.body.banner_url
   };
 
   if (req.body.remove_media) {

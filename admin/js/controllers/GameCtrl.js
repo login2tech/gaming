@@ -124,8 +124,12 @@ angular
         });
     };
 
-    $scope.removeImage = function() {
-      $scope.game.image_url = '';
+    $scope.removeImage = function(abc) {
+      if (abc == 'banner_url') {
+        $scope.game.banner_url = '';
+      } else {
+        $scope.game.image_url = '';
+      }
     };
 
     $scope.uploaded_images = [];
@@ -133,17 +137,20 @@ angular
     $scope.file_upload_failed = false;
     $scope.file_upload_completed = false;
 
-    $scope.uploadedFile = function(element) {
-      $scope.file_upload_started = true;
-      $scope.file_upload_started = true;
+    $scope.uploadedFile = function(element, banner_url) {
+      if (banner_url == 'banner_url') {
+        $scope.file_upload_started_banner = true;
+      } else {
+        $scope.file_upload_started = true;
+      }
       $scope.file_upload_failed = false;
       $scope.file_upload_completed = false;
       $scope.$apply(function($scope) {
         $scope.files = element.files;
       });
-      $scope.__uploadFile($scope.files);
+      $scope.__uploadFile($scope.files, banner_url);
     };
-    $scope.__uploadFile = function(files) {
+    $scope.__uploadFile = function(files, banner_url) {
       const fd = new FormData();
       const url = '/upload';
       angular.forEach(files, function(file) {
@@ -162,18 +169,32 @@ angular
           transformRequest: angular.identity
         })
         .success(function(data) {
-          $scope.file_upload_started = false;
-          $scope.file_upload_failed = false;
-          $scope.file_upload_completed = true;
-          $scope.game.image_url = data.file;
+          if (banner_url == 'banner_url') {
+            $scope.file_upload_started_banner = false;
+            $scope.file_upload_failed_banner = false;
+            $scope.file_upload_completed_banner = true;
+            $scope.game.banner_url = data.file;
+          } else {
+            $scope.file_upload_started = false;
+            $scope.file_upload_failed = false;
+            $scope.file_upload_completed = true;
+            $scope.game.image_url = data.file;
+          }
+
           $scope.messages = {
             success: [data]
           };
         })
         .error(function(data) {
-          $scope.file_upload_started = false;
-          $scope.file_upload_failed = true;
-          $scope.file_upload_completed = false;
+          if (banner_url == 'banner_url') {
+            $scope.file_upload_started_banner = false;
+            $scope.file_upload_failed_banner = true;
+            $scope.file_upload_completed_banner = false;
+          } else {
+            $scope.file_upload_started = false;
+            $scope.file_upload_failed = true;
+            $scope.file_upload_completed = false;
+          }
           $scope.messages = {
             error: [data]
           };
@@ -247,8 +268,12 @@ angular
 
     $scope.fetchSingle();
 
-    $scope.removeImage = function() {
-      $scope.game.image_url = '';
+    $scope.removeImage = function(banner_url) {
+      if (banner_url == 'banner_url') {
+        $scope.game.banner_url = '';
+      } else {
+        $scope.game.image_url = '';
+      }
     };
 
     $scope.uploaded_images = [];
@@ -256,17 +281,21 @@ angular
     $scope.file_upload_failed = false;
     $scope.file_upload_completed = false;
 
-    $scope.uploadedFile = function(element) {
-      $scope.file_upload_started = true;
-      $scope.file_upload_started = true;
+    $scope.uploadedFile = function(element, banner_url) {
+      if (banner_url == 'banner_url') {
+        $scope.file_upload_started_banner = true;
+      } else {
+        $scope.file_upload_started = true;
+      }
+
       $scope.file_upload_failed = false;
       $scope.file_upload_completed = false;
       $scope.$apply(function($scope) {
         $scope.files = element.files;
       });
-      $scope.__uploadFile($scope.files);
+      $scope.__uploadFile($scope.files, banner_url);
     };
-    $scope.__uploadFile = function(files) {
+    $scope.__uploadFile = function(files, banner_url) {
       const fd = new FormData();
       const url = '/upload';
       angular.forEach(files, function(file) {
@@ -285,18 +314,31 @@ angular
           transformRequest: angular.identity
         })
         .success(function(data) {
-          $scope.file_upload_started = false;
-          $scope.file_upload_failed = false;
-          $scope.file_upload_completed = true;
-          $scope.game.image_url = data.file;
+          if (banner_url == 'banner_url') {
+            $scope.file_upload_started_banner = false;
+            $scope.file_upload_failed_banner = false;
+            $scope.file_upload_completed_banner = true;
+            $scope.game.banner_url = data.file;
+          } else {
+            $scope.file_upload_started = false;
+            $scope.file_upload_failed = false;
+            $scope.file_upload_completed = true;
+            $scope.game.image_url = data.file;
+          }
           $scope.messages = {
             success: [data]
           };
         })
         .error(function(data) {
-          $scope.file_upload_started = false;
-          $scope.file_upload_failed = true;
-          $scope.file_upload_completed = false;
+          if (banner_url == 'banner_url') {
+            $scope.file_upload_started_banner = false;
+            $scope.file_upload_failed_banner = true;
+            $scope.file_upload_completed_banner = false;
+          } else {
+            $scope.file_upload_started = false;
+            $scope.file_upload_failed = true;
+            $scope.file_upload_completed = false;
+          }
           $scope.messages = {
             error: [data]
           };

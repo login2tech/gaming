@@ -2,13 +2,14 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
-import {add_post} from '../../actions/social';
+import {add_post, add_friend} from '../../actions/social';
 import axios from 'axios';
+import Timeline from '../Social/Timeline';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_info: {},
+      user_info: {followers: [], teams: []},
       user_teams: [],
       renderTab: 'profile',
       match_played: [],
@@ -50,7 +51,10 @@ class Profile extends React.Component {
         });
       }
     }, 1000);
+    this.fetchUserInfo(true);
+  }
 
+  fetchUserInfo(forward) {
     fetch('/api/user_info?uid=' + this.props.params.username)
       .then(res => res.json())
       .then(json => {
@@ -61,7 +65,9 @@ class Profile extends React.Component {
               user_info: json.user_info
             },
             () => {
-              this.fetchTeams();
+              if (forward) {
+                this.fetchTeams();
+              }
             }
           );
         }
@@ -95,7 +101,7 @@ class Profile extends React.Component {
     team_array = team_array.join(',');
 
     fetch(
-      '/api/matches/matches_of_user?=' +
+      '/api/matches/matches_of_user?uid=' +
         this.state.user_info.id +
         '&teams=' +
         team_array
@@ -114,7 +120,12 @@ class Profile extends React.Component {
   }
 
   fetchPosts() {
-    fetch('/api/posts/list/my?page=' + this.state.posts_page)
+    fetch(
+      '/api/posts/list/my?uid=' +
+        this.state.user_info.id +
+        '&page=' +
+        this.state.posts_page
+    )
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -128,6 +139,27 @@ class Profile extends React.Component {
           );
         }
       });
+  }
+
+  addFriend(event) {
+    event.preventDefault();
+    this.props.dispatch(
+      add_friend(
+        {
+          follow_to: this.state.user_info.id
+        },
+        cb => {
+          if (!cb) {
+            //
+          } else {
+            //
+            setTimeout(() => {
+              this.fetchUserInfo(false);
+            }, 200);
+          }
+        }
+      )
+    );
   }
 
   doPostNew(event) {
@@ -214,6 +246,17 @@ class Profile extends React.Component {
     );
   };
 
+  tags = [1, 2, 3, 4, 5, 6];
+  tag_names = [
+    '',
+    'Xbox Live Gamertag',
+    'PSN',
+    'Username',
+    'Epic Games Username',
+    'Steam Username',
+    'Battletag'
+  ];
+
   render() {
     const divStyle = this.state.new_cover_pic
       ? {
@@ -264,7 +307,7 @@ class Profile extends React.Component {
 
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span> MEMBER SINCE</span>
                         <p>
                           {moment(this.state.user_info.created_at).format(
@@ -273,13 +316,23 @@ class Profile extends React.Component {
                         </p>
                       </div>
 
-                      <div className="col-md-4">
+                      <div className="col-md-3">
                         <span> TIME ZONE </span>
                         <p>
                           {this.state.user_info.timezone
                             ? this.state.user_info.timezone
                             : '-'}
                         </p>
+                      </div>
+
+                      <div className="col-md-3">
+                        <span> Following </span>
+                        <p>{this.state.user_info.followingCount}</p>
+                      </div>
+
+                      <div className="col-md-3">
+                        <span> Followers </span>
+                        <p>{this.state.user_info.followerCount}</p>
                       </div>
                       {/*}
                       <div className="col-md-4">
@@ -307,14 +360,32 @@ class Profile extends React.Component {
                   </div>
                 </div>
                 {this.props.user &&
-                this.props.user.id != this.state.user_info.id ? (
+                this.state.is_loaded &&
+                this.props.user.id != this.state.user_info.id &&
+                this.state.user_info.followers.length < 1 ? (
                   <Link
-                    onClick={() => {
-                      this.addFriend();
+                    onClick={event => {
+                      this.addFriend(event);
                     }}
-                    className="btn btn-default bttn_submit"
+                    className="btn btn-default bttn_submit btn-outline"
                   >
-                    Add as friend
+                    Follow
+                  </Link>
+                ) : (
+                  false
+                )}
+
+                {this.props.user &&
+                this.state.is_loaded &&
+                this.props.user.id != this.state.user_info.id &&
+                this.state.user_info.followers.length > 0 ? (
+                  <Link
+                    onClick={event => {
+                      this.addFriend(event);
+                    }}
+                    className="btn btn-default bttn_submit active"
+                  >
+                    Stop Following
                   </Link>
                 ) : (
                   false
@@ -462,23 +533,35 @@ class Profile extends React.Component {
                           </p>
                         </div>
 
-                        {/*}<div className="col-md-4">
-                            <span>LIFETIME EARNINGS</span>
-                            <p>{this.state.user_info.lifetime_earning? this.state.user_info.lifetime_earning : ''}</p>
-                          </div>*/}
-
-                        {/*}<div className="col-md-4">
-                            <span> PROFILE VIEWS</span>
-                            <p>436</p>
-                          </div>
-                          */}
                         <div className="col-md-4">
                           <span>Rank</span>
                           <p>-</p>
                         </div>
                       </div>
+
+                      <div className="row">
+                        {this.tags.map((k, i) => {
+                          return (
+                            <div className="col-md-4" key={k}>
+                              <span>{this.tag_names[k]}</span>
+                              <p>{this.state.user_info['gamer_tag_' + k]}</p>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
+
+                  {/*}<div className="col-md-4">
+                                              <span>LIFETIME EARNINGS</span>
+                                              <p>{this.state.user_info.lifetime_earning? this.state.user_info.lifetime_earning : ''}</p>
+                                            </div>*/}
+
+                  {/*}<div className="col-md-4">
+                                              <span> PROFILE VIEWS</span>
+                                              <p>436</p>
+                                            </div>
+                                            */}
 
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
@@ -609,192 +692,195 @@ class Profile extends React.Component {
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12">
                   <div className="row">
-                    <div className="col-md-6 offset-md-3">
-                      <form
-                        onSubmit={event => {
-                          this.doPostNew(event);
-                        }}
-                      >
-                        <div className="card gedf-card">
-                          <div className="card-header">
-                            <ul
-                              className="nav nav-tabs card-header-tabs"
-                              id="myTab"
-                              role="tablist"
-                            >
-                              <li className="nav-item">
-                                <a
-                                  className={
-                                    'nav-link' +
-                                    (this.state.new_post_type == 'text'
-                                      ? ' active '
-                                      : '')
-                                  }
-                                  id="posts-tab"
-                                  // data-toggle="tab"
-                                  // href="#posts"
-                                  // role="tab"
-                                  // aria-controls="posts"
-                                  // aria-selected="true/"
-                                  onClick={() => {
-                                    this.setState({
-                                      new_post_type: 'text',
-                                      new_post_image: '',
-                                      new_post_video: '',
-                                      post_video_select: ''
-                                    });
-                                  }}
-                                >
-                                  Post
-                                </a>
-                              </li>
-                              <li className="nav-item">
-                                <a
-                                  className={
-                                    'nav-link' +
-                                    (this.state.new_post_type == 'image'
-                                      ? ' active '
-                                      : '')
-                                  }
-                                  id="images-tab"
-                                  onClick={() => {
-                                    this.setState({
-                                      new_post_type: 'image',
-                                      // new_post_image: '',
-                                      new_post_video: '',
-                                      post_image_select: ''
-                                    });
-                                  }}
-                                  // data-toggle="tab"
-                                  // role="tab"
-                                  // aria-controls="images"
-                                  // aria-selected="false"
-                                  // href="#images"
-                                >
-                                  <i className="fa fa-image" />
-                                </a>
-                              </li>
-                              <li className="nav-item">
-                                <a
-                                  className={
-                                    'nav-link' +
-                                    (this.state.new_post_type == 'video'
-                                      ? ' active '
-                                      : '')
-                                  }
-                                  id="videos-tab"
-                                  // data-toggle="tab"
-                                  // role="tab"
-                                  // aria-controls="videos"
-                                  // aria-selected="false"
-                                  // href="#videos"
-                                  onClick={() => {
-                                    this.setState({
-                                      new_post_type: 'video',
-                                      new_post_image: ''
-                                      // new_post_video: ''
-                                    });
-                                  }}
-                                >
-                                  <i className="fa fa-video-camera" />
-                                </a>
-                              </li>
-                            </ul>
-                          </div>
-                          <div className="card-body">
-                            <div className="tab-content" id="myTabContent">
-                              <div
-                                className="tab-pane fade show active"
-                                id="posts"
-                                role="tabpanel"
-                                aria-labelledby="posts-tab"
+                    <div className="col-md-8 offset-md-2">
+                      {this.props.user &&
+                      this.props.user.id == this.state.user_info.id ? (
+                        <form
+                          onSubmit={event => {
+                            this.doPostNew(event);
+                          }}
+                        >
+                          <div className="card gedf-card">
+                            <div className="card-header">
+                              <ul
+                                className="nav nav-tabs card-header-tabs"
+                                id="myTab"
+                                role="tablist"
                               >
-                                {this.state.new_post_type == 'image' ? (
-                                  <div className="custom-file">
-                                    <input
-                                      type="file"
-                                      className="custom-file-input"
-                                      id="customFile"
-                                      onChange={this.handleImageUpload}
-                                    />
-                                    <label
-                                      className="custom-file-label"
-                                      htmlFor="customFile"
-                                    >
-                                      Upload image
-                                    </label>
-                                  </div>
-                                ) : (
-                                  false
-                                )}
-
-                                {this.state.new_post_type == 'video' ? (
-                                  <div className="custom-file">
-                                    <input
-                                      type="file"
-                                      className="custom-file-input"
-                                      id="customFile"
-                                      onChange={this.handleVideoUpload}
-                                    />
-                                    <label
-                                      className="custom-file-label"
-                                      htmlFor="customFile"
-                                    >
-                                      Upload video
-                                    </label>
-                                  </div>
-                                ) : (
-                                  false
-                                )}
-                                {this.state.new_post_image != '' ? (
-                                  <img
-                                    src={this.state.new_post_image}
-                                    className="img-fluid"
-                                    style={{marginBottom: '10px'}}
-                                  />
-                                ) : (
-                                  false
-                                )}
-
-                                {this.state.new_post_video != '' ? (
-                                  <div
-                                    className="embed-responsive embed-responsive-21by9"
-                                    style={{marginBottom: '10px'}}
+                                <li className="nav-item">
+                                  <a
+                                    className={
+                                      'nav-link' +
+                                      (this.state.new_post_type == 'text'
+                                        ? ' active '
+                                        : '')
+                                    }
+                                    id="posts-tab"
+                                    // data-toggle="tab"
+                                    // href="#posts"
+                                    // role="tab"
+                                    // aria-controls="posts"
+                                    // aria-selected="true/"
+                                    onClick={() => {
+                                      this.setState({
+                                        new_post_type: 'text',
+                                        new_post_image: '',
+                                        new_post_video: '',
+                                        post_video_select: ''
+                                      });
+                                    }}
                                   >
-                                    <video>
-                                      <source
-                                        src={this.state.new_post_video}
-                                        type="video/mp4"
+                                    Post
+                                  </a>
+                                </li>
+                                <li className="nav-item">
+                                  <a
+                                    className={
+                                      'nav-link' +
+                                      (this.state.new_post_type == 'image'
+                                        ? ' active '
+                                        : '')
+                                    }
+                                    id="images-tab"
+                                    onClick={() => {
+                                      this.setState({
+                                        new_post_type: 'image',
+                                        // new_post_image: '',
+                                        new_post_video: '',
+                                        post_image_select: ''
+                                      });
+                                    }}
+                                    // data-toggle="tab"
+                                    // role="tab"
+                                    // aria-controls="images"
+                                    // aria-selected="false"
+                                    // href="#images"
+                                  >
+                                    <i className="fa fa-image" />
+                                  </a>
+                                </li>
+                                <li className="nav-item">
+                                  <a
+                                    className={
+                                      'nav-link' +
+                                      (this.state.new_post_type == 'video'
+                                        ? ' active '
+                                        : '')
+                                    }
+                                    id="videos-tab"
+                                    // data-toggle="tab"
+                                    // role="tab"
+                                    // aria-controls="videos"
+                                    // aria-selected="false"
+                                    // href="#videos"
+                                    onClick={() => {
+                                      this.setState({
+                                        new_post_type: 'video',
+                                        new_post_image: ''
+                                        // new_post_video: ''
+                                      });
+                                    }}
+                                  >
+                                    <i className="fa fa-video-camera" />
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                            <div className="card-body">
+                              <div className="tab-content" id="myTabContent">
+                                <div
+                                  className="tab-pane fade show active"
+                                  id="posts"
+                                  role="tabpanel"
+                                  aria-labelledby="posts-tab"
+                                >
+                                  {this.state.new_post_type == 'image' ? (
+                                    <div className="custom-file">
+                                      <input
+                                        type="file"
+                                        className="custom-file-input"
+                                        id="customFile"
+                                        onChange={this.handleImageUpload}
                                       />
-                                    </video>
+                                      <label
+                                        className="custom-file-label"
+                                        htmlFor="customFile"
+                                      >
+                                        Upload image
+                                      </label>
+                                    </div>
+                                  ) : (
+                                    false
+                                  )}
+
+                                  {this.state.new_post_type == 'video' ? (
+                                    <div className="custom-file">
+                                      <input
+                                        type="file"
+                                        className="custom-file-input"
+                                        id="customFile"
+                                        onChange={this.handleVideoUpload}
+                                      />
+                                      <label
+                                        className="custom-file-label"
+                                        htmlFor="customFile"
+                                      >
+                                        Upload video
+                                      </label>
+                                    </div>
+                                  ) : (
+                                    false
+                                  )}
+                                  {this.state.new_post_image != '' ? (
+                                    <img
+                                      src={this.state.new_post_image}
+                                      className="img-fluid"
+                                      style={{marginBottom: '10px'}}
+                                    />
+                                  ) : (
+                                    false
+                                  )}
+
+                                  {this.state.new_post_video != '' ? (
+                                    <div
+                                      className="embed-responsive embed-responsive-21by9"
+                                      style={{marginBottom: '10px'}}
+                                    >
+                                      <video>
+                                        <source
+                                          src={this.state.new_post_video}
+                                          type="video/mp4"
+                                        />
+                                      </video>
+                                    </div>
+                                  ) : (
+                                    false
+                                  )}
+                                  <div className="form-group">
+                                    <textarea
+                                      className="form-control"
+                                      id="new_post_content"
+                                      required
+                                      rows="3"
+                                      value={this.state.new_post_content}
+                                      placeholder="What are you thinking?"
+                                      name="new_post_content"
+                                      onChange={this.handleChange.bind(this)}
+                                    />
                                   </div>
-                                ) : (
-                                  false
-                                )}
-                                <div className="form-group">
-                                  <textarea
-                                    className="form-control"
-                                    id="new_post_content"
-                                    required
-                                    rows="3"
-                                    value={this.state.new_post_content}
-                                    placeholder="What are you thinking?"
-                                    name="new_post_content"
-                                    onChange={this.handleChange.bind(this)}
-                                  />
                                 </div>
                               </div>
-                            </div>
-                            <div className="btn-toolbar justify-content-between">
-                              <div className="btn-group">
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary"
-                                >
-                                  share
-                                </button>
-                              </div>
-                              {/* <div className="btn-group">
+
+                              <div className="btn-toolbar justify-content-between">
+                                <div className="btn-group">
+                                  <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                  >
+                                    share
+                                  </button>
+                                </div>
+                                {/* <div className="btn-group">
                               <button
                                 id="btnGroupDrop1"
                                 type="button"
@@ -820,48 +906,20 @@ class Profile extends React.Component {
                                 </a>
                               </div>
                             </div> */}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </form>
+                        </form>
+                      ) : (
+                        false
+                      )}
 
                       <br />
                       <h4 className="text-white">Latest Posts</h4>
                       <ul className="timeline">
                         {this.state.posts &&
                           this.state.posts.map((post, i) => {
-                            return (
-                              <li key={post.id}>
-                                <span className="text-date">
-                                  {moment(post.created_at).format('lll')}
-                                </span>
-                                {post.image_url ? (
-                                  <img
-                                    src={post.image_url}
-                                    className="img-fluid"
-                                    style={{marginBottom: '10px'}}
-                                  />
-                                ) : (
-                                  false
-                                )}
-                                {post.video_url ? (
-                                  <div
-                                    className="embed-responsive embed-responsive-21by9"
-                                    style={{marginBottom: '10px'}}
-                                  >
-                                    <video controls>
-                                      <source
-                                        src={post.video_url}
-                                        type="video/mp4"
-                                      />
-                                    </video>
-                                  </div>
-                                ) : (
-                                  false
-                                )}
-                                <p>{post.post}</p>
-                              </li>
-                            );
+                            return <Timeline post={post} key={post.id} />;
                           })}
                       </ul>
                     </div>

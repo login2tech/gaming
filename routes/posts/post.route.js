@@ -6,7 +6,13 @@ const ctrl = require('./controller.js');
 module.exports = routes;
 
 routes.get('/list/my', ctrl.listItemMy);
+routes.get('/list/all', ctrl.listItemAll);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
+
+routes.post('/upvote', u_ctrl.ensureAuthenticated, ctrl.upvote);
+routes.post('/new_comment', u_ctrl.ensureAuthenticated, ctrl.new_comment);
+routes.post('/downvote', u_ctrl.ensureAuthenticated, ctrl.downvote);
+
 // routes.get('/listPaged', ctrl.listPaged);
 // routes.get('/single/:id', ctrl.listSingleItem);
 

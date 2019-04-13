@@ -181,7 +181,7 @@ hr {
 }
 
 li.logo {
-    margin: 0px 40px;
+    margin: 0px 20px;
     margin-left: 0px;
 }
 
@@ -4400,4 +4400,47 @@ ul.submenu li a {
 
 .t-prizes-place.p3 {
     border-left: 0.4375rem solid #c0a290;
+}
+
+.notification_list li {
+    padding: 10px 30px 10px 10px;
+    font-size: 10px;
+    background: white;
+    margin: 10px;
+    color: #000;
+    min-width: 204px;
+}
+
+
+.btn-outline {
+    background: none;
+    border: 2px solid #ffffff;
+}
+
+.image_alternate_feed {
+    display: inline-block;
+    border-radius: 50%;
+    border: 3px solid #315fe9;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    z-index: 400;
+    position: absolute;
+}
+.image_alternate_feed img {
+    width: 100%;
+    top: 0;
+    float: left;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.upvoted {
+    background: #2847f3;
+    color: #fff;
+}
+
+.is_link{
+  background: none;
+    color: #fff;
 }
