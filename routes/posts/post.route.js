@@ -6,6 +6,13 @@ const ctrl = require('./controller.js');
 module.exports = routes;
 
 routes.get('/list/my', ctrl.listItemMy);
+routes.get(
+  '/list/myfeed',
+  u_ctrl.ensureAuthenticated,
+  ctrl.getMyFollowing,
+  ctrl.listItemMyFeed
+);
+
 routes.get('/list/all', ctrl.listItemAll);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
 

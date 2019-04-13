@@ -99,7 +99,7 @@ class PostComments extends React.Component {
               required
               rows="3"
               value={this.state.new_post_content}
-              placeholder="What are you thinking?"
+              placeholder="Add a comment?"
               name="new_post_content"
               onChange={this.handleChange.bind(this)}
             />

@@ -155,7 +155,7 @@ select.form-control:not([size]):not([multiple]) {
     transition: all 0.5s ease 0s;
     font-family: 'Montserrat', sans-serif;
     font-size: 15px;
-    padding: 0px 10px;
+    padding: 0px 0px;
     font-weight: 500;
 }
 
@@ -181,7 +181,7 @@ hr {
 }
 
 li.logo {
-    margin: 0px 20px;
+    margin: 0px;
     margin-left: 0px;
 }
 
@@ -4405,10 +4405,10 @@ ul.submenu li a {
 .notification_list li {
     padding: 10px 30px 10px 10px;
     font-size: 10px;
-    background: white;
+    /* background: white; */
     margin: 10px;
-    color: #000;
-    min-width: 204px;
+    color: #fff;
+    min-width: 250px;
 }
 
 

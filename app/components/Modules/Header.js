@@ -47,8 +47,21 @@ const Header = props => {
                   <li>
                     <Link to="/tournaments">Tournaments</Link>
                   </li>
-                  <li>
+                  <li className="has_children_m">
                     <Link to="/feed">Social Feed</Link>
+                    <ul className="submenu">
+                      <li>
+                        <Link to="/feed">All</Link>
+                      </li>
+                      <li>
+                        <Link to="/feed/my">My</Link>
+                      </li>
+                      <li>
+                        <Link to="/clip_of_the_week_month">
+                          Clip of the week / month
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
                   <li>
                     <Link to="/forums">Community</Link>
@@ -58,6 +71,12 @@ const Header = props => {
                   </li>
                   <li>
                     <Link to="/support/tickets">Support</Link>
+                  </li>
+
+                  <li>
+                    <Link className="profile_menu_item">
+                      <i className="fa fa-search" />
+                    </Link>
                   </li>
 
                   {props.user

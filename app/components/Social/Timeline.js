@@ -5,6 +5,18 @@ import moment from 'moment';
 import UpvoteButton from '../Modules/UpvoteButton';
 import PostComments from './PostComments';
 import {add_post} from '../../actions/social';
+
+// import anchorme from 'anchorme'; // ES6 / Typescript style imports
+
+// const anchorThisText = function(text) {
+//   const op = [];
+//   const list = anchorme(text, {list: true}).forEach((x, i) => {
+//     // console.log(raw);
+//     op.push(x.raw);
+//   });
+//   // console.log(op);
+// };
+
 class Timeline extends React.Component {
   state = {repost_done: false};
   doRepost() {

@@ -23,7 +23,7 @@ import SingleThread from './components/Forums/SingleThread';
 import NewTeam from './components/Teams/NewTeam';
 import TeamInfo from './components/Teams/TeamInfo';
 
-// import FeedFollowing from './components/Social/FeedFollowing';
+import FeedMy from './components/Social/FeedMy';
 import Feed from './components/Social/Feed';
 
 import NewTicket from './components/Tickets/NewTicket';
@@ -71,6 +71,7 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         component={SingleTicket}
       />
+      <Route path="/feed/my" onEnter={ensureAuthenticated} component={FeedMy} />
       <Route path="/feed" component={Feed} />
       <Route
         path="/support/tickets/create"

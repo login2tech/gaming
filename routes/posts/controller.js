@@ -2,6 +2,7 @@
 const Item = require('./Post');
 const ItemUpvotes = require('./PostUpvotes');
 const ItemComments = require('./PostComments');
+const UsereFollower = require('../../models/UserFollower');
 
 exports.new_comment = function(req, res, next) {
   const uid = req.user.id;
@@ -76,6 +77,89 @@ exports.downvote = function(req, res, next) {
     });
 };
 
+exports.getMyFollowing = function(req, res, next) {
+  new UsereFollower()
+    .where({
+      follower_id: req.user.id
+    })
+    .fetchAll()
+    .then(function(tasks) {
+      tasks = tasks.toJSON();
+      const feed_players = [];
+      for (let i = 0; i < tasks.length; i++) {
+        feed_players.push(tasks[i].user_id);
+      }
+      req.users_my_following = feed_players;
+      next();
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'failed',
+        items: []
+      });
+    });
+};
+
+exports.listItemMyFeed = function(req, res, next) {
+  const cur_u = req.user.id ? req.user.id : 99999;
+  const n = new Item()
+    .orderBy('id', 'DESC')
+    .where('user_id', 'in', req.users_my_following);
+  let p;
+  if (req.query.paged && parseInt(req.query.paged) > 1) {
+    p = parseInt(req.query.paged);
+  } else {
+    p = 1;
+  }
+  n.fetchPage({
+    page: p,
+    pageSize: 10,
+    withRelated: [
+      {
+        user: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        upvotes: function(qb) {
+          qb.column('post_id').where('user_id', cur_u);
+          // .where('subject_name', 'Question');
+        }
+      },
+      {
+        'comments.user': function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      'like_count',
+      'comments'
+    ]
+  })
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      items = items.toJSON();
+      // console.log(items);
+      // items.like_count = items.like_count ? items.like_count.length : 0;
+      return res.status(200).send({ok: true, items: items});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
 exports.listItemMy = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
   const n = new Item().orderBy('id', 'DESC').where({
@@ -129,7 +213,7 @@ exports.listItemMy = function(req, res, next) {
       return res.status(200).send({ok: true, items: items});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
