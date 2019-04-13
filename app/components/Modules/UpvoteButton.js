@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {upVote, downVote} from '../../actions/social';
 
 class UpvoteButton extends React.Component {
-  state = {changed: false};
+  state = {changed: false, doChange: 0};
   changeVote(already_voted, e) {
     if (already_voted) {
       this.handleDownVote(e);
@@ -21,7 +21,8 @@ class UpvoteButton extends React.Component {
         res => {
           if (res) {
             this.setState({
-              changed: !this.state.changed
+              changed: !this.state.changed,
+              doChange: this.state.doChange + 1
             });
           }
         }
@@ -30,7 +31,7 @@ class UpvoteButton extends React.Component {
   }
 
   handleDownVote(e) {
-    if (this.props.total_count == 0) {
+    if (this.props.total_count == 0 && !this.state.changed) {
       return;
     }
     this.props.dispatch(
@@ -41,7 +42,8 @@ class UpvoteButton extends React.Component {
         res => {
           if (res) {
             this.setState({
-              changed: !this.state.changed
+              changed: !this.state.changed,
+              doChange: this.state.doChange - 1
             });
           }
         }
@@ -80,7 +82,7 @@ class UpvoteButton extends React.Component {
             (
             {this.state.changed
               ? this.props.total_count
-                ? this.props.total_count + 1
+                ? this.props.total_count + this.state.doChange
                 : '1'
               : this.props.total_count
                 ? this.props.total_count

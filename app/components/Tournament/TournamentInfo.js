@@ -393,7 +393,7 @@ class TournamentInfo extends React.Component {
                       <td>
                         <span className="hc-trophy-icon">
                           <img
-                            src="https://umggaming.com/img/goldtrophy.png"
+                            src="/images/goldtrophy.png"
                             style={{width: '40px'}}
                           />
                         </span>
@@ -420,7 +420,7 @@ class TournamentInfo extends React.Component {
                       <td>
                         <span className="hc-trophy-icon">
                           <img
-                            src="https://umggaming.com/img/silvertrophy.png"
+                            src="/images/silvertrophy.png"
                             style={{width: '40px'}}
                           />
                         </span>
@@ -447,7 +447,7 @@ class TournamentInfo extends React.Component {
                       <td>
                         <span className="hc-trophy-icon">
                           <img
-                            src="https://umggaming.com/img/bronzetrophy.png"
+                            src="/images/bronzetrophy.png"
                             style={{width: '40px'}}
                           />
                         </span>

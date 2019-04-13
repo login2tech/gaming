@@ -66,37 +66,70 @@ export default function getRoutes(store) {
         component={ApplyForStaff}
         onLeave={clearMessages}
       />
-      <Route path="/faq" component={FAQ} onLeave={clearMessages} />
-      <Route path="/p/:slug" component={CMSPage} />
+      <Route onLeave={clearMessages} path="/faq" component={FAQ} />
+      <Route onLeave={clearMessages} path="/p/:slug" component={CMSPage} />
       <Route
         path="/support/tickets/ticket/:ticket_id"
+        onLeave={clearMessages}
         onEnter={ensureAuthenticated}
         component={SingleTicket}
       />
-      <Route path="/feed/my" onEnter={ensureAuthenticated} component={FeedMy} />
-      <Route path="/clip_of_the_week_month" component={ClipOfTheWeek} />
-      <Route path="/feed" component={Feed} />
+      <Route
+        onLeave={clearMessages}
+        path="/feed/my"
+        onEnter={ensureAuthenticated}
+        component={FeedMy}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/clip_of_the_week_month"
+        component={ClipOfTheWeek}
+      />
+      <Route onLeave={clearMessages} path="/feed" component={Feed} />
       <Route
         path="/support/tickets/create"
         onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
         component={NewTicket}
       />
       <Route
         path="/support/tickets"
         onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
         component={Tickets}
       />
       <Route
         path="/forums/thread/:thread_id/page/:page"
+        onLeave={clearMessages}
         component={props => <SingleThread key={props.params.page} {...props} />}
       />
+
+      <Route
+        onLeave={clearMessages}
+        path="/forums/:id/:title"
+        component={Threads}
       />
-      <Route path="/forums/:id/:title" component={Threads} />
-      <Route path="/forums" component={Topics} />
-      <Route path="/matchfinder" component={MatchFinder} />
-      <Route path="/tournaments" component={TournamentFinder} />
-      <Route path="/t/:tournament_id" component={TournamentInfo} />
-      <Route path="/m/:match_id" component={MatchInfo} />
+      <Route onLeave={clearMessages} path="/forums" component={Topics} />
+      <Route
+        onLeave={clearMessages}
+        path="/matchfinder"
+        component={MatchFinder}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/tournaments"
+        component={TournamentFinder}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/t/:tournament_id"
+        component={TournamentInfo}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/m/:match_id"
+        component={MatchInfo}
+      />
       <Route
         path="/matchfinder/new/:ladder/:id"
         component={NewMatch}

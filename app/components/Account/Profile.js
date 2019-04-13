@@ -324,7 +324,6 @@ class Profile extends React.Component {
   }
 
   askFile(cls, cb) {
-    // console.log('here');
     const data = new FormData();
     data.append('file', this.state[cls], this.state[cls].name);
     axios
@@ -530,7 +529,7 @@ class Profile extends React.Component {
                     onClick={event => {
                       this.addFriend(event);
                     }}
-                    className="btn btn-default bttn_submit btn-outline"
+                    className="btn btn-default bttn_submit btn-outline mw_200"
                   >
                     Follow
                   </Link>
@@ -546,7 +545,7 @@ class Profile extends React.Component {
                     onClick={event => {
                       this.addFriend(event);
                     }}
-                    className="btn btn-default bttn_submit active"
+                    className="btn btn-default bttn_submit active mw_200"
                   >
                     Stop Following
                   </Link>

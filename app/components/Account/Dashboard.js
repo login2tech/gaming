@@ -778,7 +778,7 @@ class Profile extends React.Component {
               <div className="col-md-6">
                 <h5 className="credit_summary">Double XP</h5>
 
-                {this.props.user.prime ? (
+                {this.props.user.double_xp ? (
                   <p>
                     <strong className="text-white">Status:</strong>{' '}
                     <span className="text-success">enabled</span>

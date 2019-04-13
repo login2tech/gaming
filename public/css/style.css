@@ -4411,7 +4411,6 @@ ul.submenu li a {
     min-width: 250px;
 }
 
-
 .btn-outline {
     background: none;
     border: 2px solid #ffffff;
@@ -4427,6 +4426,7 @@ ul.submenu li a {
     z-index: 400;
     position: absolute;
 }
+
 .image_alternate_feed img {
     width: 100%;
     top: 0;
@@ -4440,8 +4440,8 @@ ul.submenu li a {
     color: #fff;
 }
 
-.is_link{
-  background: none;
+.is_link {
+    background: none;
     color: #fff;
 }
 
@@ -4459,8 +4459,9 @@ ul.submenu.notification_list {
     max-height: 400px;
     overflow-y: auto;
 }
-.mw_200{
-  max-width: 200px;
+
+.mw_200 {
+    max-width: 200px;
 }
 
 .rank_box_prog {
@@ -4494,8 +4495,6 @@ span.rank_prog_done {
     border-radius: 5px;
 }
 
-
-
 .rank_box_prog_outer > span {
     float: left;
     font-size: 10px;
@@ -4510,4 +4509,13 @@ span.rank_prog_done {
 
 .profile_pic_outline.prime {
     border: 4px solid #ecc907 !important;
+}
+
+.text-sm {
+    font-size: 10px;
+    width: 100%;
+    display: block;
+    line-height: 10px;
+    color: #8e8e8e;
+    letter-spacing: 1px;
 }
