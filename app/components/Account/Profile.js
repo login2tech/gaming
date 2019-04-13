@@ -24,6 +24,138 @@ class Profile extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  rank_based_on_xp(xp) {
+    if (xp < 50) {
+      return 'Amatuer';
+    }
+    if (xp < 200) {
+      return 'Beginner';
+    }
+    if (xp < 500) {
+      return 'Upcoming';
+    }
+    if (xp < 1000) {
+      return 'Bronze';
+    }
+    if (xp < 1500) {
+      return 'Silver';
+    }
+    if (xp < 2000) {
+      return 'Gold';
+    }
+    if (xp < 3000) {
+      return 'Platinum';
+    }
+    if (xp < 3500) {
+      return 'Diamond';
+    }
+    if (xp < 4000) {
+      return 'Elite';
+    }
+    // if (xp >  5000) {
+    return 'Elite';
+    // }
+  }
+
+  rank_min_based_on_xp(xp) {
+    if (xp < 50) {
+      return '0';
+    }
+    if (xp < 200) {
+      return '50';
+    }
+    if (xp < 500) {
+      return '200';
+    }
+    if (xp < 1000) {
+      return '500';
+    }
+    if (xp < 1500) {
+      return '1000';
+    }
+    if (xp < 2000) {
+      return '1500';
+    }
+    if (xp < 3000) {
+      return '2000';
+    }
+    if (xp < 3500) {
+      return '3000';
+    }
+    if (xp < 4000) {
+      return '3500';
+    }
+    // if (xp >  5000) {
+    return '4000';
+    // }
+  }
+
+  rank_max_based_on_xp(xp) {
+    if (xp < 50) {
+      return '50';
+    }
+    if (xp < 200) {
+      return '200';
+    }
+    if (xp < 500) {
+      return '500';
+    }
+    if (xp < 1000) {
+      return '1000';
+    }
+    if (xp < 1500) {
+      return '1500';
+    }
+    if (xp < 2000) {
+      return '2000';
+    }
+    if (xp < 3000) {
+      return '3000';
+    }
+    if (xp < 3500) {
+      return '3500';
+    }
+    if (xp < 4000) {
+      return '4000';
+    }
+    // if (xp >  5000) {
+    return '5000';
+    // }
+  }
+
+  rank_percent_based_on_xp(xp) {
+    if (xp < 50) {
+      return (xp * 10) / 5;
+    }
+    if (xp < 200) {
+      return xp / 2;
+    }
+    if (xp < 500) {
+      return xp / 5;
+    }
+    if (xp < 1000) {
+      return xp / 10;
+    }
+    if (xp < 1500) {
+      return xp / 15;
+    }
+    if (xp < 2000) {
+      return xp / 20;
+    }
+    if (xp < 3000) {
+      return xp / 30;
+    }
+    if (xp < 3500) {
+      return xp / 35;
+    }
+    if (xp < 4000) {
+      return xp / 40;
+    }
+    // if (xp >  5000) {
+    return 100;
+    // }
+  }
+
   getTeams(match) {
     const team_1_id = match.team_1_id;
     const team_2_id = match.team_2_id;
@@ -282,11 +414,17 @@ class Profile extends React.Component {
                   this.state.user_info.profile_picture ? (
                     <img
                       src={this.state.user_info.profile_picture}
-                      className="img-fluid profile_pic_outline"
+                      className={
+                        'img-fluid profile_pic_outline' +
+                        (this.state.user_info.prime ? ' prime ' : ' ')
+                      }
                     />
                   ) : (
                     <img
-                      className="img-fluid profile_pic_outline"
+                      className={
+                        'img-fluid profile_pic_outline' +
+                        (this.state.user_info.prime ? ' prime ' : ' ')
+                      }
                       src={
                         'https://ui-avatars.com/api/?size=512&name=' +
                         this.state.user_info.first_name +
@@ -304,6 +442,31 @@ class Profile extends React.Component {
                     {this.state.user_info && this.state.user_info.first_name}{' '}
                     {this.state.user_info && this.state.user_info.last_name}
                   </h3>
+                  <div className="float-right rank_box_wrap">
+                    rank : {this.rank_based_on_xp(this.state.user_info.life_xp)}
+                    <div className="rank_box_prog_outer">
+                      <div className="rank_box_prog">
+                        <span
+                          className="rank_prog_done"
+                          style={{
+                            width: this.rank_percent_based_on_xp(
+                              this.state.user_info.life_xp
+                            )
+                          }}
+                        />
+                      </div>
+                      <span>
+                        {this.rank_min_based_on_xp(
+                          this.state.user_info.life_xp
+                        )}
+                      </span>
+                      <span>
+                        {this.rank_max_based_on_xp(
+                          this.state.user_info.life_xp
+                        )}
+                      </span>
+                    </div>
+                  </div>
 
                   <div className="list_pad">
                     <div className="row">

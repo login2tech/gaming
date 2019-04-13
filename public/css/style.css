@@ -4462,3 +4462,52 @@ ul.submenu.notification_list {
 .mw_200{
   max-width: 200px;
 }
+
+.rank_box_prog {
+    width: 300px;
+    height: 5px;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.float-right.rank_box_wrap {
+    background: #ffffff6e;
+    padding: 15px;
+    border-radius: 34px;
+}
+
+.float-right.rank_box_wrap {
+    background: #ffffff6e;
+    padding: 5px 32px;
+    border-radius: 34px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+span.rank_prog_done {
+    background: #2747f3;
+    float: left;
+    height: 100%;
+    border-radius: 5px;
+}
+
+
+
+.rank_box_prog_outer > span {
+    float: left;
+    font-size: 10px;
+    line-height: 10px;
+    padding-top: 6px;
+    color: #fff;
+}
+
+.rank_box_prog_outer > span:last-child {
+    float: right;
+}
+
+.profile_pic_outline.prime {
+    border: 4px solid #ecc907 !important;
+}
