@@ -15,7 +15,7 @@ exports.listGame = function(req, res, next) {
       return res.status(200).send({ok: true, items: games.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res.status(200).send([]);
     });
 };
@@ -81,6 +81,7 @@ exports.addGame = function(req, res, next) {
     title: req.body.title,
     max_players: req.body.max_players,
     min_players: req.body.min_players,
+    game_id: parseInt(req.body.course_id),
     rules: req.body.rules
   })
     .save()
@@ -111,6 +112,7 @@ exports.updateGame = function(req, res, next) {
   const obj = {
     title: req.body.title,
     max_players: req.body.max_players,
+    game_id: parseInt(req.body.course_id),
     min_players: req.body.min_players,
     rules: req.body.rules
   };
@@ -127,14 +129,14 @@ exports.updateGame = function(req, res, next) {
           });
         })
         .catch(function(err) {
-          console.log(err);
+          // console.log(err);
           res
             .status(400)
             .send({msg: 'Something went wrong while updating the Ladder'});
         });
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
 
       res
         .status(400)

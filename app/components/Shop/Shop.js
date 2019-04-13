@@ -320,7 +320,7 @@ class Shop extends React.Component {
                   this.renderBuyBox('prime')
                 ) : (
                   <div className="row">
-                    <div className="col-md-6 offset-md-3 text-center">
+                    <div className="col-md-8 offset-md-2 text-center">
                       {this.props.user ? (
                         this.props.user.prime ? (
                           <p className="text-success">

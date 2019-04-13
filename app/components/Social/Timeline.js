@@ -18,7 +18,7 @@ import {add_post} from '../../actions/social';
 // };
 
 class Timeline extends React.Component {
-  state = {repost_done: false};
+  state = {repost_done: false, show_comments: false};
   doRepost() {
     const {post} = this.props;
     this.props.dispatch(
@@ -115,7 +115,7 @@ class Timeline extends React.Component {
                 onClick={event => {
                   event.preventDefault();
                   this.setState({
-                    comments_to_show_of: post.id
+                    show_comments: !this.state.show_comments
                   });
                 }}
               >
@@ -158,7 +158,7 @@ class Timeline extends React.Component {
               false
             )}
           </span>
-          {this.state.comments_to_show_of == post.id && (
+          {this.state.show_comments && (
             <PostComments comments={post.comments} post_id={post.id} />
           )}
         </span>

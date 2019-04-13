@@ -5,7 +5,7 @@ import Messages from '../Modules/Messages';
 import {createMatch} from '../../actions/match';
 
 import {Link} from 'react-router';
-import moment from 'moment';
+// import moment from 'moment';
 class NewTeam extends React.Component {
   constructor(props) {
     super(props);

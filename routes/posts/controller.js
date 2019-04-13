@@ -3,6 +3,7 @@ const Item = require('./Post');
 const ItemUpvotes = require('./PostUpvotes');
 const ItemComments = require('./PostComments');
 const UsereFollower = require('../../models/UserFollower');
+const moment = require('moment');
 
 exports.new_comment = function(req, res, next) {
   const uid = req.user.id;
@@ -93,7 +94,7 @@ exports.getMyFollowing = function(req, res, next) {
       next();
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       res.status(400).send({
         ok: false,
         msg: 'failed',
@@ -271,6 +272,138 @@ exports.listItemAll = function(req, res, next) {
       // console.log(items);
       // items.like_count = items.like_count  ?items.like_count.length : 0;
       return res.status(200).send({ok: true, items: items});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
+exports.famousWeek = function(req, res, next) {
+  const cur_u = req.user.id ? req.user.id : 99999;
+  const n = new Item()
+    .orderBy('id', 'DESC')
+    .where('created_at', '>=', moment().subtract(7, 'days'))
+    .where('video_url', '!=', '');
+
+  n.fetchAll({
+    withRelated: [
+      {
+        user: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        upvotes: function(qb) {
+          qb.column('post_id').where('user_id', cur_u);
+          // .where('subject_name', 'Question');
+        }
+      },
+      {
+        'comments.user': function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      'like_count',
+      'comments'
+    ]
+  })
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      items = items.toJSON();
+      let max = 0;
+      let max_item = {};
+      for (let i = 0; i < items.length; i++) {
+        const like_count = items[i].like_count.length;
+        const comment_count = items[i].comments.length;
+
+        if (max < like_count + comment_count) {
+          max = like_count + comment_count;
+          max_item = items[i];
+        }
+      }
+      req.week_famous = max_item;
+      next();
+      return;
+      // return res.status(200).send({ok: true, items: items});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
+exports.famousMonth = function(req, res, next) {
+  const cur_u = req.user.id ? req.user.id : 99999;
+  const n = new Item()
+    .orderBy('id', 'DESC')
+    .where('created_at', '>=', moment().subtract(30, 'days'))
+    .where('video_url', '!=', '');
+
+  n.fetchAll({
+    withRelated: [
+      {
+        user: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        upvotes: function(qb) {
+          qb.column('post_id').where('user_id', cur_u);
+          // .where('subject_name', 'Question');
+        }
+      },
+      {
+        'comments.user': function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      'like_count',
+      'comments'
+    ]
+  })
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      items = items.toJSON();
+      let max = 0;
+      let max_item = {};
+      for (let i = 0; i < items.length; i++) {
+        const like_count = items[i].like_count.length;
+        const comment_count = items[i].comments.length;
+
+        if (max < like_count + comment_count) {
+          max = like_count + comment_count;
+          max_item = items[i];
+        }
+      }
+      req.month_famous = max_item;
+      // next();
+
+      return res.status(200).send({
+        ok: true,
+        week_famous: req.week_famous,
+        month_famous: req.month_famous
+      });
     })
     .catch(function(err) {
       // console.log(err);

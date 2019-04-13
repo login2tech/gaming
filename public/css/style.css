@@ -2675,7 +2675,7 @@ a.read-blog {
     font: 900 0.75em/1 "Montserrat",sans-serif;
     word-break: break-word;
     text-transform: uppercase;
-    width: 200px;
+    min-width: 200px;
     height: 40px;
     flex-shrink: 0;
     display: -webkit-flex;
@@ -4458,4 +4458,7 @@ ul.submenu li a {
 ul.submenu.notification_list {
     max-height: 400px;
     overflow-y: auto;
+}
+.mw_200{
+  max-width: 200px;
 }

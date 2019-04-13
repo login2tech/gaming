@@ -20,6 +20,8 @@ routes.post('/upvote', u_ctrl.ensureAuthenticated, ctrl.upvote);
 routes.post('/new_comment', u_ctrl.ensureAuthenticated, ctrl.new_comment);
 routes.post('/downvote', u_ctrl.ensureAuthenticated, ctrl.downvote);
 
+routes.get('/famous', ctrl.famousWeek, ctrl.famousMonth);
+
 // routes.get('/listPaged', ctrl.listPaged);
 // routes.get('/single/:id', ctrl.listSingleItem);
 

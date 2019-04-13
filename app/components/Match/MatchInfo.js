@@ -192,9 +192,9 @@ class MatchInfo extends React.Component {
         onClick={() => {
           this.showMatch();
         }}
-        className="btn btn-default bttn_submit"
+        className="btn btn-default bttn_submit mw_200"
       >
-        Join Match
+        Accept Match
       </button>
     );
   }

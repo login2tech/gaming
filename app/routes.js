@@ -26,6 +26,8 @@ import TeamInfo from './components/Teams/TeamInfo';
 import FeedMy from './components/Social/FeedMy';
 import Feed from './components/Social/Feed';
 
+import ClipOfTheWeek from './components/Social/ClipOfTheWeek';
+
 import NewTicket from './components/Tickets/NewTicket';
 import SingleTicket from './components/Tickets/SingleTicket';
 import Tickets from './components/Tickets/MyTickets';
@@ -72,6 +74,7 @@ export default function getRoutes(store) {
         component={SingleTicket}
       />
       <Route path="/feed/my" onEnter={ensureAuthenticated} component={FeedMy} />
+      <Route path="/clip_of_the_week_month" component={ClipOfTheWeek} />
       <Route path="/feed" component={Feed} />
       <Route
         path="/support/tickets/create"

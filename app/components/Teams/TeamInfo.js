@@ -274,7 +274,7 @@ class TeamInfo extends React.Component {
                           '/' +
                           this.state.team_info.id
                         }
-                        className="btn btn-default bttn_submit"
+                        className="btn btn-default bttn_submit mw_200"
                       >
                         Create a match
                       </Link>
