@@ -39,6 +39,14 @@ class Signup extends React.Component {
         password_confirm: this.state.password_confirm
       })
     );
+    const element = document.body;
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
   }
 
   // handleFacebook() {
@@ -57,7 +65,7 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <section className="middle_part_login">
+      <section className="middle_part_login" id="tab-block">
         <div className="container">
           <div className="row">
             <div className="col-md-12">

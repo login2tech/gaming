@@ -63,9 +63,9 @@ class Timeline extends React.Component {
 
     return (
       <li data-image_url={image_url}>
-        <span className="image_alternate_feed">
+        <Link className="image_alternate_feed" to={'/u/' + post.user.username}>
           <img src={image_url} />
-        </span>
+        </Link>
         <span className="text-date">
           <span className="float-right">
             {moment(post.created_at).format('lll')}
@@ -122,7 +122,7 @@ class Timeline extends React.Component {
                 {post.comments && post.comments.length
                   ? post.comments.length
                   : '0'}{' '}
-                comments
+                <i className="fa fa-comment" />
               </button>
             }
           </span>
@@ -152,6 +152,7 @@ class Timeline extends React.Component {
                 }}
                 className="btn btn-sm"
               >
+                <i className="fa fa-share-square" />{' '}
                 {this.state.repost_done == true ? 'Reposted' : 'Repost'}
               </button>
             ) : (

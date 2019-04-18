@@ -310,7 +310,7 @@ class Shop extends React.Component {
           <Messages messages={this.props.messages} />
           <div className="row" style={{marginBottom: '10px'}}>
             <div className="col-md-6">
-              <div className="authorize_box text-center">
+              <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Official Comp Membership
                   <br />
@@ -360,7 +360,7 @@ class Shop extends React.Component {
             </div>
 
             <div className="col-md-6">
-              <div className="authorize_box text-center">
+              <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Double XP <br />
                   <br /> $5 / month
@@ -410,11 +410,11 @@ class Shop extends React.Component {
           </div>
           <div className="row">
             <div className="col-md-6">
-              <div className="authorize_box text-center">
+              <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Credit Balance
                   <br />
-                  <br /> {this.props.user.credit_balance}
+                  <br /> {this.props.user && this.props.user.credit_balance}
                 </div>
                 {this.state.init_transaction_mode == 'credit' ? (
                   this.renderBuyBox('credit')
@@ -438,11 +438,11 @@ class Shop extends React.Component {
               </div>
             </div>
             <div className="col-md-6 ">
-              <div className="authorize_box text-center">
+              <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Cash Balance
                   <br />
-                  <br /> ${this.props.user.cash_balance}
+                  <br /> ${this.props.user && this.props.user.cash_balance}
                 </div>
                 {this.state.init_transaction_mode == 'cash' ? (
                   this.renderBuyBox('cash')

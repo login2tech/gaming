@@ -547,7 +547,7 @@ class Profile extends React.Component {
                     }}
                     className="btn btn-default bttn_submit active mw_200"
                   >
-                    Stop Following
+                    Unfollow
                   </Link>
                 ) : (
                   false
@@ -703,6 +703,12 @@ class Profile extends React.Component {
 
                       <div className="row">
                         {this.tags.map((k, i) => {
+                          if (
+                            !this.state.user_info['gamer_tag_' + k] ||
+                            this.state.user_info['gamer_tag_' + k] == ''
+                          ) {
+                            return false;
+                          }
                           return (
                             <div className="col-md-4" key={k}>
                               <span>{this.tag_names[k]}</span>
@@ -786,7 +792,7 @@ class Profile extends React.Component {
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
                               <td>{teams[0].title}</td>
-                              <td>{teams[1].title}</td>
+                              <td>{teams[1] ? teams[1].title : ' '}</td>
                               <td>
                                 {match.result ? (
                                   match.result == 'team_1' ? (

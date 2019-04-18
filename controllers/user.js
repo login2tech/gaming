@@ -179,6 +179,7 @@ exports.signupPost = function(req, res, next) {
       return;
     })
     .catch(function(err) {
+      // console.log(err);
       if (err.code === 'ER_DUP_ENTRY' || err.code === '23505') {
         return res.status(400).send({
           msg:
@@ -531,7 +532,7 @@ exports.singleUser_info = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res.status(200).send({user_info: {}, ok: false});
     });
 };

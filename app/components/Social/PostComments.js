@@ -105,7 +105,7 @@ class PostComments extends React.Component {
             />
           </div>
           <button type="submit" className="btn btn-primary">
-            Post Comment
+            Reply
           </button>
         </form>
       </div>

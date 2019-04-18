@@ -76,20 +76,29 @@ class Header extends React.Component {
                       Home
                     </Link>
                   </li> */}
-                    <li>
-                      <Link to="/matchfinder">MatchFinder</Link>
+                    <li className="has_children_m">
+                      <Link to="/matchfinder">Play</Link>
+                      <ul className="submenu">
+                        <li>
+                          <Link to="/matchfinder">MatchFinder</Link>
+                        </li>
+                        <li>
+                          <Link to="/tournaments">Tournaments</Link>
+                        </li>
+                        <li>
+                          <Link to="/money8">Money 8</Link>
+                        </li>
+                      </ul>
                     </li>
-                    <li>
-                      <Link to="/tournaments">Tournaments</Link>
-                    </li>
+
                     <li className="has_children_m">
                       <Link to="/feed">Social Feed</Link>
                       <ul className="submenu">
                         <li>
-                          <Link to="/feed">All</Link>
+                          <Link to="/feed">Global</Link>
                         </li>
                         <li>
-                          <Link to="/feed/my">My</Link>
+                          <Link to="/feed/my">Personal</Link>
                         </li>
                         <li>
                           <Link to="/clip_of_the_week_month">

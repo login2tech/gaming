@@ -77,15 +77,48 @@ class MatchInfo extends React.Component {
       return '--';
     }
     if (this.state.match.match_type == 'free') {
-      return <span className="text-success">Eligible</span>;
+      return (
+        <span className="text-success">
+          <img
+            src="/images/controller-green.svg"
+            style={{
+              width: '20px',
+              marginRight: 5
+            }}
+          />{' '}
+          Eligible
+        </span>
+      );
     }
 
     const amount = parseFloat(this.state.match.match_fee);
 
     if (parseFloat(team_u.user_info.cash_balance) < amount) {
-      return <span className="text-danger">Not Eligible</span>;
+      return (
+        <span className="text-danger">
+          <img
+            src="/images/controller-red.svg"
+            style={{
+              width: '20px',
+              marginRight: 5
+            }}
+          />{' '}
+          Not Eligible
+        </span>
+      );
     }
-    return <span className="text-success">Eligible</span>;
+    return (
+      <span className="text-success">
+        <img
+          src="/images/controller-green.svg"
+          style={{
+            width: '20px',
+            marginRight: 5
+          }}
+        />{' '}
+        Eligible
+      </span>
+    );
   }
 
   componentDidMount() {

@@ -74,7 +74,13 @@ class UpvoteButton extends React.Component {
           this.changeVote(voted, e);
         }}
       >
-        <i className="fa fa-thumb-up" />
+        <img
+          src="/images/controller.svg"
+          style={{
+            width: '20px',
+            marginRight: 5
+          }}
+        />
         <span className="hidden-sm-down">
           {voted ? 'Liked' : 'Like'}
           <span>
