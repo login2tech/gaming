@@ -441,31 +441,6 @@ class Profile extends React.Component {
                     {this.state.user_info && this.state.user_info.first_name}{' '}
                     {this.state.user_info && this.state.user_info.last_name}
                   </h3>
-                  <div className="float-right rank_box_wrap">
-                    rank : {this.rank_based_on_xp(this.state.user_info.life_xp)}
-                    <div className="rank_box_prog_outer">
-                      <div className="rank_box_prog">
-                        <span
-                          className="rank_prog_done"
-                          style={{
-                            width: this.rank_percent_based_on_xp(
-                              this.state.user_info.life_xp
-                            )
-                          }}
-                        />
-                      </div>
-                      <span>
-                        {this.rank_min_based_on_xp(
-                          this.state.user_info.life_xp
-                        )}
-                      </span>
-                      <span>
-                        {this.rank_max_based_on_xp(
-                          this.state.user_info.life_xp
-                        )}
-                      </span>
-                    </div>
-                  </div>
 
                   <div className="list_pad">
                     <div className="row">
@@ -518,6 +493,32 @@ class Profile extends React.Component {
                         </span>
                         <p>Profile Views </p>
                       </div>*/}
+                    </div>
+                  </div>
+
+                  <div className="float-right rank_box_wrap">
+                    rank : {this.rank_based_on_xp(this.state.user_info.life_xp)}
+                    <div className="rank_box_prog_outer">
+                      <div className="rank_box_prog">
+                        <span
+                          className="rank_prog_done"
+                          style={{
+                            width: this.rank_percent_based_on_xp(
+                              this.state.user_info.life_xp
+                            )
+                          }}
+                        />
+                      </div>
+                      <span>
+                        {this.rank_min_based_on_xp(
+                          this.state.user_info.life_xp
+                        )}
+                      </span>
+                      <span>
+                        {this.rank_max_based_on_xp(
+                          this.state.user_info.life_xp
+                        )}
+                      </span>
                     </div>
                   </div>
                 </div>
