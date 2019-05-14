@@ -5,7 +5,7 @@
 import React from 'react';
 // import {connect} from 'react-redux';
 // import {deleteQuestion} from '../../../actions/submissionActions';
-class Followers extends React.Component {
+class Following extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,7 @@ class Followers extends React.Component {
     };
   }
   fetchUserInfo(forward) {
-    fetch('/api/user_info/followers/list?uid=' + this.props.uid)
+    fetch('/api/user_info/following/list?uid=' + this.props.uid)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -37,7 +37,7 @@ class Followers extends React.Component {
               return (
                 <tr key={item.id}>
                   <td>
-                    {item.follower.first_name} {item.follower.last_name}
+                    {item.user.first_name} {item.user.last_name}
                   </td>
                 </tr>
               );
@@ -53,4 +53,4 @@ class Followers extends React.Component {
   }
 }
 
-export default Followers;
+export default Following;

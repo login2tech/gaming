@@ -455,6 +455,36 @@ exports.listUsers = function(req, res, next) {
       return res.status(200).send([]);
     });
 };
+exports.listFollower = function(req, res, next) {
+  const me = req.query.uid;
+  new UserFollower()
+    .where({
+      user_id: me
+    })
+    .fetchAll({withRelated: ['follower']})
+    .then(function(items) {
+      res.status(200).send({ok: true, items: items.toJSON()});
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(200).send({ok: true, items: []});
+    });
+};
+exports.listFollowing = function(req, res, next) {
+  const me = req.query.uid;
+  new UserFollower()
+    .where({
+      follower_id: me
+    })
+    .fetchAll({withRelated: ['user']})
+    .then(function(items) {
+      res.status(200).send({ok: true, items: items.toJSON()});
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(200).send({ok: true, items: []});
+    });
+};
 exports.addFollower = function(req, res, next) {
   const me = req.user.id;
   const follow_to = req.body.follow_to;

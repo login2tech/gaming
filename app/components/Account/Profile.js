@@ -7,7 +7,7 @@ import axios from 'axios';
 import Timeline from '../Social/Timeline';
 import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
-// import Following from '../Modules/Modals/Following';
+import Following from '../Modules/Modals/Following';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -31,6 +31,17 @@ class Profile extends React.Component {
         zIndex: 1075,
         heading: 'Followers',
         content: <Followers uid={id} />
+      })
+    );
+  }
+  showFollowing(id) {
+    this.props.dispatch(
+      openModal({
+        id: 'following',
+        type: 'custom',
+        zIndex: 1076,
+        heading: 'Followings',
+        content: <Following uid={id} />
       })
     );
   }
@@ -478,8 +489,24 @@ class Profile extends React.Component {
                       </div>
 
                       <div className="col-md-3">
-                        <span> Following </span>
-                        <p>{this.state.user_info.followingCount}</p>
+                        <span>
+                          <a
+                            onClick={() => {
+                              this.showFollowing(this.state.user_info.id);
+                            }}
+                          >
+                            Following
+                          </a>
+                        </span>
+                        <p>
+                          <a
+                            onClick={() => {
+                              this.showFollowing(this.state.user_info.id);
+                            }}
+                          >
+                            {this.state.user_info.followingCount}
+                          </a>
+                        </p>
                       </div>
 
                       <div className="col-md-3">

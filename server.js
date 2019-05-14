@@ -175,6 +175,10 @@ app.post(
 );
 app.get('/api/user_info', userController.singleUser_info);
 app.post('/api/user/follower/add', userController.addFollower);
+
+app.get('/api/user_info/followers/list', userController.listFollower);
+app.get('/api/user_info/following/list', userController.listFollowing);
+
 app.delete(
   '/account',
   userController.ensureAuthenticated,
