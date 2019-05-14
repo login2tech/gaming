@@ -34,9 +34,22 @@
               </div>
 
 
+            <div class="form-group">
+                <label>{{ELEMENENT}} Gamer Tag</label>
+              <select ng-model="item.gamer_tag" placeholder="Enter {{ELEMENENT}} Gamer Tag" class="form-control">
+                <option value="">Select</option>
+                <option value="1">Tag 1</option>
+                <option value="2">Tag 2</option>
+                <option value="3">Tag 3</option>
+                <option value="4">Tag 4</option>
+                <option value="5">Tag 5</option>
+                <option value="6">Tag 6</option>
+            </div>
+
+
 
             <div class="form-group">
-                <label>{{ELEMENENT}} Rules</label> 
+                <label>{{ELEMENENT}} Rules</label>
                   <trix-editor angular-trix ng-model="cms_page.rules"></trix-editor>
             </div>
 

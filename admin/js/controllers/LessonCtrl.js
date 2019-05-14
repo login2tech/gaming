@@ -138,7 +138,7 @@ angular
       description: '',
       quiz_data: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
     };
-    $scope.title = 'Edit Lesson';
+    $scope.title = 'Edit Ladder';
     $scope.loading = false;
     $scope.submitForm = function() {
       if ($scope.item.title == '') {

@@ -4428,8 +4428,8 @@ ul.submenu li a {
     border-radius: 50%;
     border: 3px solid #315fe9;
     left: -40px;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     z-index: 400;
     position: absolute;
     top: 0;
@@ -4526,4 +4526,10 @@ span.rank_prog_done {
     line-height: 10px;
     color: #8e8e8e;
     letter-spacing: 1px;
+}
+
+.float-right.rank_box_wrap {
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

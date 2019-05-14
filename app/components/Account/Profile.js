@@ -5,6 +5,9 @@ import moment from 'moment';
 import {add_post, add_friend} from '../../actions/social';
 import axios from 'axios';
 import Timeline from '../Social/Timeline';
+import {openModal} from '../../actions/modals';
+import Followers from '../Modules/Modals/Followers';
+// import Following from '../Modules/Modals/Following';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +21,18 @@ class Profile extends React.Component {
       new_post_video: '',
       posts_page: 1
     };
+  }
+
+  showFollowers(id) {
+    this.props.dispatch(
+      openModal({
+        id: 'followers',
+        type: 'custom',
+        zIndex: 1075,
+        heading: 'Followers',
+        content: <Followers uid={id} />
+      })
+    );
   }
 
   handleChange(event) {
@@ -468,8 +483,24 @@ class Profile extends React.Component {
                       </div>
 
                       <div className="col-md-3">
-                        <span> Followers </span>
-                        <p>{this.state.user_info.followerCount}</p>
+                        <span>
+                          <a
+                            onClick={() => {
+                              this.showFollowers(this.state.user_info.id);
+                            }}
+                          >
+                            Followers
+                          </a>
+                        </span>
+                        <p>
+                          <a
+                            onClick={() => {
+                              this.showFollowers(this.state.user_info.id);
+                            }}
+                          >
+                            {this.state.user_info.followerCount}
+                          </a>
+                        </p>
                       </div>
                       {/*}
                       <div className="col-md-4">
@@ -1049,32 +1080,6 @@ class Profile extends React.Component {
                                     share
                                   </button>
                                 </div>
-                                {/* <div className="btn-group">
-                              <button
-                                id="btnGroupDrop1"
-                                type="button"
-                                className="btn btn-link dropdown-toggle"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                              >
-                                <i className="fa fa-globe" />
-                              </button>
-                              <div
-                                className="dropdown-menu dropdown-menu-right"
-                                aria-labelledby="btnGroupDrop1"
-                              >
-                                <a className="dropdown-item" href="#">
-                                  <i className="fa fa-globe" /> Public
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i className="fa fa-users" /> Friends
-                                </a>
-                                <a className="dropdown-item" href="#">
-                                  <i className="fa fa-user" /> Just me
-                                </a>
-                              </div>
-                            </div> */}
                               </div>
                             </div>
                           </div>

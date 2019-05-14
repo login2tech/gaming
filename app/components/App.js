@@ -3,6 +3,8 @@ import Header from './Modules/Header';
 // import Header2 from './Header2';
 import Footer from './Modules/Footer';
 
+import ModalContainer from './ModalContainer';
+
 import {withLocalize} from 'react-localize-redux';
 
 class App extends React.Component {
@@ -60,6 +62,8 @@ class App extends React.Component {
         {this.props.routes[1].isNoWrap ? false : <Header />}
         {this.props.children}
         {this.props.routes[1].isNoWrap ? false : <Footer />}
+
+        <ModalContainer />
       </div>
     );
   }

@@ -63,7 +63,10 @@ class Timeline extends React.Component {
 
     return (
       <li data-image_url={image_url}>
-        <Link className="image_alternate_feed" to={'/u/' + post.user.username}>
+        <Link
+          className="image_alternate_feed"
+          to={post.user ? '/u/' + post.user.username : '#'}
+        >
           <img src={image_url} />
         </Link>
         <span className="text-date">

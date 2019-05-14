@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
       table.string('team_2_result').defaultTo('');
       table.text('result');
       table.timestamps();
-      table.integer('match_round').defaultTo(1);
+      // table.integer('match_round').defaultTo(1);
     }),
     knex.schema.table('tournaments', function(table) {
       table.text('team_ids');
