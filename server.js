@@ -112,6 +112,8 @@ app.post('/upload', (req, res, next) => {
 });
 
 app.post('/contact', contactController.contactPost);
+app.post('/contact_apply', contactController.contactApplyForStaff);
+app.post('/contact_advertiseWithUs', contactController.contactAdvertiseWithUs);
 
 app.get('/api/user_suggest', function(req, res, next) {
   if (!req.query.q) {
@@ -125,7 +127,7 @@ app.get('/api/user_suggest', function(req, res, next) {
       res.status(200).send({items: items.toJSON(), ok: true});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       res.status(200).send({items: [], ok: true, msg: 'err'});
     });
 });

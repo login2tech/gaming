@@ -29,7 +29,14 @@ class Feed extends React.Component {
   }
 
   fetchPosts() {
-    fetch('/api/posts/list/all?page=' + this.state.posts_page)
+    // console.log(this.props.params);
+    let hashtag = this.props.params ? this.props.params.hashtag : '';
+    if (!hashtag) {
+      hashtag = '';
+    }
+    fetch(
+      '/api/posts/list/all?hastag=' + hashtag + '&page=' + this.state.posts_page
+    )
       .then(res => res.json())
       .then(json => {
         if (json.ok) {

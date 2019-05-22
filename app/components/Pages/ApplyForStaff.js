@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {applyForStaff} from '../../actions/contact';
 import Messages from '../Modules/Messages';
-import {Translate} from 'react-localize-redux';
 
 class ApplyForStaff extends React.Component {
   constructor(props) {

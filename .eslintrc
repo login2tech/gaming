@@ -17,7 +17,8 @@
         "introJs": true,
         "Mousetrap": true,
         "chartToolTipInit": true,
-        "angular" : true,
-        "scrolltoTop":true
+        "angular": true,
+        "scrolltoTop": true,
+        "linkHashTags": true
     }
 }

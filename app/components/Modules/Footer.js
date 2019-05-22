@@ -64,10 +64,10 @@ class Footer extends React.Component {
                       <Link to="/tournaments">Tournaments </Link>
                     </li>
                     <li>
-                      <Link to="/apply_for_staff">Apply For Staff</Link>
+                      <Link to="/apply-for-staff">Apply For Staff</Link>
                     </li>
                     <li>
-                      <Link to="/advertise_with_us">Advertise with us</Link>
+                      <Link to="/advertise-with-us">Advertise with us</Link>
                     </li>
                     <li>
                       <Link to="/p/about">About Us</Link>

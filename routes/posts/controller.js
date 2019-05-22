@@ -37,7 +37,8 @@ exports.upvote = function(req, res, next) {
   new ItemUpvotes()
     .save({
       user_id: uid,
-      post_id: post_id
+      post_id: post_id,
+      type: req.body.type
     })
     .then(function(ub) {
       res.status(200).send({
@@ -46,7 +47,7 @@ exports.upvote = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed'
@@ -71,6 +72,7 @@ exports.downvote = function(req, res, next) {
       });
     })
     .catch(function(err) {
+      console.log(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed'
@@ -226,6 +228,11 @@ exports.listItemAll = function(req, res, next) {
   // .where({
   // user_id: req.user ? req.user.id : 0
   // });
+  // console.log(req.query);
+  if (req.query.hastag) {
+    // console.log(req.query.hashtag);
+    n = n.where('post', 'LIKE', '%' + n.query.hastag + '%');
+  }
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
     p = parseInt(req.query.paged);

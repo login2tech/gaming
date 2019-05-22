@@ -5,6 +5,7 @@ import App from './components/App';
 import Home from './components/Pages/Home';
 import Contact from './components/Pages/Contact';
 import ApplyForStaff from './components/Pages/ApplyForStaff';
+import AdvertiseWithUs from './components/Pages/AdvertiseWithUs';
 import NotFound from './components/Pages/NotFound';
 import FAQ from './components/Pages/FAQ';
 
@@ -62,8 +63,13 @@ export default function getRoutes(store) {
       <IndexRoute component={Home} onLeave={clearMessages} />
       <Route path="/contact" component={Contact} onLeave={clearMessages} />
       <Route
-        path="/apply_for_staff"
+        path="/apply-for-staff"
         component={ApplyForStaff}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/advertise-with-us"
+        component={AdvertiseWithUs}
         onLeave={clearMessages}
       />
       <Route onLeave={clearMessages} path="/faq" component={FAQ} />
@@ -84,6 +90,11 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
         path="/clip_of_the_week_month"
         component={ClipOfTheWeek}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/feed/hastag/:hashtag"
+        component={Feed}
       />
       <Route onLeave={clearMessages} path="/feed" component={Feed} />
       <Route

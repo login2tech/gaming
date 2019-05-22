@@ -106,8 +106,10 @@ class Timeline extends React.Component {
         ) : (
           false
         )}
-        <p>{post.post}</p>
-
+        <p
+          className="feed_post_content"
+          dangerouslySetInnerHTML={{__html: linkHashTags(post.post)}}
+        />
         <span className="text-date" />
         <span className="">
           <span className="float-right">
@@ -133,13 +135,8 @@ class Timeline extends React.Component {
             {this.props.user ? (
               <UpvoteButton
                 post_id={post.id}
-                total_count={post.like_count ? post.like_count.length : 0}
+                likes={post.like_count}
                 me={this.props.user.id}
-                liked={
-                  post.upvotes && post.upvotes.length && post.upvotes[0].post_id
-                    ? true
-                    : false
-                }
                 disabled={!this.props.user}
               />
             ) : (
