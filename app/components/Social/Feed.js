@@ -53,6 +53,10 @@ class Feed extends React.Component {
   }
 
   render() {
+    let hashtag = this.props.params ? this.props.params.hashtag : '';
+    if (!hashtag) {
+      hashtag = '';
+    }
     return (
       <div>
         <section className="page_title_bar less_padding" id="is_top">
@@ -60,7 +64,10 @@ class Feed extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>Social Feed</h3>
+                  <h3>
+                    Social Feed
+                    {hashtag ? ' - #' + hashtag : ''}
+                  </h3>
                 </div>
               </div>
             </div>
@@ -73,7 +80,10 @@ class Feed extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-8 offset-md-2">
-                    <h4 className="text-white">Latest Posts</h4>
+                    <h4 className="text-white">
+                      Latest Posts
+                      {hashtag ? ' - #' + hashtag : ''}
+                    </h4>
                     <ul className="timeline">
                       {this.state.posts &&
                         this.state.posts.map((post, i) => {

@@ -37,6 +37,10 @@ import NewMatch from './components/Match/NewMatch';
 import MatchFinder from './components/Match/MatchFinder';
 import MatchInfo from './components/Match/MatchInfo';
 
+import NewMoney8 from './components/Money8/NewMoney8';
+import Money8List from './components/Money8/Money8List';
+import Money8Info from './components/Money8/Money8Info';
+
 import TournamentFinder from './components/Tournament/TournamentFinder';
 import TournamentInfo from './components/Tournament/TournamentInfo';
 
@@ -141,12 +145,25 @@ export default function getRoutes(store) {
         path="/m/:match_id"
         component={MatchInfo}
       />
+
       <Route
         path="/matchfinder/new/:ladder/:id"
         component={NewMatch}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
+      <Route
+        path="/money8/new/"
+        component={NewMoney8}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/money8/:match_id"
+        component={Money8Info}
+      />
+      <Route onLeave={clearMessages} path="/money8" component={Money8List} />
       <Route
         path="/u/:username/teams/new"
         component={NewTeam}

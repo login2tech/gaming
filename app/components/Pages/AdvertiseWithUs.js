@@ -52,7 +52,7 @@ class AdvertiseWithUs extends React.Component {
                     id="contact-form"
                   >
                     <div className="row clearfix">
-                      <div className="form-group col-md-6 col-sm-6 co-xs-12">
+                      <div className="form-group col-md-12 col-sm-12 co-xs-12">
                         <label>
                           Name
                           <span className="required">*</span>

@@ -276,7 +276,7 @@ class NewTeam extends React.Component {
                           type="text"
                           id="starts_at"
                           className="form-control"
-                          required=""
+                          required
                           data-toggle="datetimepicker"
                           data-target="#starts_at"
                           placeholder="Match Start Date"
@@ -296,7 +296,7 @@ class NewTeam extends React.Component {
                           type="text"
                           id="starts_at_time"
                           className="form-control"
-                          required=""
+                          required
                           data-toggle="datetimepicker"
                           data-target="#starts_at_time"
                           placeholder="Match Start Time"
@@ -352,9 +352,7 @@ class NewTeam extends React.Component {
                           id="match_fee"
                           className="form-control"
                           onChange={this.handleChange.bind(this)}
-                          required=""
-                          data-toggle="datetimepicker"
-                          data-target="#match_fee"
+                          required
                           placeholder="Match Fees"
                           name="match_fee"
                         />
