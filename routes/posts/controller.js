@@ -47,7 +47,7 @@ exports.upvote = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed'
@@ -72,7 +72,7 @@ exports.downvote = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed'
@@ -108,7 +108,9 @@ exports.getMyFollowing = function(req, res, next) {
 exports.listItemMyFeed = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
   const n = new Item()
+
     .orderBy('id', 'DESC')
+    // .orderBy('is_pinned', 'ASC')
     .where('user_id', 'in', req.users_my_following);
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
@@ -165,9 +167,14 @@ exports.listItemMyFeed = function(req, res, next) {
 
 exports.listItemMy = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
-  const n = new Item().orderBy('id', 'DESC').where({
-    user_id: req.query.uid ? req.query.uid : 0
-  });
+  const n = new Item()
+
+    .orderBy('is_pinned', 'DESC')
+
+    .orderBy('id', 'DESC')
+    .where({
+      user_id: req.query.uid ? req.query.uid : 0
+    });
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
     p = parseInt(req.query.paged);
@@ -224,14 +231,14 @@ exports.listItemMy = function(req, res, next) {
 exports.listItemAll = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
 
-  const n = new Item().orderBy('id', 'DESC');
+  let n = new Item().orderBy('id', 'DESC');
   // .where({
   // user_id: req.user ? req.user.id : 0
   // });
   // console.log(req.query);
   if (req.query.hastag) {
     // console.log(req.query.hashtag);
-    n = n.where('post', 'LIKE', '%' + n.query.hastag + '%');
+    n = n.where('post', 'LIKE', '%' + req.query.hastag + '%');
   }
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
@@ -281,8 +288,8 @@ exports.listItemAll = function(req, res, next) {
       return res.status(200).send({ok: true, items: items});
     })
     .catch(function(err) {
-      // console.log(err);
-      return res.status(200).send({ok: true, items: []});
+      console.log(err);
+      return res.status(200).send({ok: true, items: [], error: 'err'});
     });
 };
 
@@ -291,6 +298,70 @@ exports.famousWeek = function(req, res, next) {
   const n = new Item()
     .orderBy('id', 'DESC')
     .where('created_at', '>=', moment().subtract(7, 'days'))
+    .where('video_url', '!=', '');
+
+  n.fetchAll({
+    withRelated: [
+      {
+        user: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        upvotes: function(qb) {
+          qb.column('post_id').where('user_id', cur_u);
+          // .where('subject_name', 'Question');
+        }
+      },
+      {
+        'comments.user': function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      'like_count',
+      'comments'
+    ]
+  })
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      items = items.toJSON();
+      let max = 0;
+      let max_item = {};
+      for (let i = 0; i < items.length; i++) {
+        const like_count = items[i].like_count.length;
+        const comment_count = items[i].comments.length;
+
+        if (max < like_count + comment_count) {
+          max = like_count + comment_count;
+          max_item = items[i];
+        }
+      }
+      req.week_famous = max_item;
+      next();
+      return;
+      // return res.status(200).send({ok: true, items: items});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
+exports.famousDay = function(req, res, next) {
+  const cur_u = req.user.id ? req.user.id : 99999;
+  const n = new Item()
+    .orderBy('id', 'DESC')
+    .where('created_at', '>=', moment().subtract(1, 'days'))
     .where('video_url', '!=', '');
 
   n.fetchAll({
@@ -527,6 +598,44 @@ exports.addItem = function(req, res, next) {
 //     });
 // };
 //
+exports.doPin = function(req, res, next) {
+  req.assert('post_id', 'ID cannot be blank').notEmpty();
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).send(errors);
+  }
+
+  const item = new Item({id: req.body.post_id, user_id: req.user.id});
+
+  item
+    .fetch()
+    .then(function(itm_obj) {
+      if (itm_obj) {
+        itm_obj
+          .save({
+            is_pinned: !item.get('is_pinned')
+          })
+          .then(function(itm_obj) {
+            res.status(200).send({ok: true, msg: 'done'});
+          })
+          .catch(function(err) {
+            res
+              .status(400)
+              .send({msg: 'Something went wrong while updating the pin'});
+          });
+      } else {
+        res.status(200).send({ok: true, msg: 'done'});
+      }
+    })
+    .catch(function(err) {
+      // console.log(err);
+
+      res
+        .status(400)
+        .send({msg: 'Something went wrong while updating the pin'});
+    });
+};
+
 // exports.updateItem = function(req, res, next) {
 //   req.assert('title', 'Title cannot be blank').notEmpty();
 //   // req.assert('content', 'Content cannot be blank').notEmpty();

@@ -18,7 +18,36 @@ import {add_post} from '../../actions/social';
 // };
 
 class Timeline extends React.Component {
-  state = {repost_done: false, show_comments: false};
+  state = {repost_done: false, show_comments: false, is_pinned: false};
+
+  doPin(id, is_pinned) {
+    return fetch('/api/posts/doPin', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({post_id: id})
+    }).then(response => {
+      if (response.ok) {
+        // response.json().then(json => {
+        //   this.props.dispatch({
+        //     type: 'SUCCESS',
+        //     messages: Array.isArray(json) ? json : [json]
+        //   });
+        //   // window.location.href = '/m/' + json.match.id;
+        // });
+        this.setState({
+          is_pinned: is_pinned ? 'no' : 'yes'
+        });
+      } else {
+        // return response.json().then(json => {
+        //   dispatch({
+        //     type: 'FAILURE',
+        //     messages: Array.isArray(json) ? json : [json]
+        //   });
+        // });
+      }
+    });
+  }
+
   doRepost() {
     const {post} = this.props;
     this.props.dispatch(
@@ -60,6 +89,12 @@ class Timeline extends React.Component {
           ' ' +
           (post.user ? post.user.last_name : ' ') +
           '&color=223cf3&background=000000';
+    if (this.state.is_pinned == 'yes') {
+      post.is_pinned = true;
+    }
+    if (this.state.is_pinned == 'no') {
+      post.is_pinned = false;
+    }
 
     return (
       <li data-image_url={image_url}>
@@ -71,7 +106,20 @@ class Timeline extends React.Component {
         </Link>
         <span className="text-date">
           <span className="float-right">
-            {moment(post.created_at).format('lll')}
+            {moment(post.created_at).format('lll')}{' '}
+            {this.props.show_option_to_pin && (
+              <button
+                onClick={() => {
+                  this.doPin(post.id, post.is_pinned);
+                }}
+                className={
+                  (post.is_pinned ? ' is_pinned' : ' ') +
+                  ' pinner btn btn-sm is_link'
+                }
+              >
+                <i className="fa fa-thumb-tack" />
+              </button>
+            )}
           </span>
           <span className="">
             <Link

@@ -76,16 +76,19 @@ class MatchInfo extends React.Component {
     if (this.state.match.match_type == '') {
       return '--';
     }
+    if (!team_u.user_info['gamer_tag_' + this.state.match.ladder.gamer_tag]) {
+      return (
+        <span className="text-danger">
+          <img src="/images/controller-red.svg" className="icon_size" /> Not
+          Eligible
+        </span>
+      );
+    }
+
     if (this.state.match.match_type == 'free') {
       return (
         <span className="text-success">
-          <img
-            src="/images/controller-green.svg"
-            style={{
-              width: '20px',
-              marginRight: 5
-            }}
-          />{' '}
+          <img src="/images/controller-green.svg" className="icon_size" />{' '}
           Eligible
         </span>
       );
@@ -96,26 +99,14 @@ class MatchInfo extends React.Component {
     if (parseFloat(team_u.user_info.cash_balance) < amount) {
       return (
         <span className="text-danger">
-          <img
-            src="/images/controller-red.svg"
-            style={{
-              width: '20px',
-              marginRight: 5
-            }}
-          />{' '}
-          Not Eligible
+          <img src="/images/controller-red.svg" className="icon_size" /> Not
+          Eligible
         </span>
       );
     }
     return (
       <span className="text-success">
-        <img
-          src="/images/controller-green.svg"
-          style={{
-            width: '20px',
-            marginRight: 5
-          }}
-        />{' '}
+        <img src="/images/controller-green.svg" className="icon_size" />{' '}
         Eligible
       </span>
     );
@@ -523,7 +514,7 @@ class MatchInfo extends React.Component {
 
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
-                    <i className="fa fa-users" aria-hidden="true" /> ROSTER
+                    <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
                   <br />
 
@@ -534,6 +525,7 @@ class MatchInfo extends React.Component {
                     <thead>
                       <tr>
                         <th>Username</th>
+                        <th>Gamer Tag</th>
                         <th>Role</th>
                       </tr>
                     </thead>
@@ -543,9 +535,27 @@ class MatchInfo extends React.Component {
                           return (
                             <tr key={team_user.id}>
                               <td>
-                                <Link to={'/u/' + team_user.user_info.username}>
+                                <Link
+                                  target="_blank"
+                                  to={'/u/' + team_user.user_info.username}
+                                >
                                   {team_user.user_info.username}
                                 </Link>
+                              </td>
+                              <td>
+                                {team_user.user_info[
+                                  'gamer_tag_' +
+                                    this.state.match.ladder.gamer_tag
+                                ] ? (
+                                  team_user.user_info[
+                                    'gamer_tag_' +
+                                      this.state.match.ladder.gamer_tag
+                                  ]
+                                ) : (
+                                  <span className="text-danger">
+                                    No Gamertag
+                                  </span>
+                                )}
                               </td>
 
                               <td>
@@ -571,6 +581,7 @@ class MatchInfo extends React.Component {
                         <thead>
                           <tr>
                             <th>Username</th>
+                            <th>Gamer Tag</th>
                             <th>Role</th>
                           </tr>
                         </thead>
@@ -586,7 +597,21 @@ class MatchInfo extends React.Component {
                                       {team_user.user_info.username}
                                     </Link>
                                   </td>
-
+                                  <td>
+                                    {team_user.user_info[
+                                      'gamer_tag_' +
+                                        this.state.match.ladder.gamer_tag
+                                    ] ? (
+                                      team_user.user_info[
+                                        'gamer_tag_' +
+                                          this.state.match.ladder.gamer_tag
+                                      ]
+                                    ) : (
+                                      <span className="text-danger">
+                                        No Gamertag
+                                      </span>
+                                    )}
+                                  </td>
                                   <td>
                                     {team_user.user_id ==
                                     this.state.match.team_2_info.team_creator
@@ -627,7 +652,7 @@ class MatchInfo extends React.Component {
                       }}
                     >
                       <h6 className="prizes_desclaimer">
-                        {this.state.team_selected.title} - Rooster
+                        {this.state.team_selected.title} - Squad
                       </h6>
                       <table className="table table-striped table-ongray table-hover">
                         <thead>

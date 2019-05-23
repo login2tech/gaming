@@ -12,9 +12,9 @@ angular
     $scope.items = [];
     $scope.ELEMENENT = 'Ladder';
     $scope.courseId = $routeParams.id;
-    $scope.list = function(course_id) {
+    $scope.list = function(game_id) {
       $scope.show = false;
-      Lesson.list(course_id)
+      Lesson.list(game_id)
         .then(function(response) {
           $scope.show = true;
           $scope.items = response.data.items;
@@ -87,7 +87,7 @@ angular
     $scope.item = {
       title: '',
       id: $routeParams.id,
-      course_id: $routeParams.id,
+      game_id: $routeParams.id,
       description: '',
       quiz_data: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
     };
@@ -134,7 +134,7 @@ angular
     $scope.item = {
       title: '',
       id: $routeParams.id,
-      course_id: $routeParams.id,
+      game_id: $routeParams.id,
       description: '',
       quiz_data: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}]
     };

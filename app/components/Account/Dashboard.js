@@ -494,12 +494,11 @@ class Profile extends React.Component {
       </div>
     );
   }
-  tags = [1, 2, 3, 4, 5, 6];
+  tags = [1, 2, 3, 4, 5];
   tag_names = [
     '',
     'Xbox Live Gamertag',
     'PSN',
-    'Username',
     'Epic Games Username',
     'Steam Username',
     'Battletag'

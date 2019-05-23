@@ -93,7 +93,7 @@ export default function getRoutes(store) {
       />
       <Route
         onLeave={clearMessages}
-        path="/feed/hastag/:hashtag"
+        path="/feed/hashtag/:hashtag"
         component={Feed}
       />
       <Route onLeave={clearMessages} path="/feed" component={Feed} />

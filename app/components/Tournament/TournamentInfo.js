@@ -865,7 +865,7 @@ class TournamentInfo extends React.Component {
               }}
             >
               <h6 className="prizes_desclaimer">
-                {this.state.team_selected.title} - Rooster
+                {this.state.team_selected.title} - Squad
               </h6>
               <table className="table table-striped table-ongray table-hover">
                 <thead>

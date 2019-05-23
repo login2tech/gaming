@@ -15,12 +15,13 @@ routes.get(
 
 routes.get('/list/all', ctrl.listItemAll);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
+routes.post('/doPin', u_ctrl.ensureAuthenticated, ctrl.doPin);
 
 routes.post('/upvote', u_ctrl.ensureAuthenticated, ctrl.upvote);
 routes.post('/new_comment', u_ctrl.ensureAuthenticated, ctrl.new_comment);
 routes.post('/downvote', u_ctrl.ensureAuthenticated, ctrl.downvote);
 
-routes.get('/famous', ctrl.famousWeek, ctrl.famousMonth);
+routes.get('/famous', ctrl.famousDay, ctrl.famousWeek, ctrl.famousMonth);
 
 // routes.get('/listPaged', ctrl.listPaged);
 // routes.get('/single/:id', ctrl.listSingleItem);

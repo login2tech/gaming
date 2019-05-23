@@ -17,6 +17,12 @@ routes.get(
   ctrl.matches_of_user
 );
 
+routes.get(
+  '/matches_of_team',
+  u_ctrl.ensureAuthenticated,
+  ctrl.matches_of_team
+);
+
 // routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
 routes.get('/user_info', ctrl.listItem);
 // routes.get('/listPaged', ctrl.listPaged);

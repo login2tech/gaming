@@ -4565,3 +4565,18 @@ p.feed_post_content a {
     text-decoration: underline;
     font-weight: bold;
 }
+
+img.icon_size {
+    width: 50px;
+}
+
+
+button.is_pinned.pinner {
+    transform: rotate(90deg);
+    color: red;
+    border: 1px solid red;
+}
+
+.pinner {
+    margin-left: 10px;
+}

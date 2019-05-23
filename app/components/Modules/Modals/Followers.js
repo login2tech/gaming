@@ -1,6 +1,7 @@
 // import {closeModal, openModal} from '../../../actions/modals';
 // import {connect} from 'react-redux';
 // import Messages from '../../Messages';
+import {Link} from 'react-router';
 
 import React from 'react';
 // import {connect} from 'react-redux';
@@ -37,7 +38,9 @@ class Followers extends React.Component {
               return (
                 <tr key={item.id}>
                   <td>
-                    {item.follower.first_name} {item.follower.last_name}
+                    <Link to={'/u/' + item.follower.username}>
+                      {item.follower.username}
+                    </Link>
                   </td>
                 </tr>
               );

@@ -1,6 +1,7 @@
 // import {closeModal, openModal} from '../../../actions/modals';
 // import {connect} from 'react-redux';
 // import Messages from '../../Messages';
+import {Link} from 'react-router';
 
 import React from 'react';
 // import {connect} from 'react-redux';
@@ -37,7 +38,9 @@ class Following extends React.Component {
               return (
                 <tr key={item.id}>
                   <td>
-                    {item.user.first_name} {item.user.last_name}
+                    <Link to={'/u/' + item.user.username}>
+                      {item.user.username}
+                    </Link>
                   </td>
                 </tr>
               );

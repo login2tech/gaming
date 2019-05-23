@@ -14,6 +14,8 @@ routes.get('/user_info', ctrl.listItem);
 routes.get('/single/:id', ctrl.listSingleItem);
 
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
+// routes.get('/matchlist', u_ctrl.ensureAuthenticated, ctrl.matchlist);
+
 routes.post('/edit', u_ctrl.ensureAuthenticated, ctrl.updateItem);
 routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);
 

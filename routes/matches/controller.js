@@ -145,6 +145,30 @@ const takeMoneyFromTeam = function(team_id, input_val) {
     });
 };
 
+exports.matches_of_team = function(req, res, next) {
+  // const teams = [req.query.team_id];
+  new Item()
+    .orderBy('created_at', 'DESC')
+
+    .query(function(qb) {
+      qb.where('team_1_id', req.query.team_id).orWhere(
+        'team_2_id',
+        req.query.team_id
+      );
+    })
+    .fetchAll({withRelated: ['ladder', 'game', 'team_1_info', 'team_2_info']})
+    .then(function(item) {
+      if (!item) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      return res.status(200).send({ok: true, items: item.toJSON()});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
 exports.matches_of_user = function(req, res, next) {
   const teams = req.query.teams.split(',');
   // const uid = req.query.uid;
@@ -268,6 +292,7 @@ exports.saveScore = function(req, res, next) {
       });
     });
 };
+
 exports.join = function(req, res, next) {
   //
   if (!req.body.team_2_id) {
@@ -333,6 +358,7 @@ exports.listItem = function(req, res, next) {
       return res.status(200).send({ok: true, items: []});
     });
 };
+
 exports.listPaged = function(req, res, next) {
   let c = new Item();
   c = c.orderBy('id', 'DESC');
@@ -396,6 +422,8 @@ exports.addItem = function(req, res, next) {
   req.assert('team_1_id', 'Team cannot be blank').notEmpty();
   req.assert('starts_at', 'Starts At cannot be blank').notEmpty();
   req.assert('match_type', 'Match Type cannot be blank').notEmpty();
+  req.assert('match_players', 'Match Players cannot be blank').notEmpty();
+
   // req.assert('content', 'Content cannot be blank').notEmpty();
   // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
   const errors = req.validationErrors();

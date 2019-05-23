@@ -13,7 +13,8 @@ class TeamInfo extends React.Component {
       team_info: {ladder: {}, team_users: []},
       game: {},
       match_played: [],
-      new_invite_user_name: ''
+      new_invite_user_name: '',
+      is_edit_mode: false
     };
   }
   approveRequest(event) {
@@ -97,7 +98,28 @@ class TeamInfo extends React.Component {
               game: json.item
             },
             () => {
-              // this.fetchGame();
+              this.fetchMatches();
+            }
+          );
+        }
+      });
+  }
+
+  fetchMatches() {
+    if (!this.state.team_info.ladder) {
+      return;
+    }
+    fetch('/api/matches/matches_of_team/?team_id=' + this.props.params.team_id)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              is_loaded: true,
+              match_played: json.items ? json.items : []
+            },
+            () => {
+              this.fetchMatches();
             }
           );
         }
@@ -294,12 +316,28 @@ class TeamInfo extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
-                    <i className="fa fa-users" aria-hidden="true" /> ROSTER
+                    <span className="pull-right">
+                      {this.props.user.id ==
+                        this.state.team_info.team_creator && (
+                        <button
+                          className="is_link btn"
+                          onClick={() => {
+                            this.setState({
+                              is_edit_mode: !this.state.is_edit_mode
+                            });
+                          }}
+                        >
+                          <i className="fa fa-edit" /> edit
+                        </button>
+                      )}
+                    </span>
+                    <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
 
                   <table className="table table-striped table-ongray table-hover">
                     <thead>
                       <tr>
+                        {this.state.is_edit_mode && <th>{'remove'}</th>}
                         <th>Username</th>
                         <th>Role</th>
                         <th>Date Joined</th>
@@ -307,8 +345,17 @@ class TeamInfo extends React.Component {
                     </thead>
                     <tbody>
                       {this.state.team_info.team_users.map((team_user, i) => {
+                        // console.log(team_user.user_info.id, this.props.user.id);
                         return (
                           <tr key={team_user.id}>
+                            {this.state.is_edit_mode && (
+                              <td>
+                                {team_user.user_info.id !=
+                                  this.props.user.id && (
+                                  <input type="checkbox" />
+                                )}
+                              </td>
+                            )}
                             <td>
                               <Link to={'/u/' + team_user.user_info.username}>
                                 {team_user.user_info.username}
@@ -344,6 +391,11 @@ class TeamInfo extends React.Component {
                       })}
                     </tbody>
                   </table>
+                  {this.state.is_edit_mode && (
+                    <button disabled className="btn btn-danger sm">
+                      Remove from squad
+                    </button>
+                  )}
                 </div>
 
                 {this.state.team_info.team_creator == this.props.user.id &&
@@ -393,8 +445,7 @@ class TeamInfo extends React.Component {
                       <th>Match</th>
                       <th>Opponent</th>
                       <th>Status</th>
-                      <th>UserXP</th>
-                      <th>DoubleXP</th>
+
                       <th>Date</th>
                       <th>Info</th>
                     </tr>
@@ -419,8 +470,7 @@ class TeamInfo extends React.Component {
                           </td>
 
                           <td>{match.status}</td>
-                          <td>{''}</td>
-                          <td>{''}</td>
+
                           <td>{moment(match.created_at).format('lll')}</td>
                           <td>
                             {' '}

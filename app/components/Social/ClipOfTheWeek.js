@@ -55,14 +55,14 @@ class ClipOfTheWeek extends React.Component {
             <div className="col-md-8 offset-md-2 ">
               <div className="authorize_box" style={{maxWidth: '100%'}}>
                 <div className="title_default_dark title_border text-center">
-                  <h4>Clip of the week</h4>
+                  <h4>Clip of the Day</h4>
                 </div>
 
                 {!this.state.week_famous.id ? (
                   <div className="alert alert-warning">No clip available</div>
                 ) : (
                   <ul className="timeline">
-                    {this.state.is_loaded ? this.renderClipWeek() : false}
+                    {this.state.is_loaded ? this.renderClipDay() : false}
                   </ul>
                 )}
               </div>

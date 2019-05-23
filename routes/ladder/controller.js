@@ -80,8 +80,9 @@ exports.addGame = function(req, res, next) {
   new Game({
     title: req.body.title,
     max_players: req.body.max_players,
+    gamer_tag: req.body.gamer_tag,
     min_players: req.body.min_players,
-    game_id: parseInt(req.body.course_id),
+    game_id: parseInt(req.body.game_id),
     rules: req.body.rules
   })
     .save()
@@ -89,7 +90,7 @@ exports.addGame = function(req, res, next) {
       res.send({ok: true, msg: 'New Ladder has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Ladder'});
@@ -112,8 +113,9 @@ exports.updateGame = function(req, res, next) {
   const obj = {
     title: req.body.title,
     max_players: req.body.max_players,
-    game_id: parseInt(req.body.course_id),
+    game_id: parseInt(req.body.game_id),
     min_players: req.body.min_players,
+    gamer_tag: req.body.gamer_tag,
     rules: req.body.rules
   };
 
@@ -129,14 +131,14 @@ exports.updateGame = function(req, res, next) {
           });
         })
         .catch(function(err) {
-          // console.log(err);
+          console.log(err);
           res
             .status(400)
             .send({msg: 'Something went wrong while updating the Ladder'});
         });
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
 
       res
         .status(400)

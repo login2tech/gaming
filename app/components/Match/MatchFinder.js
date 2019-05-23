@@ -90,10 +90,11 @@ class MatchFinder extends React.Component {
                           <li
                             key={match.id}
                             className="tournament-box"
-                            style={{
-                              backgroundImage:
-                                "url('images/thumbnail_tournament.jpg')"
-                            }}
+                            style={{background: '#27204d'}}
+                            // style={{
+                            //   backgroundImage:
+                            //     "url('images/thumbnail_tournament.jpg')"
+                            // }}
                           >
                             <div className="tournament-body">
                               <Link
@@ -131,6 +132,12 @@ class MatchFinder extends React.Component {
                                     {match.match_type == 'paid'
                                       ? '$ ' + match.match_fee + ' USD'
                                       : '--'}
+                                  </p>
+                                </div>
+                                <div className="col-item">
+                                  <h5>Players</h5>
+                                  <p>
+                                    {match.match_players}v{match.match_players}
                                   </p>
                                 </div>
                               </div>

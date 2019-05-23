@@ -403,12 +403,12 @@ class Profile extends React.Component {
     );
   };
 
-  tags = [1, 2, 3, 4, 5, 6];
+  tags = [1, 2, 3, 4, 5];
   tag_names = [
     '',
     'Xbox Live Gamertag',
     'PSN',
-    'Username',
+    // 'Username',
     'Epic Games Username',
     'Steam Username',
     'Battletag'
@@ -1120,7 +1120,13 @@ class Profile extends React.Component {
                       <ul className="timeline">
                         {this.state.posts &&
                           this.state.posts.map((post, i) => {
-                            return <Timeline post={post} key={post.id} />;
+                            return (
+                              <Timeline
+                                post={post}
+                                key={post.id}
+                                show_option_to_pin
+                              />
+                            );
                           })}
                       </ul>
                     </div>

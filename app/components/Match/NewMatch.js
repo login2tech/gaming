@@ -13,9 +13,11 @@ class NewTeam extends React.Component {
       title: '',
       ladder: '',
       games: [],
+      match_players: '',
       team_info: {ladder: {title: ''}, team_users: [], title: ''},
       game_info: {title: ''},
       starts_at: new Date(new Date().getTime() + 10 * 60 * 1000),
+      starts_at_time: new Date(new Date().getTime() + 10 * 60 * 1000),
       match_type: '',
       match_fee: 0
     };
@@ -48,6 +50,11 @@ class NewTeam extends React.Component {
       starts_at: b
     });
   }
+  newDateTime(a, b, c) {
+    this.setState({
+      starts_at_time: b
+    });
+  }
   componentDidMount() {
     fetch('/api/teams/single/' + this.props.params.id)
       .then(res => res.json())
@@ -66,9 +73,9 @@ class NewTeam extends React.Component {
       });
     setTimeout(() => {
       $('#starts_at').flatpickr({
-        enableTime: true,
-        dateFormat: 'Y-m-d H:i',
-        stepMinute: 10, //intervals of minutes
+        enableTime: false,
+        dateFormat: 'Y-m-d',
+        // stepMinute: 10, //intervals of minutes
         minDate: this.state.starts_at,
         defaultDate: this.state.starts_at,
         // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
@@ -76,6 +83,19 @@ class NewTeam extends React.Component {
         maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
 
         onChange: this.newDate.bind(this)
+      });
+      $('#starts_at_time').flatpickr({
+        enableTime: true,
+        dateFormat: ' H:i',
+        noCalendar: true,
+        stepMinute: 10, //intervals of minutes
+        // minDate: this.state.starts_at,
+        // defaultDate: this.state.starts_at,
+        // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
+        minuteIncrement: 10,
+        // maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
+
+        onChange: this.newDateTime.bind(this)
       });
     }, 2000);
   }
@@ -89,8 +109,10 @@ class NewTeam extends React.Component {
           team_1_id: this.props.params.id,
           game_id: this.state.game_info.id,
           ladder_id: this.state.team_info.ladder_id,
-          starts_at: this.state.starts_at,
+          starts_at:
+            '' + this.state.starts_at + ' ' + this.state.starts_at_time,
           match_type: this.state.match_type,
+          match_players: this.state.match_players,
           match_fee: this.state.match_type == 'paid' ? this.state.match_fee : ''
         },
         this.props.user
@@ -99,12 +121,13 @@ class NewTeam extends React.Component {
   }
 
   isEligible() {
+    const gamer_tag = this.state.team_info.ladder.gamer_tag;
+    const required_users = this.state.match_players;
+    let user_done = 0;
     if (this.state.match_type == '' || this.state.starts_at == '') {
       return false;
     }
-    if (this.state.match_type == 'free') {
-      return true;
-    }
+
     if (
       this.state.match_type == 'paid' &&
       (this.state.match_fee == '' || parseFloat(this.state.match_fee) <= 0)
@@ -112,34 +135,99 @@ class NewTeam extends React.Component {
       return false;
     }
 
-    const amount = parseFloat(this.state.match_fee);
     for (let i = 0; i < this.state.team_info.team_users.length; i++) {
       if (
-        parseFloat(this.state.team_info.team_users[i].user_info.cash_balance) <
-        amount
+        this.state.team_info.team_users[i].user_info['gamer_tag_' + gamer_tag]
       ) {
-        return false;
+        // step 1 passed, if free no more steps
+        if (this.state.match_type == 'free') {
+          user_done++;
+        } else {
+          const amount = parseFloat(this.state.match_fee);
+          for (let i = 0; i < this.state.team_info.team_users.length; i++) {
+            if (
+              parseFloat(
+                this.state.team_info.team_users[i].user_info.cash_balance
+              ) < amount
+            ) {
+              // return false;
+            } else {
+              user_done++;
+            }
+          }
+        }
       }
     }
-    return true;
+    if (user_done >= required_users) {
+      return true;
+    }
+    return false;
+
+    // return true;
   }
 
   amIEligible(team_u) {
+    const gamer_tag = this.state.team_info.ladder.gamer_tag;
+    if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
+      return (
+        <span className="text-danger">
+          <img className="icon_size" src="/images/controller-red.svg" /> Not
+          Eligible
+        </span>
+      );
+    }
     if (this.state.match_type == '') {
       return '--';
     }
-    if (this.state.match_type == 'free') {
-      return <span className="text-success">Eligible</span>;
-    }
 
     const amount = parseFloat(this.state.match_fee);
+    // console.log(team_u.user_info['gamer_tag_' + gamer_tag]);
+
+    if (this.state.match_type == 'free') {
+      return (
+        <span className="text-success">
+          <img className="icon_size" src="/images/controller-green.svg" />{' '}
+          Eligible
+        </span>
+      );
+    }
 
     if (parseFloat(team_u.user_info.cash_balance) < amount) {
-      return <span className="text-danger">Not Eligible</span>;
+      return (
+        <span className="text-danger">
+          <img className="icon_size" src="/images/controller-red.svg" /> Not
+          Eligible
+        </span>
+      );
     }
-    return <span className="text-success">Eligible</span>;
+    return (
+      <span className="text-success">
+        <img className="icon_size" src="/images/controller-green.svg" />{' '}
+        Eligible
+      </span>
+    );
   }
+  tag_names = [
+    '',
+    'Xbox Live Gamertag',
+    'PSN',
+    'Epic Games Username',
+    'Steam Username',
+    'Battletag'
+  ];
   render() {
+    let min = this.state.team_info.ladder.min_players;
+    let max = this.state.team_info.ladder.max_players;
+    if (max < min) {
+      const tmp = max;
+      max = min;
+      min = tmp;
+    }
+    const player_selection = [];
+    for (let i = min; i <= max; i++) {
+      player_selection.push(i);
+    }
+    // console.log(this.state.team_info.ladder, min, max, player_selection);
     return (
       <section className="middle_part_login">
         <div className="container">
@@ -174,7 +262,15 @@ class NewTeam extends React.Component {
                     </div>
                     <br />
                     <div className="form-group col-md-12">
-                      <label htmlFor="title">Match Settings</label>
+                      <label htmlFor="title">Gamer Tag Required</label>
+                      <br />
+                      <strong>
+                        {this.tag_names[this.state.team_info.ladder.gamer_tag]}
+                      </strong>
+                    </div>
+                    <br />
+                    <div className="form-group col-md-12">
+                      <label htmlFor="title">Match Date</label>
                       <div className="input-group date">
                         <input
                           type="text"
@@ -183,17 +279,54 @@ class NewTeam extends React.Component {
                           required=""
                           data-toggle="datetimepicker"
                           data-target="#starts_at"
-                          placeholder="Match Start Date & Time"
+                          placeholder="Match Start Date"
                           name="starts_at"
                           onChange={this.handleChange.bind(this)}
+                        />
+                        <span className="input-group-addon">
+                          <span className="glyphicon glyphicon-date" />
+                        </span>
+                      </div>
+                    </div>
 
-                          // value={this.state.starts_at}
-                          // onChange={this.handleChange.bind(this)}
+                    <div className="form-group col-md-12">
+                      <label htmlFor="title">Match Time</label>
+                      <div className="input-group date">
+                        <input
+                          type="text"
+                          id="starts_at_time"
+                          className="form-control"
+                          required=""
+                          data-toggle="datetimepicker"
+                          data-target="#starts_at_time"
+                          placeholder="Match Start Time"
+                          name="starts_at"
+                          onChange={this.handleChange.bind(this)}
                         />
                         <span className="input-group-addon">
                           <span className="glyphicon glyphicon-time" />
                         </span>
                       </div>
+                    </div>
+
+                    <div className="form-group col-md-12">
+                      <label htmlFor="title">Match Players</label>
+                      <select
+                        required
+                        onChange={this.handleChange.bind(this)}
+                        className="form-control"
+                        name="match_players"
+                        id="match_players"
+                      >
+                        <option value="">Select</option>
+                        {player_selection.map((k, i) => {
+                          return (
+                            <option key={k} value={k}>
+                              {k}v{k}
+                            </option>
+                          );
+                        })}
+                      </select>
                     </div>
 
                     <div className="form-group col-md-12">
@@ -243,8 +376,7 @@ class NewTeam extends React.Component {
                     <div className="col-md-12 col-sm-12 col-xs-12">
                       <div className="content_box">
                         <h5 className="prizes_desclaimer">
-                          <i className="fa fa-users" aria-hidden="true" />{' '}
-                          ROSTER
+                          <i className="fa fa-users" aria-hidden="true" /> SQUAD
                         </h5>
 
                         <table className="table table-striped table-ongray table-hover">
@@ -252,6 +384,7 @@ class NewTeam extends React.Component {
                             <tr>
                               <th>Username</th>
                               <th>Role</th>
+                              <th>Gamer Tag</th>
                               <th>Eligibility</th>
                             </tr>
                           </thead>
@@ -263,7 +396,10 @@ class NewTeam extends React.Component {
                                     <td>
                                       <Link
                                         to={
-                                          '/u/' + team_user.user_info.username
+                                          team_user.user_info
+                                            ? '/u/' +
+                                              team_user.user_info.username
+                                            : ''
                                         }
                                       >
                                         {team_user.user_info.username}
@@ -275,6 +411,22 @@ class NewTeam extends React.Component {
                                       this.state.team_info.team_creator
                                         ? 'Leader'
                                         : 'Member'}
+                                    </td>
+                                    <td>
+                                      {team_user.user_info[
+                                        'gamer_tag_' +
+                                          this.state.team_info.ladder.gamer_tag
+                                      ] ? (
+                                        team_user.user_info[
+                                          'gamer_tag_' +
+                                            this.state.team_info.ladder
+                                              .gamer_tag
+                                        ]
+                                      ) : (
+                                        <span className="text-danger">
+                                          No Gamertag
+                                        </span>
+                                      )}
                                     </td>
                                     <td>{this.amIEligible(team_user)}</td>
                                   </tr>
