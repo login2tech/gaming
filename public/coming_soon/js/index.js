@@ -84,9 +84,9 @@ $(document).ready(function() {
       }
     } else {
       if ($(this).attr('id') === 'PrimaryCall') {
-        window.location.href = 'tel:8622263945';
+        window.location.href = 'tel:99988877766';
       } else if ($(this).attr('id') === 'PrimaryEmail') {
-        window.location.href = 'mailto:support@prodigy-gaming.com';
+        window.location.href = 'mailto:support@onlycompgaming.com';
       }
     }
   });
@@ -150,7 +150,7 @@ $(document).ready(function() {
     .typeString('Coming Soon.')
     .pauseFor(2500)
     .deleteAll()
-    .typeString('Prodigy Gaming.')
+    .typeString('Only Comp Gaming.')
     .pauseFor(2500)
     .deleteAll()
     .typeString('Innovative eSports.')
@@ -458,24 +458,24 @@ $(document).ready(function() {
   let done = true;
 
   // open *********
-  // $('#InfoButton').click(function() {
-  //   if (done) {
-  //     doneUtil();
-  //
-  //     $('#WelcomeSection').animate({opacity: 0}, 2000);
-  //
-  //     $('#InfoSection').animate({right: '0px', opacity: 1}, 1000, 'easeInExpo');
-  //     $('#InfoSection .col.two').animate(
-  //       {right: '0px', opacity: 1},
-  //       2500,
-  //       'easeOutQuart'
-  //     );
-  //
-  //     setTimeout(function() {
-  //       $('#InfoSection .fade-in').css({opacity: '1'});
-  //     }, 1500);
-  //   }
-  // });
+  $('#InfoButton').click(function() {
+    if (done) {
+      doneUtil();
+
+      $('#WelcomeSection').animate({opacity: 0}, 2000);
+
+      $('#InfoSection').animate({right: '0px', opacity: 1}, 1000, 'easeInExpo');
+      $('#InfoSection .col.two').animate(
+        {right: '0px', opacity: 1},
+        2500,
+        'easeOutQuart'
+      );
+
+      setTimeout(function() {
+        $('#InfoSection .fade-in').css({opacity: '1'});
+      }, 1500);
+    }
+  });
 
   // close *********
   $('#InfoSection #Close').click(function() {
