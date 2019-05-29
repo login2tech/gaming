@@ -1,6 +1,6 @@
 function linkHashTags(txt){
   txt= txt.replace(/#(\S+)/g,'<a href="/feed/hashtag/$1" title="Find more posts tagged with #$1">#$1</a>');
-  return txt.replace(/@(\S+)/g,'<a href="/u/$1" title="User profile of #$1">#$1</a>');
+  return txt.replace(/@(\S+)/g,'<a href="/u/$1" title="User profile of #$1">@$1</a>');
 }
 
 // function linkHashTags(){
