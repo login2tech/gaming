@@ -107,7 +107,7 @@ button {
     right: 0px;
     bottom: 0px;
     z-index: 9999999999;
-    background-color: white;
+    background-color: #000;
 }
 
 /* wrapper */
