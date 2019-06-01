@@ -486,7 +486,7 @@ button {
 #WelcomeOverlay {
     z-index: 999;
     opacity: 0.9;
-    background: linear-gradient(to right bottom, #1549fb, #8895e4);
+    background: linear-gradient(to right bottom, rgba(54, 91, 217, 0.9), #8895e4)
 }
 
 /******************** PARTICLES ********************/
