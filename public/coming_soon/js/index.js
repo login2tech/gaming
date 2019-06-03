@@ -108,7 +108,7 @@ $(document).ready(function() {
 // COUNTDOWN *****************************************
 $(document).ready(function() {
   // date *********
-  const date = new Date('October 1, 2019').getTime();
+  const date = new Date('July 7, 2019').getTime();
 
   // interval *********
   const interval = setInterval(function() {
