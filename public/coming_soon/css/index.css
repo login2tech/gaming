@@ -264,14 +264,15 @@ button {
 
 /******************** PRIMARY CONTROLS ********************/
 .primary-control {
-    width: auto;
-    height: 55px;
-    position: absolute;
-    bottom: 40px;
-    z-index: 99999;
-    cursor: pointer;
-    background-color: white;
-    border-radius: 100%;
+  width: auto;
+  height: 55px;
+  position: absolute;
+  bottom: 40px;
+  right: 199px;
+  z-index: 99999;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 100%;
 }
 
 .primary-control:hover {
@@ -292,7 +293,7 @@ button {
 .primary-control-display {
     position: absolute;
     bottom: 58px;
-    right: 206px;
+    right: 272px;
     z-index: 99999;
     opacity: 0;
     font-size: 17px;
