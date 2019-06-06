@@ -148,25 +148,32 @@ $(document).ready(function() {
   // typewriter *********
   typewriter
     .pauseFor(2500)
-    .typeString('Coming Soon.')
+    .typeString('Coming Soon..')
     .pauseFor(2500)
     .deleteAll()
-    .typeString('Only Comp Gaming.')
+    .typeString('Only Comp Gaming')
     .pauseFor(2500)
     .deleteAll()
-    .typeString('Innovative eSports.')
+    .typeString('A Community Just For Us ')
     .pauseFor(2500)
     .deleteAll()
-    .typeString('Competitive Tournaments.')
+    .typeString('Competitive Ladders/Tournaments ')
     .pauseFor(2500)
     .deleteAll()
     .typeString('Win Cash.')
     .pauseFor(2500)
     .deleteAll()
+    .typeString('Innovative eSports')
+    .pauseFor(2500)
+    .deleteAll()
     .typeString('Win Prizes.')
+    .pauseFor(2500)
+    .deleteAll()
+    .typeString('Stay Tuned!')
     .pauseFor(2500)
     .start();
 
+ 
 
     const elem2 = document.getElementById('TypewriterText2'),
       typewriter2 = new Typewriter(elem2, {

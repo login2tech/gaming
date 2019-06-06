@@ -528,31 +528,31 @@ button {
 }
 
 #Carousel #Img1 {
-    background-image: url("/assets/game_images/image1.jpg");
+    background-image: url("/assets/game_images/image1.png");
 }
 
 #Carousel #Img2 {
-    background-image: url("/assets/game_images/image2.jpg");
+    background-image: url("/assets/game_images/image2.png");
 }
 
 #Carousel #Img3 {
-    background-image: url("/assets/game_images/image3.jpg");
+    background-image: url("/assets/game_images/image3.png");
 }
 
 #Carousel #Img4 {
-    background-image: url("/assets/game_images/image4.jpg");
+    background-image: url("/assets/game_images/image4.png");
 }
 
 #Carousel #Img5 {
-    background-image: url("/assets/game_images/image5.jpg");
+    background-image: url("/assets/game_images/image5.png");
 }
 
 #Carousel #Img6 {
-    background-image: url("/assets/game_images/image6.jpg");
+    background-image: url("/assets/game_images/image6.png");
 }
 
 #Carousel #Img7 {
-    background-image: url("/assets/game_images/image7.jpg");
+    background-image: url("/assets/game_images/image7.png");
 }
 /*
 #Carousel #Img8 {
@@ -701,9 +701,9 @@ button {
 /* outer container */
 #InfoSection .col.two #InfoContent {
     height: auto;
-    width: 300px;
+    width: 400px;
     position: absolute;
-    top: calc(50% - 185px);
+    top: calc(50% - 165px);
     left: calc(50% - 250px);
     z-index: 9;
 
