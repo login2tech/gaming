@@ -168,8 +168,8 @@ $(document).ready(function() {
     .start();
 
 
-    const elem = document.getElementById('TypewriterText2'),
-      typewriter2 = new Typewriter(elem, {
+    const elem2 = document.getElementById('TypewriterText2'),
+      typewriter2 = new Typewriter(elem2, {
         loop: true,
         cursorClassName: 'typewritercursor'
       });
