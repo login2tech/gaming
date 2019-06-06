@@ -83,9 +83,10 @@ $(document).ready(function() {
         doneUtil();
       }
     } else {
-      if ($(this).attr('id') === 'PrimaryCall') {
-        window.location.href = 'tel:99988877766';
-      } else if ($(this).attr('id') === 'PrimaryEmail') {
+      // if ($(this).attr('id') === 'PrimaryCall') {
+      //   window.location.href = 'tel:99988877766';
+      // }
+       if ($(this).attr('id') === 'PrimaryEmail') {
         window.location.href = 'mailto:support@onlycompgaming.com';
       }
     }
@@ -165,6 +166,27 @@ $(document).ready(function() {
     .typeString('Win Prizes.')
     .pauseFor(2500)
     .start();
+
+
+    const elem = document.getElementById('TypewriterText2'),
+      typewriter2 = new Typewriter(elem, {
+        loop: true,
+        cursorClassName: 'typewritercursor'
+      });
+
+    // typewriter *********
+    typewriter2
+      .pauseFor(2500)
+      .typeString('Xbox One')
+      .pauseFor(2500)
+      .deleteAll()
+      .typeString('Playstation 4')
+      .pauseFor(2500)
+      .deleteAll()
+      .typeString('PC')
+
+      .pauseFor(2500)
+      .start();
 });
 
 // WELCOME FORM ****************************************
