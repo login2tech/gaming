@@ -958,7 +958,6 @@ button {
 @media (max-width: 900px) {
     .primary-control {
         height: 35px;
-        top: 30px;
     }
 
     /* positioning */
@@ -968,6 +967,8 @@ button {
 
     #PrimaryEmail {
         left: 135px;
+        /* top: auto; */
+        /* bottom: 20px; */
     }
 
     /* display */
