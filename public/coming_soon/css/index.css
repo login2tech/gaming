@@ -958,6 +958,7 @@ button {
 @media (max-width: 900px) {
     .primary-control {
         height: 35px;
+        left: calc(50% + 5px);
     }
 
     /* positioning */
@@ -966,9 +967,8 @@ button {
     }
 
     #PrimaryEmail {
-        left: 135px;
-        /* top: auto; */
-        /* bottom: 20px; */
+        left: calc(50% - 40px);
+        right: auto;
     }
 
     /* display */
@@ -1010,8 +1010,12 @@ button {
 /********* 900px *********/
 @media (max-width: 900px) {
     #Typewriter {
-        left: -224px;
-        font-size: 20px;
+        left: 10px;
+        font-size: 15px;
+    }
+    #Typewriter2 {
+
+        font-size: 15px;
     }
 }
 
