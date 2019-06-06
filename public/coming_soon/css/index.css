@@ -513,33 +513,33 @@ button {
 }
 
 #Carousel #Img1 {
-    background-image: url("/assets/icons/1.jpg");
+    background-image: url("/assets/game_images/image1.jpg");
 }
 
 #Carousel #Img2 {
-    background-image: url("/assets/icons/2.jpg");
+    background-image: url("/assets/game_images/image2.jpg");
 }
 
 #Carousel #Img3 {
-    background-image: url("/assets/icons/3.jpg");
+    background-image: url("/assets/game_images/image3.jpg");
 }
 
 #Carousel #Img4 {
-    background-image: url("/assets/icons/4.jpg");
+    background-image: url("/assets/game_images/image4.jpg");
 }
 
 #Carousel #Img5 {
-    background-image: url("/assets/icons/5.jpg");
+    background-image: url("/assets/game_images/image5.jpg");
 }
 
 #Carousel #Img6 {
-    background-image: url("/assets/icons/6.jpg");
+    background-image: url("/assets/game_images/image6.jpg");
 }
 
 #Carousel #Img7 {
-    background-image: url("/assets/icons/7.jpg");
+    background-image: url("/assets/game_images/image7.jpg");
 }
-
+/*
 #Carousel #Img8 {
     background-image: url("/assets/icons/8.jpg");
 }
@@ -550,7 +550,7 @@ button {
 
 #Carousel #Img10 {
     background-image: url("/assets/icons/10.jpg");
-}
+} */
 
 /* show animation */
 .showimg {
