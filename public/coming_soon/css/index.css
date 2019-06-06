@@ -656,7 +656,7 @@ button {
 /* overlay */
 #InfoSection .col.one #Overlay {
     opacity: 0.9;
-    background: linear-gradient(to left top, #ED83F8, #1D13A0);
+    background: linear-gradient(to left top,  #4153fc, #000000)
 }
 
 /* social */
@@ -703,8 +703,11 @@ button {
     width: 300px;
     position: absolute;
     top: calc(50% - 185px);
-    left: calc(50% - 187.5px);
+    left: calc(50% - 250px);
     z-index: 9;
+
+
+
 }
 
 /* logo */
@@ -717,7 +720,7 @@ button {
 #InfoSection .col.two #InfoContent p {
     margin-top: 50px;
     text-align: justify;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 300;
     font-style: italic;
     color: rgb(100,100,100);
