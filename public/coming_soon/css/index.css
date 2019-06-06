@@ -945,6 +945,10 @@ button {
         padding-top: 14px;
         top: 25px;
         left: 25px;
+        bottom: 50px;
+        top: auto;
+        right: 25px;
+        left: auto;
     }
 
     /* img */
@@ -981,11 +985,11 @@ button {
 /********* 900px *********/
 @media (max-width: 900px) {
     #CountdownSection {
-        width: 80%;
+        width: 90%;
         text-align: center;
         /* top: auto; */
         /* bottom: 0px; */
-        right: 10%;
+        right: 5%;
     }
 
     /* diamond */
@@ -993,6 +997,8 @@ button {
         width: 60px;
         height: 60px;
         padding-top: 4px;
+        margin-right: 2px;
+        margin-left: 2px;
     }
 
     /* countdown */
@@ -1029,6 +1035,12 @@ button {
 
 /********* 900px *********/
 @media (max-width: 900px) {
+
+  #Typewriter2 + img {
+    width: 200px !important;
+    margin: 0 auto;
+    left: calc(50% - 100px) !important;
+}
     #InfoSection {
         right: calc(-100% - 100px);
     }
