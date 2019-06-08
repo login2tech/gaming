@@ -173,27 +173,27 @@ $(document).ready(function() {
     .pauseFor(2500)
     .start();
 
- 
 
-    const elem2 = document.getElementById('TypewriterText2'),
-      typewriter2 = new Typewriter(elem2, {
-        loop: true,
-        cursorClassName: 'typewritercursor'
-      });
 
-    // typewriter *********
-    typewriter2
-      .pauseFor(2500)
-      .typeString('Xbox One')
-      .pauseFor(2500)
-      .deleteAll()
-      .typeString('Playstation 4')
-      .pauseFor(2500)
-      .deleteAll()
-      .typeString('PC')
-
-      .pauseFor(2500)
-      .start();
+    // const elem2 = document.getElementById('TypewriterText2'),
+    //   typewriter2 = new Typewriter(elem2, {
+    //     loop: true,
+    //     cursorClassName: 'typewritercursor'
+    //   });
+    //
+    // // typewriter *********
+    // typewriter2
+    //   .pauseFor(2500)
+    //   .typeString('Xbox One')
+    //   .pauseFor(2500)
+    //   .deleteAll()
+    //   .typeString('Playstation 4')
+    //   .pauseFor(2500)
+    //   .deleteAll()
+    //   .typeString('PC')
+    //
+    //   .pauseFor(2500)
+    //   .start();
 });
 
 // WELCOME FORM ****************************************
