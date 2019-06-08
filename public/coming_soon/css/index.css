@@ -1127,80 +1127,152 @@ button {
   90%  { font-size:1em; }
   100%  { font-size:2em; }
 }
-/* @-o-keyframes flickerAnimation1{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+@-o-keyframes flickerAnimation1{
+  0%  { font-size:2em; }
+  10%  { font-size:2em; }
+  20%  { font-size:2em; }
+  30%  { font-size:1em; }
+  40%  { font-size:1em; }
+  50%  { font-size:1em; }
+  60%  { font-size:1em; }
+  70%  { font-size:1em; }
+  80%  { font-size:1em; }
+  90%  { font-size:1em; }
+  100%  { font-size:2em; }
 }
 @-moz-keyframes flickerAnimation1{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+  0%  { font-size:2em; }
+  10%  { font-size:2em; }
+  20%  { font-size:2em; }
+  30%  { font-size:1em; }
+  40%  { font-size:1em; }
+  50%  { font-size:1em; }
+  60%  { font-size:1em; }
+  70%  { font-size:1em; }
+  80%  { font-size:1em; }
+  90%  { font-size:1em; }
+  100%  { font-size:2em; }
 }
 @-webkit-keyframes flickerAnimation1{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-} */
+  0%  { font-size:2em; }
+  10%  { font-size:2em; }
+  20%  { font-size:2em; }
+  30%  { font-size:1em; }
+  40%  { font-size:1em; }
+  50%  { font-size:1em; }
+  60%  { font-size:1em; }
+  70%  { font-size:1em; }
+  80%  { font-size:1em; }
+  90%  { font-size:1em; }
+  100%  { font-size:2em; }
+}
 
 
 @keyframes flickerAnimation2 {
-  0%  { font-size:1em; }
- 10%  { font-size:1em; }
- 20%  { font-size:1em; }
- 30%  { font-size:2em; }
- 40%  { font-size:2em; }
- 50%  { font-size:2em; }
- 60%  { font-size:1em; }
- 70%  { font-size:1em; }
- 80%  { font-size:1em; }
- 90%  { font-size:1em; }
- 100%  { font-size:1em; }
+    0%  { font-size:1em; }
+   10%  { font-size:1em; }
+   20%  { font-size:1em; }
+   30%  { font-size:2em; }
+   40%  { font-size:2em; }
+   50%  { font-size:2em; }
+   60%  { font-size:1em; }
+   70%  { font-size:1em; }
+   80%  { font-size:1em; }
+   90%  { font-size:1em; }
+   100%  { font-size:1em; }
 }
-/* @-o-keyframes flickerAnimation2{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+@-o-keyframes flickerAnimation2{
+  0%  { font-size:1em; }
+  10%  { font-size:1em; }
+  20%  { font-size:1em; }
+  30%  { font-size:2em; }
+  40%  { font-size:2em; }
+  50%  { font-size:2em; }
+  60%  { font-size:1em; }
+  70%  { font-size:1em; }
+  80%  { font-size:1em; }
+  90%  { font-size:1em; }
+  100%  { font-size:1em; }
 }
 @-moz-keyframes flickerAnimation2{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+  0%  { font-size:1em; }
+  10%  { font-size:1em; }
+  20%  { font-size:1em; }
+  30%  { font-size:2em; }
+  40%  { font-size:2em; }
+  50%  { font-size:2em; }
+  60%  { font-size:1em; }
+  70%  { font-size:1em; }
+  80%  { font-size:1em; }
+  90%  { font-size:1em; }
+  100%  { font-size:1em; }
 }
 @-webkit-keyframes flickerAnimation2{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-} */
+  0%  { font-size:1em; }
+  10%  { font-size:1em; }
+  20%  { font-size:1em; }
+  30%  { font-size:2em; }
+  40%  { font-size:2em; }
+  50%  { font-size:2em; }
+  60%  { font-size:1em; }
+  70%  { font-size:1em; }
+  80%  { font-size:1em; }
+  90%  { font-size:1em; }
+  100%  { font-size:1em; }
+}
 
 @keyframes flickerAnimation3 {
   0%  { font-size:1em; }
- 10%  { font-size:1em; }
- 20%  { font-size:1em; }
- 30%  { font-size:1em; }
- 40%  { font-size:1em; }
- 50%  { font-size:1em; }
- 60%  { font-size:2em; }
- 70%  { font-size:2em; }
- 80%  { font-size:2em; }
- 90%  { font-size:2em; }
- 100%  { font-size:1em; }
+  10%  { font-size:1em; }
+  20%  { font-size:1em; }
+  30%  { font-size:1em; }
+  40%  { font-size:1em; }
+  50%  { font-size:1em; }
+  60%  { font-size:2em; }
+  70%  { font-size:2em; }
+  80%  { font-size:2em; }
+  90%  { font-size:2em; }
+  100%  { font-size:1em; }
 }
-/* @-o-keyframes flickerAnimation3{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+@-o-keyframes flickerAnimation3{
+  0%  { font-size:1em; }
+  10%  { font-size:1em; }
+  20%  { font-size:1em; }
+  30%  { font-size:1em; }
+  40%  { font-size:1em; }
+  50%  { font-size:1em; }
+  60%  { font-size:2em; }
+  70%  { font-size:2em; }
+  80%  { font-size:2em; }
+  90%  { font-size:2em; }
+  100%  { font-size:1em; }
 }
 @-moz-keyframes flickerAnimation3{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
+  0%  { font-size:1em; }
+  10%  { font-size:1em; }
+  20%  { font-size:1em; }
+  30%  { font-size:1em; }
+  40%  { font-size:1em; }
+  50%  { font-size:1em; }
+  60%  { font-size:2em; }
+  70%  { font-size:2em; }
+  80%  { font-size:2em; }
+  90%  { font-size:2em; }
+  100%  { font-size:1em; }
 }
 @-webkit-keyframes flickerAnimation3{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-} */
+  0%  { font-size:1em; }
+  10%  { font-size:1em; }
+  20%  { font-size:1em; }
+  30%  { font-size:1em; }
+  40%  { font-size:1em; }
+  50%  { font-size:1em; }
+  60%  { font-size:2em; }
+  70%  { font-size:2em; }
+  80%  { font-size:2em; }
+  90%  { font-size:2em; }
+  100%  { font-size:1em; }
+}
 .animate-flicker.first {
    -webkit-animation: flickerAnimation1 10s infinite;
 }
