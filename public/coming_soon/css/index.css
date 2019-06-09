@@ -557,18 +557,33 @@ button {
 #Carousel #Img7 {
     background-image: url("/assets/game_images/image7.png");
 }
-/*
+
 #Carousel #Img8 {
-    background-image: url("/assets/icons/8.jpg");
+    background-image: url("/assets/game_images/image8.png");
 }
 
 #Carousel #Img9 {
-    background-image: url("/assets/icons/9.jpg");
+    background-image: url("/assets/game_images/image9.png");
 }
 
 #Carousel #Img10 {
-    background-image: url("/assets/icons/10.jpg");
-} */
+    background-image: url("/assets/game_images/image10.png");
+}
+
+
+
+
+#Carousel #Img11 {
+    background-image: url("/assets/game_images/image11.png");
+}
+
+#Carousel #Img12 {
+    background-image: url("/assets/game_images/image12.png");
+}
+
+#Carousel #Img13 {
+    background-image: url("/assets/game_images/image13.png");
+}
 
 /* show animation */
 .showimg {
