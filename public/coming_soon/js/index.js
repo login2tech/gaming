@@ -273,7 +273,7 @@ $(document).ready(function() {
           data: $('#WelcomeForm').serialize()
         });
 
-        $('#FN, #EA, #ST').val('');
+        $('#FN, #EA, #ST, #INST').val('');
 
         $('#ProgressBar').css({width: 0});
         progress = 0;
