@@ -235,10 +235,13 @@ $(document).ready(function() {
     // input
     if (
       !nSubmit &&
-      (i === 0 ||
+      (
+        i === 0 ||
         (i === 1 && testLength.test(nameVal)) ||
         (i === 2 && testEmail.test(emailVal)) ||
-        (i === 3 && testLength.test(stateVal)))
+        (i === 3 && testLength.test(stateVal)) ||
+        (i === 4   )
+      )
     ) {
       if (!(i === 0)) {
         displayEl($('#WelcomeForm .formoption' + i), false);
@@ -253,7 +256,7 @@ $(document).ready(function() {
     }
 
     // submit
-    if (i === 4) {
+    if (i === 5) {
       nSubmit = true;
 
       i = 0;
