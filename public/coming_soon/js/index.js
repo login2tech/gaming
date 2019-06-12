@@ -220,6 +220,9 @@ $(document).ready(function() {
       stateVal = $('#ST')
         .val()
         .trim(),
+      instagram = $('#INST')
+        .val()
+        .trim(),
       testLength = new RegExp(/^.{2,}/),
       testEmail = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,4}$/);
 
@@ -250,7 +253,7 @@ $(document).ready(function() {
       i++;
 
       $('#ProgressBar').css({width: progress + '%'});
-      progress += 33.333;
+      progress += 20;
 
       displayEl($('#WelcomeForm .formoption' + i), true);
     }
