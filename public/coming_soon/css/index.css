@@ -681,7 +681,7 @@ button {
 /* overlay */
 #InfoSection .col.one #Overlay {
     opacity: 0.9;
-    background: linear-gradient(to left top,  #4153fc, #000000)
+    /* background: linear-gradient(to left top,  #4153fc, #000000) */
 }
 
 /* social */
@@ -748,7 +748,7 @@ button {
     font-size: 20px;
     font-weight: 300;
     font-style: italic;
-    color: rgb(100,100,100);
+    color: #fff;
 }
 
 /********************* PRELOAD *********************/
