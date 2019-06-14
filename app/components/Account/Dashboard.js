@@ -398,7 +398,11 @@ class Profile extends React.Component {
               <input
                 type="number"
                 id="add_new_bal_number"
-                placeholder="Buy Credit Points"
+                placeholder={
+                  this.state.init_transaction_mode == 'credit'
+                    ? 'Add Credit Points'
+                    : 'Deposit Cash'
+                }
                 className="form-control"
                 name="add_new_bal_number"
                 value={this.state.add_new_bal_number}
