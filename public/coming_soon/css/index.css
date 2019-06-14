@@ -727,12 +727,9 @@ button {
     height: auto;
     width: 400px;
     position: absolute;
-    top: calc(50% - 165px);
+    top: calc(50% - 200px);
     left: calc(50% - 250px);
     z-index: 9;
-
-
-
 }
 
 /* logo */
@@ -745,7 +742,7 @@ button {
 #InfoSection .col.two #InfoContent p {
     margin-top: 50px;
     text-align: justify;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 300;
     font-style: italic;
     color: #fff;
