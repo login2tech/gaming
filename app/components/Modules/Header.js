@@ -146,7 +146,7 @@ class Header extends React.Component {
                       </ul>
                     </li>
 
-                    {props.user
+                    {props.user && props.token
                       ? [
                           <li key={5} className="has_children_m">
                             <Link className="profile_menu_item">

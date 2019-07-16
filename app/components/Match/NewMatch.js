@@ -19,6 +19,7 @@ class NewTeam extends React.Component {
       starts_at: new Date(new Date().getTime() + 10 * 60 * 1000),
       starts_at_time: new Date(new Date().getTime() + 10 * 60 * 1000),
       match_type: '',
+      using_users : [],
       match_fee: 0
     };
   }
@@ -113,7 +114,8 @@ class NewTeam extends React.Component {
             '' + this.state.starts_at + ' ' + this.state.starts_at_time,
           match_type: this.state.match_type,
           match_players: this.state.match_players,
-          match_fee: this.state.match_type == 'paid' ? this.state.match_fee : ''
+          match_fee: this.state.match_type == 'paid' ? this.state.match_fee : '',
+          using_users : this.state.using_users
         },
         this.props.user
       )
@@ -134,8 +136,17 @@ class NewTeam extends React.Component {
     ) {
       return false;
     }
+    if(parseInt(this.state.match_players) > this.state.using_users.length){
+      return false;
+    }
+
 
     for (let i = 0; i < this.state.team_info.team_users.length; i++) {
+      if(this.state.using_users.indexOf( this.state.team_info.team_users[i].user_info.id )  < -1)
+      {
+        // this user is not playing, no need to check it's eligibility; 
+        continue;
+      }
       if (
         this.state.team_info.team_users[i].user_info['gamer_tag_' + gamer_tag]
       ) {
@@ -165,6 +176,29 @@ class NewTeam extends React.Component {
 
     // return true;
   }
+
+  amIEligibleFlag(team_u)
+  {
+     const gamer_tag = this.state.team_info.ladder.gamer_tag;
+    if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
+      return false;
+    }
+    if (this.state.match_type == '') {
+      return false;
+    }
+    const amount = parseFloat(this.state.match_fee);
+  
+    if (this.state.match_type == 'free') {
+      return true;
+    }
+
+    if (parseFloat(team_u.user_info.cash_balance) < amount) {
+      return false;
+    }
+    return true;
+
+  }
+
 
   amIEligible(team_u) {
     const gamer_tag = this.state.team_info.ladder.gamer_tag;
@@ -384,6 +418,7 @@ class NewTeam extends React.Component {
                               <th>Role</th>
                               <th>Gamer Tag</th>
                               <th>Eligibility</th>
+                              <th>Include</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -427,6 +462,24 @@ class NewTeam extends React.Component {
                                       )}
                                     </td>
                                     <td>{this.amIEligible(team_user)}</td>
+                                    <td>
+                                    <label><input disabled={!this.amIEligibleFlag(team_user)} type="checkbox" checked={
+                                      this.state.using_users.indexOf(team_user.user_info.id)  > -1
+                                    } onChange={()=>{
+                                      let using_users = this.state.using_users;
+                                      if(using_users.indexOf(team_user.user_info.id) > -1)
+                                      {
+                                        using_users.splice(using_users.indexOf(team_user.user_info.id) , 1);
+
+                                      }else{
+                                        using_users.push(team_user.user_info.id);
+                                      }
+                                      this.setState({
+                                        using_users :using_users
+                                      })
+                                    }} />
+                                    </label>
+                                    </td>
                                   </tr>
                                 );
                               }

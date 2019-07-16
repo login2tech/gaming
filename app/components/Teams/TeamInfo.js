@@ -397,10 +397,10 @@ class TeamInfo extends React.Component {
                     </button>
                   )}
                 </div>
-
+                
                 {this.state.team_info.team_creator == this.props.user.id &&
                 parseInt(this.state.team_info.ladder.max_players) >
-                  parseInt(this.state.team_info.team_users) ? (
+                  parseInt(this.state.team_info.team_users.length) ? (
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">Invite A User</h5>
                     <Messages messages={this.props.messages} />

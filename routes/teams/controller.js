@@ -3,6 +3,7 @@ const Item = require('./Team');
 const ItemChild = require('./TeamUser');
 const User = require('../../models/User');
 const ObjName = 'Team';
+const Notif = require('../../models/Notification')
 
 exports.team_pic = function(req, res, next) {
   if (!req.body.profile_picture && !req.body.cover_picture) {
@@ -117,6 +118,14 @@ exports.invite = function(req, res, next) {
                 ok: true,
                 msg: 'User invited successfully.'
               });
+              new Notif().save({
+                user_id : user_id,
+                description: 'You have been invited to a team',
+                type :'team_invite',
+                object_id : team.id
+              }).then(function(){}).catch(function(er){
+                console.log(er);
+              })
             })
             .catch(function(err) {
               console.log(err);
@@ -184,6 +193,7 @@ exports.listItem = function(req, res, next) {
       return res.status(200).send({ok: true, items: []});
     });
 };
+
 exports.listPaged = function(req, res, next) {
   let c = new Item();
   c = c.orderBy('id', 'DESC');
@@ -232,8 +242,6 @@ exports.listSingleItem = function(req, res, next) {
 
 exports.addItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
-  // req.assert('content', 'Content cannot be blank').notEmpty();
-  // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
   const errors = req.validationErrors();
   if (errors) {
     return res.status(400).send(errors);
@@ -266,11 +274,8 @@ exports.addItem = function(req, res, next) {
 
 exports.updateItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
-  // req.assert('content', 'Content cannot be blank').notEmpty();
-  // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
-  // req.assert('category_id', 'Category cannot be blank').notEmpty();
+ 
 
-  // console.log(req.body);
   const errors = req.validationErrors();
   if (errors) {
     return res.status(400).send(errors);
@@ -325,7 +330,3 @@ exports.deleteItem = function(req, res, next) {
         .send({msg: 'Something went wrong while deleting the ' + ObjName});
     });
 };
-
-// exports.matchlist = function(req, res, next) {
-//   //
-// };
