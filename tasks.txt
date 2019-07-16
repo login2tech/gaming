@@ -1,0 +1,2 @@
+separate pages for timeline/profile
+matchfinder directly create new(no need to select team first.)
