@@ -166,7 +166,8 @@ exports.signupPost = function(req, res, next) {
     gender: req.body.gender,
     dob: req.body.dob,
     role: 'user',
-    status: true
+    status: true,
+    email_verified:true
   })
     .save()
     .then(function(user) {
