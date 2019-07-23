@@ -10,6 +10,8 @@ import NotFound from './components/Pages/NotFound';
 import FAQ from './components/Pages/FAQ';
 
 import CMSPage from './components/CMSPage';
+import Notifications from './components/Notifications';
+import Transactions from './components/Transactions';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
 import Profile from './components/Account/Profile';
@@ -78,6 +80,18 @@ export default function getRoutes(store) {
       />
       <Route onLeave={clearMessages} path="/faq" component={FAQ} />
       <Route onLeave={clearMessages} path="/p/:slug" component={CMSPage} />
+      <Route
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        path="/notifications"
+        component={Notifications}
+      />
+      <Route
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        path="/transactions"
+        component={Transactions}
+      />
       <Route
         path="/support/tickets/ticket/:ticket_id"
         onLeave={clearMessages}

@@ -116,7 +116,7 @@ class TournamentFinder extends React.Component {
                               </span>
 
                               <span className="date">
-                                Tournament Starts
+                                Tournament Starts{' '}
                                 {moment(match.starts_at).fromNow()}
                               </span>
                             </div>

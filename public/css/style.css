@@ -4679,3 +4679,17 @@ p.score_obj_scr {
     border-width: 10px;
     margin-top: -10px;
 }
+
+.notification_list_main li {
+    padding: 15px 50px;
+    border: 1px solid #124afb;
+    margin-bottom: 10px;
+    border-radius: 7px;
+    font-weight: normal;
+}
+
+.notification_list_main li a {
+    font-weight: 100;
+    font-size: 14px;
+    letter-spacing: 1px;
+}

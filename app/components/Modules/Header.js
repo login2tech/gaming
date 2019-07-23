@@ -170,6 +170,7 @@ class Header extends React.Component {
                             </Link>
                             <ul className="submenu notification_list">
                               {this.state.notifications.map((notif, i) => {
+                                if(i>6)return false;
                                 let lnk = '';
                                 if (notif.type == 'money-8') {
                                   lnk = '/money8/' + notif.object_id;
@@ -183,6 +184,9 @@ class Header extends React.Component {
                                   </li>
                                 );
                               })}
+                              <li >
+                                    <Link to={'/notifications'}>See all notifications</Link>
+                                  </li>
                             </ul>
                           </li>,
 
@@ -235,6 +239,14 @@ class Header extends React.Component {
                                   className="profile_menu_item"
                                 >
                                   Profile
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to={'/transactions'}
+                                  className="profile_menu_item"
+                                >
+                                  Transaction History
                                 </Link>
                               </li>
                               <li>

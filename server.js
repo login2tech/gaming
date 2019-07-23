@@ -30,6 +30,7 @@ const faqController = require('./controllers/faq');
 const langController = require('./controllers/language');
 const settingsController = require('./controllers/settings');
 const notifController = require('./controllers/notif');
+const transactionsController = require('./controllers/transactions');
 
 const langs = {};
 
@@ -393,12 +394,23 @@ app.get(
   '/notifs/list',
   userController.ensureAuthenticated,
   notifController.list
-);app.get(
+);
+
+app.get(
+  '/transactions/list',
+  userController.ensureAuthenticated,
+  transactionsController.list
+);
+
+
+
+
+app.get(
   '/notifs/listMine',
   userController.ensureAuthenticated,
   notifController.listMine
 );
-app.post(
+app.get(
   '/notifs/delete',
   userController.ensureAuthenticated,
   notifController.delete
