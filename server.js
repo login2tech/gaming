@@ -393,6 +393,10 @@ app.get(
   '/notifs/list',
   userController.ensureAuthenticated,
   notifController.list
+);app.get(
+  '/notifs/listMine',
+  userController.ensureAuthenticated,
+  notifController.listMine
 );
 app.post(
   '/notifs/delete',

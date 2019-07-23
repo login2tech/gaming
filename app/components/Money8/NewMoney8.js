@@ -62,7 +62,7 @@ class NewMoney8 extends React.Component {
           // match_players: this.state.player,
           game_id: game_id,
           ladder_id: ladder_id,
-          match_fee: this.state.match_type == 'paid' ? this.state.match_fee : ''
+          match_fee: this.state.match_type == 'free' ?'': this.state.match_fee 
         },
         this.props.user
       )

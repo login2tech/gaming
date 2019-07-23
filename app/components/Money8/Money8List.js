@@ -60,7 +60,7 @@ class Money8List extends React.Component {
                   to={'/money8/new/'}
                   className="btn btn-default bttn_submit"
                 >
-                  Create a match
+                  Create a money-8 pool
                 </Link>
               </div>
             </div>
@@ -128,19 +128,19 @@ class Money8List extends React.Component {
                                   <h5>Prize pool</h5>
                                   <p>
                                     {match.match_type != 'free'
-                                      ? '$ ' +
+                                      ? '' +
                                         match.match_fee +
                                         ' ' +
                                         (match.match_type == 'cash'
-                                          ? 'cash'
-                                          : 'credits')
+                                          ? 'OCG Cash'
+                                          : 'Credits')
                                       : '--'}
                                   </p>
                                 </div>
                                 <div className="col-item">
                                   <h5>Players</h5>
                                   <p>
-                                    {match.players_total / 2}v
+                                    {match.players_total / 2}<small> v </small>
                                     {match.players_total / 2}
                                   </p>
                                 </div>
@@ -151,7 +151,7 @@ class Money8List extends React.Component {
                                   to={this.matchLink('/money8/' + match.id)}
                                   className="btn-default"
                                 >
-                                  Join Match
+                                  Join Pool
                                 </Link>
                               </div>
                             </div>

@@ -9,4 +9,5 @@ const XP = bookshelf.Model.extend({
   }
 });
 
-module.exports = XP;
+module.exports = bookshelf.model('XP', XP);
+ 

@@ -27,64 +27,7 @@ class Money8Info extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  agreeToTermsForMatchJoin(event) {
-    event.preventDefault();
-
-    this.props.dispatch(
-      join_match(
-        {
-          // user_id: this.state.team_selected.id,
-          match_id: this.state.match.id
-        },
-        this.props.user
-      )
-    );
-  }
-
-  amIEligible(team_u, ladder) {
-    const gamer_tag = ladder.gamer_tag;
-    if (!team_u['gamer_tag_' + gamer_tag]) {
-      return false;
-    }
-    if (this.state.match_type == '') {
-      return 'waiting';
-    }
-
-    const amount = parseFloat(this.state.match_fee);
-
-    if (this.state.match_type == 'free') {
-      return true;
-    }
-
-    if (this.state.match_type != 'free' && !this.state.match_fee) {
-      return 'waiting';
-    }
-
-    if (this.state.match_type == 'cash') {
-      if (parseFloat(team_u.cash_balance) < amount) {
-        return false;
-      }
-    }
-
-    if (this.state.match_type == 'credits') {
-      if (parseFloat(team_u.credit_balance) < amount) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  tag_names = [
-    '',
-    'Xbox Live Gamertag',
-    'PSN',
-    'Epic Games Username',
-    'Steam Username',
-    'Battletag'
-  ];
-
-  componentDidMount() {
+  fetchMatch() {
     fetch('/api/money8/single/' + this.props.params.match_id)
       .then(res => res.json())
       .then(json => {
@@ -102,12 +45,16 @@ class Money8Info extends React.Component {
       });
   }
 
-  matchLink(orign) {
-    if (this.props.user) {
-      return orign;
-    }
-    return '/login';
+  componentDidMount() {
+    this.fetchMatch();
   }
+
+  // matchLink(orign) {
+  //   if (this.props.user) {
+  //     return orign;
+  //   }
+  //   return '/login';
+  // }
 
   saveScore() {
     // const scrore = '';
@@ -134,35 +81,23 @@ class Money8Info extends React.Component {
     this.props.dispatch(saveScores(val, this.props.user));
   }
 
-  showMatch() {
-    // fetch(
-    //   '/api/teams/team_of_user/?uid=' +
-    //     this.props.user.id +
-    //     '&filter_ladder=' +
-    //     this.state.match.ladder_id
-    // )
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     if (json.ok) {
+  agreeToTermsForMatchJoin(event) {
+    event.preventDefault();
+
+    this.props.dispatch(
+      join_match(
+        {
+          match_id: this.state.match.id
+        },
+        this.props.user
+      )
+    );
+  }
+
+  joinPool() {
     this.setState({
-      // is_loaded: true,
-      // eligible_teams: json.teams,
       approve_join: true
     });
-    //         () => {
-    //           // scroll
-    //           const element = document.getElementById('tlst');
-    //           if (element) {
-    //             element.scrollIntoView({
-    //               behavior: 'smooth',
-    //               block: 'end',
-    //               inline: 'nearest'
-    //             });
-    //           }
-    //         }
-    //       );
-    //     }
-    //   });
   }
 
   renderJoin() {
@@ -179,52 +114,90 @@ class Money8Info extends React.Component {
     const users = JSON.parse(this.state.match.players);
 
     for (let i = 0; i < users.length; i++) {
-      // console.log(users);
-      // console.log(users[i].id, me);
-      if (users[i].id == me) {
+      // console.log(users[i] , me)
+      if (users[i] == me) {
         return false;
       }
     }
-    return (
-      <button
-        type="button"
-        onClick={() => {
-          this.showMatch();
-        }}
-        className="btn btn-default bttn_submit mw_200"
-      >
-        Join this Money 8 Pool
-      </button>
-    );
-  }
+    let current_user_bal;
+    let disabled = false;
+    // debugger;
+    let disabled_reason = '';
+    if (this.state.match.match_type != 'free') {
+      if (this.state.match.match_type == 'cash') {
+        current_user_bal = this.props.user.cash_balance;
+      } else if (this.state.match.match_type == 'credits') {
+        current_user_bal = this.props.user.credit_balance;
+      }
+      if (!current_user_bal) {
+        current_user_bal = 0;
+      }
 
-  dynamicStatus() {
-    if (!this.state.match.team_2_id) {
-      return 'Expired';
-    }
-    if (!this.state.match.team_1_result && !this.state.match.team_2_result) {
-      return 'Pending Results';
-    }
-    if (!this.state.match.team_1_result || !this.state.match.team_2_result) {
-      return 'Pending Results Confirmation';
-    }
-    if (this.state.match.team_1_result != this.state.match.team_2_result) {
-      return 'Disputed';
-    }
-
-    let result;
-
-    if (this.state.match.result == 'tie') {
-      result = 'Tie';
-    } else {
-      if (this.state.match.result == 'team_1') {
-        result = 'Team 1 Wins';
-      } else {
-        result = 'Team 2 Wins';
+      if (current_user_bal < this.state.match.match_fee) {
+        disabled = true;
+        disabled_reason =
+          'you do not have enough ' +
+          (this.state.match.match_type == 'cash' ? 'OCG Cash' : 'credits') +
+          ' to join this pool';
       }
     }
 
-    return 'Complete - ' + result;
+    if (this.state.match.ladder && this.state.match.ladder.gamer_tag) {
+      if (!this.props.user['gamer_tag_' + this.state.match.ladder.gamer_tag]) {
+        disabled = true;
+        disabled_reason =
+          'You do not have the required gamer tag set to join this pool.';
+      }
+    }
+
+    if (disabled && this.state.approve_join) {
+      return false;
+    }
+
+    if (this.state.approve_join) {
+      return (
+        <div className="btn-group">
+          <button
+            type="button"
+            onClick={e => {
+              this.agreeToTermsForMatchJoin(e);
+            }}
+            className="btn btn-default bttn_submit mw_200"
+          >
+            Are you Sure?
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              this.setState({
+                approve_join: false
+              });
+            }}
+            className="btn btn-danger bttn_submit mw_200"
+          >
+            X
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => {
+            this.joinPool();
+          }}
+          className="btn btn-default bttn_submit mw_200"
+        >
+          Join this Money 8 Pool
+        </button>
+
+        <small className="text-danger">{disabled_reason}</small>
+      </div>
+    );
   }
 
   renderScoreSubmit() {
@@ -338,6 +311,11 @@ class Money8Info extends React.Component {
     );
   }
 
+
+  renderStartedMatch(){
+    //
+  }
+
   render() {
     const divStyle =
       this.state.match &&
@@ -412,7 +390,15 @@ class Money8Info extends React.Component {
                             'FREE'
                           ) : (
                             <span>
-                              {'PAID (' + this.state.match.match_type + ')'}
+                              {'PAID (' +
+                                (this.state.match.match_type == 'cash'
+                                  ? '' +
+                                    this.state.match.match_fee +
+                                    ' OCG Cash'
+                                  : '' +
+                                    this.state.match.match_fee +
+                                    ' credits') +
+                                ')'}
                             </span>
                           )}
                         </p>
@@ -482,7 +468,7 @@ class Money8Info extends React.Component {
                     </table>
                   </div>
                 ) : (
-                  false
+                  this.renderStartedMatch()
                 )}
 
                 <br />

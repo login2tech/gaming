@@ -16,28 +16,7 @@ exports.deleteSettings = function(req, res, next) {
 
 exports.create_SATOSHIS = function(req, res, next) {
   const s = [
-    //
-    // {
-    //   key: 'address',
-    //   type: 'text',
-    //   label: 'Address',
-    //   content: '',
-    //   page: 'Contact Details'
-    // },
-    // {
-    //   key: 'phone',
-    //   type: 'text',
-    //   label: 'Phone Number',
-    //   content: '+91-999-999-9999',
-    //   page: 'Contact Details'
-    // },
-    // {
-    //   key: 'email',
-    //   type: 'email',
-    //   label: 'Email Address',
-    //   content: 'abc@xyz.com',
-    //   page: 'Contact Details'
-    // },
+    
     {
       key: 'facebook_url',
       type: 'url',
@@ -59,21 +38,14 @@ exports.create_SATOSHIS = function(req, res, next) {
       content: 'http://linkedin.com',
       page: 'Contact Details'
     },
-    // {
-    //   key: 'instagram_url',
-    //   type: 'url',
-    //   label: 'Instagram U.R.L.',
-    //   content: 'http://instagram.com',
-    //   page: 'Contact Details'
-    // },
-    // {
-    //   key: 'google_plus_url',
-    //   type: 'url',
-    //   label: 'Google Plus U.R.L.',
-    //   content: 'http://plus.google.com',
-    //   page: 'Contact Details'
-    // },
-
+    {
+      key: 'instagram_url',
+      type: 'url',
+      label: 'Instagram U.R.L.',
+      content: 'http://instagram.com',
+      page: 'Contact Details'
+    },
+   
     {
       key: 'stripe_live_publishable_key',
       type: 'text',
@@ -81,14 +53,7 @@ exports.create_SATOSHIS = function(req, res, next) {
       content: 'pk_live_',
       page: 'Stripe'
     },
-    {
-      key: 'facebook_public_key',
-      type: 'text',
-      label: 'Facebook Client Id',
-      content: '',
-      page: 'Facebook Auth'
-    },
-
+    
     {
       key: 'stripe_test_publishable_key',
       type: 'text',
@@ -96,7 +61,6 @@ exports.create_SATOSHIS = function(req, res, next) {
       content: 'pk_test_',
       page: 'Stripe'
     },
-
     {
       key: 'stripe_mode',
       type: 'text',

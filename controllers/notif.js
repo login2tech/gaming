@@ -15,6 +15,26 @@ exports.list = function(req, res, next) {
     });
 };
 
+exports.listMine = function(req, res, next) {
+  new Notification()
+    .where({
+      user_id: req.user.id
+    })
+    .orderBy('id', 'DESC')
+    .fetchAll()
+    .then(function(notifs) {
+      if (!notifs) {
+        return res.status(200).send([]);
+      }
+      return res.status(200).send({ok: true, notifs: notifs.toJSON()});
+    })
+    .catch(function(err) {
+      return res.status(200).send([]);
+    });
+};
+
+
+
 exports.delete = function(req, res, next) {
   new Notification({id: req.body.id})
     .destroy()

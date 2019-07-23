@@ -533,7 +533,14 @@ exports.singleUser_info = function(req, res, next) {
           }
         },
         'followerCount',
-        'followingCount'
+        'followingCount',
+        'score',
+        {
+          'score.ladder': function(qb) {
+            qb.column('id', 'title');
+          }
+        },
+        'xp_obj'
         // 'followerCount'
         // {
         //   followersCount: function(qb) {
@@ -562,7 +569,7 @@ exports.singleUser_info = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(200).send({user_info: {}, ok: false});
     });
 };

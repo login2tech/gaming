@@ -8,7 +8,8 @@ class Header extends React.Component {
     super(props);
     this.state = {
       searchString: '',
-      userSuggestions: []
+      userSuggestions: [],
+      notifications: []
       // posts_page: 1
     };
   }
@@ -29,6 +30,9 @@ class Header extends React.Component {
       }
     );
   }
+  componentDidMount() {
+    this.fetchNotifications();
+  }
 
   fetchSuggestions() {
     fetch('/api/user_suggest?q=' + this.state.searchString)
@@ -37,6 +41,18 @@ class Header extends React.Component {
         if (json.ok) {
           this.setState({
             userSuggestions: json.items
+          });
+        }
+      });
+  }
+
+  fetchNotifications() {
+    fetch('/notifs/listMine')
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState({
+            notifications: json.notifs
           });
         }
       });
@@ -153,7 +169,20 @@ class Header extends React.Component {
                               <i className="fa fa-bell" />
                             </Link>
                             <ul className="submenu notification_list">
-                              <li>Match #123 started</li>
+                              {this.state.notifications.map((notif, i) => {
+                                let lnk = '';
+                                if (notif.type == 'money-8') {
+                                  lnk = '/money8/' + notif.object_id;
+                                } else if (notif.type == 'match') {
+                                  lnk = '/m/' + notif.object_id;
+                                }
+
+                                return (
+                                  <li key={notif.id}>
+                                    <Link to={lnk}>{notif.description}</Link>
+                                  </li>
+                                );
+                              })}
                             </ul>
                           </li>,
 

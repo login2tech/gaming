@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt-nodejs');
 const bookshelf = require('../config/bookshelf');
 const Team = require('../routes/teams/TeamUser');
 const UserFollower = require('./UserFollower');
+const Score = require('./Score');
+const XP = require('./XP');
 
 const User = bookshelf.Model.extend({
   tableName: 'users',
@@ -29,14 +31,12 @@ const User = bookshelf.Model.extend({
   following: function() {
     return this.hasMany('UserFollower', 'follower_id');
   },
-  // followingCount: function() {
-  //   return this.hasMany('UserFollower', 'follower_id').count();
-  // },
-  // following: function() {
-  //   return this.hasOne('UserFollower', 'user_id');
-  // },
-
-  //
+  score : function () {
+    return this.hasMany('Score', 'user_id');
+  },
+  xp_obj : function () {
+    return this.hasMany('XP', 'user_id');
+  },
 
   hashPassword: function(model, attrs, options) {
     const password = options.patch ? attrs.password : model.get('password');

@@ -19,8 +19,8 @@ exports.up = function(knex, Promise) {
       table.string('gamer_tag_6');
       table.string('profile_picture');
       table.string('cover_picture');
-      table.integer('credit_balance').defaultTo(0);
-      table.integer('cash_balance').defaultTo(0);
+      table.double('credit_balance').defaultTo(0);
+      table.double('cash_balance').defaultTo(0);
       table.string('stripe_user_id');
       table.boolean('prime');
       table.text('prime_obj').defaultTo('{}');

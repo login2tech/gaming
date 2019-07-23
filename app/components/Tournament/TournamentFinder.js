@@ -76,8 +76,7 @@ class TournamentFinder extends React.Component {
                     {this.state.is_loaded &&
                     this.state.tournaments.length < 1 ? (
                       <div className="alert alert-warning">
-                        There are no active tournaments. Please check back later
-                        or start a new match
+                        There are no active tournaments. Please check back later.
                       </div>
                     ) : (
                       false

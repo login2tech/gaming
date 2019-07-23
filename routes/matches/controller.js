@@ -5,12 +5,16 @@ const Item = require('./Match');
 const User = require('../../models/User');
 const Notif = require('../../models/Notification');
 const XP = require('../../models/XP');
+const CashTransactions = require('../../models/CashTransactions');
+const CreditTransactions = require('../../models/CreditTransactions');
+const XPTransactions = require('../../models/XPTransactions');
+const Score = require('../../models/Score');
 
 const getXPBasedOn = function(current_xp) {
   return 10;
 };
 
-const giveXpToMember = function(uid, input_val) {
+const giveXpToMember = function(uid, match_id) {
   new User()
     .where({id: uid})
     .fetch()
@@ -25,9 +29,11 @@ const giveXpToMember = function(uid, input_val) {
         }
         xp += xP_to_add;
         usr
-          .save({life_xp: xp})
+          .save({life_xp: xp}, {patch: true})
           .then(function(usr) {})
-          .catch(function(err) {});
+          .catch(function(err) {
+            console.log(1, err);
+          });
 
         const year = moment().format('YYYY');
         const season = moment().format('Q');
@@ -41,56 +47,138 @@ const giveXpToMember = function(uid, input_val) {
           .fetch()
           .then(function(xpObj) {
             if (xpObj) {
-              xpObj.save({
-                xp: xpObj.get('xp') + xP_to_add
-              });
+              xpObj
+                .save({
+                  xp: xpObj.get('xp') + xP_to_add
+                })
+                .then(function(o) {})
+                .catch(function(err) {
+                  console.log(2, err);
+                });
             } else {
-              new XP().save({
-                year: year,
-                season: season,
-                user_id: uid,
-                xp: xP_to_add
-              });
+              new XP()
+                .save({
+                  year: year,
+                  season: season,
+                  user_id: uid,
+                  xp: xP_to_add
+                })
+                .then(function(o) {})
+                .catch(function(err) {
+                  console.log(3, err);
+                });
+              
             }
+            new XPTransactions()
+                .save({
+                  user_id: uid,
+                  details: 'XP Credit for winning match #' + match_id,
+                  qty: xP_to_add
+                })
+                .then(function(o) {})
+                .catch(function(err) {
+                  console.log(4, err);
+                });
           })
           .catch(function(err) {
-            console.log(err);
+            console.log(5, err);
           });
       }
     })
     .catch(function(err) {
-      console.log(err);
+      console.log(6, err);
     });
 };
 
-const giveMoneyToMember = function(uid, input_val) {
+const addScoreForMember = function(uid, ladder_id, type) {
+  const year = moment().format('YYYY');
+  const season = moment().format('Q');
+
+  new Score()
+    .where({
+      year: year,
+      ladder_id: ladder_id,
+      season: season,
+      user_id: uid
+    })
+    .fetch()
+    .then(function(scoreObj) {
+      if (scoreObj) {
+        scoreObj
+          .save({
+            [type]: scoreObj.get(type) + 1
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(4, err);
+          });
+      } else {
+        new Score()
+          .save({
+            year: year,
+            season: season,
+            user_id: uid,
+            ladder_id: ladder_id,
+            [type]: 1
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(4, err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(7, err);
+    });
+};
+
+const giveMoneyToMember = function(uid, input_val, match_id) {
+  console.log('match_fee is: ', input_val);
   new User()
     .where({id: uid})
     .fetch()
     .then(function(usr) {
       if (usr) {
         let cash_balance = usr.get('cash_balance');
-        const prime = usr.get('prime');
-        if (prime) {
-          cash_balance += parseFloat(input_val);
-        } else {
-          cash_balance += parseFloat((4 / 5) * input_val);
-        }
 
+        const prime = usr.get('prime');
+        let val;
+
+        if (prime) {
+          val = parseFloat(input_val);
+        } else {
+          val = parseFloat((4 / 5) * input_val);
+        }
+        // console.log('cah_bl ', cash_balance);
+        // console.log('val ', val);
+        // console.log('prime ', prime);
+        cash_balance += val;
+        // console.log('cah_bl_new ', cash_balance);
         usr
           .save({cash_balance: cash_balance}, {patch: true})
-          .then(function(usr) {})
+          .then(function(usr) {
+            new CashTransactions()
+              .save({
+                user_id: uid,
+                details: 'Cash Credit for winning match #' + match_id,
+                qty: val
+              })
+              .then(function(o) {})
+              .catch(function(err) {
+                console.log(8, err);
+              });
+          })
           .catch(function(err) {
-            // console.log(err);
+            console.log(9, err);
           });
       }
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(10, err);
     });
 };
 
-const takeMoneyFromMember = function(uid, input_val) {
+const takeMoneyFromMember = function(uid, input_val, match_id) {
   // console.log(input_val);
   new User()
     .where({id: uid})
@@ -105,21 +193,33 @@ const takeMoneyFromMember = function(uid, input_val) {
         // console.log(cash_balance);
         usr
           .save({cash_balance: cash_balance}, {patch: true})
-          .then(function(usr) {})
+          .then(function(usr) {
+             new CashTransactions()
+              .save({
+                user_id: uid,
+                details: 'Cash Debit for joining match #' + match_id,
+                qty: -parseFloat(input_val)
+              })
+              .then(function(o) {})
+              .catch(function(err) {
+                console.log(4, err);
+              });
+          })
           .catch(function(err) {
-            // console.log(err);
+      console.log(141, err);
+           
           });
       }
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(11, err);
     });
 };
 
-const giveXPtoTeam = function(team_id, players) {
+const giveXPtoTeam = function(team_id, players, match_id) {
   for (let i = players.length - 1; i >= 0; i--) {
     const uid = parseInt(players[i]);
-    giveXpToMember(uid);
+    giveXpToMember(uid, match_id);
   }
   // todo add xp to team as well
   // new TeamUser()
@@ -140,7 +240,12 @@ const giveXPtoTeam = function(team_id, players) {
   //   });
 };
 
-const giveMoneyBackToTeam = function(team_id, input_val, team_members) {
+const giveMoneyBackToTeam = function(
+  team_id,
+  input_val,
+  team_members,
+  match_id
+) {
   // new TeamUser()
   //   .where({
   //     team_id: team_id,
@@ -158,13 +263,19 @@ const giveMoneyBackToTeam = function(team_id, input_val, team_members) {
   //     // console.log(err);
   // });
   for (let i = team_members.length - 1; i >= 0; i--) {
-    giveMoneyToMember(parseInt(team_members[i]), input_val);
+    giveMoneyToMember(parseInt(team_members[i]), input_val, match_id);
   }
 };
 
-const takeMoneyFromTeam = function(team_id, input_val, team_members) {
+const takeMoneyFromTeam = function(team_id, input_val, team_members, match_id) {
   for (let i = team_members.length - 1; i >= 0; i--) {
-    takeMoneyFromMember(parseInt(team_members[i]), input_val);
+    takeMoneyFromMember(parseInt(team_members[i]), input_val, match_id);
+  }
+};
+
+const addScoreForTeam = function(game_id, ladder_id, type, team_members) {
+  for (let i = team_members.length - 1; i >= 0; i--) {
+    addScoreForMember(parseInt(team_members[i]), ladder_id, type);
   }
 };
 
@@ -225,24 +336,54 @@ exports.saveScore = function(req, res, next) {
           });
 
           if (val.result == 'team_1' || val.result == 'team_2') {
-            let win_team_members =
-              val.result == 'team_1'
-                ? match.get('team_1_players')
-                : match.get('team_2_players');
+            // let t_1_p = match.get('team_1_players');
+            // t_1_p = t_1_p.split('|');
+
+            // let t_2_p = match.get('team_2_players');
+            // t_2_p = t_2_p.split('|');
+            let win_team_members;
+            let loose_team_members;
+            if (val.result == 'team_1') {
+              win_team_members = match.get('team_1_players');
+              loose_team_members = match.get('team_2_players');
+            } else {
+              win_team_members = match.get('team_2_players');
+              loose_team_members = match.get('team_1_players');
+            }
+            console.log('winers are ', win_team_members);
+            console.log('lossers are ', loose_team_members);
+
             win_team_members = win_team_members.split('|');
-            console.log(win_team_members);
+            loose_team_members = loose_team_members.split('|');
+
             const award_team_id =
               val.result == 'team_1'
                 ? tmp_match.team_1_id
                 : tmp_match.team_2_id;
-            giveXPtoTeam(award_team_id, win_team_members);
+            console.log('giving xp now');
+            giveXPtoTeam(award_team_id, win_team_members, tmp_match.id);
             if (tmp_match.match_type == 'paid') {
+              console.log('paid match giving xp');
               giveMoneyBackToTeam(
                 award_team_id,
                 tmp_match.match_fee,
-                win_team_members
+                win_team_members,
+                tmp_match.id
               );
             }
+            console.log('score resotlo');
+            addScoreForTeam(
+              tmp_match.game_id,
+              tmp_match.ladder_id,
+              'wins',
+              win_team_members
+            );
+            addScoreForTeam(
+              tmp_match.game_id,
+              tmp_match.ladder_id,
+              'loss',
+              loose_team_members
+            );
           }
         })
         .catch(function(err) {
@@ -304,7 +445,8 @@ exports.join = function(req, res, next) {
             takeMoneyFromTeam(
               req.body.team_2_id,
               match.get('match_fee'),
-              req.body.using_users
+              req.body.using_users,
+              match.id
             );
           }
 
@@ -347,7 +489,7 @@ exports.join = function(req, res, next) {
         });
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed to Join the match'
@@ -380,14 +522,15 @@ exports.addItem = function(req, res, next) {
     .then(function(item) {
       res.send({
         ok: true,
-        msg: 'New Item has been created successfully.',
+        msg: 'New Match has been created successfully.',
         match: item.toJSON()
       });
       if (req.body.match_type == 'paid') {
         takeMoneyFromTeam(
           req.body.team_1_id,
           req.body.match_fee,
-          req.body.using_users
+          req.body.using_users,
+          item.id
         );
       }
       for (let i = req.body.using_users.length - 1; i >= 0; i--) {
@@ -405,7 +548,7 @@ exports.addItem = function(req, res, next) {
       }
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});
@@ -430,7 +573,7 @@ exports.matches_of_team = function(req, res, next) {
       return res.status(200).send({ok: true, items: item.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -451,7 +594,7 @@ exports.matches_of_user = function(req, res, next) {
       return res.status(200).send({ok: true, items: item.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -468,7 +611,7 @@ exports.listupcoming = function(req, res, next) {
       return res.status(200).send({ok: true, items: item.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -484,6 +627,7 @@ exports.listItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
+      console.log(err)
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -508,7 +652,7 @@ exports.listPaged = function(req, res, next) {
         .send({ok: true, items: items.toJSON(), pagination: items.pagination});
     })
     .catch(function(err) {
-      // console.log(err)
+      console.log(err)
       return res.status(200).send([]);
     });
 };
@@ -537,7 +681,7 @@ exports.listSingleItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(400).send({
         id: req.params.id,
         title: '',

@@ -3533,6 +3533,7 @@ font-weight: 600; text-transform: uppercase; }
     font-size: 20px;
     margin-bottom: 15px;
 }
+
 .authorize_box.shop {
     /* border: 1px solid #2847f3; */
     box-shadow: 0 0 5px 2px #2847f3;
@@ -4197,6 +4198,7 @@ ul.timeline > li {
     margin: 20px 0;
     padding-left: 20px;
 }
+
 /*
 ul.timeline > li:before {
     content: ' ';
@@ -4210,7 +4212,6 @@ ul.timeline > li:before {
     height: 20px;
     z-index: 400;
 } */
-
 .card.gedf-card {
     background: #000;
 }
@@ -4411,13 +4412,36 @@ ul.submenu li a {
     border-left: 0.4375rem solid #c0a290;
 }
 
-.notification_list li {
+.notification_list.user_sugggestions li {
     padding: 10px 30px 10px 10px;
     font-size: 10px;
-    /* background: white; */
     margin: 10px;
     color: #fff;
     min-width: 250px;
+}
+
+.notification_list::-webkit-scrollbar {
+    width: 10px;
+    background: #000
+}
+
+.notification_list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.notification_list::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+    border-radius: 5px;
+}
+
+.notification_list:not(.user_sugggestions) li a {
+    padding: 10px 30px 10px 10px !important;
+    font-size: 10px !important;
+    /* background: white; */
+    /*margin: 10px 0 !important;*/
+    color: #fff !important;
+    min-width: 250px !important;
 }
 
 .btn-outline {
@@ -4546,17 +4570,16 @@ span.rank_prog_done {
 }
 
 .modal-content:after {
-  position: fixed;
-  content: ' ';
-  width: 100%;
-  height: 100%;
-  left: 0;
-  right: 0;
-  top: 0;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: -1;
+    position: fixed;
+    content: ' ';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
 }
-
 
 p.feed_post_content {
     letter-spacing: 0.5px;
@@ -4572,7 +4595,6 @@ img.icon_size {
     width: 50px;
 }
 
-
 button.is_pinned.pinner {
     transform: rotate(90deg);
     color: red;
@@ -4581,4 +4603,79 @@ button.is_pinned.pinner {
 
 .pinner {
     margin-left: 10px;
+}
+
+button.btn.btn-danger {
+    background: #dc3545;
+    border: 0;
+    height: 40px;
+}
+
+li.tournament-box {
+    margin-bottom: 10px;
+}
+
+.score_obj {
+    background: #3d3d3d;
+    padding: 0;
+    /* display: flex; */
+    padding: 0;
+    border: 1px solid #124afb;
+}
+
+.score_obj p {
+    margin: 0;
+    padding: 15px;
+}
+
+p.score_obj_ttl {
+    float: left;
+    display: flex;
+    width: 62%;
+    height: 100%;
+}
+
+p.score_obj_ttl span {
+    color: #fff;
+    font-size: 12px;
+}
+
+p.score_obj_scr {
+    float: right;
+    padding: 15px 20px;
+    border: 0;
+    background: #000;
+    border-left: 1px solid #124afb;
+    width: calc(100% - 62%);
+}
+
+.arrow_box {
+    position: relative;
+    background: #000;
+    border: 4px solid #124afb;
+}
+
+.arrow_box:after, .arrow_box:before {
+    right: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.arrow_box:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-right-color: #000;
+    border-width: 8px;
+    margin-top: -8px;
+}
+
+.arrow_box:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-right-color: #124afb;
+    border-width: 10px;
+    margin-top: -10px;
 }

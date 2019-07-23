@@ -9,7 +9,7 @@ routes.get('/list', ctrl.listItem);
 //routes.get('/team_of_user', ctrl.team_of_user);
 // routes.post('/invite', u_ctrl.ensureAuthenticated, ctrl.invite);
 routes.post('/join', u_ctrl.ensureAuthenticated, ctrl.join);
-routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);
+// routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);
 
 // routes.get(
 //   '/matches_of_user',

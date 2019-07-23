@@ -8,11 +8,12 @@ import Timeline from '../Social/Timeline';
 import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
 import Following from '../Modules/Modals/Following';
+
 class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_info: {followers: [], teams: []},
+      user_info: {followers: [], teams: [], xp_obj: [], score: []},
       user_teams: [],
       renderTab: 'profile',
       match_played: [],
@@ -50,7 +51,15 @@ class Profile extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  rank_based_on_xp(xp) {
+  rank_based_on_xp(xpo) {
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
     if (xp < 50) {
       return 'Amatuer';
     }
@@ -154,28 +163,28 @@ class Profile extends React.Component {
       return (xp * 10) / 5;
     }
     if (xp < 200) {
-      return xp / 2;
+      return ((xp - 50) / 150) * 100;
     }
     if (xp < 500) {
-      return xp / 5;
+      return ((xp - 50) / 300) * 100;
     }
     if (xp < 1000) {
-      return xp / 10;
+      return ((xp - 200) / 500) * 100;
     }
     if (xp < 1500) {
-      return xp / 15;
+      return ((xp - 500) / 500) * 100;
     }
     if (xp < 2000) {
-      return xp / 20;
+      return ((xp - 1000) / 500) * 100;
     }
     if (xp < 3000) {
-      return xp / 30;
+      return ((xp - 1500) / 1000) * 100;
     }
     if (xp < 3500) {
-      return xp / 35;
+      return ((xp - 2000) / 500) * 100;
     }
     if (xp < 4000) {
-      return xp / 40;
+      return ((xp - 3000) / 500) * 100;
     }
     // if (xp >  5000) {
     return 100;
@@ -420,10 +429,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.state.user_info && this.state.user_info.cover_picture
-        ? {
-            backgroundImage: 'url(' + this.state.user_info.cover_picture + ')'
-          }
-        : {};
+      ? {
+          backgroundImage: 'url(' + this.state.user_info.cover_picture + ')'
+        }
+      : {};
     return (
       <div>
         <section
@@ -555,15 +564,18 @@ class Profile extends React.Component {
                   </div>
 
                   <div className="float-right rank_box_wrap">
-                    rank : {this.rank_based_on_xp(this.state.user_info.life_xp)}
+                    rank : {this.rank_based_on_xp(this.state.user_info.xp_obj)}
                     <div className="rank_box_prog_outer">
                       <div className="rank_box_prog">
                         <span
                           className="rank_prog_done"
                           style={{
-                            width: this.rank_percent_based_on_xp(
-                              this.state.user_info.life_xp
-                            )
+                            width:
+                              '' +
+                              this.rank_percent_based_on_xp(
+                                this.state.user_info.life_xp
+                              ) +
+                              '%'
                           }}
                         />
                       </div>
@@ -657,31 +669,59 @@ class Profile extends React.Component {
                       <i className="fa fa-trophy" aria-hidden="true" />{' '}
                       ACHIEVEMENT
                     </h5>
-
-                    {/*}<div className="list_pad">
-                        <div className="row">
-                          <div className="col-md-2 text-center">
-                            <span>
-                              <img src="/images/shield-gold.png" />
-                            </span>
-                            <p>Win - 9 </p>
-                          </div>
-
-                          <div className="col-md-2 text-center">
-                            <span>
-                              <img src="/images/shield-silver.png" />
-                            </span>
-                            <p>Win - 6 </p>
-                          </div>
-
-                          <div className="col-md-2 text-center">
-                            <span>
-                              <img src="/images/shield-bronze.png" />
-                            </span>
-                            <p>Win - 2 </p>
-                          </div>
+                    <br />
+                    <div className="list_pad">
+                      <div className="row">
+                        <div className="col-md-2 text-center">
+                          <span>
+                            <img src="/images/shield-gold.png" />
+                          </span>
+                          <p>
+                            Gold Trophies
+                            <br /> 0{' '}
+                          </p>
                         </div>
-                      </div>*/}
+
+                        <div className="col-md-2 text-center">
+                          <span>
+                            <img src="/images/shield-silver.png" />
+                          </span>
+                          <p>
+                            Silver Trophies
+                            <br /> 0{' '}
+                          </p>
+                        </div>
+                        <div className="col-md-2 text-center">
+                          <span>
+                            <img src="/images/shield-bronze.png" />
+                          </span>
+                          <p>
+                            Bronze Trophies
+                            <br /> 0{' '}
+                          </p>
+                        </div>
+                      </div>
+                      <br /><br /><br />
+                      <div className="row">
+                        {this.state.user_info.score.map((xp, i) => {
+                          return (
+                            <div
+                              className="col-md-3 text-center score_obj"
+                              key={xp.id}
+                            >
+                              <p className="score_obj_ttl">
+
+                              <span>{xp.ladder.title}</span></p>
+                              <p className="score_obj_scr arrow_box">
+                                <span className="text-success">{xp.wins}W</span>{' '}
+                                -{' '}
+                                <span className="text-danger">{xp.loss}W</span>
+                              </p>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
                   </div>
 
                   <div className="content_box">
