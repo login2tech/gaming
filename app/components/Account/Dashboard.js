@@ -459,7 +459,7 @@ class Profile extends React.Component {
           <div className="col-md-6 ">
             <div className="authorize_box">
               <div className="credit_summary ">
-                Cash Balance
+                OCG Cash Balance
                 <br />
                 <br /> ${this.props.user.cash_balance}
               </div>

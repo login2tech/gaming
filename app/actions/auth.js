@@ -42,7 +42,7 @@ export function login(email, password) {
   };
 }
 
-export function signup(data) {
+export function signup(data, cb) {
   return dispatch => {
     dispatch({
       type: 'CLEAR_MESSAGES'
@@ -58,6 +58,7 @@ export function signup(data) {
             type: 'CONTACT_FORM_SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
+          cb && cb();
           // browserHistory.push('/');
           // cookie.save('token', json.token, {
           //   expires: moment()

@@ -28,16 +28,36 @@ class Signup extends React.Component {
   handleSignup(event) {
     event.preventDefault();
     this.props.dispatch(
-      signup({
-        first_name: this.state.first_name,
-        last_name: this.state.last_name,
-        username: this.state.username,
-        dob:
-          '' + this.state.day + '/' + this.state.month + '/' + this.state.year,
-        email: this.state.email,
-        password: this.state.password,
-        password_confirm: this.state.password_confirm
-      })
+      signup(
+        {
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+          username: this.state.username,
+          dob:
+            '' +
+            this.state.day +
+            '/' +
+            this.state.month +
+            '/' +
+            this.state.year,
+          email: this.state.email,
+          password: this.state.password,
+          password_confirm: this.state.password_confirm
+        },
+        () => {
+          this.state = {
+            first_name: '',
+            last_name: '',
+            username: '',
+            email: '',
+            day: '',
+            month: '',
+            year: '',
+            password: '',
+            password_confirm: ''
+          };
+        }
+      )
     );
     const element = document.body;
     if (element) {
