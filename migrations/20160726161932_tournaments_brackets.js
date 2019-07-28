@@ -1,7 +1,8 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
-    knex.schema.table('tournament_matches', function(table) {
+    knex.schema.table('tournaments', function(table) {
        table.text('brackets');
+       table.text('users_list');
     })
   ]);
 };

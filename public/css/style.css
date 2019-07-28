@@ -4831,3 +4831,7 @@ p.score_obj_scr {
 div.trophy-info .trophy-name.gold {
     color: #d8b862;
 }
+
+.container-brackets {
+    min-height: 500px;
+}

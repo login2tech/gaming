@@ -13,3 +13,6 @@ routes.post('/edit', u_ctrl.ensureAuthenticated, ctrl.updateItem);
 routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);
 routes.get('/upcoming', ctrl.listupcoming);
 routes.post('/join', u_ctrl.ensureAuthenticated, ctrl.join);
+
+
+routes.get('/t_of_user', ctrl.t_of_user);

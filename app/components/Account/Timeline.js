@@ -257,34 +257,7 @@ class Profile extends React.Component {
         }
       });
   }
-
-  fetchMatches() {
-    let team_array = [];
-    for (let i = 0; i < this.state.user_teams.length; i++) {
-      const team_parent = this.state.user_teams[i];
-      const team = team_parent.team_info ? team_parent.team_info : {};
-      team_array.push(team.id);
-    }
-    team_array = team_array.join(',');
-
-    fetch(
-      '/api/matches/matches_of_user?uid=' +
-        this.state.user_info.id +
-        '&teams=' +
-        team_array
-    )
-      .then(res => res.json())
-      .then(json => {
-        if (json.ok) {
-          this.setState(
-            {
-              match_played: json.items
-            },
-            () => {}
-          );
-        }
-      });
-  }
+ 
 
   fetchPosts() {
     fetch(
@@ -301,7 +274,7 @@ class Profile extends React.Component {
               posts: json.items
             },
             () => {
-              this.fetchMatches();
+         //     this.fetchMatches();
             }
           );
         }

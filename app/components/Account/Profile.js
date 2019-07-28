@@ -24,6 +24,7 @@ class Profile extends React.Component {
       user_teams: [],
       renderTab: 'profile',
       match_played: [],
+      tournaments : [],
       new_post_type: 'text',
       new_post_image: '',
       new_post_video: '',
@@ -258,7 +259,7 @@ class Profile extends React.Component {
               user_teams: json.teams
             },
             () => {
-              // this.fetchPosts();
+              this.fetchMatches();
             }
           );
         }
@@ -286,6 +287,35 @@ class Profile extends React.Component {
           this.setState(
             {
               match_played: json.items
+            },
+            () => {
+              this.fetchTournaments()
+            }
+          );
+        }
+      });
+  }
+
+  fetchTournaments() {
+    // let team_array = [];
+    // for (let i = 0; i < this.state.user_teams.length; i++) {
+    //   const team_parent = this.state.user_teams[i];
+    //   const team = team_parent.team_info ? team_parent.team_info : {};
+    //   team_array.push(team.id);
+    // }
+    // team_array = team_array.join(',');
+
+    fetch(
+      '/api/tournaments/t_of_user?uid=' +
+        this.state.user_info.id 
+        
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              tournaments: json.items
             },
             () => {}
           );
@@ -666,7 +696,7 @@ class Profile extends React.Component {
                               <div className="trophy-count">
                                 <span className="text-success">{xp.wins}W</span>{' '}
                                 -{' '}
-                                <span className="text-danger">{xp.loss}W</span>
+                                <span className="text-danger">{xp.loss}L</span>
                               </div>
                             </div>
                           </div>
@@ -674,49 +704,6 @@ class Profile extends React.Component {
                       })}
                     </div>
                   </div>
-                </div>
-
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <i className="fa fa-users" aria-hidden="true" /> TEAMS
-                  </h5>
-
-                  <ul className="team_list">
-                    {this.state.user_teams.map((team_parent, i) => {
-                      const team = team_parent.team_info
-                        ? team_parent.team_info
-                        : {};
-                      return (
-                        <li className="item" key={team.id}>
-                          <Link
-                            to={
-                              '/u/' +
-                              this.state.user_info.username +
-                              '/teams/' +
-                              team.id
-                            }
-                          >
-                            <img src="/images/team_bg.png" />
-                            <div className="info">{team.title}</div>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                    {this.props.user &&
-                    this.state.user_info.id == this.props.user.id ? (
-                      <li>
-                        <a
-                          href={
-                            '/u/' + this.state.user_info.username + '/teams/new'
-                          }
-                        >
-                          <img src="/images/team_new.png" />
-                        </a>
-                      </li>
-                    ) : (
-                      false
-                    )}
-                  </ul>
                 </div>
 
                 <div className="content_box">
@@ -769,17 +756,52 @@ class Profile extends React.Component {
                   </div>
                 </div>
 
-                {/*}<div className="col-md-4">
-                                              <span>LIFETIME EARNINGS</span>
-                                              <p>{this.state.user_info.lifetime_earning? this.state.user_info.lifetime_earning : ''}</p>
-                                            </div>*/}
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">
+                    <i className="fa fa-users" aria-hidden="true" /> TEAMS
+                  </h5>
 
-                {/*}<div className="col-md-4">
-                                              <span> PROFILE VIEWS</span>
-                                              <p>436</p>
-                                            </div>
-                                            */}
+                  <ul className="team_list">
+                    {this.state.user_teams.map((team_parent, i) => {
+                      const team = team_parent.team_info
+                        ? team_parent.team_info
+                        : {};
+                      return (
+                        <li className="item" key={team.id}>
+                          <Link
+                            to={
+                              '/u/' +
+                              this.state.user_info.username +
+                              '/teams/' +
+                              team.id
+                            }
+                          >
+                            <img src="/images/team_bg.png" />
+                            <div className="info">{team.title}</div>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                    {this.props.user &&
+                    this.state.user_info.id == this.props.user.id ? (
+                      <li>
+                        <a
+                          href={
+                            '/u/' + this.state.user_info.username + '/teams/new'
+                          }
+                        >
+                          <img src="/images/team_new.png" />
+                        </a>
+                      </li>
+                    ) : (
+                      false
+                    )}
+                  </ul>
+                </div>
 
+                
+
+              
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
@@ -885,14 +907,19 @@ class Profile extends React.Component {
                         <th>Tournament</th>
                         <th>Tournament Placing</th>
                         <th>Date</th>
+                        <th>Status</th>
                         <th>Info</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.match_played.map((match, i) => {
+                      {this.state.tournaments.map((match, i) => {
                         return (
                           <tr key={match.id}>
-                            <td>123</td>
+                            <td>{match.id}</td>
+                            <td>{match.game.title } - {match.ladder.title}</td>
+                            <td>{moment(match.starts_at).format('lll')}</td>
+                            <td>{match.status}</td>
+                            <td> <Link to={'/t/' + match.id}>View Tournament</Link></td>
                           </tr>
                         );
                       })}

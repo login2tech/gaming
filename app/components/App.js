@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './Modules/Header';
-// import Header2 from './Header2';
 import Footer from './Modules/Footer';
 
 import ModalContainer from './ModalContainer';

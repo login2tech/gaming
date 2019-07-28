@@ -72,7 +72,6 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
     });
 };
 
-
 // const giveXPtoTeam = function(team_id, input_val) {
 //   new TeamUser()
 //     .where({
@@ -124,7 +123,10 @@ exports.listItem = function(req, res, next) {
       if (!items) {
         return res.status(200).send([]);
       }
-      return res.status(200).send({ok: true, items: items.toJSON()});
+
+      return res
+        .status(200)
+        .send({ok: true, items: items.toJSON(), users_data: {}});
     })
     .catch(function(err) {
       // console.log(err);
@@ -196,21 +198,43 @@ const createRoundMatches = function(match) {
   let teams = match.get('team_ids');
   let teams_obj = match.get('teams_obj');
   teams_obj = JSON.parse(teams_obj);
-teams = teams.split(',');
+  teams = teams.split(',');
   const teams_count = teams.length;
 
-
-  console.log('---- -- - - - --------- -- - - - -----');
-console.log(teams);
+  //   console.log('---- -- - - - --------- -- - - - -----');
+  // console.log(teams);
   const participants = Array.from({length: teams_count}, (v, k) => k + 1);
   console.log(participants);
   const bracket_obj = getBracket(participants);
-  const brackets = bracket_obj[0];
+  const brackets_round = bracket_obj[0];
 
-  for (let i = brackets.length - 1; i >= 0; i--) {
-    const team_set = brackets[i];
-    console.log('---- -- - - - -----');
-    console.log(team_set);
+  let brackets = match.get('brackets');
+  if (!brackets) {
+    brackets = {};
+    brackets.total_rounds = bracket_obj[1];
+    brackets.rounds_calculated = 1;
+    brackets.round_1 = brackets_round;
+  } else {
+    brackets = JSON.parse(brackets);
+    brackets.rounds_calculated = brackets.rounds_calculated + 1;
+    brackets.round[brackets.rounds_calculated] = brackets_round;
+  }
+  brackets = JSON.stringify(brackets);
+  match
+    .save({
+      brackets: brackets
+    })
+    .then(function(e) {
+      console.log('brackets updated');
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+
+  for (let i = brackets_round.length - 1; i >= 0; i--) {
+    const team_set = brackets_round[i];
+    // console.log('---- -- - - - -----');
+    // console.log(team_set);
     let team_1 = team_set[0] ? team_set[0] : null;
     let team_2 = team_set[1] ? team_set[1] : null;
 
@@ -218,12 +242,12 @@ console.log(teams);
     team_1 = teams[team_1 - 1];
     team_2 = teams[team_2 - 1];
 
-    console.log(
-      team_1,
-      team_2,
-      teams_obj['team_' + team_1],
-      teams_obj['team_' + team_2]
-    );
+    // console.log(
+    //   team_1,
+    //   team_2,
+    //   teams_obj['team_' + team_1],
+    //   teams_obj['team_' + team_2]
+    // );
 
     createMatch(
       team_1,
@@ -262,6 +286,11 @@ exports.join = function(req, res, next) {
       }
       teams_obj = JSON.parse(teams_obj);
       let teams_registered = tmp_m.teams_registered;
+      let users_list = tmp_m.users_list;
+      if (!users_list) {
+        users_list = '[]';
+      }
+      users_list = JSON.parse(users_list);
       const registration_end_at = tmp_m.registration_end_at;
       const registration_start_at = tmp_m.registration_start_at;
       const total_teams = tmp_m.total_teams;
@@ -320,6 +349,11 @@ exports.join = function(req, res, next) {
         teams_obj: JSON.stringify(teams_obj)
         // status: 'accepted'
       };
+      for (let i = req.body.using_users.length - 1; i >= 0; i--) {
+        users_list.push('{' + req.body.using_users[i] + '}');
+      }
+      obj_to_save.users_list = JSON.stringify(users_list);
+
       if (teams_registered == total_teams) {
         obj_to_save.status = 'started';
       }
@@ -400,6 +434,7 @@ exports.listSingleItem = function(req, res, next) {
           content: ''
         });
       }
+      let users_list = item.get('users_list');
       item = item.toJSON();
 
       // console.log(item);
@@ -419,12 +454,11 @@ exports.listSingleItem = function(req, res, next) {
       if (!new_t_id) {
         new_t_id = [];
       }
-      // console.log(new_t_id);
       if (new_t_id && new_t_id.length) {
         new Team()
           .where('id', 'in', new_t_id)
           .fetchAll({
-            withRelated: ['team_users', 'team_users.user_info']
+            withRelated: []
           })
           .then(function(data) {
             if (data) {
@@ -432,10 +466,55 @@ exports.listSingleItem = function(req, res, next) {
               item.teams = data;
               // return res.status(200).send({ok: true, item: item});
             }
-            return res.status(200).send({ok: true, item: item});
+
+            if (!users_list) {
+              users_list = '[]';
+            }
+            users_list = JSON.parse(users_list);
+            const u = [];
+            for (let i = users_list.length - 1; i >= 0; i--) {
+              let k = users_list[i];
+              k = k.replace('{', '');
+              k = k.replace('}', '');
+
+              u.push(parseInt(k));
+            }
+            console.log('here reached');
+            new User()
+              .where('id', 'IN', u)
+              .fetchAll()
+              .then(function(usrs) {
+                console.log('here reached too');
+                if (!usrs) {
+                  return res
+                    .status(200)
+                    .send({ok: true, item: item, users_data: {}});
+                }
+                usrs = usrs.toJSON();
+                const users_data = {};
+                for (let i = usrs.length - 1; i >= 0; i--) {
+                  users_data['usr_' + usrs[i].id] = {
+                    first_name: usrs[i].first_name,
+                    last_name: usrs[i].last_name,
+                    username: usrs[i].username,
+                    id: usrs[i].id
+                  };
+                }
+                return res.status(200).send({
+                  ok: true,
+                  item: item,
+                  users_data: users_data
+                });
+              })
+              .catch(function(err) {
+                console.log(err);
+                return res
+                  .status(200)
+                  .send({ok: true, item: item, users_data: {}});
+              });
           })
           .catch(function(err) {
-            // console.log(err);
+            console.log(err);
             return res.status(400).send({
               id: req.params.id,
               title: '',
@@ -449,7 +528,7 @@ exports.listSingleItem = function(req, res, next) {
       }
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(400).send({
         id: req.params.id,
         title: '',
@@ -470,6 +549,24 @@ exports.listupcoming = function(req, res, next) {
         return res.status(200).send({ok: true, items: []});
       }
       return res.status(200).send({ok: true, items: item.toJSON()});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
+exports.t_of_user = function(req, res, next) {
+  const u = req.query.uid;
+  new Item()
+    .where('users_list', 'LIKE', '%{' + u + '}%')
+    .fetchAll({withRelated: ['ladder', 'game']})
+
+    .then(function(items) {
+      res.status(200).send({
+        ok: true,
+        items: items.toJSON()
+      });
     })
     .catch(function(err) {
       // console.log(err);
