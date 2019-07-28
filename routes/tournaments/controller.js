@@ -5,7 +5,8 @@ const ObjName = 'Tournament';
 const moment = require('moment');
 const User = require('../../models/User');
 const TeamUser = require('../teams/TeamUser');
-//
+const CreditTransactions = require('../../models/CreditTransactions');
+
 // const giveMoneyToMember = function(uid, input_val) {
 //   new User()
 //     .where({id: uid})
@@ -32,7 +33,7 @@ const TeamUser = require('../teams/TeamUser');
 //       console.log(err);
 //     });
 // };
-const takeMoneyFromMember = function(uid, input_val) {
+const takeMoneyFromMember = function(uid, input_val, match_id) {
   // console.log(input_val);
   new User()
     .where({id: uid})
@@ -43,17 +44,29 @@ const takeMoneyFromMember = function(uid, input_val) {
 
         // console.log(credit_balance);
         credit_balance -= parseFloat(input_val);
+
         // console.log(credit_balance);
         usr
           .save({credit_balance: credit_balance}, {patch: true})
-          .then(function(usr) {})
+          .then(function(usr) {
+            new CreditTransactions()
+              .save({
+                user_id: uid,
+                details: 'Credit Debit for joining tournament #' + match_id,
+                qty: -parseFloat(input_val)
+              })
+              .then(function(o) {})
+              .catch(function(err) {
+                console.log(4, err);
+              });
+          })
           .catch(function(err) {
-            // console.log(err);
+            console.log(141, err);
           });
       }
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(11, err);
     });
 };
 //
@@ -94,23 +107,10 @@ const takeMoneyFromMember = function(uid, input_val) {
 //     });
 // };
 
-const takeMoneyFromTeam = function(team_id, input_val) {
-  new TeamUser()
-    .where({
-      team_id: team_id,
-      accepted: true
-    })
-    .fetchAll()
-    .then(function(usrs) {
-      usrs = usrs.toJSON();
-      for (let i = 0; i < usrs.length; i++) {
-        const uid = usrs[i].user_id;
-        takeMoneyFromMember(uid, input_val);
-      }
-    })
-    .catch(function(err) {
-      // console.log(err);
-    });
+const takeMoneyFromTeam = function(team_id, input_val, team_members, match_id) {
+  for (let i = team_members.length - 1; i >= 0; i--) {
+    takeMoneyFromMember(parseInt(team_members[i]), input_val, match_id);
+  }
 };
 
 exports.listItem = function(req, res, next) {
@@ -129,6 +129,12 @@ exports.listItem = function(req, res, next) {
     });
 };
 
+exports.createRoundMatches = function(match)
+{
+  let teams = match.get('team_ids');
+  
+}
+
 exports.join = function(req, res, next) {
   //
   if (!req.body.tournament_id) {
@@ -143,12 +149,17 @@ exports.join = function(req, res, next) {
       if (!match) {
         res.status(400).send({
           ok: false,
-          msg: 'Match doesnt exist'
+          msg: 'Tournament doesn\'t exist'
         });
         return;
       }
       const tmp_m = match.toJSON();
       let teams = tmp_m.team_ids;
+      let teams_obj = tmp_m.teams_obj;
+      if (teams_obj == '' || !teams_obj) {
+        teams_obj = '{}';
+      }
+      teams_obj = JSON.parse(teams_obj);
       const teams_registered = tmp_m.teams_registered;
       const registration_end_at = tmp_m.registration_end_at;
       const registration_start_at = tmp_m.registration_start_at;
@@ -192,15 +203,27 @@ exports.join = function(req, res, next) {
         });
         return;
       }
-      teams.push(req.body.team_id);
-      teams = teams.join(',');
 
-      match
-        .save({
+      teams.push(req.body.team_id);
+
+      teams = teams.filter(function(el) {
+        return el != null && el != '';
+      });
+      teams = teams.join(',');
+      teams_obj['team_' + req.body.team_id] = req.body.using_users;
+      teams_registered = teams_registered +1;
+
+      let obj_to_save = {
           team_ids: teams,
-          teams_registered: teams_registered + 1
+          teams_registered: teams_registered,
+          teams_obj: JSON.stringify(teams_obj)
           // status: 'accepted'
-        })
+        };
+      if(teams_registered == total_teams){
+        obj_to_save.status = 'started';
+      }
+      match
+        .save(obj_to_save)
         .then(function(match) {
           res.status(200).send({
             ok: true,
@@ -208,23 +231,34 @@ exports.join = function(req, res, next) {
             tournament: match.toJSON()
           });
 
+          if(teams_registered == total_teams){
+            createRoundMatches(match);
+          }
+
+
+
           if (match.get('match_type') != 'free') {
-            takeMoneyFromTeam(req.body.team_id, match.get('entry_fee'));
+            takeMoneyFromTeam(
+              req.body.team_id,
+              match.get('entry_fee'),
+              req.body.using_users,
+              match.id
+            );
           }
         })
         .catch(function(err) {
-          // console.log(err);
+          console.log(err);
           res.status(400).send({
             ok: false,
-            msg: 'Failed to Save Score'
+            msg: 'Failed to Join Tournament'
           });
         });
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       res.status(400).send({
         ok: false,
-        msg: 'Failed to Save Score'
+        msg: 'Failed to Join Tournament'
       });
     });
 };

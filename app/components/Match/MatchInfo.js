@@ -18,7 +18,7 @@ class MatchInfo extends React.Component {
         team_2_info: {team_users: []}
       },
       ladder: '',
-       using_users : [],
+      using_users : [],
       games: [],
       my_score: '',
       their_score: ''
@@ -52,7 +52,7 @@ class MatchInfo extends React.Component {
       return false;
     }
    
-    console.log(this.state.match.match_players, this.state.using_users.length)
+    // console.log(this.state.match.match_players, this.state.using_users.length)
     if(parseInt(this.state.match.match_players) > this.state.using_users.length){
       return false;
     }
@@ -70,7 +70,7 @@ class MatchInfo extends React.Component {
 
     const amount = parseFloat(this.state.match.match_fee);
     for (let i = 0; i < this.state.team_selected.team_users.length; i++) {
-       if(this.state.using_users.indexOf( this.state.team_selected.team_users[i].user_info.id )  < -1)
+       if(this.state.using_users.indexOf( this.state.team_selected.team_users[i].user_info.id )  <= -1)
         {
           // this user is not playing, no need to check it's eligibility; 
           continue;

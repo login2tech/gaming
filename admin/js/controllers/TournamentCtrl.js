@@ -135,6 +135,30 @@ angular
         });
     };
 
+    $scope.updatePlayersCnt = function()
+    {
+      for (let i = 0 ; i < $scope.games.length;i++)
+      {
+        if($scope.games[i].id == $scope.item.game_id)
+        {
+          for (let j = 0 ; j < $scope.games[i].ladders.length;j++)
+          {
+            if($scope.games[i].ladders[j].id == $scope.item.ladder_id)
+            {
+              // alert()
+              $scope.min_players = $scope.games[i].ladders[j].min_players;
+              $scope.max_players = $scope.games[i].ladders[j].max_players;
+              $scope.types = [];
+              for(let k = $scope.min_players;k<= $scope.max_players;k++)
+              {
+                $scope.types.push(k);
+              }
+            }
+          }
+        }
+      }
+    }
+
     $scope.removeImage = function() {
       $scope.item.image_url = '';
     };

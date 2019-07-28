@@ -2,9 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
-import {add_post, add_friend} from '../../actions/social';
-import axios from 'axios';
-import Timeline from '../Social/Timeline';
+import {add_friend} from '../../actions/social';
+// import axios from 'axios';
+// import Timeline from '../Social/Timeline';
 import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
 import Following from '../Modules/Modals/Following';
@@ -13,7 +13,14 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_info: {followers: [], teams: [], xp_obj: [], score: []},
+      user_info: {
+        first_name: ' ',
+        last_name: ' ',
+        followers: [],
+        teams: [],
+        xp_obj: [],
+        score: []
+      },
       user_teams: [],
       renderTab: 'profile',
       match_played: [],
@@ -222,7 +229,7 @@ class Profile extends React.Component {
   }
 
   fetchUserInfo(forward) {
-    fetch('/api/user_info?uid=' + this.props.params.username)
+    fetch('/api/user_info?addViews=yes&uid=' + this.props.params.username)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -251,7 +258,7 @@ class Profile extends React.Component {
               user_teams: json.teams
             },
             () => {
-              this.fetchPosts();
+              // this.fetchPosts();
             }
           );
         }
@@ -286,28 +293,6 @@ class Profile extends React.Component {
       });
   }
 
-  fetchPosts() {
-    fetch(
-      '/api/posts/list/my?uid=' +
-        this.state.user_info.id +
-        '&page=' +
-        this.state.posts_page
-    )
-      .then(res => res.json())
-      .then(json => {
-        if (json.ok) {
-          this.setState(
-            {
-              posts: json.items
-            },
-            () => {
-              this.fetchMatches();
-            }
-          );
-        }
-      });
-  }
-
   addFriend(event) {
     event.preventDefault();
     this.props.dispatch(
@@ -328,89 +313,6 @@ class Profile extends React.Component {
       )
     );
   }
-
-  doPostNew(event) {
-    event.preventDefault();
-
-    this.props.dispatch(
-      add_post(
-        {
-          post_type: this.state.new_post_type,
-          image_url: this.state.new_post_image,
-          video_url: this.state.new_post_video,
-          content: this.state.new_post_content
-        },
-        this.props.token,
-        (result, post) => {
-          if (result) {
-            const posts = this.state.posts;
-            posts.unshift(post);
-            this.setState({
-              posts: posts,
-              new_post_type: 'text',
-              new_post_image: '',
-              new_post_video: '',
-              new_post_content: ''
-            });
-          }
-        }
-      )
-    );
-  }
-
-  askFile(cls, cb) {
-    const data = new FormData();
-    data.append('file', this.state[cls], this.state[cls].name);
-    axios
-      .post('/upload', data, {
-        onUploadProgress: ProgressEvent => {
-          // this.setState({
-          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          // });
-        }
-      })
-      .then(res => {
-        cb && cb(res.data);
-      })
-      .catch(err => {
-        alert('some error occoured.');
-        // console.log(err);
-      });
-  }
-
-  handleImageUpload = event => {
-    this.setState(
-      {
-        post_image_select: event.target.files[0]
-      },
-      () => {
-        this.askFile('post_image_select', data => {
-          if (data && data.file) {
-            this.setState({
-              new_post_image: data.file
-            });
-          }
-        });
-      }
-    );
-  };
-
-  handleVideoUpload = event => {
-    this.setState(
-      {
-        post_video_select: event.target.files[0]
-      },
-      () => {
-        this.askFile('post_video_select', data => {
-          if (data && data.file) {
-            this.setState({
-              new_post_video: data.file
-            });
-          }
-        });
-      }
-    );
-  };
 
   tags = [1, 2, 3, 4, 5];
   tag_names = [
@@ -629,9 +531,7 @@ class Profile extends React.Component {
           <div className="baris">
             <div className="container">
               <ul className="lnkss">
-                <li
-                  className={this.state.renderTab == 'profile' ? 'active' : ''}
-                >
+                <li className={'active'}>
                   <Link
                     onClick={() => {
                       this.setState({
@@ -642,16 +542,8 @@ class Profile extends React.Component {
                     Profile
                   </Link>
                 </li>
-                <li
-                  className={this.state.renderTab == 'updates' ? 'active' : ''}
-                >
-                  <Link
-                    onClick={() => {
-                      this.setState({
-                        renderTab: 'updates'
-                      });
-                    }}
-                  >
+                <li>
+                  <Link to={'/u/' + this.props.params.username + '/timeline'}>
                     Timeline
                   </Link>
                 </li>
@@ -659,523 +551,358 @@ class Profile extends React.Component {
             </div>
           </div>
         </section>
-        {this.state.renderTab == 'profile' ? (
-          <section className="contet_part single_match_details">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12 col-sm-12 col-xs-12">
-                  <div className="content_box">
-                    <h5 className="prizes_desclaimer">
-                      <i className="fa fa-trophy" aria-hidden="true" />{' '}
-                      ACHIEVEMENT
-                    </h5>
-                    <br />
-                    <div className="list_pad">
-                      <div className="row">
-                        <div className="col-md-2 text-center">
-                          <span>
-                            <img src="/images/shield-gold.png" />
-                          </span>
-                          <p>
-                            Gold Trophies
-                            <br /> 0{' '}
-                          </p>
-                        </div>
 
-                        <div className="col-md-2 text-center">
-                          <span>
-                            <img src="/images/shield-silver.png" />
-                          </span>
-                          <p>
-                            Silver Trophies
-                            <br /> 0{' '}
-                          </p>
+        <section className="contet_part single_match_details">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">
+                    <i className="fa fa-trophy" aria-hidden="true" />{' '}
+                    ACHIEVEMENT
+                  </h5>
+                  <br />
+
+                  <div className="user-profile-stats">
+                    <div className="user-profile-header-data">
+                      <div className="rank-data">
+                        <div>RANK</div>{' '}
+                        <div>{this.state.user_info.xp_rank}</div>{' '}
+                        <div>{this.state.user_info.life_xp} XP</div>
+                      </div>
+                    </div>
+                    <div className="user-profile-header-data">
+                      <div className="winnings-data">
+                        <div>WINNINGS</div>{' '}
+                        <div>${this.state.user_info.lifetime_earning ? this.state.user_info.lifetime_earning : '0'}</div>
+                      </div>
+                    </div>
+                    <div className="user-profile-header-data">
+                      <div className="career-data">
+                        <div>CAREER RECORD</div>{' '}
+                        <div>
+                          {this.state.user_info.wins
+                            ? this.state.user_info.wins
+                            : '0'}{' '}
+                          W -{' '}
+                          {this.state.user_info.loss
+                            ? this.state.user_info.loss
+                            : '0'}{' '}
+                          L
                         </div>
-                        <div className="col-md-2 text-center">
-                          <span>
-                            <img src="/images/shield-bronze.png" />
-                          </span>
-                          <p>
-                            Bronze Trophies
-                            <br /> 0{' '}
-                          </p>
+                        <div>
+                          {this.state.user_info.wins +
+                            this.state.user_info.loss ==
+                          0
+                            ? 100
+                            : (this.state.user_info.wins * 100) /
+                              (this.state.user_info.wins +
+                                this.state.user_info.loss)}
+                          % WIN RATE
                         </div>
                       </div>
-                      <br /><br /><br />
-                      <div className="row">
-                        {this.state.user_info.score.map((xp, i) => {
-                          return (
-                            <div
-                              className="col-md-3 text-center score_obj"
-                              key={xp.id}
-                            >
-                              <p className="score_obj_ttl">
+                    </div>
+                    <div className="user-profile-header-data">
+                      <div className="views-data">
+                        <div>PROFILE VIEWS</div>{' '}
+                        <div>
+                          {this.state.user_info.profile_views
+                            ? this.state.user_info.profile_views
+                            : '0'}
+                        </div>{' '}
+                        <div />
+                      </div>
+                    </div>
+                  </div>
 
-                              <span>{xp.ladder.title}</span></p>
-                              <p className="score_obj_scr arrow_box">
+                  <div className="user-profile-trophies-wrapper">
+                    <div className="user-profile-trophies-container">
+                      <div className="single-trophy-container">
+                        <div className="trophy-image">
+                          <img src="/images/shield-gold.png" />
+                        </div>
+                        <div className="trophy-info">
+                          <div className="trophy-name gold">Gold Trophies</div>
+                          <div className="trophy-count">0</div>
+                        </div>
+                      </div>
+                      <div className="single-trophy-container">
+                        <div className="trophy-image">
+                          <img src="/images/shield-silver.png" />
+                        </div>
+                        <div className="trophy-info">
+                          <div className="trophy-name silver">
+                            Silver Trophies
+                          </div>
+                          <div className="trophy-count">0</div>
+                        </div>
+                      </div>
+                      <div className="single-trophy-container">
+                        <div className="trophy-image">
+                          <img src="/images/shield-bronze.png" />
+                        </div>
+                        <div className="trophy-info">
+                          <div className="trophy-name bronze">
+                            Bronze Trophies
+                          </div>
+                          <div className="trophy-count">0</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="user-profile-trophies-wrapper">
+                    <div className="user-profile-trophies-container">
+                      {this.state.user_info.score.map((xp, i) => {
+                        return (
+                          <div className="single-trophy-container" key={xp.id}>
+                            <div className="trophy-image">
+                              <img src="/images/shield-gold.png" />
+                            </div>
+                            <div className="trophy-info">
+                              <div className="trophy-name gold">
+                                {xp.ladder.title}
+                              </div>
+                              <div className="trophy-count">
                                 <span className="text-success">{xp.wins}W</span>{' '}
                                 -{' '}
                                 <span className="text-danger">{xp.loss}W</span>
-                              </p>
+                              </div>
                             </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="content_box">
-                    <h5 className="prizes_desclaimer">
-                      <i className="fa fa-users" aria-hidden="true" /> TEAMS
-                    </h5>
-
-                    <ul className="team_list">
-                      {this.state.user_teams.map((team_parent, i) => {
-                        const team = team_parent.team_info
-                          ? team_parent.team_info
-                          : {};
-                        return (
-                          <li className="item" key={team.id}>
-                            <Link
-                              to={
-                                '/u/' +
-                                this.state.user_info.username +
-                                '/teams/' +
-                                team.id
-                              }
-                            >
-                              <img src="/images/team_bg.png" />
-                              <div className="info">{team.title}</div>
-                            </Link>
-                          </li>
+                          </div>
                         );
                       })}
-                      {this.props.user &&
-                      this.state.user_info.id == this.props.user.id ? (
-                        <li>
-                          <a
-                            href={
-                              '/u/' +
-                              this.state.user_info.username +
-                              '/teams/new'
-                            }
-                          >
-                            <img src="/images/team_new.png" />
-                          </a>
-                        </li>
-                      ) : (
-                        false
-                      )}
-                    </ul>
-                  </div>
-
-                  <div className="content_box">
-                    <h5 className="prizes_desclaimer">
-                      <i className="fa fa-user" aria-hidden="true" /> ABOUT
-                    </h5>
-
-                    <div className="list_pad">
-                      <div className="row">
-                        <div className="col-md-4">
-                          <span> MEMBER SINCE</span>
-                          <p>
-                            {moment(this.state.user_info.created_at).format(
-                              'lll'
-                            )}
-                          </p>
-                        </div>
-
-                        <div className="col-md-4">
-                          <span> TIME ZONE </span>
-                          <p>
-                            {this.state.user_info.timezone
-                              ? this.state.user_info.timezone
-                              : '-'}
-                          </p>
-                        </div>
-
-                        <div className="col-md-4">
-                          <span>Rank</span>
-                          <p>-</p>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        {this.tags.map((k, i) => {
-                          if (
-                            !this.state.user_info['gamer_tag_' + k] ||
-                            this.state.user_info['gamer_tag_' + k] == ''
-                          ) {
-                            return false;
-                          }
-                          return (
-                            <div className="col-md-4" key={k}>
-                              <span>{this.tag_names[k]}</span>
-                              <p>{this.state.user_info['gamer_tag_' + k]}</p>
-                            </div>
-                          );
-                        })}
-                      </div>
                     </div>
                   </div>
+                </div>
 
-                  {/*}<div className="col-md-4">
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">
+                    <i className="fa fa-users" aria-hidden="true" /> TEAMS
+                  </h5>
+
+                  <ul className="team_list">
+                    {this.state.user_teams.map((team_parent, i) => {
+                      const team = team_parent.team_info
+                        ? team_parent.team_info
+                        : {};
+                      return (
+                        <li className="item" key={team.id}>
+                          <Link
+                            to={
+                              '/u/' +
+                              this.state.user_info.username +
+                              '/teams/' +
+                              team.id
+                            }
+                          >
+                            <img src="/images/team_bg.png" />
+                            <div className="info">{team.title}</div>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                    {this.props.user &&
+                    this.state.user_info.id == this.props.user.id ? (
+                      <li>
+                        <a
+                          href={
+                            '/u/' + this.state.user_info.username + '/teams/new'
+                          }
+                        >
+                          <img src="/images/team_new.png" />
+                        </a>
+                      </li>
+                    ) : (
+                      false
+                    )}
+                  </ul>
+                </div>
+
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">
+                    <i className="fa fa-user" aria-hidden="true" /> ABOUT
+                  </h5>
+
+                  <div className="list_pad">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <span> MEMBER SINCE</span>
+                        <p>
+                          {moment(this.state.user_info.created_at).format(
+                            'lll'
+                          )}
+                        </p>
+                      </div>
+
+                      <div className="col-md-4">
+                        <span> TIME ZONE </span>
+                        <p>
+                          {this.state.user_info.timezone
+                            ? this.state.user_info.timezone
+                            : '-'}
+                        </p>
+                      </div>
+
+                      <div className="col-md-4">
+                        <span>Rank</span>
+                        <p>-</p>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      {this.tags.map((k, i) => {
+                        if (
+                          !this.state.user_info['gamer_tag_' + k] ||
+                          this.state.user_info['gamer_tag_' + k] == ''
+                        ) {
+                          return false;
+                        }
+                        return (
+                          <div className="col-md-4" key={k}>
+                            <span>{this.tag_names[k]}</span>
+                            <p>{this.state.user_info['gamer_tag_' + k]}</p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                {/*}<div className="col-md-4">
                                               <span>LIFETIME EARNINGS</span>
                                               <p>{this.state.user_info.lifetime_earning? this.state.user_info.lifetime_earning : ''}</p>
                                             </div>*/}
 
-                  {/*}<div className="col-md-4">
+                {/*}<div className="col-md-4">
                                               <span> PROFILE VIEWS</span>
                                               <p>436</p>
                                             </div>
                                             */}
 
-                  <div className="content_box">
-                    <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th>Match</th>
-                          <th>Team</th>
-                          <th>Opponent</th>
-                          <th>Result</th>
-                          <th>Date</th>
-                          <th>Info</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.match_played.map((match, i) => {
-                          const teams = this.getTeams(match);
-                          let is_win = false;
-                          let is_loss = false;
-                          // is_status = true;
-                          if (match.result) {
-                            if (match.result == 'team_1') {
-                              if (teams[2] == 1) {
-                                is_win = true;
-                              } else {
-                                is_loss = false;
-                              }
-                            } else if (match.result == 'team_2') {
-                              if (teams[2] == 2) {
-                                is_win = true;
-                              } else {
-                                is_loss = false;
-                              }
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <th>Match</th>
+                        <th>Team</th>
+                        <th>Opponent</th>
+                        <th>Result</th>
+                        <th>Date</th>
+                        <th>Info</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.match_played.map((match, i) => {
+                        const teams = this.getTeams(match);
+                        let is_win = false;
+                        let is_loss = false;
+                        // is_status = true;
+                        if (match.result) {
+                          if (match.result == 'team_1') {
+                            if (teams[2] == 1) {
+                              is_win = true;
                             } else {
-                              // is_status = true;
+                              is_loss = false;
                             }
+                          } else if (match.result == 'team_2') {
+                            if (teams[2] == 2) {
+                              is_win = true;
+                            } else {
+                              is_loss = false;
+                            }
+                          } else {
+                            // is_status = true;
                           }
-                          {
-                            is_win ? (
-                              <span className="text-success">W</span>
-                            ) : (
-                              false
-                            );
-                          }
-                          {
-                            is_loss ? (
-                              <span className="text-danger">L</span>
-                            ) : (
-                              false
-                            );
-                          }
-                          {
-                            !is_win && !is_loss ? match.status : false;
-                          }
+                        }
+                        {
+                          is_win ? (
+                            <span className="text-success">W</span>
+                          ) : (
+                            false
+                          );
+                        }
+                        {
+                          is_loss ? (
+                            <span className="text-danger">L</span>
+                          ) : (
+                            false
+                          );
+                        }
+                        {
+                          !is_win && !is_loss ? match.status : false;
+                        }
 
-                          return (
-                            <tr key={match.id}>
-                              <td>
-                                <Link to={'/m/' + match.id}>#{match.id}</Link>
-                              </td>
-                              <td>{teams[0].title}</td>
-                              <td>{teams[1] ? teams[1].title : ' '}</td>
-                              <td>
-                                {match.result ? (
-                                  match.result == 'team_1' ? (
-                                    teams[2] == 1 ? (
-                                      <span className="text-success">W</span>
-                                    ) : (
-                                      <span className="text-danger">L</span>
-                                    )
-                                  ) : match.result == 'team_2' ? (
-                                    teams[2] == 2 ? (
-                                      <span className="text-success">W</span>
-                                    ) : (
-                                      <span className="text-danger">L</span>
-                                    )
+                        return (
+                          <tr key={match.id}>
+                            <td>
+                              <Link to={'/m/' + match.id}>#{match.id}</Link>
+                            </td>
+                            <td>{teams[0].title}</td>
+                            <td>{teams[1] ? teams[1].title : ' '}</td>
+                            <td>
+                              {match.result ? (
+                                match.result == 'team_1' ? (
+                                  teams[2] == 1 ? (
+                                    <span className="text-success">W</span>
                                   ) : (
-                                    match.result
+                                    <span className="text-danger">L</span>
+                                  )
+                                ) : match.result == 'team_2' ? (
+                                  teams[2] == 2 ? (
+                                    <span className="text-success">W</span>
+                                  ) : (
+                                    <span className="text-danger">L</span>
                                   )
                                 ) : (
-                                  match.status
-                                )}
-                              </td>
-                              {/* <td>{''}</td> */}
-                              <td>{moment(match.created_at).format('lll')}</td>
-                              <td>
-                                {' '}
-                                <Link to={'/m/' + match.id}>View Match</Link>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
+                                  match.result
+                                )
+                              ) : (
+                                match.status
+                              )}
+                            </td>
+                            {/* <td>{''}</td> */}
+                            <td>{moment(match.created_at).format('lll')}</td>
+                            <td>
+                              {' '}
+                              <Link to={'/m/' + match.id}>View Match</Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
 
-                  <div className="content_box">
-                    <h5 className="prizes_desclaimer">RECENT TOURNAMENTS</h5>
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">RECENT TOURNAMENTS</h5>
 
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th>Tournament</th>
-                          <th>Tournament Placing</th>
-                          <th>Date</th>
-                          <th>Info</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.match_played.map((match, i) => {
-                          return (
-                            <tr key={match.id}>
-                              <td>123</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <th>Tournament</th>
+                        <th>Tournament Placing</th>
+                        <th>Date</th>
+                        <th>Info</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.match_played.map((match, i) => {
+                        return (
+                          <tr key={match.id}>
+                            <td>123</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-          </section>
-        ) : (
-          <section className="contet_part single_match_details">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12 col-sm-12 col-xs-12">
-                  <div className="row">
-                    <div className="col-md-8 offset-md-2">
-                      {this.props.user &&
-                      this.props.user.id == this.state.user_info.id ? (
-                        <form
-                          onSubmit={event => {
-                            this.doPostNew(event);
-                          }}
-                        >
-                          <div className="card gedf-card">
-                            <div className="card-header">
-                              <ul
-                                className="nav nav-tabs card-header-tabs"
-                                id="myTab"
-                                role="tablist"
-                              >
-                                <li className="nav-item">
-                                  <a
-                                    className={
-                                      'nav-link' +
-                                      (this.state.new_post_type == 'text'
-                                        ? ' active '
-                                        : '')
-                                    }
-                                    id="posts-tab"
-                                    // data-toggle="tab"
-                                    // href="#posts"
-                                    // role="tab"
-                                    // aria-controls="posts"
-                                    // aria-selected="true/"
-                                    onClick={() => {
-                                      this.setState({
-                                        new_post_type: 'text',
-                                        new_post_image: '',
-                                        new_post_video: '',
-                                        post_video_select: ''
-                                      });
-                                    }}
-                                  >
-                                    Post
-                                  </a>
-                                </li>
-                                <li className="nav-item">
-                                  <a
-                                    className={
-                                      'nav-link' +
-                                      (this.state.new_post_type == 'image'
-                                        ? ' active '
-                                        : '')
-                                    }
-                                    id="images-tab"
-                                    onClick={() => {
-                                      this.setState({
-                                        new_post_type: 'image',
-                                        // new_post_image: '',
-                                        new_post_video: '',
-                                        post_image_select: ''
-                                      });
-                                    }}
-                                    // data-toggle="tab"
-                                    // role="tab"
-                                    // aria-controls="images"
-                                    // aria-selected="false"
-                                    // href="#images"
-                                  >
-                                    <i className="fa fa-image" />
-                                  </a>
-                                </li>
-                                <li className="nav-item">
-                                  <a
-                                    className={
-                                      'nav-link' +
-                                      (this.state.new_post_type == 'video'
-                                        ? ' active '
-                                        : '')
-                                    }
-                                    id="videos-tab"
-                                    // data-toggle="tab"
-                                    // role="tab"
-                                    // aria-controls="videos"
-                                    // aria-selected="false"
-                                    // href="#videos"
-                                    onClick={() => {
-                                      this.setState({
-                                        new_post_type: 'video',
-                                        new_post_image: ''
-                                        // new_post_video: ''
-                                      });
-                                    }}
-                                  >
-                                    <i className="fa fa-video-camera" />
-                                  </a>
-                                </li>
-                              </ul>
-                            </div>
-                            <div className="card-body">
-                              <div className="tab-content" id="myTabContent">
-                                <div
-                                  className="tab-pane fade show active"
-                                  id="posts"
-                                  role="tabpanel"
-                                  aria-labelledby="posts-tab"
-                                >
-                                  {this.state.new_post_type == 'image' ? (
-                                    <div className="custom-file">
-                                      <input
-                                        type="file"
-                                        className="custom-file-input"
-                                        id="customFile"
-                                        onChange={this.handleImageUpload}
-                                      />
-                                      <label
-                                        className="custom-file-label"
-                                        htmlFor="customFile"
-                                      >
-                                        Upload image
-                                      </label>
-                                    </div>
-                                  ) : (
-                                    false
-                                  )}
-
-                                  {this.state.new_post_type == 'video' ? (
-                                    <div className="custom-file">
-                                      <input
-                                        type="file"
-                                        className="custom-file-input"
-                                        id="customFile"
-                                        onChange={this.handleVideoUpload}
-                                      />
-                                      <label
-                                        className="custom-file-label"
-                                        htmlFor="customFile"
-                                      >
-                                        Upload video
-                                      </label>
-                                    </div>
-                                  ) : (
-                                    false
-                                  )}
-                                  {this.state.new_post_image != '' ? (
-                                    <img
-                                      src={this.state.new_post_image}
-                                      className="img-fluid"
-                                      style={{marginBottom: '10px'}}
-                                    />
-                                  ) : (
-                                    false
-                                  )}
-
-                                  {this.state.new_post_video != '' ? (
-                                    <div
-                                      className="embed-responsive embed-responsive-21by9"
-                                      style={{marginBottom: '10px'}}
-                                    >
-                                      <video>
-                                        <source
-                                          src={this.state.new_post_video}
-                                          type="video/mp4"
-                                        />
-                                      </video>
-                                    </div>
-                                  ) : (
-                                    false
-                                  )}
-                                  <div className="form-group">
-                                    <textarea
-                                      className="form-control"
-                                      id="new_post_content"
-                                      required
-                                      rows="3"
-                                      value={this.state.new_post_content}
-                                      placeholder="What are you thinking?"
-                                      name="new_post_content"
-                                      onChange={this.handleChange.bind(this)}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div className="btn-toolbar justify-content-between">
-                                <div className="btn-group">
-                                  <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                  >
-                                    share
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      ) : (
-                        false
-                      )}
-
-                      <br />
-                      <h4 className="text-white">Latest Posts</h4>
-                      <ul className="timeline">
-                        {this.state.posts &&
-                          this.state.posts.map((post, i) => {
-                            return (
-                              <Timeline
-                                post={post}
-                                key={post.id}
-                                show_option_to_pin
-                              />
-                            );
-                          })}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
+          </div>
+        </section>
       </div>
     );
   }

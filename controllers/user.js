@@ -167,7 +167,7 @@ exports.signupPost = function(req, res, next) {
     dob: req.body.dob,
     role: 'user',
     status: true,
-    email_verified:true
+    email_verified: true
   })
     .save()
     .then(function(user) {
@@ -550,12 +550,12 @@ exports.singleUser_info = function(req, res, next) {
         // }
       ]
     })
-    .then(function(user) {
-      if (!user) {
+    .then(function(usr) {
+      if (!usr) {
         // console.log(err);
         return res.status(200).send({user_info: {}, ok: false});
       }
-      user = user.toJSON();
+      let user = usr.toJSON();
       user.email = '';
       user.credit_balance = '';
       user.dob = '';
@@ -564,10 +564,26 @@ exports.singleUser_info = function(req, res, next) {
       user.cash_balance = '';
       user.followerCount = user.followerCount.length;
       user.followingCount = user.followingCount.length;
-      return res.status(200).send({
+     res.status(200).send({
         user_info: user,
         ok: true
       });
+      if (req.query.addViews == 'yes' && req.user.id != user.id) {
+        usr
+          .save(
+            {
+              profile_views: usr.get('profile_views') + 1
+            },
+            {patch: true}
+          )
+          .then(function() {
+            console.log('done')
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
+      }
+      return ;
     })
     .catch(function(err) {
       console.log(err);

@@ -23,6 +23,7 @@ class TournamentInfo extends React.Component {
         teams: []
       },
       ladder: '',
+      using_users: [],
       eligible_teams: [],
       games: []
       // my_score: '',
@@ -76,7 +77,8 @@ class TournamentInfo extends React.Component {
       join_tournament(
         {
           team_id: this.state.team_selected.id,
-          tournament_id: this.state.tournament.id
+          tournament_id: this.state.tournament.id,
+          using_users : this.state.using_users
         },
         this.props.user
       )
@@ -86,30 +88,82 @@ class TournamentInfo extends React.Component {
   }
 
   isEligible() {
-    if (parseFloat(this.state.tournament.entry_fee) <= 0) {
+    // if (parseFloat(this.state.tournament.entry_fee) <= 0) {
+    //   return false;
+    // }
+
+    if(parseInt(this.state.tournament.max_players) > this.state.using_users.length){
       return false;
     }
+    console.log('here');
 
     const amount = parseFloat(this.state.tournament.entry_fee);
     for (let i = 0; i < this.state.team_selected.team_users.length; i++) {
+      console.log(this.state.using_users.indexOf( this.state.team_selected.team_users[i].user_info.id ))
+       if(this.state.using_users.indexOf( this.state.team_selected.team_users[i].user_info.id )  <= -1)
+        {
+          // this user is not playing, no need to check it's eligibility; 
+          continue;
+        }
       if (
         parseFloat(
           this.state.team_selected.team_users[i].user_info.credit_balance
         ) < amount
       ) {
+        console.log('no')
         return false;
       }
     }
     return true;
   }
 
-  amIEligible(team_u) {
+  amIEligibleFlag(team_u) {
+    // if (this.state.match.match_type == '') {
+    //   return false;
+    // }
+    const gamer_tag = this.state.tournament.ladder.gamer_tag;
+    if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
+      return false;
+    }
+    if (this.state.match_type == '') {
+      return false;
+    }
     const amount = parseFloat(this.state.tournament.entry_fee);
 
     if (parseFloat(team_u.user_info.credit_balance) < amount) {
-      return <span className="text-danger">Not Eligible</span>;
+      return false;
     }
-    return <span className="text-success">Eligible</span>;
+    return true;
+  }
+
+  amIEligible(team_u) {
+    if (
+      !team_u.user_info['gamer_tag_' + this.state.tournament.ladder.gamer_tag]
+    ) {
+      return (
+        <span className="text-danger">
+          <img src="/images/controller-red.svg" className="icon_size" /> Not
+          Eligible
+        </span>
+      );
+    }
+
+    const amount = parseFloat(this.state.tournament.entry_fee);
+
+    if (parseFloat(team_u.user_info.credit_balance) < amount) {
+      return (
+        <span className="text-danger">
+          <img src="/images/controller-red.svg" className="icon_size" /> Not
+          Eligible
+        </span>
+      );
+    }
+    return (
+      <span className="text-success">
+        <img src="/images/controller-green.svg" className="icon_size" />{' '}
+        Eligible
+      </span>
+    );
   }
 
   componentDidMount() {
@@ -182,6 +236,7 @@ class TournamentInfo extends React.Component {
   }
 
   fetchTeams() {
+    if(!this.props.user)return;
     fetch(
       '/api/teams/team_of_user/?uid=' +
         this.props.user.id +
@@ -873,6 +928,7 @@ class TournamentInfo extends React.Component {
                     <th>Username</th>
                     <th>Role</th>
                     <th>Eligibility</th>
+                    <th>Include</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -892,6 +948,36 @@ class TournamentInfo extends React.Component {
                             : 'Member'}
                         </td>
                         <td>{this.amIEligible(team_user)}</td>
+                        <td>
+                          <label>
+                            <input
+                              disabled={!this.amIEligibleFlag(team_user)}
+                              type="checkbox"
+                              checked={
+                                this.state.using_users.indexOf(
+                                  team_user.user_info.id
+                                ) > -1
+                              }
+                              onChange={() => {
+                                const using_users = this.state.using_users;
+                                if (
+                                  using_users.indexOf(team_user.user_info.id) >
+                                  -1
+                                ) {
+                                  using_users.splice(
+                                    using_users.indexOf(team_user.user_info.id),
+                                    1
+                                  );
+                                } else {
+                                  using_users.push(team_user.user_info.id);
+                                }
+                                this.setState({
+                                  using_users: using_users
+                                });
+                              }}
+                            />
+                          </label>
+                        </td>
                       </tr>
                     );
                   })}
@@ -906,7 +992,7 @@ class TournamentInfo extends React.Component {
               <br />
               <input
                 type="submit"
-                disabled={!this.isEligible.bind(this)}
+                disabled={!this.isEligible()}
                 className="btn btn-primary max-width-300"
                 value={'Join Match'}
               />
@@ -948,17 +1034,16 @@ class TournamentInfo extends React.Component {
                 </li>
               );
             })}
-          {this.state.eligible_teams_loaded &&
-            !this.state.team_selected && (
-              <li>
-                <a
-                  target="_blank"
-                  href={'/u/' + this.props.user.username + '/teams/new'}
-                >
-                  <img src="/images/team_new.png" />
-                </a>
-              </li>
-            )}
+          {this.state.eligible_teams_loaded && !this.state.team_selected && (
+            <li>
+              <a
+                target="_blank"
+                href={'/u/' + this.props.user.username + '/teams/new'}
+              >
+                <img src="/images/team_new.png" />
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     );

@@ -4693,3 +4693,138 @@ p.score_obj_scr {
     font-size: 14px;
     letter-spacing: 1px;
 }
+
+.user-profile-stats {
+    display: flex;
+    /* position: absolute; */
+    /* bottom: 30px; */
+    left: 0;
+    height: 150px;
+    padding: 20px 40px;
+    width: 100%;
+    /* background-color: rgba(0,0,0,.7); */
+}
+
+.user-profile-header-data {
+    height: 100%;
+    padding: 0 40px;
+    border-right: 1px solid #404040;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-profile-header-data {
+    height: 100%;
+    padding: 0 40px;
+    border-right: 1px solid #404040;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+}
+
+.user-profile-header-data:last-of-type {
+    border: none;
+}
+
+.user-profile-stats img.rank-image {
+    height: 100%;
+    width: auto;
+    display: inline-block;
+}
+
+.user-profile-header-data>div>div:first-of-type {
+    text-transform: uppercase;
+    color: #2947f3;
+    font-weight: bolder;
+    font-size: 15.4px;
+}
+
+.user-profile-header-data>div>div:nth-of-type(2) {
+    color: #fff;
+    font-size: 23.8px;
+    font-weight: bolder;
+    margin-bottom: 5px;
+    margin-top: -5px;
+    min-height: 34px;
+}
+
+.user-profile-header-data>div>div:nth-of-type(3) {
+    font-size: 12.6px;
+    color: #b3b3b3;
+    height: 20px;
+}
+
+.user-profile-trophies-wrapper {
+    position: relative;
+    margin: 20px;
+    z-index: 1;
+}
+
+.user-profile-trophies-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.user-profile-trophies-container>div {
+    width: calc(33% - 10px);
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid #303030;
+    height: 72px;
+    background-color: #292929;
+}
+
+.user-profile-trophies-container>div:first-of-type {
+    padding-left: 0;
+}
+
+.user-profile-trophies-container>div div.trophy-image {
+    width: 72px;
+    height: 100%;
+    flex-shrink: 0;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.user-profile-trophies-container>div div.trophy-info {
+    margin-left: 15px;
+    margin-right: 10px;
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.user-profile-trophies-container>div div.trophy-info .trophy-name {
+    width: 100%;
+    text-transform: uppercase;
+    font-family: Saira,sans-serif;
+    font-weight: bolder;
+    line-height: 13px;
+    padding-top: 5px;
+}
+
+.user-profile-trophies-container>div div.trophy-info .trophy-count {
+    display: flex;
+    font-size: 30.8px;
+    color: #fff;
+    font-family: Saira,sans-serif;
+    font-weight: bolder;
+    margin-top: -10px;
+}
+
+.user-profile-trophies-container>div div.trophy-info .trophy-name.elite {
+    color: #5cc5e6;
+}
+
+div.trophy-info .trophy-name.gold {
+    color: #d8b862;
+}

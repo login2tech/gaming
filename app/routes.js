@@ -15,6 +15,7 @@ import Transactions from './components/Transactions';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
 import Profile from './components/Account/Profile';
+import Timeline from './components/Account/Timeline';
 import Dashboard from './components/Account/Dashboard';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
@@ -195,6 +196,7 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route path="/u/:username" component={Profile} onLeave={clearMessages} />
+      <Route path="/u/:username/timeline" component={Timeline} onLeave={clearMessages} />
       <Route path="/shop" component={Shop} onLeave={clearMessages} />
       <Route
         path="/login"

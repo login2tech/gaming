@@ -29,10 +29,19 @@
               </select>
               <br />
 
-              <select type="text" ng-model="item.ladder_id"  required class="form-control">
+              <select ng-change="updatePlayersCnt()" type="text" ng-model="item.ladder_id"  required class="form-control">
                 <option value="">Select Ladder</option>
                 <optgroup label="{{game.title}}"  ng-repeat="game in games" ng-if="item.game_id == game.id" >
                   <option ng-selected="item.ladder_id == ladder.id"   ng-repeat="ladder in game.ladders" ng-value="ladder.id">{{ladder.title}}</option>
+                </optgroup>
+              </select>
+
+
+               <br />
+ 
+              <select type="text" ng-model="item.max_players"  required class="form-control">
+                <option value="">Select Players</option>
+                  <option ng-repeat="type in types" ng-value="type">{{type}}v{{type}}</option>
                 </optgroup>
               </select>
 
