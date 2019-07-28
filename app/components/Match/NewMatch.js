@@ -19,8 +19,9 @@ class NewTeam extends React.Component {
       starts_at: new Date(new Date().getTime() + 10 * 60 * 1000),
       starts_at_time: new Date(new Date().getTime() + 10 * 60 * 1000),
       match_type: '',
-      using_users : [],
-      match_fee: 0
+      using_users: [],
+      match_fee: 0,
+      match_starts_in: ''
     };
   }
 
@@ -73,31 +74,29 @@ class NewTeam extends React.Component {
         }
       });
     setTimeout(() => {
-      $('#starts_at').flatpickr({
-        enableTime: false,
-        dateFormat: 'Y-m-d',
-        // stepMinute: 10, //intervals of minutes
-        minDate: this.state.starts_at,
-        defaultDate: this.state.starts_at,
-        // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
-        minuteIncrement: 10,
-        maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
-
-        onChange: this.newDate.bind(this)
-      });
-      $('#starts_at_time').flatpickr({
-        enableTime: true,
-        dateFormat: ' H:i',
-        noCalendar: true,
-        stepMinute: 10, //intervals of minutes
-        // minDate: this.state.starts_at,
-        // defaultDate: this.state.starts_at,
-        // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
-        minuteIncrement: 10,
-        // maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
-
-        onChange: this.newDateTime.bind(this)
-      });
+      // $('#starts_at').flatpickr({
+      //   enableTime: false,
+      //   dateFormat: 'Y-m-d',
+      //   // stepMinute: 10, //intervals of minutes
+      //   minDate: this.state.starts_at,
+      //   defaultDate: this.state.starts_at,
+      //   // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
+      //   minuteIncrement: 10,
+      //   maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
+      //   onChange: this.newDate.bind(this)
+      // });
+      // $('#starts_at_time').flatpickr({
+      //   enableTime: true,
+      //   dateFormat: ' H:i',
+      //   noCalendar: true,
+      //   stepMinute: 10, //intervals of minutes
+      //   // minDate: this.state.starts_at,
+      //   // defaultDate: this.state.starts_at,
+      //   // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
+      //   minuteIncrement: 10,
+      //   // maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
+      //   onChange: this.newDateTime.bind(this)
+      // });
     }, 2000);
   }
 
@@ -110,12 +109,14 @@ class NewTeam extends React.Component {
           team_1_id: this.props.params.id,
           game_id: this.state.game_info.id,
           ladder_id: this.state.team_info.ladder_id,
-          starts_at:
-            '' + this.state.starts_at + ' ' + this.state.starts_at_time,
+          // starts_at:
+          // '' + this.state.starts_at + ' ' + this.state.starts_at_time,
+          match_starts_in: this.state.match_starts_in,
           match_type: this.state.match_type,
           match_players: this.state.match_players,
-          match_fee: this.state.match_type == 'paid' ? this.state.match_fee : '',
-          using_users : this.state.using_users
+          match_fee:
+            this.state.match_type == 'paid' ? this.state.match_fee : '',
+          using_users: this.state.using_users
         },
         this.props.user
       )
@@ -136,15 +137,17 @@ class NewTeam extends React.Component {
     ) {
       return false;
     }
-    if(parseInt(this.state.match_players) > this.state.using_users.length){
+    if (parseInt(this.state.match_players) > this.state.using_users.length) {
       return false;
     }
 
-
     for (let i = 0; i < this.state.team_info.team_users.length; i++) {
-      if(this.state.using_users.indexOf( this.state.team_info.team_users[i].user_info.id )  < -1)
-      {
-        // this user is not playing, no need to check it's eligibility; 
+      if (
+        this.state.using_users.indexOf(
+          this.state.team_info.team_users[i].user_info.id
+        ) < -1
+      ) {
+        // this user is not playing, no need to check it's eligibility;
         continue;
       }
       if (
@@ -177,9 +180,8 @@ class NewTeam extends React.Component {
     // return true;
   }
 
-  amIEligibleFlag(team_u)
-  {
-     const gamer_tag = this.state.team_info.ladder.gamer_tag;
+  amIEligibleFlag(team_u) {
+    const gamer_tag = this.state.team_info.ladder.gamer_tag;
     if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
       return false;
     }
@@ -187,7 +189,7 @@ class NewTeam extends React.Component {
       return false;
     }
     const amount = parseFloat(this.state.match_fee);
-  
+
     if (this.state.match_type == 'free') {
       return true;
     }
@@ -196,9 +198,7 @@ class NewTeam extends React.Component {
       return false;
     }
     return true;
-
   }
-
 
   amIEligible(team_u) {
     const gamer_tag = this.state.team_info.ladder.gamer_tag;
@@ -303,6 +303,7 @@ class NewTeam extends React.Component {
                       </strong>
                     </div>
                     <br />
+                    {/*}
                     <div className="form-group col-md-12">
                       <label htmlFor="title">Match Date</label>
                       <div className="input-group date">
@@ -321,12 +322,31 @@ class NewTeam extends React.Component {
                           <span className="glyphicon glyphicon-date" />
                         </span>
                       </div>
-                    </div>
+                    </div>*/}
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="title">Match Time</label>
+                      <label htmlFor="title">Match Starts at</label>
                       <div className="input-group date">
-                        <input
+                        <select className='form-control'
+                          name="match_starts_in"
+                          id="match_starts_in"
+                          onChange={this.handleChange.bind(this)}
+                        >
+                          <option value="">{'Select'}</option>
+                          <option value="5|minutes">In 5 minutes</option>
+                          <option value="10|minutes">In 10 minutes</option>
+                          <option value="15|minutes">In 15 minutes</option>
+                          <option value="30|minutes">In 30 minutes</option>
+                          <option value="45|minutes">In 45 minutes</option>
+                          <option value="60|minutes">In 1 hour</option>
+                          <option value="120|minutes">In 2 hours</option>
+                          <option value="5|hours">In 5 hours</option>
+                          <option value="10|hours">In 10 hours</option>
+                          <option value="1|day">In 1 day</option>
+                          <option value="2|days">In 2 days</option>
+                          <option value="3|days">In 3 days</option>
+                          <option value="7|days">In 1 week</option>
+                          {/*<input
                           type="text"
                           id="starts_at_time"
                           className="form-control"
@@ -339,7 +359,8 @@ class NewTeam extends React.Component {
                         />
                         <span className="input-group-addon">
                           <span className="glyphicon glyphicon-time" />
-                        </span>
+                        </span>*/}
+                        </select>
                       </div>
                     </div>
 
@@ -463,22 +484,42 @@ class NewTeam extends React.Component {
                                     </td>
                                     <td>{this.amIEligible(team_user)}</td>
                                     <td>
-                                    <label><input disabled={!this.amIEligibleFlag(team_user)} type="checkbox" checked={
-                                      this.state.using_users.indexOf(team_user.user_info.id)  > -1
-                                    } onChange={()=>{
-                                      let using_users = this.state.using_users;
-                                      if(using_users.indexOf(team_user.user_info.id) > -1)
-                                      {
-                                        using_users.splice(using_users.indexOf(team_user.user_info.id) , 1);
-
-                                      }else{
-                                        using_users.push(team_user.user_info.id);
-                                      }
-                                      this.setState({
-                                        using_users :using_users
-                                      })
-                                    }} />
-                                    </label>
+                                      <label>
+                                        <input
+                                          disabled={
+                                            !this.amIEligibleFlag(team_user)
+                                          }
+                                          type="checkbox"
+                                          checked={
+                                            this.state.using_users.indexOf(
+                                              team_user.user_info.id
+                                            ) > -1
+                                          }
+                                          onChange={() => {
+                                            const using_users = this.state
+                                              .using_users;
+                                            if (
+                                              using_users.indexOf(
+                                                team_user.user_info.id
+                                              ) > -1
+                                            ) {
+                                              using_users.splice(
+                                                using_users.indexOf(
+                                                  team_user.user_info.id
+                                                ),
+                                                1
+                                              );
+                                            } else {
+                                              using_users.push(
+                                                team_user.user_info.id
+                                              );
+                                            }
+                                            this.setState({
+                                              using_users: using_users
+                                            });
+                                          }}
+                                        />
+                                      </label>
                                     </td>
                                   </tr>
                                 );

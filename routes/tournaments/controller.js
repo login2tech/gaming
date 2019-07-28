@@ -5,6 +5,7 @@ const ObjName = 'Tournament';
 const moment = require('moment');
 const User = require('../../models/User');
 const TeamUser = require('../teams/TeamUser');
+const TournamentMatch = require('./TournamentMatch');
 const CreditTransactions = require('../../models/CreditTransactions');
 
 // const giveMoneyToMember = function(uid, input_val) {
@@ -33,6 +34,7 @@ const CreditTransactions = require('../../models/CreditTransactions');
 //       console.log(err);
 //     });
 // };
+
 const takeMoneyFromMember = function(uid, input_val, match_id) {
   // console.log(input_val);
   new User()
@@ -69,7 +71,8 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
       console.log(11, err);
     });
 };
-//
+
+
 // const giveXPtoTeam = function(team_id, input_val) {
 //   new TeamUser()
 //     .where({
@@ -129,11 +132,109 @@ exports.listItem = function(req, res, next) {
     });
 };
 
-exports.createRoundMatches = function(match)
-{
+const getBracket = function(participants) {
+  const participantsCount = participants.length;
+  const rounds = Math.ceil(Math.log(participantsCount) / Math.log(2));
+  const bracketSize = Math.pow(2, rounds);
+  const requiredByes = bracketSize - participantsCount;
+
+  // console.log('Number of participants: {0}'.format(participantsCount));
+  // console.log('Number of rounds: {0}'.format(rounds));
+  // console.log('Bracket size: {0}'.format(bracketSize));
+  // console.log('Required number of byes: {0}'.format(requiredByes));
+
+  if (participantsCount < 2) {
+    return [[], rounds, bracketSize, requiredByes];
+  }
+
+  let matches = [[1, 2]];
+
+  for (let round = 1; round < rounds; round++) {
+    const roundMatches = [];
+    const sum = Math.pow(2, round + 1) + 1;
+
+    for (let i = 0; i < matches.length; i++) {
+      let home = changeIntoBye(matches[i][0], participantsCount);
+      let away = changeIntoBye(sum - matches[i][0], participantsCount);
+      roundMatches.push([home, away]);
+      home = changeIntoBye(sum - matches[i][1], participantsCount);
+      away = changeIntoBye(matches[i][1], participantsCount);
+      roundMatches.push([home, away]);
+    }
+    matches = roundMatches;
+  }
+
+  return [matches, rounds, bracketSize, requiredByes];
+};
+
+const changeIntoBye = function(seed, participantsCount) {
+  //return seed <= participantsCount ?  seed : '{0} (= bye)'.format(seed);
+  return seed <= participantsCount ? seed : null;
+};
+
+const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
+  new TournamentMatch()
+    .save({
+      tournament_id: t_id,
+      match_round: round,
+      team_1_id: team_1,
+      team_2_id: team_2,
+      starts_at: moment().add(10, 'minutes'),
+      team_1_players: t_1_u ? t_1_u.join('|') : null,
+      team_2_players: t_2_u ? t_2_u.join('|') : null,
+      status: 'pending'
+    })
+    .then(function() {
+      console.log('match created');
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+
+const createRoundMatches = function(match) {
   let teams = match.get('team_ids');
-  
-}
+  let teams_obj = match.get('teams_obj');
+  teams_obj = JSON.parse(teams_obj);
+teams = teams.split(',');
+  const teams_count = teams.length;
+
+
+  console.log('---- -- - - - --------- -- - - - -----');
+console.log(teams);
+  const participants = Array.from({length: teams_count}, (v, k) => k + 1);
+  console.log(participants);
+  const bracket_obj = getBracket(participants);
+  const brackets = bracket_obj[0];
+
+  for (let i = brackets.length - 1; i >= 0; i--) {
+    const team_set = brackets[i];
+    console.log('---- -- - - - -----');
+    console.log(team_set);
+    let team_1 = team_set[0] ? team_set[0] : null;
+    let team_2 = team_set[1] ? team_set[1] : null;
+
+    // team_set[0] = team_set[0] ? team_set[0]  : 0 ;
+    team_1 = teams[team_1 - 1];
+    team_2 = teams[team_2 - 1];
+
+    console.log(
+      team_1,
+      team_2,
+      teams_obj['team_' + team_1],
+      teams_obj['team_' + team_2]
+    );
+
+    createMatch(
+      team_1,
+      team_2,
+      team_set[0] ? teams_obj['team_' + team_1] : null,
+      team_set[1] ? teams_obj['team_' + team_2] : null,
+      match.id,
+      1
+    );
+  }
+};
 
 exports.join = function(req, res, next) {
   //
@@ -149,7 +250,7 @@ exports.join = function(req, res, next) {
       if (!match) {
         res.status(400).send({
           ok: false,
-          msg: 'Tournament doesn\'t exist'
+          msg: "Tournament doesn't exist"
         });
         return;
       }
@@ -160,7 +261,7 @@ exports.join = function(req, res, next) {
         teams_obj = '{}';
       }
       teams_obj = JSON.parse(teams_obj);
-      const teams_registered = tmp_m.teams_registered;
+      let teams_registered = tmp_m.teams_registered;
       const registration_end_at = tmp_m.registration_end_at;
       const registration_start_at = tmp_m.registration_start_at;
       const total_teams = tmp_m.total_teams;
@@ -211,15 +312,15 @@ exports.join = function(req, res, next) {
       });
       teams = teams.join(',');
       teams_obj['team_' + req.body.team_id] = req.body.using_users;
-      teams_registered = teams_registered +1;
+      teams_registered = teams_registered + 1;
 
-      let obj_to_save = {
-          team_ids: teams,
-          teams_registered: teams_registered,
-          teams_obj: JSON.stringify(teams_obj)
-          // status: 'accepted'
-        };
-      if(teams_registered == total_teams){
+      const obj_to_save = {
+        team_ids: teams,
+        teams_registered: teams_registered,
+        teams_obj: JSON.stringify(teams_obj)
+        // status: 'accepted'
+      };
+      if (teams_registered == total_teams) {
         obj_to_save.status = 'started';
       }
       match
@@ -231,11 +332,9 @@ exports.join = function(req, res, next) {
             tournament: match.toJSON()
           });
 
-          if(teams_registered == total_teams){
+          if (teams_registered == total_teams) {
             createRoundMatches(match);
           }
-
-
 
           if (match.get('match_type') != 'free') {
             takeMoneyFromTeam(
@@ -303,7 +402,7 @@ exports.listSingleItem = function(req, res, next) {
       }
       item = item.toJSON();
 
-      console.log(item);
+      // console.log(item);
 
       let team_ids = item.team_ids;
       if (!team_ids) {

@@ -572,7 +572,7 @@ exports.join = function(req, res, next) {
 
 exports.addItem = function(req, res, next) {
   req.assert('team_1_id', 'Team cannot be blank').notEmpty();
-  req.assert('starts_at', 'Starts At cannot be blank').notEmpty();
+  req.assert('match_starts_in', 'Starts At cannot be blank').notEmpty();
   req.assert('match_type', 'Match Type cannot be blank').notEmpty();
   req.assert('match_players', 'Match Players cannot be blank').notEmpty();
   req.assert('using_users', 'Match Players cannot be blank').notEmpty();
@@ -581,11 +581,13 @@ exports.addItem = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
+  let starts_at = req.body.match_starts_in;
+  starts_at = starts_at.split('|');
   new Item({
     team_1_id: req.body.team_1_id,
     game_id: req.body.game_id,
     ladder_id: req.body.ladder_id,
-    starts_at: req.body.starts_at,
+    starts_at: moment().add(starts_at[0], starts_at[1]),
     match_type: req.body.match_type,
     match_players: req.body.match_players,
     match_fee: req.body.match_fee,

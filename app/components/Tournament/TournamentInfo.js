@@ -17,9 +17,7 @@ class TournamentInfo extends React.Component {
         game: {},
         ladder: {},
         matches: [],
-
         team_ids: '',
-
         teams: []
       },
       ladder: '',
@@ -29,6 +27,114 @@ class TournamentInfo extends React.Component {
       // my_score: '',
       // their_score: ''
     };
+  }
+
+  createBrackets() {
+    let rounds = [
+      [
+        {
+          player1: {name: 'Team 111', ID: 111},
+          player2: {name: 'Team 211', ID: 211}
+        },
+
+        {
+          player1: {name: 'Team 112', ID: 112},
+          player2: {name: 'Team 212', ID: 212}
+        },
+
+        {
+          player1: {name: 'Team 113', ID: 113},
+          player2: {name: 'Team 213', ID: 213}
+        },
+
+        {
+          player1: {name: 'Team 114', ID: 114},
+          player2: {name: 'Team 214', ID: 214}
+        },
+
+        {
+          player1: {name: 'Team 115', ID: 115},
+          player2: {name: 'Team 215', ID: 215}
+        },
+
+        {
+          player1: {name: 'Team 116', ID: 116},
+          player2: {name: 'Team 216', ID: 216}
+        },
+
+        {
+          player1: {name: 'Team 117', ID: 117},
+          player2: {name: 'Team 217', ID: 217}
+        },
+
+        {
+          player1: {name: 'Player 118', ID: 118},
+          player2: {name: 'Player 218', ID: 218}
+        }
+      ],
+      [
+        {
+          player1: {name: 'Player 111', winner: true, ID: 111},
+          player2: {name: 'Player 212', ID: 212}
+        },
+
+        {
+          player1: {name: 'Player 113', winner: true, ID: 113},
+          player2: {name: 'Player 214', ID: 214}
+        },
+
+        {
+          player1: {name: 'Player 115', winner: true, ID: 115},
+          player2: {name: 'Player 216', ID: 216}
+        },
+
+        {
+          player1: {name: 'Player 117', winner: true, ID: 117},
+          player2: {name: 'Player 218', ID: 218}
+        }
+      ],
+
+      [
+        {
+          player1: {name: 'Player 111', winner: true, ID: 111},
+          player2: {name: 'Player 113', ID: 113}
+        },
+
+        {
+          player1: {name: 'Player 115', winner: true, ID: 115},
+          player2: {name: 'Player 218', ID: 218}
+        }
+      ],
+
+      [
+        {
+          player1: {name: 'Player 113', winner: true, ID: 113},
+          player2: {name: 'Player 218', winner: true, ID: 218}
+        }
+      ],
+
+      [
+        {
+          player1: {name: 'Player 113', winner: true, ID: 113}
+        }
+      ]
+    ];
+
+    const titles = ['round 1', 'round 2', 'round 3', 'round 4', 'round 5'];
+
+    $('.brackets').brackets({
+      titles: titles,
+      rounds: rounds,
+      color_title: 'white',
+      border_color: '#46CFB0',
+      color_player: 'white',
+      bg_player: '#46CFB0',
+      color_player_hover: 'white',
+      bg_player_hover: '#E95546',
+      border_radius_player: '5px',
+      border_radius_lines: '5px'
+      // MORE OPTIONS HERE
+    });
   }
 
   am_i_in_match(match) {
@@ -78,7 +184,7 @@ class TournamentInfo extends React.Component {
         {
           team_id: this.state.team_selected.id,
           tournament_id: this.state.tournament.id,
-          using_users : this.state.using_users
+          using_users: this.state.using_users
         },
         this.props.user
       )
@@ -92,25 +198,35 @@ class TournamentInfo extends React.Component {
     //   return false;
     // }
 
-    if(parseInt(this.state.tournament.max_players) > this.state.using_users.length){
+    if (
+      parseInt(this.state.tournament.max_players) >
+      this.state.using_users.length
+    ) {
       return false;
     }
     console.log('here');
 
     const amount = parseFloat(this.state.tournament.entry_fee);
     for (let i = 0; i < this.state.team_selected.team_users.length; i++) {
-      console.log(this.state.using_users.indexOf( this.state.team_selected.team_users[i].user_info.id ))
-       if(this.state.using_users.indexOf( this.state.team_selected.team_users[i].user_info.id )  <= -1)
-        {
-          // this user is not playing, no need to check it's eligibility; 
-          continue;
-        }
+      console.log(
+        this.state.using_users.indexOf(
+          this.state.team_selected.team_users[i].user_info.id
+        )
+      );
+      if (
+        this.state.using_users.indexOf(
+          this.state.team_selected.team_users[i].user_info.id
+        ) <= -1
+      ) {
+        // this user is not playing, no need to check it's eligibility;
+        continue;
+      }
       if (
         parseFloat(
           this.state.team_selected.team_users[i].user_info.credit_balance
         ) < amount
       ) {
-        console.log('no')
+        console.log('no');
         return false;
       }
     }
@@ -236,7 +352,9 @@ class TournamentInfo extends React.Component {
   }
 
   fetchTeams() {
-    if(!this.props.user)return;
+    if (!this.props.user) {
+      return;
+    }
     fetch(
       '/api/teams/team_of_user/?uid=' +
         this.props.user.id +
@@ -674,9 +792,10 @@ class TournamentInfo extends React.Component {
   renderBrackets() {
     return (
       <div className="col-md-12">
-        <div className="alert alert-warning">
+        {/*<div className="alert alert-warning">
           Brackets are yet not generated
-        </div>
+        </div>*/}
+        <div className="brackets" />
       </div>
     );
   }
@@ -1137,9 +1256,14 @@ class TournamentInfo extends React.Component {
                 >
                   <Link
                     onClick={() => {
-                      this.setState({
-                        renderTab: 'brackets'
-                      });
+                      this.setState(
+                        {
+                          renderTab: 'brackets'
+                        },
+                        () => {
+                          this.createBrackets();
+                        }
+                      );
                     }}
                   >
                     Brackets
