@@ -109,6 +109,216 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
 //     });
 // };
 
+exports.saveScore = function(req, res, next) {
+  new TournamentMatch({id: req.body.id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        res.status(400).send({
+          ok: false,
+          msg: "Match doesn't exist"
+        });
+        return;
+      }
+      const val = req.body;
+      const tmp_match = match.toJSON();
+      if (tmp_match.team_1_result && tmp_match.team_2_result) {
+        return res.status(400).send({ok: false, msg: 'Result already saved'});
+      }
+      if (val.team_1_result && tmp_match.team_2_result) {
+        val.team_2_result = tmp_match.team_2_result;
+      } else if (val.team_2_result && tmp_match.team_1_result) {
+        val.team_1_result = tmp_match.team_1_result;
+      }
+      if (!val.team_1_result && !val.team_2_result) {
+        res.status(400).send({
+          ok: false,
+          msg: "Match Data doesn't exist"
+        });
+        return;
+      }
+
+      if (
+        val.team_1_result &&
+        val.team_2_result &&
+        val.team_1_result != '' &&
+        val.team_2_result != ''
+      ) {
+        if (val.team_1_result != val.team_2_result) {
+          val.status = 'disputed';
+          val.result = 'disputed';
+        } else {
+          const tmp = val.team_1_result.split('-');
+          if (parseInt(tmp[0]) > parseInt(tmp[1])) {
+            val.result = 'team_1';
+            val.status = 'Complete';
+          } else if (parseInt(tmp[1]) > parseInt(tmp[0])) {
+            val.result = 'team_2';
+            val.status = 'Complete';
+          } else {
+            val.status = 'tie';
+            val.result = 'Tie';
+          }
+        }
+      }
+      match
+        .save(val)
+        .then(function(match) {
+          res.status(200).send({
+            ok: true,
+            msg: 'Score Updated successfully.',
+            match: match.toJSON()
+          });
+
+          new TournamentMatch()
+            .where({
+              tournament_id: tmp_match.tournament_id,
+              match_round: tmp_match.match_round
+            })
+            .fetchAll()
+            .then(function(round_matches) {
+              round_matches = round_matches.toJSON();
+              const winner_teams =[];
+              for (let i = round_matches.length - 1; i >= 0; i--) {
+                const rm = round_matches[i];
+                if (round_matches[i].status == 'pending') {
+                  return;
+                }
+                if (rm.result == 'team_1') {
+                  winner_teams.push(rm.team_1_id);
+                } else if (rm.result == 'team_1') {
+                  winner_teams.push(rm.team_2_id);
+                }
+              }
+
+              new Tournament()
+                .where({
+                  id: tmp_match.tournament_id
+                })
+                .fetch()
+                .then(function(tournament) {
+                  const bracket_obj = getBracket(winner_teams);
+                  console.log(new bracket_obj());
+                  const brackets_round = bracket_obj[0];
+
+                  let brackets = tournament.get('brackets');
+                  if (!brackets) {
+                    brackets = {};
+                    brackets.total_rounds = bracket_obj[1];
+                    brackets.rounds_calculated = 1;
+                    brackets.round_1 = brackets_round;
+                  } else {
+                    brackets = JSON.parse(brackets);
+                    brackets.rounds_calculated = brackets.rounds_calculated + 1;
+                    brackets.round[brackets.rounds_calculated] = brackets_round;
+                  }
+                  brackets = JSON.stringify(brackets);
+                  tournament
+                    .save({
+                      brackets: brackets
+                    })
+                    .then(function(e) {
+                      console.log('brackets updated');
+                    })
+                    .catch(function(err) {
+                      console.log(err);
+                    });
+
+                  for (let i = brackets_round.length - 1; i >= 0; i--) {
+                    const team_set = brackets_round[i];
+                    // console.log('---- -- - - - -----');
+                    // console.log(team_set);
+                    const team_1 = team_set[0] ? team_set[0] : null;
+                    const team_2 = team_set[1] ? team_set[1] : null;
+
+                    createMatch(
+                      team_1,
+                      team_2,
+                      team_set[0] ? teams_obj['team_' + team_1] : null,
+                      team_set[1] ? teams_obj['team_' + team_2] : null,
+                      tournament.id,
+                      brackets.rounds_calculated,
+                      tournament.starts_at
+                    );
+                  }
+                });
+            })
+            .catch(function(err) {
+              console.log(err);
+            });
+
+          if (val.result == 'team_1' || val.result == 'team_2') {
+            let win_team_members;
+            let loose_team_members;
+
+            if (val.result == 'team_1') {
+              win_team_members = match.get('team_1_players');
+              loose_team_members = match.get('team_2_players');
+            } else {
+              win_team_members = match.get('team_2_players');
+              loose_team_members = match.get('team_1_players');
+            }
+
+            // console.log('winers are ', win_team_members);
+            // console.log('lossers are ', loose_team_members);
+
+            // win_team_members = win_team_members.split('|');
+            // loose_team_members = loose_team_members.split('|');
+
+            // const award_team_id =
+            //   val.result == 'team_1'
+            //     ? tmp_match.team_1_id
+            //     : tmp_match.team_2_id;
+            // const loose_team_id =
+            //   val.result == 'team_1'
+            //     ? tmp_match.team_2_id
+            //     : tmp_match.team_1_id;
+            // console.log('giving xp now');
+            // giveXPtoTeam(award_team_id, win_team_members, tmp_match.id);
+            // takeXPfromTeam(loose_team_id, loose_team_members, tmp_match.id);
+            // if (tmp_match.match_type == 'paid') {
+            //   console.log('paid match giving xp');
+            //   giveMoneyBackToTeam(
+            //     award_team_id,
+            //     tmp_match.match_fee,
+            //     win_team_members,
+            //     tmp_match.id
+            //   );
+            // }
+            // console.log('score resotlo');
+            // addScoreForTeam(
+            //   tmp_match.game_id,
+            //   tmp_match.ladder_id,
+            //   'wins',
+            //   win_team_members
+            // );
+            // addScoreForTeam(
+            //   tmp_match.game_id,
+            //   tmp_match.ladder_id,
+            //   'loss',
+            //   loose_team_members
+            // );
+          }
+        })
+        .catch(function(err) {
+          console.log('1');
+          console.log(err);
+          res.status(400).send({
+            ok: false,
+            msg: 'Failed to Save Score'
+          });
+        });
+    })
+    .catch(function(err) {
+      console.log('2');
+      console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed to Save Score'
+      });
+    });
+};
+
 const takeMoneyFromTeam = function(team_id, input_val, team_members, match_id) {
   for (let i = team_members.length - 1; i >= 0; i--) {
     takeMoneyFromMember(parseInt(team_members[i]), input_val, match_id);
@@ -139,11 +349,6 @@ const getBracket = function(participants) {
   const rounds = Math.ceil(Math.log(participantsCount) / Math.log(2));
   const bracketSize = Math.pow(2, rounds);
   const requiredByes = bracketSize - participantsCount;
-
-  // console.log('Number of participants: {0}'.format(participantsCount));
-  // console.log('Number of rounds: {0}'.format(rounds));
-  // console.log('Bracket size: {0}'.format(bracketSize));
-  // console.log('Required number of byes: {0}'.format(requiredByes));
 
   if (participantsCount < 2) {
     return [[], rounds, bracketSize, requiredByes];
@@ -242,20 +447,14 @@ const createRoundMatches = function(match) {
     team_1 = teams[team_1 - 1];
     team_2 = teams[team_2 - 1];
 
-    // console.log(
-    //   team_1,
-    //   team_2,
-    //   teams_obj['team_' + team_1],
-    //   teams_obj['team_' + team_2]
-    // );
-
     createMatch(
       team_1,
       team_2,
       team_set[0] ? teams_obj['team_' + team_1] : null,
       team_set[1] ? teams_obj['team_' + team_2] : null,
       match.id,
-      1
+      1,
+      match.get('starts_at')
     );
   }
 };

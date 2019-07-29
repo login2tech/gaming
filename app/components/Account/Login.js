@@ -50,11 +50,11 @@ class Login extends React.Component {
                   <form onSubmit={this.handleLogin.bind(this)}>
                     <div className="form-group col-md-12">
                       <input
-                        type="email"
+                        type="text"
                         id="email"
                         className="form-control"
                         required=""
-                        placeholder="Enter Email"
+                        placeholder="Enter Email / Username"
                         name="email"
                         value={this.state.email}
                         onChange={this.handleChange.bind(this)}

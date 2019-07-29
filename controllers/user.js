@@ -2,8 +2,6 @@ const async = require('async');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
-// const request = require('request');
-// const qs = require('querystring');
 const User = require('../models/User');
 const UserFollower = require('../models/UserFollower');
 const mailer = require('./mailer');
@@ -53,15 +51,11 @@ exports.isAdmin = function(req, res, next) {
     res.status(401).send({msg: 'Unauthorized Access'});
   }
 };
-/**
- * POST /login
- * Sign in with email and password
- */
+
+
 exports.loginPost = function(req, res, next) {
-  req.assert('email', 'Email is not valid').isEmail();
   req.assert('email', 'Email cannot be blank').notEmpty();
   req.assert('password', 'Password cannot be blank').notEmpty();
-  req.sanitize('email').normalizeEmail({remove_dots: false});
 
   const errors = req.validationErrors();
 
@@ -69,7 +63,11 @@ exports.loginPost = function(req, res, next) {
     return res.status(400).send(errors);
   }
 
-  new User({email: req.body.email})
+  new User()
+    .query({
+      where: {email: req.body.email},
+      orWhere: {username: req.body.email}
+    })
     .fetch()
     .then(function(user) {
       if (!user) {

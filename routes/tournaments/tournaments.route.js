@@ -16,3 +16,4 @@ routes.post('/join', u_ctrl.ensureAuthenticated, ctrl.join);
 
 
 routes.get('/t_of_user', ctrl.t_of_user);
+routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);

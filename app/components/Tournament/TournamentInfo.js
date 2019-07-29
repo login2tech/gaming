@@ -2,7 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
-import {join_tournament} from '../../actions/tournament';
+import {join_tournament, saveScores} from '../../actions/tournament';
+
 // import {Bracket} from 'react-tournament-bracket';
 
 import Messages from '../Modules/Messages';
@@ -105,7 +106,7 @@ class TournamentInfo extends React.Component {
     let team_2_p = match.team_2_players;
 
     team_2_p = team_2_p.split('|');
-    if (team_1_p.indexOf('' + this.props.user.id) > -1) {
+    if (team_2_p.indexOf('' + this.props.user.id) > -1) {
       return match.team_2_id;
     }
     return false;
@@ -253,6 +254,10 @@ class TournamentInfo extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchTournament();
+  }
+
+  fetchTournament(skip){
     fetch('/api/tournaments/single/' + this.props.params.tournament_id)
       .then(res => res.json())
       .then(json => {
@@ -264,7 +269,11 @@ class TournamentInfo extends React.Component {
               users_data: json.users_data ? json.users_data : {}
             },
             () => {
-              this.fetchTeams();
+              if(skip){
+                //
+              }else{
+                this.fetchTeams();
+              }
             }
           );
         }
@@ -278,27 +287,30 @@ class TournamentInfo extends React.Component {
     return '/login';
   }
 
-  saveScore() {
-    // // const scrore = '';
-    // const val = {};
-    // const me = this.props.user.id;
-    // if (
-    //   me == this.state.tournament.team_1_info.team_creator &&
-    //   !this.state.tournament.team_1_result
-    // ) {
-    //   val.team_1_result =
-    //     '' + this.state.my_score + '-' + this.state.their_score;
-    // }
-    // if (
-    //   me == this.state.tournament.team_2_info.team_creator &&
-    //   !this.state.tournament.team_2_result
-    // ) {
-    //   val.team_2_result =
-    //     '' + this.state.their_score + '-' + this.state.my_score;
-    // }
-    // val.id = this.state.tournament.id;
-    // // console.log(val);
-    // this.props.dispatch(saveScores(val, this.props.user));
+  submitScore(match_id, s_no) {
+
+
+    let score_1 = this.state['match_'+match_id+'_'+s_no+'_team_1_score'];
+    let score_2 = this.state['match_'+match_id+'_'+s_no+'_team_2_score'];
+
+    let submitter = s_no;
+    
+    const val = {};
+    
+    if(submitter == 1)
+    {
+      val.team_1_result = '' + score_1 + '-' + score_2;
+    }
+    else if(submitter == 2)
+    {
+      val.team_2_result = '' + score_1 + '-' + score_2;
+    }
+
+    val.id = match_id;
+    this.props.dispatch(saveScores(val, this.props.user, ()=>{
+      this.fetchTournament(true);
+    }));
+
   }
 
   showJoin() {
@@ -845,6 +857,35 @@ class TournamentInfo extends React.Component {
     );
   }
 
+   dynamicStatus_match(match) {
+    if (!match.team_2_id) {
+      return 'Expired';
+    }
+    if (!match.team_1_result && !match.team_2_result) {
+      return 'Pending Results';
+    }
+    if (!match.team_1_result || !match.team_2_result) {
+      return 'Pending Results Confirmation';
+    }
+    if (match.team_1_result != match.team_2_result) {
+      return 'Disputed';
+    }
+
+    let result;
+
+    if (match.result == 'tie') {
+      result = 'Tie';
+    } else {
+      if (match.result == 'team_1') {
+        result = 'Team 1 Wins';
+      } else {
+        result = 'Team 2 Wins';
+      }
+    }
+
+    return 'Complete - ' + result;
+  }
+
   renderMatch() {
     return (
       <div className="col-md-12">
@@ -858,6 +899,7 @@ class TournamentInfo extends React.Component {
                 <th>Opponent</th>
                 <th>Result</th>
                 <th>Date</th>
+                <th>Status</th>
                 <th>Info</th>
               </tr>
             </thead>
@@ -869,25 +911,28 @@ class TournamentInfo extends React.Component {
                 const teams = this.getTeams(match);
 
                 const my_team_id = this.am_i_in_match(match);
-                console.log(my_team_id);
-                // const my_result_1 = my_team_id && my_team_id== teams[0].id ? team_1_result : false;
-                // const my_result_2 = my_team_id && my_team_id== teams[0].id ? team_2_result : false;
+                
                 return (
                   <tr key={match.id}>
                     <td>#{match.id}</td>
                     <td>{teams[0].title}</td>
                     <td>{teams[1].title}</td>
                     <td>{match.result ? match.result : 'Results Pending'}</td>
-                    {/* <td>{''}</td> */}
-                    <td>{moment(match.created_at).format('lll')}</td>
+                    
+                    <td>{moment(match.created_at).format('lll')} </td>
+                    <td>{moment().isAfter(moment(match.starts_at))
+                            ? this.dynamicStatus_match(match)
+                            : this.state.match.status}</td>
                     <td>
+                      
                       {my_team_id && my_team_id == teams[0].id ? (
-                        match.team_1_result ? (
-                          match.team_1_result
-                        ) : (
+                        match.team_1_result ? 
+                          ('Your team submitted ' + match.team_1_result )
+                          : (
                           <form
-                            onSubmit={() => {
-                              this.submitScore(match.id);
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              this.submitScore(match.id, 1);
                             }}
                           >
                             <div className="">
@@ -942,12 +987,11 @@ class TournamentInfo extends React.Component {
                       )}
 
                       {my_team_id && my_team_id == teams[1].id ? (
-                        match.team_2_result ? (
-                          match.team_2_result
-                        ) : (
+                        match.team_2_result ? ('Your team submitted ' + match.team_2_result ) : (
                           <form
-                            onSubmit={() => {
-                              this.submitScore(match.id);
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              this.submitScore(match.id, 2);
                             }}
                           >
                             <div className="">

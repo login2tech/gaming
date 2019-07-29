@@ -70,7 +70,12 @@
 
             <div class="form-group">
               <label>Total number of Teams</label>
-              <input type="number" ng-model="item.total_teams" required placeholder="Total Number of Teams" class="form-control">
+              <select ng-model="item.total_teams" required placeholder="Total Number of Teams" class="form-control">
+                <option value="">Select</option>
+                <option value="4">4 Teams</option>
+                <option value="4">8 Teams</option>
+                <option value="4">16 Teams</option>
+              </select>
             </div>
             <div class="form-group">
               <label>Entry Fee (credits)</label>

@@ -60,12 +60,12 @@ export function join_tournament(data, user) {
   };
 }
 
-export function saveScores(data, user) {
+export function saveScores(data, user, cb) {
   return dispatch => {
     dispatch({
       type: 'CLEAR_MESSAGES'
     });
-    return fetch('/api/matches/saveScore', {
+    return fetch('/api/tournaments/saveScore', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
@@ -76,7 +76,7 @@ export function saveScores(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/m/' + json.match.id;
+          cb && cb();
         });
       } else {
         return response.json().then(json => {
