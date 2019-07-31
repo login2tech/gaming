@@ -676,14 +676,25 @@ exports.matches_of_user = function(req, res, next) {
 
 exports.listupcoming = function(req, res, next) {
   new Item()
-    .orderBy('created_at', 'DESC')
+    .orderBy('game_id', 'DESC')
+    // .orderBy('created_at', 'DESC')
     .where('starts_at', '>', moment())
     .fetchAll({withRelated: ['ladder', 'game', 'team_1_info']})
     .then(function(item) {
       if (!item) {
         return res.status(200).send({ok: true, items: []});
       }
-      return res.status(200).send({ok: true, items: item.toJSON()});
+      item = item.toJSON() ;
+
+      let games_obj =  {};
+      for (var i = item.length - 1; i >= 0; i--) {
+        if(!games_obj['game_'+item[i].game_id])
+          games_obj['game_'+item[i].game_id] = [];
+        games_obj['game_'+item[i].game_id].push(item[i]);
+      }
+
+
+      return res.status(200).send({ok: true, items: games_obj});
     })
     .catch(function(err) {
       console.log(err);
