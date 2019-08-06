@@ -4296,6 +4296,9 @@ ul.submenu {
     top: 99%;
     display: none;
 }
+.has_search_form ul.submenu {
+    right: -100px;
+}
 
 li.has_children_m a {
     cursor: pointer;

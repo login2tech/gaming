@@ -133,7 +133,7 @@ class Header extends React.Component {
                       <Link to="/support/tickets">Support</Link>
                     </li>
 
-                    <li className="has_children_m">
+                    <li className="has_children_m has_search_form">
                       <Link className="profile_menu_item">
                         <i className="fa fa-search" />
                       </Link>

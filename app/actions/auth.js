@@ -79,9 +79,9 @@ export function signup(data, cb) {
 export function logout() {
   cookie.remove('token');
   // browserHistory.push('/');
-  setTimeout(function(){
-    window.location.href='/';
-  })
+  setTimeout(function() {
+    window.location.href = '/';
+  }, 1000);
   return {
     type: 'LOGOUT_SUCCESS'
   };

@@ -13,6 +13,7 @@ class Signup extends React.Component {
       last_name: '',
       username: '',
       email: '',
+      email_confirm: '',
       day: '',
       month: '',
       year: '',
@@ -27,6 +28,23 @@ class Signup extends React.Component {
 
   handleSignup(event) {
     event.preventDefault();
+
+    if (this.state.email && this.state.email_confirm != this.state.email) {
+      this.props.dispatch({
+        type: 'FAILURE',
+        messages: [{msg: 'Email and confirm email do not match.'}]
+      });
+      const element = document.body;
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        });
+      }
+      return;
+    }
+
     this.props.dispatch(
       signup(
         {
@@ -45,7 +63,7 @@ class Signup extends React.Component {
           password_confirm: this.state.password_confirm
         },
         () => {
-          this.state = {
+          this.setState({
             first_name: '',
             last_name: '',
             username: '',
@@ -55,7 +73,7 @@ class Signup extends React.Component {
             year: '',
             password: '',
             password_confirm: ''
-          };
+          });
         }
       )
     );
@@ -143,6 +161,18 @@ class Signup extends React.Component {
                           id="email"
                           name="email"
                           value={this.state.email}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                      </div>
+                      <div className="form-group col-md-12">
+                        <input
+                          type="email_confirm"
+                          className="form-control"
+                          required=""
+                          placeholder="Confirm Email Address"
+                          id="email_confirm"
+                          name="email_confirm"
+                          value={this.state.email_confirm}
                           onChange={this.handleChange.bind(this)}
                         />
                       </div>
@@ -346,7 +376,7 @@ class Signup extends React.Component {
                           name="rememberme"
                           id="rememberme"
                           value="rememberme"
-                        />
+                        />{' '}
                         <label htmlFor="rememberme">
                           {' '}
                           I agree with{' '}
@@ -354,6 +384,23 @@ class Signup extends React.Component {
                         </label>
                       </div>
                     </div>
+
+                    <div className="form-group col-md-12">
+                      <div className="checkbox_field d-inline">
+                        <input
+                          required
+                          type="checkbox"
+                          name="age_check"
+                          id="age_check"
+                          value="age_check"
+                        />{' '}
+                        <label htmlFor="age_check">
+                          {' '}
+                          I am atleast 18 years of age or older.
+                        </label>
+                      </div>
+                    </div>
+
                     <div className="form-group col-md-12 text-center">
                       <button
                         className="btn btn-default btn-radius bttn_submit"
