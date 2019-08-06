@@ -4257,8 +4257,8 @@ ul.timeline li {
 }
 
 span.menu_prof_name_bot {
-    font-size: 8px;
-    line-height: 7px;
+    font-size: 12px;
+    line-height: 12px;
     border-top: 1px solid #2747f3;
     padding-top: 5px;
 }
@@ -4834,4 +4834,12 @@ div.trophy-info .trophy-name.gold {
 
 .container-brackets {
     min-height: 500px;
+}
+
+img.img-circle {
+    border-radius: 50%;
+}
+.image_avar img {
+    margin-right: 10px;
+    width: 50px;
 }

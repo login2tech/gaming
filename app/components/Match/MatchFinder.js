@@ -157,7 +157,7 @@ class MatchFinder extends React.Component {
                                         to={this.matchLink('/m/' + match.id)}
                                         className="btn-default"
                                       >
-                                        Join Match
+                                        Accept Match
                                       </Link>
                                     </div>
                                   </div>

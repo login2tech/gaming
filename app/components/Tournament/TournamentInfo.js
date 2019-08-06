@@ -1172,7 +1172,7 @@ class TournamentInfo extends React.Component {
                 type="submit"
                 disabled={!this.isEligible()}
                 className="btn btn-primary max-width-300"
-                value={'Join Match'}
+                value={'Join Tournament'}
               />
             </form>
           </div>

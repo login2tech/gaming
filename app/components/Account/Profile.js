@@ -24,12 +24,25 @@ class Profile extends React.Component {
       user_teams: [],
       renderTab: 'profile',
       match_played: [],
-      tournaments : [],
+      tournaments: [],
       new_post_type: 'text',
       new_post_image: '',
       new_post_video: '',
       posts_page: 1
     };
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.params.username != prevState.username) {
+      return {username: nextProps.params.username};
+    }
+    return null;
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.username != this.state.username) {
+      this.fetchUserInfo(true);
+    }
+    //
   }
 
   showFollowers(id) {
@@ -237,7 +250,8 @@ class Profile extends React.Component {
           this.setState(
             {
               is_loaded: true,
-              user_info: json.user_info
+              user_info: json.user_info,
+              username: this.props.params.username
             },
             () => {
               if (forward) {
@@ -289,7 +303,7 @@ class Profile extends React.Component {
               match_played: json.items
             },
             () => {
-              this.fetchTournaments()
+              this.fetchTournaments();
             }
           );
         }
@@ -305,11 +319,7 @@ class Profile extends React.Component {
     // }
     // team_array = team_array.join(',');
 
-    fetch(
-      '/api/tournaments/t_of_user?uid=' +
-        this.state.user_info.id 
-        
-    )
+    fetch('/api/tournaments/t_of_user?uid=' + this.state.user_info.id)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -405,8 +415,7 @@ class Profile extends React.Component {
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3>
-                    {this.state.user_info && this.state.user_info.first_name}{' '}
-                    {this.state.user_info && this.state.user_info.last_name}
+                    @{this.state.user_info && this.state.user_info.username}
                   </h3>
 
                   <div className="list_pad">
@@ -604,7 +613,12 @@ class Profile extends React.Component {
                     <div className="user-profile-header-data">
                       <div className="winnings-data">
                         <div>WINNINGS</div>{' '}
-                        <div>${this.state.user_info.lifetime_earning ? this.state.user_info.lifetime_earning : '0'}</div>
+                        <div>
+                          $
+                          {this.state.user_info.lifetime_earning
+                            ? this.state.user_info.lifetime_earning
+                            : '0'}
+                        </div>
                       </div>
                     </div>
                     <div className="user-profile-header-data">
@@ -799,9 +813,6 @@ class Profile extends React.Component {
                   </ul>
                 </div>
 
-                
-
-              
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
@@ -916,10 +927,15 @@ class Profile extends React.Component {
                         return (
                           <tr key={match.id}>
                             <td>{match.id}</td>
-                            <td>{match.game.title } - {match.ladder.title}</td>
+                            <td>
+                              {match.game.title} - {match.ladder.title}
+                            </td>
                             <td>{moment(match.starts_at).format('lll')}</td>
                             <td>{match.status}</td>
-                            <td> <Link to={'/t/' + match.id}>View Tournament</Link></td>
+                            <td>
+                              {' '}
+                              <Link to={'/t/' + match.id}>View Tournament</Link>
+                            </td>
                           </tr>
                         );
                       })}

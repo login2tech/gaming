@@ -1,5 +1,5 @@
-// import {closeModal, openModal} from '../../../actions/modals';
-// import {connect} from 'react-redux';
+import {closeModal} from '../../../actions/modals';
+import {connect} from 'react-redux';
 // import Messages from '../../Messages';
 import {Link} from 'react-router';
 
@@ -35,10 +35,28 @@ class Followers extends React.Component {
         <table>
           <tbody>
             {this.state.items.map((item, i) => {
+              const image_url =
+                item.follower && item.follower.profile_picture
+                  ? item.follower.profile_picture
+                  : 'https://ui-avatars.com/api/?size=30&name=' +
+                    (item.follower ? item.follower.first_name : ' ') +
+                    ' ' +
+                    (item.follower ? item.follower.last_name : ' ') +
+                    '&color=223cf3&background=000000';
+
               return (
                 <tr key={item.id}>
                   <td>
-                    <Link to={'/u/' + item.follower.username}>
+                    <Link
+                      className="image_avar"
+                      onClick={()=>{this.props.dispatch(
+                        closeModal({
+                          id: 'followers'
+                        })
+                      )}}
+                      to={item.follower ? '/u/' + item.follower.username : '#'}
+                    >
+                      <img className="img-circle " src={image_url} />@
                       {item.follower.username}
                     </Link>
                   </td>
@@ -47,13 +65,20 @@ class Followers extends React.Component {
             })}
           </tbody>
         </table>
-        {this.state.is_loaded &&
-          this.state.items.length < 1 && (
-            <div className="alert alert-warning">No Users in this list</div>
-          )}
+        {this.state.is_loaded && this.state.items.length < 1 && (
+          <div className="alert alert-warning">No Users in this list</div>
+        )}
       </div>
     );
   }
 }
 
-export default Followers;
+const mapStateToProps = state => {
+  return {
+    
+  };
+};
+
+export default connect(mapStateToProps)(Followers);
+
+ 
