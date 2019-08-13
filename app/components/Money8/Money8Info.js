@@ -11,7 +11,11 @@ class Money8Info extends React.Component {
     super(props);
     this.state = {
       title: '',
+
+
       match: {
+        team_1 : '',
+        team_2 : '',
         game: {},
         ladder: {}
       },
