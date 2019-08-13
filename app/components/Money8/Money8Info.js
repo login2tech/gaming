@@ -205,19 +205,20 @@ class Money8Info extends React.Component {
   }
 
   renderScoreSubmit() {
-    if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
-      return false;
-    }
-    if (!moment().isAfter(moment(this.state.match.starts_at))) {
-      return false;
-    }
-    const me = this.props.user.id;
-    if (
-      me != this.state.match.team_1_info.team_creator &&
-      this.state.match.team_2_info.team_creator != me
-    ) {
-      return false;
-    }
+    return (<div class="alert alert-danger">you are not allowed to submit scrore</div>);
+    // if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
+    //   return false;
+    // }
+    // if (!moment().isAfter(moment(this.state.match.starts_at))) {
+    //   return false;
+    // }
+    // const me = this.props.user.id;
+    // if (
+    //   me != this.state.match.team_1_info.team_creator &&
+    //   this.state.match.team_2_info.team_creator != me
+    // ) {
+    //   return false;
+    // }
 
     if (
       me == this.state.match.team_1_info.team_creator &&
@@ -320,7 +321,12 @@ class Money8Info extends React.Component {
 
     let team_1 = this.state.match.team_1.split('|');
     let team_2 = this.state.match.team_2.split('|');
+    return (
     <div className="content_box">
+
+     {this.renderScoreSubmit()}
+
+
       <h5 className="prizes_desclaimer">
         <i className="fa fa-users" aria-hidden="true" /> PLAYERS
       </h5>
@@ -425,6 +431,7 @@ class Money8Info extends React.Component {
         </tbody>
       </table>
     </div>
+    );
   }
 
   render() {
@@ -527,7 +534,7 @@ class Money8Info extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {/* {this.renderScoreSubmit()} */}
+                 
 
                 {this.state.match.players_joined <
                 this.state.match.players_total ? (
