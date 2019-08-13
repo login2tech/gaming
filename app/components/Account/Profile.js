@@ -119,7 +119,7 @@ class Profile extends React.Component {
     // }
   }
 
-  rank_min_based_on_xp(xp) {
+  rank_min_based_on_xp(xpo) {
     const year = moment().format('YYYY');
     const season = moment().format('Q');
     let xp = 0;
@@ -163,7 +163,7 @@ class Profile extends React.Component {
     // }
   }
 
-  rank_max_based_on_xp(xp) {
+  rank_max_based_on_xp(xpo) {
     const year = moment().format('YYYY');
     const season = moment().format('Q');
     let xp = 0;
@@ -204,7 +204,7 @@ class Profile extends React.Component {
     // }
   }
 
-  rank_percent_based_on_xp(xp) {
+  rank_percent_based_on_xp(xpo) {
     const year = moment().format('YYYY');
     const season = moment().format('Q');
     let xp = 0;

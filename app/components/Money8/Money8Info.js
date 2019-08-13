@@ -313,7 +313,114 @@ class Money8Info extends React.Component {
 
 
   renderStartedMatch(){
-    //
+
+    let team_1 = this.state.match.team_1.split('|');
+    let team_2 = this.state.match.team_2.split('|');
+    <div className="content_box">
+      <h5 className="prizes_desclaimer">
+        <i className="fa fa-users" aria-hidden="true" /> PLAYERS
+      </h5>
+      <br />
+
+      <h5 className="prizes_desclaimer">
+        <i className="fa fa-users" aria-hidden="true" /> Team 1
+      </h5>
+      <table className="table table-striped table-ongray table-hover">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Gamer Tag</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.match.players_obj &&
+            this.state.match.players_obj.map((team_user, i) => {
+              if(team_1.indexOf(''+team_user.user.id) > -1){
+              return (
+                <tr key={team_user.id}>
+                  <td>
+                    <Link
+                      target="_blank"
+                      to={'/u/' + team_user.username}
+                    >
+                      {team_user.username}
+                    </Link>
+                  </td>
+                  <td>
+                    {team_user[
+                      'gamer_tag_' +
+                        this.state.match.ladder.gamer_tag
+                    ] ? (
+                      team_user[
+                        'gamer_tag_' +
+                          this.state.match.ladder.gamer_tag
+                      ]
+                    ) : (
+                      <span className="text-danger">
+                        No Gamertag
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              );
+          }
+            else
+              return false;
+            })}
+        </tbody>
+      </table>
+
+
+      <br />
+
+      <h5 className="prizes_desclaimer">
+        <i className="fa fa-users" aria-hidden="true" /> Team 2
+      </h5>
+      <table className="table table-striped table-ongray table-hover">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Gamer Tag</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.match.players_obj &&
+            this.state.match.players_obj.map((team_user, i) => {
+              if(team_2.indexOf(''+team_user.user.id) > -1){
+              return (
+                <tr key={team_user.id}>
+                  <td>
+                    <Link
+                      target="_blank"
+                      to={'/u/' + team_user.username}
+                    >
+                      {team_user.username}
+                    </Link>
+                  </td>
+                  <td>
+                    {team_user[
+                      'gamer_tag_' +
+                        this.state.match.ladder.gamer_tag
+                    ] ? (
+                      team_user[
+                        'gamer_tag_' +
+                          this.state.match.ladder.gamer_tag
+                      ]
+                    ) : (
+                      <span className="text-danger">
+                        No Gamertag
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              );
+          }
+            else
+              return false;
+            })}
+        </tbody>
+      </table>
+    </div>
   }
 
   render() {
