@@ -446,8 +446,7 @@ class Profile extends React.Component {
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3>
-                    {this.state.user_info && this.state.user_info.first_name}{' '}
-                    {this.state.user_info && this.state.user_info.last_name}
+                    {this.state.user_info && this.state.user_info.username}
                   </h3>
 
                   <div className="list_pad">
