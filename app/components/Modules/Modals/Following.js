@@ -30,6 +30,13 @@ class Following extends React.Component {
   }
 
   render() {
+    if(!this.state.is_loaded)
+    {
+      return (
+        <div className="modal-body">
+        <span class='fa fa-spinner fa-spin spin' />
+        </div>)
+    }
     return (
       <div className="modal-body">
         <table>

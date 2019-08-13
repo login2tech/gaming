@@ -78,8 +78,11 @@ export function signup(data, cb) {
 
 export function logout() {
   cookie.remove('token');
+  cookie.remove('token');
+  cookie.remove('token');
   // browserHistory.push('/');
   setTimeout(function() {
+    cookie.remove('token');
     window.location.href = '/';
   }, 1000);
   return {

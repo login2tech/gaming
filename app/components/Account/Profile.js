@@ -22,6 +22,7 @@ class Profile extends React.Component {
         score: []
       },
       user_teams: [],
+      is_loaded: false,
       renderTab: 'profile',
       match_played: [],
       tournaments: [],
@@ -56,6 +57,7 @@ class Profile extends React.Component {
       })
     );
   }
+
   showFollowing(id) {
     this.props.dispatch(
       openModal({
@@ -82,34 +84,34 @@ class Profile extends React.Component {
       }
     }
     if (xp < 50) {
-      return 'Amatuer';
+      return 'Amatuer ('+xp+' XP)';
     }
     if (xp < 200) {
-      return 'Beginner';
+      return 'Beginner ('+xp+' XP)';
     }
     if (xp < 500) {
-      return 'Upcoming';
+      return 'Upcoming ('+xp+' XP)';
     }
     if (xp < 1000) {
-      return 'Bronze';
+      return 'Bronze ('+xp+' XP)';
     }
     if (xp < 1500) {
-      return 'Silver';
+      return 'Silver ('+xp+' XP)';
     }
     if (xp < 2000) {
-      return 'Gold';
+      return 'Gold ('+xp+' XP)';
     }
     if (xp < 3000) {
-      return 'Platinum';
+      return 'Platinum ('+xp+' XP)';
     }
     if (xp < 3500) {
-      return 'Diamond';
+      return 'Diamond ('+xp+' XP)';
     }
     if (xp < 4000) {
-      return 'Elite';
+      return 'Elite ('+xp+' XP)';
     }
     // if (xp >  5000) {
-    return 'Elite';
+    return 'Elite ('+xp+' XP)';
     // }
   }
 
@@ -441,7 +443,9 @@ class Profile extends React.Component {
                       <div className="col-md-3">
                         <span>
                           <a
-                            onClick={() => {
+                          href='#'
+                            onClick={(e) => {
+                              e.preventDefault();
                               this.showFollowing(this.state.user_info.id);
                             }}
                           >
@@ -450,7 +454,9 @@ class Profile extends React.Component {
                         </span>
                         <p>
                           <a
-                            onClick={() => {
+                          href='#'
+                            onClick={(e) => {
+                              e.preventDefault();
                               this.showFollowing(this.state.user_info.id);
                             }}
                           >
@@ -503,35 +509,41 @@ class Profile extends React.Component {
                       </div>*/}
                     </div>
                   </div>
-
-                  <div className="float-right rank_box_wrap">
-                    rank : {this.rank_based_on_xp(this.state.user_info.xp_obj)}
-                    <div className="rank_box_prog_outer">
-                      <div className="rank_box_prog">
-                        <span
-                          className="rank_prog_done"
-                          style={{
-                            width:
-                              '' +
-                              this.rank_percent_based_on_xp(
-                                this.state.user_info.life_xp
-                              ) +
-                              '%'
-                          }}
-                        />
+                  {this.state.is_loaded ? (
+                    <div className="float-right rank_box_wrap">
+                      rank :{' '}
+                      {this.rank_based_on_xp(this.state.user_info.xp_obj)}
+                      <div className="rank_box_prog_outer">
+                        <div className="rank_box_prog">
+                          <span
+                            className="rank_prog_done"
+                            style={{
+                              width:
+                                '' +
+                                this.rank_percent_based_on_xp(
+                                  this.state.user_info.life_xp
+                                ) +
+                                '%'
+                            }}
+                          />
+                        </div>
+                        <span>
+                          {this.rank_min_based_on_xp(
+                            this.state.user_info.life_xp
+                          )}
+                        </span>
+                        <span>
+                          {this.rank_max_based_on_xp(
+                            this.state.user_info.life_xp
+                          )}
+                        </span>
                       </div>
-                      <span>
-                        {this.rank_min_based_on_xp(
-                          this.state.user_info.life_xp
-                        )}
-                      </span>
-                      <span>
-                        {this.rank_max_based_on_xp(
-                          this.state.user_info.life_xp
-                        )}
-                      </span>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="float-right rank_box_wrap">
+                      <span className="fa fa-spinner fa-spin" />
+                    </div>
+                  )}
                 </div>
                 {this.props.user &&
                 this.state.is_loaded &&
@@ -593,6 +605,9 @@ class Profile extends React.Component {
 
         <section className="contet_part single_match_details">
           <div className="container">
+          {this.state.is_loaded ? (
+
+
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="content_box">
@@ -697,7 +712,35 @@ class Profile extends React.Component {
 
                   <div className="user-profile-trophies-wrapper">
                     <div className="user-profile-trophies-container">
-                      {this.state.user_info.score.map((xp, i) => {
+                      
+                      <div className="single-trophy-container">
+                        <div className="trophy-image">
+                          <img src="/images/shield-gold.png" />
+                        </div>
+                        <div className="trophy-info">
+                          <Link to={'/records/season'} className="trophy-name gold">
+                            Seasonal Records
+
+                          </Link>
+                           
+                        </div>
+                      </div>
+
+                         <div className="single-trophy-container">
+                        <div className="trophy-image">
+                          <img src="/images/shield-gold.png" />
+                        </div>
+                        <div className="trophy-info">
+                          <Link to={'/records/life'} className="trophy-name gold">
+                            Life Records
+
+                          </Link>
+                           
+                        </div>
+                          </div>
+
+                         
+                      {/*this.state.user_info.score.map((xp, i) => {
                         return (
                           <div className="single-trophy-container" key={xp.id}>
                             <div className="trophy-image">
@@ -715,7 +758,7 @@ class Profile extends React.Component {
                             </div>
                           </div>
                         );
-                      })}
+                      })*/}
                     </div>
                   </div>
                 </div>
@@ -944,6 +987,7 @@ class Profile extends React.Component {
                 </div>
               </div>
             </div>
+            ):  <span className="fa fa-spinner fa-spin" />}
           </div>
         </section>
       </div>

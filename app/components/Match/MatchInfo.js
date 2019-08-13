@@ -18,7 +18,7 @@ class MatchInfo extends React.Component {
         team_2_info: {team_users: []}
       },
       ladder: '',
-      using_users : [],
+      using_users: [],
       games: [],
       my_score: '',
       their_score: ''
@@ -37,7 +37,7 @@ class MatchInfo extends React.Component {
         {
           team_2_id: this.state.team_selected.id,
           match_id: this.state.match.id,
-          using_users : this.state.using_users
+          using_users: this.state.using_users
         },
         this.props.user
       )
@@ -51,9 +51,11 @@ class MatchInfo extends React.Component {
     if (this.state.match.match_type == '' || this.state.match.starts_at == '') {
       return false;
     }
-   
+
     // console.log(this.state.match.match_players, this.state.using_users.length)
-    if(parseInt(this.state.match.match_players) > this.state.using_users.length){
+    if (
+      parseInt(this.state.match.match_players) > this.state.using_users.length
+    ) {
       return false;
     }
 
@@ -70,11 +72,14 @@ class MatchInfo extends React.Component {
 
     const amount = parseFloat(this.state.match.match_fee);
     for (let i = 0; i < this.state.team_selected.team_users.length; i++) {
-       if(this.state.using_users.indexOf( this.state.team_selected.team_users[i].user_info.id )  <= -1)
-        {
-          // this user is not playing, no need to check it's eligibility; 
-          continue;
-        }
+      if (
+        this.state.using_users.indexOf(
+          this.state.team_selected.team_users[i].user_info.id
+        ) <= -1
+      ) {
+        // this user is not playing, no need to check it's eligibility;
+        continue;
+      }
       if (
         parseFloat(
           this.state.team_selected.team_users[i].user_info.cash_balance
@@ -86,12 +91,11 @@ class MatchInfo extends React.Component {
     return true;
   }
 
-  amIEligibleFlag(team_u)
-  {
+  amIEligibleFlag(team_u) {
     if (this.state.match.match_type == '') {
       return false;
     }
-     const gamer_tag = this.state.match.ladder.gamer_tag;
+    const gamer_tag = this.state.match.ladder.gamer_tag;
     if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
       return false;
     }
@@ -99,7 +103,7 @@ class MatchInfo extends React.Component {
       return false;
     }
     const amount = parseFloat(this.state.match.match_fee);
-  
+
     if (this.state.match.match_type == 'free') {
       return true;
     }
@@ -411,8 +415,14 @@ class MatchInfo extends React.Component {
           }
         : {};
 
-      let team_1_players = this.state.match && this.state.match.team_1_players ? this.state.match.team_1_players.split('|') : [];
-      let team_2_players = this.state.match && this.state.match.team_2_players ? this.state.match.team_2_players.split('|') : [];
+    const team_1_players =
+      this.state.match && this.state.match.team_1_players
+        ? this.state.match.team_1_players.split('|')
+        : [];
+    const team_2_players =
+      this.state.match && this.state.match.team_2_players
+        ? this.state.match.team_2_players.split('|')
+        : [];
     return (
       <div>
         <section className="page_title_bar" style={divStyle}>
@@ -449,7 +459,10 @@ class MatchInfo extends React.Component {
                     {moment(this.state.match.starts_at).format('lll')} ({' '}
                     {moment(this.state.match.starts_at).fromNow()} )
                   </div>
-                  <div className="twovstwo">{this.state.match.match_players} VS {this.state.match.match_players} MATCH</div>
+                  <div className="twovstwo">
+                    {this.state.match.match_players} VS{' '}
+                    {this.state.match.match_players} MATCH
+                  </div>
                   {/* <div className="rules_point">
                     <ul>
                       <li>
@@ -560,8 +573,26 @@ class MatchInfo extends React.Component {
 
                   <h6 className="prizes_desclaimer">
                     {this.state.match.team_1_info.title}
+                    {this.state.match.status == 'complete' &&
+                    this.state.match.result == 'team_1' ? (
+                      <span>
+                        {' '}
+                        - <span className="text text-success">W</span>
+                      </span>
+                    ) : (
+                      false
+                    )}
+                    {this.state.match.status == 'complete' &&
+                    this.state.match.result == 'team_2' ? (
+                      <span>
+                        {' '}
+                        - <span className="text text-danger">L</span>
+                      </span>
+                    ) : (
+                      false
+                    )}
                   </h6>
-                  
+
                   <table className="table table-striped table-ongray table-hover">
                     <thead>
                       <tr>
@@ -573,8 +604,13 @@ class MatchInfo extends React.Component {
                     <tbody>
                       {this.state.match.team_1_info.team_users.map(
                         (team_user, i) => {
-                          if(team_1_players.indexOf(""+team_user.user_info.id) < 0)
+                          if (
+                            team_1_players.indexOf(
+                              '' + team_user.user_info.id
+                            ) < 0
+                          ) {
                             return false;
+                          }
                           return (
                             <tr key={team_user.id}>
                               <td>
@@ -618,7 +654,25 @@ class MatchInfo extends React.Component {
                   {this.state.match.team_2_id ? (
                     <div>
                       <h6 className="prizes_desclaimer">
-                        {this.state.match.team_2_info.title}
+                        {this.state.match.team_2_info.title}{' '}
+                        {this.state.match.status == 'complete' &&
+                        this.state.match.result == 'team_2' ? (
+                          <span>
+                            {' '}
+                            - <span className="text text-success">W</span>
+                          </span>
+                        ) : (
+                          false
+                        )}
+                        {this.state.match.status == 'complete' &&
+                        this.state.match.result == 'team_1' ? (
+                          <span>
+                            {' '}
+                            - <span className="text text-danger">L</span>
+                          </span>
+                        ) : (
+                          false
+                        )}
                       </h6>
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
@@ -631,8 +685,13 @@ class MatchInfo extends React.Component {
                         <tbody>
                           {this.state.match.team_2_info.team_users.map(
                             (team_user, i) => {
-                               if(team_2_players.indexOf(""+team_user.user_info.id) < 0)
-                            return false;
+                              if (
+                                team_2_players.indexOf(
+                                  '' + team_user.user_info.id
+                                ) < 0
+                              ) {
+                                return false;
+                              }
                               return (
                                 <tr key={team_user.id}>
                                   <td>
@@ -727,23 +786,45 @@ class MatchInfo extends React.Component {
                                       ? 'Leader'
                                       : 'Member'}
                                   </td>
-                                  <td>{this.amIEligible(team_user)}</td><td>
-                                  <label><input disabled={!this.amIEligibleFlag(team_user)} type="checkbox" checked={
-                                      this.state.using_users.indexOf(team_user.user_info.id)  > -1
-                                    } onChange={()=>{
-                                      let using_users = this.state.using_users;
-                                      if(using_users.indexOf(team_user.user_info.id) > -1)
-                                      {
-                                        using_users.splice(using_users.indexOf(team_user.user_info.id) , 1);
-
-                                      }else{
-                                        using_users.push(team_user.user_info.id);
-                                      }
-                                      this.setState({
-                                        using_users :using_users
-                                      })
-                                    }} />
-                                    </label></td>
+                                  <td>{this.amIEligible(team_user)}</td>
+                                  <td>
+                                    <label>
+                                      <input
+                                        disabled={
+                                          !this.amIEligibleFlag(team_user)
+                                        }
+                                        type="checkbox"
+                                        checked={
+                                          this.state.using_users.indexOf(
+                                            team_user.user_info.id
+                                          ) > -1
+                                        }
+                                        onChange={() => {
+                                          const using_users = this.state
+                                            .using_users;
+                                          if (
+                                            using_users.indexOf(
+                                              team_user.user_info.id
+                                            ) > -1
+                                          ) {
+                                            using_users.splice(
+                                              using_users.indexOf(
+                                                team_user.user_info.id
+                                              ),
+                                              1
+                                            );
+                                          } else {
+                                            using_users.push(
+                                              team_user.user_info.id
+                                            );
+                                          }
+                                          this.setState({
+                                            using_users: using_users
+                                          });
+                                        }}
+                                      />
+                                    </label>
+                                  </td>
                                 </tr>
                               );
                             }
@@ -763,7 +844,9 @@ class MatchInfo extends React.Component {
                         type="submit"
                         // disable={!this.isEligible.bind(this)}
                         className="btn btn-primary max-width-300"
-                        >Accept Match</button>
+                      >
+                        Accept Match
+                      </button>
                     </form>
                   </div>
                 ) : (

@@ -5,6 +5,7 @@ const moment = require('moment');
 const User = require('../models/User');
 const UserFollower = require('../models/UserFollower');
 const mailer = require('./mailer');
+const Notif = require('../models/Notification');
 
 function generateToken(user) {
   const payload = {
@@ -504,7 +505,19 @@ exports.addFollower = function(req, res, next) {
           user_id: follow_to
         })
           .save()
-          .then(function(uf) {})
+          .then(function(uf) {
+            new Notif()
+              .save({
+                user_id: follow_to,
+                description: 'You have a new follower',
+                type: 'follower',
+                object_id: 1
+              })
+              .then(function() {})
+              .catch(function(er) {
+                console.log(er);
+              });
+          })
           .catch(function(err) {
             // console.log(err);
           });

@@ -119,8 +119,9 @@ class Signup extends React.Component {
                       <div className="form-group col-md-6 ">
                         <input
                           type="text"
+                           
                           className="form-control"
-                          required=""
+                          required
                           placeholder="Enter First Name"
                           id="first_name"
                           name="first_name"
@@ -131,8 +132,9 @@ class Signup extends React.Component {
                       <div className="form-group col-md-6 ">
                         <input
                           type="text"
+                           
                           className="form-control"
-                          required=""
+                          required
                           placeholder="Enter Last Name"
                           id="last_name"
                           name="last_name"
@@ -143,8 +145,9 @@ class Signup extends React.Component {
                       <div className="form-group col-md-12">
                         <input
                           type="text"
+                           
                           className="form-control"
-                          required=""
+                          required
                           placeholder="Enter your username"
                           id="username"
                           name="username"
@@ -155,8 +158,9 @@ class Signup extends React.Component {
                       <div className="form-group col-md-12">
                         <input
                           type="email"
+                           
                           className="form-control"
-                          required=""
+                          required
                           placeholder="Enter Email Address"
                           id="email"
                           name="email"
@@ -166,9 +170,10 @@ class Signup extends React.Component {
                       </div>
                       <div className="form-group col-md-12">
                         <input
-                          type="email_confirm"
+                          type="email"
+                          required
                           className="form-control"
-                          required=""
+                           
                           placeholder="Confirm Email Address"
                           id="email_confirm"
                           name="email_confirm"
@@ -188,7 +193,7 @@ class Signup extends React.Component {
                                 value={this.state.month}
                                 onChange={this.handleChange.bind(this)}
                               >
-                                <option value="" selected="" disabled="">
+                                <option value="">
                                   Birth Month
                                 </option>
                                 <option value="1">January</option>
@@ -217,7 +222,7 @@ class Signup extends React.Component {
                                 onChange={this.handleChange.bind(this)}
                               >
                                 >
-                                <option value="" selected="" disabled="">
+                                <option value="">
                                   Birth Day
                                 </option>
                                 <option value="1">1</option>
@@ -265,7 +270,7 @@ class Signup extends React.Component {
                                 onChange={this.handleChange.bind(this)}
                               >
                                 >
-                                <option value="" selected="" disabled="">
+                                <option value="">
                                   Birth Year
                                 </option>
                                 <option value="2019">2019</option>
@@ -347,7 +352,7 @@ class Signup extends React.Component {
                         <input
                           type="password"
                           className="form-control"
-                          required=""
+                          required
                           placeholder="Enter Password"
                           name="password"
                           id="password"
@@ -359,7 +364,7 @@ class Signup extends React.Component {
                         <input
                           type="password"
                           className="form-control"
-                          required=""
+                          required
                           placeholder="Confirm Password"
                           name="password_confirm"
                           id="password_confirm"

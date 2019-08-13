@@ -47,6 +47,8 @@ class Header extends React.Component {
   }
 
   fetchNotifications() {
+    if(!this.props.user)
+      return;
     fetch('/notifs/listMine')
       .then(res => res.json())
       .then(json => {
@@ -141,6 +143,7 @@ class Header extends React.Component {
                         <li>
                           <input
                             type="text"
+                            autoFocus
                             className="dark_text form-control"
                             placeholder={'Search here...'}
                             value={this.state.searchString}
@@ -167,6 +170,10 @@ class Header extends React.Component {
                           <li key={5} className="has_children_m">
                             <Link className="profile_menu_item">
                               <i className="fa fa-bell" />
+                              {
+                                this.state.notifications && this.state.notifications.length ? (
+                                  <span className='dot notif_dot' >{this.state.notifications.length}</span>):false
+                              }
                             </Link>
                             <ul className="submenu notification_list">
                               {this.state.notifications.map((notif, i) => {
@@ -176,17 +183,26 @@ class Header extends React.Component {
                                   lnk = '/money8/' + notif.object_id;
                                 } else if (notif.type == 'match') {
                                   lnk = '/m/' + notif.object_id;
+                                } else if(notif.type =='team_invite')
+                                {
+                                  lnk = '/teams/view/'+notif.object_id;
+                                }else if(notif.type == 'post')
+                                {
+                                  // post
+                                }else if(notif.type =='follower')
+                                {
+                                  //follower
                                 }
 
                                 return (
                                   <li key={notif.id}>
-                                    <Link to={lnk}>{notif.description}</Link>
+                                    <Link to={lnk}>{notif.description}</Link> <button style={{display:'none'}} class='btn removeNotif'><span class="text-danger fa fa-times" /></button>
                                   </li>
                                 );
                               })}
-                              <li >
-                                    <Link to={'/notifications'}>See all notifications</Link>
-                                  </li>
+                              <li>
+                                <Link style={{fontWeight:'bold'}} to={'/notifications'}>See all notifications</Link>
+                              </li>
                             </ul>
                           </li>,
 

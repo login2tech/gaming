@@ -64,11 +64,20 @@ class Notifications extends React.Component {
                 <ul className="  notification_list_main">
                   {this.state.notifications.map((notif, i) => {
                     let lnk = '';
-                    if (notif.type == 'money-8') {
-                      lnk = '/money8/' + notif.object_id;
-                    } else if (notif.type == 'match') {
-                      lnk = '/m/' + notif.object_id;
-                    }
+                     if (notif.type == 'money-8') {
+                        lnk = '/money8/' + notif.object_id;
+                      } else if (notif.type == 'match') {
+                        lnk = '/m/' + notif.object_id;
+                      } else if(notif.type =='team_invite')
+                      {
+                        lnk = '/teams/view/'+notif.object_id;
+                      }else if(notif.type == 'post')
+                      {
+                        // post
+                      }else if(notif.type =='follower')
+                      {
+                        //follower
+                      }
 
                     return (
                       <li key={notif.id}>

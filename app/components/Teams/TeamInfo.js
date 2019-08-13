@@ -119,7 +119,7 @@ class TeamInfo extends React.Component {
               match_played: json.items ? json.items : []
             },
             () => {
-              this.fetchMatches();
+              // this.fetchMatches();
             }
           );
         }
@@ -197,10 +197,10 @@ class TeamInfo extends React.Component {
           backgroundImage: "url('" + this.state.new_cover_pic + "')"
         }
       : this.state.team_info && this.state.team_info.cover_picture
-        ? {
-            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
-          }
-        : {};
+      ? {
+          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
+        }
+      : {};
 
     return (
       <div>
@@ -340,6 +340,8 @@ class TeamInfo extends React.Component {
                         {this.state.is_edit_mode && <th>{'remove'}</th>}
                         <th>Username</th>
                         <th>Role</th>
+                        <th>Gamer Tag</th>
+                        <th>Eligible</th>
                         <th>Date Joined</th>
                       </tr>
                     </thead>
@@ -369,9 +371,44 @@ class TeamInfo extends React.Component {
                                 : 'Member'}
                             </td>
                             <td>
+                              {this.state.team_info &&
+                              this.state.team_info.ladder &&
+                              this.state.team_info.ladder.gamer_tag
+                                ? team_user.user_info[
+                                    'gamer_tag_' +
+                                      this.state.team_info.ladder.gamer_tag
+                                  ]
+                                : ''}
+                            </td>
+                            <td>
+                              {this.state.team_info &&
+                              this.state.team_info.ladder &&
+                              this.state.team_info.ladder.gamer_tag &&
+                              team_user.user_info[
+                                'gamer_tag_' +
+                                  this.state.team_info.ladder.gamer_tag
+                              ] ? (
+                                <span className="text-success">
+                                  <img
+                                    className="icon_size"
+                                    src="/images/controller-green.svg"
+                                  />{' '}
+                                  Eligible
+                                </span>
+                              ) : (
+                                <span className="text-danger">
+                                  <img
+                                    className="icon_size"
+                                    src="/images/controller-red.svg"
+                                  />{' '}
+                                  Not Eligible
+                                </span>
+                              )}
+                            </td>
+                            <td>
                               {team_user.accepted
                                 ? moment(team_user.created_at).format('lll')
-                                : 'Not Yet'}{' '}
+                                : 'Not Yet Accepted'}{' '}
                               {!team_user.accepted &&
                               team_user.user_id == this.props.user.id ? (
                                 <button
@@ -397,7 +434,7 @@ class TeamInfo extends React.Component {
                     </button>
                   )}
                 </div>
-                
+
                 {this.state.team_info.team_creator == this.props.user.id &&
                 parseInt(this.state.team_info.ladder.max_players) >
                   parseInt(this.state.team_info.team_users.length) ? (

@@ -4846,3 +4846,33 @@ img.img-circle {
     margin-right: 10px;
     width: 50px;
 }
+span.dot.notif_dot {
+    /*position: absolute;
+    width: 5px;
+    height: 5px;
+    background: red;
+    border-radius: 6px;*/
+        position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid red;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 9px;
+    line-height: 16px;
+}
+ul.lnkss a:hover {
+    color: #fff;
+    background: black;
+}
+ul.submenu.notification_list li {
+    position: relative;
+}
+
+button.btn.removeNotif {
+    background: none;
+    position: absolute;
+    right: 0;
+    font-size: 12px;
+    top: calc(50% - 15px);
+}
