@@ -32,6 +32,9 @@ class Header extends React.Component {
   }
   componentDidMount() {
     this.fetchNotifications();
+    setInterval(()=>{
+      this.fetchNotifications();
+    }, 3000);
   }
 
   fetchSuggestions() {
@@ -58,6 +61,7 @@ class Header extends React.Component {
           });
         }
       });
+
   }
 
   render() {
