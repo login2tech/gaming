@@ -110,12 +110,24 @@ class Profile extends React.Component {
     if (xp < 4000) {
       return 'Elite ('+xp+' XP)';
     }
+    if(xp  <  0)
+    {
+
+    }
     // if (xp >  5000) {
     return 'Elite ('+xp+' XP)';
     // }
   }
 
   rank_min_based_on_xp(xp) {
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
     if (xp < 50) {
       return '0';
     }
@@ -143,12 +155,23 @@ class Profile extends React.Component {
     if (xp < 4000) {
       return '3500';
     }
+    if(xp < 0){
+      return 0;
+    }
     // if (xp >  5000) {
     return '4000';
     // }
   }
 
   rank_max_based_on_xp(xp) {
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
     if (xp < 50) {
       return '50';
     }
@@ -182,6 +205,14 @@ class Profile extends React.Component {
   }
 
   rank_percent_based_on_xp(xp) {
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
     if (xp < 50) {
       return (xp * 10) / 5;
     }
@@ -521,7 +552,7 @@ class Profile extends React.Component {
                               width:
                                 '' +
                                 this.rank_percent_based_on_xp(
-                                  this.state.user_info.life_xp
+                                  this.state.user_info.xp_obj
                                 ) +
                                 '%'
                             }}
@@ -529,12 +560,12 @@ class Profile extends React.Component {
                         </div>
                         <span>
                           {this.rank_min_based_on_xp(
-                            this.state.user_info.life_xp
+                            this.state.user_info.xp_obj
                           )}
                         </span>
                         <span>
                           {this.rank_max_based_on_xp(
-                            this.state.user_info.life_xp
+                            this.state.user_info.xp_obj
                           )}
                         </span>
                       </div>
