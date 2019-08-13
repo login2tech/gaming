@@ -66,6 +66,7 @@ class Signup extends React.Component {
           this.setState({
             first_name: '',
             last_name: '',
+            email_confirm : '',
             username: '',
             email: '',
             day: '',
@@ -191,7 +192,17 @@ class Signup extends React.Component {
                                 name="month"
                                 required
                                 value={this.state.month}
-                                onChange={this.handleChange.bind(this)}
+                                onChange={(e)=>{
+                                  let a = {
+                                    month : e.target.value,
+                                  };
+                                  if(a.month  == 2 && this.state.day && parseInt(this.state.day) > 31)
+                                  {
+                                    a.day = '';
+                                  }
+
+                                  this.setState()
+                                }}
                               >
                                 <option value="">
                                   Birth Month
@@ -255,7 +266,10 @@ class Signup extends React.Component {
                                 <option value="28">28</option>
                                 <option value="29">29</option>
                                 <option value="30">30</option>
-                                <option value="31">31</option>
+                                {
+                                    this.state.month != 2 && this.state.month != "2" ? <option value="31">31</option>  :false
+                                }
+                                
                               </select>
                             </div>
                           </div>
@@ -273,24 +287,6 @@ class Signup extends React.Component {
                                 <option value="">
                                   Birth Year
                                 </option>
-                                <option value="2019">2019</option>
-                                <option value="2018">2018</option>
-                                <option value="2017">2017</option>
-                                <option value="2016">2016</option>
-                                <option value="2015">2015</option>
-                                <option value="2014">2014</option>
-                                <option value="2013">2013</option>
-                                <option value="2012">2012</option>
-                                <option value="2011">2011</option>
-                                <option value="2010">2010</option>
-                                <option value="2009">2009</option>
-                                <option value="2008">2008</option>
-                                <option value="2007">2007</option>
-                                <option value="2006">2006</option>
-                                <option value="2005">2005</option>
-                                <option value="2004">2004</option>
-                                <option value="2003">2003</option>
-                                <option value="2002">2002</option>
                                 <option value="2001">2001</option>
                                 <option value="2000">2000</option>
                                 <option value="1999">1999</option>
