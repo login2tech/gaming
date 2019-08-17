@@ -14,8 +14,7 @@ class Profile extends React.Component {
     super(props);
     this.state = {
       user_info: {first_name: ' ',last_name: ' ', followers: [], teams: [], xp_obj: [], score: []},
-      user_teams: [],
-      renderTab: 'profile',
+       renderTab: 'profile',
       match_played: [],
       new_post_type: 'text',
       new_post_image: '',
@@ -190,23 +189,7 @@ class Profile extends React.Component {
     return 100;
     // }
   }
-
-  getTeams(match) {
-    const team_1_id = match.team_1_id;
-    const team_2_id = match.team_2_id;
-    const {user_teams} = this.state;
-
-    for (let i = 0; i < user_teams.length; i++) {
-      if (team_1_id == user_teams[i].team_info.id) {
-        return [match.team_1_info, match.team_2_info, 1];
-      }
-      if (team_2_id == user_teams[i].team_info.id) {
-        return [match.team_2_info, match.team_1_info, 2];
-      }
-    }
-    return [match.team_1_info, match.team_2_info, 1];
-  }
-
+ 
   componentDidMount() {
     setTimeout(function() {
       const element = document.getElementById('is_top');
@@ -217,7 +200,7 @@ class Profile extends React.Component {
           inline: 'nearest'
         });
       }
-    }, 1000);
+    }, 500);
     this.fetchUserInfo(true);
   }
 
@@ -233,33 +216,19 @@ class Profile extends React.Component {
             },
             () => {
               if (forward) {
-                this.fetchTeams();
+               this.fetchPosts();
               }
             }
           );
         }
       });
-  }
-
-  fetchTeams() {
-    fetch('/api/teams/team_of_user?uid=' + this.state.user_info.id)
-      .then(res => res.json())
-      .then(json => {
-        if (json.ok) {
-          this.setState(
-            {
-              user_teams: json.teams
-            },
-            () => {
-              this.fetchPosts();
-            }
-          );
-        }
-      });
-  }
+  } 
  
 
   fetchPosts() {
+    // console.log(this.props.user)
+    if(!this.props.user)
+      return;
     fetch(
       '/api/posts/list/my?uid=' +
         this.state.user_info.id +
@@ -315,7 +284,8 @@ class Profile extends React.Component {
         },
         this.props.token,
         (result, post) => {
-          if (result) {
+          if (result && post) {
+            post.user = this.props.user;
             const posts = this.state.posts;
             posts.unshift(post);
             this.setState({
@@ -416,20 +386,21 @@ class Profile extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
-                <div className="game_pic_tournament">
+                <div className="game_pic_tournament profile_pic_outline square">
+                <div className="content">
                   {this.state.user_info &&
                   this.state.user_info.profile_picture ? (
                     <img
                       src={this.state.user_info.profile_picture}
                       className={
-                        'img-fluid profile_pic_outline' +
+                        'img-fluid ' +
                         (this.state.user_info.prime ? ' prime ' : ' ')
                       }
                     />
                   ) : (
                     <img
                       className={
-                        'img-fluid profile_pic_outline' +
+                        'img-fluid ' +
                         (this.state.user_info.prime ? ' prime ' : ' ')
                       }
                       src={
@@ -442,10 +413,11 @@ class Profile extends React.Component {
                     />
                   )}
                 </div>
+                </div>
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>
+                  <h3 class='no-case-change'>
                     {this.state.user_info && this.state.user_info.username}
                   </h3>
 
@@ -832,7 +804,10 @@ class Profile extends React.Component {
                       <br />
                       <h4 className="text-white">Latest Posts</h4>
                       <ul className="timeline">
-                        {this.state.posts &&
+                      {
+                        this.props.user ? 
+                        false: <div class='alert alert-warning'>You need to be logged in to see the posts</div>}
+                        {this.props.user  && this.state.posts &&
                           this.state.posts.map((post, i) => {
                             return (
                               <Timeline
@@ -842,6 +817,7 @@ class Profile extends React.Component {
                               />
                             );
                           })}
+                      
                       </ul>
                     </div>
                   </div>
@@ -849,7 +825,7 @@ class Profile extends React.Component {
               </div>
             </div>
           </section>
-        )}
+        
       </div>
     );
   }

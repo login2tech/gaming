@@ -34,7 +34,7 @@ class Followers extends React.Component {
     {
       return (
         <div className="modal-body">
-        <span class='fa fa-spinner fa-spin spin' />
+        <span className='fa fa-spinner fa-spin spin' />
         </div>)
     }
     return (

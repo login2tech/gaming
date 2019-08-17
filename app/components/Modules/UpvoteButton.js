@@ -1,7 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {upVote, downVote} from '../../actions/social';
+import {Link} from 'react-router';
 
+import {upVote, downVote} from '../../actions/social';
+import {openModal} from '../../actions/modals';
+import Reactions from '../Modules/Modals/Reactions';
 class UpvoteButton extends React.Component {
   state = {changed: false, doChange: 0};
   changeVote(already_voted, e, type, old_type) {
@@ -76,10 +79,12 @@ class UpvoteButton extends React.Component {
     let i_have_liked = false;
     let original_liked = false;
     let {likes} = this.props;
+
+    const likes_count = likes.length;
     if (!likes) {
       likes = [];
     }
-    for (let i = 0; i < likes.length; i++) {
+    for (let i = 0; i < likes_count; i++) {
       if (!like_counts[likes[i].type]) {
         like_counts[likes[i].type] = 1;
       } else {
@@ -114,6 +119,38 @@ class UpvoteButton extends React.Component {
     }
     return (
       <span>
+        {likes_count > 0 ? (
+          <small style={{fontStyle: 'italic'}}>
+            this post got{' '}
+            <Link
+              to={'#'}
+              style={{color: '#3c9c8e'}}
+              onClick={e => {
+                e.preventDefault();
+                this.props.dispatch(
+                  openModal({
+                    id: 'likes_details',
+                    type: 'custom',
+                    zIndex: 1075,
+                    heading: 'Reactions',
+                    content: (
+                      <Reactions
+                        likes={this.props.likes}
+                        post_id={this.props.post_id}
+                      />
+                    )
+                  })
+                );
+              }}
+            >
+              {' '}
+              {likes_count} reactions
+            </Link>
+          </small>
+        ) : (
+           <small style={{fontStyle: 'italic'}}>Be the first to react to this post</small>
+        )}
+        <br />
         {emojis.map((emoji, i) => {
           return (
             <button

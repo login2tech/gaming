@@ -77,13 +77,11 @@ export function signup(data, cb) {
 }
 
 export function logout() {
-  cookie.remove('token');
-  cookie.remove('token');
-  cookie.remove('token');
-  // browserHistory.push('/');
+  cookie.remove('token', {path: '/'});
+
+  const redirectTO = '/';
   setTimeout(function() {
-    cookie.remove('token');
-    window.location.href = '/';
+    location.href = redirectTO;
   }, 1000);
   return {
     type: 'LOGOUT_SUCCESS'
@@ -223,7 +221,7 @@ export function team_pic(team_id, data) {
   };
 }
 
-export function accountPic(data) {
+export function accountPic(data, cb) {
   return dispatch => {
     dispatch({
       type: 'CLEAR_MESSAGES'
@@ -236,6 +234,7 @@ export function accountPic(data) {
       body: JSON.stringify(data)
     }).then(response => {
       if (response.ok) {
+        cb && cb(true);
         return response.json().then(json => {
           dispatch({
             type: 'UPDATE_USER',
@@ -245,6 +244,7 @@ export function accountPic(data) {
           });
         });
       } else {
+        cb && cb(false);
         return response.json().then(json => {
           dispatch({
             type: 'UPDATE_PROFILE_FAILURE',
@@ -256,7 +256,7 @@ export function accountPic(data) {
   };
 }
 
-export function teamPic(data) {
+export function teamPic(data, cb) {
   return dispatch => {
     dispatch({
       type: 'CLEAR_MESSAGES'
@@ -268,6 +268,7 @@ export function teamPic(data) {
       },
       body: JSON.stringify(data)
     }).then(response => {
+      cb && cb(true);
       if (response.ok) {
         return response.json().then(json => {
           dispatch({
@@ -278,6 +279,7 @@ export function teamPic(data) {
           });
         });
       } else {
+        cb && cb(false);
         return response.json().then(json => {
           dispatch({
             type: 'UPDATE_PROFILE_FAILURE',

@@ -64,6 +64,14 @@ class Profile extends React.Component {
         this.props.token
       )
     );
+    const element = document.body;
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
   }
 
   handleChangePassword(event) {
@@ -317,20 +325,29 @@ class Profile extends React.Component {
   };
 
   doSaveProfilePic(event) {
+    this.setState({
+      saving_profile_photo: true
+    });
     if (!this.state.new_profile_pic) {
       return;
     }
 
     event.preventDefault();
     this.props.dispatch(
-      accountPic({
-        profile_picture: this.state.new_profile_pic
-      })
+      accountPic(
+        {
+          profile_picture: this.state.new_profile_pic
+        },
+        st => {
+          const obj = {saving_profile_photo: false};
+          if (st) {
+            obj.new_profile_pic = '';
+            obj.new_profile_pic_saved = false;
+          }
+          this.setState(obj);
+        }
+      )
     );
-    this.setState({
-      new_profile_pic: '',
-      new_profile_pic_saved: false
-    });
   }
 
   doSaveCoverPic(event) {
@@ -817,10 +834,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.props.user.cover_picture
-        ? {
-            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
-          }
-        : {};
+      ? {
+          backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+        }
+      : {};
 
     return (
       <div>
@@ -860,64 +877,74 @@ class Profile extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
-                <div className="game_pic_tournament">
-                  <div className="update_btn">
-                    <label htmlFor="profile_image_select">
-                      <i className="fa fa-edit" />
-                    </label>
+                <div className="game_pic_tournament profile_pic_outline square">
+                  <div className="content">
+                    <div className="update_btn">
+                      <label htmlFor="profile_image_select">
+                        <i className="fa fa-edit" />
+                      </label>
 
-                    {this.state.new_profile_pic &&
-                    !this.state.new_profile_pic_saved ? (
-                      <button
-                        onClick={event => {
-                          this.doSaveProfilePic(event);
-                        }}
-                        type="button"
-                      >
-                        <i className="fa fa-save" />
-                      </button>
+                      {this.state.new_profile_pic &&
+                      !this.state.new_profile_pic_saved ? (
+                        <button
+                          onClick={event => {
+                            this.doSaveProfilePic(event);
+                          }}
+                          type="button"
+                        >
+                          <i className="fa fa-save" />
+                        </button>
+                      ) : (
+                        false
+                      )}
+
+                      <input
+                        type="file"
+                        name="profile_image_select"
+                        id="profile_image_select"
+                        className="hidden hide"
+                        accept="image/gif, image/jpeg, image/png"
+                        onChange={this.handleselectedFile}
+                      />
+                    </div>
+
+                    {this.state.saving_profile_photo ? (
+                      <div className="photo_progress">
+                        <span className="fa fa-spinner fa-spin" />
+                      </div>
                     ) : (
                       false
                     )}
-
-                    <input
-                      type="file"
-                      name="profile_image_select"
-                      id="profile_image_select"
-                      className="hidden hide"
-                      accept="image/gif, image/jpeg, image/png"
-                      onChange={this.handleselectedFile}
-                    />
+                    {this.state.new_profile_pic ? (
+                      <img
+                        src={this.state.new_profile_pic}
+                        className="img-fluid"
+                      />
+                    ) : this.props.user.profile_picture ? (
+                      <img
+                        src={this.props.user.profile_picture}
+                        className="img-fluid "
+                      />
+                    ) : (
+                      <img
+                        className="img-fluid"
+                        src={
+                          'https://ui-avatars.com/api/?size=512&name=' +
+                          this.props.user.first_name +
+                          ' ' +
+                          this.props.user.last_name +
+                          '&color=223cf3&background=000000'
+                        }
+                      />
+                    )}
                   </div>
-                  {this.state.new_profile_pic ? (
-                    <img
-                      src={this.state.new_profile_pic}
-                      className="img-fluid profile_pic_outline"
-                    />
-                  ) : this.props.user.profile_picture ? (
-                    <img
-                      src={this.props.user.profile_picture}
-                      className="img-fluid profile_pic_outline"
-                    />
-                  ) : (
-                    <img
-                      className="img-fluid profile_pic_outline"
-                      src={
-                        'https://ui-avatars.com/api/?size=512&name=' +
-                        this.props.user.first_name +
-                        ' ' +
-                        this.props.user.last_name +
-                        '&color=223cf3&background=000000'
-                      }
-                    />
-                  )}
                 </div>
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>
+                  <h3 className="no-case-change">
                     <Link to={'/u/' + this.props.user.username}>
-                      {this.props.user.first_name} {this.props.user.last_name}
+                      @{this.props.user.username}
                     </Link>
                   </h3>
                   {/* <div className="game_platform_icon">About</div> */}

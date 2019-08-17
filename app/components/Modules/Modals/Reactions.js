@@ -4,17 +4,25 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 
 import React from 'react';
-// import {connect} from 'react-redux';
-// import {deleteQuestion} from '../../../actions/submissionActions';
-class Following extends React.Component {
+
+const emojis = [
+  {key: 4, em: 'like'},
+  {key: 3, em: 'heart'},
+  {key: 2, em: 'angry'},
+  {key: 1, em: '100'}
+];
+
+class Reactions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      is_loaded: true,
+      showing: 'like'
     };
   }
   fetchUserInfo(forward) {
-    fetch('/api/user_info/following/list?uid=' + this.props.uid)
+    fetch('/api/posts/reactionsList?pid=' + this.props.post_id)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -30,18 +38,53 @@ class Following extends React.Component {
   }
 
   render() {
-    if(!this.state.is_loaded)
-    {
+    if (!this.state.is_loaded) {
       return (
         <div className="modal-body">
-        <span className='fa fa-spinner fa-spin spin' />
-        </div>)
+          <span className="fa fa-spinner fa-spin spin" />
+        </div>
+      );
     }
     return (
       <div className="modal-body">
+        <ul className="nav nav-tabs">
+          {emojis.map((emoji, i) => {
+            return (
+              <li key={emoji.key}>
+                <button
+                  className={
+                    'btn btn-sm btn-vote pulsate-fwd' +
+                    (this.state.showing == emoji.em ? ' upvoted ' : '')
+                  }
+                  style={{marginRight: '5px'}}
+                  type="button"
+                  data-id={this.props.post_id}
+                  onClick={() => {
+                    this.setState({
+                      showing: emoji.em
+                    });
+                  }}
+                >
+                  <img
+                    src={'/images/emoji/emoji_' + emoji.em + '.png'}
+                    style={{
+                      width: '20px'
+                    }}
+                  />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <br />
+        <br />
         <table>
           <tbody>
+
             {this.state.items.map((item, i) => {
+              if (item.type != this.state.showing) {
+                return false;
+              }
               const image_url =
                 item.user && item.user.profile_picture
                   ? item.user.profile_picture
@@ -86,4 +129,4 @@ const mapStateToProps = state => {
   return {};
 };
 
-export default connect(mapStateToProps)(Following);
+export default connect(mapStateToProps)(Reactions);

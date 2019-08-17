@@ -11,6 +11,7 @@ class MatchInfo extends React.Component {
     super(props);
     this.state = {
       title: '',
+      is_loaded : false,
       match: {
         game: {},
         ladder: {},
@@ -54,7 +55,7 @@ class MatchInfo extends React.Component {
 
     // console.log(this.state.match.match_players, this.state.using_users.length)
     if (
-      parseInt(this.state.match.match_players) > this.state.using_users.length
+      parseInt(this.state.match.match_players) != this.state.using_users.length
     ) {
       return false;
     }
@@ -216,7 +217,7 @@ class MatchInfo extends React.Component {
         if (json.ok) {
           this.setState(
             {
-              // is_loaded: true,
+              // is_loaded: true,f
               eligible_teams: json.teams,
               eligible_teams_loaded: true
             },
@@ -237,9 +238,11 @@ class MatchInfo extends React.Component {
   }
 
   renderJoin() {
+    if(!this.state.is_loaded) return false;
     if (this.state.match.team_2_id) {
       return false;
     }
+    if(this.state.eligible_teams_loaded)return false;
 
     // return false;
     const me = this.props.user.id;
@@ -572,7 +575,7 @@ class MatchInfo extends React.Component {
                   <br />
 
                   <h6 className="prizes_desclaimer">
-                    {this.state.match.team_1_info.title}
+                    <Link to={'/teams/view/'+this.state.match.team_1_id}>{this.state.match.team_1_info.title}</Link>
                     {this.state.match.status == 'complete' &&
                     this.state.match.result == 'team_1' ? (
                       <span>
@@ -582,7 +585,7 @@ class MatchInfo extends React.Component {
                     ) : (
                       false
                     )}
-                    {this.state.match.status == 'complete' &&
+                    {(this.state.match.status == 'complete' || this.state.match.status == 'Complete') &&
                     this.state.match.result == 'team_2' ? (
                       <span>
                         {' '}
@@ -654,8 +657,8 @@ class MatchInfo extends React.Component {
                   {this.state.match.team_2_id ? (
                     <div>
                       <h6 className="prizes_desclaimer">
-                        {this.state.match.team_2_info.title}{' '}
-                        {this.state.match.status == 'complete' &&
+                        <Link to={'/teams/view/'+this.state.match.team_2_id}>{this.state.match.team_2_info.title}</Link>{' '}
+                        {(this.state.match.status == 'complete' || this.state.match.status == 'Complete') &&
                         this.state.match.result == 'team_2' ? (
                           <span>
                             {' '}

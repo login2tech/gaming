@@ -84,38 +84,36 @@ class Profile extends React.Component {
       }
     }
     if (xp < 50) {
-      return 'Amatuer ('+xp+' XP)';
+      return 'Amatuer (' + xp + ' XP)';
     }
     if (xp < 200) {
-      return 'Beginner ('+xp+' XP)';
+      return 'Beginner (' + xp + ' XP)';
     }
     if (xp < 500) {
-      return 'Upcoming ('+xp+' XP)';
+      return 'Upcoming (' + xp + ' XP)';
     }
     if (xp < 1000) {
-      return 'Bronze ('+xp+' XP)';
+      return 'Bronze (' + xp + ' XP)';
     }
     if (xp < 1500) {
-      return 'Silver ('+xp+' XP)';
+      return 'Silver (' + xp + ' XP)';
     }
     if (xp < 2000) {
-      return 'Gold ('+xp+' XP)';
+      return 'Gold (' + xp + ' XP)';
     }
     if (xp < 3000) {
-      return 'Platinum ('+xp+' XP)';
+      return 'Platinum (' + xp + ' XP)';
     }
     if (xp < 3500) {
-      return 'Diamond ('+xp+' XP)';
+      return 'Diamond (' + xp + ' XP)';
     }
     if (xp < 4000) {
-      return 'Elite ('+xp+' XP)';
+      return 'Elite (' + xp + ' XP)';
     }
-    if(xp  <  0)
-    {
-
+    if (xp < 0) {
     }
     // if (xp >  5000) {
-    return 'Elite ('+xp+' XP)';
+    return 'Elite (' + xp + ' XP)';
     // }
   }
 
@@ -155,7 +153,7 @@ class Profile extends React.Component {
     if (xp < 4000) {
       return '3500';
     }
-    if(xp < 0){
+    if (xp < 0) {
       return 0;
     }
     // if (xp >  5000) {
@@ -271,7 +269,7 @@ class Profile extends React.Component {
           inline: 'nearest'
         });
       }
-    }, 1000);
+    }, 500);
     this.fetchUserInfo(true);
   }
 
@@ -418,36 +416,38 @@ class Profile extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
-                <div className="game_pic_tournament">
-                  {this.state.user_info &&
-                  this.state.user_info.profile_picture ? (
-                    <img
-                      src={this.state.user_info.profile_picture}
-                      className={
-                        'img-fluid profile_pic_outline' +
-                        (this.state.user_info.prime ? ' prime ' : ' ')
-                      }
-                    />
-                  ) : (
-                    <img
-                      className={
-                        'img-fluid profile_pic_outline' +
-                        (this.state.user_info.prime ? ' prime ' : ' ')
-                      }
-                      src={
-                        'https://ui-avatars.com/api/?size=512&name=' +
-                        this.state.user_info.first_name +
-                        ' ' +
-                        this.state.user_info.last_name +
-                        '&color=223cf3&background=000000'
-                      }
-                    />
-                  )}
+                <div className="game_pic_tournament profile_pic_outline square">
+                  <div className="content">
+                    {this.state.user_info &&
+                    this.state.user_info.profile_picture ? (
+                      <img
+                        src={this.state.user_info.profile_picture}
+                        className={
+                          'img-fluid ' +
+                          (this.state.user_info.prime ? ' prime ' : ' ')
+                        }
+                      />
+                    ) : (
+                      <img
+                        className={
+                          'img-fluid ' +
+                          (this.state.user_info.prime ? ' prime ' : ' ')
+                        }
+                        src={
+                          'https://ui-avatars.com/api/?size=512&name=' +
+                          this.state.user_info.first_name +
+                          ' ' +
+                          this.state.user_info.last_name +
+                          '&color=223cf3&background=000000'
+                        }
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>
+                  <h3 className="no-case-change">
                     @{this.state.user_info && this.state.user_info.username}
                   </h3>
 
@@ -474,8 +474,8 @@ class Profile extends React.Component {
                       <div className="col-md-3">
                         <span>
                           <a
-                          href='#'
-                            onClick={(e) => {
+                            href="#"
+                            onClick={e => {
                               e.preventDefault();
                               this.showFollowing(this.state.user_info.id);
                             }}
@@ -485,8 +485,8 @@ class Profile extends React.Component {
                         </span>
                         <p>
                           <a
-                          href='#'
-                            onClick={(e) => {
+                            href="#"
+                            onClick={e => {
                               e.preventDefault();
                               this.showFollowing(this.state.user_info.id);
                             }}
@@ -636,142 +636,147 @@ class Profile extends React.Component {
 
         <section className="contet_part single_match_details">
           <div className="container">
-          {this.state.is_loaded ? (
+            {this.state.is_loaded ? (
+              <div className="row">
+                <div className="col-md-12 col-sm-12 col-xs-12">
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">
+                      <i className="fa fa-trophy" aria-hidden="true" />{' '}
+                      ACHIEVEMENT
+                    </h5>
+                    <br />
 
-
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <i className="fa fa-trophy" aria-hidden="true" />{' '}
-                    ACHIEVEMENT
-                  </h5>
-                  <br />
-
-                  <div className="user-profile-stats">
-                    <div className="user-profile-header-data">
-                      <div className="rank-data">
-                        <div>RANK</div>{' '}
-                        <div>{this.state.user_info.xp_rank}</div>{' '}
-                        <div>{this.state.user_info.life_xp} XP</div>
-                      </div>
-                    </div>
-                    <div className="user-profile-header-data">
-                      <div className="winnings-data">
-                        <div>WINNINGS</div>{' '}
-                        <div>
-                          $
-                          {this.state.user_info.lifetime_earning
-                            ? this.state.user_info.lifetime_earning
-                            : '0'}
+                    <div className="user-profile-stats">
+                      <div className="user-profile-header-data">
+                        <div className="rank-data">
+                          <div>RANK</div>{' '}
+                          <div>{this.state.user_info.xp_rank}</div>{' '}
+                          <div>{this.state.user_info.life_xp} XP</div>
                         </div>
                       </div>
-                    </div>
-                    <div className="user-profile-header-data">
-                      <div className="career-data">
-                        <div>CAREER RECORD</div>{' '}
-                        <div>
-                          {this.state.user_info.wins
-                            ? this.state.user_info.wins
-                            : '0'}{' '}
-                          W -{' '}
-                          {this.state.user_info.loss
-                            ? this.state.user_info.loss
-                            : '0'}{' '}
-                          L
-                        </div>
-                        <div>
-                          {this.state.user_info.wins +
-                            this.state.user_info.loss ==
-                          0
-                            ? 100
-                            : (this.state.user_info.wins * 100) /
-                              (this.state.user_info.wins +
-                                this.state.user_info.loss)}
-                          % WIN RATE
-                        </div>
-                      </div>
-                    </div>
-                    <div className="user-profile-header-data">
-                      <div className="views-data">
-                        <div>PROFILE VIEWS</div>{' '}
-                        <div>
-                          {this.state.user_info.profile_views
-                            ? this.state.user_info.profile_views
-                            : '0'}
-                        </div>{' '}
-                        <div />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="user-profile-trophies-wrapper">
-                    <div className="user-profile-trophies-container">
-                      <div className="single-trophy-container">
-                        <div className="trophy-image">
-                          <img src="/images/shield-gold.png" />
-                        </div>
-                        <div className="trophy-info">
-                          <div className="trophy-name gold">Gold Trophies</div>
-                          <div className="trophy-count">0</div>
-                        </div>
-                      </div>
-                      <div className="single-trophy-container">
-                        <div className="trophy-image">
-                          <img src="/images/shield-silver.png" />
-                        </div>
-                        <div className="trophy-info">
-                          <div className="trophy-name silver">
-                            Silver Trophies
+                      <div className="user-profile-header-data">
+                        <div className="winnings-data">
+                          <div>WINNINGS</div>{' '}
+                          <div>
+                            $
+                            {this.state.user_info.lifetime_earning
+                              ? this.state.user_info.lifetime_earning
+                              : '0'}
                           </div>
-                          <div className="trophy-count">0</div>
                         </div>
                       </div>
-                      <div className="single-trophy-container">
-                        <div className="trophy-image">
-                          <img src="/images/shield-bronze.png" />
-                        </div>
-                        <div className="trophy-info">
-                          <div className="trophy-name bronze">
-                            Bronze Trophies
+                      <div className="user-profile-header-data">
+                        <div className="career-data">
+                          <div>CAREER RECORD</div>{' '}
+                          <div>
+                            <span className="text-success">
+                              {this.state.user_info.wins
+                                ? this.state.user_info.wins
+                                : '0'}{' '}
+                              W
+                            </span>{' '}
+                            -{' '}
+                            <span className="text-danger">
+                              {this.state.user_info.loss
+                                ? this.state.user_info.loss
+                                : '0'}{' '}
+                              L
+                            </span>
                           </div>
-                          <div className="trophy-count">0</div>
+                          <div>
+                            {this.state.user_info.wins +
+                              this.state.user_info.loss ==
+                            0
+                              ? 100
+                              : (this.state.user_info.wins * 100) /
+                                (this.state.user_info.wins +
+                                  this.state.user_info.loss)}
+                            % WIN RATE
+                          </div>
+                        </div>
+                      </div>
+                      <div className="user-profile-header-data">
+                        <div className="views-data">
+                          <div>PROFILE VIEWS</div>{' '}
+                          <div>
+                            {this.state.user_info.profile_views
+                              ? this.state.user_info.profile_views
+                              : '0'}
+                          </div>{' '}
+                          <div />
                         </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div className="user-profile-trophies-wrapper">
-                    <div className="user-profile-trophies-container">
-                      
-                      <div className="single-trophy-container">
-                        <div className="trophy-image">
-                          <img src="/images/shield-gold.png" />
+                    <div className="user-profile-trophies-wrapper">
+                      <div className="user-profile-trophies-container">
+                        <div className="single-trophy-container">
+                          <div className="trophy-image">
+                            <img src="/images/shield-gold.png" />
+                          </div>
+                          <div className="trophy-info">
+                            <div className="trophy-name gold">
+                              Gold Trophies
+                            </div>
+                            <div className="trophy-count">0</div>
+                          </div>
                         </div>
-                        <div className="trophy-info">
-                          <Link to={'/records/season'} className="trophy-name gold">
-                            Seasonal Records
-
-                          </Link>
-                           
+                        <div className="single-trophy-container">
+                          <div className="trophy-image">
+                            <img src="/images/shield-silver.png" />
+                          </div>
+                          <div className="trophy-info">
+                            <div className="trophy-name silver">
+                              Silver Trophies
+                            </div>
+                            <div className="trophy-count">0</div>
+                          </div>
+                        </div>
+                        <div className="single-trophy-container">
+                          <div className="trophy-image">
+                            <img src="/images/shield-bronze.png" />
+                          </div>
+                          <div className="trophy-info">
+                            <div className="trophy-name bronze">
+                              Bronze Trophies
+                            </div>
+                            <div className="trophy-count">0</div>
+                          </div>
                         </div>
                       </div>
+                    </div>
 
-                         <div className="single-trophy-container">
-                        <div className="trophy-image">
-                          <img src="/images/shield-gold.png" />
-                        </div>
-                        <div className="trophy-info">
-                          <Link to={'/records/life'} className="trophy-name gold">
-                            Life Records
-
-                          </Link>
-                           
-                        </div>
+                    <div className="user-profile-trophies-wrapper">
+                      <div className="user-profile-trophies-container">
+                        <div className="single-trophy-container">
+                          <div className="trophy-image">
+                            <img src="/images/shield-gold.png" />
                           </div>
+                          <div className="trophy-info">
+                            <Link
+                              to={'/records/'+this.state.user_info.username+'/season'}
+                              className="trophy-name gold"
+                            >
+                              Seasonal Records
+                            </Link>
+                          </div>
+                        </div>
 
-                         
-                      {/*this.state.user_info.score.map((xp, i) => {
+                        <div className="single-trophy-container">
+                          <div className="trophy-image">
+                            <img src="/images/shield-gold.png" />
+                          </div>
+                          <div className="trophy-info">
+                            <Link
+                              to={'/records/'+this.state.user_info.username+'/life'}
+                              className="trophy-name gold"
+                            >
+                              Life Records
+                            </Link>
+                          </div>
+                        </div>
+
+                        {/*this.state.user_info.score.map((xp, i) => {
                         return (
                           <div className="single-trophy-container" key={xp.id}>
                             <div className="trophy-image">
@@ -790,235 +795,253 @@ class Profile extends React.Component {
                           </div>
                         );
                       })*/}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <i className="fa fa-user" aria-hidden="true" /> ABOUT
-                  </h5>
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">
+                      <i className="fa fa-user" aria-hidden="true" /> ABOUT
+                    </h5>
 
-                  <div className="list_pad">
-                    <div className="row">
-                      <div className="col-md-4">
-                        <span> MEMBER SINCE</span>
-                        <p>
-                          {moment(this.state.user_info.created_at).format(
-                            'lll'
-                          )}
-                        </p>
+                    <div className="list_pad">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <span> MEMBER SINCE</span>
+                          <p>
+                            {moment(this.state.user_info.created_at).format(
+                              'lll'
+                            )}
+                          </p>
+                        </div>
+
+                        <div className="col-md-4">
+                          <span> TIME ZONE </span>
+                          <p>
+                            {this.state.user_info.timezone
+                              ? this.state.user_info.timezone
+                              : '-'}
+                          </p>
+                        </div>
+
+                        <div className="col-md-4">
+                          <span>Rank</span>
+                          <p>-</p>
+                        </div>
                       </div>
 
-                      <div className="col-md-4">
-                        <span> TIME ZONE </span>
-                        <p>
-                          {this.state.user_info.timezone
-                            ? this.state.user_info.timezone
-                            : '-'}
-                        </p>
-                      </div>
-
-                      <div className="col-md-4">
-                        <span>Rank</span>
-                        <p>-</p>
+                      <div className="row">
+                        {this.tags.map((k, i) => {
+                          if (
+                            !this.state.user_info['gamer_tag_' + k] ||
+                            this.state.user_info['gamer_tag_' + k] == ''
+                          ) {
+                            return false;
+                          }
+                          return (
+                            <div className="col-md-4" key={k}>
+                              <span>{this.tag_names[k]}</span>
+                              <p>{this.state.user_info['gamer_tag_' + k]}</p>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
+                  </div>
 
-                    <div className="row">
-                      {this.tags.map((k, i) => {
-                        if (
-                          !this.state.user_info['gamer_tag_' + k] ||
-                          this.state.user_info['gamer_tag_' + k] == ''
-                        ) {
-                          return false;
-                        }
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">
+                      <i className="fa fa-users" aria-hidden="true" /> TEAMS
+                    </h5>
+
+                    <ul className="team_list">
+                      {this.state.user_teams.map((team_parent, i) => {
+                        const team = team_parent.team_info
+                          ? team_parent.team_info
+                          : {};
                         return (
-                          <div className="col-md-4" key={k}>
-                            <span>{this.tag_names[k]}</span>
-                            <p>{this.state.user_info['gamer_tag_' + k]}</p>
-                          </div>
+                          <li className="item" key={team.id}>
+                            <Link
+                              to={
+                                '/u/' +
+                                this.state.user_info.username +
+                                '/teams/' +
+                                team.id
+                              }
+                            >
+                              <img src="/images/team_bg.png" />
+                              <div className="info">{team.title}</div>
+                            </Link>
+                          </li>
                         );
                       })}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <i className="fa fa-users" aria-hidden="true" /> TEAMS
-                  </h5>
-
-                  <ul className="team_list">
-                    {this.state.user_teams.map((team_parent, i) => {
-                      const team = team_parent.team_info
-                        ? team_parent.team_info
-                        : {};
-                      return (
-                        <li className="item" key={team.id}>
-                          <Link
-                            to={
+                      {this.props.user &&
+                      this.state.user_info.id == this.props.user.id ? (
+                        <li>
+                          <a
+                            href={
                               '/u/' +
                               this.state.user_info.username +
-                              '/teams/' +
-                              team.id
+                              '/teams/new'
                             }
                           >
-                            <img src="/images/team_bg.png" />
-                            <div className="info">{team.title}</div>
-                          </Link>
+                            <img src="/images/team_new.png" />
+                          </a>
                         </li>
-                      );
-                    })}
-                    {this.props.user &&
-                    this.state.user_info.id == this.props.user.id ? (
-                      <li>
-                        <a
-                          href={
-                            '/u/' + this.state.user_info.username + '/teams/new'
-                          }
-                        >
-                          <img src="/images/team_new.png" />
-                        </a>
-                      </li>
-                    ) : (
-                      false
-                    )}
-                  </ul>
-                </div>
+                      ) : (
+                        false
+                      )}
+                    </ul>
+                  </div>
 
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        <th>Match</th>
-                        <th>Team</th>
-                        <th>Opponent</th>
-                        <th>Result</th>
-                        <th>Date</th>
-                        <th>Info</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.match_played.map((match, i) => {
-                        const teams = this.getTeams(match);
-                        let is_win = false;
-                        let is_loss = false;
-                        // is_status = true;
-                        if (match.result) {
-                          if (match.result == 'team_1') {
-                            if (teams[2] == 1) {
-                              is_win = true;
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Match</th>
+                          <th>Team</th>
+                          <th>Opponent</th>
+                          <th>Result</th>
+                          <th>Date</th>
+                          <th>Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.match_played.map((match, i) => {
+                          const teams = this.getTeams(match);
+                          let is_win = false;
+                          let is_loss = false;
+                          // is_status = true;
+                          if (match.result) {
+                            if (match.result == 'team_1') {
+                              if (teams[2] == 1) {
+                                is_win = true;
+                              } else {
+                                is_loss = false;
+                              }
+                            } else if (match.result == 'team_2') {
+                              if (teams[2] == 2) {
+                                is_win = true;
+                              } else {
+                                is_loss = false;
+                              }
                             } else {
-                              is_loss = false;
+                              // is_status = true;
                             }
-                          } else if (match.result == 'team_2') {
-                            if (teams[2] == 2) {
-                              is_win = true;
-                            } else {
-                              is_loss = false;
-                            }
-                          } else {
-                            // is_status = true;
                           }
-                        }
-                        {
-                          is_win ? (
-                            <span className="text-success">W</span>
-                          ) : (
-                            false
-                          );
-                        }
-                        {
-                          is_loss ? (
-                            <span className="text-danger">L</span>
-                          ) : (
-                            false
-                          );
-                        }
-                        {
-                          !is_win && !is_loss ? match.status : false;
-                        }
+                          {
+                            is_win ? (
+                              <span className="text-success">W</span>
+                            ) : (
+                              false
+                            );
+                          }
+                          {
+                            is_loss ? (
+                              <span className="text-danger">L</span>
+                            ) : (
+                              false
+                            );
+                          }
+                          {
+                            !is_win && !is_loss ? match.status : false;
+                          }
 
-                        return (
-                          <tr key={match.id}>
-                            <td>
-                              <Link to={'/m/' + match.id}>#{match.id}</Link>
-                            </td>
-                            <td>{teams[0].title}</td>
-                            <td>{teams[1] ? teams[1].title : ' '}</td>
-                            <td>
-                              {match.result ? (
-                                match.result == 'team_1' ? (
-                                  teams[2] == 1 ? (
-                                    <span className="text-success">W</span>
+                          return (
+                            <tr key={match.id}>
+                              <td>
+                                <Link to={'/m/' + match.id}>#{match.id}</Link>
+                              </td>
+                              <td>
+                                <Link to={'/teams/view/' + teams[0].id}>
+                                  {teams[0].title}
+                                </Link>
+                              </td>
+                              <td>
+                                {teams[1] ? (
+                                  <Link to={'/teams/view/' + teams[0].id}>
+                                    {teams[1].title}
+                                  </Link>
+                                ) : (
+                                  ' '
+                                )}
+                              </td>
+                              <td>
+                                {match.result ? (
+                                  match.result == 'team_1' ? (
+                                    teams[2] == 1 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : match.result == 'team_2' ? (
+                                    teams[2] == 2 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
                                   ) : (
-                                    <span className="text-danger">L</span>
-                                  )
-                                ) : match.result == 'team_2' ? (
-                                  teams[2] == 2 ? (
-                                    <span className="text-success">W</span>
-                                  ) : (
-                                    <span className="text-danger">L</span>
+                                    match.result
                                   )
                                 ) : (
-                                  match.result
-                                )
-                              ) : (
-                                match.status
-                              )}
-                            </td>
-                            {/* <td>{''}</td> */}
-                            <td>{moment(match.created_at).format('lll')}</td>
-                            <td>
-                              {' '}
-                              <Link to={'/m/' + match.id}>View Match</Link>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                                  match.status
+                                )}
+                              </td>
+                              {/* <td>{''}</td> */}
+                              <td>{moment(match.created_at).format('lll')}</td>
+                              <td>
+                                {' '}
+                                <Link to={'/m/' + match.id}>View Match</Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
 
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">RECENT TOURNAMENTS</h5>
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">RECENT TOURNAMENTS</h5>
 
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        <th>Tournament</th>
-                        <th>Tournament Placing</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Info</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.tournaments.map((match, i) => {
-                        return (
-                          <tr key={match.id}>
-                            <td>{match.id}</td>
-                            <td>
-                              {match.game.title} - {match.ladder.title}
-                            </td>
-                            <td>{moment(match.starts_at).format('lll')}</td>
-                            <td>{match.status}</td>
-                            <td>
-                              {' '}
-                              <Link to={'/t/' + match.id}>View Tournament</Link>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Tournament</th>
+                          <th>Tournament Placing</th>
+                          <th>Date</th>
+                          <th>Status</th>
+                          <th>Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.tournaments.map((match, i) => {
+                          return (
+                            <tr key={match.id}>
+                              <td>{match.id}</td>
+                              <td>
+                                {match.game.title} - {match.ladder.title}
+                              </td>
+                              <td>{moment(match.starts_at).format('lll')}</td>
+                              <td>{match.status}</td>
+                              <td>
+                                {' '}
+                                <Link to={'/t/' + match.id}>
+                                  View Tournament
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </div>
-            ):  <span className="fa fa-spinner fa-spin" />}
+            ) : (
+              <span className="fa fa-spinner fa-spin" />
+            )}
           </div>
         </section>
       </div>

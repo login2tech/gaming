@@ -34,7 +34,7 @@ class Header extends React.Component {
     this.fetchNotifications();
     setInterval(()=>{
       this.fetchNotifications();
-    }, 3000);
+    }, 1000 * 60 * 3);
   }
 
   fetchSuggestions() {
@@ -181,7 +181,7 @@ class Header extends React.Component {
                             </Link>
                             <ul className="submenu notification_list">
                               {this.state.notifications.map((notif, i) => {
-                                if(i>6)return false;
+                                if(i>10)return false;
                                 let lnk = '';
                                 if (notif.type == 'money-8') {
                                   lnk = '/money8/' + notif.object_id;
@@ -192,6 +192,7 @@ class Header extends React.Component {
                                   lnk = '/teams/view/'+notif.object_id;
                                 }else if(notif.type == 'post')
                                 {
+                                  lnk = '/post/'+notif.object_id;
                                   // post
                                 }else if(notif.type =='follower')
                                 {
@@ -200,7 +201,7 @@ class Header extends React.Component {
 
                                 return (
                                   <li key={notif.id}>
-                                    <Link to={lnk}>{notif.description}</Link> <button style={{display:'none'}} class='btn removeNotif'><span class="text-danger fa fa-times" /></button>
+                                    <Link to={lnk}>{notif.description}</Link> <button style={{display:'none'}} className='btn removeNotif'><span className="text-danger fa fa-times" /></button>
                                   </li>
                                 );
                               })}

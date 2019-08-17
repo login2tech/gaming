@@ -12,17 +12,19 @@ class TeamInfo extends React.Component {
     this.state = {
       team_info: {ladder: {}, team_users: []},
       game: {},
+      is_loaded:false,
       match_played: [],
       new_invite_user_name: '',
       is_edit_mode: false
     };
   }
-  approveRequest(event) {
+  approveRequest(event, reject) {
     event.preventDefault();
     this.props.dispatch(
       approveRequest(
         {
-          team_id: this.state.team_info.id
+          team_id: this.state.team_info.id,
+          mode: reject == 'reject' ? 'reject' : 'accept'
         },
         st => {
           if (st) {
@@ -191,6 +193,12 @@ class TeamInfo extends React.Component {
       });
   }
 
+  currentUserInTeam() {
+    return this.state.team_info.team_creator == this.props.user.id
+      ? true
+      : false;
+  }
+
   render() {
     const divStyle = this.state.new_cover_pic
       ? {
@@ -209,33 +217,37 @@ class TeamInfo extends React.Component {
           id="is_top"
           style={divStyle}
         >
-          <div className="update_btn cover">
-            <label htmlFor="cover_image_select">
-              <i className="fa fa-edit" /> upload cover
-            </label>
+          {this.props.user && this.currentUserInTeam() ? (
+            <div className="update_btn cover">
+              <label htmlFor="cover_image_select">
+                <i className="fa fa-edit" /> upload cover
+              </label>
 
-            {this.state.new_cover_pic && !this.state.new_cover_pic_saved ? (
-              <button
-                onClick={event => {
-                  this.doSaveCoverPic(event);
-                }}
-                type="button"
-              >
-                <i className="fa fa-save" /> save new cover
-              </button>
-            ) : (
-              false
-            )}
+              {this.state.new_cover_pic && !this.state.new_cover_pic_saved ? (
+                <button
+                  onClick={event => {
+                    this.doSaveCoverPic(event);
+                  }}
+                  type="button"
+                >
+                  <i className="fa fa-save" /> save new cover
+                </button>
+              ) : (
+                false
+              )}
 
-            <input
-              type="file"
-              name="cover_image_select"
-              id="cover_image_select"
-              className="hidden hide"
-              accept="image/gif, image/jpeg, image/png"
-              onChange={this.handleCoverFile.bind(this)}
-            />
-          </div>
+              <input
+                type="file"
+                name="cover_image_select"
+                id="cover_image_select"
+                className="hidden hide"
+                accept="image/gif, image/jpeg, image/png"
+                onChange={this.handleCoverFile.bind(this)}
+              />
+            </div>
+          ) : (
+            false
+          )}
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
@@ -288,7 +300,8 @@ class TeamInfo extends React.Component {
                       <p>Profile Views </p>
                     </div>*/}
                     </div>
-                    {this.state.team_info.team_creator == this.props.user.id ? (
+                    {this.props.user &&
+                    this.state.team_info.team_creator == this.props.user.id ? (
                       <Link
                         to={
                           '/matchfinder/new/' +
@@ -317,7 +330,7 @@ class TeamInfo extends React.Component {
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
                     <span className="pull-right">
-                      {this.props.user.id ==
+                      {this.props.user && this.props.user.id ==
                         this.state.team_info.team_creator && (
                         <button
                           className="is_link btn"
@@ -352,7 +365,7 @@ class TeamInfo extends React.Component {
                           <tr key={team_user.id}>
                             {this.state.is_edit_mode && (
                               <td>
-                                {team_user.user_info.id !=
+                                {this.props.user && team_user.user_info.id !=
                                   this.props.user.id && (
                                   <input type="checkbox" />
                                 )}
@@ -409,7 +422,7 @@ class TeamInfo extends React.Component {
                               {team_user.accepted
                                 ? moment(team_user.created_at).format('lll')
                                 : 'Not Yet Accepted'}{' '}
-                              {!team_user.accepted &&
+                              {this.props.user && !team_user.accepted &&
                               team_user.user_id == this.props.user.id ? (
                                 <button
                                   className="btn btn-sm btn-success"
@@ -418,6 +431,19 @@ class TeamInfo extends React.Component {
                                   }}
                                 >
                                   Accept
+                                </button>
+                              ) : (
+                                false
+                              )}
+                              { this.props.user && !team_user.accepted &&
+                              team_user.user_id == this.props.user.id ? (
+                                <button
+                                  className="btn btn-sm btn-danger"
+                                  onClick={event => {
+                                    this.approveRequest(event, 'reject');
+                                  }}
+                                >
+                                  Reject
                                 </button>
                               ) : (
                                 false
@@ -435,7 +461,7 @@ class TeamInfo extends React.Component {
                   )}
                 </div>
 
-                {this.state.team_info.team_creator == this.props.user.id &&
+                { this.props.user && this.state.team_info.team_creator == this.props.user.id &&
                 parseInt(this.state.team_info.ladder.max_players) >
                   parseInt(this.state.team_info.team_users.length) ? (
                   <div className="content_box">

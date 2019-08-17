@@ -18,9 +18,19 @@ import {add_post} from '../../actions/social';
 // };
 
 class Timeline extends React.Component {
-  state = {repost_done: false, show_comments: false, is_pinned: false};
+  constructor(props) {
+    super(props);
+    this.state = {
+      repost_done: false,
+      show_comments: props.expand_comments ? true : false,
+      is_pinned: false
+    };
+  }
 
   doPin(id, is_pinned) {
+    if (this.props.post.user_id != this.props.user.id) {
+      return;
+    }
     return fetch('/api/posts/doPin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -56,7 +66,10 @@ class Timeline extends React.Component {
           // post_type: post.new_post_type ? post.new_post_type : false,
           image_url: post.image_url ? post.image_url : false,
           video_url: post.video_url ? post.video_url : false,
-          content: post.post ? post.post : false
+          content: post.post ? post.post : false,
+          repost_from: post.id,
+          is_repost: true,
+          repost_of_user_id: post.user_id
         },
         this.props.token,
         (result, post) => {
@@ -131,14 +144,32 @@ class Timeline extends React.Component {
               {post.user ? post.user.first_name : ''}{' '}
               {post.user ? post.user.last_name : ''}
             </Link>
+            {' '}{post.is_repost && post.original_poster ? (
+                <span>
+                  (Repost from{' '}
+                  <Link to={'/post/' + post.repost_of} target="_blank">
+                    @{post.original_poster.username}
+                  </Link>
+                  )
+                </span>
+              ) : (
+                false
+              )}
           </span>
         </span>
         {post.image_url ? (
-          <img
-            src={post.image_url}
-            className="img-fluid"
-            style={{marginBottom: '10px'}}
-          />
+          <Link
+            to={'/post/' + post.id}
+            className={
+              'post_image' + (this.props.is_single ? '' : ' post_image_smaller')
+            }
+          >
+            <img
+              src={post.image_url}
+              className="img-fluid"
+              style={{marginBottom: '10px'}}
+            />
+          </Link>
         ) : (
           false
         )}
@@ -201,14 +232,21 @@ class Timeline extends React.Component {
                 className="btn btn-sm"
               >
                 <i className="fa fa-share-square" />{' '}
-                {this.state.repost_done == true ? 'Reposted' : 'Repost'}
+                {this.state.repost_done == true
+                  ? 'Reposted'
+                  : 'Repost' +
+                    (post.repost_count ? '(' + post.repost_count + ')' : '')}
               </button>
             ) : (
               false
             )}
           </span>
           {this.state.show_comments && (
-            <PostComments comments={post.comments} post_id={post.id} />
+            <PostComments
+              comments={post.comments}
+              post_id={post.id}
+              is_single={this.props.is_single}
+            />
           )}
         </span>
       </li>

@@ -11,11 +11,13 @@ import FAQ from './components/Pages/FAQ';
 
 import CMSPage from './components/CMSPage';
 import Notifications from './components/Notifications';
+import Records from './components/Account/Records';
 import Transactions from './components/Transactions';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
 import Profile from './components/Account/Profile';
 import Timeline from './components/Account/Timeline';
+import SinglePost from './components/Social/SinglePost';
 import Dashboard from './components/Account/Dashboard';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
@@ -90,6 +92,14 @@ export default function getRoutes(store) {
       <Route
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
+        path="/records/:username/:duration"
+        component={Records}
+      />
+
+
+      <Route
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
         path="/transactions"
         component={Transactions}
       />
@@ -104,6 +114,12 @@ export default function getRoutes(store) {
         path="/feed/my"
         onEnter={ensureAuthenticated}
         component={FeedMy}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/post/:id"
+        onEnter={ensureAuthenticated}
+        component={SinglePost}
       />
       <Route
         onLeave={clearMessages}

@@ -78,13 +78,27 @@ class PostComments extends React.Component {
     //   return false;
     // }
     return (
-      <div>
+      <div  class='comment_list'>
         <ul>
           {this.props.comments &&
-            this.props.comments.map((comment, i) =>
-              this.renderComment(comment)
-            )}
+            this.props.comments.map((comment, i) => {
+              if (
+                !this.props.is_single &&
+                i > 1 &&
+                this.props.comments.length > 1
+              ) {
+                return false;
+              }
+              return this.renderComment(comment);
+            })}
           {this.state.posts.map((comment, i) => this.renderComment2(comment))}
+          {!this.props.is_single && this.props.comments.length > 1 ? (
+            <li>
+              <a href={'/post/' + this.props.post_id}>Show all comments</a>
+            </li>
+          ) : (
+            false
+          )}
         </ul>
         <div className="text-date" />
         <form

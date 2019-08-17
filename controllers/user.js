@@ -6,6 +6,7 @@ const User = require('../models/User');
 const UserFollower = require('../models/UserFollower');
 const mailer = require('./mailer');
 const Notif = require('../models/Notification');
+const Score = require('../models/Score');
 
 function generateToken(user) {
   const payload = {
@@ -52,7 +53,6 @@ exports.isAdmin = function(req, res, next) {
     res.status(401).send({msg: 'Unauthorized Access'});
   }
 };
-
 
 exports.loginPost = function(req, res, next) {
   req.assert('email', 'Email cannot be blank').notEmpty();
@@ -566,7 +566,7 @@ exports.singleUser_info = function(req, res, next) {
         // console.log(err);
         return res.status(200).send({user_info: {}, ok: false});
       }
-      let user = usr.toJSON();
+      const user = usr.toJSON();
       user.email = '';
       user.credit_balance = '';
       user.dob = '';
@@ -575,7 +575,7 @@ exports.singleUser_info = function(req, res, next) {
       user.cash_balance = '';
       user.followerCount = user.followerCount.length;
       user.followingCount = user.followingCount.length;
-     res.status(200).send({
+      res.status(200).send({
         user_info: user,
         ok: true
       });
@@ -588,13 +588,13 @@ exports.singleUser_info = function(req, res, next) {
             {patch: true}
           )
           .then(function() {
-            console.log('done')
+            console.log('done');
           })
           .catch(function(err) {
             console.log(err);
           });
       }
-      return ;
+      return;
     })
     .catch(function(err) {
       console.log(err);
@@ -763,98 +763,49 @@ exports.unbanUser = function(req, res, next) {
   }
 };
 
-/**
- * POST /auth/facebook
- * Sign in with Facebook
- //  */
-// exports.authFacebook = function(req, res) {
-//   const profileFields = ['id', 'name', 'email', 'gender', 'location'];
-//   const accessTokenUrl = 'https://graph.facebook.com/v2.5/oauth/access_token';
-//   const graphApiUrl =
-//     'https://graph.facebook.com/v2.5/me?fields=' + profileFields.join(',');
-//
-//   const params = {
-//     code: req.body.code,
-//     client_id: req.body.clientId,
-//     client_secret: process.env.FACEBOOK_SECRET,
-//     redirect_uri: req.body.redirectUri
-//   };
-//
-//   // Step 1. Exchange authorization code for access token.
-//   request.get({url: accessTokenUrl, qs: params, json: true}, function(
-//     err,
-//     response,
-//     accessToken
-//   ) {
-//     if (accessToken.error) {
-//       return res.status(500).send({msg: accessToken.error.messdob});
-//     }
-//
-//     // Step 2. Retrieve user's profile information.
-//     request.get({url: graphApiUrl, qs: accessToken, json: true}, function(
-//       err,
-//       response,
-//       profile
-//     ) {
-//       if (profile.error) {
-//         return res.status(500).send({msg: profile.error.messdob});
-//       }
-//
-//       // Step 3a. Link accounts if user is authenticated.
-//       if (req.isAuthenticated()) {
-//         new User({facebook: profile.id}).fetch().then(function(user) {
-//           if (user) {
-//             return res.status(409).send({
-//               msg:
-//                 'There is already an existing account linked with Facebook that belongs to you.'
-//             });
-//           }
-//           user = req.user;
-//           user.set('name', user.get('name') || profile.name);
-//           user.set('gender', user.get('gender') || profile.gender);
-//           user.set(
-//             'picture',
-//             user.get('picture') ||
-//               'https://graph.facebook.com/' + profile.id + '/picture?type=large'
-//           );
-//           user.set('facebook', profile.id);
-//           user.save(user.changed, {patch: true}).then(function() {
-//             res.send({token: generateToken(user), user: user});
-//           });
-//         });
-//       } else {
-//         // Step 3b. Create a new user account or return an existing one.
-//         new User({facebook: profile.id}).fetch().then(function(user) {
-//           if (user) {
-//             return res.send({token: generateToken(user), user: user});
-//           }
-//           new User({email: profile.email}).fetch().then(function(user) {
-//             if (user) {
-//               return res.status(400).send({
-//                 msg:
-//                   user.get('email') +
-//                   ' is already associated with another account.'
-//               });
-//             }
-//             user = new User();
-//             user.set('name', profile.name);
-//             user.set('email', profile.email);
-//             user.set('gender', profile.gender);
-//             user.set('location', profile.location && profile.location.name);
-//             user.set(
-//               'picture',
-//               'https://graph.facebook.com/' + profile.id + '/picture?type=large'
-//             );
-//             user.set('facebook', profile.id);
-//             user.save().then(function(user) {
-//               return res.send({token: generateToken(user), user: user});
-//             });
-//           });
-//         });
-//       }
-//     });
-//   });
-// };
+exports.records = function(req, res, next) {
+  const username = req.query.username;
+  const duration = req.query.duration;
+  if (!username || !duration) {
+    return res.status(400).send({ok: false, msg: 'Invalid nubmer of params'});
+  }
+  new User()
+    .where({
+      username: username
+    })
+    .fetch()
+    .then(function(usr) {
+      if (!usr) {
+        return res.status(400).send({ok: false, msg: 'No such username'});
+      }
+      usr = usr.toJSON();
+      const user_id = usr.id;
+      let scr = new Score();
+      scr = scr.where({
+        user_id: user_id
+      });
+      if (duration == 'season') {
+        const year = moment().format('YYYY');
+        const season = moment().format('Q');
+
+        scr = scr.where({
+          year: year,
+          season: season
+        });
+      }
+      scr
+        .fetchAll({
+          withRelated: ['ladder', 'ladder.game_info']
+        })
+        .then(function(items) {
+          res.status(200).send({ok: true, records: items.toJSON()});
+        })
+        .catch(function(err) {
+          console.log(err);
+          return res.status(400).send({ok: false, msg: 'Failed to fetch'});
+        });
+    });
+};
 
 exports.authFacebookCallback = function(req, res) {
   res.render('loading');

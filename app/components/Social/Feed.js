@@ -84,6 +84,9 @@ class Feed extends React.Component {
                       Latest Posts
                       {hashtag ? ' - #' + hashtag : ''}
                     </h4>
+                    {
+                        this.props.user ? 
+                        false: <div class='alert alert-warning'>You need to be logged in to see the posts</div>}
                     <ul className="timeline">
                       {this.state.posts &&
                         this.state.posts.map((post, i) => {

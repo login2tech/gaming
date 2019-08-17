@@ -3,7 +3,7 @@ const Item = require('./Team');
 const ItemChild = require('./TeamUser');
 const User = require('../../models/User');
 const ObjName = 'Team';
-const Notif = require('../../models/Notification')
+const Notif = require('../../models/Notification');
 
 exports.team_pic = function(req, res, next) {
   if (!req.body.profile_picture && !req.body.cover_picture) {
@@ -34,6 +34,24 @@ exports.approve = function(req, res, next) {
   //
   if (!req.body.team_id) {
     res.status(400).send({ok: false, msg: 'Please enter Team ID'});
+  }
+  if (req.body.mode == 'reject') {
+    new ItemChild().where({team_id: req.body.team_id, user_id: req.user.id})
+      .destroy()
+      .then(function(teamusr) {
+        res.status(200).send({
+          ok: true,
+          msg: 'Rejected the invitation.'
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+        res.status(400).send({
+          ok: false,
+          msg: 'failed to reject invite'
+        });
+      });
+    return;
   }
   new ItemChild({team_id: req.body.team_id, user_id: req.user.id})
     .fetch()
@@ -67,7 +85,7 @@ exports.approve = function(req, res, next) {
       console.log(err);
       res.status(400).send({
         ok: false,
-        msg: 'failed to invite user'
+        msg: 'failed to accept invite'
       });
     });
 };
@@ -118,14 +136,17 @@ exports.invite = function(req, res, next) {
                 ok: true,
                 msg: 'User invited successfully.'
               });
-              new Notif().save({
-                user_id : user_id,
-                description: 'You have been invited to a team',
-                type :'team_invite',
-                object_id : team.id
-              }).then(function(){}).catch(function(er){
-                console.log(er);
-              })
+              new Notif()
+                .save({
+                  user_id: user_id,
+                  description: 'You have been invited to a team',
+                  type: 'team_invite',
+                  object_id: team.id
+                })
+                .then(function() {})
+                .catch(function(er) {
+                  console.log(er);
+                });
             })
             .catch(function(err) {
               console.log(err);
@@ -274,7 +295,6 @@ exports.addItem = function(req, res, next) {
 
 exports.updateItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
- 
 
   const errors = req.validationErrors();
   if (errors) {

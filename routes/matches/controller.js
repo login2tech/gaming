@@ -25,7 +25,7 @@ const giveXpToMember = function(uid, match_id) {
       if (usr) {
         let xp = usr.get('life_xp');
         const double_xp = usr.get('double_xp');
-        const xP_to_add = getXPBasedOn(xp);
+        let xP_to_add = getXPBasedOn(xp);
 
         if (double_xp) {
           xP_to_add = xP_to_add * 2;
@@ -165,6 +165,7 @@ const takeXpFromMember = function(uid, match_id) {
 };
 
 const addScoreForMember = function(uid, ladder_id, type) {
+  console.log('168');
   const year = moment().format('YYYY');
   const season = moment().format('Q');
 
@@ -204,23 +205,25 @@ const addScoreForMember = function(uid, ladder_id, type) {
     .catch(function(err) {
       console.log(7, err);
     });
+  // console.log('208')
 
   new User()
     .where({id: uid})
     .fetch()
     .then(function(usr) {
+      let tpye_val;
       if (usr) {
-        const tpye_val = usr.get(type);
+        tpye_val = usr.get(type);
+        tpye_val++;
+        usr
+          .save({[type]: tpye_val}, {patch: true})
+          .then(function(usr) {
+            console.log('221');
+          })
+          .catch(function(err) {
+            console.log(7, err);
+          });
       }
-      tpye_val++;
-      usr
-        .save({[type]: tpye_val}, {patch: true})
-        .then(function(usr) {
-          //
-        })
-        .catch(function(err) {
-          console.log(7, err);
-        });
     })
     .catch(function(err) {
       console.log(7, err);
@@ -376,7 +379,7 @@ exports.saveScore = function(req, res, next) {
         return;
       }
 
-      if (val.team_1_result != '' && val.team_2_result != '') {
+      if (val.team_1_result && val.team_2_result) {
         if (val.team_1_result != val.team_2_result) {
           val.status = 'disputed';
           val.result = 'disputed';
@@ -384,13 +387,35 @@ exports.saveScore = function(req, res, next) {
           const tmp = val.team_1_result.split('-');
           if (parseInt(tmp[0]) > parseInt(tmp[1])) {
             val.result = 'team_1';
-            val.status = 'Complete';
+            val.status = 'complete';
           } else if (parseInt(tmp[1]) > parseInt(tmp[0])) {
             val.result = 'team_2';
-            val.status = 'Complete';
+            val.status = 'complete';
           } else {
             val.status = 'tie';
             val.result = 'Tie';
+          }
+        }
+      } else {
+        // pehle se result koi b ni posted, first time post ho rha h but lose dala h khud ka toh close match
+        // console.log(
+        // 'pehle se result koi b ni posted, first time post ho rha h but lose dala h khud ka toh close match'
+        // );
+        const winner = false;
+        // console.log(val);
+        if (val.team_1_result) {
+          const tmp = val.team_1_result.split('-');
+          if (parseInt(tmp[0]) < parseInt(tmp[1])) {
+            val.result = 'team_2';
+            val.team_2_result = val.team_1_result;
+            val.status = 'complete';
+          }
+        } else if (val.team_2_result) {
+          const tmp = val.team_2_result.split('-');
+          if (parseInt(tmp[0]) > parseInt(tmp[1])) {
+            val.result = 'team_1';
+            val.team_1_result = val.team_2_result;
+            val.status = 'complete';
           }
         }
       }
@@ -418,8 +443,8 @@ exports.saveScore = function(req, res, next) {
               win_team_members = match.get('team_2_players');
               loose_team_members = match.get('team_1_players');
             }
-            console.log('winers are ', win_team_members);
-            console.log('lossers are ', loose_team_members);
+            // console.log('winers are ', win_team_members);
+            // console.log('lossers are ', loose_team_members);
 
             win_team_members = win_team_members.split('|');
             loose_team_members = loose_team_members.split('|');
@@ -432,11 +457,13 @@ exports.saveScore = function(req, res, next) {
               val.result == 'team_1'
                 ? tmp_match.team_2_id
                 : tmp_match.team_1_id;
-            console.log('giving xp now');
+
+            // giveWinToTeam(award_team_id,win_team_members,  tmp_match.id);
             giveXPtoTeam(award_team_id, win_team_members, tmp_match.id);
             takeXPfromTeam(loose_team_id, loose_team_members, tmp_match.id);
+
             if (tmp_match.match_type == 'paid') {
-              console.log('paid match giving xp');
+              // console.log('paid match giving xp');
               giveMoneyBackToTeam(
                 award_team_id,
                 tmp_match.match_fee,
@@ -684,15 +711,15 @@ exports.listupcoming = function(req, res, next) {
       if (!item) {
         return res.status(200).send({ok: true, items: []});
       }
-      item = item.toJSON() ;
+      item = item.toJSON();
 
-      let games_obj =  {};
-      for (var i = item.length - 1; i >= 0; i--) {
-        if(!games_obj['game_'+item[i].game_id])
-          games_obj['game_'+item[i].game_id] = [];
-        games_obj['game_'+item[i].game_id].push(item[i]);
+      const games_obj = {};
+      for (let i = item.length - 1; i >= 0; i--) {
+        if (!games_obj['game_' + item[i].game_id]) {
+          games_obj['game_' + item[i].game_id] = [];
+        }
+        games_obj['game_' + item[i].game_id].push(item[i]);
       }
-
 
       return res.status(200).send({ok: true, items: games_obj});
     })

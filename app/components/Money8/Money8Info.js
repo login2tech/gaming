@@ -205,7 +205,7 @@ class Money8Info extends React.Component {
   }
 
   renderScoreSubmit() {
-    return (<div class="alert alert-danger">you are not allowed to submit scrore</div>);
+    return (<div className="alert alert-danger">you are not allowed to submit scrore</div>);
     // if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
     //   return false;
     // }

@@ -30,9 +30,7 @@ class Notifications extends React.Component {
   }
 
   render() {
-    if (this.state.is_loaded && !this.state.is_page) {
-      return <NotFound />;
-    }
+     
     return (
       <div>
         <section className="page_title_bar">
@@ -73,6 +71,7 @@ class Notifications extends React.Component {
                         lnk = '/teams/view/'+notif.object_id;
                       }else if(notif.type == 'post')
                       {
+                        lnk = '/post/'+notif.object_id;
                         // post
                       }else if(notif.type =='follower')
                       {

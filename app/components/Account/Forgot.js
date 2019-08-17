@@ -55,7 +55,7 @@ class Forgot extends React.Component {
                       </button>
                     </div>
                     <div className="form-group col-md-12 text-center">
-                      <Link to="/login" class="forgot_pass">
+                      <Link to="/login" className="forgot_pass">
                         Login instead{' '}
                         <i
                           className="fa fa-long-arrow-right m-l-5"

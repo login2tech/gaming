@@ -137,7 +137,7 @@ class NewTeam extends React.Component {
     ) {
       return false;
     }
-    if (parseInt(this.state.match_players) > this.state.using_users.length) {
+    if (parseInt(this.state.match_players)  != this.state.using_users.length) {
       return false;
     }
 

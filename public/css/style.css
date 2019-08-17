@@ -4567,11 +4567,13 @@ span.rank_prog_done {
     display: block;
 }
 
-.modal-content, .modal-content * {
+.modal-content, .modal-content div{
     background: #222;
     color: #fff;
 }
-
+.modal-content .btn:not(.upvoted){
+    background: none;
+}
 .modal-content:after {
     position: fixed;
     content: ' ';
@@ -4608,10 +4610,14 @@ button.is_pinned.pinner {
     margin-left: 10px;
 }
 
-button.btn.btn-danger {
+button.btn.btn-danger:not(.btn-sm) {
     background: #dc3545;
     border: 0;
     height: 40px;
+}
+.btn.btn-sm.btn-danger
+{
+    margin-left: 5px;
 }
 
 li.tournament-box {
@@ -4845,6 +4851,7 @@ img.img-circle {
 .image_avar img {
     margin-right: 10px;
     width: 50px;
+    height: 50px;
 }
 span.dot.notif_dot {
     /*position: absolute;
@@ -4875,4 +4882,77 @@ button.btn.removeNotif {
     right: 0;
     font-size: 12px;
     top: calc(50% - 15px);
+}
+
+/*.game_pic_tournament.profile_pic_outline{
+    max-height: 200px;overflow: hidden;
+}*/
+
+.square.profile_pic_outline{
+      width: 100%;
+  position: relative;
+
+}
+
+
+.square.profile_pic_outline:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+  
+.square.profile_pic_outline .content {
+  position: absolute;
+  width: 100%;
+  height: 100%;overflow: hidden;
+}
+
+
+.photo_progress {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100%;
+    font-size: 50px;
+    background: #111;
+}
+.comment_list li {
+    margin-top: 9px;
+}
+
+.comment_list {
+    margin-top: 10px;
+}
+
+a:hover {
+    color: #afafaf;
+    text-decoration: none;
+}
+.post_image.post_image_smaller {
+    max-height: 200px;
+    overflow: hidden;
+    position: relative;display: inline-block;
+}
+
+.post_image.post_image_smaller:after {
+    position: absolute;
+    bottom: 0;
+    height: 100px;
+    background: linear-gradient(0deg, black, transparent);
+    content: ' click to open post';
+    width: 100%;
+    right: 0;
+    text-align: center;
+    padding-top: 68px;font-size:12px;
+    color: #5b5b5b;
+}
+.no-case-change{
+    text-transform: none !important;
+}
+.m-b-20{
+    margin-bottom: 20px;
 }
