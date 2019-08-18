@@ -20,3 +20,6 @@ routes.post('/edit', u_ctrl.ensureAuthenticated, ctrl.updateItem);
 routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);
 
 routes.post('/pics', u_ctrl.ensureAuthenticated, ctrl.team_pic);
+
+routes.post('/removeMembers', u_ctrl.ensureAuthenticated, ctrl.removeMembers);
+routes.post('/disband', u_ctrl.ensureAuthenticated, ctrl.disband);

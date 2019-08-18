@@ -4956,3 +4956,6 @@ a:hover {
 .m-b-20{
     margin-bottom: 20px;
 }
+td a {
+    color: #547dff;
+}

@@ -2,7 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
-import {inviteToTeam, approveRequest, teamPic} from '../../actions/team';
+import {
+  inviteToTeam,
+  approveRequest,
+  teamPic,
+  removeMembers,
+  disband
+} from '../../actions/team';
 import Messages from '../Modules/Messages';
 import axios from 'axios';
 
@@ -12,9 +18,10 @@ class TeamInfo extends React.Component {
     this.state = {
       team_info: {ladder: {}, team_users: []},
       game: {},
-      is_loaded:false,
+      is_loaded: false,
       match_played: [],
       new_invite_user_name: '',
+      removing: [],
       is_edit_mode: false
     };
   }
@@ -76,7 +83,8 @@ class TeamInfo extends React.Component {
           this.setState(
             {
               is_loaded: true,
-              team_info: json.item
+              team_info: json.item,
+              removing: []
             },
             () => {
               this.fetchGame();
@@ -197,6 +205,44 @@ class TeamInfo extends React.Component {
     return this.state.team_info.team_creator == this.props.user.id
       ? true
       : false;
+  }
+
+  removeUsers() {
+    if (!confirm('Are you sure you want to perform this action?')) {
+      return;
+    }
+    // event.preventDefault();
+    this.props.dispatch(
+      removeMembers(
+        {
+          team_id: this.state.team_info.id,
+          members: this.state.removing
+        },
+        st => {
+          if (st) {
+            this.fetchTeam();
+          }
+        }
+      )
+    );
+  }
+  disband() {
+    if (!confirm('Are you sure you want to perform this action?')) {
+      return;
+    }
+    this.props.dispatch(
+      disband(
+        {
+          team_id: this.state.team_info.id
+          // members: this.state.removing
+        },
+        st => {
+          if (st) {
+            this.fetchTeam();
+          }
+        }
+      )
+    );
   }
 
   render() {
@@ -330,19 +376,20 @@ class TeamInfo extends React.Component {
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
                     <span className="pull-right">
-                      {this.props.user && this.props.user.id ==
-                        this.state.team_info.team_creator && (
-                        <button
-                          className="is_link btn"
-                          onClick={() => {
-                            this.setState({
-                              is_edit_mode: !this.state.is_edit_mode
-                            });
-                          }}
-                        >
-                          <i className="fa fa-edit" /> edit
-                        </button>
-                      )}
+                      {this.props.user &&
+                        this.props.user.id ==
+                          this.state.team_info.team_creator && (
+                          <button
+                            className="is_link btn"
+                            onClick={() => {
+                              this.setState({
+                                is_edit_mode: !this.state.is_edit_mode
+                              });
+                            }}
+                          >
+                            <i className="fa fa-edit" /> edit
+                          </button>
+                        )}
                     </span>
                     <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
@@ -360,15 +407,40 @@ class TeamInfo extends React.Component {
                     </thead>
                     <tbody>
                       {this.state.team_info.team_users.map((team_user, i) => {
+                        if (team_user.removed == 1) {
+                          return false;
+                        }
                         // console.log(team_user.user_info.id, this.props.user.id);
                         return (
                           <tr key={team_user.id}>
                             {this.state.is_edit_mode && (
                               <td>
-                                {this.props.user && team_user.user_info.id !=
-                                  this.props.user.id && (
-                                  <input type="checkbox" />
-                                )}
+                                {this.props.user &&
+                                  team_user.user_info.id !=
+                                    this.props.user.id && (
+                                    <input
+                                      type="checkbox"
+                                      checked={
+                                        this.state.removing.indexOf(
+                                          team_user.user_info.id
+                                        ) > -1
+                                      }
+                                      onChange={() => {
+                                        const removing = this.state.removing;
+                                        const idx = removing.indexOf(
+                                          team_user.user_info.id
+                                        );
+                                        if (idx > -1) {
+                                          removing.splice(idx, 1);
+                                        } else {
+                                          removing.push(team_user.user_info.id);
+                                        }
+                                        this.setState({
+                                          removing: removing
+                                        });
+                                      }}
+                                    />
+                                  )}
                               </td>
                             )}
                             <td>
@@ -422,7 +494,8 @@ class TeamInfo extends React.Component {
                               {team_user.accepted
                                 ? moment(team_user.created_at).format('lll')
                                 : 'Not Yet Accepted'}{' '}
-                              {this.props.user && !team_user.accepted &&
+                              {this.props.user &&
+                              !team_user.accepted &&
                               team_user.user_id == this.props.user.id ? (
                                 <button
                                   className="btn btn-sm btn-success"
@@ -435,7 +508,8 @@ class TeamInfo extends React.Component {
                               ) : (
                                 false
                               )}
-                              { this.props.user && !team_user.accepted &&
+                              {this.props.user &&
+                              !team_user.accepted &&
                               team_user.user_id == this.props.user.id ? (
                                 <button
                                   className="btn btn-sm btn-danger"
@@ -455,13 +529,32 @@ class TeamInfo extends React.Component {
                     </tbody>
                   </table>
                   {this.state.is_edit_mode && (
-                    <button disabled className="btn btn-danger sm">
-                      Remove from squad
-                    </button>
+                    <div>
+                      {' '}
+                      <button
+                        disabled={this.state.removing.length < 1}
+                        className="btn btn-danger sm"
+                        onClick={() => {
+                          this.removeUsers();
+                        }}
+                      >
+                        Remove from squad
+                      </button>
+                      <button
+                        className="is_link btn"
+                        onClick={() => {
+                          this.disband();
+                        }}
+                      >
+                        <span className=" fa fa-times text-danger" /> Disband
+                        team
+                      </button>
+                    </div>
                   )}
                 </div>
 
-                { this.props.user && this.state.team_info.team_creator == this.props.user.id &&
+                {this.props.user &&
+                this.state.team_info.team_creator == this.props.user.id &&
                 parseInt(this.state.team_info.ladder.max_players) >
                   parseInt(this.state.team_info.team_users.length) ? (
                   <div className="content_box">

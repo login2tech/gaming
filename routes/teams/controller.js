@@ -350,3 +350,31 @@ exports.deleteItem = function(req, res, next) {
         .send({msg: 'Something went wrong while deleting the ' + ObjName});
     });
 };
+
+exports.removeMembers = function(req, res, next)
+{
+  let team_id = req.body.team_id;
+  let members = req.body.members;
+  if(!team_id || !members)
+  {
+    return res.status(400).send({ok:false, msg:'invalid number of params'});
+  }
+  new ItemChild().where( 'user_id', 'in', members).save({
+
+  }, {method:'update'}).then(function(data){
+    res.status(200).send({ok:true, msg: 'Successfully removed users.'})
+  })
+
+
+}
+exports.disband = function(req, res, next){
+  let team_id = req.body.team_id;
+  if(!team_id )
+  {
+    return res.status(400).send({ok:false, msg:'invalid number of params'});
+  }
+  new ItemChild().where({
+    
+  })
+}
+

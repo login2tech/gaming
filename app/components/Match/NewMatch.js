@@ -445,6 +445,8 @@ class NewTeam extends React.Component {
                           <tbody>
                             {this.state.team_info.team_users.map(
                               (team_user, i) => {
+                                if(team_user.removed  == 1)
+                                  return false;
                                 return (
                                   <tr key={team_user.id}>
                                     <td>

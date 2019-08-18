@@ -1111,6 +1111,8 @@ class TournamentInfo extends React.Component {
                 </thead>
                 <tbody>
                   {this.state.team_selected.team_users.map((team_user, i) => {
+                    if(team_user.removed  == 1)
+                      return false;
                     return (
                       <tr key={team_user.id}>
                         <td>
