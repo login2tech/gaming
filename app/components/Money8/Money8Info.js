@@ -11,11 +11,11 @@ class Money8Info extends React.Component {
     super(props);
     this.state = {
       title: '',
-
+      is_loaded: false,
 
       match: {
-        team_1 : '',
-        team_2 : '',
+        team_1: '',
+        team_2: '',
         game: {},
         ladder: {}
       },
@@ -61,12 +61,14 @@ class Money8Info extends React.Component {
   // }
 
   saveScore() {
-    // const scrore = '';
+    const team_1 = this.state.match.team_1.split('|');
+    const team_2 = this.state.match.team_2.split('|');
+
     const val = {};
     const me = this.props.user.id;
 
     if (
-      me == this.state.match.team_1_info.team_creator &&
+      team_1.indexOf('' + this.props.user.id) > -1 &&
       !this.state.match.team_1_result
     ) {
       val.team_1_result =
@@ -74,14 +76,13 @@ class Money8Info extends React.Component {
     }
 
     if (
-      me == this.state.match.team_2_info.team_creator &&
+      team_2.indexOf('' + this.props.user.id) > -1 &&
       !this.state.match.team_2_result
     ) {
       val.team_2_result =
         '' + this.state.their_score + '-' + this.state.my_score;
     }
-    val.id = this.state.match.id;
-    //console.log(val);
+    val.id = this.state.match.id; 
     this.props.dispatch(saveScores(val, this.props.user));
   }
 
@@ -105,6 +106,9 @@ class Money8Info extends React.Component {
   }
 
   renderJoin() {
+    if (!this.props.user) {
+      return false;
+    }
     if (!this.state.match.id) {
       return false;
     }
@@ -205,53 +209,64 @@ class Money8Info extends React.Component {
   }
 
   renderScoreSubmit() {
-    return (<div className="alert alert-danger">you are not allowed to submit scrore</div>);
-    // if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
-    //   return false;
-    // }
-    // if (!moment().isAfter(moment(this.state.match.starts_at))) {
-    //   return false;
-    // }
-    // const me = this.props.user.id;
-    // if (
-    //   me != this.state.match.team_1_info.team_creator &&
-    //   this.state.match.team_2_info.team_creator != me
-    // ) {
-    //   return false;
-    // }
-
-    if (
-      me == this.state.match.team_1_info.team_creator &&
-      this.state.match.team_1_result
-    ) {
-      return (
-        <p className="text-success">
-          You have updated score as {this.state.match.team_1_result}
-        </p>
-      );
+    if (!this.state.is_loaded) {
+      return false;
     }
+    const team_1 = this.state.match.team_1.split('|');
+    const team_2 = this.state.match.team_2.split('|');
+ 
 
     if (
-      me == this.state.match.team_2_info.team_creator &&
+      // team_1.indexOf(''+this.props.user.id) > -1 &&
+      this.state.match.team_1_result &&
       this.state.match.team_2_result
     ) {
       return (
-        <p className="text-success">
-          You have updated score as {this.state.match.team_2_result}
-        </p>
+        <div>
+          <p className="alert alert-success">
+            Score submitted by Team 1 = {this.state.match.team_1_result}
+          </p>
+          <p className="alert alert-success">
+            Score submitted by Team 2 = {this.state.match.team_2_result}
+          </p>
+        </div>
       );
     }
 
-    // i have submitted?
+  
+    if(
+       team_1.indexOf(''+this.props.user.id) > -1 &&
+       this.state.match.team_1_result
+       ) {
+       return (
+        <div>
+          <p className="text-success">
+            Score submitted by Team 1 = {this.state.match.team_1_result}
+          </p>
+          
+        </div>
+      );
+    }
 
-    //
-    // my_score
-    // their_score
+  
+    if(
+       team_2.indexOf(''+this.props.user.id) > -1 &&
+       this.state.match.team_2_result
+       ) {
+       return (
+        <div>
+          <p className="text-success">
+            Score submitted by Team 2 = {this.state.match.team_2_result}
+          </p>
+          
+        </div>
+      );
+    }
+
 
     return (
       <div>
         <h5 className="prizes_desclaimer">Report Scrore</h5>
-
         <div className="well well-sm well-dark margin-20">
           <form
             className="light-form"
@@ -316,121 +331,97 @@ class Money8Info extends React.Component {
     );
   }
 
-
-  renderStartedMatch(){
-
-    let team_1 = this.state.match.team_1.split('|');
-    let team_2 = this.state.match.team_2.split('|');
+  renderStartedMatch() {
+    const team_1 = this.state.match.team_1.split('|');
+    const team_2 = this.state.match.team_2.split('|');
     return (
-    <div className="content_box">
+      <div className="content_box">
+        {this.renderScoreSubmit()}
 
-     {this.renderScoreSubmit()}
+        <h5 className="prizes_desclaimer">
+          <i className="fa fa-users" aria-hidden="true" /> Team 1
+        </h5>
+        <table className="table table-striped table-ongray table-hover">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Gamer Tag</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.match.players_obj &&
+              this.state.match.players_obj.map((team_user, i) => {
+                if (team_1.indexOf('' + team_user.id) > -1) {
+                  return (
+                    <tr key={team_user.id}>
+                      <td>
+                        <Link target="_blank" to={'/u/' + team_user.username}>
+                          {team_user.username}
+                        </Link>
+                      </td>
+                      <td>
+                        {team_user[
+                          'gamer_tag_' + this.state.match.ladder.gamer_tag
+                        ] ? (
+                          team_user[
+                            'gamer_tag_' + this.state.match.ladder.gamer_tag
+                          ]
+                        ) : (
+                          <span className="text-danger">No Gamertag</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                } else {
+                  return false;
+                }
+              })}
+          </tbody>
+        </table>
 
+        <br />
 
-      <h5 className="prizes_desclaimer">
-        <i className="fa fa-users" aria-hidden="true" /> PLAYERS
-      </h5>
-      <br />
-
-      <h5 className="prizes_desclaimer">
-        <i className="fa fa-users" aria-hidden="true" /> Team 1
-      </h5>
-      <table className="table table-striped table-ongray table-hover">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Gamer Tag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.match.players_obj &&
-            this.state.match.players_obj.map((team_user, i) => {
-              if(team_1.indexOf(''+team_user.user.id) > -1){
-              return (
-                <tr key={team_user.id}>
-                  <td>
-                    <Link
-                      target="_blank"
-                      to={'/u/' + team_user.username}
-                    >
-                      {team_user.username}
-                    </Link>
-                  </td>
-                  <td>
-                    {team_user[
-                      'gamer_tag_' +
-                        this.state.match.ladder.gamer_tag
-                    ] ? (
-                      team_user[
-                        'gamer_tag_' +
-                          this.state.match.ladder.gamer_tag
-                      ]
-                    ) : (
-                      <span className="text-danger">
-                        No Gamertag
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              );
-          }
-            else
-              return false;
-            })}
-        </tbody>
-      </table>
-
-
-      <br />
-
-      <h5 className="prizes_desclaimer">
-        <i className="fa fa-users" aria-hidden="true" /> Team 2
-      </h5>
-      <table className="table table-striped table-ongray table-hover">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Gamer Tag</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.match.players_obj &&
-            this.state.match.players_obj.map((team_user, i) => {
-              if(team_2.indexOf(''+team_user.user.id) > -1){
-              return (
-                <tr key={team_user.id}>
-                  <td>
-                    <Link
-                      target="_blank"
-                      to={'/u/' + team_user.username}
-                    >
-                      {team_user.username}
-                    </Link>
-                  </td>
-                  <td>
-                    {team_user[
-                      'gamer_tag_' +
-                        this.state.match.ladder.gamer_tag
-                    ] ? (
-                      team_user[
-                        'gamer_tag_' +
-                          this.state.match.ladder.gamer_tag
-                      ]
-                    ) : (
-                      <span className="text-danger">
-                        No Gamertag
-                      </span>
-                    )}
-                  </td>
-                </tr>
-              );
-          }
-            else
-              return false;
-            })}
-        </tbody>
-      </table>
-    </div>
+        <h5 className="prizes_desclaimer">
+          <i className="fa fa-users" aria-hidden="true" /> Team 2
+        </h5>
+        <table className="table table-striped table-ongray table-hover">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Gamer Tag</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.match.players_obj &&
+              this.state.match.players_obj.map((team_user, i) => {
+                if (team_2.indexOf('' + team_user.id) > -1) {
+                  return (
+                    <tr key={team_user.id}>
+                      <td>
+                        <Link target="_blank" to={'/u/' + team_user.username}>
+                          {team_user.username}
+                        </Link>
+                      </td>
+                      <td>
+                        {team_user[
+                          'gamer_tag_' + this.state.match.ladder.gamer_tag
+                        ] ? (
+                          team_user[
+                            'gamer_tag_' + this.state.match.ladder.gamer_tag
+                          ]
+                        ) : (
+                          <span className="text-danger">No Gamertag</span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                } else {
+                  return false;
+                }
+              })}
+          </tbody>
+        </table>
+      </div>
     );
   }
 
@@ -534,8 +525,6 @@ class Money8Info extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                 
-
                 {this.state.match.players_joined <
                 this.state.match.players_total ? (
                   <div className="content_box">

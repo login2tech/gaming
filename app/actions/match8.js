@@ -76,7 +76,7 @@ export function saveScores(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/m/' + json.match.id;
+          window.location.href = '/money8/' + json.match.id;
         });
       } else {
         return response.json().then(json => {
