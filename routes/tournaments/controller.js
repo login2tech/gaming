@@ -781,13 +781,14 @@ exports.addItem = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
+  console.log(req.body);
   new Item({
     title: req.body.title,
     game_id: req.body.game_id,
     ladder_id: req.body.ladder_id,
-    starts_at: req.body.starts_at,
-    registration_start_at: req.body.registration_start_at,
-    registration_end_at: req.body.registration_end_at,
+    starts_at:moment(req.body.starts_at),
+    registration_start_at:moment(req.body.registration_start_at),
+    registration_end_at:moment(req.body.registration_end_at),
     total_teams: req.body.total_teams,
     entry_fee: req.body.entry_fee,
     first_winner_price: req.body.first_winner_price,

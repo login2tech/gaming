@@ -163,6 +163,14 @@ export default function getRoutes(store) {
         component={NewThread}
       />
       <Route onLeave={clearMessages} path="/forums" component={Topics} />
+
+      <Route
+        onLeave={clearMessages}
+        path="/matchfinder/:id/:title"
+        component={MatchFinder}
+      />
+
+
       <Route
         onLeave={clearMessages}
         path="/matchfinder"

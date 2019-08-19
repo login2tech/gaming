@@ -63,25 +63,32 @@ class Home extends React.Component {
         <section className="featruedboxes">
           <div className="container">
             <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
+              <div className="col-md-6 col-sm-6 col-xs-6">
                 <div className="section-headline white-headline text-center">
-                  <h3>Upcoming tournaments</h3>
+                  <h3>
+                    Upcoming <br />
+                    matches
+                  </h3>
+                  <br />
+
+                  <br />
+                  <br />
+                  <Link to={'/matchfinder'} className="play_match_btn">
+                    View All
+                  </Link>
                 </div>
               </div>
-            </div>
+              <div className="col-md-6 col-sm-6 col-xs-6">
+                <div className="section-headline white-headline text-center">
+                  <h3>Upcoming tournaments</h3>
+                  <br />
 
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <ul
-                  id="upcoming-tournament"
-                  className="tournament-list active"
-                />
-              </div>
-
-              <div className="col-md-12 col-sm-12 col-xs-12 text-center">
-                <a className="play_match_btn" href="#">
-                  View All
-                </a>
+                  <br />
+                  <br />
+                  <Link to={'/tournaments'} className="play_match_btn">
+                    View All
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -115,7 +122,7 @@ class Home extends React.Component {
 
                       <a
                         href={
-                          '/games/' +
+                          '/matchfinder/' +
                           games.id +
                           '/' +
                           games.title.toLowerCase().replace(/ /g, '-')
@@ -147,7 +154,7 @@ class Home extends React.Component {
 
                       <a
                         href={
-                          '/games/' +
+                          '/matchfinder/' +
                           games.id +
                           '/' +
                           games.title.toLowerCase().replace(/ /g, '-')
@@ -163,8 +170,11 @@ class Home extends React.Component {
             </div>
           </div>
         </section>
-        <section className="tournaments">
+        {/*<section className="tournaments">
           <div className="container">
+
+
+
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-center">
@@ -174,17 +184,17 @@ class Home extends React.Component {
               </div>
             </div>
 
-            <div className="row">
+             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <ul
                   id="upcoming-tournament"
                   className="tournament-list active"
                 />
               </div>
-            </div>
+            </div> 
           </div>
-        </section>
-        <section className="teams">
+        </section>*/}
+        <section className="tournaments">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
@@ -229,7 +239,7 @@ class Home extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-center">
                   <h3>Go Prime, Get More Out of OnlyCompGaming Gaming.</h3>
-                  <Link className="play_match_btn" to="/membership">
+                  <Link className="play_match_btn" to="/shop">
                     View Plans
                   </Link>
                 </div>

@@ -702,11 +702,18 @@ exports.matches_of_user = function(req, res, next) {
 };
 
 exports.listupcoming = function(req, res, next) {
-  new Item()
+  let a = new Item()
     .orderBy('game_id', 'DESC')
     // .orderBy('created_at', 'DESC')
-    .where('starts_at', '>', moment())
-    .fetchAll({withRelated: ['ladder', 'game', 'team_1_info']})
+    .where('starts_at', '>', moment());
+
+  if (req.query.filter_id) {
+    a = a.where({
+      game_id: req.query.filter_id
+    });
+  }
+
+  a.fetchAll({withRelated: ['ladder', 'game', 'team_1_info']})
     .then(function(item) {
       if (!item) {
         return res.status(200).send({ok: true, items: []});
