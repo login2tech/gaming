@@ -2,7 +2,7 @@ const Item = require('./TicketReply');
 const ObjName = 'TicketReply';
 
 exports.listItem = function(req, res, next) {
-  const n = new Item().orderBy('id', 'DESC');
+  const n = new Item().orderBy('id', 'ASC');
   n.where({ticket_id: req.query.ticket_id});
   n.fetchAll({withRelated: ['user']})
     .then(function(items) {
@@ -87,6 +87,7 @@ exports.addItem = function(req, res, next) {
     content: req.body.text,
     ticket_id: req.body.ticket_id,
     user_id: req.user.id,
+    attachment  : req.body.attachment  ? req.body.attachment  : '',
     from_admin: req.user.role == 'admin' ? true : false
   })
     .save()

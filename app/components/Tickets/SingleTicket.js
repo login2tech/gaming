@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import { resetPassword } from '../../actions/auth';
+import axios from 'axios';
 import Messages from '../Modules/Messages';
 import moment from 'moment';
 
@@ -11,11 +11,15 @@ class SingleTicket extends React.Component {
       page_loaded: false,
       items: [],
       text: '',
-      ticket: {user: {first_name: '',last_name:''}}
+      new_post_image: '',
+      ticket: {user: {first_name: '', last_name: ''}}
     };
   }
 
   submitForm(event) {
+    this.setState({
+      submit_started: true
+    });
     event.preventDefault();
     fetch('/api/ticket_replies/add', {
       method: 'POST',
@@ -25,7 +29,8 @@ class SingleTicket extends React.Component {
       },
       body: JSON.stringify({
         text: this.state.text,
-        ticket_id: this.state.ticket.id
+        ticket_id: this.state.ticket.id,
+        attachment: this.state.new_post_image ? this.state.new_post_image : ''
       })
     }).then(rawResponse => {
       rawResponse
@@ -47,7 +52,8 @@ class SingleTicket extends React.Component {
             this.setState(
               {
                 text: '',
-                cur_page: 1
+                cur_page: 1,
+                submit_started: false
               },
               () => {
                 this.fetchReplies();
@@ -58,9 +64,15 @@ class SingleTicket extends React.Component {
               type: 'FAILURE',
               messages: Array.isArray(json) ? json : [json]
             });
+            this.setState({
+              submit_started: false
+            });
           }
         })
         .catch(err => {
+          this.setState({
+            submit_started: false
+          });
           const json = {ok: false, msg: 'Some error occoured'};
           this.props.dispatch({
             type: 'FAILURE',
@@ -121,6 +133,48 @@ class SingleTicket extends React.Component {
         }
       });
   }
+
+  askFile(cls, cb) {
+    const data = new FormData();
+    data.append('file', this.state[cls], this.state[cls].name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          //
+        }
+      })
+      .then(res => {
+        cb && cb(res.data);
+      })
+      .catch(err => {
+        alert('some error occoured in uploading file..');
+        this.setState({
+          upload_started: false
+        });
+        // console.log(err);
+      });
+  }
+
+  handleImageUpload = event => {
+    this.setState(
+      {
+        post_image_select: event.target.files[0],
+        upload_started: true,
+        uploaded: false
+      },
+      () => {
+        this.askFile('post_image_select', data => {
+          if (data && data.file) {
+            this.setState({
+              new_post_image: data.file,
+              upload_started: false,
+              uploaded: true
+            });
+          }
+        });
+      }
+    );
+  };
 
   render() {
     return (
@@ -199,7 +253,15 @@ class SingleTicket extends React.Component {
                   <div className="card post">
                     <div className="row">
                       <div className="col-sm-3 ticket_item_av">
-                        <span className={"profile_menu_item ticket_item "+(item.from_admin ? ' from_admin ' :' ')}>
+                        <span
+                          className={
+                            'profile_menu_item ticket_item ' +
+                            (item.from_admin &&
+                            this.state.ticket.user_id != item.user_id
+                              ? ' from_admin '
+                              : ' ')
+                          }
+                        >
                           <span className="profile_menu_item_inner">
                             <span className="menu_avatar">
                               <img
@@ -213,26 +275,23 @@ class SingleTicket extends React.Component {
                             </span>
                             <span className="menu_prof_name_w">
                               <span className="menu_prof_name_top">
-                              {
-                                item.from_admin ? 'SUPPORT STAF' : ''+item.user.first_name +
-                                  ' ' +
-                                  item.user.last_name
-                              } 
-                                
+                                {item.from_admin &&
+                                this.state.ticket.user_id != item.user_id
+                                  ? 'SUPPORT STAFF'
+                                  : '' +
+                                    item.user.first_name +
+                                    ' ' +
+                                    item.user.last_name}
                               </span>
                               <span className="menu_prof_name_bot">
-                                {moment(item.created_at).format(
-                                  'lll'
-                                )}
+                                {moment(item.created_at).format('lll')}
                               </span>
                             </span>
                           </span>
                         </span>
                       </div>
                       <div className="col-sm-9 post-content">
-                        <div
-                          dangerouslySetInnerHTML={{__html: item.content}}
-                        />
+                        <div dangerouslySetInnerHTML={{__html: item.content}} />
                         {item.attachment ? (
                           <a download href={item.attachment}>
                             Download attachment
@@ -263,9 +322,43 @@ class SingleTicket extends React.Component {
                           rows="5"
                         />
                       </div>
-                      <button type="submit" className="btn btn-primary">
+                      <button
+                        type="submit"
+                        className="btn btn-primary"
+                        disabled={
+                          this.state.upload_started ||
+                          !this.state.text ||
+                          this.state.submit_started
+                        }
+                      >
                         Reply
                       </button>
+                      <br />
+                      <br />
+                      <div className="form-group">
+                        Attach file:{' '}
+                        <input
+                          type="file"
+                          className="custom-file-inputs"
+                          id="customFile"
+                          style={{display: 'block !important'}}
+                          onChange={this.handleImageUpload}
+                        />
+                        {this.state.upload_started ? (
+                          <span className="text text-primary">
+                            uploading..please wait.
+                          </span>
+                        ) : (
+                          false
+                        )}
+                        {this.state.uploaded ? (
+                          <span className="text text-success">
+                            uploaded..please proceed with reply submission.
+                          </span>
+                        ) : (
+                          false
+                        )}
+                      </div>
                     </fieldset>
                   </form>
                 )}
