@@ -1,4 +1,3 @@
-// const fs = require('fs');
 const Item = require('./Thread');
 const ObjName = 'Thread';
 
@@ -86,26 +85,24 @@ exports.listSingleItem = function(req, res, next) {
 };
 
 exports.addItem = function(req, res, next) {
-  req.assert('title', 'Title cannot be blank').notEmpty();
-  // req.assert('content', 'Content cannot be blank').notEmpty();
-  // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
+  req.assert('ticket_title', 'Title cannot be blank').notEmpty();
+  req.assert('ticket_description', 'Description cannot be blank').notEmpty();
   const errors = req.validationErrors();
   if (errors) {
     return res.status(400).send(errors);
   }
   new Item({
-    title: req.body.title,
-    platform: req.body.platform,
-    image_url: req.body.image_url
-    // category_id: req.body.category_id,
-    // short_content: req.body.short_content
+    title: req.body.ticket_title,
+    description: req.body.ticket_description,
+    topic_id: req.body.topic_id,
+    user_id : req.user.id
   })
     .save()
     .then(function(item) {
       res.send({ok: true, msg: 'New Item has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});

@@ -14,8 +14,7 @@ class SingleThread extends React.Component {
       text: '',
       thread: {user: {}},
       pageCount: 1,
-      cur_page: this.props.params.page
-      // page:thi.
+      cur_page: this.props.params.page 
     };
   }
 
@@ -37,15 +36,6 @@ class SingleThread extends React.Component {
       rawResponse
         .json()
         .then(json => {
-          // console.log(json);
-          const element = document.getElementById('less_padding');
-          if (element) {
-            element.scrollIntoView({
-              behavior: 'smooth',
-              block: 'end',
-              inline: 'nearest'
-            });
-          }
           if (rawResponse.ok) {
             this.props.dispatch({
               type: 'SUCCESS',
@@ -74,18 +64,13 @@ class SingleThread extends React.Component {
             messages: Array.isArray(json) ? json : [json]
           });
         });
-    });
-    // const content = await rawResponse.json();
-
-    // console.log(content);
+    }); 
   }
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
-  componentWillUnmount() {
-    // this.serverRequest.abort();
-  }
+
   componentDidMount() {
     fetch('/api/thread/single/' + this.props.params.thread_id)
       .then(res => res.json())
@@ -108,6 +93,8 @@ class SingleThread extends React.Component {
         }
       });
   }
+
+  
   fetchReplies() {
     // var item_id =
     const paged = this.state.cur_page;
@@ -158,7 +145,52 @@ class SingleThread extends React.Component {
 
         <section className="contet_part" id="contet_part">
           <div className="container">
-            <Messages messages={this.props.messages} />
+            <div className="col-sm-12">
+              <div className="card post">
+                <span className="date">
+                  {moment(this.state.thread.created_at).format('lll')}
+                </span>
+                <div className="row">
+                  <div className="col-sm-3 user">
+                    <div className="text-center">
+                      <img
+                        src={
+                          this.state.thread.user &&
+                          this.state.thread.user.gravatar
+                        }
+                        width="90"
+                        height="140"
+                        className="img-fluid center-block"
+                      />
+                      <h3>
+                        {this.state.thread.user.first_name}{' '}
+                        {this.state.thread.user.last_name}
+                      </h3>
+                      {/*}<p>Been spending a lot of time on here!</p>*/}
+                      <table style={{width: '100%'}}>
+                        <tbody>
+                          <tr>
+                            <th>Joined:</th>
+                            <td>
+                              {moment(this.state.thread.user.created_at).format(
+                                'lll'
+                              )}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div className="col-sm-9 post-content">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: this.state.thread.description
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {this.state.items.map((item, i) => {
               return (
@@ -204,15 +236,6 @@ class SingleThread extends React.Component {
                         <div dangerouslySetInnerHTML={{__html: item.content}} />
                       </div>
                     </div>
-                    {/*}<span className="likes">
-                    3 users liked this{' '}
-                    <span className="span-post-no">
-                      <a href="">Like</a>
-                    </span>{' '}
-                    <span className="span-post-no">
-                      <a href="">Quote</a>
-                    </span>
-                  </span>*/}
                   </div>
                 </div>
               );
@@ -261,13 +284,6 @@ class SingleThread extends React.Component {
                 }}
                 previousLinkClassName={'page-link'}
                 nextLinkClassName={'page-link'}
-                // hrefBuilder={page =>
-                //   '/forums/thread/' +
-                //   this.props.params.thread_id +
-                //   '/page/' +
-                //   page +
-                //   '/'
-                // }
               />
             </div>
 
@@ -287,9 +303,12 @@ class SingleThread extends React.Component {
                       />
                     </div>
                     <button type="submit" className="btn btn-primary">
-                      Reply
+                      Add Comment
                     </button>
                   </fieldset>
+                  <br />
+                  <br />
+                  <Messages messages={this.props.messages} />
                 </form>
               )}
             </div>

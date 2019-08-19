@@ -24,6 +24,7 @@ import Reset from './components/Account/Reset';
 
 import Topics from './components/Forums/Topic';
 import Threads from './components/Forums/Threads';
+import NewThread from './components/Forums/NewThread';
 import SingleThread from './components/Forums/SingleThread';
 
 import NewTeam from './components/Teams/NewTeam';
@@ -154,6 +155,12 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
         path="/forums/:id/:title"
         component={Threads}
+      />
+
+      <Route
+        onLeave={clearMessages}
+        path="/forums/:id/:title/new"
+        component={NewThread}
       />
       <Route onLeave={clearMessages} path="/forums" component={Topics} />
       <Route

@@ -2,6 +2,7 @@ import React from 'react';
 // import {connect} from 'react-redux';
 // import { resetPassword } from '../../actions/auth';
 // import Messages from 'Messages';
+import {Link} from 'react-router';
 
 class Topic extends React.Component {
   constructor(props) {
@@ -57,8 +58,8 @@ class Topic extends React.Component {
                   {this.state.topics.map((topic, i) => {
                     return (
                       <li key={topic.id}>
-                        <a
-                          href={
+                        <Link
+                          to={
                             '/forums/' +
                             topic.id +
                             '/' +
@@ -71,20 +72,21 @@ class Topic extends React.Component {
                               {topic.sub_title}
                             </span>
                           </div>
-                          <div className="right_topic_content">
-                            <span className="thread_count">
+                          
+                            
+                            {/* <div className="right_topic_content"><span className="thread_count">
                               <i
                                 className="fa fa-question-circle-o"
                                 aria-hidden="true"
                               />{' '}
                               {topic.threadsCount} threads
                             </span>
-                            {/* <span className="active_users">
+                            <span className="active_users">
                             <i className="fa fa-users" aria-hidden="true" /> 125
                             active users
-                          </span>*/}
-                          </div>
-                        </a>
+                          </span> </div>*/}
+                         
+                        </Link>
                       </li>
                     );
                   })}

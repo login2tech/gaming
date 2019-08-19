@@ -1,7 +1,6 @@
 import React from 'react';
-// import {connect} from 'react-redux';
-// import { resetPassword } from '../../actions/auth';
-// import Messages from 'Messages';
+import {Link} from 'react-router';
+
 
 class Threads extends React.Component {
   constructor(props) {
@@ -58,13 +57,31 @@ class Threads extends React.Component {
         </section>
 
         <section className="contet_part">
-          <div className="container">
+          <div className="container content_box">
+            <ul
+              className="nav  justify-content-end nav-tabs responsive-tabs"
+              role="tablist"
+              style={{marginBottom: 40}}
+            >
+              <li role="presentation" className="pull-right text-right">
+                <Link
+                  to={
+                    '/forums/' +
+                    this.props.params.id +
+                    '/' +
+                    this.props.params.title +
+                    '/new'
+                  }
+                  role="tab"
+                >
+                  <i className="fa fa-plus" /> Create New Thread
+                </Link>
+              </li>
+            </ul>
+
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <table
-                  id="threads-table"
-                  className="table table-striped table-gray"
-                >
+                <table className="table table-striped table-ongray table-hover">
                   <thead>
                     <tr>
                       <th>Title</th>
