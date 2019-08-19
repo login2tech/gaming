@@ -11,13 +11,12 @@ class SingleTicket extends React.Component {
       page_loaded: false,
       items: [],
       text: '',
-      ticket: {user: {}}
+      ticket: {user: {first_name: '',last_name:''}}
     };
   }
 
   submitForm(event) {
     event.preventDefault();
-
     fetch('/api/ticket_replies/add', {
       method: 'POST',
       headers: {
@@ -133,8 +132,7 @@ class SingleTicket extends React.Component {
                 <div className="section-headline white-headline text-left">
                   <h3>{this.state.ticket.title}</h3>
                   <p>
-                    Started
-                    {moment(this.state.ticket.created_at).fromNow()} |{' '}
+                    Started {moment(this.state.ticket.created_at).fromNow()} |{' '}
                     {this.state.ticket.type}
                   </p>
                 </div>
@@ -150,12 +148,32 @@ class SingleTicket extends React.Component {
             <div className="col-sm-12">
               <div className="card post">
                 <div className="row">
-                  <div className="col-sm-3 user">
-                    <div className="text-center">
-                      {this.props.user.first_name +
-                        ' ' +
-                        this.props.user.last_name}
-                    </div>
+                  <div className="col-sm-3 ticket_item_av">
+                    <span className="profile_menu_item ticket_item">
+                      <span className="profile_menu_item_inner">
+                        <span className="menu_avatar">
+                          <img
+                            src={
+                              this.state.ticket.user.profile_picture
+                                ? this.state.ticket.user.profile_picture
+                                : this.state.ticket.user.gravatar
+                            }
+                            className="img-fluid profile_pic_outline"
+                          />
+                        </span>
+                        <span className="menu_prof_name_w">
+                          <span className="menu_prof_name_top">
+                            By{' '}
+                            {this.state.ticket.user.first_name +
+                              ' ' +
+                              this.state.ticket.user.last_name}
+                          </span>
+                          <span className="menu_prof_name_bot">
+                            {moment(this.state.ticket.created_at).format('lll')}
+                          </span>
+                        </span>
+                      </span>
+                    </span>
                   </div>
                   <div className="col-sm-9 post-content">
                     <div
@@ -163,6 +181,13 @@ class SingleTicket extends React.Component {
                         __html: this.state.ticket.description
                       }}
                     />
+                    {this.state.ticket.attachment ? (
+                      <a download href={this.state.ticket.attachment}>
+                        Download attachment
+                      </a>
+                    ) : (
+                      false
+                    )}
                   </div>
                 </div>
               </div>
@@ -172,23 +197,49 @@ class SingleTicket extends React.Component {
               return (
                 <div className="col-sm-12" key={item.id}>
                   <div className="card post">
-                    <span className="date">
-                      {moment(item.created_at).format('lll')}
-                    </span>
                     <div className="row">
-                      <div className="col-sm-3 user">
-                        <div className="text-center">
-                          <h3>
-                            {item.is_user
-                              ? item.user.first_name + ' ' + item.user.last_name
-                              : 'Support Staff'}
-                          </h3>
-                        </div>
+                      <div className="col-sm-3 ticket_item_av">
+                        <span className={"profile_menu_item ticket_item "+(item.from_admin ? ' from_admin ' :' ')}>
+                          <span className="profile_menu_item_inner">
+                            <span className="menu_avatar">
+                              <img
+                                src={
+                                  item.user.profile_picture
+                                    ? item.user.profile_picture
+                                    : item.user.gravatar
+                                }
+                                className="img-fluid profile_pic_outline"
+                              />
+                            </span>
+                            <span className="menu_prof_name_w">
+                              <span className="menu_prof_name_top">
+                              {
+                                item.from_admin ? 'SUPPORT STAF' : ''+item.user.first_name +
+                                  ' ' +
+                                  item.user.last_name
+                              } 
+                                
+                              </span>
+                              <span className="menu_prof_name_bot">
+                                {moment(item.created_at).format(
+                                  'lll'
+                                )}
+                              </span>
+                            </span>
+                          </span>
+                        </span>
                       </div>
                       <div className="col-sm-9 post-content">
                         <div
-                          dangerouslySetInnerHTML={{__html: item.description}}
+                          dangerouslySetInnerHTML={{__html: item.content}}
                         />
+                        {item.attachment ? (
+                          <a download href={item.attachment}>
+                            Download attachment
+                          </a>
+                        ) : (
+                          false
+                        )}
                       </div>
                     </div>
                   </div>

@@ -136,6 +136,25 @@ class TeamInfo extends React.Component {
       });
   }
 
+  handleselectedFile = event => {
+    this.setState(
+      {
+        profile_image_select: event.target.files[0],
+        loaded: 0
+      },
+      () => {
+        this.askFile('profile_image_select', data => {
+          if (data && data.file) {
+            this.setState({
+              new_profile_pic: data.file,
+              new_profile_pic_saved: false
+            });
+          }
+        });
+      }
+    );
+  };
+
   handleCoverFile = event => {
     this.setState(
       {
@@ -154,6 +173,33 @@ class TeamInfo extends React.Component {
       }
     );
   };
+
+  doSaveProfilePic(event) {
+    this.setState({
+      saving_profile_photo: true
+    });
+    if (!this.state.new_profile_pic) {
+      return;
+    }
+
+    event.preventDefault();
+    this.props.dispatch(
+      teamPic(
+        {
+          profile_picture: this.state.new_profile_pic
+        },
+         this.state.team_info.id,
+        st => {
+          const obj = {saving_profile_photo: false};
+          if (st) {
+            obj.new_profile_pic = '';
+            obj.new_profile_pic_saved = false;
+          }
+          this.setState(obj);
+        }
+      )
+    );
+  }
 
   doSaveCoverPic(event) {
     if (!this.state.new_cover_pic) {
@@ -263,7 +309,7 @@ class TeamInfo extends React.Component {
           id="is_top"
           style={divStyle}
         >
-          {this.props.user && this.currentUserInTeam() ? (
+          {this.props.user && this.currentUserInTeam() && !this.state.team_info.removed ? (
             <div className="update_btn cover">
               <label htmlFor="cover_image_select">
                 <i className="fa fa-edit" /> upload cover
@@ -297,16 +343,71 @@ class TeamInfo extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
-                <div className="game_pic_tournament">
-                  <img
-                    className="img-fluid profile_pic_outline"
-                    src="/images/team_bg.png"
-                  />
+                
+
+                <div className="game_pic_tournament profile_pic_outline square">
+                  <div className="content">
+                    <div className="update_btn">
+                      <label htmlFor="profile_image_select">
+                        <i className="fa fa-edit" />
+                      </label>
+
+                      {this.state.new_profile_pic &&
+                      !this.state.new_profile_pic_saved ? (
+                        <button
+                          onClick={event => {
+                            this.doSaveProfilePic(event);
+                          }}
+                          type="button"
+                        >
+                          <i className="fa fa-save" />
+                        </button>
+                      ) : (
+                        false
+                      )}
+
+                      <input
+                        type="file"
+                        name="profile_image_select"
+                        id="profile_image_select"
+                        className="hidden hide"
+                        accept="image/gif, image/jpeg, image/png"
+                        onChange={this.handleselectedFile}
+                      />
+                    </div>
+
+                    {this.state.saving_profile_photo ? (
+                      <div className="photo_progress">
+                        <span className="fa fa-spinner fa-spin" />
+                      </div>
+                    ) : (
+                      false
+                    )}
+                    {this.state.new_profile_pic ? (
+                      <img
+                        src={this.state.new_profile_pic}
+                        className="img-fluid"
+                      />
+                    ) : this.state.team_info.profile_picture ? (
+                      <img
+                        src={this.state.team_info.profile_picture}
+                        className="img-fluid "
+                      />
+                    ) : (
+                      <img
+                        className="img-fluid  "
+                        src="/images/team_bg.png"
+                      />
+                    )}
+                  </div>
                 </div>
+
+
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>{this.state.team_info.title}</h3>
+                  <h3>{this.state.team_info.title}{
+                    this.state.team_info.removed ? ' - DELETED TEAM ' : ''}</h3>
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-4">
@@ -347,7 +448,7 @@ class TeamInfo extends React.Component {
                     </div>*/}
                     </div>
                     {this.props.user &&
-                    this.state.team_info.team_creator == this.props.user.id ? (
+                    this.state.team_info.team_creator == this.props.user.id && !this.state.team_info.removed ? (
                       <Link
                         to={
                           '/matchfinder/new/' +
@@ -378,7 +479,7 @@ class TeamInfo extends React.Component {
                     <span className="pull-right">
                       {this.props.user &&
                         this.props.user.id ==
-                          this.state.team_info.team_creator && (
+                          this.state.team_info.team_creator && !this.state.team_info.removed && (
                           <button
                             className="is_link btn"
                             onClick={() => {

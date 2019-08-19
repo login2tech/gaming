@@ -307,9 +307,6 @@ class Profile extends React.Component {
     axios
       .post('/upload', data, {
         onUploadProgress: ProgressEvent => {
-          // this.setState({
-          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          // });
         }
       })
       .then(res => {

@@ -174,7 +174,8 @@ exports.invite = function(req, res, next) {
 };
 exports.team_of_user = function(req, res, next) {
   const a = new ItemChild().where({
-    user_id: req.query.uid
+    user_id: req.query.uid,
+    removed:false
   });
   // if (req.query.filter_ladder) {
   //   a = a.where({
@@ -360,7 +361,7 @@ exports.removeMembers = function(req, res, next)
     return res.status(400).send({ok:false, msg:'invalid number of params'});
   }
   new ItemChild().where( 'user_id', 'in', members).save({
-
+    removed:true
   }, {method:'update'}).then(function(data){
     res.status(200).send({ok:true, msg: 'Successfully removed users.'})
   })
@@ -373,8 +374,12 @@ exports.disband = function(req, res, next){
   {
     return res.status(400).send({ok:false, msg:'invalid number of params'});
   }
-  new ItemChild().where({
-    
+  new Item().where({
+    id : team_id
+  }).save({
+    removed:true
+  }, {method:'update'}).then(function(data){
+    res.status(200).send({ok:true, msg: 'Successfully removed team.'})
   })
 }
 

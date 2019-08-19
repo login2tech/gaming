@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import { resetPassword } from '../../actions/auth';
-// import Messages from 'Messages';
+import axios from 'axios';
 import Messages from '../Modules/Messages';
 
 class NewTicket extends React.Component {
@@ -10,9 +9,54 @@ class NewTicket extends React.Component {
     this.state = {
       ticket_type: '',
       ticket_title: '',
-      ticket_description: ''
+      ticket_description: '',
+      new_post_image : '',
     };
   }
+
+  askFile(cls, cb) {
+    const data = new FormData();
+    data.append('file', this.state[cls], this.state[cls].name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          //
+        }
+      })
+      .then(res => {
+        cb && cb(res.data);
+      })
+      .catch(err => {
+        alert('some error occoured in uploading file..');
+        this.setState({
+          upload_started:false
+        })
+        // console.log(err);
+      });
+  }
+
+  handleImageUpload = event => {
+    this.setState(
+      {
+        post_image_select: event.target.files[0],
+        upload_started:true,
+        uploaded :false,
+      },
+      () => {
+        this.askFile('post_image_select', data => {
+          if (data && data.file) {
+            this.setState({
+              new_post_image: data.file,
+              upload_started:false,
+              uploaded : true
+            });
+          }
+        });
+      }
+    );
+  };
+
+
 
   submitForm(event) {
     event.preventDefault();
@@ -27,7 +71,8 @@ class NewTicket extends React.Component {
       body: JSON.stringify({
         ticket_type: this.state.ticket_type,
         ticket_title: this.state.ticket_title,
-        ticket_description: this.state.ticket_description
+        ticket_description: this.state.ticket_description,
+        ticket_attachment : this.state.new_post_image
       })
     }).then(rawResponse => {
       rawResponse
@@ -212,12 +257,32 @@ class NewTicket extends React.Component {
                       </div>
                     </div>
                   </div>
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <input
+                          type="file"
+                          className="custom-file-inputs"
+                          id="customFile"
+                          style={{display:'block !important'}}
+                          onChange={this.handleImageUpload}
+                        />
+                        {
+                          this.state.upload_started ? <span class="text text-primary">uploading..please wait.</span> : false
+                        }
+                        {
+                          this.state.uploaded ? <span class="text text-success">uploaded..please proceed with ticket submission.</span> : false
+                        }
+                      </div>
+                    </div>
+                  </div>  
                   <hr />
                   <div className="row">
                     <div className="col-md-12 text-right">
                       <button
                         className="btn btn-blue btn-lg bttn_submit"
                         type="submit"
+                        disabled={this.state.upload_started || !this.state.ticket_title}
                       >
                         Create Ticket
                       </button>

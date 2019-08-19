@@ -31,7 +31,7 @@ exports.listMy = function(req, res, next) {
       return res.status(200).send({ok: true, items: items.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -62,9 +62,11 @@ exports.listPaged = function(req, res, next) {
 };
 
 exports.listSingleItem = function(req, res, next) {
-  new Item()
-    .where('id', req.params.id)
-    .fetch()
+  let a = new Item().where('id', req.params.id);
+  if (req.user.role != 'admin') {
+    a = a.where('user_id', req.user.id);
+  }
+  a.fetch({withRelated:['user']})
     .then(function(item) {
       if (!item) {
         return res
@@ -74,6 +76,7 @@ exports.listSingleItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
+      console.log(err)
       return res.status(400).send({
         id: req.params.id,
         title: '',
@@ -95,14 +98,15 @@ exports.addItem = function(req, res, next) {
     title: req.body.ticket_title,
     description: req.body.ticket_description,
     type: req.body.ticket_type,
-    user_id: req.user.id
+    user_id: req.user.id,
+    attachment: req.body.ticket_attachment ? req.body.ticket_attachment : ''
   })
     .save()
     .then(function(item) {
       res.send({ok: true, msg: 'New Ticket has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});

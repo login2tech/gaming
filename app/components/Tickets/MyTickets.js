@@ -15,9 +15,6 @@ class Tickets extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    // this.serverRequest.abort();
-  }
   componentDidMount() {
     fetch('/api/tickets/my')
       .then(res => res.json())
@@ -40,10 +37,7 @@ class Tickets extends React.Component {
         }
       });
   }
-  // fetchReplies(){
-  //   var item_id =
-  //   var paged = this.props.params.page
-  // }
+ 
 
   render() {
     return (
@@ -61,10 +55,11 @@ class Tickets extends React.Component {
         </section>
 
         <section className="contet_part">
-          <div className="container">
+          <div className="container content_box">
             <ul
               className="nav  justify-content-end nav-tabs responsive-tabs"
               role="tablist"
+              style={{marginBottom:40}}
             >
               <li role="presentation" className="pull-right text-right">
                 <Link to="/support/tickets/create" role="tab">
@@ -75,7 +70,7 @@ class Tickets extends React.Component {
 
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <table id="table" className="table table-striped table-ongray">
+                <table className="table table-striped table-ongray table-hover">
                   <thead>
                     <tr>
                       <th width="30">ID</th>

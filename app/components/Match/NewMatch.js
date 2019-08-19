@@ -137,7 +137,7 @@ class NewTeam extends React.Component {
     ) {
       return false;
     }
-    if (parseInt(this.state.match_players)  != this.state.using_users.length) {
+    if (parseInt(this.state.match_players) != this.state.using_users.length) {
       return false;
     }
 
@@ -274,36 +274,45 @@ class NewTeam extends React.Component {
                 <div className="field_form authorize_form">
                   <Messages messages={this.props.messages} />
                   <br />
-                  <form
-                    onSubmit={this.handleCreation.bind(this)}
-                    autoComplete="off"
-                  >
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Team</label>
-                      <br />
-                      <strong>{this.state.team_info.title}</strong>
+                  {this.state.team_info.removed ? (
+                    <div className="alert alert-warning">
+                      Team has already been deleted
                     </div>
-                    <br />
+                  ) : (
+                    <form
+                      onSubmit={this.handleCreation.bind(this)}
+                      autoComplete="off"
+                    >
+                      <div className="form-group col-md-12">
+                        <label htmlFor="title">Team</label>
+                        <br />
+                        <strong>{this.state.team_info.title}</strong>
+                      </div>
+                      <br />
 
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Ladder</label>
+                      <div className="form-group col-md-12">
+                        <label htmlFor="title">Ladder</label>
+                        <br />
+                        <strong>
+                          {this.state.game_info.title +
+                            ' - ' +
+                            this.state.team_info.ladder.title}
+                        </strong>
+                      </div>
                       <br />
-                      <strong>
-                        {this.state.game_info.title +
-                          ' - ' +
-                          this.state.team_info.ladder.title}
-                      </strong>
-                    </div>
-                    <br />
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Gamer Tag Required</label>
+                      <div className="form-group col-md-12">
+                        <label htmlFor="title">Gamer Tag Required</label>
+                        <br />
+                        <strong>
+                          {
+                            this.tag_names[
+                              this.state.team_info.ladder.gamer_tag
+                            ]
+                          }
+                        </strong>
+                      </div>
                       <br />
-                      <strong>
-                        {this.tag_names[this.state.team_info.ladder.gamer_tag]}
-                      </strong>
-                    </div>
-                    <br />
-                    {/*}
+                      {/*}
                     <div className="form-group col-md-12">
                       <label htmlFor="title">Match Date</label>
                       <div className="input-group date">
@@ -324,29 +333,30 @@ class NewTeam extends React.Component {
                       </div>
                     </div>*/}
 
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Match Starts at</label>
-                      <div className="input-group date">
-                        <select className='form-control'
-                          name="match_starts_in"
-                          id="match_starts_in"
-                          onChange={this.handleChange.bind(this)}
-                        >
-                          <option value="">{'Select'}</option>
-                          <option value="5|minutes">In 5 minutes</option>
-                          <option value="10|minutes">In 10 minutes</option>
-                          <option value="15|minutes">In 15 minutes</option>
-                          <option value="30|minutes">In 30 minutes</option>
-                          <option value="45|minutes">In 45 minutes</option>
-                          <option value="60|minutes">In 1 hour</option>
-                          <option value="120|minutes">In 2 hours</option>
-                          <option value="5|hours">In 5 hours</option>
-                          <option value="10|hours">In 10 hours</option>
-                          <option value="1|day">In 1 day</option>
-                          <option value="2|days">In 2 days</option>
-                          <option value="3|days">In 3 days</option>
-                          <option value="7|days">In 1 week</option>
-                          {/*<input
+                      <div className="form-group col-md-12">
+                        <label htmlFor="title">Match Starts at</label>
+                        <div className="input-group date">
+                          <select
+                            className="form-control"
+                            name="match_starts_in"
+                            id="match_starts_in"
+                            onChange={this.handleChange.bind(this)}
+                          >
+                            <option value="">{'Select'}</option>
+                            <option value="5|minutes">In 5 minutes</option>
+                            <option value="10|minutes">In 10 minutes</option>
+                            <option value="15|minutes">In 15 minutes</option>
+                            <option value="30|minutes">In 30 minutes</option>
+                            <option value="45|minutes">In 45 minutes</option>
+                            <option value="60|minutes">In 1 hour</option>
+                            <option value="120|minutes">In 2 hours</option>
+                            <option value="5|hours">In 5 hours</option>
+                            <option value="10|hours">In 10 hours</option>
+                            <option value="1|day">In 1 day</option>
+                            <option value="2|days">In 2 days</option>
+                            <option value="3|days">In 3 days</option>
+                            <option value="7|days">In 1 week</option>
+                            {/*<input
                           type="text"
                           id="starts_at_time"
                           className="form-control"
@@ -360,178 +370,186 @@ class NewTeam extends React.Component {
                         <span className="input-group-addon">
                           <span className="glyphicon glyphicon-time" />
                         </span>*/}
+                          </select>
+                        </div>
+                      </div>
+
+                      <div className="form-group col-md-12">
+                        <label htmlFor="title">Match Players</label>
+                        <select
+                          required
+                          onChange={this.handleChange.bind(this)}
+                          className="form-control"
+                          name="match_players"
+                          id="match_players"
+                        >
+                          <option value="">Select</option>
+                          {player_selection.map((k, i) => {
+                            return (
+                              <option key={k} value={k}>
+                                {k}v{k}
+                              </option>
+                            );
+                          })}
                         </select>
                       </div>
-                    </div>
 
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Match Players</label>
-                      <select
-                        required
-                        onChange={this.handleChange.bind(this)}
-                        className="form-control"
-                        name="match_players"
-                        id="match_players"
-                      >
-                        <option value="">Select</option>
-                        {player_selection.map((k, i) => {
-                          return (
-                            <option key={k} value={k}>
-                              {k}v{k}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Match Type</label>
-                      <select
-                        required
-                        onChange={this.handleChange.bind(this)}
-                        className="form-control"
-                        name="match_type"
-                        id="match_type"
-                      >
-                        <option value="">Select</option>
-                        <option value="free">Free</option>
-                        <option value="paid">Paid</option>
-                      </select>
-                    </div>
-
-                    {this.state.match_type == 'paid' ? (
                       <div className="form-group col-md-12">
-                        <label htmlFor="match_fee">Match Entry Fee</label>
-                        <input
-                          type="text"
-                          id="match_fee"
-                          className="form-control"
-                          onChange={this.handleChange.bind(this)}
+                        <label htmlFor="title">Match Type</label>
+                        <select
                           required
-                          placeholder="Match Fees"
-                          name="match_fee"
-                        />
+                          onChange={this.handleChange.bind(this)}
+                          className="form-control"
+                          name="match_type"
+                          id="match_type"
+                        >
+                          <option value="">Select</option>
+                          <option value="free">Free</option>
+                          <option value="paid">Paid</option>
+                        </select>
                       </div>
-                    ) : (
-                      false
-                    )}
-                    <div className="form-group col-md-12 text-center">
-                      <button
-                        disabled={!this.isEligible()}
-                        className="btn btn-default bttn_submit"
-                        type="submit"
-                      >
-                        Create Match
-                      </button>
-                    </div>
-                  </form>
-                  <div className="row">
-                    <div className="col-md-12 col-sm-12 col-xs-12">
-                      <div className="content_box">
-                        <h5 className="prizes_desclaimer">
-                          <i className="fa fa-users" aria-hidden="true" /> SQUAD
-                        </h5>
 
-                        <table className="table table-striped table-ongray table-hover">
-                          <thead>
-                            <tr>
-                              <th>Username</th>
-                              <th>Role</th>
-                              <th>Gamer Tag</th>
-                              <th>Eligibility</th>
-                              <th>Include</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {this.state.team_info.team_users.map(
-                              (team_user, i) => {
-                                if(team_user.removed  == 1)
-                                  return false;
-                                return (
-                                  <tr key={team_user.id}>
-                                    <td>
-                                      <Link
-                                        to={
-                                          team_user.user_info
-                                            ? '/u/' +
-                                              team_user.user_info.username
-                                            : ''
-                                        }
-                                      >
-                                        {team_user.user_info.username}
-                                      </Link>
-                                    </td>
+                      {this.state.match_type == 'paid' ? (
+                        <div className="form-group col-md-12">
+                          <label htmlFor="match_fee">Match Entry Fee</label>
+                          <input
+                            type="text"
+                            id="match_fee"
+                            className="form-control"
+                            onChange={this.handleChange.bind(this)}
+                            required
+                            placeholder="Match Fees"
+                            name="match_fee"
+                          />
+                        </div>
+                      ) : (
+                        false
+                      )}
+                      <div className="form-group col-md-12 text-center">
+                        <button
+                          disabled={!this.isEligible()}
+                          className="btn btn-default bttn_submit"
+                          type="submit"
+                        >
+                          Create Match
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                  {this.state.team_info.removed ? (
+                    false
+                  ) : (
+                    <div className="row">
+                      <div className="col-md-12 col-sm-12 col-xs-12">
+                        <div className="content_box">
+                          <h5 className="prizes_desclaimer">
+                            <i className="fa fa-users" aria-hidden="true" />{' '}
+                            SQUAD
+                          </h5>
 
-                                    <td>
-                                      {team_user.user_id ==
-                                      this.state.team_info.team_creator
-                                        ? 'Leader'
-                                        : 'Member'}
-                                    </td>
-                                    <td>
-                                      {team_user.user_info[
-                                        'gamer_tag_' +
-                                          this.state.team_info.ladder.gamer_tag
-                                      ] ? (
-                                        team_user.user_info[
+                          <table className="table table-striped table-ongray table-hover">
+                            <thead>
+                              <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Gamer Tag</th>
+                                <th>Eligibility</th>
+                                <th>Include</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {this.state.team_info.team_users.map(
+                                (team_user, i) => {
+                                  if (team_user.removed == 1) {
+                                    return false;
+                                  }
+                                  return (
+                                    <tr key={team_user.id}>
+                                      <td>
+                                        <Link
+                                          to={
+                                            team_user.user_info
+                                              ? '/u/' +
+                                                team_user.user_info.username
+                                              : ''
+                                          }
+                                        >
+                                          {team_user.user_info.username}
+                                        </Link>
+                                      </td>
+
+                                      <td>
+                                        {team_user.user_id ==
+                                        this.state.team_info.team_creator
+                                          ? 'Leader'
+                                          : 'Member'}
+                                      </td>
+                                      <td>
+                                        {team_user.user_info[
                                           'gamer_tag_' +
                                             this.state.team_info.ladder
                                               .gamer_tag
-                                        ]
-                                      ) : (
-                                        <span className="text-danger">
-                                          No Gamertag
-                                        </span>
-                                      )}
-                                    </td>
-                                    <td>{this.amIEligible(team_user)}</td>
-                                    <td>
-                                      <label>
-                                        <input
-                                          disabled={
-                                            !this.amIEligibleFlag(team_user)
-                                          }
-                                          type="checkbox"
-                                          checked={
-                                            this.state.using_users.indexOf(
-                                              team_user.user_info.id
-                                            ) > -1
-                                          }
-                                          onChange={() => {
-                                            const using_users = this.state
-                                              .using_users;
-                                            if (
-                                              using_users.indexOf(
+                                        ] ? (
+                                          team_user.user_info[
+                                            'gamer_tag_' +
+                                              this.state.team_info.ladder
+                                                .gamer_tag
+                                          ]
+                                        ) : (
+                                          <span className="text-danger">
+                                            No Gamertag
+                                          </span>
+                                        )}
+                                      </td>
+                                      <td>{this.amIEligible(team_user)}</td>
+                                      <td>
+                                        <label>
+                                          <input
+                                            disabled={
+                                              !this.amIEligibleFlag(team_user)
+                                            }
+                                            type="checkbox"
+                                            checked={
+                                              this.state.using_users.indexOf(
                                                 team_user.user_info.id
                                               ) > -1
-                                            ) {
-                                              using_users.splice(
+                                            }
+                                            onChange={() => {
+                                              const using_users = this.state
+                                                .using_users;
+                                              if (
                                                 using_users.indexOf(
                                                   team_user.user_info.id
-                                                ),
-                                                1
-                                              );
-                                            } else {
-                                              using_users.push(
-                                                team_user.user_info.id
-                                              );
-                                            }
-                                            this.setState({
-                                              using_users: using_users
-                                            });
-                                          }}
-                                        />
-                                      </label>
-                                    </td>
-                                  </tr>
-                                );
-                              }
-                            )}
-                          </tbody>
-                        </table>
+                                                ) > -1
+                                              ) {
+                                                using_users.splice(
+                                                  using_users.indexOf(
+                                                    team_user.user_info.id
+                                                  ),
+                                                  1
+                                                );
+                                              } else {
+                                                using_users.push(
+                                                  team_user.user_info.id
+                                                );
+                                              }
+                                              this.setState({
+                                                using_users: using_users
+                                              });
+                                            }}
+                                          />
+                                        </label>
+                                      </td>
+                                    </tr>
+                                  );
+                                }
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -862,6 +862,9 @@ class MatchInfo extends React.Component {
                   {this.state.eligible_teams_loaded &&
                     !this.state.team_selected &&
                     this.state.eligible_teams.map((team_parent, i) => {
+                      
+                      if(team_parent.team_info.removed)
+                        return false;
                       if (
                         team_parent.team_info.ladder_id !=
                         this.state.match.ladder_id

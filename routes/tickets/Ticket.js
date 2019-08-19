@@ -1,4 +1,5 @@
 const bookshelf = require('../../config/bookshelf');
+const User = require('../../models/User');
 const Thread = require('../threads/Thread');
 
 const Tickets = bookshelf.Model.extend({
@@ -6,7 +7,11 @@ const Tickets = bookshelf.Model.extend({
   hasTimestamps: true,
   threads: function() {
     return this.hasMany(Thread);
+  },
+   user: function() {
+    return this.belongsTo(User);
   }
+
 
   // thread_count: function() {
   //   return new Topic.Model()

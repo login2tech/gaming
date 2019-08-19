@@ -87,7 +87,7 @@ exports.addItem = function(req, res, next) {
     content: req.body.text,
     ticket_id: req.body.ticket_id,
     user_id: req.user.id,
-    is_user: true
+    from_admin: req.user.role == 'admin' ? true : false
   })
     .save()
     .then(function(item) {

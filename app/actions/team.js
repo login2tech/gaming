@@ -165,7 +165,7 @@ export function disband(data, cb) {
 
 
 
-export function teamPic(data, team_id) {
+export function teamPic(data, team_id, cb) {
   return dispatch => {
     dispatch({
       type: 'CLEAR_MESSAGES'
@@ -177,6 +177,7 @@ export function teamPic(data, team_id) {
       },
       body: JSON.stringify(data)
     }).then(response => {
+      cb && cb();
       if (response.ok) {
         return response.json().then(json => {
           dispatch({

@@ -856,9 +856,11 @@ class Profile extends React.Component {
 
                     <ul className="team_list">
                       {this.state.user_teams.map((team_parent, i) => {
+
                         const team = team_parent.team_info
                           ? team_parent.team_info
                           : {};
+                          if(team.removed) return false;
                         return (
                           <li className="item" key={team.id}>
                             <Link

@@ -3692,7 +3692,16 @@ th {
     background: #8386af1c;
     color: #fff;
 }
+.ticket_item_av{
+    color: #fff;
+}
 
+span.profile_menu_item.ticket_item {
+    padding: 20px;
+    display: inline-block;
+    background: black;
+    border-radius: 9px;
+}
 /*}*/
 .profile-link {
     background: #8386af2e;
@@ -4958,4 +4967,11 @@ a:hover {
 }
 td a {
     color: #547dff;
+}
+.game_pic_tournament.profile_pic_outline.square {
+    background: #161d24;
+}
+
+span.profile_menu_item.ticket_item.from_admin {
+    border: 2px solid #124afb;
 }

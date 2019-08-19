@@ -31,10 +31,10 @@ const User = bookshelf.Model.extend({
   following: function() {
     return this.hasMany('UserFollower', 'follower_id');
   },
-  score : function () {
+  score: function() {
     return this.hasMany('Score', 'user_id');
   },
-  xp_obj : function () {
+  xp_obj: function() {
     return this.hasMany('XP', 'user_id');
   },
 
@@ -67,14 +67,13 @@ const User = bookshelf.Model.extend({
 
   virtuals: {
     gravatar: function() {
-      if (!this.get('email')) {
-        return 'https://gravatar.com/avatar/?s=200&d=retro';
-      }
-      const md5 = crypto
-        .createHash('md5')
-        .update(this.get('email'))
-        .digest('hex');
-      return 'https://gravatar.com/avatar/' + md5 + '?s=200&d=retro';
+      return (
+        'https://ui-avatars.com/api/?size=512&name=' +
+        this.get('first_name') +
+        '+' +
+        this.get('last_name') +
+        '&color=223cf3&background=000000'
+      );
     }
   }
 });
