@@ -72,20 +72,12 @@ class Topic extends React.Component {
                               {topic.sub_title}
                             </span>
                           </div>
-                          
-                            
-                            {/* <div className="right_topic_content"><span className="thread_count">
-                              <i
-                                className="fa fa-question-circle-o"
-                                aria-hidden="true"
-                              />{' '}
+
+                          <div className="right_topic_content">
+                            <span className="thread_count">
                               {topic.threadsCount} threads
                             </span>
-                            <span className="active_users">
-                            <i className="fa fa-users" aria-hidden="true" /> 125
-                            active users
-                          </span> </div>*/}
-                         
+                          </div>
                         </Link>
                       </li>
                     );

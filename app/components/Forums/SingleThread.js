@@ -14,7 +14,7 @@ class SingleThread extends React.Component {
       text: '',
       thread: {user: {}},
       pageCount: 1,
-      cur_page: this.props.params.page 
+      cur_page: this.props.params.page
     };
   }
 
@@ -64,7 +64,7 @@ class SingleThread extends React.Component {
             messages: Array.isArray(json) ? json : [json]
           });
         });
-    }); 
+    });
   }
 
   handleChange(event) {
@@ -94,7 +94,6 @@ class SingleThread extends React.Component {
       });
   }
 
-  
   fetchReplies() {
     // var item_id =
     const paged = this.state.cur_page;
@@ -151,35 +150,32 @@ class SingleThread extends React.Component {
                   {moment(this.state.thread.created_at).format('lll')}
                 </span>
                 <div className="row">
-                  <div className="col-sm-3 user">
-                    <div className="text-center">
-                      <img
-                        src={
-                          this.state.thread.user &&
-                          this.state.thread.user.gravatar
-                        }
-                        width="90"
-                        height="140"
-                        className="img-fluid center-block"
-                      />
-                      <h3>
-                        {this.state.thread.user.first_name}{' '}
-                        {this.state.thread.user.last_name}
-                      </h3>
-                      {/*}<p>Been spending a lot of time on here!</p>*/}
-                      <table style={{width: '100%'}}>
-                        <tbody>
-                          <tr>
-                            <th>Joined:</th>
-                            <td>
-                              {moment(this.state.thread.user.created_at).format(
-                                'lll'
-                              )}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
+                  <div className="col-sm-3 ticket_item_av">
+                    <span className="profile_menu_item ticket_item">
+                      <span className="profile_menu_item_inner">
+                        <span className="menu_avatar">
+                          <img
+                            src={
+                              this.state.thread.user.profile_picture
+                                ? this.state.thread.user.profile_picture
+                                : this.state.thread.user.gravatar
+                            }
+                            className="img-fluid profile_pic_outline"
+                          />
+                        </span>
+                        <span className="menu_prof_name_w">
+                          <span className="menu_prof_name_top">
+                            By{' '}
+                            {this.state.thread.user.first_name +
+                              ' ' +
+                              this.state.thread.user.last_name}
+                          </span>
+                          <span className="menu_prof_name_bot">
+                            {moment(this.state.thread.created_at).format('lll')}
+                          </span>
+                        </span>
+                      </span>
+                    </span>
                   </div>
                   <div className="col-sm-9 post-content">
                     <div
@@ -196,41 +192,33 @@ class SingleThread extends React.Component {
               return (
                 <div className="col-sm-12" key={item.id}>
                   <div className="card post">
-                    <span className="date">
-                      {moment(item.created_at).format('lll')}
-                    </span>
                     <div className="row">
-                      <div className="col-sm-3 user">
-                        <div className="text-center">
-                          <img
-                            src={item.user && item.user.gravatar}
-                            width="90"
-                            height="140"
-                            className="img-fluid center-block"
-                          />
-                          <h3>
-                            {item.user.first_name} {item.user.last_name}
-                          </h3>
-                          {/*}<p>Been spending a lot of time on here!</p>*/}
-                          <table style={{width: '100%'}}>
-                            <tbody>
-                              <tr>
-                                <th>Joined:</th>
-                                <td>
-                                  {moment(item.user.created_at).format('lll')}
-                                </td>
-                              </tr>
-                              {/*}<tr>
-                              <th>Messages:</th>
-                              <td>22,358</td>
-                            </tr>
-                            <tr>
-                              <th>Likes:</th>
-                              <td>7,514</td>
-                            </tr>*/}
-                            </tbody>
-                          </table>
-                        </div>
+                      <div className="col-sm-3 ticket_item_av">
+                        <span className="profile_menu_item ticket_item">
+                          <span className="profile_menu_item_inner">
+                            <span className="menu_avatar">
+                              <img
+                                src={
+                                  item.user.profile_picture
+                                    ? item.user.profile_picture
+                                    : item.user.gravatar
+                                }
+                                className="img-fluid profile_pic_outline"
+                              />
+                            </span>
+                            <span className="menu_prof_name_w">
+                              <span className="menu_prof_name_top">
+                                By{' '}
+                                {item.user.first_name +
+                                  ' ' +
+                                  item.user.last_name}
+                              </span>
+                              <span className="menu_prof_name_bot">
+                                {moment(item.created_at).format('lll')}
+                              </span>
+                            </span>
+                          </span>
+                        </span>
                       </div>
                       <div className="col-sm-9 post-content">
                         <div dangerouslySetInnerHTML={{__html: item.content}} />

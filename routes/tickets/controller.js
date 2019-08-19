@@ -66,17 +66,20 @@ exports.listSingleItem = function(req, res, next) {
   if (req.user.role != 'admin') {
     a = a.where('user_id', req.user.id);
   }
-  a.fetch({withRelated:['user']})
+  a.fetch({withRelated: ['user']})
     .then(function(item) {
       if (!item) {
-        return res
-          .status(200)
-          .send({id: req.params.id, title: '', content: ''});
+        return res.status(400).send({
+          id: req.params.id,
+          msg:
+            "You are not the owner of this ticket or the ticket doesn't exist",
+          ok: false
+        });
       }
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
-      console.log(err)
+      console.log(err);
       return res.status(400).send({
         id: req.params.id,
         title: '',

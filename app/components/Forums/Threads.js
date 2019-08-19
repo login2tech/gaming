@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-
 class Threads extends React.Component {
   constructor(props) {
     super(props);
@@ -101,7 +100,17 @@ class Threads extends React.Component {
                           <td className="lb-user">
                             <div className="lb-userimg">
                               <a href={'/u/' + item.user.username}>
-                                {<img src={item.user.gravatar} />}
+                                <img
+                                  src={
+                                    item.user.profile_picture ||
+                                    item.user.gravatar
+                                  }
+                                  style={{
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 25
+                                  }}
+                                />
                               </a>
                               <a href={'/u/' + item.user.username}>
                                 {' '}

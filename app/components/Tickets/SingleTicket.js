@@ -98,7 +98,8 @@ class SingleTicket extends React.Component {
         if (json.ok) {
           this.setState(
             {
-              is_loaded: true,
+              page_loaded: true,
+
               ticket: json.item
             },
             () => {
@@ -106,11 +107,21 @@ class SingleTicket extends React.Component {
             }
           );
         } else {
+          if (json.msg) {
+            this.props.dispatch({
+              type: 'FAILURE',
+              messages: [json]
+            });
+          }
           this.setState({
             is_page: false,
-            is_loaded: true
+            page_loaded: false,
+            is_404: true
           });
         }
+      })
+      .catch(a => {
+        console.log(a);
       });
   }
   fetchReplies() {
@@ -123,7 +134,6 @@ class SingleTicket extends React.Component {
           this.setState({
             is_loaded: true,
             items: json.items
-            // pageCount: json.pagination.pageCount
           });
         } else {
           this.setState({
@@ -183,13 +193,19 @@ class SingleTicket extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
-                  <h3>{this.state.ticket.title}</h3>
-                  <p>
-                    Started {moment(this.state.ticket.created_at).fromNow()} |{' '}
-                    {this.state.ticket.type}
-                  </p>
-                </div>
+                {this.state.is_404 ? (
+                  <div className="section-headline white-headline text-left">
+                    <h3>Not allowed to view this ticket</h3>
+                  </div>
+                ) : (
+                  <div className="section-headline white-headline text-left">
+                    <h3>{this.state.ticket.title}</h3>
+                    <p>
+                      Started {moment(this.state.ticket.created_at).fromNow()} |{' '}
+                      {this.state.ticket.type}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -199,53 +215,61 @@ class SingleTicket extends React.Component {
           <div className="container">
             <Messages messages={this.props.messages} />
 
-            <div className="col-sm-12">
-              <div className="card post">
-                <div className="row">
-                  <div className="col-sm-3 ticket_item_av">
-                    <span className="profile_menu_item ticket_item">
-                      <span className="profile_menu_item_inner">
-                        <span className="menu_avatar">
-                          <img
-                            src={
-                              this.state.ticket.user.profile_picture
-                                ? this.state.ticket.user.profile_picture
-                                : this.state.ticket.user.gravatar
-                            }
-                            className="img-fluid profile_pic_outline"
-                          />
-                        </span>
-                        <span className="menu_prof_name_w">
-                          <span className="menu_prof_name_top">
-                            By{' '}
-                            {this.state.ticket.user.first_name +
-                              ' ' +
-                              this.state.ticket.user.last_name}
+            {this.state.is_404 ? (
+              false
+            ) : this.state.page_loaded ? (
+              <div className="col-sm-12">
+                <div className="card post">
+                  <div className="row">
+                    <div className="col-sm-3 ticket_item_av">
+                      <span className="profile_menu_item ticket_item">
+                        <span className="profile_menu_item_inner">
+                          <span className="menu_avatar">
+                            <img
+                              src={
+                                this.state.ticket.user.profile_picture
+                                  ? this.state.ticket.user.profile_picture
+                                  : this.state.ticket.user.gravatar
+                              }
+                              className="img-fluid profile_pic_outline"
+                            />
                           </span>
-                          <span className="menu_prof_name_bot">
-                            {moment(this.state.ticket.created_at).format('lll')}
+                          <span className="menu_prof_name_w">
+                            <span className="menu_prof_name_top">
+                              By{' '}
+                              {this.state.ticket.user.first_name +
+                                ' ' +
+                                this.state.ticket.user.last_name}
+                            </span>
+                            <span className="menu_prof_name_bot">
+                              {moment(this.state.ticket.created_at).format(
+                                'lll'
+                              )}
+                            </span>
                           </span>
                         </span>
                       </span>
-                    </span>
-                  </div>
-                  <div className="col-sm-9 post-content">
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: this.state.ticket.description
-                      }}
-                    />
-                    {this.state.ticket.attachment ? (
-                      <a download href={this.state.ticket.attachment}>
-                        Download attachment
-                      </a>
-                    ) : (
-                      false
-                    )}
+                    </div>
+                    <div className="col-sm-9 post-content">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: this.state.ticket.description
+                        }}
+                      />
+                      {this.state.ticket.attachment ? (
+                        <a download href={this.state.ticket.attachment}>
+                          Download attachment
+                        </a>
+                      ) : (
+                        false
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ) : (
+              false
+            )}
 
             {this.state.items.map((item, i) => {
               return (
@@ -308,7 +332,8 @@ class SingleTicket extends React.Component {
 
             <div className="col-sm-12">
               {this.props.user &&
-                this.props.user.id == this.state.ticket.user_id && (
+                (this.props.user.id == this.state.ticket.user_id ||
+                  this.props.user.role == 'admin') && (
                   <form onSubmit={this.submitForm.bind(this)}>
                     <fieldset>
                       <div className="form-group">
