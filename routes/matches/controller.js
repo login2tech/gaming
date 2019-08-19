@@ -245,8 +245,9 @@ const giveMoneyToMember = function(uid, input_val, match_id) {
         if (prime) {
           val = parseFloat(input_val) + parseFloat( input_val );
         } else {
-          val = ( parseFloat( (4 / 5) * parseFloat( input_val ) )  + parseFloat( input_val );
+          val = ( parseFloat( (4 / 5) * parseFloat( input_val ) )  + parseFloat( input_val ) );
         }
+
         cash_balance += val;
         usr
           .save({cash_balance: cash_balance}, {patch: true})
