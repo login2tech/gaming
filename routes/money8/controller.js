@@ -252,9 +252,9 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
         let val;
 
         if (prime) {
-          val = parseFloat(input_val);
+          val = parseFloat(input_val) + parseFloat( input_val );
         } else {
-          val = parseFloat((4 / 5) * input_val);
+          val = ( parseFloat( (4 / 5) * parseFloat( input_val ) )  + parseFloat( input_val );
         }
         // console.log('cah_bl ', cash_balance);
         // console.log('val ', val);
