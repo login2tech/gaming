@@ -197,7 +197,7 @@ class SingleTicket extends React.Component {
                   <div className="section-headline white-headline text-left">
                     <h3>Not allowed to view this ticket</h3>
                   </div>
-                ) : (
+                ) : this.state.page_loaded ? (
                   <div className="section-headline white-headline text-left">
                     <h3>{this.state.ticket.title}</h3>
                     <p>
@@ -205,6 +205,8 @@ class SingleTicket extends React.Component {
                       {this.state.ticket.type}
                     </p>
                   </div>
+                ) : (
+                  false
                 )}
               </div>
             </div>
