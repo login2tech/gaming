@@ -82,7 +82,7 @@ class Money8Info extends React.Component {
       val.team_2_result =
         '' + this.state.their_score + '-' + this.state.my_score;
     }
-    val.id = this.state.match.id; 
+    val.id = this.state.match.id;
     this.props.dispatch(saveScores(val, this.props.user));
   }
 
@@ -214,7 +214,6 @@ class Money8Info extends React.Component {
     }
     const team_1 = this.state.match.team_1.split('|');
     const team_2 = this.state.match.team_2.split('|');
- 
 
     if (
       // team_1.indexOf(''+this.props.user.id) > -1 &&
@@ -233,36 +232,31 @@ class Money8Info extends React.Component {
       );
     }
 
-  
-    if(
-       team_1.indexOf(''+this.props.user.id) > -1 &&
-       this.state.match.team_1_result
-       ) {
-       return (
+    if (
+      team_1.indexOf('' + this.props.user.id) > -1 &&
+      this.state.match.team_1_result
+    ) {
+      return (
         <div>
           <p className="text-success">
             Score submitted by Team 1 = {this.state.match.team_1_result}
           </p>
-          
         </div>
       );
     }
 
-  
-    if(
-       team_2.indexOf(''+this.props.user.id) > -1 &&
-       this.state.match.team_2_result
-       ) {
-       return (
+    if (
+      team_2.indexOf('' + this.props.user.id) > -1 &&
+      this.state.match.team_2_result
+    ) {
+      return (
         <div>
           <p className="text-success">
             Score submitted by Team 2 = {this.state.match.team_2_result}
           </p>
-          
         </div>
       );
     }
-
 
     return (
       <div>
@@ -339,7 +333,26 @@ class Money8Info extends React.Component {
         {this.renderScoreSubmit()}
 
         <h5 className="prizes_desclaimer">
-          <i className="fa fa-users" aria-hidden="true" /> Team 1
+          <i className="fa fa-users" aria-hidden="true" /> Team 1{' '}
+          {this.state.match.status == 'complete' &&
+          this.state.match.result == 'team_1' ? (
+            <span>
+              {' '}
+              - <span className="text text-success">W</span>
+            </span>
+          ) : (
+            false
+          )}
+          {(this.state.match.status == 'complete' ||
+            this.state.match.status == 'Complete') &&
+          this.state.match.result == 'team_2' ? (
+            <span>
+              {' '}
+              - <span className="text text-danger">L</span>
+            </span>
+          ) : (
+            false
+          )}
         </h5>
         <table className="table table-striped table-ongray table-hover">
           <thead>
@@ -382,7 +395,26 @@ class Money8Info extends React.Component {
         <br />
 
         <h5 className="prizes_desclaimer">
-          <i className="fa fa-users" aria-hidden="true" /> Team 2
+          <i className="fa fa-users" aria-hidden="true" /> Team 2{' '}
+          {this.state.match.status == 'complete' &&
+          this.state.match.result == 'team_1' ? (
+            <span>
+              {' '}
+              - <span className="text text-danger">L</span>
+            </span>
+          ) : (
+            false
+          )}
+          {(this.state.match.status == 'complete' ||
+            this.state.match.status == 'Complete') &&
+          this.state.match.result == 'team_2' ? (
+            <span>
+              {' '}
+              - <span className="text text-success">W</span>
+            </span>
+          ) : (
+            false
+          )}
         </h5>
         <table className="table table-striped table-ongray table-hover">
           <thead>
