@@ -270,6 +270,12 @@ class Header extends React.Component {
                                   Transaction History
                                 </Link>
                               </li>
+                              {
+                                this.props.user.role == 'admin' ? 
+                                <li>
+                                <a href='/admin'>Admin Panel</a>
+                                </li> : false
+                              }
                               <li>
                                 <Link
                                   onClick={event => {

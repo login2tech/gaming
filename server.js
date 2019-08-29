@@ -90,6 +90,25 @@ app.use(function(req, res, next) {
   }
 });
 
+app.get('/me', userController.ensureAuthenticated, function(req, res, next){
+  if(req.query.shouldBeAdmin = true)
+  {
+    if(req.user.role !='admin')
+    {
+      return res.status(400).send({ok:false})
+    }
+      const token = req.headers.authorization
+      ? req.headers.authorization && req.headers.authorization.split(' ')[1]
+      : req.cookies.token
+        ? req.cookies.token
+        : '';
+        // console.log(token);
+    return res.status(200).send({ok:true, user: req.user, token: token})
+    
+  }
+  return res.status(400).send({ok:false})
+})
+
 app.post('/upload', (req, res, next) => {
   const mkdirp = require('mkdirp');
   const uploadFile = req.files.file;
@@ -339,6 +358,8 @@ app.use('/api/ticket_replies', ticket_repliesRoutes);
 
 const posts_route = require('./routes/posts/post.route.js');
 app.use('/api/posts', posts_route);
+const admin_routes = require('./routes/admin/admin.route.js');
+app.use('/api/admin/', admin_routes);
 
 app.get(
   '/api/cms_pages/list',
@@ -463,6 +484,7 @@ new Lang().fetchAll().then(function(data) {
   }
 });
 
+
 app.get('/api/lang/', function(req, res, next) {
   // console.log(langs);
   res.status(200).send(langs);
@@ -481,7 +503,11 @@ app.get('/clearTranslationCache', function(req, res, next) {
     res.status(302).redirect('/admin_panel');
   });
 });
+
 app.get('/api/*', function(req, res, next) {
+  res.status(404).send({ok: false, route: '404', msg: 'Route not found'});
+});
+app.get('/admin/*', function(req, res, next) {
   res.status(404).send({ok: false, route: '404', msg: 'Route not found'});
 });
 app.post('/api/*', function(req, res, next) {

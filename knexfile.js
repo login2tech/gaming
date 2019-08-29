@@ -3,6 +3,7 @@ require('dotenv').config({silent: true});
 module.exports = {
   client: 'postgresql',
   debug : false,
+ 
   connection: process.env.DATABASE_URL || {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,

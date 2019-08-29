@@ -69,44 +69,44 @@ angular
       }
     };
   })
-  .factory('FAQ', function($http) {
-    return {
-      list: function() {
-        return $http.get('/api/faq/list');
-      },
-      listSingle: function(id) {
-        return $http.get('/api/faq/single/' + id);
-      },
-      add: function(data) {
-        return $http.post('/api/faq/add', data);
-      },
-      update: function(data) {
-        return $http.post('/api/faq/edit', data);
-      },
-      delete: function(data) {
-        return $http.post('/api/faq/delete', data);
-      }
-    };
-  })
-  .factory('PLAN', function($http) {
-    return {
-      list: function() {
-        return $http.get('/api/plan/list');
-      },
-      listSingle: function(id) {
-        return $http.get('/api/plan/single/' + id);
-      },
-      add: function(data) {
-        return $http.post('/api/plan/add', data);
-      },
-      update: function(data) {
-        return $http.post('/api/plan/edit', data);
-      },
-      delete: function(data) {
-        return $http.post('/api/plan/delete', data);
-      }
-    };
-  })
+  // .factory('FAQ', function($http) {
+  //   return {
+  //     list: function() {
+  //       return $http.get('/api/faq/list');
+  //     },
+  //     listSingle: function(id) {
+  //       return $http.get('/api/faq/single/' + id);
+  //     },
+  //     add: function(data) {
+  //       return $http.post('/api/faq/add', data);
+  //     },
+  //     update: function(data) {
+  //       return $http.post('/api/faq/edit', data);
+  //     },
+  //     delete: function(data) {
+  //       return $http.post('/api/faq/delete', data);
+  //     }
+  //   };
+  // })
+  // .factory('PLAN', function($http) {
+  //   return {
+  //     list: function() {
+  //       return $http.get('/api/plan/list');
+  //     },
+  //     listSingle: function(id) {
+  //       return $http.get('/api/plan/single/' + id);
+  //     },
+  //     add: function(data) {
+  //       return $http.post('/api/plan/add', data);
+  //     },
+  //     update: function(data) {
+  //       return $http.post('/api/plan/edit', data);
+  //     },
+  //     delete: function(data) {
+  //       return $http.post('/api/plan/delete', data);
+  //     }
+  //   };
+  // })
   .factory('CMSPage', function($http) {
     return {
       list: function() {
