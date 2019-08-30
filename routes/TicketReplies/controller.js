@@ -33,7 +33,7 @@ exports.listPaged = function(req, res, next) {
     withRelated: [
       {
         user: function(qb) {
-          qb.column(['id', 'username', 'first_name', 'last_name']);
+          qb.column(['id', 'username', 'first_name', 'last_name', 'profile_picture']);
         }
       }
     ]
