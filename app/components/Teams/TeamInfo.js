@@ -267,6 +267,7 @@ class TeamInfo extends React.Component {
         st => {
           if (st) {
             this.fetchTeam();
+            window.location.reload();
           }
         }
       )
@@ -285,6 +286,7 @@ class TeamInfo extends React.Component {
         st => {
           if (st) {
             this.fetchTeam();
+            window.location.reload();
           }
         }
       )
@@ -657,7 +659,7 @@ class TeamInfo extends React.Component {
                 {this.props.user &&
                 this.state.team_info.team_creator == this.props.user.id &&
                 parseInt(this.state.team_info.ladder.max_players) >
-                  parseInt(this.state.team_info.team_users.length) ? (
+                  parseInt(this.state.team_info.team_users.length) && !this.state.team_info.removed ? (
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">Invite A User</h5>
                     <Messages messages={this.props.messages} />
