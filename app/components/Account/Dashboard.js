@@ -297,6 +297,7 @@ class Profile extends React.Component {
     this.setState(
       {
         profile_image_select: event.target.files[0],
+        saving_profile_photo:true,
         loaded: 0
       },
       () => {
@@ -304,6 +305,7 @@ class Profile extends React.Component {
           if (data && data.file) {
             this.setState({
               new_profile_pic: data.file,
+              saving_profile_photo : false,
               new_profile_pic_saved: false
             });
           }

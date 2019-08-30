@@ -110,9 +110,8 @@ class UpvoteButton extends React.Component {
         like_counts[original_liked] = 0;
       }
       // alert(i_have_liked);
-      like_counts[i_have_liked] = like_counts[i_have_liked]
-        ? like_counts[i_have_liked] + 1
-        : 1;
+      if(i_have_liked)
+      like_counts[i_have_liked] = like_counts[i_have_liked] +  1;
       // alert(like_counts[i_have_liked]);
 
       // like_counts[likes[i].type]++;
