@@ -368,7 +368,7 @@ exports.resolveDispute = function(req,res, next)
         }); 
       }
       let final_result = req.body.winner;
-      if(final_result != 'team_1' && final_result!=team_2)
+      if(final_result != 'team_1' && final_result!='team_2')
       {
         return res.status(400).send({
           ok:false, msg:'Thats not a valid result'
