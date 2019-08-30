@@ -182,6 +182,7 @@ exports.saveScore = function(req, res, next) {
               for (let i = round_matches.length - 1; i >= 0; i--) {
                 const rm = round_matches[i];
                 if (round_matches[i].status == 'pending') {
+                  console.log(round_matches[i])
                   return;
                 }
                 if (rm.result == 'team_1') {
@@ -190,15 +191,19 @@ exports.saveScore = function(req, res, next) {
                   winner_teams.push(rm.team_2_id);
                 }
               }
+              console.log('winners of this round are: ', winner_teams);
 
-              new Tournament()
+              new Item()
                 .where({
                   id: tmp_match.tournament_id
                 })
                 .fetch()
                 .then(function(tournament) {
+
+                  let teams_obj = tournament.get('teams_obj');
+                  teams_obj = JSON.parse(teams_obj);
                   const bracket_obj = getBracket(winner_teams);
-                  console.log(new bracket_obj());
+                  console.log(  bracket_obj);
                   const brackets_round = bracket_obj[0];
 
                   let brackets = tournament.get('brackets');
@@ -210,7 +215,7 @@ exports.saveScore = function(req, res, next) {
                   } else {
                     brackets = JSON.parse(brackets);
                     brackets.rounds_calculated = brackets.rounds_calculated + 1;
-                    brackets.round[brackets.rounds_calculated] = brackets_round;
+                    brackets['round_'+brackets.rounds_calculated] = brackets_round;
                   }
                   brackets = JSON.stringify(brackets);
                   tournament
