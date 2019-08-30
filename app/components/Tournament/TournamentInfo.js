@@ -917,12 +917,17 @@ class TournamentInfo extends React.Component {
                     <td>#{match.id}</td>
                     <td>{teams[0].title}</td>
                     <td>{teams[1].title}</td>
-                    <td>{match.result ? match.result : 'Results Pending'}</td>
+                    <td>{match.result ? '' : 'Results Pending'}{
+                      match.result && match.result == 'team_1' ? teams[0].title + ' wins' : ''
+                    }
+                    {
+                      match.result && match.result == 'team_2' ? teams[1].title + ' wins' : ''
+                    }</td>
                     
                     <td>{moment(match.created_at).format('lll')} </td>
                     <td>{moment().isAfter(moment(match.starts_at))
                             ? this.dynamicStatus_match(match)
-                            : this.state.match.status}</td>
+                            : match.status}</td>
                     <td>
                       
                       {my_team_id && my_team_id == teams[0].id ? (
