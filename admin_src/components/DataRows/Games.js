@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Fetcher from '../../actions/Fetcher';
-// import { updateProfile, changePassword, deleteAccount } from '../../actions/auth';
+import NewGame from '../Modules/Modals/NewGame';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
+import {openModal} from '../../actions/modals';
 
 class Games extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Games extends React.Component {
     // console.log(data)
     let selected = parseInt(data.selected) + 1;
     this.setState({ page: selected }, () => {
-      this.loadUsers();
+      this.loadData();
     });
   };
 
@@ -84,19 +85,21 @@ class Games extends React.Component {
   // }
 
   deleteItem(id) {
-    const r = confirm('Are you sure you want to delete the user? ');
+    let k ='';
+    const r = confirm('Are you sure you want to delete the game? ');
     if (r == true) {
     } else {
+      return;
     }
     this.setState(
       {
-        ['update_' + key + id]: true
+        ['update_' + id]: true
       },
       () => {
         Fetcher.post('/api/admin/delete/games', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' + key + id]: false
+               ['update_' + id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -121,7 +124,27 @@ class Games extends React.Component {
   }
 
   addItem() {
-    // todo
+     this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'newgame',
+          zIndex: 534,
+          heading: 'New Game',
+          content: <NewGame onComplete={this.loadData.bind(this)} />
+        })
+      );
+  }
+
+  editItem(id, data){
+    this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'newgame',
+          zIndex: 534,
+          heading: 'New Game',
+          content: <NewGame mode={'edit'} id={id} data={data} onComplete={this.loadData.bind(this)} />
+        })
+      );
   }
 
   render() {
@@ -142,13 +165,13 @@ class Games extends React.Component {
           <div className="panel-body">
             <div className="text-right pull-right push-right align-right">
               <button
-                className="btn btn-success btn-sm"
+                className="btn btn-success btn-xs"
                 onClick={this.addItem.bind(this)}
               >
                 <span className="fa fa-plus" /> Add new game
               </button>
             </div>
-            <h2 style={{padding: 0, margin: 0}}>Admin Users</h2>
+            <h2 style={{padding: 0, margin: 0}}>Games</h2>
           </div>
         </div>
         <div className="panel">
@@ -172,16 +195,34 @@ class Games extends React.Component {
                           {u.title}
                         </td>
                         <td>
+
+                          <button
+                           
+                            onClick={() => {
+                              this.editItem(
+                                u.id, u
+                              );
+                            }}
+                            className="btn btn-warning btn-xs"
+                          >
+                            {this.state['update_' + u.id] ? (
+                              <i className="fa fa-spinner fa-spin" />
+                            ) : (
+                              false
+                            )}{' '}
+                            Edit
+                          </button>{' '}
                            
                           <button
+                           
                             onClick={() => {
                               this.deleteItem(
                                 u.id
                               );
                             }}
-                            className="btn btn-danger btn-sm"
+                            className="btn btn-danger btn-xs"
                           >
-                            {this.state['update_del_' + u.id] ? (
+                            {this.state['update_' + u.id] ? (
                               <i className="fa fa-spinner fa-spin" />
                             ) : (
                               false

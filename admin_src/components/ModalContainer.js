@@ -27,13 +27,13 @@ class Modal extends React.Component {
       const {content} = this.props.item;
       return (
         <div
-          className="modal must_show"
+          className={"modal must_show "}
           id={'modal_' + this.props.item.id}
           tabIndex="-1"
           role="dialog"
         >
           <div
-            className="modal-dialog modal-dialog-centered"
+            className={"modal-dialog modal-dialog-centered"+(this.props.item.modal_class?this.props.item.modal_class:  ' ') }
             style={{zIndex: this.props.item.zIndex + 2}}
             role="document"
           >

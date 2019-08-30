@@ -77,21 +77,34 @@ class Header extends React.Component {
                     Home
                   </IndexLink>
                 </li>
+
                 <li>
-                  <Link to="/admin_users" activeStyle={active}>
-                    Admin Users
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Users
                   </Link>
-                </li>
-                <li>
-                  <Link to="/app_users" activeStyle={active}>
-                    App Users
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/teams" activeStyle={active}>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/admin_users">Admin Users</Link>
+                    </li>
+                    <li>
+                      <Link to="/app_users">Web App User</Link>
+                    </li>
+                     <li>
+                     <Link to="/teams" activeStyle={active}>
                     Teams
                   </Link>
+                  </li>
+                     
+                  </ul>
                 </li>
+ 
+                 
                 <li>
                   <Link
                     className="dropdown-toggle"
@@ -124,7 +137,7 @@ class Header extends React.Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Games
+                    Games & Ladders
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
@@ -139,10 +152,46 @@ class Header extends React.Component {
 
 
                 <li>
-                  <Link to="/app_users" activeStyle={active}>
-                    Matches
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Community
                   </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/topics">List Topics</Link>
+                    </li>
+                    <li>
+                      <Link to="/threads">List Threads</Link>
+                    </li>
+                  </ul>
                 </li>
+
+
+                <li>
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Support Tickets
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/tickets">List Tickets</Link>
+                    </li>
+                    
+                  </ul>
+                </li>
+
+ 
+ 
               </ul>
             ) : (
               false

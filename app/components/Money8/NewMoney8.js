@@ -124,7 +124,9 @@ class NewMoney8 extends React.Component {
 
       for (let i = 0; i < this.state.games.length; i++) {
         if (this.state.games[i].id == game_id) {
-          for (let j = 0; j < this.state.games.length; j++) {
+          if(!this.state.games[i].ladders)
+            continue;
+          for (let j = 0; j < this.state.games[i].ladders.length; j++) {
             // game = this.state.games;
             if (this.state.games[i].ladders[j].id == ladder_id) {
               ladder = this.state.games[i].ladders[j];
@@ -133,6 +135,7 @@ class NewMoney8 extends React.Component {
         }
       }
     }
+    console.log(ladder)
     return (
       <section className="middle_part_login">
         <div className="container">

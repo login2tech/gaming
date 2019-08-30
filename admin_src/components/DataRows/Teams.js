@@ -50,7 +50,7 @@ class Teams extends React.Component {
       return null;
     }else if(state.showing_for!='all')
     {
-      
+
       return {
         refresh : true,page:1
       }
@@ -218,7 +218,7 @@ class Teams extends React.Component {
                     }
 
                     return (
-                      <tr key={u.id}>
+                      <tr key={u.id} className={u.removed ? ' table-danger ' : ''}>
                         <td>{u.id}</td>
                         <td>{u.title}</td>
                         <td>{u.ladder.title}</td>
@@ -236,7 +236,7 @@ class Teams extends React.Component {
                               {u.team_users &&
                                 u.team_users.map((tu, j) => {
                                   return (
-                                    <li key={tu.id}>
+                                    <li key={tu.id} className={tu.removed ? ' table-danger  ' :  ''} >
                                       <a
                                         href="#"
                                         onClick={e => {
@@ -273,6 +273,11 @@ class Teams extends React.Component {
                                 <Link to={'/matchfinder/' + u.id}>
                                   View Matches of Team
                                 </Link>
+                              </li>
+                               <li>
+                                <a target='_blank' href={'/teams/view/' + u.id}>
+                                  View Public Profile of Team
+                                </a>
                               </li>
                             </ul>
                           </div>

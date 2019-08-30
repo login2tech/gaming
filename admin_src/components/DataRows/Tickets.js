@@ -5,11 +5,11 @@ import Fetcher from '../../actions/Fetcher';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
+import moment from 'moment';
+import ReplyTicket from '../Modules/Modals/ReplyTicket'
+import ViewTicket from '../Modules/Modals/ViewTicket';
 
-import NewLadder from '../Modules/Modals/NewLadder';
-
-
-class Ladders extends React.Component {
+class Tickets extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,19 +20,17 @@ class Ladders extends React.Component {
     };
   }
 
-  
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadData();
     });
   };
 
-
   loadData() {
     Fetcher.get(
-      '/api/admin/listPaged/ladders?related=game_info&page=' + this.state.page
+      '/api/admin/listPaged/tickets?related=user&page=' + this.state.page
     )
       .then(resp => {
         if (resp.ok) {
@@ -58,52 +56,21 @@ class Ladders extends React.Component {
       });
   }
 
-  // updateItem(id, data, key) {
-  //   this.setState(
-  //     {
-  //       ['update_' + key + id]: true
-  //     },
-  //     () => {
-  //       Fetcher.post('/api/admin/update/users', {id: id, data: data})
-  //         .then(resp => {
-  //           this.setState({
-  //             ['update_' + key + id]: false
-  //           });
-  //           if (resp.ok) {
-  //             this.loadData();
-  //           } else {
-  //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-  //           }
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //           const msg = 'Failed to perform Action';
-  //           this.props.dispatch({
-  //             type: 'FAILURE',
-  //             messages: [{msg: msg}]
-  //           });
-  //         });
-  //     }
-  //   );
-  // }
-
   deleteItem(id) {
-    let k = '';
-    const r = confirm('Are you sure you want to delete the ladder? ');
-    // console.log(r)
+    const r = confirm('Are you sure you want to delete the ticket? ');
     if (r == true) {
     } else {
       return;
     }
     this.setState(
       {
-        ['update_' + id]: true
+        ['delete_' + id]: true
       },
       () => {
-        Fetcher.post('/api/admin/delete/ladders', {id: id})
+        Fetcher.post('/api/admin/delete/tickets', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' + id]: false
+              ['delete_' + id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -112,7 +79,9 @@ class Ladders extends React.Component {
             }
           })
           .catch(err => {
-            console.log(err);
+            this.setState({
+              ['delete_' + id]: false
+            });
             const msg = 'Failed to perform Action';
             this.props.dispatch({
               type: 'FAILURE',
@@ -127,25 +96,31 @@ class Ladders extends React.Component {
     this.loadData();
   }
 
-  addItem() {
-   this.props.dispatch(
+  reply(id) {
+    this.props.dispatch(
       openModal({
         type: 'custom',
-        id: 'newladder',
+        id: 'replyticket',
         zIndex: 534,
-        heading: 'New Ladder',
-        content: <NewLadder onComplete={this.loadData.bind(this)} />
+        heading: 'View Ticket',
+        content: <ReplyTicket id={id} />
+      })
+    );
+
+  }
+  veiwItem(id) {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: <ViewTicket id={id} />
       })
     );
   }
 
-gamer_tags= {
-tag_1: 'Xbox Live Gamertag',
-tag_2: 'PSN',
-tag_3: 'Epic Games Username',
-tag_4: 'Steam Username',
-tag_5: 'Battletag'
-}
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -162,15 +137,7 @@ tag_5: 'Battletag'
       <div className="container">
         <div className="panel">
           <div className="panel-body">
-            <div className="text-right pull-right push-right align-right">
-              <button
-                className="btn btn-success btn-xs"
-                onClick={this.addItem.bind(this)}
-              >
-                <i className="fa fa-plus" /> Add new Ladder
-              </button>
-            </div>
-            <h2 style={{padding: 0, margin: 0}}>Ladders</h2>
+            <h2 style={{padding: 0, margin: 0}}>Support Tickets</h2>
           </div>
         </div>
         <div className="panel">
@@ -180,11 +147,11 @@ tag_5: 'Battletag'
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Game</th>
-                  <th>Min Players</th>
-                  <th>Max Players</th>
-                  <th>Gamer Tag Used</th>
+                  <th>Title</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Created By</th>
+                  <th>Created On</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -194,37 +161,40 @@ tag_5: 'Battletag'
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
-                        <td>
-                          {u.title}
-                        </td>
-                        <td>
-                          {u.game_info && u.game_info.title}
-                        </td>
+                        <td>{u.title}</td>
+                        <td>{u.type}</td>
+                        <td>{u.status}</td>
+
+                        <td>{u.user ? '@' + u.user.username : ' '}</td>
+                        <td>{moment(u.created_at).format('lll')}</td>
 
                         <td>
-                          {u.min_players}
-                        </td>
-                          <td>
-                          {u.max_players}
-                        </td>
-                          <td>
-                          {this.gamer_tags['tag_'+u.gamer_tag]}
-                        </td>
-                        <td>
-                           
                           <button
                             onClick={() => {
-                              this.deleteItem(
-                                u.id,
-                               
-                              );
+                              this.reply(u.id);
+                            }}
+                            className="btn btn-success btn-xs"
+                          >
+                            <span className="fa fa-reply" /> Reply
+                          </button>{' '}
+                          <button
+                            onClick={() => {
+                              this.veiwItem(u.id);
+                            }}
+                            className="btn btn-primary btn-xs"
+                          >
+                            <span className="fa fa-view" /> View
+                          </button>{' '}
+                          <button
+                            onClick={() => {
+                              this.deleteItem(u.id);
                             }}
                             className="btn btn-danger btn-xs"
                           >
-                            {this.state['update_' + u.id] ? (
+                            {this.state['delete_' + u.id] ? (
                               <i className="fa fa-spinner fa-spin" />
                             ) : (
-                              false
+                              <span className="fa fa-trash" />
                             )}{' '}
                             Delete
                           </button>
@@ -234,20 +204,20 @@ tag_5: 'Battletag'
                   })}
               </tbody>
             </table>
-            
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>
@@ -263,4 +233,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Ladders);
+export default connect(mapStateToProps)(Tickets);

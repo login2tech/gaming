@@ -6,10 +6,10 @@ import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
 
-import NewLadder from '../Modules/Modals/NewLadder';
+import NewTopic from '../Modules/Modals/NewTopic';
 
 
-class Ladders extends React.Component {
+class Topics extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +32,7 @@ class Ladders extends React.Component {
 
   loadData() {
     Fetcher.get(
-      '/api/admin/listPaged/ladders?related=game_info&page=' + this.state.page
+      '/api/admin/listPaged/topics?page=' + this.state.page
     )
       .then(resp => {
         if (resp.ok) {
@@ -87,23 +87,20 @@ class Ladders extends React.Component {
   //   );
   // }
 
-  deleteItem(id) {
-    let k = '';
-    const r = confirm('Are you sure you want to delete the ladder? ');
-    // console.log(r)
+  deleteItem(id) { let k ='';
+    const r = confirm('Are you sure you want to delete the topic? ');
     if (r == true) {
     } else {
-      return;
     }
     this.setState(
       {
-        ['update_' + id]: true
+        ['update_' +  id]: true
       },
       () => {
-        Fetcher.post('/api/admin/delete/ladders', {id: id})
+        Fetcher.post('/api/admin/delete/topics', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' + id]: false
+               ['update_' +  id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -131,21 +128,14 @@ class Ladders extends React.Component {
    this.props.dispatch(
       openModal({
         type: 'custom',
-        id: 'newladder',
+        id: 'newtopic',
         zIndex: 534,
-        heading: 'New Ladder',
-        content: <NewLadder onComplete={this.loadData.bind(this)} />
+        heading: 'New Topic',
+        content: <NewTopic onComplete={this.loadData.bind(this)} />
       })
     );
   }
-
-gamer_tags= {
-tag_1: 'Xbox Live Gamertag',
-tag_2: 'PSN',
-tag_3: 'Epic Games Username',
-tag_4: 'Steam Username',
-tag_5: 'Battletag'
-}
+ 
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -167,10 +157,10 @@ tag_5: 'Battletag'
                 className="btn btn-success btn-xs"
                 onClick={this.addItem.bind(this)}
               >
-                <i className="fa fa-plus" /> Add new Ladder
+                <i className="fa fa-plus" /> Add new Topic
               </button>
             </div>
-            <h2 style={{padding: 0, margin: 0}}>Ladders</h2>
+            <h2 style={{padding: 0, margin: 0}}>Topics</h2>
           </div>
         </div>
         <div className="panel">
@@ -180,11 +170,9 @@ tag_5: 'Battletag'
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Game</th>
-                  <th>Min Players</th>
-                  <th>Max Players</th>
-                  <th>Gamer Tag Used</th>
+                  <th>Title</th>
+                  <th>Sub Title</th>
+                 
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -197,26 +185,18 @@ tag_5: 'Battletag'
                         <td>
                           {u.title}
                         </td>
-                        <td>
-                          {u.game_info && u.game_info.title}
-                        </td>
-
-                        <td>
-                          {u.min_players}
-                        </td>
+                         
                           <td>
-                          {u.max_players}
+                          {u.sub_title}
                         </td>
-                          <td>
-                          {this.gamer_tags['tag_'+u.gamer_tag]}
-                        </td>
+                          
                         <td>
                            
                           <button
                             onClick={() => {
                               this.deleteItem(
-                                u.id,
-                               
+                                u.id
+                                
                               );
                             }}
                             className="btn btn-danger btn-xs"
@@ -228,6 +208,8 @@ tag_5: 'Battletag'
                             )}{' '}
                             Delete
                           </button>
+
+                             
                         </td>
                       </tr>
                     );
@@ -263,4 +245,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Ladders);
+export default connect(mapStateToProps)(Topics);

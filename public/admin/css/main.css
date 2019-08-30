@@ -1,90 +1,91 @@
-@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CRaleway:100,300,600,700,800");
-
- 
-footer {
-  position: fixed;
-  width: 100%;
-  height: 44px;
-  padding: 10px 30px;
-  bottom: 0;
-  background-color: #eee;
-  border-top: 1px solid #e0e0e0;
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800%7CRaleway:100,300,600,700,800"); footer {
+    position: fixed;
+    width: 100%;
+    height: 44px;
+    padding: 10px 30px;
+    bottom: 0;
+    background-color: #eee;
+    border-top: 1px solid #e0e0e0;
 }
 
 .login-container {
-  max-width: 555px;
+    max-width: 555px;
 }
 
 /* Alerts
 /* ------------------------- */
-
 .alert {
-  border-width: 0 0 0 3px;
+    border-width: 0 0 0 3px;
 }
- 
+
+.table-danger {
+    background-color: rgba(231, 76, 60, 0.6);
+}
+
+.profile_pic_outline {
+    width: 50px;
+    height: auto;
+}
 
 /* Navbar
 /* ------------------------- */
- 
 .navbar-default .navbar-nav > li > a {
-  /*color: #262626;*/
-  /*border-bottom: 3px solid transparent;*/
-  padding-top: 17.5px;
-  padding-bottom: 14.5px;
-  transition: all 0.25s;
+    /*color: #262626;*/
+    /*border-bottom: 3px solid transparent;*/
+    padding-top: 17.5px;
+    padding-bottom: 14.5px;
+    transition: all 0.25s;
 }
 
 .navbar-default .navbar-nav > li > a:hover {
-  /*background-color: transparent;;*/
-  /*border-bottom-color: #bdbdbd;*/
+    /*background-color: transparent;;*/
+    /*border-bottom-color: #bdbdbd;*/
 }
 
 .navbar-default .navbar-nav > li > a.navbar-avatar {
-  padding-top: 13px;
-  padding-bottom: 10px;
+    padding-top: 13px;
+    padding-bottom: 10px;
 }
 
 .navbar-default .navbar-nav > li > a.navbar-avatar img {
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
 }
 
 .navbar-default .navbar-nav > li.active > a {
-  /*border-bottom-color: #3f51b5;*/
-  /*background-color: transparent;*/
-  /*color: #262626;*/
+    /*border-bottom-color: #3f51b5;*/
+    /*background-color: transparent;*/
+    /*color: #262626;*/
 }
 
 /* Panels
 /* ------------------------- */
-
 .panel {
-  /*border: solid 1px rgba(160, 160, 160, 0.3);*/
-  /*box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);*/
+    /*border: solid 1px rgba(160, 160, 160, 0.3);*/
+    /*box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);*/
 }
 
 .panel-heading {
-  padding: 20px 30px;
+    padding: 20px 30px;
 }
 
 .panel-heading + .panel-body {
-  padding-top: 0;
+    padding-top: 0;
 }
 
 .panel-body {
-  padding: 30px;
+    padding: 30px;
 }
 
 .panel-body h3 {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .panel-title {
-  font-size: 18px;
-  /*color: #424242;*/
+    font-size: 18px;
+    /*color: #424242;*/
 }
- 
 
 .modals {
     position: fixed;
@@ -142,10 +143,10 @@ footer {
 .snackbar a {
     color: #fff;
 }
+
 .modal-header button.close {
     float: right;
 }
-
 
 .show_loader {
     position: absolute;
@@ -169,6 +170,58 @@ footer {
     animation: spin 2s linear infinite;
 }
 
+.card.post {
+    padding: 10px;
+    background: #e0e0e0;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.ticket_item_av {
+    background: #fff;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.card.post > .row {
+    margin: 0;
+}
+
+.card.post > .date {
+    display: inline-block;
+    width: 100%;
+    font-size: 12px;
+    background: green;
+    color: #fff;
+    padding: 2px;
+    margin-bottom: 10px;
+}
+span.profile_menu_item_inner {
+    display: inline-block;
+}
+span.menu_prof_name_w {
+    display: inline-block;
+    float: right;
+    width: auto;
+    max-width: 70%;
+}
+
+span.menu_prof_name_top {
+    display: inline-block;
+    width: 100%;
+}
+
+span.menu_prof_name_bot {
+    font-size: 0.8em;
+}
+.col-sm-9.post-content div {
+    background: #fff;
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
@@ -178,6 +231,7 @@ footer {
         transform: rotate(360deg);
     }
 }
+
 div#modal_orders .modal-dialog {
     width: 900px;
     max-width: 100%;

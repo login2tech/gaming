@@ -206,6 +206,7 @@ class MatchFinder extends React.Component {
                   <th>Team 2</th>
                   <th>Status</th>
                   <th>Result</th>
+                  <th>Match type</th>
                   <th>Team 1 Result</th>
                   <th>Team 2 Result</th>
                   
@@ -237,11 +238,13 @@ class MatchFinder extends React.Component {
                               ? "Team 2 Wins"
                               : u.result=='team_1'
                                 ? "Team 1 Wins"
-                                : u.result =='dispute'
+                                : u.result =='disputed'
                                   ? (<span className="text-danger">Disputed</span>)
                                   : (<span className="text-warning">{u.result}</span>):
                                   <span className="text-warning">Yet to declare</span>}</td>
+                        <td>{u.match_type== 'paid' ? ''+u.match_fee+'/- OCG CASH' : 'FREE'}</td>
                         <td>{u.team_1_result}</td>
+                        
                         <td>{u.team_2_result}</td> 
                         <td>
                         <div className="dropdown">
@@ -282,12 +285,12 @@ class MatchFinder extends React.Component {
                                 </li> : false
                               }
                               {
-                                (u.result =='dispute')? (
+                                (u.result =='disputed')? (
                                   <li>
                                 <a
                                   href="#" onClick={(e)=>{
                                   e.preventDefault();
-                                  this.resolveDispute('team_1');
+                                  this.resolveDispute(u.id, 'team_1');
                                   }}
                                 
                                 >
@@ -300,11 +303,11 @@ class MatchFinder extends React.Component {
                               }
 
                                {
-                                (u.result =='dispute')? (
+                                (u.result =='disputed')? (
                                   <li>
                                 <a href="#" onClick={(e)=>{
                                   e.preventDefault();
-                                  this.resolveDispute('team_2');
+                                  this.resolveDispute(u.id, 'team_2');
                                 }}
                                 
                                 >

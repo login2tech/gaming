@@ -5,11 +5,11 @@ import Fetcher from '../../actions/Fetcher';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
+import ViewThread from '../Modules/Modals/ViewThread';
 
-import NewLadder from '../Modules/Modals/NewLadder';
+ 
 
-
-class Ladders extends React.Component {
+class Threads extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +32,7 @@ class Ladders extends React.Component {
 
   loadData() {
     Fetcher.get(
-      '/api/admin/listPaged/ladders?related=game_info&page=' + this.state.page
+      '/api/admin/listPaged/threads?related=topic&page=' + this.state.page
     )
       .then(resp => {
         if (resp.ok) {
@@ -58,52 +58,34 @@ class Ladders extends React.Component {
       });
   }
 
-  // updateItem(id, data, key) {
-  //   this.setState(
-  //     {
-  //       ['update_' + key + id]: true
-  //     },
-  //     () => {
-  //       Fetcher.post('/api/admin/update/users', {id: id, data: data})
-  //         .then(resp => {
-  //           this.setState({
-  //             ['update_' + key + id]: false
-  //           });
-  //           if (resp.ok) {
-  //             this.loadData();
-  //           } else {
-  //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-  //           }
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //           const msg = 'Failed to perform Action';
-  //           this.props.dispatch({
-  //             type: 'FAILURE',
-  //             messages: [{msg: msg}]
-  //           });
-  //         });
-  //     }
-  //   );
-  // }
+  viewItem(id){
+ this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'viewthread',
+          modal_class : '   modal-lg',
+          zIndex: 534,
+          heading: 'View Thread',
+          content: <ViewThread id={id}   />
+        })
+      );
+  }
 
-  deleteItem(id) {
-    let k = '';
-    const r = confirm('Are you sure you want to delete the ladder? ');
-    // console.log(r)
+  deleteItem(id) { let k ='';
+    const r = confirm('Are you sure you want to delete the thread? ');
     if (r == true) {
     } else {
       return;
     }
     this.setState(
       {
-        ['update_' + id]: true
+        ['update_' +  id]: true
       },
       () => {
-        Fetcher.post('/api/admin/delete/ladders', {id: id})
+        Fetcher.post('/api/admin/delete/threads', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' + id]: false
+               ['update_' +  id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -127,25 +109,8 @@ class Ladders extends React.Component {
     this.loadData();
   }
 
-  addItem() {
-   this.props.dispatch(
-      openModal({
-        type: 'custom',
-        id: 'newladder',
-        zIndex: 534,
-        heading: 'New Ladder',
-        content: <NewLadder onComplete={this.loadData.bind(this)} />
-      })
-    );
-  }
-
-gamer_tags= {
-tag_1: 'Xbox Live Gamertag',
-tag_2: 'PSN',
-tag_3: 'Epic Games Username',
-tag_4: 'Steam Username',
-tag_5: 'Battletag'
-}
+   
+ 
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -162,15 +127,8 @@ tag_5: 'Battletag'
       <div className="container">
         <div className="panel">
           <div className="panel-body">
-            <div className="text-right pull-right push-right align-right">
-              <button
-                className="btn btn-success btn-xs"
-                onClick={this.addItem.bind(this)}
-              >
-                <i className="fa fa-plus" /> Add new Ladder
-              </button>
-            </div>
-            <h2 style={{padding: 0, margin: 0}}>Ladders</h2>
+            
+            <h2 style={{padding: 0, margin: 0}}>Threads</h2>
           </div>
         </div>
         <div className="panel">
@@ -180,11 +138,8 @@ tag_5: 'Battletag'
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Game</th>
-                  <th>Min Players</th>
-                  <th>Max Players</th>
-                  <th>Gamer Tag Used</th>
+                  <th>Title</th>
+                  <th>Topic</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -197,26 +152,18 @@ tag_5: 'Battletag'
                         <td>
                           {u.title}
                         </td>
-                        <td>
-                          {u.game_info && u.game_info.title}
-                        </td>
-
-                        <td>
-                          {u.min_players}
-                        </td>
+                         
                           <td>
-                          {u.max_players}
+                          {u.topic && u.topic.title}
                         </td>
-                          <td>
-                          {this.gamer_tags['tag_'+u.gamer_tag]}
-                        </td>
+                          
                         <td>
                            
                           <button
                             onClick={() => {
                               this.deleteItem(
-                                u.id,
-                               
+                                u.id
+                                
                               );
                             }}
                             className="btn btn-danger btn-xs"
@@ -228,6 +175,19 @@ tag_5: 'Battletag'
                             )}{' '}
                             Delete
                           </button>
+{ ' '}
+                           <button
+                            onClick={() => {
+                              this.viewItem(
+                                u.id
+                              );
+                            }}
+                            className="btn btn-success btn-xs"
+                          >
+                            View
+                          </button>
+
+                             
                         </td>
                       </tr>
                     );
@@ -263,4 +223,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Ladders);
+export default connect(mapStateToProps)(Threads);

@@ -1,20 +1,16 @@
 const bookshelf = require('../../config/bookshelf');
 const Thread = require('../threads/Thread');
 
-const Tournament = bookshelf.Model.extend({
+const Topic = bookshelf.Model.extend({
   tableName: 'topics',
-  hasTimestamps: true,
+  hasTimestamps: false,
   threads: function() {
     return this.hasMany(Thread);
   }
 
-  // thread_count: function() {
-  //   return new Topic.Model()
-  //     .query(function(qb) {
-  //       qb.where('topic_id', 9);
-  //       qb.count();
-  //     })
-  //     .fetch();
-  // }
+  
 });
-module.exports = Tournament;
+
+module.exports = bookshelf.model('Topic', Topic);
+
+// module.exports = Topic;

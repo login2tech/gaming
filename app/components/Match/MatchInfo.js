@@ -11,7 +11,7 @@ class MatchInfo extends React.Component {
     super(props);
     this.state = {
       title: '',
-      is_loaded : false,
+      is_loaded: false,
       match: {
         game: {},
         ladder: {},
@@ -21,6 +21,7 @@ class MatchInfo extends React.Component {
       ladder: '',
       using_users: [],
       games: [],
+      clicked: false,
       my_score: '',
       their_score: ''
     };
@@ -238,28 +239,43 @@ class MatchInfo extends React.Component {
   }
 
   renderJoin() {
-    if(!this.state.is_loaded) return false;
+    if (this.state.clicked) {
+      return false;
+    }
+
+    if (!this.state.is_loaded) {
+      return false;
+    }
     if (this.state.match.team_2_id) {
       return false;
     }
-    if(this.state.eligible_teams_loaded)return false;
 
     // return false;
     const me = this.props.user.id;
-    const users = this.state.match.team_1_info.team_users;
+    // let team_1_players = this.state.match.team_1_players.split('|');
+    const team_1_players = this.state.match.team_1_info.team_users;
 
-    for (let i = 0; i < users.length; i++) {
+    for (let i = 0; i < team_1_players.length; i++) {
       // console.log(users);
       // console.log(users[i].id, me);
-      if (users[i].user_info.id == me) {
+      if (parseInt(team_1_players[i]) == me) {
+        console.log(team_1_players[i], me);
         return false;
       }
     }
+    //
     return (
       <button
         type="button"
         onClick={() => {
-          this.showMatch();
+          this.setState(
+            {
+              clicked: true
+            },
+            () => {
+              this.showMatch();
+            }
+          );
         }}
         className="btn btn-default bttn_submit mw_200"
       >
@@ -575,7 +591,9 @@ class MatchInfo extends React.Component {
                   <br />
 
                   <h6 className="prizes_desclaimer">
-                    <Link to={'/teams/view/'+this.state.match.team_1_id}>{this.state.match.team_1_info.title}</Link>
+                    <Link to={'/teams/view/' + this.state.match.team_1_id}>
+                      {this.state.match.team_1_info.title}
+                    </Link>
                     {this.state.match.status == 'complete' &&
                     this.state.match.result == 'team_1' ? (
                       <span>
@@ -585,7 +603,8 @@ class MatchInfo extends React.Component {
                     ) : (
                       false
                     )}
-                    {(this.state.match.status == 'complete' || this.state.match.status == 'Complete') &&
+                    {(this.state.match.status == 'complete' ||
+                      this.state.match.status == 'Complete') &&
                     this.state.match.result == 'team_2' ? (
                       <span>
                         {' '}
@@ -657,8 +676,11 @@ class MatchInfo extends React.Component {
                   {this.state.match.team_2_id ? (
                     <div>
                       <h6 className="prizes_desclaimer">
-                        <Link to={'/teams/view/'+this.state.match.team_2_id}>{this.state.match.team_2_info.title}</Link>{' '}
-                        {(this.state.match.status == 'complete' || this.state.match.status == 'Complete') &&
+                        <Link to={'/teams/view/' + this.state.match.team_2_id}>
+                          {this.state.match.team_2_info.title}
+                        </Link>{' '}
+                        {(this.state.match.status == 'complete' ||
+                          this.state.match.status == 'Complete') &&
                         this.state.match.result == 'team_2' ? (
                           <span>
                             {' '}
@@ -773,8 +795,9 @@ class MatchInfo extends React.Component {
                         <tbody>
                           {this.state.team_selected.team_users.map(
                             (team_user, i) => {
-                              if(team_user.removed  == 1)
-                                  return false;
+                              if (team_user.removed == 1) {
+                                return false;
+                              }
                               return (
                                 <tr key={team_user.id}>
                                   <td>
@@ -862,9 +885,9 @@ class MatchInfo extends React.Component {
                   {this.state.eligible_teams_loaded &&
                     !this.state.team_selected &&
                     this.state.eligible_teams.map((team_parent, i) => {
-                      
-                      if(team_parent.team_info.removed)
+                      if (team_parent.team_info.removed) {
                         return false;
+                      }
                       if (
                         team_parent.team_info.ladder_id !=
                         this.state.match.ladder_id

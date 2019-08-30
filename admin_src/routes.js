@@ -19,6 +19,10 @@ import Money8 from './components/DataRows/Money8';
 import Tournaments from './components/DataRows/Tournaments';
 import Games from './components/DataRows/Games';
 import Ladders from './components/DataRows/Ladders';
+import Topics from './components/DataRows/Topics';
+import Posts from './components/DataRows/Posts';
+import Threads from './components/DataRows/Threads';
+import Tickets from './components/DataRows/Tickets';
 
 
 export default function getRoutes(store) {
@@ -55,6 +59,10 @@ export default function getRoutes(store) {
       <Route path="/money8" component={Money8} onLeave={clearMessages} />
       <Route path="/tournaments" component={Tournaments} onLeave={clearMessages} />
       <Route path="/games" component={Games} onLeave={clearMessages} />
+      <Route path="/topics" component={Topics} onLeave={clearMessages} />
+      <Route path="/threads" component={Threads} onLeave={clearMessages} />
+      <Route path="/tickets" component={Tickets} onLeave={clearMessages} />
+      <Route path="/posts" component={Posts} onLeave={clearMessages} />
       <Route path="/games/add" component={Games} onLeave={clearMessages} />
       <Route path="/games/edit" component={Games} onLeave={clearMessages} />
       <Route path="/ladders" component={Ladders} onLeave={clearMessages} />

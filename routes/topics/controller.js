@@ -60,6 +60,7 @@ exports.listSingleItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
+
       return res.status(400).send({
         id: req.params.id,
         title: '',
@@ -79,8 +80,9 @@ exports.addItem = function(req, res, next) {
   }
   new Item({
     title: req.body.title,
-    platform: req.body.platform,
-    image_url: req.body.image_url
+    sub_title: req.body.sub_title,
+    // platform: req.body.platform,
+    // image_url: req.body.image_url
     // category_id: req.body.category_id,
     // short_content: req.body.short_content
   })
@@ -89,7 +91,7 @@ exports.addItem = function(req, res, next) {
       res.send({ok: true, msg: 'New Item has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});
@@ -111,13 +113,10 @@ exports.updateItem = function(req, res, next) {
   const item = new Item({id: req.body.id});
   const obj = {
     title: req.body.title,
-    platform: req.body.platform,
-    image_url: req.body.image_url
+   sub_title: req.body.sub_title,
   };
 
-  if (req.body.remove_media) {
-    obj.image_url = '';
-  }
+  
   item
     .save(obj)
     .then(function(blg) {

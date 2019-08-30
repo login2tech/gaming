@@ -88,22 +88,19 @@ class Ladders extends React.Component {
   // }
 
   deleteItem(id) {
-    let k = '';
-    const r = confirm('Are you sure you want to delete the ladder? ');
-    // console.log(r)
+    const r = confirm('Are you sure you want to delete the user? ');
     if (r == true) {
     } else {
-      return;
     }
     this.setState(
       {
-        ['update_' + id]: true
+        ['update_' + key + id]: true
       },
       () => {
         Fetcher.post('/api/admin/delete/ladders', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' + id]: false
+               ['update_' + key + id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -214,14 +211,17 @@ tag_5: 'Battletag'
                            
                           <button
                             onClick={() => {
-                              this.deleteItem(
+                              this.updateItem(
                                 u.id,
-                               
+                                {
+                                  role: 'member'
+                                },
+                                'del_', true
                               );
                             }}
                             className="btn btn-danger btn-xs"
                           >
-                            {this.state['update_' + u.id] ? (
+                            {this.state['update_del_' + u.id] ? (
                               <i className="fa fa-spinner fa-spin" />
                             ) : (
                               false

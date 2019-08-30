@@ -188,10 +188,19 @@ class AppUsers extends React.Component {
                                     this.doAction('profile', u);
                                   }}
                                 >
-                                  Profile
+                                  Profile Info
                                 </a>
                               </li>
                               <li>
+                                <a
+                                  href={'/u/'+u.username}
+                                  target='_blank'
+                                  
+                                >
+                                  Public Profile
+                                </a>
+                              </li>
+                            {/*  <li>
                                 <a
                                   href="#"
                                   onClick={e => {
@@ -223,7 +232,7 @@ class AppUsers extends React.Component {
                                 >
                                   Show Cash Transactions
                                 </a>
-                              </li> 
+                              </li> */}
                               <li>
                                 <Link
                                   to={"/teams/"+u.id}

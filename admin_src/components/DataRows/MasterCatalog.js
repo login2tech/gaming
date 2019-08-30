@@ -80,7 +80,7 @@ class MasterCatalog extends React.Component {
           <div className="panel-body">
             <div className="text-right pull-right push-right align-right">
               <button
-                className="btn btn-success btn-sm"
+                className="btn btn-success btn-xs"
                 onClick={this.addUser.bind(this)}
               >
                 <i className="fa fa-plus" /> Add new item
