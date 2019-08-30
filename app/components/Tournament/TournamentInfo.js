@@ -1198,6 +1198,8 @@ class TournamentInfo extends React.Component {
                 return false;
               }
               const team = team_parent.team_info ? team_parent.team_info : {};
+              if(team.removed==true)
+                return false;
               return (
                 <li className="" key={team.id}>
                   <Link
