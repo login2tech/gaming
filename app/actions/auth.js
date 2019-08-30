@@ -28,7 +28,10 @@ export function login(email, password) {
               .add(1, 'month')
               .toDate()
           });
-          browserHistory.push('/dashboard');
+          setTimeout(function(){
+            window.location.href('/dashboard');  
+          }, 500);
+          
         });
       } else {
         return response.json().then(json => {
