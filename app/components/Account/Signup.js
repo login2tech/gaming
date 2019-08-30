@@ -201,7 +201,7 @@ class Signup extends React.Component {
                                     a.day = '';
                                   }
 
-                                  this.setState()
+                                  this.setState(a)
                                 }}
                               >
                                 <option value="">
@@ -265,9 +265,15 @@ class Signup extends React.Component {
                                 <option value="27">27</option>
                                 <option value="28">28</option>
                                 <option value="29">29</option>
-                                <option value="30">30</option>
+                               {
+                                    this.state.month != 2 && this.state.month != "2" ? <option value="30">30</option> : false}
                                 {
-                                    this.state.month != 2 && this.state.month != "2" ? <option value="31">31</option>  :false
+                                    this.state.month != 2 && this.state.month != "2" &&
+                                    this.state.month != 4 && this.state.month != "4" &&
+                                    this.state.month != 6 && this.state.month != "6" &&
+                                    this.state.month != 9 && this.state.month != "9" &&
+                                    this.state.month != 11 && this.state.month != "11"
+                                    ? <option value="31">31</option>  :false
                                 }
                                 
                               </select>
