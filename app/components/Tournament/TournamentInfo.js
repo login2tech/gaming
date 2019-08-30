@@ -170,7 +170,7 @@ class TournamentInfo extends React.Component {
     // }
 
     if (
-      parseInt(this.state.tournament.max_players) >
+      parseInt(this.state.tournament.max_players) !=
       this.state.using_users.length
     ) {
       return false;
