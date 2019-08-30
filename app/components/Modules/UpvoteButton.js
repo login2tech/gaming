@@ -80,10 +80,11 @@ class UpvoteButton extends React.Component {
     let original_liked = false;
     let {likes} = this.props;
 
-    const likes_count = likes.length;
+    
     if (!likes) {
       likes = [];
     }
+    const likes_count = likes.length;
     for (let i = 0; i < likes_count; i++) {
       if (!like_counts[likes[i].type]) {
         like_counts[likes[i].type] = 1;
