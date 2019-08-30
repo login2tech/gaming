@@ -233,7 +233,7 @@ exports.listItemMyFeed = function(req, res, next) {
   }
   n.fetchPage({
     page: p,
-    pageSize: 10,
+    pageSize: 100,
     withRelated: [
       {
         user: function(qb) {
@@ -306,7 +306,7 @@ exports.listItemMy = function(req, res, next) {
   }
   n.fetchPage({
     page: p,
-    pageSize: 10,
+    pageSize: 100,
     withRelated: [
       {
         user: function(qb) {
@@ -381,7 +381,7 @@ exports.listItemAll = function(req, res, next) {
   }
   n.fetchPage({
     page: p,
-    pageSize: 10,
+    pageSize: 100,
     withRelated: [
       {
         user: function(qb) {
