@@ -29,7 +29,7 @@ export function login(email, password) {
               .toDate()
           });
           setTimeout(function(){
-            window.location.href('/dashboard');  
+            window.location.href = '/dashboard';
           }, 500);
           
         });
