@@ -378,6 +378,116 @@ const addScoreForTeam = function(game_id, ladder_id, type, team_members) {
   }
 };
 
+
+
+exports.resolveDispute = function(req,res, next)
+{
+  console.log(req.body);
+  new Item({id: req.body.id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        return res.status(400).send({
+          ok: false,
+          msg: "Match doesn't exist"
+        }); 
+      }
+      const tmp_match = match.toJSON();
+      if(tmp_match.result!='disputed')
+      {
+        return res.status(400).send({
+          ok: false,
+          msg: "Match not disputed"
+        }); 
+      }
+      let final_result = req.body.winner;
+      if(final_result != 'team_1' && final_result!=team_2)
+      {
+        return res.status(400).send({
+          ok:false, msg:'Thats not a valid result'
+        })
+      }
+      let saved_info = {
+        status : 'complete',
+        result : final_result
+      };
+
+
+      match
+        .save(saved_info, {method:'update'})
+        .then(function(match) {
+          res.status(200).send({
+            ok: true,
+            msg: 'Dispute resolved successfully',
+            match: match.toJSON()
+          });
+
+
+          let win_team_members;
+          let loose_team_members;
+          if (final_result == 'team_1') {
+            win_team_members = match.get('team_1');
+            loose_team_members = match.get('team_2');
+          } else {
+            win_team_members = match.get('team_2');
+            loose_team_members = match.get('team_1');
+          }
+
+          win_team_members = win_team_members.split('|').map(function(a){return parseInt(a);});
+          loose_team_members = loose_team_members.split('|').map(function(a){return parseInt(a);});
+
+          giveXPtoTeam(null, win_team_members, tmp_match.id);
+
+          if (
+            tmp_match.match_type == 'cash' ||
+            tmp_match.match_type == 'credits'
+          ) {
+            // console.log('paid match giving xp');
+            giveMoneyBackToTeam(
+              null,
+              tmp_match.match_fee,
+              win_team_members,
+              tmp_match.id,
+              tmp_match.match_type
+            );
+          }
+          // console.log('score resotlo');
+          addScoreForTeam(
+            tmp_match.game_id,
+            tmp_match.ladder_id,
+            'wins',
+            win_team_members
+          );
+          addScoreForTeam(
+            tmp_match.game_id,
+            tmp_match.ladder_id,
+            'loss',
+            loose_team_members
+          );
+
+ 
+
+        })
+        .catch(function(err) {
+          console.log('1');
+          console.log(err);
+          res.status(400).send({
+            ok: false,
+            msg: 'Failed to resolve the dispute'
+          });
+        });
+    })
+    .catch(function(err) {
+      console.log('2');
+      console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed to resolve dispute'
+      });
+    });
+          
+}
+
 exports.saveScore = function(req, res, next) {
   console.log(req.body);
   new Item({id: req.body.id})

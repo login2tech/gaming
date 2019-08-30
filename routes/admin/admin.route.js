@@ -9,8 +9,9 @@ const Ladder = require('../games/Ladder');
 const Models = require('./Models');
 const Topic =require('../topics/Topic')
 const Match = require('../matches/Match');
-const Ticket = require('../tickets/Ticket')
-const Threads = require('../threads/Thread')
+const Ticket = require('../tickets/Ticket');
+const Threads = require('../threads/Thread');
+const Money8 = require('../money8/Money8Match');
 module.exports = routes;
 
 
@@ -39,6 +40,10 @@ const fixateModel = function(req, res, next)
 			return;
 		case 'matches': 
 			req.Mdl = Match;
+			next();
+			return;
+		case 'money8': 
+			req.Mdl = Money8;
 			next();
 			return;
 		case 'topics': 

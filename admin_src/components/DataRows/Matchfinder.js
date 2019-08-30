@@ -253,7 +253,7 @@ class MatchFinder extends React.Component {
                               type="button"
                               data-toggle="dropdown"
                             >
-                              Details
+                              Actions
                               <span className="caret" />
                             </button>
                             <ul className="dropdown-menu">
