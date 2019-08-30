@@ -811,3 +811,4 @@ exports.records = function(req, res, next) {
 exports.authFacebookCallback = function(req, res) {
   res.render('loading');
 };
+

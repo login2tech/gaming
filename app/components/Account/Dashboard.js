@@ -7,7 +7,7 @@ import {Link} from 'react-router';
 import moment from 'moment';
 import axios from 'axios';
 import {accountPic} from '../../actions/auth';
-import {updateProfile, changePassword, logout} from '../../actions/auth';
+import {updateProfile,stopRenewal, changePassword, logout} from '../../actions/auth';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -78,6 +78,13 @@ class Profile extends React.Component {
     event.preventDefault();
     this.props.dispatch(
       changePassword(this.state.password, this.state.confirm, this.props.token)
+    );
+  }
+
+  handleStopRenewal(event, item) {
+    event.preventDefault();
+    this.props.dispatch(
+      stopRenewal(item, this.props.token)
     );
   }
 
@@ -754,24 +761,38 @@ class Profile extends React.Component {
   renderStep2() {
     let prime_info = false;
     let tmp;
+    let prime_obj = false;
+    let double_xp_obj = false;
     if (this.props.user.prime) {
       tmp = JSON.parse(this.props.user.prime_obj);
+      prime_obj = tmp;
       prime_info = (
         <span>
           <strong className="text-white">Started On: </strong>
-          {moment.unix(tmp.start).format('lll')}
+          <span className="text-success">{moment.unix(tmp.start).format('lll')}</span>
         </span>
       );
     }
     let double_xp_info = false;
     if (this.props.user.double_xp) {
       tmp = JSON.parse(this.props.user.double_xp_obj);
-      double_xp_info = (
+      double_xp_obj=  tmp;
+      if(!tmp.start)
+      {
+         double_xp_info = (
         <span>
-          <strong className="text-white">Started On: </strong>
-          {moment.unix(tmp.start).format('lll')}
+          <strong className="text-white">Started Manually by admin</strong>
         </span>
       );
+       }else{
+         double_xp_info = (
+        <span>
+          <strong className="text-white">Started On: </strong>
+          <span className="text-success">{moment.unix(tmp.start).format('lll')}</span>
+        </span>
+      );
+       }
+     
     }
     return (
       <div className="tab-pane" data-tab="tab1">
@@ -786,6 +807,23 @@ class Profile extends React.Component {
                     <span className="text-success">enabled</span>
                     <br />
                     {prime_info}
+                    <br />
+
+                    {
+                      (prime_obj.current_period_end) ? 
+                        (
+                          <span>
+                           <strong className="text-white">
+                            { prime_obj.ending_on_period_end ? 'Stops on: ': 'Renews On'}: </strong> 
+                            <span className="text-success">{moment.unix(prime_obj.current_period_end).format('lll')}</span>
+                            </span>
+                        )
+                        :(false)
+                    }
+                    <br /><br />
+                   {(prime_obj.current_period_end && !prime_obj.ending_on_period_end) ?  <button className="btn btn-danger btn-xs" onClick={(e)=>{
+                      this.handleStopRenewal(e,'prime');
+                    }}>Stop Renewing</button>  : false}
                   </p>
                 ) : (
                   <p>
@@ -804,6 +842,23 @@ class Profile extends React.Component {
                     <span className="text-success">enabled</span>
                     <br />
                     {double_xp_info}
+                    <br />
+
+                    {
+                      (double_xp_obj.current_period_end) ? 
+                        (
+                          <span>
+                           <strong className="text-white">
+                            { double_xp_obj.ending_on_period_end ? 'Stops on: ': 'Renews On'}: </strong> 
+                            <span className="text-success">{moment.unix(double_xp_obj.current_period_end).format('lll')}</span>
+                            </span>
+                        )
+                        :(false)
+                    }
+                    <br /><br />
+                   {(double_xp_obj.current_period_end && !double_xp_obj.ending_on_period_end) ?  <button className="btn btn-danger btn-xs" onClick={(e)=>{
+                      this.handleStopRenewal(e,'double_xp');
+                    }}>Stop Renewing</button>  : false}
                   </p>
                 ) : (
                   <p>

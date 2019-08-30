@@ -12,6 +12,7 @@ const Match = require('../matches/Match');
 const Ticket = require('../tickets/Ticket');
 const Threads = require('../threads/Thread');
 const Money8 = require('../money8/Money8Match');
+const Tournament = require('../tournaments/Tournament')
 module.exports = routes;
 
 
@@ -52,6 +53,10 @@ const fixateModel = function(req, res, next)
 			return;
 		case 'threads': 
 			req.Mdl = Threads;
+			next();
+			return;
+		case 'tournament' : 
+			req.Mdl = Tournament;
 			next();
 			return;
 		case 'tickets':

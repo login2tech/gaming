@@ -30,6 +30,7 @@ exports.update = function(req, res, next) {
 };
 
 exports.listPaged = function(req, res, next) {
+  console.log('listPaged');
   let c = new req.Mdl().orderBy('id', 'DESC');
 
   let p;

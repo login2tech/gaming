@@ -16,7 +16,6 @@ class App extends React.Component {
       return response.json().then((json) => {
         if(json.ok)
         {
-          
           this.props.dispatch({
             type:'UPDATE_USER',
             user : json.user,

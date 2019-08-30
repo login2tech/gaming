@@ -146,7 +146,7 @@ class MatchFinder extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <h2 style={{padding: 0, margin: 0}}>
-              Matches{' '}
+              Money 8 Matches{' '}
               {this.props.params && this.props.params.team_id
                 ? ' of team #' + this.props.params.team_id
                 : ''}

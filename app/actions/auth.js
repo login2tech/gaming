@@ -150,6 +150,43 @@ export function resetPassword(password, confirm, pathToken) {
   };
 }
 
+export function stopRenewal(data, token)
+{
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/stopRenewal', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({type : data})
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          dispatch({
+            type: 'SUCCESS',
+            messages: [json]
+          });
+          dispatch({
+            type: 'UPDATE_USER',
+            user: json.user
+          });
+        });
+      } else {
+        return response.json().then(json => {
+          dispatch({
+            type: 'UPDATE_PROFILE_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
 export function updateProfile(data, token) {
   return dispatch => {
     dispatch({

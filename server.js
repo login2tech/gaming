@@ -190,6 +190,8 @@ app.put(
   userController.accountPut
 );
 
+app.post('/stopRenewal', userController.ensureAuthenticated, creditsController.stopRenewal);
+
 app.post(
   '/accountPics',
   userController.ensureAuthenticated,

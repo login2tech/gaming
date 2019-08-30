@@ -2933,7 +2933,7 @@ function (_React$Component) {
           padding: 0,
           margin: 0
         }
-      }, "Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
+      }, "Money 8 Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
         className: "panel"
       }, _react["default"].createElement("div", {
         className: "panel-body"
@@ -4527,17 +4527,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var MatchFinder =
+var Tournament =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(MatchFinder, _React$Component);
+  _inherits(Tournament, _React$Component);
 
-  function MatchFinder(props) {
+  function Tournament(props) {
     var _this;
 
-    _classCallCheck(this, MatchFinder);
+    _classCallCheck(this, Tournament);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MatchFinder).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Tournament).call(this, props));
 
     _this.handlePageClick = function (data) {
       // console.log(data)
@@ -4546,7 +4546,7 @@ function (_React$Component) {
       _this.setState({
         page: selected
       }, function () {
-        _this.loadUsers();
+        _this.loadData();
       });
     };
 
@@ -4554,33 +4554,23 @@ function (_React$Component) {
       is_loaded: false,
       page: 1,
       items: [],
-      refresh: false,
-      pagination: {},
-      showing_for: props.params && props.params.team_id ? props.params.team_id : 'all'
+      pagination: {}
     };
     return _this;
   }
 
-  _createClass(MatchFinder, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState) {
-      if (this.state.refresh !== prevState.refresh) {
-        this.loadData();
-      }
-    }
-  }, {
+  _createClass(Tournament, [{
     key: "loadData",
     value: function loadData() {
       var _this2 = this;
 
       var other = '';
-      other = 'related=ladder,game,team_1_info,team_2_info';
+      other = 'related=ladder,game'; // if(this.props.params && this.props.params.team_id)
+      // {
+      //   other += "&filter_team_id_for_match="+this.props.params.team_id;
+      // }
 
-      if (this.props.params && this.props.params.team_id) {
-        other += "&filter_team_id_for_match=" + this.props.params.team_id;
-      }
-
-      _Fetcher["default"].get('/api/admin/listPaged/matches?' + other + '&page=' + this.state.page).then(function (resp) {
+      _Fetcher["default"].get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -4607,13 +4597,14 @@ function (_React$Component) {
     }
   }, {
     key: "resolveDispute",
-    value: function resolveDispute(match_id, team_id) {
+    value: function resolveDispute(id, team_id) {
       var _this3 = this;
 
+      var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/admin/update/users', {
+        _Fetcher["default"].post('/api/money8/resolveDispute', {
           id: id,
-          data: data
+          winner: team_id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + key + id, false));
 
@@ -4682,8 +4673,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
-
       if (!this.state.is_loaded) {
         return _react["default"].createElement("div", {
           className: "container-fluid"
@@ -4710,7 +4699,7 @@ function (_React$Component) {
           padding: 0,
           margin: 0
         }
-      }, "Matches ", this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
+      }, "Tournaments", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
         className: "panel"
       }, _react["default"].createElement("div", {
         className: "panel-body"
@@ -4718,61 +4707,40 @@ function (_React$Component) {
         messages: this.props.messages
       }), _react["default"].createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Team 1"), _react["default"].createElement("th", null, "Team 2"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Result"), _react["default"].createElement("th", null, "Team 1 Result"), _react["default"].createElement("th", null, "Team 2 Result"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Starts At"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Total Teams"), _react["default"].createElement("th", null, "Total Joined"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Entry Fees"), _react["default"].createElement("th", null, "Max Players Per Team"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Reg Period"), _react["default"].createElement("th", null, "Starts at"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        var team_1 = false;
+        var team_2 = false;
+
+        if (u.team_1) {
+          team_1 = u.team_1.split('|').map(function (a) {
+            return parseInt(a);
+          });
+        }
+
+        if (u.team_2) {
+          team_2 = u.team_2.split('|').map(function (a) {
+            return parseInt(a);
+          });
+        }
+
         return _react["default"].createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.game.title), _react["default"].createElement("td", null, u.ladder.title), _react["default"].createElement("td", null, u.result == 'team_2' ? _react["default"].createElement("span", {
-          className: "text-danger"
-        }, u.team_1_info.title) : u.result == 'team_1' ? _react["default"].createElement("span", {
-          className: "text-success"
-        }, u.team_1_info.title) : u.team_1_info.title), _react["default"].createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react["default"].createElement("span", {
-          className: "text-danger"
-        }, u.team_2_info.title) : u.result == 'team_2' ? _react["default"].createElement("span", {
-          className: "text-success"
-        }, u.team_2_info.title) : u.team_2_info.title : _react["default"].createElement("span", {
-          className: "text-danger"
-        }, "Yet to Join")), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
+        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.game.title), _react["default"].createElement("td", null, u.ladder.title), _react["default"].createElement("td", null, u.total_teams), _react["default"].createElement("td", null, u.teams_registered), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
           className: "badge badge-success"
-        }, "Complete") : u.status), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? "Team 2 Wins" : u.result == 'team_1' ? "Team 1 Wins" : u.result == 'dispute' ? _react["default"].createElement("span", {
-          className: "text-danger"
-        }, "Disputed") : _react["default"].createElement("span", {
-          className: "text-warning"
-        }, u.result) : _react["default"].createElement("span", {
-          className: "text-warning"
-        }, "Yet to declare")), _react["default"].createElement("td", null, u.team_1_result), _react["default"].createElement("td", null, u.team_2_result), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }, "Complete") : u.status), _react["default"].createElement("td", null, u.entry_fee), _react["default"].createElement("td", null, u.max_players), _react["default"].createElement("td", null, _react["default"].createElement("div", {
           className: "dropdown"
         }, _react["default"].createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Details", _react["default"].createElement("span", {
+        }, "Actions ", _react["default"].createElement("span", {
           className: "caret"
         })), _react["default"].createElement("ul", {
           className: "dropdown-menu"
         }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "/m/" + u.id,
+          href: '/t/' + u.id,
           target: "_blank"
-        }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "/teams/view/" + u.team_1_info.id,
-          target: "_blank"
-        }, "View Team 1 Public Page")), u.team_2_info ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "/teams/view/" + u.team_2_info.id,
-          target: "_blank"
-        }, "View Team 2 Public Page")) : false, u.result == 'dispute' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "#",
-          onClick: function onClick(e) {
-            e.preventDefault();
-
-            _this4.resolveDispute('team_1');
-          }
-        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'dispute' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "#",
-          onClick: function onClick(e) {
-            e.preventDefault();
-
-            _this4.resolveDispute('team_2');
-          }
-        }, "Resolve dispute by giving win to team 2")) : false))), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')));
+        }, "View Public Page"))))), _react["default"].createElement("td", null, (0, _moment["default"])(u.registrations_start_at).format('lll'), " ", _react["default"].createElement("code", null, "to"), " ", (0, _moment["default"])(u.registrations_end_at).format('lll')), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')));
       }))), _react["default"].createElement(_reactPaginate["default"], {
         previousLabel: 'previous',
         nextLabel: 'next',
@@ -4787,36 +4755,9 @@ function (_React$Component) {
         activeClassName: 'active'
       }))));
     }
-  }], [{
-    key: "getDerivedStateFromProps",
-    value: function getDerivedStateFromProps(props, state) {
-      if (state.showing_for == 'all' && (!props || !props.params || !props.params.team_id)) {
-        // console.log('here')
-        return null;
-      }
-
-      if (props.params && props.params.team_id) {
-        if (props.params.team_id != state.showing_for) {
-          return {
-            refresh: true,
-            page: 1
-          };
-        }
-
-        return null;
-      } else if (state.showing_for != 'all') {
-        return {
-          refresh: true,
-          page: 1
-        };
-      } // console.log('here2')
-
-
-      return null;
-    }
   }]);
 
-  return MatchFinder;
+  return Tournament;
 }(_react["default"].Component);
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -4827,7 +4768,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Tournament);
 
 exports["default"] = _default;
 

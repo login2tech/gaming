@@ -223,7 +223,7 @@ const newCredits = function(req, res, next) {
   req
     .assert('points_to_add', 'Please specify the credit points to add.')
     .notEmpty();
-  // console.log('absdfsd');
+
   const cost_to_consume = req.body.points_to_add * credit_cost;
 
   if (
@@ -289,3 +289,53 @@ const newCredits = function(req, res, next) {
     });
 };
 exports.new = newCredits;
+
+
+
+exports.stopRenewal  = function(req, res, next)
+{
+  req.assert('type', 'Type cannot be blank').notEmpty();
+  
+  let type=  req.body.type;
+
+  new User({id:req.user.id}).fetch().then(function(usr){
+    if(usr.get(type))
+    {
+      let obj  =usr.get(type+'_obj');
+      console.log(obj);
+      if(obj&& obj!='{}')
+      {
+        obj =  JSON.parse(obj);
+        let id= obj.subscription_id;
+        stripe.subscriptions.update(
+          id,
+          {cancel_at_period_end:true},
+          function(err, subscription) {
+            if(err)
+            {
+              return res.status(400).send({ok:false, msg: 'failed to cancel subscription.'})
+            }
+            obj.ending_on_period_end = true;
+            usr.save({
+              [type+'_obj']  : JSON.stringify(obj)
+            }, {patch:true}).then(function(u){
+              return res.status(200).send({ok:true, msg:'Subscription will stop at period end', user : u.toJSON()});  
+            })
+            .catch(function(err){
+              return res.status(400).send({ok:false, msg: 'Failed to cancel subscription.'})
+            });
+          }
+        );
+      }else{
+        return res.status(400).send({ok:false, msg: 'Failed to Cancel subscription.'})
+      }
+    }else{
+      return res.status(400).send({ok:false, msg:'subscription is not active.'})
+    }
+  })
+ 
+
+  
+}
+
+
