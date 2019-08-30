@@ -65,7 +65,7 @@ exports.listPaged = function(req, res, next) {
   if (req.query.related) {
     withRelated = req.query.related.split(',');
   }
-  let per_page = 3;
+  let per_page = 10;
   if (req.query.per_page) {
     per_page = req.query.per_page;
   }

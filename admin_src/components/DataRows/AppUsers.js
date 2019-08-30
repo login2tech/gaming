@@ -10,6 +10,9 @@ import SellList from '../Modules/Modals/SellList';
 import {IndexLink, Link} from 'react-router';
 import ReactPaginate from 'react-paginate';
 
+// import XPTransactions from '../Modules/Modals/XPTransactions'
+// import CreditHistory from '../Modules/Modals/CreditHistory'
+import CashHistory from '../Modules/Modals/CashHistory'
 class AppUsers extends React.Component {
   constructor(props) {
     super(props);
@@ -107,6 +110,43 @@ class AppUsers extends React.Component {
       );
       return;
     }
+    else if(action === 'show_xp')
+    {
+       this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: <CashHistory type={'xp_tx'} id={obj.id} />
+        })
+      );
+      return;
+    } else if(action === 'show_credit')
+    {
+       this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'credits'} id={obj.id} />
+        })
+      );
+      return;
+    }else if(action === 'show_cash')
+    {
+       this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'cash'} id={obj.id} />
+        })
+      );
+      return;
+    }
 
     alert(action + ' ' + obj.id);
   }
@@ -200,7 +240,7 @@ class AppUsers extends React.Component {
                                   Public Profile
                                 </a>
                               </li>
-                            {/*  <li>
+                       <li>
                                 <a
                                   href="#"
                                   onClick={e => {
@@ -227,12 +267,12 @@ class AppUsers extends React.Component {
                                   href="#"
                                   onClick={e => {
                                     e.preventDefault();
-                                    this.doAction('show_credit', u);
+                                    this.doAction('show_cash', u);
                                   }}
                                 >
                                   Show Cash Transactions
                                 </a>
-                              </li> */}
+                              </li> 
                               <li>
                                 <Link
                                   to={"/teams/"+u.id}

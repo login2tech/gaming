@@ -27,10 +27,6 @@ class Tournament extends React.Component {
   loadData() {
     let other = '';
     other = 'related=ladder,game';
-    // if(this.props.params && this.props.params.team_id)
-    // {
-    //   other += "&filter_team_id_for_match="+this.props.params.team_id;
-    // }
     Fetcher.get(
       '/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page
     )

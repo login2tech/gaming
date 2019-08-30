@@ -12,7 +12,14 @@ const Match = require('../matches/Match');
 const Ticket = require('../tickets/Ticket');
 const Threads = require('../threads/Thread');
 const Money8 = require('../money8/Money8Match');
-const Tournament = require('../tournaments/Tournament')
+const Tournament = require('../tournaments/Tournament');
+
+
+const CashTransactions = require('../../models/CashTransactions');
+const CreditTransactions = require('../../models/CreditTransactions');
+const XpTransactions = require('../../models/XpTransactions');
+
+
 module.exports = routes;
 
 
@@ -61,6 +68,18 @@ const fixateModel = function(req, res, next)
 			return;
 		case 'tickets':
 			req.Mdl = Ticket;
+			next();
+			return;
+		case 'cash' : 
+			req.Mdl = CashTransactions;
+			next();
+			return;
+		case 'credits' : 
+			req.Mdl = CreditTransactions;
+			next();
+			return;
+		case 'xp_tx' : 
+			req.Mdl = XpTransactions;
 			next();
 			return;
 	}
