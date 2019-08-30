@@ -17,7 +17,7 @@ const Tournament = require('../tournaments/Tournament');
 
 const CashTransactions = require('../../models/CashTransactions');
 const CreditTransactions = require('../../models/CreditTransactions');
-const XpTransactions = require('../../models/XpTransactions');
+const XPTransactions = require('../../models/XPTransactions');
 
 
 module.exports = routes;
@@ -79,7 +79,7 @@ const fixateModel = function(req, res, next)
 			next();
 			return;
 		case 'xp_tx' : 
-			req.Mdl = XpTransactions;
+			req.Mdl = XPTransactions;
 			next();
 			return;
 	}
