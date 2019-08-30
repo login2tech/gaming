@@ -258,7 +258,7 @@ class MatchInfo extends React.Component {
     for (let i = 0; i < team_1_players.length; i++) {
       // console.log(users);
       // console.log(users[i].id, me);
-      if (parseInt(team_1_players[i]) == me) {
+      if (parseInt(team_1_players[i].user_id) == me) {
         console.log(team_1_players[i], me);
         return false;
       }
