@@ -4,7 +4,7 @@ import Fetcher from '../../actions/Fetcher';
 import {openModal} from '../../actions/modals';
 import Messages from '../Messages';
 import MoreInfo from '../Modules/Modals/MoreInfo';
-import {IndexLink, Link} from 'react-router';
+import {Link} from 'react-router';
 import ReactPaginate from 'react-paginate';
 import CashHistory from '../Modules/Modals/CashHistory';
 class AppUsers extends React.Component {
@@ -18,15 +18,13 @@ class AppUsers extends React.Component {
     };
   }
 
-
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadUsers();
     });
   };
-
 
   loadUsers() {
     Fetcher.get(
@@ -56,8 +54,9 @@ class AppUsers extends React.Component {
   }
 
   updateItem(id, data, key) {
-    if(!key)
+    if (!key) {
       key = '';
+    }
     this.setState(
       {
         ['update_' + key + id]: true
@@ -85,12 +84,11 @@ class AppUsers extends React.Component {
       }
     );
   }
-  
 
   componentDidMount() {
     this.loadUsers();
   }
- 
+
   doAction(action, obj) {
     if (action == 'profile') {
       this.props.dispatch(
@@ -103,10 +101,8 @@ class AppUsers extends React.Component {
         })
       );
       return;
-    }
-    else if(action === 'show_xp')
-    {
-       this.props.dispatch(
+    } else if (action === 'show_xp') {
+      this.props.dispatch(
         openModal({
           type: 'custom',
           id: 'tx',
@@ -116,9 +112,8 @@ class AppUsers extends React.Component {
         })
       );
       return;
-    } else if(action === 'show_credit')
-    {
-       this.props.dispatch(
+    } else if (action === 'show_credit') {
+      this.props.dispatch(
         openModal({
           type: 'custom',
           id: 'tx',
@@ -128,9 +123,8 @@ class AppUsers extends React.Component {
         })
       );
       return;
-    }else if(action === 'show_cash')
-    {
-       this.props.dispatch(
+    } else if (action === 'show_cash') {
+      this.props.dispatch(
         openModal({
           type: 'custom',
           id: 'tx',
@@ -172,7 +166,7 @@ class AppUsers extends React.Component {
               <thead>
                 <tr>
                   <th>ID</th>
-                   
+
                   <th>Name</th>
                   <th>Username</th>
                   <th>Email</th>
@@ -189,7 +183,9 @@ class AppUsers extends React.Component {
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
-                        <td>{u.first_name} {u.last_name}</td>
+                        <td>
+                          {u.first_name} {u.last_name}
+                        </td>
                         <td>{u.username}</td>
                         <td>{u.email}</td>
 
@@ -226,15 +222,11 @@ class AppUsers extends React.Component {
                                 </a>
                               </li>
                               <li>
-                                <a
-                                  href={'/u/'+u.username}
-                                  target='_blank'
-                                  
-                                >
+                                <a href={'/u/' + u.username} target="_blank">
                                   Public Profile
                                 </a>
                               </li>
-                       <li>
+                              <li>
                                 <a
                                   href="#"
                                   onClick={e => {
@@ -244,7 +236,7 @@ class AppUsers extends React.Component {
                                 >
                                   Show XP Transactions
                                 </a>
-                              </li> 
+                              </li>
                               <li>
                                 <a
                                   href="#"
@@ -255,8 +247,8 @@ class AppUsers extends React.Component {
                                 >
                                   Show Credit Transactions
                                 </a>
-                              </li> 
-                               <li>
+                              </li>
+                              <li>
                                 <a
                                   href="#"
                                   onClick={e => {
@@ -266,25 +258,24 @@ class AppUsers extends React.Component {
                                 >
                                   Show Cash Transactions
                                 </a>
-                              </li> 
-                              <li>
-                                <Link
-                                  to={"/teams/"+u.id}
-                                >
-                                  Teams
-                                </Link>
                               </li>
-                               
+                              <li>
+                                <Link to={'/teams/' + u.id}>Teams</Link>
+                              </li>
                             </ul>
                           </div>
                         </td>
-                        <td >
+                        <td>
                           {!u.status ? (
                             <button
                               onClick={() => {
-                                this.updateItem(u.id, {
-                                  status: true
-                                }, '');
+                                this.updateItem(
+                                  u.id,
+                                  {
+                                    status: true
+                                  },
+                                  ''
+                                );
                               }}
                               className="btn btn-success btn-xs"
                             >
@@ -298,9 +289,13 @@ class AppUsers extends React.Component {
                           ) : (
                             <button
                               onClick={() => {
-                                this.updateItem(u.id, {
-                                  status: false
-                                }, '');
+                                this.updateItem(
+                                  u.id,
+                                  {
+                                    status: false
+                                  },
+                                  ''
+                                );
                               }}
                               className="btn btn-warning btn-xs"
                             >
@@ -312,22 +307,26 @@ class AppUsers extends React.Component {
                               Disable
                             </button>
                           )}{' '}
-                           <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                this.updateItem(u.id, {
+                          <button
+                            onClick={e => {
+                              e.preventDefault();
+                              this.updateItem(
+                                u.id,
+                                {
                                   role: 'admin'
-                                }, 'make_admin');
-                              }}
-                              className="btn btn-warning btn-xs"
-                            >
-                              {this.state['update_make_admin' + u.id] ? (
-                                <i className="fa fa-spinner fa-spin" />
-                              ) : (
-                                false
-                              )}{' '}
-                              Make Admin
-                            </button>
+                                },
+                                'make_admin'
+                              );
+                            }}
+                            className="btn btn-warning btn-xs"
+                          >
+                            {this.state['update_make_admin' + u.id] ? (
+                              <i className="fa fa-spinner fa-spin" />
+                            ) : (
+                              false
+                            )}{' '}
+                            Make Admin
+                          </button>
                         </td>
                       </tr>
                     );
@@ -335,19 +334,19 @@ class AppUsers extends React.Component {
               </tbody>
             </table>
 
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

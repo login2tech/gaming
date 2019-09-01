@@ -5003,3 +5003,32 @@ span.profile_menu_item.ticket_item.from_admin {
 .modal-title{
     color:#fff;
 }
+
+ul.pagination a {
+    padding: 10px;
+    background: #124afb;
+}
+
+ul.pagination {
+    margin-top: 30px;
+}
+
+ul.pagination a:hover {
+    background: #111111;
+    cursor: pointer;
+    color: #fff;
+}
+
+ul.pagination li.active a {
+    background: #0732ba;
+}
+
+ul.pagination li.active a {
+    background: #0732ba;
+}
+
+ul.pagination .disabled a {
+    color: #313131;
+    background: #00165a;
+    cursor: not-allowed;
+}

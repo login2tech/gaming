@@ -10,6 +10,7 @@
     "rules": {
         "react/prop-types": "off",
         "eqeqeq": "off",
+        "no-console":"off",
         "react/no-unescaped-entities": "off"
     },
     "globals": {

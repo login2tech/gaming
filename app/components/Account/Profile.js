@@ -8,6 +8,7 @@ import {add_friend} from '../../actions/social';
 import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
 import Following from '../Modules/Modals/Following';
+import ReactPaginate from 'react-paginate';
 
 class Profile extends React.Component {
   constructor(props) {
@@ -25,7 +26,14 @@ class Profile extends React.Component {
       is_loaded: false,
       renderTab: 'profile',
       match_played: [],
+      money8_played: [],
       tournaments: [],
+      matchfinder_page: 1,
+      money8_page: 1,
+      tour_page: 1,
+      pagination_matchfinder: {},
+      pagination_money8: {},
+      pagination_tour: {},
       new_post_type: 'text',
       new_post_image: '',
       new_post_video: '',
@@ -321,7 +329,9 @@ class Profile extends React.Component {
     team_array = team_array.join(',');
 
     fetch(
-      '/api/matches/matches_of_user?uid=' +
+      '/api/matches/matches_of_user?page=' +
+        this.state.matchfinder_page +
+        '&uid=' +
         this.state.user_info.id +
         '&teams=' +
         team_array
@@ -331,7 +341,31 @@ class Profile extends React.Component {
         if (json.ok) {
           this.setState(
             {
-              match_played: json.items
+              match_played: json.items,
+              pagination_matchfinder: json.pagination ? json.pagination : {}
+            },
+            () => {
+              this.fetchMoney8();
+            }
+          );
+        }
+      });
+  }
+
+  fetchMoney8() {
+    fetch(
+      '/api/money8/matches_of_user?page=' +
+        this.state.money8_page +
+        '&uid=' +
+        this.state.user_info.id
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              money8_played: json.items,
+              pagination_money8: json.pagination ? json.pagination : {}
             },
             () => {
               this.fetchTournaments();
@@ -342,27 +376,36 @@ class Profile extends React.Component {
   }
 
   fetchTournaments() {
-    // let team_array = [];
-    // for (let i = 0; i < this.state.user_teams.length; i++) {
-    //   const team_parent = this.state.user_teams[i];
-    //   const team = team_parent.team_info ? team_parent.team_info : {};
-    //   team_array.push(team.id);
-    // }
-    // team_array = team_array.join(',');
-
-    fetch('/api/tournaments/t_of_user?uid=' + this.state.user_info.id)
+    fetch(
+      '/api/tournaments/t_of_user?page=' +
+        this.state.tour_page +
+        '&uid=' +
+        this.state.user_info.id
+    )
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          this.setState(
-            {
-              tournaments: json.items
-            },
-            () => {}
-          );
+          this.setState({
+            tournaments: json.items,
+            pagination_tour: json.pagination ? json.pagination : {}
+          });
         }
       });
   }
+
+  handlePageClick = (data, typ) => {
+    // console.log(data)
+    const selected = parseInt(data.selected) + 1;
+    this.setState({[typ + '_page']: selected}, () => {
+      if (typ == 'matchfinder') {
+        this.fetchMatches();
+      } else if (typ == 'money8') {
+        this.fetchMoney8();
+      } else if (typ == 'tour') {
+        this.fetchTeams();
+      }
+    });
+  };
 
   addFriend(event) {
     event.preventDefault();
@@ -402,10 +445,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.state.user_info && this.state.user_info.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.state.user_info.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.state.user_info.cover_picture + ')'
+          }
+        : {};
     return (
       <div>
         <section
@@ -754,7 +797,11 @@ class Profile extends React.Component {
                           </div>
                           <div className="trophy-info">
                             <Link
-                              to={'/records/'+this.state.user_info.username+'/season'}
+                              to={
+                                '/records/' +
+                                this.state.user_info.username +
+                                '/season'
+                              }
                               className="trophy-name gold"
                             >
                               Seasonal Records
@@ -768,7 +815,11 @@ class Profile extends React.Component {
                           </div>
                           <div className="trophy-info">
                             <Link
-                              to={'/records/'+this.state.user_info.username+'/life'}
+                              to={
+                                '/records/' +
+                                this.state.user_info.username +
+                                '/life'
+                              }
                               className="trophy-name gold"
                             >
                               Life Records
@@ -856,11 +907,12 @@ class Profile extends React.Component {
 
                     <ul className="team_list">
                       {this.state.user_teams.map((team_parent, i) => {
-
                         const team = team_parent.team_info
                           ? team_parent.team_info
                           : {};
-                          if(team.removed) return false;
+                        if (team.removed) {
+                          return false;
+                        }
                         return (
                           <li className="item" key={team.id}>
                             <Link
@@ -1002,6 +1054,106 @@ class Profile extends React.Component {
                         })}
                       </tbody>
                     </table>
+                    <ReactPaginate
+                      previousLabel={'previous'}
+                      nextLabel={'next'}
+                      breakLabel={'...'}
+                      breakClassName={'break-me'}
+                      pageCount={this.state.pagination_matchfinder.pageCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={data => {
+                        this.handlePageClick(data, 'matchfinder');
+                      }}
+                      containerClassName={'pagination'}
+                      subContainerClassName={'pages pagination'}
+                      activeClassName={'active'}
+                    />
+                  </div>
+
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">MONEY-8 Matches</h5>
+
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Match</th>
+                          <th>Result</th>
+                          <th>Date</th>
+                          <th>Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.money8_played.map((match, i) => {
+                          // const teams = this.getTeams(match);
+                          // const is_win = false;
+                          // const is_loss = false;
+                          let team_1 = [];
+                          let team_2 = [];
+                          if (match.status != 'pending') {
+                            team_1 = match.team_1.split('|').map(function(a) {
+                              return parseInt(a);
+                            });
+
+                            team_2 = match.team_2.split('|').map(function(a) {
+                              return parseInt(a);
+                            });
+                          }
+                          return (
+                            <tr key={match.id}>
+                              <td>
+                                <Link to={'/money8/' + match.id}>
+                                  #{match.id}
+                                </Link>
+                              </td>
+
+                              <td>
+                                {match.result ? (
+                                  match.result == 'team_1' ? (
+                                    team_1.indexOf(this.props.user.id) > -1 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : match.result == 'team_2' ? (
+                                    team_2.indexOf(this.props.user.id) > -1 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : (
+                                    match.result
+                                  )
+                                ) : (
+                                  match.status
+                                )}
+                              </td>
+                              <td>{moment(match.created_at).format('lll')}</td>
+                              <td>
+                                <Link to={'/money8/' + match.id}>
+                                  View Match
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                    <ReactPaginate
+                      previousLabel={'previous'}
+                      nextLabel={'next'}
+                      breakLabel={'...'}
+                      breakClassName={'break-me'}
+                      pageCount={this.state.pagination_money8.pageCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={data => {
+                        this.handlePageClick(data, 'money8');
+                      }}
+                      containerClassName={'pagination'}
+                      subContainerClassName={'pages pagination'}
+                      activeClassName={'active'}
+                    />
                   </div>
 
                   <div className="content_box">
@@ -1038,6 +1190,21 @@ class Profile extends React.Component {
                         })}
                       </tbody>
                     </table>
+                    <ReactPaginate
+                      previousLabel={'previous'}
+                      nextLabel={'next'}
+                      breakLabel={'...'}
+                      breakClassName={'break-me'}
+                      pageCount={this.state.pagination_tour.pageCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={data => {
+                        this.handlePageClick(data, 'tour');
+                      }}
+                      containerClassName={'pagination'}
+                      subContainerClassName={'pages pagination'}
+                      activeClassName={'active'}
+                    />
                   </div>
                 </div>
               </div>

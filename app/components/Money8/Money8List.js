@@ -81,6 +81,15 @@ class Money8List extends React.Component {
                     ) : (
                       false
                     )}
+
+                    {!this.state.is_loaded ? (
+                      <div className="text-center">
+                        <span className="fa fa-spin fa-spinner" />
+                      </div>
+                    ) : (
+                      false
+                    )}
+
                     <ul
                       id="upcoming-tournament"
                       className="tournament-list active"
@@ -140,7 +149,8 @@ class Money8List extends React.Component {
                                 <div className="col-item">
                                   <h5>Players</h5>
                                   <p>
-                                    {match.players_total / 2}<small> v </small>
+                                    {match.players_total / 2}
+                                    <small> v </small>
                                     {match.players_total / 2}
                                   </p>
                                 </div>

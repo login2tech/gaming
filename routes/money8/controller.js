@@ -78,6 +78,7 @@ const giveXpToMember = function(uid, match_id) {
             new XPTransactions()
               .save({
                 user_id: uid,
+                obj_type: 'm8_' + match_id,
                 details: 'XP Credit for winning money-8 match #' + match_id,
                 qty: xP_to_add
               })
@@ -149,6 +150,7 @@ const takeXpFromMember = function(uid, match_id) {
             new XPTransactions()
               .save({
                 user_id: uid,
+                obj_type: 'm8_' + match_id,
                 details: 'XP Debit for losing money-8 match #' + match_id,
                 qty: -xP_to_add
               })
@@ -237,10 +239,14 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
   let typ = '';
   if (type == 'cash' || type == 'cash_balance') {
     typ = 'cash_balance';
-  } else if (type == 'credit' || type == 'credit_balance') {
+  } else if (
+    type == 'credit' ||
+    type == 'credit_balance' ||
+    type == 'credits'
+  ) {
     typ = 'credit_balance';
   }
-  // console.log('match_fee is: ', input_val);
+  console.log('match_fee is: ', input_val, typ);
   new User()
     .where({id: uid})
     .fetch()
@@ -252,15 +258,16 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
         let val;
 
         if (prime) {
-          val = parseFloat(input_val) + parseFloat( input_val );
+          val = parseFloat(input_val) + parseFloat(input_val);
         } else {
-          val = ( parseFloat( (4 / 5) * parseFloat( input_val ) )  + parseFloat( input_val ));
+          val =
+            parseFloat((4 / 5) * parseFloat(input_val)) + parseFloat(input_val);
         }
-        // console.log('cah_bl ', cash_balance);
-        // console.log('val ', val);
-        // console.log('prime ', prime);
+        console.log('cah_bl ', cash_balance);
+        console.log('val ', val);
+        console.log('prime ', prime);
         cash_balance += val;
-        // console.log('cah_bl_new ', cash_balance);
+        console.log('cah_bl_new ', cash_balance);
         usr
           .save({[typ]: cash_balance}, {patch: true})
           .then(function(usr) {
@@ -273,6 +280,7 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
 
             ct.save({
               user_id: uid,
+              obj_type: 'm8_' + match_id,
               details: 'Cash Credit for winning money-8 match #' + match_id,
               qty: val
             })
@@ -325,6 +333,7 @@ const takeMoneyFromMember = function(uid, input_val, type, match_id) {
             if (ct) {
               ct.save({
                 user_id: uid,
+                obj_type: 'm8_' + match_id,
                 details: type + ' Debit for joining money-8 match #' + match_id,
                 qty: -parseFloat(input_val)
               })
@@ -378,10 +387,7 @@ const addScoreForTeam = function(game_id, ladder_id, type, team_members) {
   }
 };
 
-
-
-exports.resolveDispute = function(req,res, next)
-{
+exports.resolveDispute = function(req, res, next) {
   console.log(req.body);
   new Item({id: req.body.id})
     .fetch()
@@ -390,38 +396,35 @@ exports.resolveDispute = function(req,res, next)
         return res.status(400).send({
           ok: false,
           msg: "Match doesn't exist"
-        }); 
+        });
       }
       const tmp_match = match.toJSON();
-      if(tmp_match.result!='disputed')
-      {
+      if (tmp_match.result != 'disputed') {
         return res.status(400).send({
           ok: false,
-          msg: "Match not disputed"
-        }); 
+          msg: 'Match not disputed'
+        });
       }
-      let final_result = req.body.winner;
-      if(final_result != 'team_1' && final_result!='team_2')
-      {
+      const final_result = req.body.winner;
+      if (final_result != 'team_1' && final_result != 'team_2') {
         return res.status(400).send({
-          ok:false, msg:'Thats not a valid result'
-        })
+          ok: false,
+          msg: 'Thats not a valid result'
+        });
       }
-      let saved_info = {
-        status : 'complete',
-        result : final_result
+      const saved_info = {
+        status: 'complete',
+        result: final_result
       };
 
-
       match
-        .save(saved_info, {method:'update'})
+        .save(saved_info, {method: 'update'})
         .then(function(match) {
           res.status(200).send({
             ok: true,
             msg: 'Dispute resolved successfully',
             match: match.toJSON()
           });
-
 
           let win_team_members;
           let loose_team_members;
@@ -433,8 +436,12 @@ exports.resolveDispute = function(req,res, next)
             loose_team_members = match.get('team_1');
           }
 
-          win_team_members = win_team_members.split('|').map(function(a){return parseInt(a);});
-          loose_team_members = loose_team_members.split('|').map(function(a){return parseInt(a);});
+          win_team_members = win_team_members.split('|').map(function(a) {
+            return parseInt(a);
+          });
+          loose_team_members = loose_team_members.split('|').map(function(a) {
+            return parseInt(a);
+          });
 
           giveXPtoTeam(null, win_team_members, tmp_match.id);
 
@@ -464,9 +471,6 @@ exports.resolveDispute = function(req,res, next)
             'loss',
             loose_team_members
           );
-
- 
-
         })
         .catch(function(err) {
           console.log('1');
@@ -485,8 +489,7 @@ exports.resolveDispute = function(req,res, next)
         msg: 'Failed to resolve dispute'
       });
     });
-          
-}
+};
 
 exports.saveScore = function(req, res, next) {
   console.log(req.body);
@@ -911,6 +914,30 @@ exports.listupcoming = function(req, res, next) {
         return res.status(200).send({ok: true, items: []});
       }
       return res.status(200).send({ok: true, items: item.toJSON()});
+    })
+    .catch(function(err) {
+      // console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
+exports.matchesForUser = function(req, res, next) {
+  const uid = req.user.id;
+  new Item()
+    .orderBy('created_at', 'DESC')
+    .query(function(qb) {
+      qb.where('players', 'LIKE', '[' + uid + '%')
+        .orWhere('players', 'LIKE', '%,' + uid + ',%')
+        .orWhere('players', 'LIKE', '%' + uid + ']');
+    })
+    .fetchPage({page: req.query.page ? req.query.page : 1, pageSize: 5})
+    .then(function(item) {
+      if (!item) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      return res
+        .status(200)
+        .send({ok: true, items: item.toJSON(), pagination: item.pagination});
     })
     .catch(function(err) {
       // console.log(err);

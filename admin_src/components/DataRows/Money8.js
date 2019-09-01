@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Fetcher from '../../actions/Fetcher';
-import moment from 'moment';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
-
+import {openModal} from '../../actions/modals';
+import CashHistory from '../Modules/Modals/CashHistory';
 class MatchFinder extends React.Component {
   constructor(props) {
     super(props);
@@ -58,8 +58,8 @@ class MatchFinder extends React.Component {
       });
   }
 
-    resolveDispute(id , team_id) {
-    let key   = 'dispute'
+  resolveDispute(id, team_id) {
+    const key = 'dispute';
     this.setState(
       {
         ['update_' + key + id]: true
@@ -88,38 +88,44 @@ class MatchFinder extends React.Component {
     );
   }
 
-  // deleteItem(id) {
-  //   const r = confirm('Are you sure you want to delete the user? ');
-  //   if (r == true) {
-  //   } else {
-  //   }
-  //   this.setState(
-  //     {
-  //       ['update_' + key + id]: true
-  //     },
-  //     () => {
-  //       Fetcher.post('/api/admin/delete/matches', {id: id})
-  //         .then(resp => {
-  //           this.setState({
-  //              ['update_' + key + id]: false
-  //           });
-  //           if (resp.ok) {
-  //             this.loadData();
-  //           } else {
-  //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-  //           }
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //           const msg = 'Failed to perform Action';
-  //           this.props.dispatch({
-  //             type: 'FAILURE',
-  //             messages: [{msg: msg}]
-  //           });
-  //         });
-  //     }
-  //   );
-  // }
+  doAction(action, obj) {
+    if (action === 'show_xp') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: <CashHistory type={'xp_tx'} obj_type={'m8_' + obj.id} />
+        })
+      );
+      return;
+    } else if (action === 'show_credit') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'credits'} obj_type={'m8_' + obj.id} />
+        })
+      );
+      return;
+    } else if (action === 'show_cash') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'cash'} obj_type={'m8_' + obj.id} />
+        })
+      );
+      return;
+    }
+
+    alert(action + ' ' + obj.id);
+  }
 
   componentDidMount() {
     this.loadData();
@@ -203,9 +209,13 @@ class MatchFinder extends React.Component {
                           ) : (
                             u.status
                           )}
-                          
+
                           {u.status == 'pending'
-                            ? ' (' + u.players_joined + '/' + u.players_total+')'
+                            ? ' (' +
+                              u.players_joined +
+                              '/' +
+                              u.players_total +
+                              ')'
                             : ''}
                         </td>
                         <td>
@@ -227,8 +237,8 @@ class MatchFinder extends React.Component {
                           {u.match_type == 'cash'
                             ? '' + u.match_fee + '/- OCG CASH'
                             : u.match_type == 'credits'
-                            ? '' + u.match_fee + '/- Credits'
-                            : 'FREE'}
+                              ? '' + u.match_fee + '/- Credits'
+                              : 'FREE'}
                         </td>
 
                         <td>
@@ -302,13 +312,47 @@ class MatchFinder extends React.Component {
                                 </a>
                               </li>
 
+                              <li>
+                                <a
+                                  href="#"
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    this.doAction('show_xp', u);
+                                  }}
+                                >
+                                  Show XP Transactions
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  href="#"
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    this.doAction('show_credit', u);
+                                  }}
+                                >
+                                  Show Credit Transactions
+                                </a>
+                              </li>
+                              <li>
+                                <a
+                                  href="#"
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    this.doAction('show_cash', u);
+                                  }}
+                                >
+                                  Show Cash Transactions
+                                </a>
+                              </li>
+
                               {u.result == 'disputed' ? (
                                 <li>
                                   <a
                                     href="#"
                                     onClick={e => {
                                       e.preventDefault();
-                                      this.resolveDispute(u.id,'team_1');
+                                      this.resolveDispute(u.id, 'team_1');
                                     }}
                                   >
                                     Resolve dispute by giving win to team 1
@@ -324,7 +368,7 @@ class MatchFinder extends React.Component {
                                     href="#"
                                     onClick={e => {
                                       e.preventDefault();
-                                      this.resolveDispute(u.id,'team_2');
+                                      this.resolveDispute(u.id, 'team_2');
                                     }}
                                   >
                                     Resolve dispute by giving win to team 2

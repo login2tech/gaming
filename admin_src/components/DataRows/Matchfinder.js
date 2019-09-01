@@ -4,7 +4,8 @@ import Fetcher from '../../actions/Fetcher';
 import moment from 'moment';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
-
+import CashHistory from '../Modules/Modals/CashHistory';
+import {openModal} from '../../actions/modals';
 class MatchFinder extends React.Component {
   constructor(props) {
     super(props);
@@ -12,67 +13,61 @@ class MatchFinder extends React.Component {
       is_loaded: false,
       page: 1,
       items: [],
-      refresh  :false,
+      refresh: false,
       pagination: {},
-      showing_for  :props.params && props.params.team_id ? props.params.team_id : 'all'
+      showing_for:
+        props.params && props.params.team_id ? props.params.team_id : 'all'
     };
   }
-  
 
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadData();
     });
   };
 
-
   static getDerivedStateFromProps(props, state) {
-    if(state.showing_for=='all' && (!props ||!props.params||!props.params.team_id)){
+    if (
+      state.showing_for == 'all' &&
+      (!props || !props.params || !props.params.team_id)
+    ) {
       // console.log('here')
       return null;
     }
-    if(props.params && props.params.team_id)
-    {
-
-      if(props.params.team_id!= state.showing_for)
-      {
-
+    if (props.params && props.params.team_id) {
+      if (props.params.team_id != state.showing_for) {
         return {
-          refresh:true,
-          page : 1
-        }
+          refresh: true,
+          page: 1
+        };
       }
       return null;
-    }else if(state.showing_for!='all')
-    {
-      
+    } else if (state.showing_for != 'all') {
       return {
-        refresh : true,page:1
-      }
+        refresh: true,
+        page: 1
+      };
     }
     // console.log('here2')
     return null;
   }
 
-    componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.refresh !== prevState.refresh) {
       this.loadData();
     }
   }
 
-
-
   loadData() {
     let other = '';
-    other=  'related=ladder,game,team_1_info,team_2_info';
-    if(this.props.params && this.props.params.team_id)
-    {
-      other += "&filter_team_id_for_match="+this.props.params.team_id;
+    other = 'related=ladder,game,team_1_info,team_2_info';
+    if (this.props.params && this.props.params.team_id) {
+      other += '&filter_team_id_for_match=' + this.props.params.team_id;
     }
     Fetcher.get(
-      '/api/admin/listPaged/matches?'+other+'&page=' + this.state.page
+      '/api/admin/listPaged/matches?' + other + '&page=' + this.state.page
     )
       .then(resp => {
         if (resp.ok) {
@@ -98,8 +93,8 @@ class MatchFinder extends React.Component {
       });
   }
 
-  resolveDispute(id , team_id) {
-    let key   = 'dispute'
+  resolveDispute(id, team_id) {
+    const key = 'dispute';
     this.setState(
       {
         ['update_' + key + id]: true
@@ -128,38 +123,44 @@ class MatchFinder extends React.Component {
     );
   }
 
-  // deleteItem(id) {
-  //   const r = confirm('Are you sure you want to delete the user? ');
-  //   if (r == true) {
-  //   } else {
-  //   }
-  //   this.setState(
-  //     {
-  //       ['update_' + key + id]: true
-  //     },
-  //     () => {
-  //       Fetcher.post('/api/admin/delete/matches', {id: id})
-  //         .then(resp => {
-  //           this.setState({
-  //              ['update_' + key + id]: false
-  //           });
-  //           if (resp.ok) {
-  //             this.loadData();
-  //           } else {
-  //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-  //           }
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //           const msg = 'Failed to perform Action';
-  //           this.props.dispatch({
-  //             type: 'FAILURE',
-  //             messages: [{msg: msg}]
-  //           });
-  //         });
-  //     }
-  //   );
-  // }
+  doAction(action, obj) {
+    if (action === 'show_xp') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: <CashHistory type={'xp_tx'} obj_type={'m_' + obj.id} />
+        })
+      );
+      return;
+    } else if (action === 'show_credit') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'credits'} obj_type={'m_' + obj.id} />
+        })
+      );
+      return;
+    } else if (action === 'show_cash') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'cash'} obj_type={'m_' + obj.id} />
+        })
+      );
+      return;
+    }
+
+    alert(action + ' ' + obj.id);
+  }
 
   componentDidMount() {
     this.loadData();
@@ -185,12 +186,12 @@ class MatchFinder extends React.Component {
       <div className="container-fluid">
         <div className="panel">
           <div className="panel-body">
-            <h2 style={{padding: 0, margin: 0}}>Matches {
-
-                this.props.params && this.props.params.team_id  ?
-                ' of team #'+this.props.params.team_id : ''
-
-            }</h2>
+            <h2 style={{padding: 0, margin: 0}}>
+              Matches{' '}
+              {this.props.params && this.props.params.team_id
+                ? ' of team #' + this.props.params.team_id
+                : ''}
+            </h2>
           </div>
         </div>
         <div className="panel">
@@ -209,7 +210,7 @@ class MatchFinder extends React.Component {
                   <th>Match type</th>
                   <th>Team 1 Result</th>
                   <th>Team 2 Result</th>
-                  
+
                   <th>Actions</th>
                   <th>Starts At</th>
                 </tr>
@@ -222,32 +223,70 @@ class MatchFinder extends React.Component {
                         <td>{u.id}</td>
                         <td>{u.game.title}</td>
                         <td>{u.ladder.title}</td>
-                        <td>{
-                          u.result == 'team_2'  ? <span className="text-danger">{u.team_1_info.title}</span>:
-                              u.result == 'team_1' ? <span className="text-success">{u.team_1_info.title}</span> : 
-
-                          u.team_1_info.title}</td>
-                        <td>{u.team_2_info ?u.result == 'team_1'  ? <span className="text-danger">{u.team_2_info.title}</span>:
-                              u.result == 'team_2' ? <span className="text-success">{u.team_2_info.title}</span> : 
-
-                          u.team_2_info.title : <span className='text-danger'>Yet to Join</span>}</td>
                         <td>
-                        {u.status == 'complete' ? <span className="badge badge-success">Complete</span> : u.status }</td>
-                        <td>{u.result ? 
-                            u.result == 'team_2'
-                              ? "Team 2 Wins"
-                              : u.result=='team_1'
-                                ? "Team 1 Wins"
-                                : u.result =='disputed'
-                                  ? (<span className="text-danger">Disputed</span>)
-                                  : (<span className="text-warning">{u.result}</span>):
-                                  <span className="text-warning">Yet to declare</span>}</td>
-                        <td>{u.match_type== 'paid' ? ''+u.match_fee+'/- OCG CASH' : 'FREE'}</td>
+                          {u.result == 'team_2' ? (
+                            <span className="text-danger">
+                              {u.team_1_info.title}
+                            </span>
+                          ) : u.result == 'team_1' ? (
+                            <span className="text-success">
+                              {u.team_1_info.title}
+                            </span>
+                          ) : (
+                            u.team_1_info.title
+                          )}
+                        </td>
+                        <td>
+                          {u.team_2_info ? (
+                            u.result == 'team_1' ? (
+                              <span className="text-danger">
+                                {u.team_2_info.title}
+                              </span>
+                            ) : u.result == 'team_2' ? (
+                              <span className="text-success">
+                                {u.team_2_info.title}
+                              </span>
+                            ) : (
+                              u.team_2_info.title
+                            )
+                          ) : (
+                            <span className="text-danger">Yet to Join</span>
+                          )}
+                        </td>
+                        <td>
+                          {u.status == 'complete' ? (
+                            <span className="badge badge-success">
+                              Complete
+                            </span>
+                          ) : (
+                            u.status
+                          )}
+                        </td>
+                        <td>
+                          {u.result ? (
+                            u.result == 'team_2' ? (
+                              'Team 2 Wins'
+                            ) : u.result == 'team_1' ? (
+                              'Team 1 Wins'
+                            ) : u.result == 'disputed' ? (
+                              <span className="text-danger">Disputed</span>
+                            ) : (
+                              <span className="text-warning">{u.result}</span>
+                            )
+                          ) : (
+                            <span className="text-warning">Yet to declare</span>
+                          )}
+                        </td>
+                        <td>
+                          {u.match_type == 'paid'
+                            ? '' + u.match_fee + '/- OCG CASH'
+                            : 'FREE'}
+                        </td>
                         <td>{u.team_1_result}</td>
-                        
-                        <td>{u.team_2_result}</td> 
+
+                        <td>{u.team_2_result}</td>
                         <td>
-                        <div className="dropdown">
+                          <div className="dropdown">
                             <button
                               className="btn btn-primary btn-xs dropdown-toggle"
                               type="button"
@@ -258,92 +297,119 @@ class MatchFinder extends React.Component {
                             </button>
                             <ul className="dropdown-menu">
                               <li>
-                                <a
-                                  href={"/m/"+u.id}
-                                  target='_blank'
-                                >
+                                <a href={'/m/' + u.id} target="_blank">
                                   View Match Public Page
                                 </a>
                               </li>
                               <li>
                                 <a
-                                  href={"/teams/view/"+u.team_1_info.id}
-                                  target='_blank'
+                                  href={'/teams/view/' + u.team_1_info.id}
+                                  target="_blank"
                                 >
                                   View Team 1 Public Page
                                 </a>
                               </li>
-                              {
-                                u.team_2_info  ? 
+                              {u.team_2_info ? (
                                 <li>
                                   <a
-                                    href={"/teams/view/"+u.team_2_info.id}
-                                    target='_blank'
+                                    href={'/teams/view/' + u.team_2_info.id}
+                                    target="_blank"
                                   >
                                     View Team 2 Public Page
                                   </a>
-                                </li> : false
-                              }
-                              {
-                                (u.result =='disputed')? (
-                                  <li>
+                                </li>
+                              ) : (
+                                false
+                              )}
+
+                              <li>
                                 <a
-                                  href="#" onClick={(e)=>{
-                                  e.preventDefault();
-                                  this.resolveDispute(u.id, 'team_1');
+                                  href="#"
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    this.doAction('show_xp', u);
                                   }}
-                                
                                 >
-                                  Resolve dispute by giving win to team 1
+                                  Show XP Transactions
                                 </a>
                               </li>
-                              )
-                                :false
-
-                              }
-
-                               {
-                                (u.result =='disputed')? (
-                                  <li>
-                                <a href="#" onClick={(e)=>{
-                                  e.preventDefault();
-                                  this.resolveDispute(u.id, 'team_2');
-                                }}
-                                
+                              <li>
+                                <a
+                                  href="#"
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    this.doAction('show_credit', u);
+                                  }}
                                 >
-                                  Resolve dispute by giving win to team 2
+                                  Show Credit Transactions
                                 </a>
                               </li>
-                              )
-                                :false
+                              <li>
+                                <a
+                                  href="#"
+                                  onClick={e => {
+                                    e.preventDefault();
+                                    this.doAction('show_cash', u);
+                                  }}
+                                >
+                                  Show Cash Transactions
+                                </a>
+                              </li>
 
-                              }
-                             
-                               
+                              {u.result == 'disputed' ? (
+                                <li>
+                                  <a
+                                    href="#"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.resolveDispute(u.id, 'team_1');
+                                    }}
+                                  >
+                                    Resolve dispute by giving win to team 1
+                                  </a>
+                                </li>
+                              ) : (
+                                false
+                              )}
+
+                              {u.result == 'disputed' ? (
+                                <li>
+                                  <a
+                                    href="#"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.resolveDispute(u.id, 'team_2');
+                                    }}
+                                  >
+                                    Resolve dispute by giving win to team 2
+                                  </a>
+                                </li>
+                              ) : (
+                                false
+                              )}
                             </ul>
                           </div>
                         </td>
                         <td>{moment(u.starts_at).format('lll')}</td>
-
                       </tr>
                     );
                   })}
               </tbody>
             </table>
 
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

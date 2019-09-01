@@ -76,11 +76,20 @@ class TournamentFinder extends React.Component {
                     {this.state.is_loaded &&
                     this.state.tournaments.length < 1 ? (
                       <div className="alert alert-warning">
-                        There are no active tournaments. Please check back later.
+                        There are no active tournaments. Please check back
+                        later.
                       </div>
                     ) : (
                       false
                     )}
+                    {!this.state.is_loaded ? (
+                      <div className="text-center">
+                        <span className="fa fa-spin fa-spinner" />
+                      </div>
+                    ) : (
+                      false
+                    )}
+
                     <ul
                       id="upcoming-tournament"
                       className="tournament-list active"

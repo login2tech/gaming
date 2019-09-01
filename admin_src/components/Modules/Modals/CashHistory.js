@@ -10,7 +10,7 @@ class CashHistory extends React.Component {
     this.state = {
       loaded: false,
       items: [],
-      pagination: {pageCount:1},
+      pagination: {pageCount: 1},
       page: 1
     };
   }
@@ -25,36 +25,44 @@ class CashHistory extends React.Component {
 
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.fetchData();
     });
   };
 
-
   fetchData() {
-    fetch('/api/admin/listPaged/'+this.props.type+'?filter_user_id=' + this.props.id +'&page=' + this.state.page).then(
-      response => {
-        if (response.ok) {
-          return response.json().then(json => {
-            if (json.ok) {
-              this.setState({
-                items: json.items ? json.items : [],
-                loaded: true,
-                 pagination: json.pagination ? json.pagination : {pageCount : 1}
-              });
-            }
-          });
-        }
+    let url =
+      '/api/admin/listPaged/' + this.props.type + '?page=' + this.state.page;
+
+    if (this.props.id) {
+      url += '&filter_user_id=' + this.props.id;
+    }
+
+    if (this.props.obj_type) {
+      url += '&filter_obj_type=' + this.props.obj_type + '&related=user';
+    }
+
+    fetch(url).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          if (json.ok) {
+            this.setState({
+              items: json.items ? json.items : [],
+              loaded: true,
+              pagination: json.pagination ? json.pagination : {pageCount: 1}
+            });
+          }
+        });
       }
-    );
+    });
   }
 
   componentDidMount() {
     this.fetchData();
   }
 
-  render() { 
+  render() {
     return (
       <div className="">
         {this.state.loaded ? (
@@ -69,39 +77,51 @@ class CashHistory extends React.Component {
             <table className="table table-stripped table-bordered table-hovered table-hover">
               <thead>
                 <tr>
-                   
+                  {this.props.obj_type ? <th>User</th> : false}
                   <th>Details</th>
                   <th>Amount</th>
                   <th>Date/time</th>
-                  
                 </tr>
               </thead>
               <tbody>
                 {this.state.items &&
                   this.state.items.map((order, i) => {
                     return (
-                      <tr>
+                      <tr key={order.id}>
+                        {this.props.obj_type ? (
+                          <td>
+                            {order.user
+                              ? order.user.first_name +
+                                ' ' +
+                                order.user.last_name
+                              : ' '}
+                          </td>
+                        ) : (
+                          false
+                        )}
                         <td>{order.details}</td>
                         <td>{order.qty}</td>
-                        <td>{moment(order.created_at).format('lll')}</td>
+                        <td>
+                          {moment(order.created_at).format('MMM DD, YYYY')}
+                        </td>
                       </tr>
                     );
                   })}
               </tbody>
             </table>
-                <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

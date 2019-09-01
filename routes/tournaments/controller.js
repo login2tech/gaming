@@ -54,6 +54,7 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
             new CreditTransactions()
               .save({
                 user_id: uid,
+                obj_type: 't_' + match_id,
                 details: 'Credit Debit for joining tournament #' + match_id,
                 qty: -parseFloat(input_val)
               })
@@ -787,12 +788,18 @@ exports.t_of_user = function(req, res, next) {
   const u = req.query.uid;
   new Item()
     .where('users_list', 'LIKE', '%{' + u + '}%')
-    .fetchAll({withRelated: ['ladder', 'game']})
+
+    .fetchPage({
+      page: req.query.page ? req.query.page : 1,
+      pageSize: 5,
+      withRelated: ['ladder', 'game']
+    })
 
     .then(function(items) {
       res.status(200).send({
         ok: true,
-        items: items.toJSON()
+        items: items.toJSON(),
+        pagination: items.pagination
       });
     })
     .catch(function(err) {

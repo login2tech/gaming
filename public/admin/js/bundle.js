@@ -1594,7 +1594,10 @@ function (_React$Component) {
     value: function updateItem(id, data, key) {
       var _this3 = this;
 
-      if (!key) key = '';
+      if (!key) {
+        key = '';
+      }
+
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
         _Fetcher["default"].post('/api/admin/update/users', {
           id: id,
@@ -1773,7 +1776,7 @@ function (_React$Component) {
             _this4.doAction('show_cash', u);
           }
         }, "Show Cash Transactions")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
-          to: "/teams/" + u.id
+          to: '/teams/' + u.id
         }, "Teams"))))), _react["default"].createElement("td", null, !u.status ? _react["default"].createElement("button", {
           onClick: function onClick() {
             _this4.updateItem(u.id, {
@@ -2443,6 +2446,10 @@ var _Messages = _interopRequireDefault(require("../Messages"));
 
 var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+var _modals = require("../../actions/modals");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -2515,7 +2522,7 @@ function (_React$Component) {
       other = 'related=ladder,game,team_1_info,team_2_info';
 
       if (this.props.params && this.props.params.team_id) {
-        other += "&filter_team_id_for_match=" + this.props.params.team_id;
+        other += '&filter_team_id_for_match=' + this.props.params.team_id;
       }
 
       _Fetcher["default"].get('/api/admin/listPaged/matches?' + other + '&page=' + this.state.page).then(function (resp) {
@@ -2576,39 +2583,50 @@ function (_React$Component) {
           });
         });
       });
-    } // deleteItem(id) {
-    //   const r = confirm('Are you sure you want to delete the user? ');
-    //   if (r == true) {
-    //   } else {
-    //   }
-    //   this.setState(
-    //     {
-    //       ['update_' + key + id]: true
-    //     },
-    //     () => {
-    //       Fetcher.post('/api/admin/delete/matches', {id: id})
-    //         .then(resp => {
-    //           this.setState({
-    //              ['update_' + key + id]: false
-    //           });
-    //           if (resp.ok) {
-    //             this.loadData();
-    //           } else {
-    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-    //           }
-    //         })
-    //         .catch(err => {
-    //           console.log(err);
-    //           const msg = 'Failed to perform Action';
-    //           this.props.dispatch({
-    //             type: 'FAILURE',
-    //             messages: [{msg: msg}]
-    //           });
-    //         });
-    //     }
-    //   );
-    // }
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'xp_tx',
+            obj_type: 'm_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'credits',
+            obj_type: 'm_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'cash',
+            obj_type: 'm_' + obj.id
+          })
+        }));
+        return;
+      }
 
+      alert(action + ' ' + obj.id);
+    }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
@@ -2649,7 +2667,7 @@ function (_React$Component) {
           padding: 0,
           margin: 0
         }
-      }, "Matches ", this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
+      }, "Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
         className: "panel"
       }, _react["default"].createElement("div", {
         className: "panel-body"
@@ -2672,7 +2690,7 @@ function (_React$Component) {
           className: "text-danger"
         }, "Yet to Join")), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
           className: "badge badge-success"
-        }, "Complete") : u.status), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? "Team 2 Wins" : u.result == 'team_1' ? "Team 1 Wins" : u.result == 'disputed' ? _react["default"].createElement("span", {
+        }, "Complete") : u.status), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react["default"].createElement("span", {
           className: "text-danger"
         }, "Disputed") : _react["default"].createElement("span", {
           className: "text-warning"
@@ -2689,15 +2707,36 @@ function (_React$Component) {
         })), _react["default"].createElement("ul", {
           className: "dropdown-menu"
         }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "/m/" + u.id,
+          href: '/m/' + u.id,
           target: "_blank"
         }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "/teams/view/" + u.team_1_info.id,
+          href: '/teams/view/' + u.team_1_info.id,
           target: "_blank"
         }, "View Team 1 Public Page")), u.team_2_info ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
-          href: "/teams/view/" + u.team_2_info.id,
+          href: '/teams/view/' + u.team_2_info.id,
           target: "_blank"
-        }, "View Team 2 Public Page")) : false, u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Team 2 Public Page")) : false, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
@@ -2770,7 +2809,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../Messages":25,"moment":83,"react":153,"react-paginate":101,"react-redux":112}],15:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"moment":83,"react":153,"react-paginate":101,"react-redux":112}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2784,11 +2823,13 @@ var _reactRedux = require("react-redux");
 
 var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
 
-var _moment = _interopRequireDefault(require("moment"));
-
 var _Messages = _interopRequireDefault(require("../Messages"));
 
 var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -2913,39 +2954,50 @@ function (_React$Component) {
           });
         });
       });
-    } // deleteItem(id) {
-    //   const r = confirm('Are you sure you want to delete the user? ');
-    //   if (r == true) {
-    //   } else {
-    //   }
-    //   this.setState(
-    //     {
-    //       ['update_' + key + id]: true
-    //     },
-    //     () => {
-    //       Fetcher.post('/api/admin/delete/matches', {id: id})
-    //         .then(resp => {
-    //           this.setState({
-    //              ['update_' + key + id]: false
-    //           });
-    //           if (resp.ok) {
-    //             this.loadData();
-    //           } else {
-    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-    //           }
-    //         })
-    //         .catch(err => {
-    //           console.log(err);
-    //           const msg = 'Failed to perform Action';
-    //           this.props.dispatch({
-    //             type: 'FAILURE',
-    //             messages: [{msg: msg}]
-    //           });
-    //         });
-    //     }
-    //   );
-    // }
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'xp_tx',
+            obj_type: 'm8_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'credits',
+            obj_type: 'm8_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'cash',
+            obj_type: 'm8_' + obj.id
+          })
+        }));
+        return;
+      }
 
+      alert(action + ' ' + obj.id);
+    }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
@@ -3063,7 +3115,28 @@ function (_React$Component) {
         }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
           href: '/money8/' + u.id,
           target: "_blank"
-        }, "View Match Public Page")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
@@ -3109,7 +3182,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../Messages":25,"moment":83,"react":153,"react-paginate":101,"react-redux":112}],16:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"react":153,"react-paginate":101,"react-redux":112}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3153,17 +3226,17 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var Ladders =
+var Posts =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(Ladders, _React$Component);
+  _inherits(Posts, _React$Component);
 
-  function Ladders(props) {
+  function Posts(props) {
     var _this;
 
-    _classCallCheck(this, Ladders);
+    _classCallCheck(this, Posts);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Ladders).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Posts).call(this, props));
 
     _this.handlePageClick = function (data) {
       // console.log(data)
@@ -3192,12 +3265,12 @@ function (_React$Component) {
     return _this;
   }
 
-  _createClass(Ladders, [{
+  _createClass(Posts, [{
     key: "loadData",
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/ladders?related=game_info&page=' + this.state.page).then(function (resp) {
+      _Fetcher["default"].get('/api/admin/listPaged/posts?related=user&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -3260,7 +3333,7 @@ function (_React$Component) {
       if (r == true) {} else {}
 
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/ladders', {
+        _Fetcher["default"].post('/api/admin/delete/posts', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + key + id, false));
@@ -3342,7 +3415,7 @@ function (_React$Component) {
           padding: 0,
           margin: 0
         }
-      }, "Ladders"))), _react["default"].createElement("div", {
+      }, "Posts"))), _react["default"].createElement("div", {
         className: "panel"
       }, _react["default"].createElement("div", {
         className: "panel-body"
@@ -3379,7 +3452,7 @@ function (_React$Component) {
     }
   }]);
 
-  return Ladders;
+  return Posts;
 }(_react["default"].Component);
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -3390,7 +3463,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var _default = (0, _reactRedux.connect)(mapStateToProps)(Ladders);
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Posts);
 
 exports["default"] = _default;
 
@@ -5057,7 +5130,17 @@ function (_React$Component) {
         className: "dropdown-menu"
       }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
         to: "/tickets"
-      }, "List Tickets"))))) : false, rightNav)));
+      }, "List Tickets")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Social Posts"), _react["default"].createElement("ul", {
+        className: "dropdown-menu"
+      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+        to: "/posts"
+      }, "All Posts"))))) : false, rightNav)));
     }
   }]);
 
@@ -5477,7 +5560,17 @@ function (_React$Component) {
     value: function fetchData() {
       var _this2 = this;
 
-      fetch('/api/admin/listPaged/' + this.props.type + '?filter_user_id=' + this.props.id + '&page=' + this.state.page).then(function (response) {
+      var url = '/api/admin/listPaged/' + this.props.type + '?page=' + this.state.page;
+
+      if (this.props.id) {
+        url += '&filter_user_id=' + this.props.id;
+      }
+
+      if (this.props.obj_type) {
+        url += '&filter_obj_type=' + this.props.obj_type + '&related=user';
+      }
+
+      fetch(url).then(function (response) {
         if (response.ok) {
           return response.json().then(function (json) {
             if (json.ok) {
@@ -5501,6 +5594,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return _react["default"].createElement("div", {
         className: ""
       }, this.state.loaded ? false : _react["default"].createElement("div", {
@@ -5511,8 +5606,10 @@ function (_React$Component) {
         className: "modal-body report_left_inner more_info_de"
       }, _react["default"].createElement("table", {
         className: "table table-stripped table-bordered table-hovered table-hover"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "Details"), _react["default"].createElement("th", null, "Amount"), _react["default"].createElement("th", null, "Date/time"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (order, i) {
-        return _react["default"].createElement("tr", null, _react["default"].createElement("td", null, order.details), _react["default"].createElement("td", null, order.qty), _react["default"].createElement("td", null, (0, _moment["default"])(order.created_at).format('lll')));
+      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.props.obj_type ? _react["default"].createElement("th", null, "User") : false, _react["default"].createElement("th", null, "Details"), _react["default"].createElement("th", null, "Amount"), _react["default"].createElement("th", null, "Date/time"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (order, i) {
+        return _react["default"].createElement("tr", {
+          key: order.id
+        }, _this3.props.obj_type ? _react["default"].createElement("td", null, order.user ? order.user.first_name + ' ' + order.user.last_name : ' ') : false, _react["default"].createElement("td", null, order.details), _react["default"].createElement("td", null, order.qty), _react["default"].createElement("td", null, (0, _moment["default"])(order.created_at).format('MMM DD, YYYY')));
       }))), _react["default"].createElement(_reactPaginate["default"], {
         previousLabel: 'previous',
         nextLabel: 'next',

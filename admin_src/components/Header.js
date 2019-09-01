@@ -95,16 +95,14 @@ class Header extends React.Component {
                     <li>
                       <Link to="/app_users">Web App User</Link>
                     </li>
-                     <li>
-                     <Link to="/teams" activeStyle={active}>
-                    Teams
-                  </Link>
-                  </li>
-                     
+                    <li>
+                      <Link to="/teams" activeStyle={active}>
+                        Teams
+                      </Link>
+                    </li>
                   </ul>
                 </li>
- 
-                 
+
                 <li>
                   <Link
                     className="dropdown-toggle"
@@ -128,7 +126,6 @@ class Header extends React.Component {
                   </ul>
                 </li>
 
-
                 <li>
                   <Link
                     className="dropdown-toggle"
@@ -148,8 +145,6 @@ class Header extends React.Component {
                     </li>
                   </ul>
                 </li>
-
-
 
                 <li>
                   <Link
@@ -171,7 +166,6 @@ class Header extends React.Component {
                   </ul>
                 </li>
 
-
                 <li>
                   <Link
                     className="dropdown-toggle"
@@ -186,12 +180,25 @@ class Header extends React.Component {
                     <li>
                       <Link to="/tickets">List Tickets</Link>
                     </li>
-                    
                   </ul>
                 </li>
 
- 
- 
+                <li>
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Social Posts
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/posts">All Posts</Link>
+                    </li>
+                  </ul>
+                </li>
               </ul>
             ) : (
               false

@@ -17,20 +17,16 @@ class Games extends React.Component {
     };
   }
 
-
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadData();
     });
   };
 
-
   loadData() {
-    Fetcher.get(
-      '/api/admin/listPaged/games?page=' + this.state.page
-    )
+    Fetcher.get('/api/admin/listPaged/games?page=' + this.state.page)
       .then(resp => {
         if (resp.ok) {
           this.setState({
@@ -85,7 +81,7 @@ class Games extends React.Component {
   // }
 
   deleteItem(id) {
-    let k ='';
+    const k = '';
     const r = confirm('Are you sure you want to delete the game? ');
     if (r == true) {
     } else {
@@ -99,7 +95,7 @@ class Games extends React.Component {
         Fetcher.post('/api/admin/delete/games', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' + id]: false
+              ['update_' + id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -124,27 +120,34 @@ class Games extends React.Component {
   }
 
   addItem() {
-     this.props.dispatch(
-        openModal({
-          type: 'custom',
-          id: 'newgame',
-          zIndex: 534,
-          heading: 'New Game',
-          content: <NewGame onComplete={this.loadData.bind(this)} />
-        })
-      );
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'newgame',
+        zIndex: 534,
+        heading: 'New Game',
+        content: <NewGame onComplete={this.loadData.bind(this)} />
+      })
+    );
   }
 
-  editItem(id, data){
+  editItem(id, data) {
     this.props.dispatch(
-        openModal({
-          type: 'custom',
-          id: 'newgame',
-          zIndex: 534,
-          heading: 'New Game',
-          content: <NewGame mode={'edit'} id={id} data={data} onComplete={this.loadData.bind(this)} />
-        })
-      );
+      openModal({
+        type: 'custom',
+        id: 'newgame',
+        zIndex: 534,
+        heading: 'New Game',
+        content: (
+          <NewGame
+            mode={'edit'}
+            id={id}
+            data={data}
+            onComplete={this.loadData.bind(this)}
+          />
+        )
+      })
+    );
   }
 
   render() {
@@ -191,17 +194,11 @@ class Games extends React.Component {
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
+                        <td>{u.title}</td>
                         <td>
-                          {u.title}
-                        </td>
-                        <td>
-
                           <button
-                           
                             onClick={() => {
-                              this.editItem(
-                                u.id, u
-                              );
+                              this.editItem(u.id, u);
                             }}
                             className="btn btn-warning btn-xs"
                           >
@@ -212,13 +209,9 @@ class Games extends React.Component {
                             )}{' '}
                             Edit
                           </button>{' '}
-                           
                           <button
-                           
                             onClick={() => {
-                              this.deleteItem(
-                                u.id
-                              );
+                              this.deleteItem(u.id);
                             }}
                             className="btn btn-danger btn-xs"
                           >
@@ -235,20 +228,20 @@ class Games extends React.Component {
                   })}
               </tbody>
             </table>
-            
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

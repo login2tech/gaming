@@ -13,7 +13,8 @@ class MatchFinder extends React.Component {
       matches: {},
       ladder: '',
       games: [],
-      is_loaded: false
+      is_loaded: false,
+      total_upcoming: 0
     };
   }
 
@@ -22,18 +23,18 @@ class MatchFinder extends React.Component {
   }
   componentDidMount() {
     let str = '';
-    if(this.props.params && this.props.params.id)
-    {
-      str = '?&filter_id='+this.props.params.id
+    if (this.props.params && this.props.params.id) {
+      str = '?&filter_id=' + this.props.params.id;
     }
-    fetch('/api/matches/upcoming'+str)
+    fetch('/api/matches/upcoming' + str)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           this.setState(
             {
               is_loaded: true,
-              matches: json.items
+              matches: json.items,
+              total_upcoming: json.total_upcoming
             },
             () => {
               // this.fetchTeams();
@@ -79,10 +80,17 @@ class MatchFinder extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="content">
                   <div id="tab1_content" className="content_boxes selected">
-                    {this.state.is_loaded && this.state.matches.length < 1 ? (
+                    {this.state.is_loaded && this.state.total_upcoming < 1 ? (
                       <div className="alert alert-warning">
                         There are no active matches. Please check back later or
                         start a new match
+                      </div>
+                    ) : (
+                      false
+                    )}
+                    {!this.state.is_loaded ? (
+                      <div className="text-center">
+                        <span className="fa fa-spin fa-spinner" />
                       </div>
                     ) : (
                       false
@@ -105,10 +113,6 @@ class MatchFinder extends React.Component {
                                   key={match.id}
                                   className="tournament-box"
                                   style={{background: '#27204d'}}
-                                  // style={{
-                                  //   backgroundImage:
-                                  //     "url('images/thumbnail_tournament.jpg')"
-                                  // }}
                                 >
                                   <div className="tournament-body">
                                     <Link
