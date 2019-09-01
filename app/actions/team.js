@@ -177,7 +177,7 @@ export function teamPic(data, team_id, cb) {
       },
       body: JSON.stringify(data)
     }).then(response => {
-      cb && cb();
+      cb && cb(true);
       if (response.ok) {
         return response.json().then(json => {
           dispatch({

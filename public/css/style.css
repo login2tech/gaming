@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i'); a,a:hover {
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700&display=swap');
+
+
+
+ a,a:hover {
     text-decoration: none;
     font-weight: 400;
 }
@@ -12,16 +16,18 @@ html, body {
     line-height: 26px;
     font-weight: 400;
     font-size: 15px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     background: #111;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 600;
-    color: #2B2B2B;
+    color: #fefefe
 }
-
+body,  .btn-vote{
+      color: #fefefe
+}
 ul {
     margin: 0px;
     padding: 0px;
@@ -153,7 +159,7 @@ select.form-control:not([size]):not([multiple]) {
     -moz-transition: all 0.5s ease 0s;
     -o-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 15px;
     padding: 0px 0px;
     font-weight: 500;
@@ -377,7 +383,7 @@ li.logo {
 }
 
 .percentCount {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 700;
     color: #2B2B2B;
     margin-top: -11%;
@@ -440,7 +446,7 @@ li.logo {
     -o-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
     font-weight: 400;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 .portfolio-nav ul li.active-portfolio {
@@ -530,7 +536,7 @@ li.logo {
 .portfolio-title h6 {
     color: #A2A0A0;
     font-weight: 400;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-size: 14px;
 }
 
@@ -796,7 +802,7 @@ li.logo {
     color: #A2A0A0;
     font-size: 13px;
     margin-top: 15px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
 }
 
@@ -888,7 +894,7 @@ li.logo {
 .single-left-blog h5 {
     font-size: 13px;
     color: #A2A0A0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
 }
 
@@ -1006,7 +1012,7 @@ li.logo {
     color: #898888;
     font-weight: 600;
     margin-top: -3px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 .contact-col-1 p {
@@ -1038,7 +1044,7 @@ li.logo {
     color: #fff;
     padding: 10px 0px;
     font-weight: 700;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 /*--------------------------
@@ -1087,7 +1093,7 @@ li.logo {
 .page-title p {
     padding-top: 60px;
     font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 .page-title p>span {
@@ -1116,7 +1122,7 @@ li.logo {
     color: #A2A0A0;
     font-weight: 400;
     font-size: 13px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 a.read-blog {
@@ -1194,7 +1200,7 @@ a.read-blog {
 .single-recent h6 {
     font-size: 11px;
     color: #A2A0A0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
 }
 
@@ -1234,7 +1240,7 @@ a.read-blog {
 .comment-line p {
     font-size: 13px;
     font-weight: 500;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 .single-category {
@@ -1254,7 +1260,7 @@ a.read-blog {
 .single-archive a {
     color: #545454;
     display: block;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 .follow-social ul>li>a>i {
@@ -1350,6 +1356,19 @@ a.read-blog {
     color: #A2A0A0;
     bottom: -30px;
 }
+span.em_count {
+    color: #706a6a;
+}
+
+.modal button.upvoted {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.modal button.upvoted span.em_count {
+    color: red;
+}
+ 
 
 .owl-carousel .owl-item .blog-item img {
     width: auto;
@@ -1443,7 +1462,7 @@ a.read-blog {
     float: right;
     font-size: 10px;
     color: #A2A0A0;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     font-weight: 400;
 }
 
@@ -1493,7 +1512,7 @@ a.read-blog {
     text-transform: uppercase;
     font-weight: 700;
     padding: 15px 20px;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
 }
 
 .single-comment-form {
@@ -2152,7 +2171,7 @@ a.read-blog {
     color: #fff;
     padding: 8px 25px;
     font-weight: 700;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
     border: none;
 }
 
@@ -2343,11 +2362,17 @@ a.read-blog {
     color: #585858;
 }
 
+
 .social-contacts ul li a {
     font-size: 18px;
     color: #fff;
+}.contact-inner ul li a:hover, .social-contacts ul li a:hover{
+    color: #fff
 }
-
+a.image_avar {
+    display: inline-block;
+    margin-bottom: 10px;
+}
 .contact-inner ul li {
     margin-bottom: 5px;
 }
@@ -2604,7 +2629,7 @@ a.read-blog {
     color: #fff;
     text-transform: uppercase;
     margin-top: 18px;
-    font: 700 .875em "Montserrat",sans-serif;
+    font: 700 .875em "Raleway",sans-serif;
 }
 
 .tournament-list .tournament-box .tournament-body figure img {
@@ -2628,13 +2653,13 @@ a.read-blog {
 }
 
 .tournament-list .tournament-box .tournament-footer .col h5 {
-    font: 600 0.75em/1 "Montserrat",sans-serif;
+    font: 600 0.75em/1 "Raleway",sans-serif;
     color: #636f7d;
     margin-bottom: 4px;
 }
 
 .tournament-list .tournament-box .tournament-footer .col p {
-    font: 600 0.875em/1 "Montserrat",sans-serif;
+    font: 600 0.875em/1 "Raleway",sans-serif;
     color: #fff;
 }
 
@@ -2672,7 +2697,7 @@ a.read-blog {
 }
 
 .btn-default {
-    font: 900 0.75em/1 "Montserrat",sans-serif;
+    font: 900 0.75em/1 "Raleway",sans-serif;
     word-break: break-word;
     text-transform: uppercase;
     min-width: 200px;
@@ -2688,7 +2713,7 @@ a.read-blog {
 
 .tournament-list .tournament-box .tournament-body .tournament-name {
     color: #636f7d;
-    font: 500 1.125em/1 "Montserrat",sans-serif;
+    font: 500 1.125em/1 "Raleway",sans-serif;
     margin-bottom: 6px;
 }
 
@@ -2727,7 +2752,7 @@ a.read-blog {
 }
 
 .team-list .team-box .team-body h3 {
-    font: 400 1.125em/1 "Montserrat",sans-serif;
+    font: 400 1.125em/1 "Raleway",sans-serif;
 }
 
 .team-list .team-box .team-body h3 a {
@@ -2735,7 +2760,7 @@ a.read-blog {
 }
 
 .team-list .team-box .team-body span {
-    font: 700 0.75em/1 "Montserrat",sans-serif;
+    font: 700 0.75em/1 "Raleway",sans-serif;
     color: #59596d;
     text-transform: uppercase;
 }
@@ -2797,13 +2822,13 @@ ul.members li a img {
 }
 
 .team-list .team-box .team-foot h5 {
-    font: 700 0.75em/1 "Montserrat",sans-serif;
+    font: 700 0.75em/1 "Raleway",sans-serif;
     color: #59596d;
     margin-bottom: 2px;
 }
 
 .team-list .team-box .team-foot p {
-    font: 700 0.875em/1 "Montserrat",sans-serif;
+    font: 700 0.875em/1 "Raleway",sans-serif;
     color: #fff;
 }
 
@@ -3945,7 +3970,7 @@ select {
 }
 
 .example.example4 * {
-    font-family: Inter UI, Open Sans, Segoe UI, sans-serif;
+    font-family: Inter UI, Raleway, Segoe UI, sans-serif;
     font-size: 16px;
     font-weight: 500;
 }
@@ -4355,7 +4380,7 @@ ul.submenu li a {
     border-bottom: 1px solid #000000;
     padding: .5rem;
     height: 3.7rem;
-    font-family: "Open Sans Condensed", sans-serif;
+    font-family: "Raleway", sans-serif;
     text-transform: uppercase;
     font-size: 1.25rem;
     line-height: 1.25rem;
@@ -4387,7 +4412,7 @@ ul.submenu li a {
     text-align: center;
     border-bottom: 1px solid #000000;
     padding: .5rem;
-    font-family: "Open Sans Condensed", sans-serif;
+    font-family: "Raleway", sans-serif;
     text-transform: uppercase;
     font-size: 0.9375rem;
     line-height: 0.9375rem;
@@ -4974,4 +4999,7 @@ td a {
 
 span.profile_menu_item.ticket_item.from_admin {
     border: 2px solid #124afb;
+}
+.modal-title{
+    color:#fff;
 }

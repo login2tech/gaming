@@ -233,7 +233,7 @@ exports.listItemMyFeed = function(req, res, next) {
   }
   n.fetchPage({
     page: p,
-    pageSize: 100,
+    pageSize: 10,
     withRelated: [
       {
         user: function(qb) {
@@ -275,16 +275,19 @@ exports.listItemMyFeed = function(req, res, next) {
   })
     .then(function(items) {
       if (!items) {
-        return res.status(200).send({ok: true, items: []});
+        return res.status(200).send({ok: true, items: [], pagination: {}});
       }
+      const pagination = items.pagination;
       items = items.toJSON();
       // console.log(items);
       // items.like_count = items.like_count ? items.like_count.length : 0;
-      return res.status(200).send({ok: true, items: items});
+      return res
+        .status(200)
+        .send({ok: true, items: items, pagination: pagination});
     })
     .catch(function(err) {
       // console.log(err);
-      return res.status(200).send({ok: true, items: []});
+      return res.status(200).send({ok: true, items: [], pagination: {}});
     });
 };
 
@@ -306,7 +309,7 @@ exports.listItemMy = function(req, res, next) {
   }
   n.fetchPage({
     page: p,
-    pageSize: 100,
+    pageSize: 10,
     withRelated: [
       {
         user: function(qb) {
@@ -374,14 +377,14 @@ exports.listItemAll = function(req, res, next) {
     n = n.where('post', 'LIKE', '%' + req.query.hastag + '%');
   }
   let p;
-  if (req.query.paged && parseInt(req.query.paged) > 1) {
-    p = parseInt(req.query.paged);
+  if (req.query.page && parseInt(req.query.page) > 1) {
+    p = parseInt(req.query.page);
   } else {
     p = 1;
   }
   n.fetchPage({
     page: p,
-    pageSize: 100,
+    pageSize: 10,
     withRelated: [
       {
         user: function(qb) {
@@ -423,16 +426,21 @@ exports.listItemAll = function(req, res, next) {
   })
     .then(function(items) {
       if (!items) {
-        return res.status(200).send({ok: true, items: []});
+        return res.status(200).send({ok: true, items: [], pagination: {}});
       }
+      const pagination = items.pagination;
       items = items.toJSON();
       // console.log(items);
       // items.like_count = items.like_count  ?items.like_count.length : 0;
-      return res.status(200).send({ok: true, items: items});
+      return res
+        .status(200)
+        .send({ok: true, items: items, pagination: pagination});
     })
     .catch(function(err) {
       console.log(err);
-      return res.status(200).send({ok: true, items: [], error: 'err'});
+      return res
+        .status(200)
+        .send({ok: true, items: [], error: 'err', pagination: {}});
     });
 };
 

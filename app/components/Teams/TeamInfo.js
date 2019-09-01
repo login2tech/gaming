@@ -140,6 +140,7 @@ class TeamInfo extends React.Component {
     this.setState(
       {
         profile_image_select: event.target.files[0],
+        saving_profile_photo  : true,
         loaded: 0
       },
       () => {
@@ -147,6 +148,7 @@ class TeamInfo extends React.Component {
           if (data && data.file) {
             this.setState({
               new_profile_pic: data.file,
+              saving_profile_photo  : false,
               new_profile_pic_saved: false
             });
           }
@@ -159,6 +161,7 @@ class TeamInfo extends React.Component {
     this.setState(
       {
         cover_image_select: event.target.files[0],
+        saving_cover_photo: true,
         loaded: 0
       },
       () => {
@@ -166,7 +169,8 @@ class TeamInfo extends React.Component {
           if (data && data.file) {
             this.setState({
               new_cover_pic: data.file,
-              new_cover_pic_saved: false
+              new_cover_pic_saved: false,
+              saving_cover_photo: false
             });
           }
         });
@@ -192,7 +196,7 @@ class TeamInfo extends React.Component {
         st => {
           const obj = {saving_profile_photo: false};
           if (st) {
-            obj.new_profile_pic = '';
+            // obj.new_profile_pic = '';
             obj.new_profile_pic_saved = false;
           }
           this.setState(obj);
@@ -205,23 +209,32 @@ class TeamInfo extends React.Component {
     if (!this.state.new_cover_pic) {
       return;
     }
+     this.setState({
+      saving_cover_photo: true
+    });
 
     event.preventDefault();
-    this.props.dispatch(
+   
+   this.props.dispatch(
       teamPic(
         {
           cover_picture: this.state.new_cover_pic
         },
-        this.state.team_info.id
+         this.state.team_info.id,
+
+        st => {
+          const obj = {saving_cover_photo: false};
+          if (st) {
+            // obj.new_cover_pic = '';
+            obj.new_cover_pic_saved = false;
+          }
+          this.setState(obj);
+        }
       )
     );
-    const team = this.state.team_info;
-    team.cover_picture = this.state.new_cover_pic;
-    this.setState({
-      team_info: team,
-      new_cover_pic: '',
-      new_cover_pic_saved: false
-    });
+
+
+
   }
 
   askFile(cls, cb) {
@@ -311,6 +324,13 @@ class TeamInfo extends React.Component {
           id="is_top"
           style={divStyle}
         >
+        {this.state.saving_cover_photo ? (
+            <div className="photo_progress cover_progress">
+              <span className="fa fa-spinner fa-spin" />
+            </div>
+          ) : (
+            false
+          )}
           {this.props.user && this.currentUserInTeam() && !this.state.team_info.removed ? (
             <div className="update_btn cover">
               <label htmlFor="cover_image_select">

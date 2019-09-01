@@ -178,11 +178,11 @@ exports.saveScore = function(req, res, next) {
             .fetchAll()
             .then(function(round_matches) {
               round_matches = round_matches.toJSON();
-              const winner_teams =[];
+              const winner_teams = [];
               for (let i = round_matches.length - 1; i >= 0; i--) {
                 const rm = round_matches[i];
                 if (round_matches[i].status == 'pending') {
-                  console.log(round_matches[i])
+                  console.log(round_matches[i]);
                   return;
                 }
                 if (rm.result == 'team_1') {
@@ -199,11 +199,10 @@ exports.saveScore = function(req, res, next) {
                 })
                 .fetch()
                 .then(function(tournament) {
-
                   let teams_obj = tournament.get('teams_obj');
                   teams_obj = JSON.parse(teams_obj);
                   const bracket_obj = getBracket(winner_teams);
-                  console.log(  bracket_obj);
+                  console.log(bracket_obj);
                   const brackets_round = bracket_obj[0];
 
                   let brackets = tournament.get('brackets');
@@ -215,7 +214,9 @@ exports.saveScore = function(req, res, next) {
                   } else {
                     brackets = JSON.parse(brackets);
                     brackets.rounds_calculated = brackets.rounds_calculated + 1;
-                    brackets['round_'+brackets.rounds_calculated] = brackets_round;
+                    brackets[
+                      'round_' + brackets.rounds_calculated
+                    ] = brackets_round;
                   }
                   brackets = JSON.stringify(brackets);
                   tournament
@@ -543,6 +544,7 @@ exports.join = function(req, res, next) {
       teams = teams.filter(function(el) {
         return el != null && el != '';
       });
+      // let notif_to_send_to_teams = teams;
       teams = teams.join(',');
       teams_obj['team_' + req.body.team_id] = req.body.using_users;
       teams_registered = teams_registered + 1;
@@ -572,6 +574,27 @@ exports.join = function(req, res, next) {
 
           if (teams_registered == total_teams) {
             createRoundMatches(match);
+
+            for (let i = 0; i < users_list.length; i++) {
+              const uid = users_list[i].replace('{', '').replace('}', '');
+              new Notif().save({
+                description: 'The tournament you joined has started',
+                user_id: uid,
+                type: 'tournament',
+                object_id: req.body.tournament_id
+              });
+            }
+          } else {
+            for (let i = 0; i < users_list.length; i++) {
+              const uid = users_list[i].replace('{', '').replace('}', '');
+              new Notif().save({
+                description:
+                  'A new team has joined the tournament you have joined.',
+                user_id: uid,
+                type: 'tournament',
+                object_id: req.body.tournament_id
+              });
+            }
           }
 
           if (match.get('match_type') != 'free') {
@@ -791,9 +814,9 @@ exports.addItem = function(req, res, next) {
     title: req.body.title,
     game_id: req.body.game_id,
     ladder_id: req.body.ladder_id,
-    starts_at:moment(req.body.starts_at),
-    registration_start_at:moment(req.body.registration_start_at),
-    registration_end_at:moment(req.body.registration_end_at),
+    starts_at: moment(req.body.starts_at),
+    registration_start_at: moment(req.body.registration_start_at),
+    registration_end_at: moment(req.body.registration_end_at),
     total_teams: req.body.total_teams,
     entry_fee: req.body.entry_fee,
     first_winner_price: req.body.first_winner_price,

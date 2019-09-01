@@ -798,6 +798,9 @@ class MatchInfo extends React.Component {
                               if (team_user.removed == 1) {
                                 return false;
                               }
+                              if (team_user.acceepted == false) {
+                                return false;
+                              }
                               return (
                                 <tr key={team_user.id}>
                                   <td>
@@ -897,7 +900,7 @@ class MatchInfo extends React.Component {
                       const team = team_parent.team_info
                         ? team_parent.team_info
                         : {};
-                     if (team_user.removed == 1) {
+                      if (team_user.removed == 1) {
                         return false;
                       }
                       return (

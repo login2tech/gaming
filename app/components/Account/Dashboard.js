@@ -7,7 +7,12 @@ import {Link} from 'react-router';
 import moment from 'moment';
 import axios from 'axios';
 import {accountPic} from '../../actions/auth';
-import {updateProfile,stopRenewal, changePassword, logout} from '../../actions/auth';
+import {
+  updateProfile,
+  stopRenewal,
+  changePassword,
+  logout
+} from '../../actions/auth';
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -83,9 +88,7 @@ class Profile extends React.Component {
 
   handleStopRenewal(event, item) {
     event.preventDefault();
-    this.props.dispatch(
-      stopRenewal(item, this.props.token)
-    );
+    this.props.dispatch(stopRenewal(item, this.props.token));
   }
 
   proceedWithCreation(tokenObj) {
@@ -297,7 +300,7 @@ class Profile extends React.Component {
     this.setState(
       {
         profile_image_select: event.target.files[0],
-        saving_profile_photo:true,
+        saving_profile_photo: true,
         loaded: 0
       },
       () => {
@@ -305,7 +308,7 @@ class Profile extends React.Component {
           if (data && data.file) {
             this.setState({
               new_profile_pic: data.file,
-              saving_profile_photo : false,
+              saving_profile_photo: false,
               new_profile_pic_saved: false
             });
           }
@@ -318,12 +321,14 @@ class Profile extends React.Component {
     this.setState(
       {
         cover_image_select: event.target.files[0],
+        saving_cover_photo: true,
         loaded: 0
       },
       () => {
         this.askFile('cover_image_select', data => {
           if (data && data.file) {
             this.setState({
+              saving_cover_photo: false,
               new_cover_pic: data.file,
               new_cover_pic_saved: false
             });
@@ -363,17 +368,27 @@ class Profile extends React.Component {
     if (!this.state.new_cover_pic) {
       return;
     }
+    this.setState({
+      saving_cover_photo: true
+    });
 
     event.preventDefault();
     this.props.dispatch(
-      accountPic({
-        cover_picture: this.state.new_cover_pic
-      })
+      accountPic(
+        {
+          cover_picture: this.state.new_cover_pic
+        },
+
+        st => {
+          const obj = {saving_cover_photo: false};
+          if (st) {
+            obj.new_cover_pic = '';
+            obj.new_cover_pic_saved = false;
+          }
+          this.setState(obj);
+        }
+      )
     );
-    this.setState({
-      new_cover_pic: '',
-      new_cover_pic_saved: false
-    });
   }
 
   askFile(cls, cb) {
@@ -771,30 +786,32 @@ class Profile extends React.Component {
       prime_info = (
         <span>
           <strong className="text-white">Started On: </strong>
-          <span className="text-success">{moment.unix(tmp.start).format('lll')}</span>
+          <span className="text-success">
+            {moment.unix(tmp.start).format('lll')}
+          </span>
         </span>
       );
     }
     let double_xp_info = false;
     if (this.props.user.double_xp) {
       tmp = JSON.parse(this.props.user.double_xp_obj);
-      double_xp_obj=  tmp;
-      if(!tmp.start)
-      {
-         double_xp_info = (
-        <span>
-          <strong className="text-white">Started Manually by admin</strong>
-        </span>
-      );
-       }else{
-         double_xp_info = (
-        <span>
-          <strong className="text-white">Started On: </strong>
-          <span className="text-success">{moment.unix(tmp.start).format('lll')}</span>
-        </span>
-      );
-       }
-     
+      double_xp_obj = tmp;
+      if (!tmp.start) {
+        double_xp_info = (
+          <span>
+            <strong className="text-white">Started Manually by admin</strong>
+          </span>
+        );
+      } else {
+        double_xp_info = (
+          <span>
+            <strong className="text-white">Started On: </strong>
+            <span className="text-success">
+              {moment.unix(tmp.start).format('lll')}
+            </span>
+          </span>
+        );
+      }
     }
     return (
       <div className="tab-pane" data-tab="tab1">
@@ -810,22 +827,38 @@ class Profile extends React.Component {
                     <br />
                     {prime_info}
                     <br />
-
-                    {
-                      (prime_obj.current_period_end) ? 
-                        (
-                          <span>
-                           <strong className="text-white">
-                            { prime_obj.ending_on_period_end ? 'Stops on: ': 'Renews On'}: </strong> 
-                            <span className="text-success">{moment.unix(prime_obj.current_period_end).format('lll')}</span>
-                            </span>
-                        )
-                        :(false)
-                    }
-                    <br /><br />
-                   {(prime_obj.current_period_end && !prime_obj.ending_on_period_end) ?  <button className="btn btn-danger btn-xs" onClick={(e)=>{
-                      this.handleStopRenewal(e,'prime');
-                    }}>Stop Renewing</button>  : false}
+                    {prime_obj.current_period_end ? (
+                      <span>
+                        <strong className="text-white">
+                          {prime_obj.ending_on_period_end
+                            ? 'Stops on: '
+                            : 'Renews On'}
+                          :{' '}
+                        </strong>
+                        <span className="text-success">
+                          {moment
+                            .unix(prime_obj.current_period_end)
+                            .format('lll')}
+                        </span>
+                      </span>
+                    ) : (
+                      false
+                    )}
+                    <br />
+                    <br />
+                    {prime_obj.current_period_end &&
+                    !prime_obj.ending_on_period_end ? (
+                      <button
+                        className="btn btn-danger btn-xs"
+                        onClick={e => {
+                          this.handleStopRenewal(e, 'prime');
+                        }}
+                      >
+                        Stop Renewing
+                      </button>
+                    ) : (
+                      false
+                    )}
                   </p>
                 ) : (
                   <p>
@@ -845,22 +878,38 @@ class Profile extends React.Component {
                     <br />
                     {double_xp_info}
                     <br />
-
-                    {
-                      (double_xp_obj.current_period_end) ? 
-                        (
-                          <span>
-                           <strong className="text-white">
-                            { double_xp_obj.ending_on_period_end ? 'Stops on: ': 'Renews On'}: </strong> 
-                            <span className="text-success">{moment.unix(double_xp_obj.current_period_end).format('lll')}</span>
-                            </span>
-                        )
-                        :(false)
-                    }
-                    <br /><br />
-                   {(double_xp_obj.current_period_end && !double_xp_obj.ending_on_period_end) ?  <button className="btn btn-danger btn-xs" onClick={(e)=>{
-                      this.handleStopRenewal(e,'double_xp');
-                    }}>Stop Renewing</button>  : false}
+                    {double_xp_obj.current_period_end ? (
+                      <span>
+                        <strong className="text-white">
+                          {double_xp_obj.ending_on_period_end
+                            ? 'Stops on: '
+                            : 'Renews On'}
+                          :{' '}
+                        </strong>
+                        <span className="text-success">
+                          {moment
+                            .unix(double_xp_obj.current_period_end)
+                            .format('lll')}
+                        </span>
+                      </span>
+                    ) : (
+                      false
+                    )}
+                    <br />
+                    <br />
+                    {double_xp_obj.current_period_end &&
+                    !double_xp_obj.ending_on_period_end ? (
+                      <button
+                        className="btn btn-danger btn-xs"
+                        onClick={e => {
+                          this.handleStopRenewal(e, 'double_xp');
+                        }}
+                      >
+                        Stop Renewing
+                      </button>
+                    ) : (
+                      false
+                    )}
                   </p>
                 ) : (
                   <p>
@@ -903,6 +952,13 @@ class Profile extends React.Component {
           id="is_top"
           style={divStyle}
         >
+          {this.state.saving_cover_photo ? (
+            <div className="photo_progress cover_progress">
+              <span className="fa fa-spinner fa-spin" />
+            </div>
+          ) : (
+            false
+          )}
           <div className="update_btn cover">
             <label htmlFor="cover_image_select">
               <i className="fa fa-edit" /> upload cover

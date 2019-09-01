@@ -257,7 +257,7 @@ class TournamentInfo extends React.Component {
     this.fetchTournament();
   }
 
-  fetchTournament(skip){
+  fetchTournament(skip) {
     fetch('/api/tournaments/single/' + this.props.params.tournament_id)
       .then(res => res.json())
       .then(json => {
@@ -269,9 +269,9 @@ class TournamentInfo extends React.Component {
               users_data: json.users_data ? json.users_data : {}
             },
             () => {
-              if(skip){
+              if (skip) {
                 //
-              }else{
+              } else {
                 this.fetchTeams();
               }
             }
@@ -288,29 +288,29 @@ class TournamentInfo extends React.Component {
   }
 
   submitScore(match_id, s_no) {
+    const score_1 = this.state[
+      'match_' + match_id + '_' + s_no + '_team_1_score'
+    ];
+    const score_2 = this.state[
+      'match_' + match_id + '_' + s_no + '_team_2_score'
+    ];
 
+    const submitter = s_no;
 
-    let score_1 = this.state['match_'+match_id+'_'+s_no+'_team_1_score'];
-    let score_2 = this.state['match_'+match_id+'_'+s_no+'_team_2_score'];
-
-    let submitter = s_no;
-    
     const val = {};
-    
-    if(submitter == 1)
-    {
+
+    if (submitter == 1) {
       val.team_1_result = '' + score_1 + '-' + score_2;
-    }
-    else if(submitter == 2)
-    {
+    } else if (submitter == 2) {
       val.team_2_result = '' + score_1 + '-' + score_2;
     }
 
     val.id = match_id;
-    this.props.dispatch(saveScores(val, this.props.user, ()=>{
-      this.fetchTournament(true);
-    }));
-
+    this.props.dispatch(
+      saveScores(val, this.props.user, () => {
+        this.fetchTournament(true);
+      })
+    );
   }
 
   showJoin() {
@@ -827,7 +827,7 @@ class TournamentInfo extends React.Component {
                 </thead>
                 <tbody>
                   {usrs_list.map((usr, i) => {
-                    let team_user =
+                    const team_user =
                       this.state.users_data &&
                       this.state.users_data['usr_' + usr]
                         ? this.state.users_data['usr_' + usr]
@@ -857,7 +857,7 @@ class TournamentInfo extends React.Component {
     );
   }
 
-   dynamicStatus_match(match) {
+  dynamicStatus_match(match) {
     if (!match.team_2_id) {
       return 'Expired';
     }
@@ -911,31 +911,35 @@ class TournamentInfo extends React.Component {
                 const teams = this.getTeams(match);
 
                 const my_team_id = this.am_i_in_match(match);
-                
+
                 return (
                   <tr key={match.id}>
                     <td>#{match.id}</td>
                     <td>{teams[0].title}</td>
                     <td>{teams[1].title}</td>
-                    <td>{match.result ? '' : 'Results Pending'}{
-                      match.result && match.result == 'team_1' ? teams[0].title + ' wins' : ''
-                    }
-                    {
-                      match.result && match.result == 'team_2' ? teams[1].title + ' wins' : ''
-                    }</td>
-                    
-                    <td>{moment(match.created_at).format('lll')} </td>
-                    <td>{moment().isAfter(moment(match.starts_at))
-                            ? this.dynamicStatus_match(match)
-                            : match.status}</td>
                     <td>
-                      
+                      {match.result ? '' : 'Results Pending'}
+                      {match.result && match.result == 'team_1'
+                        ? teams[0].title + ' wins'
+                        : ''}
+                      {match.result && match.result == 'team_2'
+                        ? teams[1].title + ' wins'
+                        : ''}
+                    </td>
+
+                    <td>{moment(match.created_at).format('lll')} </td>
+                    <td>
+                      {moment().isAfter(moment(match.starts_at))
+                        ? this.dynamicStatus_match(match)
+                        : match.status}
+                    </td>
+                    <td>
                       {my_team_id && my_team_id == teams[0].id ? (
-                        match.team_1_result ? 
-                          ('Your team submitted ' + match.team_1_result )
-                          : (
+                        match.team_1_result ? (
+                          'Your team submitted ' + match.team_1_result
+                        ) : (
                           <form
-                            onSubmit={(e) => {
+                            onSubmit={e => {
                               e.preventDefault();
                               this.submitScore(match.id, 1);
                             }}
@@ -992,9 +996,11 @@ class TournamentInfo extends React.Component {
                       )}
 
                       {my_team_id && my_team_id == teams[1].id ? (
-                        match.team_2_result ? ('Your team submitted ' + match.team_2_result ) : (
+                        match.team_2_result ? (
+                          'Your team submitted ' + match.team_2_result
+                        ) : (
                           <form
-                            onSubmit={(e) => {
+                            onSubmit={e => {
                               e.preventDefault();
                               this.submitScore(match.id, 2);
                             }}
@@ -1116,8 +1122,12 @@ class TournamentInfo extends React.Component {
                 </thead>
                 <tbody>
                   {this.state.team_selected.team_users.map((team_user, i) => {
-                    if(team_user.removed  == 1)
+                    if (team_user.removed == 1) {
                       return false;
+                    }
+                    if (team_user.acceepted == false) {
+                      return false;
+                    }
                     return (
                       <tr key={team_user.id}>
                         <td>
@@ -1198,8 +1208,9 @@ class TournamentInfo extends React.Component {
                 return false;
               }
               const team = team_parent.team_info ? team_parent.team_info : {};
-              if(team.removed==true)
+              if (team.removed == true) {
                 return false;
+              }
               return (
                 <li className="" key={team.id}>
                   <Link
@@ -1221,16 +1232,17 @@ class TournamentInfo extends React.Component {
                 </li>
               );
             })}
-          {this.state.eligible_teams_loaded && !this.state.team_selected && (
-            <li>
-              <a
-                target="_blank"
-                href={'/u/' + this.props.user.username + '/teams/new'}
-              >
-                <img src="/images/team_new.png" />
-              </a>
-            </li>
-          )}
+          {this.state.eligible_teams_loaded &&
+            !this.state.team_selected && (
+              <li>
+                <a
+                  target="_blank"
+                  href={'/u/' + this.props.user.username + '/teams/new'}
+                >
+                  <img src="/images/team_new.png" />
+                </a>
+              </li>
+            )}
         </ul>
       </div>
     );

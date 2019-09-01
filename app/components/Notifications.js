@@ -30,7 +30,6 @@ class Notifications extends React.Component {
   }
 
   render() {
-     
     return (
       <div>
         <section className="page_title_bar">
@@ -54,29 +53,29 @@ class Notifications extends React.Component {
                 </a>
                 <br />
                 <br />
-                {this.state.notifications.length == 0 && this.state.loaded && (
-                  <div className="alert alert-warning">
-                    No more notifications to show
-                  </div>
-                )}
+                {this.state.notifications.length == 0 &&
+                  this.state.loaded && (
+                    <div className="alert alert-warning">
+                      No more notifications to show
+                    </div>
+                  )}
                 <ul className="  notification_list_main">
                   {this.state.notifications.map((notif, i) => {
                     let lnk = '';
-                     if (notif.type == 'money-8') {
-                        lnk = '/money8/' + notif.object_id;
-                      } else if (notif.type == 'match') {
-                        lnk = '/m/' + notif.object_id;
-                      } else if(notif.type =='team_invite')
-                      {
-                        lnk = '/teams/view/'+notif.object_id;
-                      }else if(notif.type == 'post')
-                      {
-                        lnk = '/post/'+notif.object_id;
-                        // post
-                      }else if(notif.type =='follower')
-                      {
-                        //follower
-                      }
+                    if (notif.type == 'money-8') {
+                      lnk = '/money8/' + notif.object_id;
+                    } else if (notif.type == 'match') {
+                      lnk = '/m/' + notif.object_id;
+                    } else if (notif.type == 'team_invite') {
+                      lnk = '/teams/view/' + notif.object_id;
+                    } else if (notif.type == 'post') {
+                      lnk = '/post/' + notif.object_id;
+                      // post
+                    } else if (notif.type == 'follower') {
+                      //follower
+                    } else if ('tournament' == notif.type) {
+                      lnk = '/t/' + notif.object_id;
+                    }
 
                     return (
                       <li key={notif.id}>

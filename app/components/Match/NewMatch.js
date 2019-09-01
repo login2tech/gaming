@@ -463,6 +463,9 @@ class NewTeam extends React.Component {
                                   if (team_user.removed == 1) {
                                     return false;
                                   }
+                                  if (team_user.acceepted == false) {
+                                    return false;
+                                  }
                                   return (
                                     <tr key={team_user.id}>
                                       <td>

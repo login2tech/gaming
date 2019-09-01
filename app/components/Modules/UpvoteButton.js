@@ -85,6 +85,8 @@ class UpvoteButton extends React.Component {
       likes = [];
     }
     const likes_count = likes.length;
+    console.log('--------',);
+    console.log('total likes : ', likes_count);
     for (let i = 0; i < likes_count; i++) {
       if (!like_counts[likes[i].type]) {
         like_counts[likes[i].type] = 1;
@@ -102,17 +104,25 @@ class UpvoteButton extends React.Component {
     if (i_have_liked == 'NO') {
       i_have_liked = false;
     }
+
+    console.log(i_have_liked, original_liked);
     if (original_liked === false && i_have_liked !== false) {
       like_counts[i_have_liked]++;
     }
-    if (original_liked && i_have_liked != original_liked) {
+    if (original_liked && i_have_liked && i_have_liked != original_liked) {
       like_counts[original_liked]--;
       if (like_counts[original_liked] < 1) {
         like_counts[original_liked] = 0;
       }
-      // alert(i_have_liked);
+      console.log('adding to ', i_have_liked, like_counts[i_have_liked]);
       if(i_have_liked)
-      like_counts[i_have_liked] = like_counts[i_have_liked] +  1;
+      {
+        if(!like_counts[i_have_liked])
+            like_counts[i_have_liked] = 0;
+        like_counts[i_have_liked]++;
+      }
+        
+        
       // alert(like_counts[i_have_liked]);
 
       // like_counts[likes[i].type]++;

@@ -17,8 +17,8 @@ class Reactions extends React.Component {
     super(props);
     this.state = {
       items: [],
-      is_loaded: true,
-      showing: 'like'
+      is_loaded: false,
+      showing: 'all'
     };
   }
   fetchUserInfo(forward) {
@@ -45,9 +45,39 @@ class Reactions extends React.Component {
         </div>
       );
     }
+
+    const emoji_counts = {
+      like: 0,
+      heart: 0,
+      angry: 0,
+      '100': 0
+    };
+
+    for (let i = 0; i < this.state.items.length; i++) {
+      emoji_counts[this.state.items[i].type]++;
+    }
     return (
       <div className="modal-body">
         <ul className="nav nav-tabs">
+          <li>
+            <button
+              className={
+                'btn btn-sm btn-vote pulsate-fwd' +
+                (this.state.showing == 'all' ? ' upvoted ' : '')
+              }
+              style={{marginRight: '5px'}}
+              type="button"
+              data-id={this.props.post_id}
+              onClick={() => {
+                this.setState({
+                  showing: 'all'
+                });
+              }}
+            >
+              All <span className="em_count">{this.state.items.length}</span>
+            </button>
+          </li>
+
           {emojis.map((emoji, i) => {
             return (
               <li key={emoji.key}>
@@ -70,7 +100,8 @@ class Reactions extends React.Component {
                     style={{
                       width: '20px'
                     }}
-                  />
+                  />{' '}
+                  <span className="em_count">{emoji_counts[emoji.em]}</span>
                 </button>
               </li>
             );
@@ -80,9 +111,11 @@ class Reactions extends React.Component {
         <br />
         <table>
           <tbody>
-
             {this.state.items.map((item, i) => {
-              if (item.type != this.state.showing) {
+              if (
+                this.state.showing != 'all' &&
+                item.type != this.state.showing
+              ) {
                 return false;
               }
               const image_url =

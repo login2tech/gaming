@@ -32,7 +32,7 @@ class Header extends React.Component {
   }
   componentDidMount() {
     this.fetchNotifications();
-    setInterval(()=>{
+    setInterval(() => {
       this.fetchNotifications();
     }, 1000 * 60 * 3);
   }
@@ -50,8 +50,9 @@ class Header extends React.Component {
   }
 
   fetchNotifications() {
-    if(!this.props.user)
+    if (!this.props.user) {
       return;
+    }
     fetch('/notifs/listMine')
       .then(res => res.json())
       .then(json => {
@@ -61,7 +62,6 @@ class Header extends React.Component {
           });
         }
       });
-
   }
 
   render() {
@@ -174,39 +174,55 @@ class Header extends React.Component {
                           <li key={5} className="has_children_m">
                             <Link className="profile_menu_item">
                               <i className="fa fa-bell" />
-                              {
-                                this.state.notifications && this.state.notifications.length ? (
-                                  <span className='dot notif_dot' >{this.state.notifications.length}</span>):false
-                              }
+                              {this.state.notifications &&
+                              this.state.notifications.length ? (
+                                <span className="dot notif_dot">
+                                  {this.state.notifications.length}
+                                </span>
+                              ) : (
+                                false
+                              )}
                             </Link>
                             <ul className="submenu notification_list">
                               {this.state.notifications.map((notif, i) => {
-                                if(i>10)return false;
+                                if (i > 10) {
+                                  return false;
+                                }
                                 let lnk = '';
                                 if (notif.type == 'money-8') {
                                   lnk = '/money8/' + notif.object_id;
                                 } else if (notif.type == 'match') {
                                   lnk = '/m/' + notif.object_id;
-                                } else if(notif.type =='team_invite')
-                                {
-                                  lnk = '/teams/view/'+notif.object_id;
-                                }else if(notif.type == 'post')
-                                {
-                                  lnk = '/post/'+notif.object_id;
+                                } else if (notif.type == 'team_invite') {
+                                  lnk = '/teams/view/' + notif.object_id;
+                                } else if (notif.type == 'post') {
+                                  lnk = '/post/' + notif.object_id;
                                   // post
-                                }else if(notif.type =='follower')
-                                {
+                                } else if (notif.type == 'follower') {
                                   //follower
+                                } else if ('tournament' == notif.type) {
+                                  lnk = '/t/' + notif.object_id;
                                 }
 
                                 return (
                                   <li key={notif.id}>
-                                    <Link to={lnk}>{notif.description}</Link> <button style={{display:'none'}} className='btn removeNotif'><span className="text-danger fa fa-times" /></button>
+                                    <Link to={lnk}>{notif.description}</Link>{' '}
+                                    <button
+                                      style={{display: 'none'}}
+                                      className="btn removeNotif"
+                                    >
+                                      <span className="text-danger fa fa-times" />
+                                    </button>
                                   </li>
                                 );
                               })}
                               <li>
-                                <Link style={{fontWeight:'bold'}} to={'/notifications'}>See all notifications</Link>
+                                <Link
+                                  style={{fontWeight: 'bold'}}
+                                  to={'/notifications'}
+                                >
+                                  See all notifications
+                                </Link>
                               </li>
                             </ul>
                           </li>,
@@ -270,12 +286,13 @@ class Header extends React.Component {
                                   Transaction History
                                 </Link>
                               </li>
-                              {
-                                this.props.user.role == 'admin' ? 
+                              {this.props.user.role == 'admin' ? (
                                 <li>
-                                <a href='/admin'>Admin Panel</a>
-                                </li> : false
-                              }
+                                  <a href="/admin">Admin Panel</a>
+                                </li>
+                              ) : (
+                                false
+                              )}
                               <li>
                                 <Link
                                   onClick={event => {

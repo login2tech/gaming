@@ -4,15 +4,9 @@ import Fetcher from '../../actions/Fetcher';
 import {openModal} from '../../actions/modals';
 import Messages from '../Messages';
 import MoreInfo from '../Modules/Modals/MoreInfo';
-import OrdersList from '../Modules/Modals/OrdersList';
-import BuyList from '../Modules/Modals/BuyList';
-import SellList from '../Modules/Modals/SellList';
 import {IndexLink, Link} from 'react-router';
 import ReactPaginate from 'react-paginate';
-
-// import XPTransactions from '../Modules/Modals/XPTransactions'
-// import CreditHistory from '../Modules/Modals/CreditHistory'
-import CashHistory from '../Modules/Modals/CashHistory'
+import CashHistory from '../Modules/Modals/CashHistory';
 class AppUsers extends React.Component {
   constructor(props) {
     super(props);

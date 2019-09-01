@@ -10,6 +10,9 @@ class FeedMy extends React.Component {
     super(props);
     this.state = {
       posts: [],
+      pagination: {},
+      loading: false,
+      loaded: false,
       posts_page: 1
     };
   }
@@ -29,13 +32,19 @@ class FeedMy extends React.Component {
   }
 
   fetchPosts() {
+    this.setState({
+      loading: true
+    });
     fetch('/api/posts/list/myfeed?page=' + this.state.posts_page)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           this.setState(
             {
-              posts: json.items
+              posts: this.state.posts.concat(json.items),
+              pagination: json.pagination ? json.pagination : {},
+              loading: false,
+              loaded: true
             },
             () => {
               // this.fetchMatches();
@@ -66,12 +75,44 @@ class FeedMy extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-8 offset-md-2">
+                    {this.state.loaded && this.state.posts.length == 0 ? (
+                      <div className="alert alert-warning">
+                        No posts to show on this page{' '}
+                      </div>
+                    ) : (
+                      false
+                    )}
                     <ul className="timeline">
                       {this.state.posts &&
                         this.state.posts.map((post, i) => {
                           return <Timeline post={post} key={post.id} />;
                         })}
                     </ul>
+
+                    <div className="text-center">
+                      {this.state.loading ? (
+                        <span className="fa fa-spin fa-spinner text-white" />
+                      ) : this.state.pagination.pageCount >
+                      this.state.posts_page ? (
+                        <button
+                          onClick={() => {
+                            this.setState(
+                              {
+                                posts_page: this.state.posts_page + 1
+                              },
+                              () => {
+                                this.fetchPosts();
+                              }
+                            );
+                          }}
+                          className="btn-outline text-white"
+                        >
+                          load more <span className="fa fa-angle-right" />
+                        </button>
+                      ) : (
+                        false
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

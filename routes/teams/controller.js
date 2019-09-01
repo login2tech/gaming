@@ -36,13 +36,30 @@ exports.approve = function(req, res, next) {
     res.status(400).send({ok: false, msg: 'Please enter Team ID'});
   }
   if (req.body.mode == 'reject') {
-    new ItemChild().where({team_id: req.body.team_id, user_id: req.user.id})
+    new ItemChild()
+      .where({team_id: req.body.team_id, user_id: req.user.id})
       .destroy()
       .then(function(teamusr) {
-        res.status(200).send({
+        const a = res.status(200).send({
           ok: true,
           msg: 'Rejected the invitation.'
         });
+        new Item()
+          .where({id: req.body.team_id})
+          .fetch()
+          .then(function(tm) {
+            if (!tm) {
+              return;
+            }
+            const team_creator = tm.get('team_creator');
+            new Notif().save({
+              description: 'The invitation to join has been rejected',
+              user_id: team_creator,
+              type: 'team_invite',
+              object_id: req.body.team_id
+            });
+          });
+        return a;
       })
       .catch(function(err) {
         console.log(err);
@@ -72,6 +89,22 @@ exports.approve = function(req, res, next) {
             ok: true,
             msg: 'Accepted successfully.'
           });
+          const a = new Item()
+            .where({id: req.body.team_id})
+            .fetch()
+            .then(function(tm) {
+              if (!tm) {
+                return;
+              }
+              const team_creator = tm.get('team_creator');
+              new Notif().save({
+                description: 'The invitation to join team has been accepted',
+                user_id: team_creator,
+                type: 'team_invite',
+                object_id: req.body.team_id
+              });
+            });
+          return a;
         })
         .catch(function(err) {
           console.log(err);
@@ -175,7 +208,7 @@ exports.invite = function(req, res, next) {
 exports.team_of_user = function(req, res, next) {
   const a = new ItemChild().where({
     user_id: req.query.uid,
-    removed:false
+    removed: false
   });
   // if (req.query.filter_ladder) {
   //   a = a.where({
@@ -352,34 +385,40 @@ exports.deleteItem = function(req, res, next) {
     });
 };
 
-exports.removeMembers = function(req, res, next)
-{
-  let team_id = req.body.team_id;
-  let members = req.body.members;
-  if(!team_id || !members)
-  {
-    return res.status(400).send({ok:false, msg:'invalid number of params'});
+exports.removeMembers = function(req, res, next) {
+  const team_id = req.body.team_id;
+  const members = req.body.members;
+  if (!team_id || !members) {
+    return res.status(400).send({ok: false, msg: 'invalid number of params'});
   }
-  new ItemChild().where( 'user_id', 'in', members).save({
-    removed:true
-  }, {method:'update'}).then(function(data){
-    res.status(200).send({ok:true, msg: 'Successfully removed users.'})
-  })
-
-
-}
-exports.disband = function(req, res, next){
-  let team_id = req.body.team_id;
-  if(!team_id )
-  {
-    return res.status(400).send({ok:false, msg:'invalid number of params'});
+  new ItemChild()
+    .where('user_id', 'in', members)
+    .save(
+      {
+        removed: true
+      },
+      {method: 'update'}
+    )
+    .then(function(data) {
+      res.status(200).send({ok: true, msg: 'Successfully removed users.'});
+    });
+};
+exports.disband = function(req, res, next) {
+  const team_id = req.body.team_id;
+  if (!team_id) {
+    return res.status(400).send({ok: false, msg: 'invalid number of params'});
   }
-  new Item().where({
-    id : team_id
-  }).save({
-    removed:true
-  }, {method:'update'}).then(function(data){
-    res.status(200).send({ok:true, msg: 'Successfully removed team.'})
-  })
-}
-
+  new Item()
+    .where({
+      id: team_id
+    })
+    .save(
+      {
+        removed: true
+      },
+      {method: 'update'}
+    )
+    .then(function(data) {
+      res.status(200).send({ok: true, msg: 'Successfully removed team.'});
+    });
+};

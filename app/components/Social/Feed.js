@@ -1,15 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {Link} from 'react-router';
-// import moment from 'moment';
-// import {add_post, add_friend} from '../../actions/social';
-// import axios from 'axios';
+
 import Timeline from '../Social/Timeline';
 class Feed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
+      pagination: {},
+      loading: false,
       posts_page: 1
     };
   }
@@ -34,6 +33,9 @@ class Feed extends React.Component {
     if (!hashtag) {
       hashtag = '';
     }
+    this.setState({
+      loading: true
+    });
     fetch(
       '/api/posts/list/all?hastag=' + hashtag + '&page=' + this.state.posts_page
     )
@@ -42,7 +44,9 @@ class Feed extends React.Component {
         if (json.ok) {
           this.setState(
             {
-              posts: json.items
+              posts: this.state.posts.concat(json.items),
+              pagination: json.pagination ? json.pagination : {},
+              loading: false
             },
             () => {
               // this.fetchMatches();
@@ -84,15 +88,44 @@ class Feed extends React.Component {
                       Latest Posts
                       {hashtag ? ' - #' + hashtag : ''}
                     </h4>
-                    {
-                        this.props.user ? 
-                        false: <div class='alert alert-warning'>You need to be logged in to see the posts</div>}
+                    {this.state.loaded && this.state.posts.length == 0 ? (
+                      <div className="alert alert-warning">
+                        No posts to show on this page{' '}
+                      </div>
+                    ) : (
+                      false
+                    )}
+
                     <ul className="timeline">
                       {this.state.posts &&
                         this.state.posts.map((post, i) => {
                           return <Timeline post={post} key={post.id} />;
                         })}
                     </ul>
+                    <div className="text-center">
+                      {this.state.loading ? (
+                        <span className="fa fa-spin fa-spinner text-white" />
+                      ) : this.state.pagination.pageCount >
+                      this.state.posts_page ? (
+                        <button
+                          onClick={() => {
+                            this.setState(
+                              {
+                                posts_page: this.state.posts_page + 1
+                              },
+                              () => {
+                                this.fetchPosts();
+                              }
+                            );
+                          }}
+                          className="btn-outline text-white"
+                        >
+                          load more <span className="fa fa-angle-right" />
+                        </button>
+                      ) : (
+                        false
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>

@@ -78,7 +78,7 @@ class PostComments extends React.Component {
     //   return false;
     // }
     return (
-      <div  class='comment_list'>
+      <div  className='comment_list'>
         <ul>
           {this.props.comments &&
             this.props.comments.map((comment, i) => {
