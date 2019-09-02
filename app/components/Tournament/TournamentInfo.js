@@ -62,7 +62,7 @@ class TournamentInfo extends React.Component {
       const round_data = brackets['round_' + (i + 1)];
       console.log(round_data);
       const final_round_data = [];
-      for (let j = round_data.length - 1; j >= 0; j--) {
+      for (let j = 0; j < round_data.length; j++) {
         let team_1 = round_data[j][0];
         team_1 = teams[team_1 - 1];
 

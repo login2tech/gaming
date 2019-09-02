@@ -177,12 +177,13 @@ exports.saveScore = function(req, res, next) {
               tournament_id: tmp_match.tournament_id,
               match_round: tmp_match.match_round
             })
+            .orderBy('id','ASC' )
             .fetchAll()
             .then(function(round_matches) {
               round_matches = round_matches.toJSON();
               console.log('we have ', round_matches.length, ' in this round');
               const winner_teams = [];
-              for (let i = round_matches.length - 1; i >= 0; i--) {
+              for (let i = 0; i < round_matches.length; i++) {
                 const rm = round_matches[i];
                 if (round_matches[i].status == 'pending') {
                   // console.log(round_matches[i]);
@@ -205,7 +206,12 @@ exports.saveScore = function(req, res, next) {
                 .then(function(tournament) {
                   let teams_obj = tournament.get('teams_obj');
                   teams_obj = JSON.parse(teams_obj);
-                  const bracket_obj = getBracket(winner_teams);
+                  const participants = Array.from(
+                    {length: winner_teams.length},
+                    (v, k) => k + 1
+                  );
+                  const bracket_obj = getBracket(participants);
+                  console.log('brocket_obj is', bracket_obj);
                   console.log(bracket_obj);
                   const brackets_round = bracket_obj[0];
 
@@ -236,20 +242,26 @@ exports.saveScore = function(req, res, next) {
 
                   for (let i = brackets_round.length - 1; i >= 0; i--) {
                     const team_set = brackets_round[i];
-                    // console.log('---- -- - - - -----');
-                    // console.log(team_set);
-                    const team_1 = team_set[0] ? team_set[0] : null;
-                    const team_2 = team_set[1] ? team_set[1] : null;
-
-                    createMatch(
-                      team_1,
-                      team_2,
-                      team_set[0] ? teams_obj['team_' + team_1] : null,
-                      team_set[1] ? teams_obj['team_' + team_2] : null,
-                      tournament.id,
-                      brackets.rounds_calculated,
-                      tournament.starts_at
-                    );
+                    console.log('---- -- - - - -----');
+                    console.log('team_set : ', team_set);
+                    const team_1 = team_set[0]
+                      ? winner_teams[team_set[0] -1]
+                      : null;
+                    const team_2 = team_set[1]
+                      ? winner_teams[team_set[1] - 1]
+                      : null;
+                      console.log(team_1, team_2)
+                    if (team_1 && team_2) {
+                      createMatch(
+                        team_1,
+                        team_2,
+                        teams_obj['team_' + team_1],
+                        teams_obj['team_' + team_2],
+                        tournament.id,
+                        brackets.rounds_calculated,
+                        tournament.starts_at
+                      );
+                    }
                   }
                 });
             })
