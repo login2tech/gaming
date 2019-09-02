@@ -13,6 +13,7 @@ const Ticket = require('../tickets/Ticket');
 const Threads = require('../threads/Thread');
 const Money8 = require('../money8/Money8Match');
 const Tournament = require('../tournaments/Tournament');
+const TournamentMatch = require('../tournaments/TournamentMatch');
 const Posts = require('../posts/Post');
 
 const CashTransactions = require('../../models/CashTransactions');
@@ -81,6 +82,10 @@ const fixateModel = function(req, res, next) {
       return;
     case 'posts':
       req.Mdl = Posts;
+      next();
+      return;
+    case 'tournamentmaches':
+      req.Mdl = TournamentMatch;
       next();
       return;
     default:

@@ -90,24 +90,21 @@ app.use(function(req, res, next) {
   }
 });
 
-app.get('/me', userController.ensureAuthenticated, function(req, res, next){
-  if(req.query.shouldBeAdmin = true)
-  {
-    if(req.user.role !='admin')
-    {
-      return res.status(400).send({ok:false})
+app.get('/me', userController.ensureAuthenticated, function(req, res, next) {
+  if ((req.query.shouldBeAdmin = true)) {
+    if (req.user.role != 'admin') {
+      return res.status(400).send({ok: false});
     }
-      const token = req.headers.authorization
+    const token = req.headers.authorization
       ? req.headers.authorization && req.headers.authorization.split(' ')[1]
       : req.cookies.token
         ? req.cookies.token
         : '';
-        // console.log(token);
-    return res.status(200).send({ok:true, user: req.user, token: token})
-    
+    // console.log(token);
+    return res.status(200).send({ok: true, user: req.user, token: token});
   }
-  return res.status(400).send({ok:false})
-})
+  return res.status(400).send({ok: false});
+});
 
 app.post('/upload', (req, res, next) => {
   const mkdirp = require('mkdirp');
@@ -190,7 +187,11 @@ app.put(
   userController.accountPut
 );
 
-app.post('/stopRenewal', userController.ensureAuthenticated, creditsController.stopRenewal);
+app.post(
+  '/stopRenewal',
+  userController.ensureAuthenticated,
+  creditsController.stopRenewal
+);
 
 app.post(
   '/accountPics',
@@ -426,9 +427,6 @@ app.get(
   transactionsController.list
 );
 
-
-
-
 app.get(
   '/notifs/listMine',
   userController.ensureAuthenticated,
@@ -472,11 +470,6 @@ app.post(
 // );
 app.get('/init_settings', settingsController.create_SATOSHIS);
 
-app.use('/admin_panel/', express.static(path.join(__dirname, 'admin')));
-app.get('/admin_panel/*', function(req, res) {
-  res.sendFile(path.join(__dirname, './admin', 'index.html'));
-});
-
 new Lang().fetchAll().then(function(data) {
   if (data) {
     data = data.toJSON();
@@ -485,7 +478,6 @@ new Lang().fetchAll().then(function(data) {
     }
   }
 });
-
 
 app.get('/api/lang/', function(req, res, next) {
   // console.log(langs);

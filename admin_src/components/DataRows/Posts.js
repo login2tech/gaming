@@ -86,9 +86,10 @@ class Posts extends React.Component {
 
   deleteItem(id) {
     const r = confirm('Are you sure you want to delete the user? ');
-    if (r == true) {
-    } else {
+    if (!r) {
+      return;
     }
+    const key = 'del_';
     this.setState(
       {
         ['update_' + key + id]: true
@@ -100,6 +101,7 @@ class Posts extends React.Component {
               ['update_' + key + id]: false
             });
             if (resp.ok) {
+              this.props.dispatch({type: 'SUCCESS', messages: [resp]});
               this.loadData();
             } else {
               this.props.dispatch({type: 'FAILURE', messages: [resp]});
@@ -133,13 +135,13 @@ class Posts extends React.Component {
     );
   }
 
-  gamer_tags = {
-    tag_1: 'Xbox Live Gamertag',
-    tag_2: 'PSN',
-    tag_3: 'Epic Games Username',
-    tag_4: 'Steam Username',
-    tag_5: 'Battletag'
-  };
+  // gamer_tags = {
+  //   tag_1: 'Xbox Live Gamertag',
+  //   tag_2: 'PSN',
+  //   tag_3: 'Epic Games Username',
+  //   tag_4: 'Steam Username',
+  //   tag_5: 'Battletag'
+  // };
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -174,11 +176,12 @@ class Posts extends React.Component {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
-                  <th>Game</th>
-                  <th>Min Players</th>
-                  <th>Max Players</th>
-                  <th>Gamer Tag Used</th>
+                  <th>Post</th>
+                  <th>Is a repost?</th>
+                  <th>Type</th>
+                  <th>Post By</th>
+                  <th>reposts</th>
+                  {/* <th>reposts count</th> */}
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -188,23 +191,36 @@ class Posts extends React.Component {
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
-                        <td>{u.title}</td>
-                        <td>{u.game_info && u.game_info.title}</td>
-
-                        <td>{u.min_players}</td>
-                        <td>{u.max_players}</td>
-                        <td>{this.gamer_tags['tag_' + u.gamer_tag]}</td>
+                        <td>{u.post}</td>
                         <td>
+                          {u.is_repost ? (
+                            <span className="badge badge-success">Yes</span>
+                          ) : (
+                            false
+                          )}
+                        </td>
+                        <td>
+                          {u.video ? (
+                            <span className="badge badge-primary">Video</span>
+                          ) : u.image ? (
+                            <span className="badge badge-primary">Image</span>
+                          ) : (
+                            <span className="badge badge-primary">Text</span>
+                          )}
+                        </td>
+                        <td>{u.user ? '@' + u.user.username : ''}</td>
+                        <td>{u.repost_count}</td>
+                        <td>
+                          <a
+                            href={'/post/' + u.id}
+                            target="_blank"
+                            className="btn btn-primary btn-xs"
+                          >
+                            View <span className="fa fa-comment" />
+                          </a>{' '}
                           <button
                             onClick={() => {
-                              this.updateItem(
-                                u.id,
-                                {
-                                  role: 'member'
-                                },
-                                'del_',
-                                true
-                              );
+                              this.deleteItem(u.id);
                             }}
                             className="btn btn-danger btn-xs"
                           >
@@ -213,7 +229,7 @@ class Posts extends React.Component {
                             ) : (
                               false
                             )}{' '}
-                            Delete
+                            Delete <span className="fa fa-trash" />
                           </button>
                         </td>
                       </tr>

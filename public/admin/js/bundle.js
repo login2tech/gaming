@@ -330,7 +330,7 @@ function deleteAccount(token) {
   };
 }
 
-},{"moment":83,"react-cookie":91,"react-router":143}],3:[function(require,module,exports){
+},{"moment":84,"react-cookie":92,"react-router":144}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -468,7 +468,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Forgot);
 
 exports["default"] = _default;
 
-},{"../../actions/auth":2,"../Messages":25,"react":153,"react-redux":112}],5:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":25,"react":154,"react-redux":113}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -603,7 +603,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Login);
 
 exports["default"] = _default;
 
-},{"../../actions/auth":2,"../Messages":25,"react":153,"react-redux":112,"react-router":143}],6:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":25,"react":154,"react-redux":113,"react-router":144}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -813,7 +813,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
 
 exports["default"] = _default;
 
-},{"../../actions/auth":2,"../Messages":25,"react":153,"react-redux":112}],7:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":25,"react":154,"react-redux":113}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -938,7 +938,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Reset);
 
 exports["default"] = _default;
 
-},{"../../actions/auth":2,"../Messages":25,"react":153,"react-redux":112}],8:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":25,"react":154,"react-redux":113}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1082,7 +1082,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Signup);
 
 exports["default"] = _default;
 
-},{"../../actions/auth":2,"../Messages":25,"react":153,"react-redux":112,"react-router":143}],9:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":25,"react":154,"react-redux":113,"react-router":144}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1191,7 +1191,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
 exports["default"] = _default;
 
-},{"./Footer":22,"./Header":23,"./ModalContainer":26,"react":153,"react-redux":112}],10:[function(require,module,exports){
+},{"./Footer":22,"./Header":23,"./ModalContainer":26,"react":154,"react-redux":113}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1480,7 +1480,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(AdminUsers);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../Messages":25,"react":153,"react-paginate":101,"react-redux":112}],11:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../Messages":25,"react":154,"react-paginate":102,"react-redux":113}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1838,7 +1838,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(AppUsers);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"../Modules/Modals/MoreInfo":28,"react":153,"react-paginate":101,"react-redux":112,"react-router":143}],12:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"../Modules/Modals/MoreInfo":28,"react":154,"react-paginate":102,"react-redux":113,"react-router":144}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2140,7 +2140,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Games);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewGame":29,"react":153,"react-paginate":101,"react-redux":112}],13:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewGame":29,"react":154,"react-paginate":102,"react-redux":113}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2426,7 +2426,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Ladders);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewLadder":30,"react":153,"react-paginate":101,"react-redux":112}],14:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewLadder":30,"react":154,"react-paginate":102,"react-redux":113}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -2809,7 +2809,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"moment":83,"react":153,"react-paginate":101,"react-redux":112}],15:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"moment":84,"react":154,"react-paginate":102,"react-redux":113}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3182,7 +3182,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"react":153,"react-paginate":101,"react-redux":112}],16:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"react":154,"react-paginate":102,"react-redux":113}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3249,13 +3249,6 @@ function (_React$Component) {
       });
     };
 
-    _this.gamer_tags = {
-      tag_1: 'Xbox Live Gamertag',
-      tag_2: 'PSN',
-      tag_3: 'Epic Games Username',
-      tag_4: 'Steam Username',
-      tag_5: 'Battletag'
-    };
     _this.state = {
       is_loaded: false,
       page: 1,
@@ -3330,8 +3323,11 @@ function (_React$Component) {
 
       var r = confirm('Are you sure you want to delete the user? ');
 
-      if (r == true) {} else {}
+      if (!r) {
+        return;
+      }
 
+      var key = 'del_';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
         _Fetcher["default"].post('/api/admin/delete/posts', {
           id: id
@@ -3339,6 +3335,11 @@ function (_React$Component) {
           _this3.setState(_defineProperty({}, 'update_' + key + id, false));
 
           if (resp.ok) {
+            _this3.props.dispatch({
+              type: 'SUCCESS',
+              messages: [resp]
+            });
+
             _this3.loadData();
           } else {
             _this3.props.dispatch({
@@ -3376,7 +3377,14 @@ function (_React$Component) {
           onComplete: this.loadData.bind(this)
         })
       }));
-    }
+    } // gamer_tags = {
+    //   tag_1: 'Xbox Live Gamertag',
+    //   tag_2: 'PSN',
+    //   tag_3: 'Epic Games Username',
+    //   tag_4: 'Steam Username',
+    //   tag_5: 'Battletag'
+    // };
+
   }, {
     key: "render",
     value: function render() {
@@ -3423,19 +3431,33 @@ function (_React$Component) {
         messages: this.props.messages
       }), _react["default"].createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Name"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Min Players"), _react["default"].createElement("th", null, "Max Players"), _react["default"].createElement("th", null, "Gamer Tag Used"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Post"), _react["default"].createElement("th", null, "Is a repost?"), _react["default"].createElement("th", null, "Type"), _react["default"].createElement("th", null, "Post By"), _react["default"].createElement("th", null, "reposts"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
         return _react["default"].createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.title), _react["default"].createElement("td", null, u.game_info && u.game_info.title), _react["default"].createElement("td", null, u.min_players), _react["default"].createElement("td", null, u.max_players), _react["default"].createElement("td", null, _this4.gamer_tags['tag_' + u.gamer_tag]), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.post), _react["default"].createElement("td", null, u.is_repost ? _react["default"].createElement("span", {
+          className: "badge badge-success"
+        }, "Yes") : false), _react["default"].createElement("td", null, u.video ? _react["default"].createElement("span", {
+          className: "badge badge-primary"
+        }, "Video") : u.image ? _react["default"].createElement("span", {
+          className: "badge badge-primary"
+        }, "Image") : _react["default"].createElement("span", {
+          className: "badge badge-primary"
+        }, "Text")), _react["default"].createElement("td", null, u.user ? '@' + u.user.username : ''), _react["default"].createElement("td", null, u.repost_count), _react["default"].createElement("td", null, _react["default"].createElement("a", {
+          href: '/post/' + u.id,
+          target: "_blank",
+          className: "btn btn-primary btn-xs"
+        }, "View ", _react["default"].createElement("span", {
+          className: "fa fa-comment"
+        })), ' ', _react["default"].createElement("button", {
           onClick: function onClick() {
-            _this4.updateItem(u.id, {
-              role: 'member'
-            }, 'del_', true);
+            _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
         }, _this4.state['update_del_' + u.id] ? _react["default"].createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Delete")));
+        }) : false, ' ', "Delete ", _react["default"].createElement("span", {
+          className: "fa fa-trash"
+        }))));
       }))), _react["default"].createElement(_reactPaginate["default"], {
         previousLabel: 'previous',
         nextLabel: 'next',
@@ -3467,7 +3489,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Posts);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewLadder":30,"react":153,"react-paginate":101,"react-redux":112}],17:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewLadder":30,"react":154,"react-paginate":102,"react-redux":113}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3806,7 +3828,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Teams);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/MoreInfo":28,"react":153,"react-paginate":101,"react-redux":112,"react-router":143}],18:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/MoreInfo":28,"react":154,"react-paginate":102,"react-redux":113,"react-router":144}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4056,7 +4078,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Threads);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/ViewThread":33,"react":153,"react-paginate":101,"react-redux":112}],19:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/ViewThread":34,"react":154,"react-paginate":102,"react-redux":113}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4334,7 +4356,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Tickets);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/ReplyTicket":32,"../Modules/Modals/ViewTicket":34,"moment":83,"react":153,"react-paginate":101,"react-redux":112}],20:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/ReplyTicket":33,"../Modules/Modals/ViewTicket":35,"moment":84,"react":154,"react-paginate":102,"react-redux":113}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4611,7 +4633,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Topics);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewTopic":31,"react":153,"react-paginate":101,"react-redux":112}],21:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/NewTopic":31,"react":154,"react-paginate":102,"react-redux":113}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4630,6 +4652,12 @@ var _moment = _interopRequireDefault(require("moment"));
 var _Messages = _interopRequireDefault(require("../Messages"));
 
 var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+var _NewTournament = _interopRequireDefault(require("../Modules/Modals/NewTournament"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -4676,32 +4704,136 @@ function (_React$Component) {
       });
     };
 
+    _this.handleMatchPageCount = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        match_page: selected
+      }, function () {
+        _this.loadTournamentMatches();
+      });
+    };
+
     _this.state = {
       is_loaded: false,
       page: 1,
+      match_page: 1,
       items: [],
+      matches: [],
+      match_pagination: {},
       pagination: {}
     };
     return _this;
   }
 
   _createClass(Tournament, [{
+    key: "resolveDispute",
+    value: function resolveDispute(id, team_id) {
+      var _this2 = this;
+
+      var key = 'dispute';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher["default"].post('/api/tournament/resolveDispute', {
+          id: id,
+          winner: team_id
+        }).then(function (resp) {
+          _this2.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this2.loadData();
+          } else {
+            _this2.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        })["catch"](function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "createTournament",
+    value: function createTournament() {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newtournament',
+        zIndex: 534,
+        heading: 'New Tournament',
+        content: _react["default"].createElement(_NewTournament["default"], {
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'xp_tx',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'credits',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react["default"].createElement(_CashHistory["default"], {
+            type: 'cash',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      }
+
+      alert(action + ' ' + obj.id);
+    }
+  }, {
     key: "loadData",
     value: function loadData() {
-      var _this2 = this;
+      var _this3 = this;
 
       var other = '';
       other = 'related=ladder,game';
 
       _Fetcher["default"].get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
-          _this2.setState({
+          _this3.setState({
             is_loaded: true,
             items: resp.items,
             pagination: resp.pagination ? resp.pagination : {}
           });
         } else {
-          _this2.props.dispatch({
+          _this3.props.dispatch({
             type: 'FAILURE',
             messages: [resp]
           });
@@ -4710,7 +4842,53 @@ function (_React$Component) {
         // console.log(err);
         var msg = 'Failed to load users';
 
-        _this2.props.dispatch({
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "showMatchesOf",
+    value: function showMatchesOf(t_id) {
+      this.setState({
+        showing_matches_of: t_id,
+        match_page: 1,
+        match_pagination: {}
+      }, this.loadTournamentMatches);
+    }
+  }, {
+    key: "loadTournamentMatches",
+    value: function loadTournamentMatches() {
+      var _this4 = this;
+
+      var other = '';
+      other = 'related=team_1_info,team_2_info'; // if (this.props.params && this.props.params.team_id) {
+
+      other += '&filter_tournament_id=' + this.state.showing_matches_of; // }
+
+      console.log('doing');
+
+      _Fetcher["default"].get('/api/admin/listPaged/tournamentmaches?' + other + '&page=' + this.state.match_page).then(function (resp) {
+        if (resp.ok) {
+          _this4.setState({
+            is_loaded: true,
+            matches: resp.items,
+            match_pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      })["catch"](function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this4.props.dispatch({
           type: 'FAILURE',
           messages: [{
             msg: msg
@@ -4721,7 +4899,7 @@ function (_React$Component) {
   }, {
     key: "resolveDispute",
     value: function resolveDispute(id, team_id) {
-      var _this3 = this;
+      var _this5 = this;
 
       var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
@@ -4729,12 +4907,12 @@ function (_React$Component) {
           id: id,
           winner: team_id
         }).then(function (resp) {
-          _this3.setState(_defineProperty({}, 'update_' + key + id, false));
+          _this5.setState(_defineProperty({}, 'update_' + key + id, false));
 
           if (resp.ok) {
-            _this3.loadData();
+            _this5.loadData();
           } else {
-            _this3.props.dispatch({
+            _this5.props.dispatch({
               type: 'FAILURE',
               messages: [resp]
             });
@@ -4743,7 +4921,7 @@ function (_React$Component) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
-          _this3.props.dispatch({
+          _this5.props.dispatch({
             type: 'FAILURE',
             messages: [{
               msg: msg
@@ -4794,8 +4972,124 @@ function (_React$Component) {
     value: function addItem() {// todo
     }
   }, {
+    key: "renderMatches",
+    value: function renderMatches() {
+      var _this6 = this;
+
+      if (!this.state.showing_matches_of) {
+        return false;
+      }
+
+      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        className: "panel"
+      }, _react["default"].createElement("div", {
+        className: "panel-body"
+      }, _react["default"].createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Matches of Tournament #", this.state.showing_matches_of))), _react["default"].createElement("div", {
+        className: "panel"
+      }, _react["default"].createElement("div", {
+        className: "panel-body"
+      }, _react["default"].createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Round"), _react["default"].createElement("th", null, "Team 1"), _react["default"].createElement("th", null, "Team 2"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Result"), _react["default"].createElement("th", null, "Match type"), _react["default"].createElement("th", null, "Team 1 Result"), _react["default"].createElement("th", null, "Team 2 Result"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Starts At"))), _react["default"].createElement("tbody", null, this.state.matches && this.state.matches.map(function (u, i) {
+        return _react["default"].createElement("tr", {
+          key: u.id
+        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.match_round), _react["default"].createElement("td", null, u.result == 'team_2' ? _react["default"].createElement("span", {
+          className: "text-danger"
+        }, u.team_1_info.title) : u.result == 'team_1' ? _react["default"].createElement("span", {
+          className: "text-success"
+        }, u.team_1_info.title) : u.team_1_info.title), _react["default"].createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react["default"].createElement("span", {
+          className: "text-danger"
+        }, u.team_2_info.title) : u.result == 'team_2' ? _react["default"].createElement("span", {
+          className: "text-success"
+        }, u.team_2_info.title) : u.team_2_info.title : _react["default"].createElement("span", {
+          className: "text-danger"
+        }, "Yet to Join")), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
+          className: "badge badge-success"
+        }, "Complete") : u.status), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react["default"].createElement("span", {
+          className: "text-danger"
+        }, "Disputed") : _react["default"].createElement("span", {
+          className: "text-warning"
+        }, u.result) : _react["default"].createElement("span", {
+          className: "text-warning"
+        }, "Yet to declare")), _react["default"].createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react["default"].createElement("td", null, u.team_1_result), _react["default"].createElement("td", null, u.team_2_result), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+          className: "dropdown"
+        }, _react["default"].createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Actions", _react["default"].createElement("span", {
+          className: "caret"
+        })), _react["default"].createElement("ul", {
+          className: "dropdown-menu"
+        }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: '/m/' + u.id,
+          target: "_blank"
+        }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: '/teams/view/' + u.team_1_info.id,
+          target: "_blank"
+        }, "View Team 1 Public Page")), u.team_2_info ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: '/teams/view/' + u.team_2_info.id,
+          target: "_blank"
+        }, "View Team 2 Public Page")) : false, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.resolveDispute(u.id, 'team_1');
+          }
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.resolveDispute(u.id, 'team_2');
+          }
+        }, "Resolve dispute by giving win to team 2")) : false))), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')));
+      }))), _react["default"].createElement(_reactPaginate["default"], {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.match_pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handleMatchPageCount,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this7 = this;
+
       if (!this.state.is_loaded) {
         return _react["default"].createElement("div", {
           className: "container-fluid"
@@ -4822,7 +5116,12 @@ function (_React$Component) {
           padding: 0,
           margin: 0
         }
-      }, "Tournaments", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
+      }, _react["default"].createElement("button", {
+        onClick: function onClick() {
+          _this7.createTournament();
+        },
+        className: "btn btn-success pull-right btn-xs"
+      }, "Create new Tournament"), "Tournaments", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
         className: "panel"
       }, _react["default"].createElement("div", {
         className: "panel-body"
@@ -4830,7 +5129,7 @@ function (_React$Component) {
         messages: this.props.messages
       }), _react["default"].createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Total Teams"), _react["default"].createElement("th", null, "Total Joined"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Entry Fees"), _react["default"].createElement("th", null, "Max Players Per Team"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Reg Period"), _react["default"].createElement("th", null, "Starts at"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Total Teams"), _react["default"].createElement("th", null, "Total Joined"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Entry Fees"), _react["default"].createElement("th", null, "Max Players Per Team"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Reg Period"), _react["default"].createElement("th", null, "Starts at"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
         var team_1 = false;
         var team_2 = false;
 
@@ -4863,7 +5162,12 @@ function (_React$Component) {
         }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
           href: '/t/' + u.id,
           target: "_blank"
-        }, "View Public Page"))))), _react["default"].createElement("td", null, (0, _moment["default"])(u.registrations_start_at).format('lll'), " ", _react["default"].createElement("code", null, "to"), " ", (0, _moment["default"])(u.registrations_end_at).format('lll')), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')));
+        }, "View Public Page"))))), _react["default"].createElement("td", null, (0, _moment["default"])(u.registration_start_at).format('lll'), ' ', _react["default"].createElement("code", null, "to"), ' ', (0, _moment["default"])(u.registration_end_at).format('lll')), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+          className: "btn btn-primary btn-xs",
+          onClick: function onClick() {
+            _this7.showMatchesOf(u.id);
+          }
+        }, "Show matches")));
       }))), _react["default"].createElement(_reactPaginate["default"], {
         previousLabel: 'previous',
         nextLabel: 'next',
@@ -4876,7 +5180,7 @@ function (_React$Component) {
         containerClassName: 'pagination',
         subContainerClassName: 'pages pagination',
         activeClassName: 'active'
-      }))));
+      }))), this.renderMatches());
     }
   }]);
 
@@ -4895,7 +5199,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Tournament);
 
 exports["default"] = _default;
 
-},{"../../actions/Fetcher":1,"../Messages":25,"moment":83,"react":153,"react-paginate":101,"react-redux":112}],22:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":25,"../Modules/Modals/CashHistory":27,"../Modules/Modals/NewTournament":32,"moment":84,"react":154,"react-paginate":102,"react-redux":113}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4949,7 +5253,7 @@ function (_React$Component) {
 var _default = Footer;
 exports["default"] = _default;
 
-},{"react":153}],23:[function(require,module,exports){
+},{"react":154}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5158,7 +5462,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Header);
 
 exports["default"] = _default;
 
-},{"../actions/auth":2,"react":153,"react-redux":112,"react-router":143}],24:[function(require,module,exports){
+},{"../actions/auth":2,"react":154,"react-redux":113,"react-router":144}],24:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5235,7 +5539,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(Home);
 
 exports["default"] = _default;
 
-},{"./Messages":25,"react":153,"react-redux":112}],25:[function(require,module,exports){
+},{"./Messages":25,"react":154,"react-redux":113}],25:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5310,7 +5614,7 @@ function (_React$Component) {
 var _default = Messages;
 exports["default"] = _default;
 
-},{"react":153}],26:[function(require,module,exports){
+},{"react":154}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5476,7 +5780,7 @@ var ModalContainer = (0, _reactRedux.connect)(function mapStateToProps(state) {
 var _default = ModalContainer;
 exports["default"] = _default;
 
-},{"../actions/modals":3,"react":153,"react-redux":112}],27:[function(require,module,exports){
+},{"../actions/modals":3,"react":154,"react-redux":113}],27:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5641,7 +5945,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(CashHistory);
 
 exports["default"] = _default;
 
-},{"../../../actions/modals":3,"moment":83,"react":153,"react-paginate":101,"react-redux":112}],28:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":84,"react":154,"react-paginate":102,"react-redux":113}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5741,7 +6045,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(MoreInfo);
 
 exports["default"] = _default;
 
-},{"../../../actions/modals":3,"moment":83,"react":153,"react-redux":112}],29:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":84,"react":154,"react-redux":113}],29:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5937,7 +6241,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(NewGame);
 
 exports["default"] = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":153,"react-redux":112}],30:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":154,"react-redux":113}],30:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6227,7 +6531,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(NewLadder);
 
 exports["default"] = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":153,"react-redux":112}],31:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":154,"react-redux":113}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6415,7 +6719,454 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(NewTopic);
 
 exports["default"] = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":153,"react-redux":112}],32:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":154,"react-redux":113}],32:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var NewTournament =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewTournament, _React$Component);
+
+  function NewTournament(props) {
+    var _this;
+
+    _classCallCheck(this, NewTournament);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewTournament).call(this, props));
+    _this.state = {
+      loaded: false,
+      title: '',
+      game_id: '',
+      ladder_id: '',
+      min_players: '',
+      gamer_tag: '',
+      rules: '',
+      max_players: '',
+      games: [],
+      ladders: []
+    };
+    return _this;
+  }
+
+  _createClass(NewTournament, [{
+    key: "doClose",
+    value: function doClose() {
+      var _this2 = this;
+
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
+      setTimeout(function () {
+        _this2.props.dispatch((0, _modals.closeModal)({
+          id: 'newtournament'
+        }));
+      }, 500);
+    }
+  }, {
+    key: "returnOptionForMaxPPT",
+    value: function returnOptionForMaxPPT() {
+      var _this3 = this;
+
+      if (!this.state.ladder_id) {
+        return false;
+      }
+
+      var ld = this.state.ladders.filter(function (a) {
+        if (_this3.state.ladder_id == a.id) {
+          return true;
+        }
+
+        return false;
+      }); // console.log(ld);
+
+      if (ld.length) {
+        ld = ld[0];
+        var a = [];
+
+        for (var i = ld.min_players; i <= ld.max_players; i++) {
+          a.push(i);
+        }
+
+        return a.map(function (b, i) {
+          return _react["default"].createElement("option", {
+            value: b,
+            key: b
+          }, b, "v", b);
+        });
+      }
+
+      return false;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this4 = this;
+
+      _Fetcher["default"].get('/api/admin/listPaged/games?per_page=10000&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this4.setState({
+            loaded: true,
+            games: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      })["catch"](function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this4.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "loadLadder",
+    value: function loadLadder(id) {
+      var _this5 = this;
+
+      this.setState({
+        loaded: false,
+        ladder_id: ''
+      });
+
+      _Fetcher["default"].get('/api/admin/listPaged/ladders?filter_game_id=' + id + '&per_page=10000&page=1').then(function (resp) {
+        if (resp.ok) {
+          _this5.setState({
+            loaded: true,
+            ladders: resp.items // pagination: resp.pagination ? resp.pagination : {}
+
+          });
+        } else {
+          _this5.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      })["catch"](function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this5.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this6 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher["default"].post('/api/tournaments/add', {
+        title: this.state.title,
+        game_id: this.state.game_id,
+        ladder_id: this.state.ladder_id,
+        max_players: this.state.max_players,
+        total_teams: this.state.total_teams,
+        starts_at: this.state.starts_at,
+        registration_start_at: this.state.registration_start_at,
+        registration_end_at: this.state.registration_end_at,
+        entry_fee: this.state.entry_fee,
+        first_winner_price: this.state.first_winner_price,
+        second_winner_price: this.state.second_winner_price,
+        third_winner_price: this.state.third_winner_price
+      }).then(function (resp) {
+        if (resp.ok) {
+          _this6.props.onComplete && _this6.props.onComplete();
+
+          _this6.doClose();
+
+          _this6.setState({
+            loaded: true
+          });
+        } else {
+          _this6.setState({
+            loaded: true
+          });
+
+          _this6.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      })["catch"](function (err) {
+        // console.log(err);
+        _this6.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this6.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+
+      if (event.target.name == 'game_id') {
+        // alert(event.target.value);
+        this.loadLadder(event.target.value);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this7 = this;
+
+      // const {data} = this.props;
+      // console.log(data);
+      return _react["default"].createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react["default"].createElement("div", {
+        className: "show_loader"
+      }, _react["default"].createElement("div", {
+        className: "is_loader"
+      }), "sdf"), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react["default"].createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this7.onSubmit(e);
+        }
+      }, _react["default"].createElement(_Messages["default"], {
+        messages: this.props.messages
+      }), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Title"), _react["default"].createElement("input", {
+        type: "text",
+        name: "title",
+        onChange: this.handleChange.bind(this),
+        id: "title",
+        value: this.state.title,
+        required: true,
+        placeholder: "Tournament Title",
+        className: "form-control"
+      })), _react["default"].createElement("div", {
+        className: "input-control"
+      }, _react["default"].createElement("label", null, "Game"), _react["default"].createElement("select", {
+        className: "form-control",
+        name: "game_id",
+        onChange: this.handleChange.bind(this),
+        id: "game_id",
+        value: this.state.game_id,
+        required: true
+      }, _react["default"].createElement("option", {
+        value: ""
+      }, "Select"), this.state.games.map(function (g, i) {
+        return _react["default"].createElement("option", {
+          value: g.id,
+          key: g.id
+        }, g.title);
+      }))), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+        className: "input-control"
+      }, _react["default"].createElement("label", null, "Ladder"), _react["default"].createElement("select", {
+        className: "form-control",
+        name: "ladder_id",
+        onChange: this.handleChange.bind(this),
+        id: "ladder_id",
+        value: this.state.ladder_id,
+        required: true
+      }, _react["default"].createElement("option", {
+        value: ""
+      }, "Select"), this.state.ladders && this.state.ladders.map(function (g, i) {
+        return _react["default"].createElement("option", {
+          value: g.id,
+          key: g.id
+        }, g.title);
+      }))), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Total number of Teams"), _react["default"].createElement("select", {
+        required: true,
+        placeholder: "Total Number of Teams",
+        className: "form-control",
+        name: "total_teams",
+        onChange: this.handleChange.bind(this),
+        id: "total_teams",
+        value: this.state.total_teams
+      }, _react["default"].createElement("option", {
+        value: ""
+      }, "Select"), _react["default"].createElement("option", {
+        value: "4"
+      }, "4 Teams"), _react["default"].createElement("option", {
+        value: "4"
+      }, "8 Teams"), _react["default"].createElement("option", {
+        value: "4"
+      }, "16 Teams"))), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Users Per Team"), _react["default"].createElement("select", {
+        required: true,
+        placeholder: "Users Per Team",
+        className: "form-control",
+        name: "max_players",
+        onChange: this.handleChange.bind(this),
+        id: "max_players",
+        value: this.state.max_players
+      }, _react["default"].createElement("option", {
+        value: ""
+      }, "Select"), this.returnOptionForMaxPPT())), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Tournament Starts On"), _react["default"].createElement("input", {
+        type: "datetime-local",
+        name: "starts_at",
+        onChange: this.handleChange.bind(this),
+        id: "starts_at",
+        value: this.state.starts_at,
+        required: true,
+        placeholder: "Enter Tournament Start Date Time",
+        className: "form-control"
+      })), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Registration Starts On"), _react["default"].createElement("input", {
+        type: "datetime-local",
+        name: "registration_start_at",
+        onChange: this.handleChange.bind(this),
+        id: "registration_start_at",
+        value: this.state.registration_start_at,
+        required: true,
+        placeholder: "Registration Start Date Time",
+        className: "form-control"
+      })), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Registration ends on"), _react["default"].createElement("input", {
+        type: "datetime-local",
+        name: "registration_end_at",
+        onChange: this.handleChange.bind(this),
+        id: "registration_end_at",
+        value: this.state.registration_end_at,
+        required: true,
+        placeholder: "Registration End Date Time",
+        className: "form-control"
+      })), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Entry Fee (credits)"), _react["default"].createElement("input", {
+        type: "number",
+        name: "entry_fee",
+        onChange: this.handleChange.bind(this),
+        id: "entry_fee",
+        value: this.state.entry_fee,
+        required: true,
+        placeholder: "Entry Fee",
+        className: "form-control"
+      })), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "First Price"), _react["default"].createElement("input", {
+        type: "number",
+        name: "first_winner_price",
+        onChange: this.handleChange.bind(this),
+        id: "first_winner_price",
+        value: this.state.first_winner_price,
+        required: true,
+        placeholder: "First Winner - Price Amount",
+        className: "form-control"
+      })), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Second Price"), _react["default"].createElement("input", {
+        type: "number",
+        name: "second_winner_price",
+        onChange: this.handleChange.bind(this),
+        id: "second_winner_price",
+        value: this.state.second_winner_price,
+        required: true,
+        placeholder: "Second Winner - Price Amount",
+        className: "form-control"
+      })), _react["default"].createElement("div", {
+        className: "form-group"
+      }, _react["default"].createElement("label", null, "Third Price"), _react["default"].createElement("input", {
+        type: "number",
+        name: "third_winner_price",
+        onChange: this.handleChange.bind(this),
+        id: "third_winner_price",
+        value: this.state.third_winner_price,
+        required: true,
+        placeholder: "Third Winner - Price Amount",
+        className: "form-control"
+      })), _react["default"].createElement("br", null), _react["default"].createElement("input", {
+        value: "Create Tournament",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
+    }
+  }]);
+
+  return NewTournament;
+}(_react["default"].Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(NewTournament);
+
+exports["default"] = _default;
+
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":154,"react-redux":113}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6590,7 +7341,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(ReplyTicket);
 
 exports["default"] = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":153,"react-redux":112}],33:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":25,"react":154,"react-redux":113}],34:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6800,7 +7551,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(ViewThread);
 
 exports["default"] = _default;
 
-},{"../../../actions/modals":3,"moment":83,"react":153,"react-redux":112}],34:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":84,"react":154,"react-redux":113}],35:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7032,7 +7783,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(ViewTicket);
 
 exports["default"] = _default;
 
-},{"../../../actions/modals":3,"moment":83,"react":153,"react-redux":112}],35:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":84,"react":154,"react-redux":113}],36:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7053,7 +7804,7 @@ var NotFound = function NotFound(props) {
 var _default = NotFound;
 exports["default"] = _default;
 
-},{"react":153}],36:[function(require,module,exports){
+},{"react":154}],37:[function(require,module,exports){
 "use strict";
 
 require("whatwg-fetch");
@@ -7082,7 +7833,7 @@ _reactDom["default"].render(_react["default"].createElement(_reactRedux.Provider
   routes: (0, _routes["default"])(store)
 })), document.getElementById('app'));
 
-},{"./routes":41,"./store/configureStore":42,"react":153,"react-dom":94,"react-redux":112,"react-router":143,"whatwg-fetch":166}],37:[function(require,module,exports){
+},{"./routes":42,"./store/configureStore":43,"react":154,"react-dom":95,"react-redux":113,"react-router":144,"whatwg-fetch":167}],38:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7127,7 +7878,7 @@ function auth() {
   }
 }
 
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7153,7 +7904,7 @@ var _default = (0, _redux.combineReducers)({
 
 exports["default"] = _default;
 
-},{"./auth":37,"./messages":39,"./modals":40,"redux":156}],39:[function(require,module,exports){
+},{"./auth":38,"./messages":40,"./modals":41,"redux":157}],40:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7199,7 +7950,7 @@ function messages() {
   }
 }
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7252,7 +8003,7 @@ function modals() {
   }
 }
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7438,7 +8189,7 @@ function getRoutes(store) {
   }));
 }
 
-},{"./components/Account/Forgot":4,"./components/Account/Login":5,"./components/Account/Profile":6,"./components/Account/Reset":7,"./components/Account/Signup":8,"./components/App":9,"./components/DataRows/AdminUsers":10,"./components/DataRows/AppUsers":11,"./components/DataRows/Games":12,"./components/DataRows/Ladders":13,"./components/DataRows/Matchfinder":14,"./components/DataRows/Money8":15,"./components/DataRows/Posts":16,"./components/DataRows/Teams":17,"./components/DataRows/Threads":18,"./components/DataRows/Tickets":19,"./components/DataRows/Topics":20,"./components/DataRows/Tournaments":21,"./components/Home":24,"./components/NotFound":35,"react":153,"react-router":143}],42:[function(require,module,exports){
+},{"./components/Account/Forgot":4,"./components/Account/Login":5,"./components/Account/Profile":6,"./components/Account/Reset":7,"./components/Account/Signup":8,"./components/App":9,"./components/DataRows/AdminUsers":10,"./components/DataRows/AppUsers":11,"./components/DataRows/Games":12,"./components/DataRows/Ladders":13,"./components/DataRows/Matchfinder":14,"./components/DataRows/Money8":15,"./components/DataRows/Posts":16,"./components/DataRows/Teams":17,"./components/DataRows/Threads":18,"./components/DataRows/Tickets":19,"./components/DataRows/Topics":20,"./components/DataRows/Tournaments":21,"./components/Home":24,"./components/NotFound":36,"react":154,"react-router":144}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7463,7 +8214,7 @@ function configureStore(initialState) {
   return store;
 }
 
-},{"../reducers":38,"redux":156,"redux-promise":154,"redux-thunk":155}],43:[function(require,module,exports){
+},{"../reducers":39,"redux":157,"redux-promise":155,"redux-thunk":156}],44:[function(require,module,exports){
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -7473,7 +8224,7 @@ function _assertThisInitialized(self) {
 }
 
 module.exports = _assertThisInitialized;
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 function _extends() {
   module.exports = _extends = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -7493,7 +8244,7 @@ function _extends() {
 }
 
 module.exports = _extends;
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
@@ -7501,7 +8252,7 @@ function _inheritsLoose(subClass, superClass) {
 }
 
 module.exports = _inheritsLoose;
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
     "default": obj
@@ -7509,7 +8260,7 @@ function _interopRequireDefault(obj) {
 }
 
 module.exports = _interopRequireDefault;
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 function _interopRequireWildcard(obj) {
   if (obj && obj.__esModule) {
     return obj;
@@ -7536,7 +8287,7 @@ function _interopRequireWildcard(obj) {
 }
 
 module.exports = _interopRequireWildcard;
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -7553,7 +8304,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 
 module.exports = _objectWithoutPropertiesLoose;
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 /*!
  * cookie
  * Copyright(c) 2012-2014 Roman Shtylman
@@ -7750,7 +8501,7 @@ function tryDecode(str, decode) {
   }
 }
 
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -8680,7 +9431,7 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 module.exports = factory;
 
 }).call(this,require('_process'))
-},{"_process":85,"fbjs/lib/emptyObject":53,"fbjs/lib/invariant":54,"fbjs/lib/warning":55,"object-assign":84}],51:[function(require,module,exports){
+},{"_process":86,"fbjs/lib/emptyObject":54,"fbjs/lib/invariant":55,"fbjs/lib/warning":56,"object-assign":85}],52:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -8710,7 +9461,7 @@ module.exports = factory(
   ReactNoopUpdateQueue
 );
 
-},{"./factory":50,"react":153}],52:[function(require,module,exports){
+},{"./factory":51,"react":154}],53:[function(require,module,exports){
 "use strict";
 
 /**
@@ -8747,7 +9498,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -8767,7 +9518,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":85}],54:[function(require,module,exports){
+},{"_process":86}],55:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -8823,7 +9574,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":85}],55:[function(require,module,exports){
+},{"_process":86}],56:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -8888,7 +9639,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":52,"_process":85}],56:[function(require,module,exports){
+},{"./emptyFunction":53,"_process":86}],57:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -8914,7 +9665,7 @@ function isFSA(action) {
 function isError(action) {
   return action.error === true;
 }
-},{"lodash.isplainobject":57}],57:[function(require,module,exports){
+},{"lodash.isplainobject":58}],58:[function(require,module,exports){
 /**
  * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -9019,7 +9770,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"lodash._basefor":79,"lodash.isarguments":80,"lodash.keysin":82}],58:[function(require,module,exports){
+},{"lodash._basefor":80,"lodash.isarguments":81,"lodash.keysin":83}],59:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -9042,7 +9793,7 @@ var REPLACE = exports.REPLACE = 'REPLACE';
  * for more information.
  */
 var POP = exports.POP = 'POP';
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -9099,7 +9850,7 @@ var loopAsync = exports.loopAsync = function loopAsync(turns, work, callback) {
 
   next();
 };
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -9199,7 +9950,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 var go = exports.go = function go(n) {
   if (n) window.history.go(n);
 };
-},{"./DOMStateStorage":61,"./DOMUtils":62,"./ExecutionEnvironment":63,"./LocationUtils":65,"./PathUtils":66}],61:[function(require,module,exports){
+},{"./DOMStateStorage":62,"./DOMUtils":63,"./ExecutionEnvironment":64,"./LocationUtils":66,"./PathUtils":67}],62:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9287,7 +10038,7 @@ var readState = exports.readState = function readState(key) {
   return undefined;
 };
 }).call(this,require('_process'))
-},{"_process":85,"warning":165}],62:[function(require,module,exports){
+},{"_process":86,"warning":166}],63:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -9337,12 +10088,12 @@ var supportsPopstateOnHashchange = exports.supportsPopstateOnHashchange = functi
 var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
   return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
 };
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = exports.canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-},{}],64:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9481,7 +10232,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
   });
 };
 }).call(this,require('_process'))
-},{"./BrowserProtocol":60,"./DOMStateStorage":61,"./DOMUtils":62,"./LocationUtils":65,"./PathUtils":66,"_process":85,"warning":165}],65:[function(require,module,exports){
+},{"./BrowserProtocol":61,"./DOMStateStorage":62,"./DOMUtils":63,"./LocationUtils":66,"./PathUtils":67,"_process":86,"warning":166}],66:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9576,7 +10327,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
   a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && statesAreEqual(a.state, b.state);
 };
 }).call(this,require('_process'))
-},{"./Actions":58,"./PathUtils":66,"_process":85,"invariant":78,"warning":165}],66:[function(require,module,exports){
+},{"./Actions":59,"./PathUtils":67,"_process":86,"invariant":79,"warning":166}],67:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9675,7 +10426,7 @@ var createPath = exports.createPath = function createPath(location) {
   return path;
 };
 }).call(this,require('_process'))
-},{"_process":85,"warning":165}],67:[function(require,module,exports){
+},{"_process":86,"warning":166}],68:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -9713,7 +10464,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
   window.location.replace((0, _PathUtils.createPath)(location));
   return false; // Don't update location
 };
-},{"./BrowserProtocol":60,"./LocationUtils":65,"./PathUtils":66}],68:[function(require,module,exports){
+},{"./BrowserProtocol":61,"./LocationUtils":66,"./PathUtils":67}],69:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9809,7 +10560,7 @@ var createBrowserHistory = function createBrowserHistory() {
 
 exports.default = createBrowserHistory;
 }).call(this,require('_process'))
-},{"./BrowserProtocol":60,"./DOMUtils":62,"./ExecutionEnvironment":63,"./RefreshProtocol":67,"./createHistory":70,"_process":85,"invariant":78}],69:[function(require,module,exports){
+},{"./BrowserProtocol":61,"./DOMUtils":63,"./ExecutionEnvironment":64,"./RefreshProtocol":68,"./createHistory":71,"_process":86,"invariant":79}],70:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -9959,7 +10710,7 @@ var createHashHistory = function createHashHistory() {
 
 exports.default = createHashHistory;
 }).call(this,require('_process'))
-},{"./DOMUtils":62,"./ExecutionEnvironment":63,"./HashProtocol":64,"./createHistory":70,"_process":85,"invariant":78,"warning":165}],70:[function(require,module,exports){
+},{"./DOMUtils":63,"./ExecutionEnvironment":64,"./HashProtocol":65,"./createHistory":71,"_process":86,"invariant":79,"warning":166}],71:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -10136,7 +10887,7 @@ var createHistory = function createHistory() {
 };
 
 exports.default = createHistory;
-},{"./Actions":58,"./AsyncUtils":59,"./LocationUtils":65,"./PathUtils":66,"./runTransitionHook":72}],71:[function(require,module,exports){
+},{"./Actions":59,"./AsyncUtils":60,"./LocationUtils":66,"./PathUtils":67,"./runTransitionHook":73}],72:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -10279,7 +11030,7 @@ var createMemoryHistory = function createMemoryHistory() {
 
 exports.default = createMemoryHistory;
 }).call(this,require('_process'))
-},{"./Actions":58,"./LocationUtils":65,"./PathUtils":66,"./createHistory":70,"_process":85,"invariant":78,"warning":165}],72:[function(require,module,exports){
+},{"./Actions":59,"./LocationUtils":66,"./PathUtils":67,"./createHistory":71,"_process":86,"invariant":79,"warning":166}],73:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -10305,7 +11056,7 @@ var runTransitionHook = function runTransitionHook(hook, location, callback) {
 
 exports.default = runTransitionHook;
 }).call(this,require('_process'))
-},{"_process":85,"warning":165}],73:[function(require,module,exports){
+},{"_process":86,"warning":166}],74:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -10415,7 +11166,7 @@ var useBasename = function useBasename(createHistory) {
 };
 
 exports.default = useBasename;
-},{"./PathUtils":66,"./runTransitionHook":72}],74:[function(require,module,exports){
+},{"./PathUtils":67,"./runTransitionHook":73}],75:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -10537,7 +11288,7 @@ var useQueries = function useQueries(createHistory) {
 };
 
 exports.default = useQueries;
-},{"./LocationUtils":65,"./PathUtils":66,"./runTransitionHook":72,"query-string":75}],75:[function(require,module,exports){
+},{"./LocationUtils":66,"./PathUtils":67,"./runTransitionHook":73,"query-string":76}],76:[function(require,module,exports){
 'use strict';
 var strictUriEncode = require('strict-uri-encode');
 var objectAssign = require('object-assign');
@@ -10744,7 +11495,7 @@ exports.stringify = function (obj, opts) {
 	}).join('&') : '';
 };
 
-},{"object-assign":84,"strict-uri-encode":76}],76:[function(require,module,exports){
+},{"object-assign":85,"strict-uri-encode":77}],77:[function(require,module,exports){
 'use strict';
 module.exports = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -10752,7 +11503,7 @@ module.exports = function (str) {
 	});
 };
 
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 'use strict';
 
 /**
@@ -10857,7 +11608,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{"react-is":97}],78:[function(require,module,exports){
+},{"react-is":98}],79:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -10910,7 +11661,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":85}],79:[function(require,module,exports){
+},{"_process":86}],80:[function(require,module,exports){
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -10960,7 +11711,7 @@ function createBaseFor(fromRight) {
 
 module.exports = baseFor;
 
-},{}],80:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -11191,7 +11942,7 @@ function isObjectLike(value) {
 
 module.exports = isArguments;
 
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11373,7 +12124,7 @@ function isNative(value) {
 
 module.exports = isArray;
 
-},{}],82:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 /**
  * lodash 3.0.8 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11507,7 +12258,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"lodash.isarguments":80,"lodash.isarray":81}],83:[function(require,module,exports){
+},{"lodash.isarguments":81,"lodash.isarray":82}],84:[function(require,module,exports){
 //! moment.js
 
 ;(function (global, factory) {
@@ -16111,7 +16862,7 @@ module.exports = keysIn;
 
 })));
 
-},{}],84:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -16203,7 +16954,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],85:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -16389,7 +17140,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -16495,7 +17246,7 @@ checkPropTypes.resetWarningCache = function() {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":90,"_process":85}],87:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":91,"_process":86}],88:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -16561,7 +17312,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":90}],88:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":91}],89:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -17156,7 +17907,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":86,"./lib/ReactPropTypesSecret":90,"_process":85,"object-assign":84,"react-is":97}],89:[function(require,module,exports){
+},{"./checkPropTypes":87,"./lib/ReactPropTypesSecret":91,"_process":86,"object-assign":85,"react-is":98}],90:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -17179,7 +17930,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":87,"./factoryWithTypeCheckers":88,"_process":85,"react-is":97}],90:[function(require,module,exports){
+},{"./factoryWithThrowingShims":88,"./factoryWithTypeCheckers":89,"_process":86,"react-is":98}],91:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -17193,7 +17944,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],91:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 var cookie = require('cookie');
 
 if (typeof Object.assign != 'function') {
@@ -17347,7 +18098,7 @@ if (typeof window !== 'undefined') {
 
 module.exports = reactCookie;
 
-},{"cookie":49}],92:[function(require,module,exports){
+},{"cookie":50}],93:[function(require,module,exports){
 (function (process){
 /** @license React v16.7.0
  * react-dom.development.js
@@ -37436,7 +38187,7 @@ module.exports = reactDom;
 }
 
 }).call(this,require('_process'))
-},{"_process":85,"object-assign":84,"prop-types/checkPropTypes":86,"react":153,"scheduler":161,"scheduler/tracing":162}],93:[function(require,module,exports){
+},{"_process":86,"object-assign":85,"prop-types/checkPropTypes":87,"react":154,"scheduler":162,"scheduler/tracing":163}],94:[function(require,module,exports){
 /** @license React v16.7.0
  * react-dom.production.min.js
  *
@@ -37687,7 +38438,7 @@ void 0:t("40");return a._reactRootContainer?(Uh(function(){fi(null,null,a,!1,fun
 Ka,La,Ca.injectEventPluginsByName,qa,Ra,function(a){za(a,Qa)},Ib,Jb,Jd,Ea]}};function hi(a,b){di(a)?void 0:t("299","unstable_createRoot");return new ci(a,!0,null!=b&&!0===b.hydrate)}(function(a){var b=a.findFiberByHostInstance;return We(n({},a,{overrideProps:null,findHostInstanceByFiber:function(a){a=nd(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null}}))})({findFiberByHostInstance:Ia,bundleType:0,version:"16.7.0",rendererPackageName:"react-dom"});
 var li={default:ki},mi=li&&ki||li;module.exports=mi.default||mi;
 
-},{"object-assign":84,"react":153,"scheduler":161}],94:[function(require,module,exports){
+},{"object-assign":85,"react":154,"scheduler":162}],95:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -37729,7 +38480,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":92,"./cjs/react-dom.production.min.js":93,"_process":85}],95:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":93,"./cjs/react-dom.production.min.js":94,"_process":86}],96:[function(require,module,exports){
 (function (process){
 /** @license React v16.8.6
  * react-is.development.js
@@ -37960,7 +38711,7 @@ exports.isSuspense = isSuspense;
 }
 
 }).call(this,require('_process'))
-},{"_process":85}],96:[function(require,module,exports){
+},{"_process":86}],97:[function(require,module,exports){
 /** @license React v16.8.6
  * react-is.production.min.js
  *
@@ -37977,7 +38728,7 @@ exports.Fragment=e;exports.Lazy=r;exports.Memo=q;exports.Portal=d;exports.Profil
 exports.isContextProvider=function(a){return t(a)===h};exports.isElement=function(a){return"object"===typeof a&&null!==a&&a.$$typeof===c};exports.isForwardRef=function(a){return t(a)===n};exports.isFragment=function(a){return t(a)===e};exports.isLazy=function(a){return t(a)===r};exports.isMemo=function(a){return t(a)===q};exports.isPortal=function(a){return t(a)===d};exports.isProfiler=function(a){return t(a)===g};exports.isStrictMode=function(a){return t(a)===f};
 exports.isSuspense=function(a){return t(a)===p};
 
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -37988,7 +38739,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-is.development.js":95,"./cjs/react-is.production.min.js":96,"_process":85}],98:[function(require,module,exports){
+},{"./cjs/react-is.development.js":96,"./cjs/react-is.production.min.js":97,"_process":86}],99:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38039,7 +38790,7 @@ BreakView.propTypes = {
 
 exports.default = BreakView;
 
-},{"prop-types":89,"react":153}],99:[function(require,module,exports){
+},{"prop-types":90,"react":154}],100:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38120,7 +38871,7 @@ PageView.propTypes = {
 
 exports.default = PageView;
 
-},{"prop-types":89,"react":153}],100:[function(require,module,exports){
+},{"prop-types":90,"react":154}],101:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38515,7 +39266,7 @@ PaginationBoxView.defaultProps = {
 };
 exports.default = PaginationBoxView;
 
-},{"./BreakView":98,"./PageView":99,"prop-types":89,"react":153}],101:[function(require,module,exports){
+},{"./BreakView":99,"./PageView":100,"prop-types":90,"react":154}],102:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -38530,7 +39281,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _PaginationBoxView2.default;
 
-},{"./PaginationBoxView":100}],102:[function(require,module,exports){
+},{"./PaginationBoxView":101}],103:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -38545,7 +39296,7 @@ var ReactReduxContext = _react.default.createContext(null);
 exports.ReactReduxContext = ReactReduxContext;
 var _default = ReactReduxContext;
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":46,"react":153}],103:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":47,"react":154}],104:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -38652,7 +39403,7 @@ Provider.propTypes = {
 };
 var _default = Provider;
 exports.default = _default;
-},{"./Context":102,"@babel/runtime/helpers/inheritsLoose":45,"@babel/runtime/helpers/interopRequireDefault":46,"@babel/runtime/helpers/interopRequireWildcard":47,"prop-types":89,"react":153}],104:[function(require,module,exports){
+},{"./Context":103,"@babel/runtime/helpers/inheritsLoose":46,"@babel/runtime/helpers/interopRequireDefault":47,"@babel/runtime/helpers/interopRequireWildcard":48,"prop-types":90,"react":154}],105:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -38868,7 +39619,7 @@ _ref) {
   };
 }
 }).call(this,require('_process'))
-},{"./Context":102,"@babel/runtime/helpers/assertThisInitialized":43,"@babel/runtime/helpers/extends":44,"@babel/runtime/helpers/inheritsLoose":45,"@babel/runtime/helpers/interopRequireDefault":46,"@babel/runtime/helpers/interopRequireWildcard":47,"@babel/runtime/helpers/objectWithoutPropertiesLoose":48,"_process":85,"hoist-non-react-statics":77,"invariant":78,"react":153,"react-is":97}],105:[function(require,module,exports){
+},{"./Context":103,"@babel/runtime/helpers/assertThisInitialized":44,"@babel/runtime/helpers/extends":45,"@babel/runtime/helpers/inheritsLoose":46,"@babel/runtime/helpers/interopRequireDefault":47,"@babel/runtime/helpers/interopRequireWildcard":48,"@babel/runtime/helpers/objectWithoutPropertiesLoose":49,"_process":86,"hoist-non-react-statics":78,"invariant":79,"react":154,"react-is":98}],106:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -38984,7 +39735,7 @@ function createConnect(_temp) {
 var _default = createConnect();
 
 exports.default = _default;
-},{"../components/connectAdvanced":104,"../utils/shallowEqual":114,"./mapDispatchToProps":106,"./mapStateToProps":107,"./mergeProps":108,"./selectorFactory":109,"@babel/runtime/helpers/extends":44,"@babel/runtime/helpers/interopRequireDefault":46,"@babel/runtime/helpers/objectWithoutPropertiesLoose":48}],106:[function(require,module,exports){
+},{"../components/connectAdvanced":105,"../utils/shallowEqual":115,"./mapDispatchToProps":107,"./mapStateToProps":108,"./mergeProps":109,"./selectorFactory":110,"@babel/runtime/helpers/extends":45,"@babel/runtime/helpers/interopRequireDefault":47,"@babel/runtime/helpers/objectWithoutPropertiesLoose":49}],107:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -39017,7 +39768,7 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 
 var _default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
 exports.default = _default;
-},{"./wrapMapToProps":111,"redux":156}],107:[function(require,module,exports){
+},{"./wrapMapToProps":112,"redux":157}],108:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -39039,7 +39790,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 
 var _default = [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing];
 exports.default = _default;
-},{"./wrapMapToProps":111}],108:[function(require,module,exports){
+},{"./wrapMapToProps":112}],109:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -39096,7 +39847,7 @@ function whenMergePropsIsOmitted(mergeProps) {
 var _default = [whenMergePropsIsFunction, whenMergePropsIsOmitted];
 exports.default = _default;
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":115,"@babel/runtime/helpers/extends":44,"@babel/runtime/helpers/interopRequireDefault":46,"_process":85}],109:[function(require,module,exports){
+},{"../utils/verifyPlainObject":116,"@babel/runtime/helpers/extends":45,"@babel/runtime/helpers/interopRequireDefault":47,"_process":86}],110:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -39198,7 +39949,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   return selectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
 }
 }).call(this,require('_process'))
-},{"./verifySubselectors":110,"@babel/runtime/helpers/interopRequireDefault":46,"@babel/runtime/helpers/objectWithoutPropertiesLoose":48,"_process":85}],110:[function(require,module,exports){
+},{"./verifySubselectors":111,"@babel/runtime/helpers/interopRequireDefault":47,"@babel/runtime/helpers/objectWithoutPropertiesLoose":49,"_process":86}],111:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -39223,7 +39974,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
   verify(mapDispatchToProps, 'mapDispatchToProps', displayName);
   verify(mergeProps, 'mergeProps', displayName);
 }
-},{"../utils/warning":116,"@babel/runtime/helpers/interopRequireDefault":46}],111:[function(require,module,exports){
+},{"../utils/warning":117,"@babel/runtime/helpers/interopRequireDefault":47}],112:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -39302,7 +40053,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
   };
 }
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":115,"@babel/runtime/helpers/interopRequireDefault":46,"_process":85}],112:[function(require,module,exports){
+},{"../utils/verifyPlainObject":116,"@babel/runtime/helpers/interopRequireDefault":47,"_process":86}],113:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -39324,7 +40075,7 @@ exports.ReactReduxContext = _Context.ReactReduxContext;
 var _connect = _interopRequireDefault(require("./connect/connect"));
 
 exports.connect = _connect.default;
-},{"./components/Context":102,"./components/Provider":103,"./components/connectAdvanced":104,"./connect/connect":105,"@babel/runtime/helpers/interopRequireDefault":46}],113:[function(require,module,exports){
+},{"./components/Context":103,"./components/Provider":104,"./components/connectAdvanced":105,"./connect/connect":106,"@babel/runtime/helpers/interopRequireDefault":47}],114:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -39346,7 +40097,7 @@ function isPlainObject(obj) {
 
   return proto === baseProto;
 }
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -39380,7 +40131,7 @@ function shallowEqual(objA, objB) {
 
   return true;
 }
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -39397,7 +40148,7 @@ function verifyPlainObject(value, displayName, methodName) {
     (0, _warning.default)(methodName + "() in " + displayName + " must return a plain object. Instead received " + value + ".");
   }
 }
-},{"./isPlainObject":113,"./warning":116,"@babel/runtime/helpers/interopRequireDefault":46}],116:[function(require,module,exports){
+},{"./isPlainObject":114,"./warning":117,"@babel/runtime/helpers/interopRequireDefault":47}],117:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -39427,7 +40178,7 @@ function warning(message) {
   /* eslint-enable no-empty */
 
 }
-},{}],117:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -39516,7 +40267,7 @@ function mapAsync(array, work, callback) {
     });
   });
 }
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -39642,7 +40393,7 @@ function ContextSubscriber(name) {
     }
   }, _ref4;
 }
-},{"prop-types":89}],119:[function(require,module,exports){
+},{"prop-types":90}],120:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -39676,7 +40427,7 @@ var IndexLink = (0, _createReactClass2.default)({
 
 exports.default = IndexLink;
 module.exports = exports['default'];
-},{"./Link":123,"create-react-class":51,"react":153}],120:[function(require,module,exports){
+},{"./Link":124,"create-react-class":52,"react":154}],121:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -39739,7 +40490,7 @@ var IndexRedirect = (0, _createReactClass2.default)({
 exports.default = IndexRedirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":122,"./Redirect":127,"./routerWarning":147,"_process":85,"create-react-class":51,"invariant":78,"prop-types":89}],121:[function(require,module,exports){
+},{"./InternalPropTypes":123,"./Redirect":128,"./routerWarning":148,"_process":86,"create-react-class":52,"invariant":79,"prop-types":90}],122:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -39801,7 +40552,7 @@ var IndexRoute = (0, _createReactClass2.default)({
 exports.default = IndexRoute;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":122,"./RouteUtils":129,"./routerWarning":147,"_process":85,"create-react-class":51,"invariant":78,"prop-types":89}],122:[function(require,module,exports){
+},{"./InternalPropTypes":123,"./RouteUtils":130,"./routerWarning":148,"_process":86,"create-react-class":52,"invariant":79,"prop-types":90}],123:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -39827,7 +40578,7 @@ var component = exports.component = (0, _propTypes.oneOfType)([_propTypes.func, 
 var components = exports.components = (0, _propTypes.oneOfType)([component, _propTypes.object]);
 var route = exports.route = (0, _propTypes.oneOfType)([_propTypes.object, _propTypes.element]);
 var routes = exports.routes = (0, _propTypes.oneOfType)([route, (0, _propTypes.arrayOf)(route)]);
-},{"prop-types":89}],123:[function(require,module,exports){
+},{"prop-types":90}],124:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -39977,7 +40728,7 @@ var Link = (0, _createReactClass2.default)({
 exports.default = Link;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":118,"./PropTypes":126,"_process":85,"create-react-class":51,"invariant":78,"prop-types":89,"react":153}],124:[function(require,module,exports){
+},{"./ContextUtils":119,"./PropTypes":127,"_process":86,"create-react-class":52,"invariant":79,"prop-types":90,"react":154}],125:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40224,7 +40975,7 @@ function formatPattern(pattern, params) {
   return pathname.replace(/\/+/g, '/');
 }
 }).call(this,require('_process'))
-},{"_process":85,"invariant":78}],125:[function(require,module,exports){
+},{"_process":86,"invariant":79}],126:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -40232,7 +40983,7 @@ exports.isPromise = isPromise;
 function isPromise(obj) {
   return obj && typeof obj.then === 'function';
 }
-},{}],126:[function(require,module,exports){
+},{}],127:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -40257,7 +41008,7 @@ var locationShape = exports.locationShape = (0, _propTypes.shape)({
   action: _propTypes.string.isRequired,
   key: _propTypes.string
 });
-},{"prop-types":89}],127:[function(require,module,exports){
+},{"prop-types":90}],128:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40359,7 +41110,7 @@ var Redirect = (0, _createReactClass2.default)({
 exports.default = Redirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":122,"./PatternUtils":124,"./RouteUtils":129,"_process":85,"create-react-class":51,"invariant":78,"prop-types":89}],128:[function(require,module,exports){
+},{"./InternalPropTypes":123,"./PatternUtils":125,"./RouteUtils":130,"_process":86,"create-react-class":52,"invariant":79,"prop-types":90}],129:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40416,7 +41167,7 @@ var Route = (0, _createReactClass2.default)({
 exports.default = Route;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":122,"./RouteUtils":129,"_process":85,"create-react-class":51,"invariant":78,"prop-types":89}],129:[function(require,module,exports){
+},{"./InternalPropTypes":123,"./RouteUtils":130,"_process":86,"create-react-class":52,"invariant":79,"prop-types":90}],130:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -40510,7 +41261,7 @@ function createRoutes(routes) {
 
   return routes;
 }
-},{"react":153}],130:[function(require,module,exports){
+},{"react":154}],131:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40689,7 +41440,7 @@ var propTypes = {
 exports.default = Router;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":122,"./RouteUtils":129,"./RouterContext":131,"./RouterUtils":132,"./createTransitionManager":139,"./routerWarning":147,"_process":85,"create-react-class":51,"invariant":78,"prop-types":89,"react":153}],131:[function(require,module,exports){
+},{"./InternalPropTypes":123,"./RouteUtils":130,"./RouterContext":132,"./RouterUtils":133,"./createTransitionManager":140,"./routerWarning":148,"_process":86,"create-react-class":52,"invariant":79,"prop-types":90,"react":154}],132:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40824,7 +41575,7 @@ var RouterContext = (0, _createReactClass2.default)({
 exports.default = RouterContext;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":118,"./RouteUtils":129,"./getRouteParams":141,"_process":85,"create-react-class":51,"invariant":78,"prop-types":89,"react":153}],132:[function(require,module,exports){
+},{"./ContextUtils":119,"./RouteUtils":130,"./getRouteParams":142,"_process":86,"create-react-class":52,"invariant":79,"prop-types":90,"react":154}],133:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -40853,7 +41604,7 @@ function assignRouterState(router, _ref) {
 
   return router;
 }
-},{}],133:[function(require,module,exports){
+},{}],134:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41016,7 +41767,7 @@ function getTransitionUtils() {
   };
 }
 module.exports = exports['default'];
-},{"./AsyncUtils":117}],134:[function(require,module,exports){
+},{"./AsyncUtils":118}],135:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -41076,7 +41827,7 @@ exports.default = function () {
 
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouterContext":131,"./routerWarning":147,"_process":85,"react":153}],135:[function(require,module,exports){
+},{"./RouterContext":132,"./routerWarning":148,"_process":86,"react":154}],136:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41093,7 +41844,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createRouterHistory2.default)(_createBrowserHistory2.default);
 module.exports = exports['default'];
-},{"./createRouterHistory":138,"history/lib/createBrowserHistory":68}],136:[function(require,module,exports){
+},{"./createRouterHistory":139,"history/lib/createBrowserHistory":69}],137:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41169,7 +41920,7 @@ function computeChangedRoutes(prevState, nextState) {
 
 exports.default = computeChangedRoutes;
 module.exports = exports['default'];
-},{"./PatternUtils":124}],137:[function(require,module,exports){
+},{"./PatternUtils":125}],138:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41201,7 +41952,7 @@ function createMemoryHistory(options) {
   return history;
 }
 module.exports = exports['default'];
-},{"history/lib/createMemoryHistory":71,"history/lib/useBasename":73,"history/lib/useQueries":74}],138:[function(require,module,exports){
+},{"history/lib/createMemoryHistory":72,"history/lib/useBasename":74,"history/lib/useQueries":75}],139:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41221,7 +41972,7 @@ function createRouterHistory(createHistory) {
   return history;
 }
 module.exports = exports['default'];
-},{"./useRouterHistory":148}],139:[function(require,module,exports){
+},{"./useRouterHistory":149}],140:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -41508,7 +42259,7 @@ function createTransitionManager(history, routes) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./TransitionUtils":133,"./computeChangedRoutes":136,"./getComponents":140,"./isActive":144,"./matchRoutes":146,"./routerWarning":147,"_process":85}],140:[function(require,module,exports){
+},{"./TransitionUtils":134,"./computeChangedRoutes":137,"./getComponents":141,"./isActive":145,"./matchRoutes":147,"./routerWarning":148,"_process":86}],141:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41549,7 +42300,7 @@ function getComponents(nextState, callback) {
 
 exports.default = getComponents;
 module.exports = exports['default'];
-},{"./AsyncUtils":117,"./PromiseUtils":125}],141:[function(require,module,exports){
+},{"./AsyncUtils":118,"./PromiseUtils":126}],142:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41576,7 +42327,7 @@ function getRouteParams(route, params) {
 
 exports.default = getRouteParams;
 module.exports = exports['default'];
-},{"./PatternUtils":124}],142:[function(require,module,exports){
+},{"./PatternUtils":125}],143:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41593,7 +42344,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createRouterHistory2.default)(_createHashHistory2.default);
 module.exports = exports['default'];
-},{"./createRouterHistory":138,"history/lib/createHashHistory":69}],143:[function(require,module,exports){
+},{"./createRouterHistory":139,"history/lib/createHashHistory":70}],144:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41719,7 +42470,7 @@ exports.applyRouterMiddleware = _applyRouterMiddleware3.default;
 exports.browserHistory = _browserHistory3.default;
 exports.hashHistory = _hashHistory3.default;
 exports.createMemoryHistory = _createMemoryHistory3.default;
-},{"./IndexLink":119,"./IndexRedirect":120,"./IndexRoute":121,"./Link":123,"./PatternUtils":124,"./PropTypes":126,"./Redirect":127,"./Route":128,"./RouteUtils":129,"./Router":130,"./RouterContext":131,"./applyRouterMiddleware":134,"./browserHistory":135,"./createMemoryHistory":137,"./hashHistory":142,"./match":145,"./useRouterHistory":148,"./withRouter":149}],144:[function(require,module,exports){
+},{"./IndexLink":120,"./IndexRedirect":121,"./IndexRoute":122,"./Link":124,"./PatternUtils":125,"./PropTypes":127,"./Redirect":128,"./Route":129,"./RouteUtils":130,"./Router":131,"./RouterContext":132,"./applyRouterMiddleware":135,"./browserHistory":136,"./createMemoryHistory":138,"./hashHistory":143,"./match":146,"./useRouterHistory":149,"./withRouter":150}],145:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -41872,7 +42623,7 @@ function isActive(_ref, indexOnly, currentLocation, routes, params) {
   return queryIsActive(query, currentLocation.query);
 }
 module.exports = exports['default'];
-},{"./PatternUtils":124}],145:[function(require,module,exports){
+},{"./PatternUtils":125}],146:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -41947,7 +42698,7 @@ function match(_ref, callback) {
 exports.default = match;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouteUtils":129,"./RouterUtils":132,"./createMemoryHistory":137,"./createTransitionManager":139,"_process":85,"history/lib/Actions":58,"invariant":78}],146:[function(require,module,exports){
+},{"./RouteUtils":130,"./RouterUtils":133,"./createMemoryHistory":138,"./createTransitionManager":140,"_process":86,"history/lib/Actions":59,"invariant":79}],147:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -42205,7 +42956,7 @@ function matchRoutes(routes, location, callback, remainingPathname) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./AsyncUtils":117,"./PatternUtils":124,"./PromiseUtils":125,"./RouteUtils":129,"./routerWarning":147,"_process":85}],147:[function(require,module,exports){
+},{"./AsyncUtils":118,"./PatternUtils":125,"./PromiseUtils":126,"./RouteUtils":130,"./routerWarning":148,"_process":86}],148:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -42242,7 +42993,7 @@ function routerWarning(falseToWarn, message) {
 function _resetWarned() {
   warned = {};
 }
-},{"warning":165}],148:[function(require,module,exports){
+},{"warning":166}],149:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -42265,7 +43016,7 @@ function useRouterHistory(createHistory) {
   };
 }
 module.exports = exports['default'];
-},{"history/lib/useBasename":73,"history/lib/useQueries":74}],149:[function(require,module,exports){
+},{"history/lib/useBasename":74,"history/lib/useQueries":75}],150:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -42348,7 +43099,7 @@ function withRouter(WrappedComponent, options) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":118,"./PropTypes":126,"_process":85,"create-react-class":51,"hoist-non-react-statics":150,"invariant":78,"react":153}],150:[function(require,module,exports){
+},{"./ContextUtils":119,"./PropTypes":127,"_process":86,"create-react-class":52,"hoist-non-react-statics":151,"invariant":79,"react":154}],151:[function(require,module,exports){
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -42400,7 +43151,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
     return targetComponent;
 };
 
-},{}],151:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 (function (process){
 /** @license React v16.7.0
  * react.development.js
@@ -44287,7 +45038,7 @@ module.exports = react;
 }
 
 }).call(this,require('_process'))
-},{"_process":85,"object-assign":84,"prop-types/checkPropTypes":86}],152:[function(require,module,exports){
+},{"_process":86,"object-assign":85,"prop-types/checkPropTypes":87}],153:[function(require,module,exports){
 /** @license React v16.7.0
  * react.production.min.js
  *
@@ -44313,7 +45064,7 @@ _currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null};a.P
 if(null!=b){void 0!==b.ref&&(h=b.ref,f=K.current);void 0!==b.key&&(g=""+b.key);var l=void 0;a.type&&a.type.defaultProps&&(l=a.type.defaultProps);for(c in b)L.call(b,c)&&!M.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==l?l[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){l=Array(c);for(var m=0;m<c;m++)l[m]=arguments[m+2];d.children=l}return{$$typeof:p,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=N.bind(null,a);b.type=a;return b},isValidElement:O,version:"16.7.0",
 unstable_ConcurrentMode:x,unstable_Profiler:u,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:K,assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default||Z;
 
-},{"object-assign":84}],153:[function(require,module,exports){
+},{"object-assign":85}],154:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -44324,7 +45075,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":151,"./cjs/react.production.min.js":152,"_process":85}],154:[function(require,module,exports){
+},{"./cjs/react.development.js":152,"./cjs/react.production.min.js":153,"_process":86}],155:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44358,7 +45109,7 @@ function promiseMiddleware(_ref) {
 }
 
 module.exports = exports['default'];
-},{"flux-standard-action":56}],155:[function(require,module,exports){
+},{"flux-standard-action":57}],156:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44382,7 +45133,7 @@ var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 
 exports['default'] = thunk;
-},{}],156:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -45033,7 +45784,7 @@ exports.compose = compose;
 exports.__DO_NOT_USE__ActionTypes = ActionTypes;
 
 }).call(this,require('_process'))
-},{"_process":85,"symbol-observable":163}],157:[function(require,module,exports){
+},{"_process":86,"symbol-observable":164}],158:[function(require,module,exports){
 (function (process){
 /** @license React v0.12.0
  * scheduler-tracing.development.js
@@ -45460,7 +46211,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 }
 
 }).call(this,require('_process'))
-},{"_process":85}],158:[function(require,module,exports){
+},{"_process":86}],159:[function(require,module,exports){
 /** @license React v0.12.0
  * scheduler-tracing.production.min.js
  *
@@ -45472,7 +46223,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 'use strict';Object.defineProperty(exports,"__esModule",{value:!0});var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_wrap=function(a){return a};exports.unstable_subscribe=function(){};exports.unstable_unsubscribe=function(){};
 
-},{}],159:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 (function (process,global){
 /** @license React v0.12.0
  * scheduler.development.js
@@ -46179,7 +46930,7 @@ exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":85}],160:[function(require,module,exports){
+},{"_process":86}],161:[function(require,module,exports){
 (function (global){
 /** @license React v0.12.0
  * scheduler.production.min.js
@@ -46204,7 +46955,7 @@ b=d.previous;b.next=d.previous=a;a.next=d;a.previous=b}return a};exports.unstabl
 exports.unstable_shouldYield=function(){return!f&&(null!==c&&c.expirationTime<l||w())};exports.unstable_continueExecution=function(){null!==c&&p()};exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNode=function(){return c};
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],161:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -46215,7 +46966,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":159,"./cjs/scheduler.production.min.js":160,"_process":85}],162:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":160,"./cjs/scheduler.production.min.js":161,"_process":86}],163:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -46226,7 +46977,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler-tracing.development.js":157,"./cjs/scheduler-tracing.production.min.js":158,"_process":85}],163:[function(require,module,exports){
+},{"./cjs/scheduler-tracing.development.js":158,"./cjs/scheduler-tracing.production.min.js":159,"_process":86}],164:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -46258,7 +47009,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":164}],164:[function(require,module,exports){
+},{"./ponyfill.js":165}],165:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -46282,7 +47033,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],165:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -46346,7 +47097,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":85}],166:[function(require,module,exports){
+},{"_process":86}],167:[function(require,module,exports){
 (function(self) {
   'use strict';
 
@@ -46741,4 +47492,4 @@ module.exports = warning;
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
 
-},{}]},{},[36]);
+},{}]},{},[37]);

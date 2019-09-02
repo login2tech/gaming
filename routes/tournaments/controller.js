@@ -170,7 +170,8 @@ exports.saveScore = function(req, res, next) {
             msg: 'Score Updated successfully.',
             match: match.toJSON()
           });
-
+          console.log(' -- -- - - -- -');
+          console.log('checking for logs of: ', tmp_match.match_round);
           new TournamentMatch()
             .where({
               tournament_id: tmp_match.tournament_id,
@@ -179,16 +180,18 @@ exports.saveScore = function(req, res, next) {
             .fetchAll()
             .then(function(round_matches) {
               round_matches = round_matches.toJSON();
+              console.log('we have ', round_matches.length, ' in this round');
               const winner_teams = [];
               for (let i = round_matches.length - 1; i >= 0; i--) {
                 const rm = round_matches[i];
                 if (round_matches[i].status == 'pending') {
-                  console.log(round_matches[i]);
+                  // console.log(round_matches[i]);
                   return;
                 }
+                console.log(' found a winner team');
                 if (rm.result == 'team_1') {
                   winner_teams.push(rm.team_1_id);
-                } else if (rm.result == 'team_1') {
+                } else if (rm.result == 'team_2') {
                   winner_teams.push(rm.team_2_id);
                 }
               }
@@ -809,7 +812,7 @@ exports.t_of_user = function(req, res, next) {
 };
 
 exports.addItem = function(req, res, next) {
-  req.assert('title', 'Title cannot be blank').notEmpty();
+  // req.assert('title', 'Title cannot be blank').notEmpty();
   // req.assert('content', 'Content cannot be blank').notEmpty();
   // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
   const errors = req.validationErrors();
@@ -818,9 +821,10 @@ exports.addItem = function(req, res, next) {
   }
   console.log(req.body);
   new Item({
-    title: req.body.title,
+    title: req.body.title ? req.body.title : '-',
     game_id: req.body.game_id,
     ladder_id: req.body.ladder_id,
+    max_players: req.body.max_players,
     starts_at: moment(req.body.starts_at),
     registration_start_at: moment(req.body.registration_start_at),
     registration_end_at: moment(req.body.registration_end_at),

@@ -1,19 +1,27 @@
-exports.delete = function(req, res, next)
-{
+exports.delete = function(req, res, next) {
   new req.Mdl({
-    id : req.body.id
-  }).destroy().then(function(){
-    return res.status(200).send({ok:true, msg:'Successfully deleted the item'});
-  }).catch
-  (function(err){
-    // console.log(err);
-    if(err.code =  '23503')
-    {
-    return res.status(400).send({ok:false, msg:'Failed to delete the item. Seems like this item is a parent of some other items.'});  
-    }
-    return res.status(400).send({ok:false, msg:'Failed to delete the item.'});
+    id: req.body.id
   })
-}
+    .destroy()
+    .then(function() {
+      return res
+        .status(200)
+        .send({ok: true, msg: 'Successfully deleted the item'});
+    })
+    .catch(function(err) {
+      console.log(err);
+      if ((err.code = '23503')) {
+        return res.status(400).send({
+          ok: false,
+          msg:
+            'Failed to delete the item. Seems like this item is a parent of some other items.'
+        });
+      }
+      return res
+        .status(400)
+        .send({ok: false, msg: 'Failed to delete the item.'});
+    });
+};
 
 exports.update = function(req, res, next) {
   new req.Mdl({id: req.body.id})
