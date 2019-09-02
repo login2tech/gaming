@@ -110,6 +110,123 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
 //     });
 // };
 
+const proceed_to_next_round = function(t_id, t_round) {
+  new TournamentMatch()
+    .where({
+      tournament_id: t_id,
+      match_round: t_round
+    })
+    .orderBy('id', 'ASC')
+    .fetchAll()
+    .then(function(round_matches) {
+      round_matches = round_matches.toJSON();
+      console.log('we have ', round_matches.length, ' in this round');
+      const winner_teams = [];
+      for (let i = 0; i < round_matches.length; i++) {
+        const rm = round_matches[i];
+        if (
+          round_matches[i].status != 'team_1' &&
+          round_matches[i].status != 'team_2'
+        ) {
+          // console.log(round_matches[i]);
+          return;
+        }
+        console.log(' found a winner team');
+        if (rm.result == 'team_1') {
+          winner_teams.push(rm.team_1_id);
+        } else if (rm.result == 'team_2') {
+          winner_teams.push(rm.team_2_id);
+        }
+      }
+      console.log('winners of this round are: ', winner_teams);
+      if(round_matches.length == winner_teams && winner_teams == 1)
+      {
+        // last match, tournament ends here
+        new Item()
+        .where({
+          id: t_id
+        })
+        .fetch()
+        .then(function(tournament) {
+          tournament
+          .save({
+            status : 'complete'
+          })
+          .then(function(e) {
+            console.log('brackets updated');
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
+        })
+        return;
+      }
+
+      new Item()
+        .where({
+          id: t_id
+        })
+        .fetch()
+        .then(function(tournament) {
+          let teams_obj = tournament.get('teams_obj');
+          teams_obj = JSON.parse(teams_obj);
+          const participants = Array.from(
+            {length: winner_teams.length},
+            (v, k) => k + 1
+          );
+          const bracket_obj = getBracket(participants);
+          // console.log('brocket_obj is', bracket_obj);
+          // console.log(bracket_obj);
+          const brackets_round = bracket_obj[0];
+
+          let brackets = tournament.get('brackets');
+          if (!brackets) {
+            brackets = {};
+            brackets.total_rounds = bracket_obj[1];
+            brackets.rounds_calculated = 1;
+            brackets.round_1 = brackets_round;
+          } else {
+            brackets = JSON.parse(brackets);
+            brackets.rounds_calculated = brackets.rounds_calculated + 1;
+            brackets['round_' + brackets.rounds_calculated] = brackets_round;
+          }
+          const current_round = brackets.rounds_calculated;
+          brackets = JSON.stringify(brackets);
+          tournament
+            .save({
+              brackets: brackets
+            })
+            .then(function(e) {
+              console.log('brackets updated');
+            })
+            .catch(function(err) {
+              console.log(err);
+            });
+
+          for (let i = brackets_round.length - 1; i >= 0; i--) {
+            const team_set = brackets_round[i];
+            console.log('---- -- - - - -----');
+            console.log('team_set : ', team_set);
+            const team_1 = team_set[0] ? winner_teams[team_set[0] - 1] : null;
+            const team_2 = team_set[1] ? winner_teams[team_set[1] - 1] : null;
+            if (team_1 && team_2) {
+              createMatch(
+                team_1,
+                team_2,
+                teams_obj['team_' + team_1],
+                teams_obj['team_' + team_2],
+                tournament.id,
+                current_round,
+                tournament.starts_at
+              );
+            }
+          }
+        });
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
 exports.saveScore = function(req, res, next) {
   new TournamentMatch({id: req.body.id})
     .fetch()
@@ -172,102 +289,8 @@ exports.saveScore = function(req, res, next) {
           });
           console.log(' -- -- - - -- -');
           console.log('checking for logs of: ', tmp_match.match_round);
-          new TournamentMatch()
-            .where({
-              tournament_id: tmp_match.tournament_id,
-              match_round: tmp_match.match_round
-            })
-            .orderBy('id','ASC' )
-            .fetchAll()
-            .then(function(round_matches) {
-              round_matches = round_matches.toJSON();
-              console.log('we have ', round_matches.length, ' in this round');
-              const winner_teams = [];
-              for (let i = 0; i < round_matches.length; i++) {
-                const rm = round_matches[i];
-                if (round_matches[i].status == 'pending') {
-                  // console.log(round_matches[i]);
-                  return;
-                }
-                console.log(' found a winner team');
-                if (rm.result == 'team_1') {
-                  winner_teams.push(rm.team_1_id);
-                } else if (rm.result == 'team_2') {
-                  winner_teams.push(rm.team_2_id);
-                }
-              }
-              console.log('winners of this round are: ', winner_teams);
 
-              new Item()
-                .where({
-                  id: tmp_match.tournament_id
-                })
-                .fetch()
-                .then(function(tournament) {
-                  let teams_obj = tournament.get('teams_obj');
-                  teams_obj = JSON.parse(teams_obj);
-                  const participants = Array.from(
-                    {length: winner_teams.length},
-                    (v, k) => k + 1
-                  );
-                  const bracket_obj = getBracket(participants);
-                  console.log('brocket_obj is', bracket_obj);
-                  console.log(bracket_obj);
-                  const brackets_round = bracket_obj[0];
-
-                  let brackets = tournament.get('brackets');
-                  if (!brackets) {
-                    brackets = {};
-                    brackets.total_rounds = bracket_obj[1];
-                    brackets.rounds_calculated = 1;
-                    brackets.round_1 = brackets_round;
-                  } else {
-                    brackets = JSON.parse(brackets);
-                    brackets.rounds_calculated = brackets.rounds_calculated + 1;
-                    brackets[
-                      'round_' + brackets.rounds_calculated
-                    ] = brackets_round;
-                  }
-                  brackets = JSON.stringify(brackets);
-                  tournament
-                    .save({
-                      brackets: brackets
-                    })
-                    .then(function(e) {
-                      console.log('brackets updated');
-                    })
-                    .catch(function(err) {
-                      console.log(err);
-                    });
-
-                  for (let i = brackets_round.length - 1; i >= 0; i--) {
-                    const team_set = brackets_round[i];
-                    console.log('---- -- - - - -----');
-                    console.log('team_set : ', team_set);
-                    const team_1 = team_set[0]
-                      ? winner_teams[team_set[0] -1]
-                      : null;
-                    const team_2 = team_set[1]
-                      ? winner_teams[team_set[1] - 1]
-                      : null;
-                      console.log(team_1, team_2)
-                    if (team_1 && team_2) {
-                      createMatch(
-                        team_1,
-                        team_2,
-                        teams_obj['team_' + team_1],
-                        teams_obj['team_' + team_2],
-                        tournament.id,
-                        brackets.rounds_calculated,
-                        tournament.starts_at
-                      );
-                    }
-                  }
-                });
-            })
-            .catch(function(err) {
-              console.log(err);
-            });
+          proceed_to_next_round(tmp_match.tournament_id, tmp_match.match_round);
 
           if (val.result == 'team_1' || val.result == 'team_2') {
             let win_team_members;

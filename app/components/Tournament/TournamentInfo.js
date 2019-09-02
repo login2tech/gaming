@@ -886,7 +886,143 @@ class TournamentInfo extends React.Component {
     return 'Complete - ' + result;
   }
 
-  renderMatch() {
+  renderMatchLine(match, i, round) {
+    if (match.match_round != round) {
+      return false;
+    }
+    const teams = this.getTeams(match);
+
+    const my_team_id = this.am_i_in_match(match);
+
+    return (
+      <tr key={match.id}>
+        <td>#{match.id}</td>
+        <td>{teams[0].title}</td>
+        <td>{teams[1].title}</td>
+        <td>
+          {match.result ? '' : 'Results Pending'}
+          {match.result && match.result == 'team_1'
+            ? teams[0].title + ' wins'
+            : ''}
+          {match.result && match.result == 'team_2'
+            ? teams[1].title + ' wins'
+            : ''}
+        </td>
+
+        <td>{moment(match.created_at).format('lll')} </td>
+        <td>
+          {moment().isAfter(moment(match.starts_at))
+            ? this.dynamicStatus_match(match)
+            : match.status}
+        </td>
+        <td>
+          {my_team_id && my_team_id == teams[0].id ? (
+            match.team_1_result ? (
+              'Your team submitted ' + match.team_1_result
+            ) : (
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  this.submitScore(match.id, 1);
+                }}
+              >
+                <div className="">
+                  <input
+                    placeholder="Your Team score"
+                    name={'match_' + match.id + '_1_team_1_score'}
+                    type="text"
+                    value={this.state['match_' + match.id + '_1_team_1_score']}
+                    onChange={event => {
+                      this.setState({
+                        ['match_' + match.id + '_1_team_1_score']: event.target
+                          .value
+                      });
+                    }}
+                    className="form-control"
+                  />
+                  <input
+                    placeholder="Opponent Team score"
+                    name={'match_' + match.id + '_1_team_2_score'}
+                    type="text"
+                    value={this.state['match_' + match.id + '_1_team_2_score']}
+                    onChange={event => {
+                      this.setState({
+                        ['match_' + match.id + '_1_team_2_score']: event.target
+                          .value
+                      });
+                    }}
+                    className="form-control"
+                  />
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    // onClick={() => {}}
+                  >
+                    Submit Score
+                  </button>
+                </div>
+              </form>
+            )
+          ) : (
+            false
+          )}
+
+          {my_team_id && my_team_id == teams[1].id ? (
+            match.team_2_result ? (
+              'Your team submitted ' + match.team_2_result
+            ) : (
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  this.submitScore(match.id, 2);
+                }}
+              >
+                <div className="">
+                  <input
+                    placeholder="Your Team score"
+                    name={'match_' + match.id + '_2_team_2_score'}
+                    type="text"
+                    value={this.state['match_' + match.id + '_2_team_2_score']}
+                    onChange={event => {
+                      this.setState({
+                        ['match_' + match.id + '_2_team_2_score']: event.target
+                          .value
+                      });
+                    }}
+                    className="form-control"
+                  />
+                  <input
+                    placeholder="Opponent Team score"
+                    name={'match_' + match.id + '_2_team_1_score'}
+                    type="text"
+                    value={this.state['match_' + match.id + '_2_team_1_score']}
+                    onChange={event => {
+                      this.setState({
+                        ['match_' + match.id + '_2_team_1_score']: event.target
+                          .value
+                      });
+                    }}
+                    className="form-control"
+                  />
+                  <button
+                    className="btn btn-primary"
+                    type="submit"
+                    // onClick={() => {}}
+                  >
+                    Submit Score
+                  </button>
+                </div>
+              </form>
+            )
+          ) : (
+            false
+          )}
+        </td>
+      </tr>
+    );
+  }
+
+  renderRound(round) {
     return (
       <div className="col-md-12">
         <h6 className="prizes_desclaimer">Round 1</h6>
@@ -905,165 +1041,49 @@ class TournamentInfo extends React.Component {
             </thead>
             <tbody>
               {this.state.tournament.matches.map((match, i) => {
-                if (match.match_round != 1) {
-                  return false;
-                }
-                const teams = this.getTeams(match);
-
-                const my_team_id = this.am_i_in_match(match);
-
-                return (
-                  <tr key={match.id}>
-                    <td>#{match.id}</td>
-                    <td>{teams[0].title}</td>
-                    <td>{teams[1].title}</td>
-                    <td>
-                      {match.result ? '' : 'Results Pending'}
-                      {match.result && match.result == 'team_1'
-                        ? teams[0].title + ' wins'
-                        : ''}
-                      {match.result && match.result == 'team_2'
-                        ? teams[1].title + ' wins'
-                        : ''}
-                    </td>
-
-                    <td>{moment(match.created_at).format('lll')} </td>
-                    <td>
-                      {moment().isAfter(moment(match.starts_at))
-                        ? this.dynamicStatus_match(match)
-                        : match.status}
-                    </td>
-                    <td>
-                      {my_team_id && my_team_id == teams[0].id ? (
-                        match.team_1_result ? (
-                          'Your team submitted ' + match.team_1_result
-                        ) : (
-                          <form
-                            onSubmit={e => {
-                              e.preventDefault();
-                              this.submitScore(match.id, 1);
-                            }}
-                          >
-                            <div className="">
-                              <input
-                                placeholder="Your Team score"
-                                name={'match_' + match.id + '_1_team_1_score'}
-                                type="text"
-                                value={
-                                  this.state[
-                                    'match_' + match.id + '_1_team_1_score'
-                                  ]
-                                }
-                                onChange={event => {
-                                  this.setState({
-                                    ['match_' +
-                                    match.id +
-                                    '_1_team_1_score']: event.target.value
-                                  });
-                                }}
-                                className="form-control"
-                              />
-                              <input
-                                placeholder="Opponent Team score"
-                                name={'match_' + match.id + '_1_team_2_score'}
-                                type="text"
-                                value={
-                                  this.state[
-                                    'match_' + match.id + '_1_team_2_score'
-                                  ]
-                                }
-                                onChange={event => {
-                                  this.setState({
-                                    ['match_' +
-                                    match.id +
-                                    '_1_team_2_score']: event.target.value
-                                  });
-                                }}
-                                className="form-control"
-                              />
-                              <button
-                                className="btn btn-primary"
-                                type="submit"
-                                // onClick={() => {}}
-                              >
-                                Submit Score
-                              </button>
-                            </div>
-                          </form>
-                        )
-                      ) : (
-                        false
-                      )}
-
-                      {my_team_id && my_team_id == teams[1].id ? (
-                        match.team_2_result ? (
-                          'Your team submitted ' + match.team_2_result
-                        ) : (
-                          <form
-                            onSubmit={e => {
-                              e.preventDefault();
-                              this.submitScore(match.id, 2);
-                            }}
-                          >
-                            <div className="">
-                              <input
-                                placeholder="Your Team score"
-                                name={'match_' + match.id + '_2_team_2_score'}
-                                type="text"
-                                value={
-                                  this.state[
-                                    'match_' + match.id + '_2_team_2_score'
-                                  ]
-                                }
-                                onChange={event => {
-                                  this.setState({
-                                    ['match_' +
-                                    match.id +
-                                    '_2_team_2_score']: event.target.value
-                                  });
-                                }}
-                                className="form-control"
-                              />
-                              <input
-                                placeholder="Opponent Team score"
-                                name={'match_' + match.id + '_2_team_1_score'}
-                                type="text"
-                                value={
-                                  this.state[
-                                    'match_' + match.id + '_2_team_1_score'
-                                  ]
-                                }
-                                onChange={event => {
-                                  this.setState({
-                                    ['match_' +
-                                    match.id +
-                                    '_2_team_1_score']: event.target.value
-                                  });
-                                }}
-                                className="form-control"
-                              />
-                              <button
-                                className="btn btn-primary"
-                                type="submit"
-                                // onClick={() => {}}
-                              >
-                                Submit Score
-                              </button>
-                            </div>
-                          </form>
-                        )
-                      ) : (
-                        false
-                      )}
-                    </td>
-                  </tr>
-                );
+                return this.renderMatchLine(match, i, 1);
               })}
             </tbody>
           </table>
         </div>
       </div>
     );
+  }
+  renderMatch() {
+    let rounds = this.state.tournament.brackets;
+    rounds = JSON.parse(rounds);
+    rounds = rounds.rounds_calculated;
+    const rnds = [];
+    for (let i = 0; i < rounds; i++) {
+      rnds.push(i + 1);
+    }
+    return rnds.map((round, i) => {
+      return (
+        <div className="col-md-12" key={round}>
+          <h6 className="prizes_desclaimer">Round {round}</h6>
+          <div>
+            <table className="table table-striped table-ongray table-hover">
+              <thead>
+                <tr>
+                  <th>Match</th>
+                  <th>Team</th>
+                  <th>Opponent</th>
+                  <th>Result</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Info</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.tournament.matches.map((match, i) => {
+                  return this.renderMatchLine(match, i, round);
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    });
   }
 
   renderRules() {
