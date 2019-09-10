@@ -503,6 +503,14 @@ class Profile extends React.Component {
                             'lll'
                           )}
                         </p>
+
+                        {this.state.user_info.prime && (
+                          <img
+                            src="/assets/icons/ocg_member.png"
+                            className="img-fluid"
+                            // style={{height: 100}}
+                          />
+                        )}
                       </div>
 
                       <div className="col-md-3">

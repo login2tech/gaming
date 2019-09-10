@@ -337,12 +337,16 @@ class Shop extends React.Component {
       <section className="middle_part_login">
         <div className="container text-center">
           <Messages messages={this.props.messages} />
-          <div className="row" style={{marginBottom: '10px'}}>
+          <div className="row" style={{marginBottom: '20px'}}>
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Official Comp Membership
                   <br />
+                  <img
+                    src="/assets/icons/ocg_member.png"
+                    style={{height: 200}}
+                  />
                   <br /> $5 / month
                 </div>
                 {this.state.init_transaction_mode == 'prime' ? (
@@ -392,6 +396,7 @@ class Shop extends React.Component {
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Double XP <br />
+                  <img src="/assets/icons/coin-01.png" />
                   <br /> $5 / month
                 </div>
                 {this.state.init_transaction_mode == 'double_xp' ? (
@@ -443,6 +448,7 @@ class Shop extends React.Component {
                 <div className="credit_summary ">
                   Credit Balance
                   <br />
+                  <img src="/assets/icons/coin-02.png" />
                   <br /> {this.props.user && this.props.user.credit_balance}
                 </div>
                 {this.state.init_transaction_mode == 'credit' ? (
@@ -471,6 +477,7 @@ class Shop extends React.Component {
                 <div className="credit_summary ">
                   Cash Balance
                   <br />
+                  <img src="/assets/icons/money-01.png" />
                   <br /> ${this.props.user && this.props.user.cash_balance}
                 </div>
                 {this.state.init_transaction_mode == 'cash' ? (

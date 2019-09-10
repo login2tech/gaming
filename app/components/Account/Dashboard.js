@@ -476,6 +476,7 @@ class Profile extends React.Component {
               <div className="credit_summary ">
                 Credit Balance
                 <br />
+                <img src="/assets/icons/coin-02.png" />
                 <br /> {this.props.user.credit_balance}
               </div>
               {this.state.init_transaction_mode == 'credit' ? (
@@ -502,6 +503,7 @@ class Profile extends React.Component {
               <div className="credit_summary ">
                 OCG Cash Balance
                 <br />
+                <img src="/assets/icons/money-01.png" />
                 <br /> ${this.props.user.cash_balance}
               </div>
               {this.state.init_transaction_mode == 'cash' ? (
@@ -820,6 +822,7 @@ class Profile extends React.Component {
             <div className="row">
               <div className="col-md-6">
                 <h5 className="credit_summary">Official Comp Membership</h5>
+                <img src="/assets/icons/ocg_member.png" style={{height: 200}} />
                 {this.props.user.prime ? (
                   <p>
                     <strong className="text-white">Status:</strong>{' '}
@@ -870,7 +873,7 @@ class Profile extends React.Component {
               </div>
               <div className="col-md-6">
                 <h5 className="credit_summary">Double XP</h5>
-
+                <img src="/assets/icons/coin-01.png" />
                 {this.props.user.double_xp ? (
                   <p>
                     <strong className="text-white">Status:</strong>{' '}
@@ -940,10 +943,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.props.user.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.props.user.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+          }
+        : {};
 
     return (
       <div>
