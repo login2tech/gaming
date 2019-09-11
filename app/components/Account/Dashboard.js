@@ -476,7 +476,7 @@ class Profile extends React.Component {
               <div className="credit_summary ">
                 Credit Balance
                 <br />
-                <img src="/assets/icons/coin-02.png" />
+                <img src="/assets/icons/coin-01.png" />
                 <br /> {this.props.user.credit_balance}
               </div>
               {this.state.init_transaction_mode == 'credit' ? (
@@ -873,7 +873,7 @@ class Profile extends React.Component {
               </div>
               <div className="col-md-6">
                 <h5 className="credit_summary">Double XP</h5>
-                <img src="/assets/icons/coin-01.png" />
+                <img src="/assets/icons/coin-02.png" />
                 {this.props.user.double_xp ? (
                   <p>
                     <strong className="text-white">Status:</strong>{' '}
