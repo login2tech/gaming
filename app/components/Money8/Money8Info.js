@@ -223,10 +223,10 @@ class Money8Info extends React.Component {
       return (
         <div>
           <p className="alert alert-success">
-            Score submitted by Team 1 = {this.state.match.team_1_result}
+            Score submitted by Mix = {this.state.match.team_1_result}
           </p>
           <p className="alert alert-success">
-            Score submitted by Team 2 = {this.state.match.team_2_result}
+            Score submitted by Match = {this.state.match.team_2_result}
           </p>
         </div>
       );
@@ -239,7 +239,7 @@ class Money8Info extends React.Component {
       return (
         <div>
           <p className="text-success">
-            Score submitted by Team 1 = {this.state.match.team_1_result}
+            Score submitted by Mix = {this.state.match.team_1_result}
           </p>
         </div>
       );
@@ -252,7 +252,7 @@ class Money8Info extends React.Component {
       return (
         <div>
           <p className="text-success">
-            Score submitted by Team 2 = {this.state.match.team_2_result}
+            Score submitted by Match = {this.state.match.team_2_result}
           </p>
         </div>
       );
@@ -333,7 +333,7 @@ class Money8Info extends React.Component {
         {this.renderScoreSubmit()}
 
         <h5 className="prizes_desclaimer">
-          <i className="fa fa-users" aria-hidden="true" /> Team 1{' '}
+          <i className="fa fa-users" aria-hidden="true" /> Mix{' '}
           {this.state.match.status == 'complete' &&
           this.state.match.result == 'team_1' ? (
             <span>
@@ -395,7 +395,7 @@ class Money8Info extends React.Component {
         <br />
 
         <h5 className="prizes_desclaimer">
-          <i className="fa fa-users" aria-hidden="true" /> Team 2{' '}
+          <i className="fa fa-users" aria-hidden="true" /> Match{' '}
           {this.state.match.status == 'complete' &&
           this.state.match.result == 'team_1' ? (
             <span>
