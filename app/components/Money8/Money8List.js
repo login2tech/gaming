@@ -52,7 +52,9 @@ class Money8List extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-8 col-sm-12 col-xs-12">
-                <div className="all_t_heading">Upcoming Money8 Matches</div>
+                <div className="all_t_heading">
+                  Upcoming Mix and Match Matches
+                </div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">

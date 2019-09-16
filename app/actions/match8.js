@@ -16,7 +16,7 @@ export function createMatch8(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/money8/' + json.match.id;
+          window.location.href = '/mix-and-match/' + json.match.id;
         });
       } else {
         return response.json().then(json => {
@@ -46,7 +46,7 @@ export function join_match(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/money8/' + json.match.id;
+          window.location.href = '/mix-and-match/' + json.match.id;
         });
       } else {
         return response.json().then(json => {
@@ -76,7 +76,7 @@ export function saveScores(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/money8/' + json.match.id;
+          window.location.href = '/mix-and-match/' + json.match.id;
         });
       } else {
         return response.json().then(json => {
@@ -89,4 +89,3 @@ export function saveScores(data, user) {
     });
   };
 }
- 
