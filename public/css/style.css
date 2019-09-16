@@ -128,7 +128,7 @@ select.form-control:not([size]):not([multiple]) {
  3. header area
  ----------------------------*/
 #mainNav {
-    position: fixed;
+    /* position: fixed; */
     width: 100%;
     left: 0;
     top: 0;
@@ -1368,7 +1368,7 @@ span.em_count {
 .modal button.upvoted span.em_count {
     color: red;
 }
- 
+
 
 .owl-carousel .owl-item .blog-item img {
     width: auto;
@@ -4934,7 +4934,7 @@ button.btn.removeNotif {
   display: block;
   padding-bottom: 100%;
 }
-  
+
 .square.profile_pic_outline .content {
   position: absolute;
   width: 100%;
