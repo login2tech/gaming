@@ -7,7 +7,9 @@ class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name : '',email : '',gender:''
+      name: '',
+      email: '',
+      gender: ''
     };
     // console.log(props);
     // this.state = {
@@ -18,8 +20,8 @@ class Profile extends React.Component {
     //   confirm: ''
     // };
   }
-  componentDidMount(){
-    console.log(this.props.user)
+  componentDidMount() {
+    // console.log(this.props.user);
     this.setState({
       email: this.props.user.email,
       name: this.props.user.name,
@@ -92,7 +94,6 @@ class Profile extends React.Component {
                 </div>
               </div>
 
-            
               <div className="form-group">
                 <div className="col-sm-offset-3 col-sm-4">
                   <button type="submit" className="btn btn-success">
@@ -150,8 +151,6 @@ class Profile extends React.Component {
             </form>
           </div>
         </div>
-
-       
       </div>
     );
   }

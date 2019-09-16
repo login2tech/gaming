@@ -62,7 +62,7 @@ class NewMoney8 extends React.Component {
           // match_players: this.state.player,
           game_id: game_id,
           ladder_id: ladder_id,
-          match_fee: this.state.match_type == 'free' ?'': this.state.match_fee 
+          match_fee: this.state.match_type == 'free' ? '' : this.state.match_fee
         },
         this.props.user
       )
@@ -124,8 +124,9 @@ class NewMoney8 extends React.Component {
 
       for (let i = 0; i < this.state.games.length; i++) {
         if (this.state.games[i].id == game_id) {
-          if(!this.state.games[i].ladders)
+          if (!this.state.games[i].ladders) {
             continue;
+          }
           for (let j = 0; j < this.state.games[i].ladders.length; j++) {
             // game = this.state.games;
             if (this.state.games[i].ladders[j].id == ladder_id) {
@@ -135,7 +136,7 @@ class NewMoney8 extends React.Component {
         }
       }
     }
-    console.log(ladder)
+    // console.log(ladder);
     return (
       <section className="middle_part_login">
         <div className="container">
@@ -143,7 +144,7 @@ class NewMoney8 extends React.Component {
             <div className="col-md-8 offset-md-2">
               <div className="authorize_box" style={{maxWidth: '100%'}}>
                 <div className="title_default_dark title_border text-center">
-                  <h4>New Money8 Match</h4>
+                  <h4>New mix-and-match Match</h4>
                 </div>
                 <div className="field_form authorize_form">
                   <Messages messages={this.props.messages} />
@@ -220,7 +221,7 @@ class NewMoney8 extends React.Component {
 
                     <div className="form-group col-md-12">
                       <label htmlFor="title">
-                        Total Players In Money 8 Pool
+                        Total Players In mix-and-match Pool
                       </label>
                       <select
                         required

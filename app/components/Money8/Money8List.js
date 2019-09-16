@@ -57,10 +57,10 @@ class Money8List extends React.Component {
               </div>
               <div className="col-md-4 col-sm-12 col-xs-12">
                 <Link
-                  to={'/money8/new/'}
+                  to={'/mix-and-match/new/'}
                   className="btn btn-default bttn_submit"
                 >
-                  Create a money-8 pool
+                  Create a mix-and-match pool
                 </Link>
               </div>
             </div>
@@ -75,8 +75,8 @@ class Money8List extends React.Component {
                   <div id="tab1_content" className="content_boxes selected">
                     {this.state.is_loaded && this.state.matches.length < 1 ? (
                       <div className="alert alert-warning">
-                        There are no active money8 matches. Please check back
-                        later or start a new match
+                        There are no active mix-and-match matches. Please check
+                        back later or start a new match
                       </div>
                     ) : (
                       false
@@ -158,7 +158,9 @@ class Money8List extends React.Component {
 
                               <div className="col align-right">
                                 <Link
-                                  to={this.matchLink('/money8/' + match.id)}
+                                  to={this.matchLink(
+                                    '/mix-and-match/' + match.id
+                                  )}
                                   className="btn-default"
                                 >
                                   Join Pool

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-const moment = require('moment');
+// const moment = require('moment');
 import {join_match, saveScores} from '../../actions/match8';
 
 import Messages from '../Modules/Messages';
@@ -65,7 +65,7 @@ class Money8Info extends React.Component {
     const team_2 = this.state.match.team_2.split('|');
 
     const val = {};
-    const me = this.props.user.id;
+    // const me = this.props.user.id;
 
     if (
       team_1.indexOf('' + this.props.user.id) > -1 &&
@@ -200,7 +200,7 @@ class Money8Info extends React.Component {
           }}
           className="btn btn-default bttn_submit mw_200"
         >
-          Join this Money 8 Pool
+          Join this mix-and-match Pool
         </button>
 
         <small className="text-danger">{disabled_reason}</small>
@@ -505,7 +505,7 @@ class Money8Info extends React.Component {
                       {this.state.match.players_joined}/
                       {this.state.match.players_total}
                     </strong>{' '}
-                    joined the money 8 pool
+                    joined the mix-and-match pool
                   </div>
                   <div className="twovstwo">
                     {this.state.match.players_total / 2} VS{' '}

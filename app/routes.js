@@ -97,7 +97,6 @@ export default function getRoutes(store) {
         component={Records}
       />
 
-
       <Route
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
@@ -170,7 +169,6 @@ export default function getRoutes(store) {
         component={MatchFinder}
       />
 
-
       <Route
         onLeave={clearMessages}
         path="/matchfinder"
@@ -199,17 +197,21 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route
-        path="/money8/new/"
+        path="/mix-and-match/new/"
         component={NewMoney8}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
       <Route
         onLeave={clearMessages}
-        path="/money8/:match_id"
+        path="/mix-and-match/:match_id"
         component={Money8Info}
       />
-      <Route onLeave={clearMessages} path="/money8" component={Money8List} />
+      <Route
+        onLeave={clearMessages}
+        path="/mix-and-match"
+        component={Money8List}
+      />
       <Route
         path="/u/:username/teams/new"
         component={NewTeam}
@@ -227,7 +229,11 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route path="/u/:username" component={Profile} onLeave={clearMessages} />
-      <Route path="/u/:username/timeline" component={Timeline} onLeave={clearMessages} />
+      <Route
+        path="/u/:username/timeline"
+        component={Timeline}
+        onLeave={clearMessages}
+      />
       <Route path="/shop" component={Shop} onLeave={clearMessages} />
       <Route
         path="/login"

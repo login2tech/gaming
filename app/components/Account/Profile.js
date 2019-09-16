@@ -118,8 +118,7 @@ class Profile extends React.Component {
     if (xp < 4000) {
       return 'Elite (' + xp + ' XP)';
     }
-    if (xp < 0) {
-    }
+
     // if (xp >  5000) {
     return 'Elite (' + xp + ' XP)';
     // }
@@ -763,7 +762,7 @@ class Profile extends React.Component {
                       <div className="user-profile-trophies-container">
                         <div className="single-trophy-container">
                           <div className="trophy-image">
-                            <img src="/images/shield-gold.png" />
+                            <img src="/assets/icons/gold.png" />
                           </div>
                           <div className="trophy-info">
                             <div className="trophy-name gold">
@@ -774,7 +773,7 @@ class Profile extends React.Component {
                         </div>
                         <div className="single-trophy-container">
                           <div className="trophy-image">
-                            <img src="/images/shield-silver.png" />
+                            <img src="/assets/icons/silver.png" />
                           </div>
                           <div className="trophy-info">
                             <div className="trophy-name silver">
@@ -785,7 +784,7 @@ class Profile extends React.Component {
                         </div>
                         <div className="single-trophy-container">
                           <div className="trophy-image">
-                            <img src="/images/shield-bronze.png" />
+                            <img src="/assets/icons/bronz.png" />
                           </div>
                           <div className="trophy-info">
                             <div className="trophy-name bronze">
@@ -1080,7 +1079,7 @@ class Profile extends React.Component {
                   </div>
 
                   <div className="content_box">
-                    <h5 className="prizes_desclaimer">MONEY-8 Matches</h5>
+                    <h5 className="prizes_desclaimer">MIX & MATCH Matches</h5>
 
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
@@ -1110,7 +1109,7 @@ class Profile extends React.Component {
                           return (
                             <tr key={match.id}>
                               <td>
-                                <Link to={'/money8/' + match.id}>
+                                <Link to={'/mix-and-match/' + match.id}>
                                   #{match.id}
                                 </Link>
                               </td>
@@ -1138,7 +1137,7 @@ class Profile extends React.Component {
                               </td>
                               <td>{moment(match.created_at).format('lll')}</td>
                               <td>
-                                <Link to={'/money8/' + match.id}>
+                                <Link to={'/mix-and-match/' + match.id}>
                                   View Match
                                 </Link>
                               </td>

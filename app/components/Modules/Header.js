@@ -108,7 +108,7 @@ class Header extends React.Component {
                           <Link to="/tournaments">Tournaments</Link>
                         </li>
                         <li>
-                          <Link to="/money8">Money 8</Link>
+                          <Link to="/mix-and-match">Mix & Match</Link>
                         </li>
                       </ul>
                     </li>
@@ -172,7 +172,10 @@ class Header extends React.Component {
                     {props.user && props.token
                       ? [
                           <li key={5} className="has_children_m">
-                            <Link className="profile_menu_item">
+                            <Link
+                              className="profile_menu_item"
+                              to="/notifications"
+                            >
                               <i className="fa fa-bell" />
                               {this.state.notifications &&
                               this.state.notifications.length ? (
@@ -190,7 +193,7 @@ class Header extends React.Component {
                                 }
                                 let lnk = '';
                                 if (notif.type == 'money-8') {
-                                  lnk = '/money8/' + notif.object_id;
+                                  lnk = '/mix-and-match/' + notif.object_id;
                                 } else if (notif.type == 'match') {
                                   lnk = '/m/' + notif.object_id;
                                 } else if (notif.type == 'team_invite') {

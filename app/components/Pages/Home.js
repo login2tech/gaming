@@ -37,25 +37,14 @@ class Home extends React.Component {
               <li data-target="#demo" data-slide-to="1" />
             </ul>
             <div className="carousel-inner">
-              <div className="carousel-item active">
-                <img src="images/game-1.jpg" alt="" />
-                <div className="carousel-caption">
-                  <h3>Play Video Games </h3>
-                  <p>Win Cash</p>
-                  <Link className="play_match_btn" to="/matchfinder">
-                    Play Match
-                  </Link>
-                </div>
+              <div
+                className="carousel-item active"
+                style={{background: '#fff'}}
+              >
+                <img src="images/slide_1.png" alt="" />
               </div>
-              <div className="carousel-item">
-                <img src="images/game-2.jpg" alt="" />
-                <div className="carousel-caption">
-                  <h3>Play Video Games </h3>
-                  <p>Win Cash</p>
-                  <Link className="play_match_btn" to="/matchfinder">
-                    Play Match
-                  </Link>
-                </div>
+              <div className="carousel-item" style={{background: '#fff'}}>
+                <img src="images/slide_2.png" alt="" />
               </div>
             </div>
           </div>
@@ -191,7 +180,7 @@ class Home extends React.Component {
                   className="tournament-list active"
                 />
               </div>
-            </div> 
+            </div>
           </div>
         </section>*/}
         <section className="tournaments">

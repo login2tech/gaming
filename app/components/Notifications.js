@@ -63,7 +63,7 @@ class Notifications extends React.Component {
                   {this.state.notifications.map((notif, i) => {
                     let lnk = '';
                     if (notif.type == 'money-8') {
-                      lnk = '/money8/' + notif.object_id;
+                      lnk = '/mix-and-match/' + notif.object_id;
                     } else if (notif.type == 'match') {
                       lnk = '/m/' + notif.object_id;
                     } else if (notif.type == 'team_invite') {
