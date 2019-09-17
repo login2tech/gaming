@@ -2477,7 +2477,7 @@ a.image_avar {
 .page_title_bar {
     padding: 80px 0px;
     background: url(../images/game-1.jpg) no-repeat;
-    margin-top: 106px;
+    /* margin-top: 106px; */
     background-position: center;
     background-size: cover;
     position: relative;
@@ -4340,6 +4340,7 @@ li.has_children_m a {
 
 li.has_children_m:hover ul {
     display: block;
+    z-index: 9999;
 }
 
 .nav-list li a {

@@ -69,7 +69,10 @@ class Home extends React.Component {
               </div>
               <div className="col-md-6 col-sm-6 col-xs-6">
                 <div className="section-headline white-headline text-center">
-                  <h3>Upcoming tournaments</h3>
+                  <h3>
+                    Upcoming <br />
+                    tournaments
+                  </h3>
                   <br />
 
                   <br />
