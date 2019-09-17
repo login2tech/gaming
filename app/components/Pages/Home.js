@@ -32,10 +32,10 @@ class Home extends React.Component {
       <div>
         <div className="main_slider_home">
           <div id="demo" className="carousel slide" data-ride="carousel">
-            <ul className="carousel-indicators">
-              <li data-target="#demo" data-slide-to="0" className="active" />
-              <li data-target="#demo" data-slide-to="1" />
-            </ul>
+            {/*}<ul className="carousel-indicators">
+            <li data-target="#demo" data-slide-to="0" className="active" />
+            <li data-target="#demo" data-slide-to="1" />
+          </ul>*/}
             <div className="carousel-inner">
               <div
                 className="carousel-item active"
@@ -43,7 +43,14 @@ class Home extends React.Component {
               >
                 <img src="images/slide_1.png" alt="" />
               </div>
-              <div className="carousel-item" style={{background: '#fff'}}>
+            </div>
+          </div>
+        </div>
+
+        <div className="main_slider_home">
+          <div id="demo2" className="carousel slide" data-ride="carousel">
+            <div className="carousel-inner">
+              <div className="carousel-item active">
                 <img src="images/slide_2.png" alt="" />
               </div>
             </div>
