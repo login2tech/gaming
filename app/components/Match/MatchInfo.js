@@ -900,7 +900,7 @@ class MatchInfo extends React.Component {
                       const team = team_parent.team_info
                         ? team_parent.team_info
                         : {};
-                      if (team_user.removed == 1) {
+                      if (team.removed == 1) {
                         return false;
                       }
                       return (
