@@ -37,7 +37,6 @@ class Tickets extends React.Component {
         }
       });
   }
- 
 
   render() {
     return (
@@ -59,7 +58,7 @@ class Tickets extends React.Component {
             <ul
               className="nav  justify-content-end nav-tabs responsive-tabs"
               role="tablist"
-              style={{marginBottom:40}}
+              style={{marginBottom: 40}}
             >
               <li role="presentation" className="pull-right text-right">
                 <Link to="/support/tickets/create" role="tab">

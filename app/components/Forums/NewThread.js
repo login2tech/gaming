@@ -10,10 +10,9 @@ class NewThread extends React.Component {
       ticket_type: '',
       ticket_title: '',
       ticket_description: '',
-      new_post_image : '',
+      new_post_image: ''
     };
   }
- 
 
   submitForm(event) {
     event.preventDefault();
@@ -29,7 +28,7 @@ class NewThread extends React.Component {
         // ticket_type: this.state.ticket_type,
         ticket_title: this.state.ticket_title,
         ticket_description: this.state.ticket_description,
-        topic_id : this.props.params.id
+        topic_id: this.props.params.id
         // ticket_attachment : this.state.new_post_image
       })
     }).then(rawResponse => {
@@ -57,7 +56,11 @@ class NewThread extends React.Component {
               },
               () => {
                 // this.fetchReplies();
-                window.location.href = '/forums/'+this.props.params.id+'/'+this.props.params.title;
+                window.location.href =
+                  '/forums/' +
+                  this.props.params.id +
+                  '/' +
+                  this.props.params.title;
               }
             );
           } else {
@@ -89,7 +92,10 @@ class NewThread extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>Create a New Thread in <span>{this.props.params.title}</span></h3>
+                  <h3>
+                    Create a New Thread in{' '}
+                    <span>{this.props.params.title}</span>
+                  </h3>
                 </div>
               </div>
             </div>
@@ -103,7 +109,6 @@ class NewThread extends React.Component {
                 <Messages messages={this.props.messages} />
 
                 <form onSubmit={this.submitForm.bind(this)}>
-                
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
@@ -137,13 +142,16 @@ class NewThread extends React.Component {
                       </div>
                     </div>
                   </div>
-           
+
                   <div className="row">
                     <div className="col-md-12 text-right">
                       <button
                         className="btn btn-blue btn-lg bttn_submit"
                         type="submit"
-                        disabled={ !this.state.ticket_title || !this.state.ticket_description}
+                        disabled={
+                          !this.state.ticket_title ||
+                          !this.state.ticket_description
+                        }
                       >
                         Create Thread
                       </button>

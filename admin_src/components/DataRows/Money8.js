@@ -254,7 +254,7 @@ class MatchFinder extends React.Component {
                               <ul className="dropdown-menu">
                                 {team_1.map((id, i) => {
                                   return (
-                                    <li>
+                                    <li key={id}>
                                       <a href={'/uid/' + id} target="_blank">
                                         @{id}
                                       </a>
@@ -281,7 +281,7 @@ class MatchFinder extends React.Component {
                               <ul className="dropdown-menu">
                                 {team_2.map((id, i) => {
                                   return (
-                                    <li>
+                                    <li key={id}>
                                       <a href={'/uid/' + id} target="_blank">
                                         @{id}
                                       </a>

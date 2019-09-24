@@ -66,7 +66,7 @@ class Signup extends React.Component {
           this.setState({
             first_name: '',
             last_name: '',
-            email_confirm : '',
+            email_confirm: '',
             username: '',
             email: '',
             day: '',
@@ -120,7 +120,6 @@ class Signup extends React.Component {
                       <div className="form-group col-md-6 ">
                         <input
                           type="text"
-                           
                           className="form-control"
                           required
                           placeholder="Enter First Name"
@@ -133,7 +132,6 @@ class Signup extends React.Component {
                       <div className="form-group col-md-6 ">
                         <input
                           type="text"
-                           
                           className="form-control"
                           required
                           placeholder="Enter Last Name"
@@ -146,7 +144,6 @@ class Signup extends React.Component {
                       <div className="form-group col-md-12">
                         <input
                           type="text"
-                           
                           className="form-control"
                           required
                           placeholder="Enter your username"
@@ -159,7 +156,6 @@ class Signup extends React.Component {
                       <div className="form-group col-md-12">
                         <input
                           type="email"
-                           
                           className="form-control"
                           required
                           placeholder="Enter Email Address"
@@ -174,7 +170,6 @@ class Signup extends React.Component {
                           type="email"
                           required
                           className="form-control"
-                           
                           placeholder="Confirm Email Address"
                           id="email_confirm"
                           name="email_confirm"
@@ -192,21 +187,22 @@ class Signup extends React.Component {
                                 name="month"
                                 required
                                 value={this.state.month}
-                                onChange={(e)=>{
-                                  let a = {
-                                    month : e.target.value,
+                                onChange={e => {
+                                  const a = {
+                                    month: e.target.value
                                   };
-                                  if(a.month  == 2 && this.state.day && parseInt(this.state.day) > 31)
-                                  {
+                                  if (
+                                    a.month == 2 &&
+                                    this.state.day &&
+                                    parseInt(this.state.day) > 31
+                                  ) {
                                     a.day = '';
                                   }
 
-                                  this.setState(a)
+                                  this.setState(a);
                                 }}
                               >
-                                <option value="">
-                                  Birth Month
-                                </option>
+                                <option value="">Birth Month</option>
                                 <option value="1">January</option>
                                 <option value="2">Febuary</option>
                                 <option value="3">March</option>
@@ -232,10 +228,7 @@ class Signup extends React.Component {
                                 value={this.state.day}
                                 onChange={this.handleChange.bind(this)}
                               >
-                                >
-                                <option value="">
-                                  Birth Day
-                                </option>
+                                ><option value="">Birth Day</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -265,17 +258,26 @@ class Signup extends React.Component {
                                 <option value="27">27</option>
                                 <option value="28">28</option>
                                 <option value="29">29</option>
-                               {
-                                    this.state.month != 2 && this.state.month != "2" ? <option value="30">30</option> : false}
-                                {
-                                    this.state.month != 2 && this.state.month != "2" &&
-                                    this.state.month != 4 && this.state.month != "4" &&
-                                    this.state.month != 6 && this.state.month != "6" &&
-                                    this.state.month != 9 && this.state.month != "9" &&
-                                    this.state.month != 11 && this.state.month != "11"
-                                    ? <option value="31">31</option>  :false
-                                }
-                                
+                                {this.state.month != 2 &&
+                                this.state.month != '2' ? (
+                                  <option value="30">30</option>
+                                ) : (
+                                  false
+                                )}
+                                {this.state.month != 2 &&
+                                this.state.month != '2' &&
+                                this.state.month != 4 &&
+                                this.state.month != '4' &&
+                                this.state.month != 6 &&
+                                this.state.month != '6' &&
+                                this.state.month != 9 &&
+                                this.state.month != '9' &&
+                                this.state.month != 11 &&
+                                this.state.month != '11' ? (
+                                  <option value="31">31</option>
+                                ) : (
+                                  false
+                                )}
                               </select>
                             </div>
                           </div>
@@ -289,10 +291,7 @@ class Signup extends React.Component {
                                 value={this.state.year}
                                 onChange={this.handleChange.bind(this)}
                               >
-                                >
-                                <option value="">
-                                  Birth Year
-                                </option>
+                                ><option value="">Birth Year</option>
                                 <option value="2001">2001</option>
                                 <option value="2000">2000</option>
                                 <option value="1999">1999</option>

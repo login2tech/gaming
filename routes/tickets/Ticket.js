@@ -8,10 +8,9 @@ const Tickets = bookshelf.Model.extend({
   threads: function() {
     return this.hasMany(Thread);
   },
-   user: function() {
+  user: function() {
     return this.belongsTo(User);
   }
-
 
   // thread_count: function() {
   //   return new Topic.Model()

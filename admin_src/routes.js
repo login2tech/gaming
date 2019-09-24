@@ -22,6 +22,9 @@ import Topics from './components/DataRows/Topics';
 import Posts from './components/DataRows/Posts';
 import Threads from './components/DataRows/Threads';
 import Tickets from './components/DataRows/Tickets';
+import Subscribers from './components/DataRows/Subscribers';
+import ApplyStaff from './components/DataRows/ApplyStaff';
+import AdvertiseWithUs from './components/DataRows/AdvertiseWithUs';
 
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
@@ -45,6 +48,24 @@ export default function getRoutes(store) {
       <Route
         path="/account"
         component={Profile}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/forms/advertise_with_us"
+        component={AdvertiseWithUs}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/forms/apply_for_staff"
+        component={ApplyStaff}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/forms/subscribers"
+        component={Subscribers}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />

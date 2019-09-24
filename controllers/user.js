@@ -562,7 +562,7 @@ exports.singleUser_info = function(req, res, next) {
       ]
     })
     .then(function(usr) {
-      console.log('here')
+      console.log('here');
       if (!usr) {
         // console.log(err);
         return res.status(200).send({user_info: {}, ok: false});
@@ -811,4 +811,3 @@ exports.records = function(req, res, next) {
 exports.authFacebookCallback = function(req, res) {
   res.render('loading');
 };
-

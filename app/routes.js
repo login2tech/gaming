@@ -35,7 +35,7 @@ import Trophies from './components/Account/Trophies';
 import FeedMy from './components/Social/FeedMy';
 import Feed from './components/Social/Feed';
 
-// import ClipOfTheWeek from './components/Social/ClipOfTheWeek';
+import ClipOfTheWeek from './components/Social/ClipOfTheWeek';
 
 import NewTicket from './components/Tickets/NewTicket';
 import SingleTicket from './components/Tickets/SingleTicket';
@@ -123,11 +123,11 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         component={SinglePost}
       />
-      {/*}  <Route
+      <Route
         onLeave={clearMessages}
         path="/clip_of_the_week_month"
         component={ClipOfTheWeek}
-      />*/}
+      />
       <Route
         onLeave={clearMessages}
         path="/feed/hashtag/:hashtag"

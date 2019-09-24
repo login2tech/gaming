@@ -1,6 +1,6 @@
 const routes = require('express').Router();
 
-const u_ctrl = require('../../controllers/user');
+// const u_ctrl = require('../../controllers/user');
 const ctrl = require('./controller.js');
 const User = require('../../models/User');
 const Game = require('../games/Game');
@@ -15,6 +15,10 @@ const Money8 = require('../money8/Money8Match');
 const Tournament = require('../tournaments/Tournament');
 const TournamentMatch = require('../tournaments/TournamentMatch');
 const Posts = require('../posts/Post');
+
+const FormAdvertise = require('../../models/FormAdvertise');
+const FormStaffApplication = require('../../models/FormStaffApplication');
+const FormSubscribe = require('../../models/FormSubscribe');
 
 const CashTransactions = require('../../models/CashTransactions');
 const CreditTransactions = require('../../models/CreditTransactions');
@@ -84,10 +88,27 @@ const fixateModel = function(req, res, next) {
       req.Mdl = Posts;
       next();
       return;
+
     case 'tournamentmaches':
       req.Mdl = TournamentMatch;
       next();
       return;
+
+    case 'advertisers':
+      req.Mdl = FormAdvertise;
+      next();
+      return;
+
+    case 'staff_applications':
+      req.Mdl = FormStaffApplication;
+      next();
+      return;
+
+    case 'subscribers':
+      req.Mdl = FormSubscribe;
+      next();
+      return;
+
     default:
       return res.status(400).send({ok: false, msg: 'Model not found'});
   }

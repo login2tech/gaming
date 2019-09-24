@@ -199,6 +199,30 @@ class Header extends React.Component {
                     </li>
                   </ul>
                 </li>
+                <li>
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Form Submissions
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/forms/apply_for_staff">Apply for staff</Link>
+                    </li>
+                    <li>
+                      <Link to="/forms/advertise_with_us">
+                        Advertise with Us
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/forms/subscribers">Subscribers</Link>
+                    </li>
+                  </ul>
+                </li>
               </ul>
             ) : (
               false

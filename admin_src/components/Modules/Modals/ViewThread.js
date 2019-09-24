@@ -5,8 +5,7 @@ import React from 'react';
 class ViewThread extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loaded: false, items:[], thread: {user: {}},
-      pageCount: 1};
+    this.state = {loaded: false, items: [], thread: {user: {}}, pageCount: 1};
   }
 
   doClose() {
@@ -17,14 +16,13 @@ class ViewThread extends React.Component {
     );
   }
 
-   fetchData() {
+  fetchData() {
     fetch('/api/thread/single/' + this.props.id)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           this.setState(
             {
-            
               thread: json.item
             },
             () => {
@@ -53,14 +51,14 @@ class ViewThread extends React.Component {
       .then(json => {
         if (json.ok) {
           this.setState({
-             loaded: true,
+            loaded: true,
             items: json.items,
             pageCount: json.pagination.pageCount
           });
         } else {
           this.setState({
             is_page: false,
-              loaded: true
+            loaded: true
           });
         }
       });

@@ -19,7 +19,6 @@ export default function messages(state = {}, action) {
     case 'FORGOT_PASSWORD_SUCCESS':
     case 'DELETE_ACCOUNT_SUCCESS':
     case 'UNLINK_SUCCESS':
-
       return {
         info: action.messages
       };

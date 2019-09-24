@@ -7,8 +7,6 @@ const Topic = bookshelf.Model.extend({
   threads: function() {
     return this.hasMany(Thread);
   }
-
-  
 });
 
 module.exports = bookshelf.model('Topic', Topic);

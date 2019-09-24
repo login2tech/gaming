@@ -6,43 +6,40 @@ import {connect} from 'react-redux';
 
 class App extends React.Component {
   state = {
-    loaded:false
-  }
-  componentDidMount(){
+    loaded: false
+  };
+  componentDidMount() {
     this.getCurrentState();
   }
-  getCurrentState(){
-    fetch('/me?shouldBeAdmin=true').then((response) => {
-      return response.json().then((json) => {
-        if(json.ok)
-        {
+  getCurrentState() {
+    fetch('/me?shouldBeAdmin=true').then(response => {
+      return response.json().then(json => {
+        if (json.ok) {
           this.props.dispatch({
-            type:'UPDATE_USER',
-            user : json.user,
+            type: 'UPDATE_USER',
+            user: json.user,
             token: json.token
-          })
+          });
           this.setState({
-            loaded : true
-          })
-        }else{
-          window.location.href='/';
+            loaded: true
+          });
+        } else {
+          window.location.href = '/';
         }
       });
-
     });
   }
   render() {
     return (
       <div>
-        <Header/>
+        <Header />
         {this.state.loaded ? this.props.children : false}
-        <Footer/>
+        <Footer />
         <ModalContainer />
       </div>
     );
   }
 }
-
 
 const mapStateToProps = state => {
   return {
@@ -53,4 +50,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(App);
- 

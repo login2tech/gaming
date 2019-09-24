@@ -10,8 +10,7 @@ const TeamUser2 = bookshelf.Model.extend({
   team_info: function() {
     return this.belongsTo('Team2');
   }
- });
-
+});
 
 exports.TeamUser2 = bookshelf.model('TeamUser2', TeamUser2);
 const Ladder = require('../games/Ladder');
@@ -27,6 +26,5 @@ const Team2 = bookshelf.Model.extend({
     return this.belongsTo('Ladder');
   }
 });
-
 
 exports.Team2 = bookshelf.model('Team2', Team2);

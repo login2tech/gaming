@@ -124,8 +124,15 @@ class Header extends React.Component {
                         </li>
                       </ul>
                     </li>
-                    <li>
+                    <li className="has_children_m">
                       <Link to="/forums">Community</Link>
+                      <ul className="submenu">
+                        <li>
+                          <Link to="/clip_of_the_week_month">
+                            Clip of the week/month
+                          </Link>
+                        </li>
+                      </ul>
                     </li>
                     <li>
                       <Link to="/shop">Shop</Link>

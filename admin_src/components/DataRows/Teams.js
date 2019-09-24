@@ -16,58 +16,53 @@ class Teams extends React.Component {
       is_loaded: false,
       page: 1,
       items: [],
-      refresh  :false,
+      refresh: false,
       pagination: {},
-      showing_for  :props.params && props.params.uid ? props.params.uid : 'all'
+      showing_for: props.params && props.params.uid ? props.params.uid : 'all'
     };
   }
 
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadUsers();
     });
   };
 
-
   static getDerivedStateFromProps(props, state) {
-    if(state.showing_for=='all' && (!props ||!props.params||!props.params.uid)){
+    if (
+      state.showing_for == 'all' &&
+      (!props || !props.params || !props.params.uid)
+    ) {
       // console.log('here')
       return null;
     }
-    if(props.params && props.params.uid)
-    {
-
-      if(props.params.uid!= state.showing_for)
-      {
-
+    if (props.params && props.params.uid) {
+      if (props.params.uid != state.showing_for) {
         return {
-          refresh:true,
-          page : 1
-        }
+          refresh: true,
+          page: 1
+        };
       }
       return null;
-    }else if(state.showing_for!='all')
-    {
-
+    } else if (state.showing_for != 'all') {
       return {
-        refresh : true,page:1
-      }
+        refresh: true,
+        page: 1
+      };
     }
     // console.log('here2')
     return null;
   }
 
-    componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.refresh !== prevState.refresh) {
       this.loadUsers();
     }
   }
 
-
   loadUsers() {
-
     let other_filter = '';
     let url = '';
     if (this.props.params && this.props.params.uid) {
@@ -94,13 +89,13 @@ class Teams extends React.Component {
           this.setState({
             is_loaded: true,
             items: resp.items,
-            refresh:false,
+            refresh: false,
             pagination: resp.pagination ? resp.pagination : {}
           });
         } else {
           this.setState({
-            refresh:false
-          })
+            refresh: false
+          });
           this.props.dispatch({
             type: 'FAILURE',
             messages: [resp]
@@ -109,8 +104,8 @@ class Teams extends React.Component {
       })
       .catch(err => {
         this.setState({
-          refresh:false
-        })
+          refresh: false
+        });
         const msg = 'Failed to load users';
         this.props.dispatch({
           type: 'FAILURE',
@@ -218,7 +213,10 @@ class Teams extends React.Component {
                     }
 
                     return (
-                      <tr key={u.id} className={u.removed ? ' table-danger ' : ''}>
+                      <tr
+                        key={u.id}
+                        className={u.removed ? ' table-danger ' : ''}
+                      >
                         <td>{u.id}</td>
                         <td>{u.title}</td>
                         <td>{u.ladder.title}</td>
@@ -236,7 +234,12 @@ class Teams extends React.Component {
                               {u.team_users &&
                                 u.team_users.map((tu, j) => {
                                   return (
-                                    <li key={tu.id} className={tu.removed ? ' table-danger  ' :  ''} >
+                                    <li
+                                      key={tu.id}
+                                      className={
+                                        tu.removed ? ' table-danger  ' : ''
+                                      }
+                                    >
                                       <a
                                         href="#"
                                         onClick={e => {
@@ -258,8 +261,9 @@ class Teams extends React.Component {
                                   );
                                 })}
                             </ul>
-                          </div></td><td>
-
+                          </div>
+                        </td>
+                        <td>
                           <div className="dropdown">
                             <button
                               className="btn btn-primary btn-xs dropdown-toggle"
@@ -274,8 +278,8 @@ class Teams extends React.Component {
                                   View Matches of Team
                                 </Link>
                               </li>
-                               <li>
-                                <a target='_blank' href={'/teams/view/' + u.id}>
+                              <li>
+                                <a target="_blank" href={'/teams/view/' + u.id}>
                                   View Public Profile of Team
                                 </a>
                               </li>
@@ -288,20 +292,20 @@ class Teams extends React.Component {
               </tbody>
             </table>
 
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  forcePage={this.state.page - 1}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              forcePage={this.state.page - 1}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

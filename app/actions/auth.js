@@ -28,10 +28,9 @@ export function login(email, password) {
               .add(1, 'month')
               .toDate()
           });
-          setTimeout(function(){
+          setTimeout(function() {
             window.location.href = '/dashboard';
           }, 500);
-          
         });
       } else {
         return response.json().then(json => {
@@ -153,8 +152,7 @@ export function resetPassword(password, confirm, pathToken) {
   };
 }
 
-export function stopRenewal(data, token)
-{
+export function stopRenewal(data, token) {
   return dispatch => {
     dispatch({
       type: 'CLEAR_MESSAGES'
@@ -165,7 +163,7 @@ export function stopRenewal(data, token)
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
-      body: JSON.stringify({type : data})
+      body: JSON.stringify({type: data})
     }).then(response => {
       if (response.ok) {
         return response.json().then(json => {

@@ -33,7 +33,13 @@ exports.listPaged = function(req, res, next) {
     withRelated: [
       {
         user: function(qb) {
-          qb.column(['id', 'username', 'first_name', 'last_name', 'profile_picture']);
+          qb.column([
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'profile_picture'
+          ]);
         }
       }
     ]
@@ -87,7 +93,7 @@ exports.addItem = function(req, res, next) {
     content: req.body.text,
     ticket_id: req.body.ticket_id,
     user_id: req.user.id,
-    attachment  : req.body.attachment  ? req.body.attachment  : '',
+    attachment: req.body.attachment ? req.body.attachment : '',
     from_admin: req.user.role == 'admin' ? true : false
   })
     .save()

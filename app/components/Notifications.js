@@ -53,12 +53,11 @@ class Notifications extends React.Component {
                 </a>
                 <br />
                 <br />
-                {this.state.notifications.length == 0 &&
-                  this.state.loaded && (
-                    <div className="alert alert-warning">
-                      No more notifications to show
-                    </div>
-                  )}
+                {this.state.notifications.length == 0 && this.state.loaded && (
+                  <div className="alert alert-warning">
+                    No more notifications to show
+                  </div>
+                )}
                 <ul className="  notification_list_main">
                   {this.state.notifications.map((notif, i) => {
                     let lnk = '';

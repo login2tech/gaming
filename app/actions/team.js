@@ -163,8 +163,6 @@ export function disband(data, cb) {
   };
 }
 
-
-
 export function teamPic(data, team_id, cb) {
   return dispatch => {
     dispatch({

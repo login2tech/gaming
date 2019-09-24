@@ -1,12 +1,14 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Fetcher from '../../actions/Fetcher';
-import NewGame from '../Modules/Modals/NewGame';
+// import NewGame from '../Modules/Modals/NewGame';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
+// import {openModal} from '../../actions/modals';
 import {openModal} from '../../actions/modals';
+import MoreInfoGeneric from '../Modules/Modals/MoreInfoGeneric';
 
-class Games extends React.Component {
+class Subscribers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +18,18 @@ class Games extends React.Component {
       pagination: {}
     };
   }
-
+  doAction(obj) {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'profile',
+        zIndex: 534,
+        heading: 'More Info - ' + obj.id,
+        content: <MoreInfoGeneric data={obj} />
+      })
+    );
+    return;
+  }
   handlePageClick = data => {
     // console.log(data)
     const selected = parseInt(data.selected) + 1;
@@ -26,7 +39,7 @@ class Games extends React.Component {
   };
 
   loadData() {
-    Fetcher.get('/api/admin/listPaged/games?page=' + this.state.page)
+    Fetcher.get('/api/admin/listPaged/subscribers?page=' + this.state.page)
       .then(resp => {
         if (resp.ok) {
           this.setState({
@@ -51,37 +64,9 @@ class Games extends React.Component {
       });
   }
 
-  // updateItem(id, data, key) {
-  //   this.setState(
-  //     {
-  //       ['update_' + key + id]: true
-  //     },
-  //     () => {
-  //       Fetcher.post('/api/admin/update/users', {id: id, data: data})
-  //         .then(resp => {
-  //           this.setState({
-  //             ['update_' + key + id]: false
-  //           });
-  //           if (resp.ok) {
-  //             this.loadData();
-  //           } else {
-  //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-  //           }
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //           const msg = 'Failed to perform Action';
-  //           this.props.dispatch({
-  //             type: 'FAILURE',
-  //             messages: [{msg: msg}]
-  //           });
-  //         });
-  //     }
-  //   );
-  // }
-
   deleteItem(id) {
-    const r = confirm('Are you sure you want to delete the game? ');
+    // const k = '';
+    const r = confirm('Are you sure you want to delete the item? ');
     if (r == true) {
       //
     } else {
@@ -92,7 +77,7 @@ class Games extends React.Component {
         ['update_' + id]: true
       },
       () => {
-        Fetcher.post('/api/admin/delete/games', {id: id})
+        Fetcher.post('/api/admin/delete/subscribers', {id: id})
           .then(resp => {
             this.setState({
               ['update_' + id]: false
@@ -119,37 +104,6 @@ class Games extends React.Component {
     this.loadData();
   }
 
-  addItem() {
-    this.props.dispatch(
-      openModal({
-        type: 'custom',
-        id: 'newgame',
-        zIndex: 534,
-        heading: 'New Game',
-        content: <NewGame onComplete={this.loadData.bind(this)} />
-      })
-    );
-  }
-
-  editItem(id, data) {
-    this.props.dispatch(
-      openModal({
-        type: 'custom',
-        id: 'newgame',
-        zIndex: 534,
-        heading: 'New Game',
-        content: (
-          <NewGame
-            mode={'edit'}
-            id={id}
-            data={data}
-            onComplete={this.loadData.bind(this)}
-          />
-        )
-      })
-    );
-  }
-
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -166,15 +120,7 @@ class Games extends React.Component {
       <div className="container">
         <div className="panel">
           <div className="panel-body">
-            <div className="text-right pull-right push-right align-right">
-              <button
-                className="btn btn-success btn-xs"
-                onClick={this.addItem.bind(this)}
-              >
-                <span className="fa fa-plus" /> Add new game
-              </button>
-            </div>
-            <h2 style={{padding: 0, margin: 0}}>Games</h2>
+            <h2 style={{padding: 0, margin: 0}}>Subscribers</h2>
           </div>
         </div>
         <div className="panel">
@@ -184,7 +130,7 @@ class Games extends React.Component {
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Name</th>
+                  <th>Email</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -194,20 +140,16 @@ class Games extends React.Component {
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
-                        <td>{u.title}</td>
+                        <td>{u.email}</td>
                         <td>
                           <button
-                            onClick={() => {
-                              this.editItem(u.id, u);
+                            className="btn btn-priamry btn-xs"
+                            onClick={e => {
+                              e.preventDefault();
+                              this.doAction(u);
                             }}
-                            className="btn btn-warning btn-xs"
                           >
-                            {this.state['update_' + u.id] ? (
-                              <i className="fa fa-spinner fa-spin" />
-                            ) : (
-                              false
-                            )}{' '}
-                            Edit
+                            More Info
                           </button>{' '}
                           <button
                             onClick={() => {
@@ -257,4 +199,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Games);
+export default connect(mapStateToProps)(Subscribers);

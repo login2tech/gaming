@@ -93,7 +93,7 @@ exports.updateSettingsFile = function(req, res, next) {
       'uploads/images/key_' + path + '.' + name
     );
 
-    const booking = new Settings()
+    new Settings()
       .where({
         key: data.key
       })

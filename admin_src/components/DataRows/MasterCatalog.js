@@ -16,15 +16,13 @@ class MasterCatalog extends React.Component {
     };
   }
 
-
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadUsers();
     });
   };
-
 
   loadItems() {
     Fetcher.get('/api/master_catalog/list?page=' + this.state.page)
@@ -52,7 +50,6 @@ class MasterCatalog extends React.Component {
         });
       });
   }
-
 
   componentDidMount() {
     this.loadItems();
@@ -87,7 +84,10 @@ class MasterCatalog extends React.Component {
               </button>
             </div>
             <h2 style={{padding: 0, margin: 0}}>Master catalog</h2>
-            <p>This is used for suggestions of products while adding to lists in app</p>
+            <p>
+              This is used for suggestions of products while adding to lists in
+              app
+            </p>
           </div>
         </div>
         <div className="panel">
@@ -99,7 +99,6 @@ class MasterCatalog extends React.Component {
                   <th>ID</th>
                   <th>Product</th>
                   <th>Actions</th>
-                   
                 </tr>
               </thead>
               <tbody>
@@ -115,20 +114,20 @@ class MasterCatalog extends React.Component {
                   })}
               </tbody>
             </table>
-            
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

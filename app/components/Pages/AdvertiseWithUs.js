@@ -31,6 +31,14 @@ class AdvertiseWithUs extends React.Component {
         you_are_a: this.state.you_are_a
       })
     );
+    const element = document.body;
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
   }
 
   render() {

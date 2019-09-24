@@ -27,13 +27,16 @@ class Modal extends React.Component {
       const {content} = this.props.item;
       return (
         <div
-          className={"modal must_show "}
+          className={'modal must_show '}
           id={'modal_' + this.props.item.id}
           tabIndex="-1"
           role="dialog"
         >
           <div
-            className={"modal-dialog modal-dialog-centered"+(this.props.item.modal_class?this.props.item.modal_class:  ' ') }
+            className={
+              'modal-dialog modal-dialog-centered' +
+              (this.props.item.modal_class ? this.props.item.modal_class : ' ')
+            }
             style={{zIndex: this.props.item.zIndex + 2}}
             role="document"
           >
@@ -49,7 +52,6 @@ class Modal extends React.Component {
                   <span aria-hidden="true">&times;</span>
                 </button>
                 <h5 className="modal-title">{this.props.item.heading}</h5>
-                
               </div>
               {content}
             </div>
@@ -69,7 +71,7 @@ class Modal extends React.Component {
           )}
         </div>
       );
-    } 
+    }
     return <div />;
   }
 }

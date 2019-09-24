@@ -56,7 +56,7 @@ exports.new_comment = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log(er);
+          console.log(err);
         });
     })
     .catch(function(err) {
@@ -101,7 +101,7 @@ exports.upvote = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log(er);
+          console.log(err);
         });
     })
     .catch(function(err) {
@@ -163,7 +163,7 @@ exports.getMyFollowing = function(req, res, next) {
 };
 exports.listSingleItem = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
-  const n = new Item()
+  new Item()
     .where({id: req.params.id})
     .fetch({
       withRelated: [

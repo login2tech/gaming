@@ -8,7 +8,6 @@ import {openModal} from '../../actions/modals';
 
 import NewTopic from '../Modules/Modals/NewTopic';
 
-
 class Topics extends React.Component {
   constructor(props) {
     super(props);
@@ -20,20 +19,16 @@ class Topics extends React.Component {
     };
   }
 
-  
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadData();
     });
   };
 
-
   loadData() {
-    Fetcher.get(
-      '/api/admin/listPaged/topics?page=' + this.state.page
-    )
+    Fetcher.get('/api/admin/listPaged/topics?page=' + this.state.page)
       .then(resp => {
         if (resp.ok) {
           this.setState({
@@ -87,20 +82,22 @@ class Topics extends React.Component {
   //   );
   // }
 
-  deleteItem(id) { let k ='';
+  deleteItem(id) {
     const r = confirm('Are you sure you want to delete the topic? ');
     if (r == true) {
+      //
     } else {
+      return;
     }
     this.setState(
       {
-        ['update_' +  id]: true
+        ['update_' + id]: true
       },
       () => {
         Fetcher.post('/api/admin/delete/topics', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' +  id]: false
+              ['update_' + id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -125,7 +122,7 @@ class Topics extends React.Component {
   }
 
   addItem() {
-   this.props.dispatch(
+    this.props.dispatch(
       openModal({
         type: 'custom',
         id: 'newtopic',
@@ -135,7 +132,7 @@ class Topics extends React.Component {
       })
     );
   }
- 
+
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -172,7 +169,7 @@ class Topics extends React.Component {
                   <th>ID</th>
                   <th>Title</th>
                   <th>Sub Title</th>
-                 
+
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -182,22 +179,14 @@ class Topics extends React.Component {
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
+                        <td>{u.title}</td>
+
+                        <td>{u.sub_title}</td>
+
                         <td>
-                          {u.title}
-                        </td>
-                         
-                          <td>
-                          {u.sub_title}
-                        </td>
-                          
-                        <td>
-                           
                           <button
                             onClick={() => {
-                              this.deleteItem(
-                                u.id
-                                
-                              );
+                              this.deleteItem(u.id);
                             }}
                             className="btn btn-danger btn-xs"
                           >
@@ -208,28 +197,26 @@ class Topics extends React.Component {
                             )}{' '}
                             Delete
                           </button>
-
-                             
                         </td>
                       </tr>
                     );
                   })}
               </tbody>
             </table>
-            
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

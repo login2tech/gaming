@@ -19,7 +19,7 @@ class NewLadder extends React.Component {
     };
   }
 
-   doClose() {
+  doClose() {
     this.props.dispatch({
       type: 'CLEAR_MESSAGES'
     });
@@ -30,8 +30,8 @@ class NewLadder extends React.Component {
         })
       );
     }, 500);
-  } 
-  
+  }
+
   componentDidMount() {
     this.loadData();
   }
@@ -223,7 +223,7 @@ class NewLadder extends React.Component {
                   value={this.state.rules}
                 />
               </div>
-<br />
+              <br />
               <input
                 value="Create Ladder"
                 type="submit"

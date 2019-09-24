@@ -10,8 +10,7 @@ class NewGame extends React.Component {
     this.state = {loaded: true, title: '', image_url: '', banner_url: ''};
   }
 
-
-   doClose() {
+  doClose() {
     this.props.dispatch({
       type: 'CLEAR_MESSAGES'
     });
@@ -22,7 +21,7 @@ class NewGame extends React.Component {
         })
       );
     }, 500);
-  } 
+  }
   onSubmit(e) {
     e.preventDefault();
     this.setState({

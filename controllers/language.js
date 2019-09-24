@@ -37,7 +37,7 @@ const data = [
     key: '404_content',
     l_1: 'The page you are looking for doesnt exist'
   },
-  
+
   {
     key: 'footer_text_copyright',
     l_1: '&copy; 2019 onlycompgaming'

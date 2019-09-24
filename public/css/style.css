@@ -4819,7 +4819,7 @@ p.score_obj_scr {
     align-items: center;
     border-radius: 4px;
     /* border: 0.5px solid #124afb; */
-    height: 72px;
+    height: 100px;
     background-color: #222d39;
 }
 
@@ -4828,16 +4828,17 @@ p.score_obj_scr {
 }
 
 .user-profile-trophies-container>div div.trophy-image {
-    width: 72px;
-    height: 100%;
-    flex-shrink: 0;
-    background-color: #161d24;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    position: relative;
-    border: 0;
+  width: 100px;
+  height: 100%;
+  flex-shrink: 0;
+  background-color: #111111;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  position: relative;
+  border: 0;
+  padding: 5px;
 }
 
 .user-profile-trophies-container>div div.trophy-info {

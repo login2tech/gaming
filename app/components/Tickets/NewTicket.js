@@ -10,7 +10,7 @@ class NewTicket extends React.Component {
       ticket_type: '',
       ticket_title: '',
       ticket_description: '',
-      new_post_image : '',
+      new_post_image: ''
     };
   }
 
@@ -29,8 +29,8 @@ class NewTicket extends React.Component {
       .catch(err => {
         alert('some error occoured in uploading file..');
         this.setState({
-          upload_started:false
-        })
+          upload_started: false
+        });
         // console.log(err);
       });
   }
@@ -39,24 +39,22 @@ class NewTicket extends React.Component {
     this.setState(
       {
         post_image_select: event.target.files[0],
-        upload_started:true,
-        uploaded :false,
+        upload_started: true,
+        uploaded: false
       },
       () => {
         this.askFile('post_image_select', data => {
           if (data && data.file) {
             this.setState({
               new_post_image: data.file,
-              upload_started:false,
-              uploaded : true
+              upload_started: false,
+              uploaded: true
             });
           }
         });
       }
     );
   };
-
-
 
   submitForm(event) {
     event.preventDefault();
@@ -72,7 +70,7 @@ class NewTicket extends React.Component {
         ticket_type: this.state.ticket_type,
         ticket_title: this.state.ticket_title,
         ticket_description: this.state.ticket_description,
-        ticket_attachment : this.state.new_post_image
+        ticket_attachment: this.state.new_post_image
       })
     }).then(rawResponse => {
       rawResponse
@@ -264,25 +262,35 @@ class NewTicket extends React.Component {
                           type="file"
                           className="custom-file-inputs"
                           id="customFile"
-                          style={{display:'block !important'}}
+                          style={{display: 'block !important'}}
                           onChange={this.handleImageUpload}
                         />
-                        {
-                          this.state.upload_started ? <span class="text text-primary">uploading..please wait.</span> : false
-                        }
-                        {
-                          this.state.uploaded ? <span class="text text-success">uploaded..please proceed with ticket submission.</span> : false
-                        }
+                        {this.state.upload_started ? (
+                          <span className="text text-primary">
+                            uploading..please wait.
+                          </span>
+                        ) : (
+                          false
+                        )}
+                        {this.state.uploaded ? (
+                          <span className="text text-success">
+                            uploaded..please proceed with ticket submission.
+                          </span>
+                        ) : (
+                          false
+                        )}
                       </div>
                     </div>
-                  </div>  
+                  </div>
                   <hr />
                   <div className="row">
                     <div className="col-md-12 text-right">
                       <button
                         className="btn btn-blue btn-lg bttn_submit"
                         type="submit"
-                        disabled={this.state.upload_started || !this.state.ticket_title}
+                        disabled={
+                          this.state.upload_started || !this.state.ticket_title
+                        }
                       >
                         Create Ticket
                       </button>

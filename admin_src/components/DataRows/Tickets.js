@@ -6,7 +6,7 @@ import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
 import moment from 'moment';
-import ReplyTicket from '../Modules/Modals/ReplyTicket'
+import ReplyTicket from '../Modules/Modals/ReplyTicket';
 import ViewTicket from '../Modules/Modals/ViewTicket';
 
 class Tickets extends React.Component {
@@ -59,6 +59,7 @@ class Tickets extends React.Component {
   deleteItem(id) {
     const r = confirm('Are you sure you want to delete the ticket? ');
     if (r == true) {
+      //
     } else {
       return;
     }
@@ -106,7 +107,6 @@ class Tickets extends React.Component {
         content: <ReplyTicket id={id} />
       })
     );
-
   }
   veiwItem(id) {
     this.props.dispatch(

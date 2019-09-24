@@ -1,6 +1,6 @@
 const bookshelf = require('../../config/bookshelf');
 const User = require('../../models/User');
-const Game = require('./Game');
+const Game = require('../games/Game');
 
 const Ladder = bookshelf.Model.extend({
   tableName: 'ladders',

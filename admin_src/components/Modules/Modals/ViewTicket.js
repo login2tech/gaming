@@ -5,8 +5,13 @@ import React from 'react';
 class ViewTicket extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loaded: false, items:[], cur_page : 1, ticket: {user: {first_name: '', last_name: ''}},
-      pageCount: 1};
+    this.state = {
+      loaded: false,
+      items: [],
+      cur_page: 1,
+      ticket: {user: {first_name: '', last_name: ''}},
+      pageCount: 1
+    };
   }
 
   doClose() {
@@ -17,8 +22,8 @@ class ViewTicket extends React.Component {
     );
   }
 
-   fetchData() {
-     fetch('/api/tickets/single/' + this.props.id)
+  fetchData() {
+    fetch('/api/tickets/single/' + this.props.id)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -64,14 +69,14 @@ class ViewTicket extends React.Component {
       .then(json => {
         if (json.ok) {
           this.setState({
-             loaded: true,
+            loaded: true,
             items: json.items,
             pageCount: json.pagination.pageCount
           });
         } else {
           this.setState({
             is_page: false,
-              loaded: true
+            loaded: true
           });
         }
       });
@@ -94,56 +99,53 @@ class ViewTicket extends React.Component {
         )}
         <div>
           <div className="modal-body report_left_inner more_info_de">
-             <div className="col-sm-12">
-                <div className="card post">
-                  <div className="row">
-                    <div className="col-sm-3 ticket_item_av">
-                      <span className="profile_menu_item ticket_item">
-                        <span className="profile_menu_item_inner">
-                          <span className="menu_avatar">
-                            <img
-                              src={
-                                this.state.ticket.user.profile_picture
-                                  ? this.state.ticket.user.profile_picture
-                                  : this.state.ticket.user.gravatar
-                              }
-                              className="img-fluid profile_pic_outline"
-                            />
+            <div className="col-sm-12">
+              <div className="card post">
+                <div className="row">
+                  <div className="col-sm-3 ticket_item_av">
+                    <span className="profile_menu_item ticket_item">
+                      <span className="profile_menu_item_inner">
+                        <span className="menu_avatar">
+                          <img
+                            src={
+                              this.state.ticket.user.profile_picture
+                                ? this.state.ticket.user.profile_picture
+                                : this.state.ticket.user.gravatar
+                            }
+                            className="img-fluid profile_pic_outline"
+                          />
+                        </span>
+                        <span className="menu_prof_name_w">
+                          <span className="menu_prof_name_top">
+                            By{' '}
+                            {this.state.ticket.user.first_name +
+                              ' ' +
+                              this.state.ticket.user.last_name}
                           </span>
-                          <span className="menu_prof_name_w">
-                            <span className="menu_prof_name_top">
-                              By{' '}
-                              {this.state.ticket.user.first_name +
-                                ' ' +
-                                this.state.ticket.user.last_name}
-                            </span>
-                            <span className="menu_prof_name_bot">
-                              {moment(this.state.ticket.created_at).format(
-                                'lll'
-                              )}
-                            </span>
+                          <span className="menu_prof_name_bot">
+                            {moment(this.state.ticket.created_at).format('lll')}
                           </span>
                         </span>
                       </span>
-                    </div>
-                    <div className="col-sm-9 post-content">
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: this.state.ticket.description
-                        }}
-                      />
-                      {this.state.ticket.attachment ? (
-                        <a download href={this.state.ticket.attachment}>
-                          Download attachment
-                        </a>
-                      ) : (
-                        false
-                      )}
-                    </div>
+                    </span>
+                  </div>
+                  <div className="col-sm-9 post-content">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: this.state.ticket.description
+                      }}
+                    />
+                    {this.state.ticket.attachment ? (
+                      <a download href={this.state.ticket.attachment}>
+                        Download attachment
+                      </a>
+                    ) : (
+                      false
+                    )}
                   </div>
                 </div>
               </div>
-         
+            </div>
 
             {this.state.items.map((item, i) => {
               return (

@@ -8,7 +8,6 @@ import {openModal} from '../../actions/modals';
 
 import NewLadder from '../Modules/Modals/NewLadder';
 
-
 class Ladders extends React.Component {
   constructor(props) {
     super(props);
@@ -20,15 +19,13 @@ class Ladders extends React.Component {
     };
   }
 
-  
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadData();
     });
   };
-
 
   loadData() {
     Fetcher.get(
@@ -88,7 +85,7 @@ class Ladders extends React.Component {
   // }
 
   deleteItem(id) {
-    let k = '';
+    const k = '';
     const r = confirm('Are you sure you want to delete the ladder? ');
     // console.log(r)
     if (r == true) {
@@ -103,7 +100,7 @@ class Ladders extends React.Component {
         Fetcher.post('/api/admin/delete/ladders', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' + id]: false
+              ['update_' + id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -128,7 +125,7 @@ class Ladders extends React.Component {
   }
 
   addItem() {
-   this.props.dispatch(
+    this.props.dispatch(
       openModal({
         type: 'custom',
         id: 'newladder',
@@ -139,13 +136,13 @@ class Ladders extends React.Component {
     );
   }
 
-gamer_tags= {
-tag_1: 'Xbox Live Gamertag',
-tag_2: 'PSN',
-tag_3: 'Epic Games Username',
-tag_4: 'Steam Username',
-tag_5: 'Battletag'
-}
+  gamer_tags = {
+    tag_1: 'Xbox Live Gamertag',
+    tag_2: 'PSN',
+    tag_3: 'Epic Games Username',
+    tag_4: 'Steam Username',
+    tag_5: 'Battletag'
+  };
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -194,30 +191,16 @@ tag_5: 'Battletag'
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
-                        <td>
-                          {u.title}
-                        </td>
-                        <td>
-                          {u.game_info && u.game_info.title}
-                        </td>
+                        <td>{u.title}</td>
+                        <td>{u.game_info && u.game_info.title}</td>
 
+                        <td>{u.min_players}</td>
+                        <td>{u.max_players}</td>
+                        <td>{this.gamer_tags['tag_' + u.gamer_tag]}</td>
                         <td>
-                          {u.min_players}
-                        </td>
-                          <td>
-                          {u.max_players}
-                        </td>
-                          <td>
-                          {this.gamer_tags['tag_'+u.gamer_tag]}
-                        </td>
-                        <td>
-                           
                           <button
                             onClick={() => {
-                              this.deleteItem(
-                                u.id,
-                               
-                              );
+                              this.deleteItem(u.id);
                             }}
                             className="btn btn-danger btn-xs"
                           >
@@ -234,20 +217,20 @@ tag_5: 'Battletag'
                   })}
               </tbody>
             </table>
-            
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

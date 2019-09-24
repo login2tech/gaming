@@ -130,6 +130,8 @@ app.post('/upload', (req, res, next) => {
 
 app.post('/contact', contactController.contactPost);
 app.post('/contact_apply', contactController.contactApplyForStaff);
+app.post('/applySubscribe', contactController.applySubscribe);
+
 app.post('/contact_advertiseWithUs', contactController.contactAdvertiseWithUs);
 
 app.get('/api/user_suggest', function(req, res, next) {

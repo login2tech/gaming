@@ -60,7 +60,6 @@ exports.listSingleItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
-
       return res.status(400).send({
         id: req.params.id,
         title: '',
@@ -80,7 +79,7 @@ exports.addItem = function(req, res, next) {
   }
   new Item({
     title: req.body.title,
-    sub_title: req.body.sub_title,
+    sub_title: req.body.sub_title
     // platform: req.body.platform,
     // image_url: req.body.image_url
     // category_id: req.body.category_id,
@@ -113,10 +112,9 @@ exports.updateItem = function(req, res, next) {
   const item = new Item({id: req.body.id});
   const obj = {
     title: req.body.title,
-   sub_title: req.body.sub_title,
+    sub_title: req.body.sub_title
   };
 
-  
   item
     .save(obj)
     .then(function(blg) {

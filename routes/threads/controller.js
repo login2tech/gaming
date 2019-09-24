@@ -95,7 +95,7 @@ exports.addItem = function(req, res, next) {
     title: req.body.ticket_title,
     description: req.body.ticket_description,
     topic_id: req.body.topic_id,
-    user_id : req.user.id
+    user_id: req.user.id
   })
     .save()
     .then(function(item) {

@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import messages from './messages';
 import auth from './auth';
 import modals from './modals';
@@ -6,5 +6,5 @@ import modals from './modals';
 export default combineReducers({
   messages,
   auth,
-  modals,
+  modals
 });

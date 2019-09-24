@@ -7,8 +7,6 @@ import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
 import ViewThread from '../Modules/Modals/ViewThread';
 
- 
-
 class Threads extends React.Component {
   constructor(props) {
     super(props);
@@ -20,15 +18,13 @@ class Threads extends React.Component {
     };
   }
 
-  
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadData();
     });
   };
-
 
   loadData() {
     Fetcher.get(
@@ -58,34 +54,35 @@ class Threads extends React.Component {
       });
   }
 
-  viewItem(id){
- this.props.dispatch(
-        openModal({
-          type: 'custom',
-          id: 'viewthread',
-          modal_class : '   modal-lg',
-          zIndex: 534,
-          heading: 'View Thread',
-          content: <ViewThread id={id}   />
-        })
-      );
+  viewItem(id) {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'viewthread',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Thread',
+        content: <ViewThread id={id} />
+      })
+    );
   }
 
-  deleteItem(id) { let k ='';
+  deleteItem(id) {
     const r = confirm('Are you sure you want to delete the thread? ');
     if (r == true) {
+      //
     } else {
       return;
     }
     this.setState(
       {
-        ['update_' +  id]: true
+        ['update_' + id]: true
       },
       () => {
         Fetcher.post('/api/admin/delete/threads', {id: id})
           .then(resp => {
             this.setState({
-               ['update_' +  id]: false
+              ['update_' + id]: false
             });
             if (resp.ok) {
               this.loadData();
@@ -109,8 +106,6 @@ class Threads extends React.Component {
     this.loadData();
   }
 
-   
- 
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -127,7 +122,6 @@ class Threads extends React.Component {
       <div className="container">
         <div className="panel">
           <div className="panel-body">
-            
             <h2 style={{padding: 0, margin: 0}}>Threads</h2>
           </div>
         </div>
@@ -149,22 +143,14 @@ class Threads extends React.Component {
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
+                        <td>{u.title}</td>
+
+                        <td>{u.topic && u.topic.title}</td>
+
                         <td>
-                          {u.title}
-                        </td>
-                         
-                          <td>
-                          {u.topic && u.topic.title}
-                        </td>
-                          
-                        <td>
-                           
                           <button
                             onClick={() => {
-                              this.deleteItem(
-                                u.id
-                                
-                              );
+                              this.deleteItem(u.id);
                             }}
                             className="btn btn-danger btn-xs"
                           >
@@ -174,40 +160,35 @@ class Threads extends React.Component {
                               false
                             )}{' '}
                             Delete
-                          </button>
-{ ' '}
-                           <button
+                          </button>{' '}
+                          <button
                             onClick={() => {
-                              this.viewItem(
-                                u.id
-                              );
+                              this.viewItem(u.id);
                             }}
                             className="btn btn-success btn-xs"
                           >
                             View
                           </button>
-
-                             
                         </td>
                       </tr>
                     );
                   })}
               </tbody>
             </table>
-            
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>

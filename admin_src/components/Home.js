@@ -1,17 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import {connect} from 'react-redux';
 import Messages from './Messages';
 
 class Home extends React.Component {
   render() {
     return (
       <div className="container">
-        <Messages messages={this.props.messages}/>
+        <Messages messages={this.props.messages} />
         <div className="row">
           <div className="col-sm-12">
             <div className="panel">
               <div className="panel-body">
-               Welcome to the admin panel of OCG
+                Welcome to the admin panel of OCG
               </div>
             </div>
           </div>
@@ -21,7 +21,7 @@ class Home extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     messages: state.messages
   };

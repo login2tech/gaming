@@ -33,13 +33,11 @@ exports.listMine = function(req, res, next) {
     });
 };
 
-
-
 exports.delete = function(req, res, next) {
   new Notification()
 
     .where({
-      user_id : req.user.id
+      user_id: req.user.id
     })
     .destroy()
     .then(function(user) {

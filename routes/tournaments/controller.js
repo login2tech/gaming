@@ -7,6 +7,7 @@ const User = require('../../models/User');
 const TeamUser = require('../teams/TeamUser');
 const TournamentMatch = require('./TournamentMatch');
 const CreditTransactions = require('../../models/CreditTransactions');
+const Notif = require('../../models/Notification');
 
 // const giveMoneyToMember = function(uid, input_val) {
 //   new User()
@@ -109,6 +110,10 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
 //       console.log(err);
 //     });
 // };
+const changeIntoBye = function(seed, participantsCount) {
+  //return seed <= participantsCount ?  seed : '{0} (= bye)'.format(seed);
+  return seed <= participantsCount ? seed : null;
+};
 
 const proceed_to_next_round = function(t_id, t_round) {
   new TournamentMatch()
@@ -416,11 +421,6 @@ const getBracket = function(participants) {
   }
 
   return [matches, rounds, bracketSize, requiredByes];
-};
-
-const changeIntoBye = function(seed, participantsCount) {
-  //return seed <= participantsCount ?  seed : '{0} (= bye)'.format(seed);
-  return seed <= participantsCount ? seed : null;
 };
 
 const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {

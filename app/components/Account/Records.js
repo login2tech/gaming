@@ -83,12 +83,9 @@ class Records extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {rec.length == 0 &&
-                  this.state.loaded && (
-                    <div className="alert alert-warning">
-                      No records to show
-                    </div>
-                  )}
+                {rec.length == 0 && this.state.loaded && (
+                  <div className="alert alert-warning">No records to show</div>
+                )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container">

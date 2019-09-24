@@ -43,6 +43,14 @@ class ApplyForStaff extends React.Component {
         why: this.state.why
       })
     );
+    const element = document.body;
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest'
+      });
+    }
   }
 
   render() {

@@ -80,12 +80,11 @@ class UpvoteButton extends React.Component {
     let original_liked = false;
     let {likes} = this.props;
 
-    
     if (!likes) {
       likes = [];
     }
     const likes_count = likes.length;
-    console.log('--------',);
+    console.log('--------');
     console.log('total likes : ', likes_count);
     for (let i = 0; i < likes_count; i++) {
       if (!like_counts[likes[i].type]) {
@@ -115,14 +114,13 @@ class UpvoteButton extends React.Component {
         like_counts[original_liked] = 0;
       }
       console.log('adding to ', i_have_liked, like_counts[i_have_liked]);
-      if(i_have_liked)
-      {
-        if(!like_counts[i_have_liked])
-            like_counts[i_have_liked] = 0;
+      if (i_have_liked) {
+        if (!like_counts[i_have_liked]) {
+          like_counts[i_have_liked] = 0;
+        }
         like_counts[i_have_liked]++;
       }
-        
-        
+
       // alert(like_counts[i_have_liked]);
 
       // like_counts[likes[i].type]++;
@@ -158,7 +156,9 @@ class UpvoteButton extends React.Component {
             </Link>
           </small>
         ) : (
-           <small style={{fontStyle: 'italic'}}>Be the first to react to this post</small>
+          <small style={{fontStyle: 'italic'}}>
+            Be the first to react to this post
+          </small>
         )}
         <br />
         {emojis.map((emoji, i) => {

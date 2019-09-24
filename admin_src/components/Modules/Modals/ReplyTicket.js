@@ -7,11 +7,10 @@ import React from 'react';
 class ReplyTicket extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loaded: true, text: '' };
+    this.state = {loaded: true, text: ''};
   }
 
-
-   doClose() {
+  doClose() {
     this.props.dispatch({
       type: 'CLEAR_MESSAGES'
     });
@@ -22,7 +21,7 @@ class ReplyTicket extends React.Component {
         })
       );
     }, 500);
-  } 
+  }
   onSubmit(e) {
     e.preventDefault();
     this.setState({
@@ -31,8 +30,7 @@ class ReplyTicket extends React.Component {
 
     Fetcher.post('/api/ticket_replies/add', {
       text: this.state.text,
-      ticket_id: this.props.id,
-       
+      ticket_id: this.props.id
     })
       .then(resp => {
         if (resp.ok) {
@@ -96,7 +94,7 @@ class ReplyTicket extends React.Component {
                 />
               </div>
               <br />
-               
+
               <input
                 value="Create Game"
                 type="submit"

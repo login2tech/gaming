@@ -1252,17 +1252,16 @@ class TournamentInfo extends React.Component {
                 </li>
               );
             })}
-          {this.state.eligible_teams_loaded &&
-            !this.state.team_selected && (
-              <li>
-                <a
-                  target="_blank"
-                  href={'/u/' + this.props.user.username + '/teams/new'}
-                >
-                  <img src="/images/team_new.png" />
-                </a>
-              </li>
-            )}
+          {this.state.eligible_teams_loaded && !this.state.team_selected && (
+            <li>
+              <a
+                target="_blank"
+                href={'/u/' + this.props.user.username + '/teams/new'}
+              >
+                <img src="/images/team_new.png" />
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     );

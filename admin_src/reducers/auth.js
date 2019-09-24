@@ -5,7 +5,7 @@ const initialState = {
 
 export default function auth(state = initialState, action) {
   if (!state.hydrated) {
-    state = Object.assign({}, initialState, state, { hydrated: true });
+    state = Object.assign({}, initialState, state, {hydrated: true});
   }
   switch (action.type) {
     case 'LOGIN_SUCCESS':
@@ -19,7 +19,7 @@ export default function auth(state = initialState, action) {
       return Object.assign({}, state, {
         token: action.token,
         user: action.user
-      })
+      });
     case 'LOGOUT_SUCCESS':
       return initialState;
     default:

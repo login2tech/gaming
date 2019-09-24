@@ -11,29 +11,27 @@ class SinlgePost extends React.Component {
       post: {}
     };
   }
- 
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
 
   componentDidMount() {
-  	this.runQuery();
+    this.runQuery();
   }
-  runQuery(){
+  runQuery() {
     fetch('/api/posts/single/' + this.props.params.id)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          this.setState(
-            {
-              is_loaded: true,
-              post: json.post
-            } 
-          );
-        }  
+          this.setState({
+            is_loaded: true,
+            post: json.post
+          });
+        }
       });
   }
-    
+
   render() {
     return (
       <div>
@@ -56,17 +54,17 @@ class SinlgePost extends React.Component {
                 <div className="row">
                   <div className="col-md-8 offset-md-2">
                     {this.state.is_loaded ? (
-                    	<ul className="timeline">
-                      <Timeline
-                        post={this.state.post}
-                        key={this.state.post}
-                        expand_comments={true}
-                        is_single
-                      />
+                      <ul className="timeline">
+                        <Timeline
+                          post={this.state.post}
+                          key={this.state.post}
+                          expand_comments
+                          is_single
+                        />
                       </ul>
                     ) : (
                       <div className="text-center">
-                        <span className="fa fa-spinner fa-spin"  />
+                        <span className="fa fa-spinner fa-spin" />
                       </div>
                     )}
                   </div>

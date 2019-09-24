@@ -3,7 +3,43 @@ import React from 'react';
 import {Translate} from 'react-localize-redux';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
+import {applySubscribe} from '../../actions/contact';
+import Messages from './Messages';
 class Footer extends React.Component {
+  state = {email: ''};
+
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
+  doneT(st) {
+    if (st) {
+      this.setState({
+        form_submitted: true
+      });
+    }
+  }
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.dispatch(
+      applySubscribe(
+        {
+          name: this.state.name,
+          last_name: this.state.last_name,
+          email: this.state.email,
+          address: this.state.address,
+          tel: this.state.tel,
+          date_of_birth: this.state.date_of_birth,
+          position: this.state.position,
+          about_yourself: this.state.about_yourself,
+          why_intested: this.state.why_intested,
+          qualification: this.state.qualification,
+          why: this.state.why
+        },
+        this.doneT.bind(this)
+      )
+    );
+  }
+
   render() {
     return (
       <footer>
@@ -82,13 +118,26 @@ class Footer extends React.Component {
                 <div className="contact-col-4 contact-inner">
                   <h4>SUBSCRIBE</h4>
                   <p>Please subscribe for latest game updates.</p>
-                  <input
-                    type="email"
-                    placeholder="Enter Email Address"
-                    className="email"
-                    name="email"
-                  />
-                  <input type="submit" className="sign-btn" value="Subscribe" />
+                  <Messages messages={this.props.messages} />
+                  {this.state.form_submitted ? (
+                    false
+                  ) : (
+                    <form onSubmit={this.handleSubmit.bind(this)}>
+                      <input
+                        type="email"
+                        placeholder="Enter Email Address"
+                        className="email"
+                        name="email"
+                        value={this.state.email}
+                        onChange={this.handleChange.bind(this)}
+                      />
+                      <input
+                        type="submit"
+                        className="sign-btn"
+                        value="Subscribe"
+                      />
+                    </form>
+                  )}
                 </div>
               </div>
             </div>
@@ -115,7 +164,8 @@ class Footer extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    settings: state.settings
+    settings: state.settings,
+    messages: state.messages
   };
 };
 

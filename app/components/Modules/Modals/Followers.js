@@ -30,12 +30,12 @@ class Followers extends React.Component {
   }
 
   render() {
-    if(!this.state.is_loaded)
-    {
+    if (!this.state.is_loaded) {
       return (
         <div className="modal-body">
-        <span className='fa fa-spinner fa-spin spin' />
-        </div>)
+          <span className="fa fa-spinner fa-spin spin" />
+        </div>
+      );
     }
     return (
       <div className="modal-body">
@@ -56,11 +56,13 @@ class Followers extends React.Component {
                   <td>
                     <Link
                       className="image_avar"
-                      onClick={()=>{this.props.dispatch(
-                        closeModal({
-                          id: 'followers'
-                        })
-                      )}}
+                      onClick={() => {
+                        this.props.dispatch(
+                          closeModal({
+                            id: 'followers'
+                          })
+                        );
+                      }}
                       to={item.follower ? '/u/' + item.follower.username : '#'}
                     >
                       <img className="img-circle " src={image_url} />@
@@ -81,11 +83,7 @@ class Followers extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {
-    
-  };
+  return {};
 };
 
 export default connect(mapStateToProps)(Followers);
-
- 

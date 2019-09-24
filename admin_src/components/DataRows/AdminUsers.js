@@ -15,15 +15,13 @@ class AdminUsers extends React.Component {
     };
   }
 
-
   handlePageClick = data => {
     // console.log(data)
-    let selected = parseInt(data.selected) + 1;
-    this.setState({ page: selected }, () => {
+    const selected = parseInt(data.selected) + 1;
+    this.setState({page: selected}, () => {
       this.loadUsers();
     });
   };
-
 
   loadUsers() {
     Fetcher.get(
@@ -55,8 +53,7 @@ class AdminUsers extends React.Component {
   }
 
   updateItem(id, data, key) {
-    if(!key)
-    {
+    if (!key) {
       key = '';
     }
     this.setState(
@@ -144,7 +141,7 @@ class AdminUsers extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <div className="text-right pull-right push-right align-right">
-      {/*}        <button
+              {/*}        <button
                 className="btn btn-success btn-xs"
                 onClick={this.addUser.bind(this)}
               >
@@ -246,19 +243,19 @@ class AdminUsers extends React.Component {
               </tbody>
             </table>
 
-               <ReactPaginate
-                  previousLabel={'previous'}
-                  nextLabel={'next'}
-                  breakLabel={'...'}
-                  breakClassName={'break-me'}
-                  pageCount={this.state.pagination.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={'pagination'}
-                  subContainerClassName={'pages pagination'}
-                  activeClassName={'active'}
-                />
+            <ReactPaginate
+              previousLabel={'previous'}
+              nextLabel={'next'}
+              breakLabel={'...'}
+              breakClassName={'break-me'}
+              pageCount={this.state.pagination.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={'pagination'}
+              subContainerClassName={'pages pagination'}
+              activeClassName={'active'}
+            />
           </div>
         </div>
       </div>
