@@ -121,7 +121,7 @@ class Home extends React.Component {
 
                       <a
                         href={
-                          '/matchfinder/' +
+                          '/game/' +
                           games.id +
                           '/' +
                           games.title.toLowerCase().replace(/ /g, '-')
@@ -153,7 +153,7 @@ class Home extends React.Component {
 
                       <a
                         href={
-                          '/matchfinder/' +
+                          '/game/' +
                           games.id +
                           '/' +
                           games.title.toLowerCase().replace(/ /g, '-')

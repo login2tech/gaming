@@ -139,26 +139,25 @@ const proceed_to_next_round = function(t_id, t_round) {
         }
       }
       console.log('winners of this round are: ', winner_teams);
-      if(round_matches.length == winner_teams && winner_teams == 1)
-      {
+      if (round_matches.length == winner_teams && winner_teams == 1) {
         // last match, tournament ends here
         new Item()
-        .where({
-          id: t_id
-        })
-        .fetch()
-        .then(function(tournament) {
-          tournament
-          .save({
-            status : 'complete'
+          .where({
+            id: t_id
           })
-          .then(function(e) {
-            console.log('brackets updated');
-          })
-          .catch(function(err) {
-            console.log(err);
+          .fetch()
+          .then(function(tournament) {
+            tournament
+              .save({
+                status: 'complete'
+              })
+              .then(function(e) {
+                console.log('brackets updated');
+              })
+              .catch(function(err) {
+                console.log(err);
+              });
           });
-        })
         return;
       }
 
@@ -866,6 +865,7 @@ exports.addItem = function(req, res, next) {
     total_teams: req.body.total_teams,
     entry_fee: req.body.entry_fee,
     first_winner_price: req.body.first_winner_price,
+    member_tournament: req.body.member_tournament == 'yes' ? true : false,
     second_winner_price: req.body.second_winner_price,
     teams_registered: 0,
     third_winner_price: req.body.third_winner_price

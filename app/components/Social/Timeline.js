@@ -143,18 +143,18 @@ class Timeline extends React.Component {
             >
               {post.user ? post.user.first_name : ''}{' '}
               {post.user ? post.user.last_name : ''}
-            </Link>
-            {' '}{post.is_repost && post.original_poster ? (
-                <span>
-                  (Repost from{' '}
-                  <Link to={'/post/' + post.repost_of} target="_blank">
-                    @{post.original_poster.username}
-                  </Link>
-                  )
-                </span>
-              ) : (
-                false
-              )}
+            </Link>{' '}
+            {post.is_repost && post.original_poster ? (
+              <span>
+                (Repost from{' '}
+                <Link to={'/post/' + post.repost_of} target="_blank">
+                  @{post.original_poster.username}
+                </Link>
+                )
+              </span>
+            ) : (
+              false
+            )}
           </span>
         </span>
         {post.image_url ? (

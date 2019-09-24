@@ -82,7 +82,7 @@ class Profile extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
-  rank_based_on_xp(xpo) {
+  getXp(xpo) {
     const year = moment().format('YYYY');
     const season = moment().format('Q');
     let xp = 0;
@@ -91,6 +91,11 @@ class Profile extends React.Component {
         xp = xpo[i].xp;
       }
     }
+    return xp;
+  }
+
+  rank_based_on_xp(xpo) {
+    const xp = this.getXp(xpo);
     if (xp < 50) {
       return 'Amatuer (' + xp + ' XP)';
     }
@@ -496,20 +501,81 @@ class Profile extends React.Component {
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-3">
+                        {this.state.user_info.prime && (
+                          <img
+                            src="/assets/icons/ocg_member.png"
+                            className="img-fluid"
+                          />
+                        )}
+                      </div>
+                      <div className="col-md-3"> </div>
+                      <div className="col-md-6">
+                        <br />
+                        {this.state.is_loaded ? (
+                          <div className="float-right rank_box_wrap">
+                            rank :{' '}
+                            {this.rank_based_on_xp(this.state.user_info.xp_obj)}
+                            <div
+                              className="rank_box_prog_outer"
+                              style={{
+                                position: 'relative'
+                              }}
+                            >
+                              <div className="rank_box_prog">
+                                <span
+                                  className="rank_prog_done"
+                                  style={{
+                                    width:
+                                      '' +
+                                      this.rank_percent_based_on_xp(
+                                        this.state.user_info.xp_obj
+                                      ) +
+                                      '%'
+                                  }}
+                                />
+                              </div>
+                              <span>
+                                {this.rank_min_based_on_xp(
+                                  this.state.user_info.xp_obj
+                                )}
+                              </span>
+                              <span
+                                style={{
+                                  position: 'absolute',
+                                  left:
+                                    '' +
+                                    this.rank_percent_based_on_xp(
+                                      this.state.user_info.xp_obj
+                                    ) +
+                                    '%'
+                                }}
+                              >
+                                {this.getXp(this.state.user_info.xp_obj)}
+                              </span>
+                              <span>
+                                {this.rank_max_based_on_xp(
+                                  this.state.user_info.xp_obj
+                                )}
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="float-right rank_box_wrap">
+                            <span className="fa fa-spinner fa-spin" />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="list_pad">
+                    <div className="row">
+                      <div className="col-md-3">
                         <span> MEMBER SINCE</span>
                         <p>
                           {moment(this.state.user_info.created_at).format(
                             'lll'
                           )}
                         </p>
-
-                        {this.state.user_info.prime && (
-                          <img
-                            src="/assets/icons/ocg_member.png"
-                            className="img-fluid"
-                            // style={{height: 100}}
-                          />
-                        )}
                       </div>
 
                       <div className="col-md-3">
@@ -590,41 +656,6 @@ class Profile extends React.Component {
                       </div>*/}
                     </div>
                   </div>
-                  {this.state.is_loaded ? (
-                    <div className="float-right rank_box_wrap">
-                      rank :{' '}
-                      {this.rank_based_on_xp(this.state.user_info.xp_obj)}
-                      <div className="rank_box_prog_outer">
-                        <div className="rank_box_prog">
-                          <span
-                            className="rank_prog_done"
-                            style={{
-                              width:
-                                '' +
-                                this.rank_percent_based_on_xp(
-                                  this.state.user_info.xp_obj
-                                ) +
-                                '%'
-                            }}
-                          />
-                        </div>
-                        <span>
-                          {this.rank_min_based_on_xp(
-                            this.state.user_info.xp_obj
-                          )}
-                        </span>
-                        <span>
-                          {this.rank_max_based_on_xp(
-                            this.state.user_info.xp_obj
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="float-right rank_box_wrap">
-                      <span className="fa fa-spinner fa-spin" />
-                    </div>
-                  )}
                 </div>
                 {this.props.user &&
                 this.state.is_loaded &&
@@ -761,37 +792,70 @@ class Profile extends React.Component {
                     <div className="user-profile-trophies-wrapper">
                       <div className="user-profile-trophies-container">
                         <div className="single-trophy-container">
-                          <div className="trophy-image">
-                            <img src="/assets/icons/gold.png" />
-                          </div>
-                          <div className="trophy-info">
-                            <div className="trophy-name gold">
-                              Gold Trophies
+                          <Link
+                            to={
+                              '/u/' +
+                              this.state.user_info.username +
+                              '/trophies/gold'
+                            }
+                            className="trof_a"
+                          >
+                            <div className="trophy-image">
+                              <img src="/assets/icons/gold.png" />
                             </div>
-                            <div className="trophy-count">0</div>
-                          </div>
+                            <div className="trophy-info">
+                              <div className="trophy-name gold">
+                                Gold Trophies
+                              </div>
+                              <div className="trophy-count">0</div>
+                            </div>
+                          </Link>
                         </div>
                         <div className="single-trophy-container">
-                          <div className="trophy-image">
-                            <img src="/assets/icons/silver.png" />
-                          </div>
-                          <div className="trophy-info">
-                            <div className="trophy-name silver">
-                              Silver Trophies
+                          <Link
+                            to={
+                              '/u/' +
+                              this.state.user_info.username +
+                              '/trophies/silver'
+                            }
+                            className="trof_a"
+                          >
+                            <div className="trophy-image">
+                              <img src="/assets/icons/silver.png" />
                             </div>
-                            <div className="trophy-count">0</div>
-                          </div>
+                            <div className="trophy-info">
+                              <div
+                                className="trophy-name silver"
+                                style={{color: '#dadcdd'}}
+                              >
+                                Silver Trophies
+                              </div>
+                              <div className="trophy-count">0</div>
+                            </div>
+                          </Link>
                         </div>
                         <div className="single-trophy-container">
-                          <div className="trophy-image">
-                            <img src="/assets/icons/bronz.png" />
-                          </div>
-                          <div className="trophy-info">
-                            <div className="trophy-name bronze">
-                              Bronze Trophies
+                          <Link
+                            to={
+                              '/u/' +
+                              this.state.user_info.username +
+                              '/trophies/bronze'
+                            }
+                            className="trof_a"
+                          >
+                            <div className="trophy-image">
+                              <img src="/assets/icons/bronz.png" />
                             </div>
-                            <div className="trophy-count">0</div>
-                          </div>
+                            <div className="trophy-info">
+                              <div
+                                className="trophy-name bronze"
+                                style={{color: '#a26631'}}
+                              >
+                                Bronze Trophies
+                              </div>
+                              <div className="trophy-count">0</div>
+                            </div>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -814,6 +878,30 @@ class Profile extends React.Component {
                               Seasonal Records
                             </Link>
                           </div>
+                        </div>
+
+                        <div className="single-trophy-container">
+                          <Link
+                            to={
+                              '/u/' +
+                              this.state.user_info.username +
+                              '/trophies/ocg'
+                            }
+                            className="trof_a"
+                          >
+                            <div className="trophy-image">
+                              <img src="/assets/icons/blue.png" />
+                            </div>
+                            <div className="trophy-info">
+                              <div
+                                className="trophy-name bronze"
+                                style={{color: 'rgb(43, 127, 197)'}}
+                              >
+                                OCG Trophies
+                              </div>
+                              <div className="trophy-count">0</div>
+                            </div>
+                          </Link>
                         </div>
 
                         <div className="single-trophy-container">

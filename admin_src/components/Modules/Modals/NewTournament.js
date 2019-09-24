@@ -14,6 +14,7 @@ class NewTournament extends React.Component {
       ladder_id: '',
       min_players: '',
       gamer_tag: '',
+      member_tournament: 'no',
       rules: '',
       max_players: '',
       games: [],
@@ -278,6 +279,23 @@ class NewTournament extends React.Component {
                   <option value="4">4 Teams</option>
                   <option value="4">8 Teams</option>
                   <option value="4">16 Teams</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label>Members only Tournament</label>
+                <select
+                  required
+                  placeholder="Members only Tournament"
+                  className="form-control"
+                  name="member_tournament"
+                  onChange={this.handleChange.bind(this)}
+                  id="member_tournament"
+                  value={this.state.member_tournament}
+                >
+                  <option value="">Select</option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
                 </select>
               </div>
 

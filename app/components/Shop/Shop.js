@@ -345,7 +345,11 @@ class Shop extends React.Component {
                   <br />
                   <img
                     src="/assets/icons/ocg_member.png"
-                    style={{height: 200}}
+                    style={{
+                      height: '150px',
+                      marginTop: '20px',
+                      marginBottom: '20px'
+                    }}
                   />
                   <br /> $5 / month
                 </div>
@@ -396,7 +400,14 @@ class Shop extends React.Component {
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Double XP <br />
-                  <img src="/assets/icons/coin-02.png" />
+                  <img
+                    src="/assets/icons/coin-02.png"
+                    style={{
+                      height: '150px',
+                      marginTop: '20px',
+                      marginBottom: '20px'
+                    }}
+                  />
                   <br /> $5 / month
                 </div>
                 {this.state.init_transaction_mode == 'double_xp' ? (
@@ -448,7 +459,14 @@ class Shop extends React.Component {
                 <div className="credit_summary ">
                   Credit Balance
                   <br />
-                  <img src="/assets/icons/coin-01.png" />
+                  <img
+                    src="/assets/icons/coin-01.png"
+                    style={{
+                      height: '150px',
+                      marginTop: '20px',
+                      marginBottom: '20px'
+                    }}
+                  />
                   <br /> {this.props.user && this.props.user.credit_balance}
                 </div>
                 {this.state.init_transaction_mode == 'credit' ? (
@@ -477,7 +495,14 @@ class Shop extends React.Component {
                 <div className="credit_summary ">
                   Cash Balance
                   <br />
-                  <img src="/assets/icons/money-01.png" />
+                  <img
+                    src="/assets/icons/money-01.png"
+                    style={{
+                      height: '150px',
+                      marginTop: '20px',
+                      marginBottom: '20px'
+                    }}
+                  />
                   <br /> ${this.props.user && this.props.user.cash_balance}
                 </div>
                 {this.state.init_transaction_mode == 'cash' ? (

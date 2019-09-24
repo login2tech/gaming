@@ -4591,12 +4591,12 @@ span.rank_prog_done {
     color: #8e8e8e;
     letter-spacing: 1px;
 }
-
+/*
 .float-right.rank_box_wrap {
     position: absolute;
     bottom: 0;
     right: 0;
-}
+} */
 
 .must_show {
     display: block;
@@ -5032,4 +5032,13 @@ ul.pagination .disabled a {
     color: #313131;
     background: #00165a;
     cursor: not-allowed;
+}
+
+
+.trof_a{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  align-self: stretch;
 }

@@ -16,7 +16,6 @@ exports.deleteSettings = function(req, res, next) {
 
 exports.create_SATOSHIS = function(req, res, next) {
   const s = [
-    
     {
       key: 'facebook_url',
       type: 'url',
@@ -45,7 +44,7 @@ exports.create_SATOSHIS = function(req, res, next) {
       content: 'http://instagram.com',
       page: 'Contact Details'
     },
-   
+
     {
       key: 'stripe_live_publishable_key',
       type: 'text',
@@ -53,7 +52,7 @@ exports.create_SATOSHIS = function(req, res, next) {
       content: 'pk_live_',
       page: 'Stripe'
     },
-    
+
     {
       key: 'stripe_test_publishable_key',
       type: 'text',

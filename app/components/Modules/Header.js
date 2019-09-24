@@ -122,11 +122,6 @@ class Header extends React.Component {
                         <li>
                           <Link to="/feed/my">Personal</Link>
                         </li>
-                        <li>
-                          <Link to="/clip_of_the_week_month">
-                            Clip of the week / month
-                          </Link>
-                        </li>
                       </ul>
                     </li>
                     <li>

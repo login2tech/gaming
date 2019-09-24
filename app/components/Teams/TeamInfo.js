@@ -140,7 +140,7 @@ class TeamInfo extends React.Component {
     this.setState(
       {
         profile_image_select: event.target.files[0],
-        saving_profile_photo  : true,
+        saving_profile_photo: true,
         loaded: 0
       },
       () => {
@@ -148,7 +148,7 @@ class TeamInfo extends React.Component {
           if (data && data.file) {
             this.setState({
               new_profile_pic: data.file,
-              saving_profile_photo  : false,
+              saving_profile_photo: false,
               new_profile_pic_saved: false
             });
           }
@@ -192,7 +192,7 @@ class TeamInfo extends React.Component {
         {
           profile_picture: this.state.new_profile_pic
         },
-         this.state.team_info.id,
+        this.state.team_info.id,
         st => {
           const obj = {saving_profile_photo: false};
           if (st) {
@@ -209,18 +209,18 @@ class TeamInfo extends React.Component {
     if (!this.state.new_cover_pic) {
       return;
     }
-     this.setState({
+    this.setState({
       saving_cover_photo: true
     });
 
     event.preventDefault();
-   
-   this.props.dispatch(
+
+    this.props.dispatch(
       teamPic(
         {
           cover_picture: this.state.new_cover_pic
         },
-         this.state.team_info.id,
+        this.state.team_info.id,
 
         st => {
           const obj = {saving_cover_photo: false};
@@ -232,9 +232,6 @@ class TeamInfo extends React.Component {
         }
       )
     );
-
-
-
   }
 
   askFile(cls, cb) {
@@ -264,6 +261,21 @@ class TeamInfo extends React.Component {
     return this.state.team_info.team_creator == this.props.user.id
       ? true
       : false;
+  }
+
+  availMembers(membrs) {
+    const l = 0;
+
+    for (let i = 0; i < this.state.team_info.team_users.length; i++) {
+      //membrs
+
+      if (this.state.team_info.team_users[i].removed == 1) {
+        //
+      } else {
+        l++;
+      }
+    }
+    return l;
   }
 
   removeUsers() {
@@ -312,10 +324,10 @@ class TeamInfo extends React.Component {
           backgroundImage: "url('" + this.state.new_cover_pic + "')"
         }
       : this.state.team_info && this.state.team_info.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
+          }
+        : {};
 
     return (
       <div>
@@ -324,14 +336,16 @@ class TeamInfo extends React.Component {
           id="is_top"
           style={divStyle}
         >
-        {this.state.saving_cover_photo ? (
+          {this.state.saving_cover_photo ? (
             <div className="photo_progress cover_progress">
               <span className="fa fa-spinner fa-spin" />
             </div>
           ) : (
             false
           )}
-          {this.props.user && this.currentUserInTeam() && !this.state.team_info.removed ? (
+          {this.props.user &&
+          this.currentUserInTeam() &&
+          !this.state.team_info.removed ? (
             <div className="update_btn cover">
               <label htmlFor="cover_image_select">
                 <i className="fa fa-edit" /> upload cover
@@ -365,8 +379,6 @@ class TeamInfo extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12">
-                
-
                 <div className="game_pic_tournament profile_pic_outline square">
                   <div className="content">
                     <div className="update_btn">
@@ -416,20 +428,17 @@ class TeamInfo extends React.Component {
                         className="img-fluid "
                       />
                     ) : (
-                      <img
-                        className="img-fluid  "
-                        src="/images/team_bg.png"
-                      />
+                      <img className="img-fluid  " src="/images/team_bg.png" />
                     )}
                   </div>
                 </div>
-
-
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>{this.state.team_info.title}{
-                    this.state.team_info.removed ? ' - DELETED TEAM ' : ''}</h3>
+                  <h3>
+                    {this.state.team_info.title}
+                    {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
+                  </h3>
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-4">
@@ -470,7 +479,8 @@ class TeamInfo extends React.Component {
                     </div>*/}
                     </div>
                     {this.props.user &&
-                    this.state.team_info.team_creator == this.props.user.id && !this.state.team_info.removed ? (
+                    this.state.team_info.team_creator == this.props.user.id &&
+                    !this.state.team_info.removed ? (
                       <Link
                         to={
                           '/matchfinder/new/' +
@@ -501,7 +511,8 @@ class TeamInfo extends React.Component {
                     <span className="pull-right">
                       {this.props.user &&
                         this.props.user.id ==
-                          this.state.team_info.team_creator && !this.state.team_info.removed && (
+                          this.state.team_info.team_creator &&
+                        !this.state.team_info.removed && (
                           <button
                             className="is_link btn"
                             onClick={() => {
@@ -679,7 +690,8 @@ class TeamInfo extends React.Component {
                 {this.props.user &&
                 this.state.team_info.team_creator == this.props.user.id &&
                 parseInt(this.state.team_info.ladder.max_players) >
-                  parseInt(this.state.team_info.team_users.length) && !this.state.team_info.removed ? (
+                  this.availMembers(this.state.team_info.team_users) &&
+                !this.state.team_info.removed ? (
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">Invite A User</h5>
                     <Messages messages={this.props.messages} />

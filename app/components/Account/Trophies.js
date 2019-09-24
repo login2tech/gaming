@@ -1,24 +1,20 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-// import { resetPassword } from '../../actions/auth';
-// import Messages from 'Messages';
 
-// import NotFound from './Pages/NotFound';
-
-class Records extends React.Component {
+class Trophies extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {records: {}, loaded: false, ladders: {}};
+    this.state = {records: {}, loaded: true, ladders: {}, rec: []};
   }
 
   componentDidMount() {
-    this.fetchNotifications();
+    // this.fetchNotifications();
   }
 
   fetchNotifications() {
     fetch(
-      '/api/user_info/records?username=' +
+      '/api/user_info/trophies?username=' +
         this.props.params.username +
         '&duration=' +
         this.props.params.duration
@@ -50,7 +46,7 @@ class Records extends React.Component {
   render() {
     console.log(this.state.ladders);
 
-    const rec = Object.keys(this.state.ladders);
+    // const rec = Object.keys(this.state.ladders);
     // console.log(rec);
 
     const {ladders, records} = this.state;
@@ -63,11 +59,7 @@ class Records extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3 className="no-case-change">
-                    {this.props.params.duration == 'life' ? 'Life' : ''}
-                    {this.props.params.duration == 'season'
-                      ? 'Season'
-                      : ''}{' '}
-                    Records for @{this.props.params.username}
+                    {this.props.params.type} Trophies
                   </h3>
                   <br />
                   <Link to={'/u/' + this.props.params.username}>
@@ -83,16 +75,13 @@ class Records extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {rec.length == 0 &&
-                  this.state.loaded && (
-                    <div className="alert alert-warning">
-                      No records to show
-                    </div>
-                  )}
+                {this.state.loaded && (
+                  <div className="alert alert-warning">No records to show</div>
+                )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container">
-                    {rec.map((notif, i) => {
+                    {this.state.rec.map((notif, i) => {
                       return (
                         <div
                           className="single-trophy-container m-b-20"
@@ -137,4 +126,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Records);
+export default connect(mapStateToProps)(Trophies);
