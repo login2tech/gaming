@@ -264,7 +264,7 @@ class TeamInfo extends React.Component {
   }
 
   availMembers(membrs) {
-    const l = 0;
+    let l = 0;
 
     for (let i = 0; i < this.state.team_info.team_users.length; i++) {
       //membrs
