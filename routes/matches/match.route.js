@@ -28,7 +28,7 @@ routes.get('/user_info', ctrl.listItem);
 // routes.get('/listPaged', ctrl.listPaged);
 routes.get('/single/:id', ctrl.listSingleItem);
 routes.get('/upcoming', ctrl.listupcoming);
+routes.get('/recent', ctrl.listrecent);
 
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
 routes.post('/resolveDispute', u_ctrl.ensureAuthenticated, ctrl.resolveDispute);
-

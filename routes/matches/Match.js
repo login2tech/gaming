@@ -22,15 +22,6 @@ const Match = bookshelf.Model.extend({
   team_2_info: function() {
     return this.belongsTo('Team', 'team_2_id');
   }
-
-  // thread_count: function() {
-  //   return new Topic.Model()
-  //     .query(function(qb) {
-  //       qb.where('topic_id', 9);
-  //       qb.count();
-  //     })
-  //     .fetch();
-  // }
 });
 // module.exports = Team;
 module.exports = bookshelf.model('Match', Match);

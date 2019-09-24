@@ -853,6 +853,31 @@ exports.listupcoming = function(req, res, next) {
     });
 };
 
+exports.listrecent = function(req, res, next) {
+  let a = new Item();
+  a = a.orderBy('id', 'DESC');
+  a = a.where('starts_at', '<', moment());
+
+  if (req.query.filter_id) {
+    a = a.where({
+      game_id: req.query.filter_id
+    });
+  }
+
+  a.fetchAll({withRelated: ['ladder', 'team_1_info', 'team_2_info']})
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      items = items.toJSON();
+      return res.status(200).send({ok: true, items: items});
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
+
 exports.listItem = function(req, res, next) {
   new Item()
     // .where('id', req.params.id)

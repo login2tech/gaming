@@ -1,43 +1,64 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import { resetPassword } from '../../actions/auth';
-// import Messages from 'Messages';
-
-import NotFound from './Pages/NotFound';
-
+const moment = require('moment');
+import {Link} from 'react-router';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {matches: {[props.params.id]: []}, done_matches: []};
   }
 
-  componentWillUnmount() {
-    // this.serverRequest.abort();
-  }
   componentDidMount() {
-    // fetch('/api/cms_pages/slug/' + this.props.params.slug)
-    //   .then(res => res.json())
-    //   .then(json => {
-    //     if (json.ok) {
-    //       this.setState({
-    //         is_page: true,
-    //         is_loaded: true,
-    //         title: json.cms_page.title,
-    //         content: json.cms_page.content
-    //       });
-    //     } else {
-    //       this.setState({
-    //         is_page: false,
-    //         is_loaded: true
-    //       });
-    //     }
-    //   });
+    this.fetchUpcomingMatches();
+  }
+  fetchUpcomingMatches() {
+    let str = '';
+    if (this.props.params && this.props.params.id) {
+      str = '?&filter_id=' + this.props.params.id;
+    }
+    fetch('/api/matches/upcoming' + str)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              is_loaded_1: true,
+              matches: json.items,
+              total_upcoming: json.total_upcoming
+            },
+            () => {
+              this.fetchRecentMatches();
+            }
+          );
+        }
+      });
+  }
+
+  fetchRecentMatches() {
+    let str = '';
+    if (this.props.params && this.props.params.id) {
+      str = '?&filter_id=' + this.props.params.id;
+    }
+    fetch('/api/matches/recent' + str)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              is_loaded_2: true,
+              done_matches: json.items,
+              total_done: json.total_done
+            },
+            () => {
+              this.fetch;
+            }
+          );
+        }
+      });
   }
 
   render() {
-    if (this.state.is_loaded && !this.state.is_page) {
-      return <NotFound />;
-    }
+    const game_id = this.props.params.id;
     return (
       <div>
         <section className="page_title_bar">
@@ -57,14 +78,99 @@ class Game extends React.Component {
             <div className="row">
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
-                  //dfsfsdfsd sfs
-                  dfsdfsdfsdjduehr8gher8ghe8rghe8rhge78rhg78ehrg78
+                  <h4>Chatbox</h4>
                 </div>
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
-                  //dfsfsdfsd sfs
-                  dfsdfsdfsdjduehr8gher8ghe8rghe8rhge78rhg78ehrg78
+                  <h4>Matchfinder</h4>
+                  {this.state.is_loaded_1 && this.state.total_upcoming < 1 ? (
+                    <div className="alert alert-warning">
+                      There are no active matches. Please check back later or
+                      start a new match
+                    </div>
+                  ) : (
+                    false
+                  )}
+                  {!this.state.is_loaded_1 ? (
+                    <div className="text-center">
+                      <span className="fa fa-spin fa-spinner" />
+                    </div>
+                  ) : (
+                    false
+                  )}
+                  <ul
+                    id="upcoming-tournament"
+                    className="tournament-list active"
+                  >
+                    {this.state.matches &&
+                      this.state.matches[game_id] &&
+                      this.state.matches[game_id].map((match, i) => {
+                        return (
+                          <li
+                            key={match.id}
+                            className="tournament-box"
+                            style={{background: '#27204d'}}
+                          >
+                            <div className="tournament-body">
+                              <Link
+                                to={this.matchLink('/m/' + match.id)}
+                                className="tournament-name"
+                              >
+                                {match.ladder.title}
+                              </Link>
+
+                              <span className="date">
+                                {moment(match.starts_at).format('lll')}
+                              </span>
+                              <span className="date">
+                                Starts {moment(match.starts_at).fromNow()}
+                              </span>
+                            </div>
+
+                            <div className="tournament-footer">
+                              <div className="col">
+                                <div className="col-item">
+                                  <h5>Status</h5>
+                                  <p>{match.status}</p>
+                                </div>
+                                <div className="col-item">
+                                  <h5>TYPE</h5>
+                                  <p>
+                                    {match.match_type == 'paid'
+                                      ? 'CASHOUT'
+                                      : 'LADDER'}
+                                  </p>
+                                </div>
+                                <div className="col-item">
+                                  <h5>Prize pool</h5>
+                                  <p>
+                                    {match.match_type == 'paid'
+                                      ? '$ ' + match.match_fee + ' USD'
+                                      : '--'}
+                                  </p>
+                                </div>
+                                <div className="col-item">
+                                  <h5>Players</h5>
+                                  <p>
+                                    {match.match_players}v{match.match_players}
+                                  </p>
+                                </div>
+                              </div>
+
+                              <div className="col align-right">
+                                <Link
+                                  to={this.matchLink('/m/' + match.id)}
+                                  className="btn-default"
+                                >
+                                  Accept Match
+                                </Link>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -72,14 +178,73 @@ class Game extends React.Component {
             <div className="row">
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
-                  //dfsfsdfsd sfs
-                  dfsdfsdfsdjduehr8gher8ghe8rghe8rhge78rhg78ehrg78
+                  <h4>Recent Matches</h4>
+
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <th>Match</th>
+                        <th>Team 1</th>
+                        <th>Team 2</th>
+                        <th>Date</th>
+                        <th>Info</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.done_matches.map((match, i) => {
+                        let wl_1 = false;
+                        let wl_2 = false;
+                        if (match.result) {
+                          if (match.result == 'team_1') {
+                            wl_1 = <span className="text-success"> W</span>;
+                            wl_2 = <span className="text-danger"> L</span>;
+                          } else if (match.result == 'team_2') {
+                            wl_2 = <span className="text-success"> W</span>;
+                            wl_1 = <span className="text-danger"> L</span>;
+                          }
+                        }
+
+                        return (
+                          <tr key={match.id}>
+                            <td>
+                              <Link to={'/m/' + match.id}>#{match.id}</Link>
+                            </td>
+                            <td>
+                              <Link to={'/teams/view/' + match.team_1_info.id}>
+                                {match.team_1_info.title}
+                              </Link>
+                              {wl_1}
+                            </td>
+                            <td>
+                              {match.team_2_info ? (
+                                <>
+                                  <Link
+                                    to={'/teams/view/' + match.team_2_info.id}
+                                  >
+                                    {match.team_2_info.title}
+                                  </Link>
+                                  {wl_2}
+                                </>
+                              ) : (
+                                ' '
+                              )}
+                            </td>
+
+                            <td>{moment(match.created_at).format('lll')}</td>
+                            <td>
+                              {' '}
+                              <Link to={'/m/' + match.id}>View Match</Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
-                  //dfsfsdfsd sfs
-                  dfsdfsdfsdjduehr8gher8ghe8rghe8rhge78rhg78ehrg78
+                  <h4>Leaderboard</h4>
                 </div>
               </div>
             </div>
