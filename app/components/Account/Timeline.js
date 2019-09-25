@@ -116,7 +116,7 @@ class Profile extends React.Component {
                     <NewPost
                       user_info={this.state.user_info}
                       onSubmit={post => {
-                        const posts = this.props.posts;
+                        const posts = this.state.posts;
                         posts.unshift(post);
                         this.setState({
                           posts: posts,
