@@ -5,6 +5,17 @@ import {connect} from 'react-redux';
 import {add_post} from '../../actions/social';
 import axios from 'axios';
 class NewPost extends React.Component {
+  state = {
+    new_post_type: 'text',
+    new_post_content: '',
+    new_post_image: '',
+    new_post_video: ''
+  };
+
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
   doPostNew(event) {
     event.preventDefault();
 
@@ -20,15 +31,7 @@ class NewPost extends React.Component {
         (result, post) => {
           if (result && post) {
             post.user = this.props.user;
-            const posts = this.state.posts;
-            posts.unshift(post);
-            this.setState({
-              posts: posts,
-              new_post_type: 'text',
-              new_post_image: '',
-              new_post_video: '',
-              new_post_content: ''
-            });
+            this.props.onSubmit && this.props.onSubmit(post);
           }
         }
       )
@@ -99,7 +102,7 @@ class NewPost extends React.Component {
   render() {
     return (
       <div>
-        {this.props.user && this.props.user.id == this.state.user_info.id ? (
+        {this.props.user && this.props.user.id == this.props.user_info.id ? (
           <form
             onSubmit={event => {
               this.doPostNew(event);
