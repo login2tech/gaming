@@ -557,7 +557,8 @@ class Money8Info extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {this.state.match.players_joined <
+                {/*
+                  this.state.match.players_joined <
                 this.state.match.players_total ? (
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">
@@ -608,7 +609,11 @@ class Money8Info extends React.Component {
                   </div>
                 ) : (
                   this.renderStartedMatch()
-                )}
+                )*/}
+                {this.state.match.players_joined <
+                this.state.match.players_total
+                  ? false
+                  : this.renderStartedMatch()}
 
                 <br />
                 {this.renderJoin()}

@@ -6,6 +6,7 @@ import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
 import moment from 'moment';
 import Following from '../Modules/Modals/Following';
+import game_user_ids from '../../../config/game_user_ids';
 class ProfileHeader extends React.Component {
   state = {};
   addFriend(event) {
@@ -254,7 +255,7 @@ class ProfileHeader extends React.Component {
         id="is_top"
         style={divStyle}
       >
-        <div className="container">
+        <div className="container-fluid">
           <div className="row">
             <div className="col-md-3 col-sm-3 col-xs-12 d-flex align-items-end">
               <div className="game_pic_tournament profile_pic_outline square">
@@ -284,10 +285,13 @@ class ProfileHeader extends React.Component {
               </div>
             </div>
             <div className="col-md-9 col-sm-9 col-xs-12 d-flex align-items-end justify-content-end align-content-end">
-              <div className="section-headline white-headline text-left">
+              <div
+                className="section-headline white-headline text-left"
+                style={{width: '100%'}}
+              >
                 <div className="list_pad">
                   <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-md-4">
                       {user_info.prime && (
                         <img
                           src="/assets/icons/ocg_member.png"
@@ -295,8 +299,8 @@ class ProfileHeader extends React.Component {
                         />
                       )}
                     </div>
-                    <div className="col-md-3"> </div>
-                    <div className="col-md-6">
+                    <div className="col-md-1"> </div>
+                    <div className="col-md-6  d-flex align-items-end justify-content-end align-content-end">
                       <br />
 
                       <div className="float-right rank_box_wrap">
@@ -382,10 +386,28 @@ class ProfileHeader extends React.Component {
           <div className="list_pad">
             <div className="row">
               <div className="col-md-3">
-                <h3 className="no-case-change text-right">
+                <h3 className="no-case-change text-center">
                   @{user_info.username}
                 </h3>
               </div>
+
+              {/*game_user_ids.tags.map((k, i) => {
+                if (
+                  !user_info['gamer_tag_' + k] ||
+                  user_info['gamer_tag_' + k] == ''
+                ) {
+                  return false;
+                }
+                return (
+                  <div className="col-md-3" key={k}>
+                    <span>{game_user_ids.tag_names[k]}</span>
+                    <p>{user_info['gamer_tag_' + k]}</p>
+                  </div>
+                );
+              })*/}
+
+              {/*}
+
               <div className="col-md-3">
                 <span> MEMBER SINCE</span>
                 <p>{moment(user_info.created_at).format('lll')}</p>
@@ -394,7 +416,7 @@ class ProfileHeader extends React.Component {
               <div className="col-md-2">
                 <span> TIME ZONE </span>
                 <p>{user_info.timezone ? user_info.timezone : '-'}</p>
-              </div>
+              </div>*/}
 
               <div className="col-md-2">
                 <span>

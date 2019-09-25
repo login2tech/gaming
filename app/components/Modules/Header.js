@@ -128,6 +128,14 @@ class Header extends React.Component {
                       <Link to="/forums">Community</Link>
                       <ul className="submenu">
                         <li>
+                          <Link to="/forums">Forums</Link>
+                        </li>
+
+                        <li>
+                          <Link to="/leaderboards">Leaderboards</Link>
+                        </li>
+
+                        <li>
                           <Link to="/clip_of_the_week_month">
                             Clip of the week/month
                           </Link>

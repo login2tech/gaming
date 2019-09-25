@@ -27,6 +27,10 @@ class MatchInfo extends React.Component {
     };
   }
 
+  showGamerTag() {
+    //
+  }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
@@ -619,7 +623,7 @@ class MatchInfo extends React.Component {
                     <thead>
                       <tr>
                         <th>Username</th>
-                        <th>Gamer Tag</th>
+                        <th>{this.showGamerTag()}</th>
                         <th>Role</th>
                       </tr>
                     </thead>
