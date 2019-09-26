@@ -178,7 +178,7 @@ class Profile extends React.Component {
 
   fetchTournaments() {
     fetch(
-      '/api/tournaments/t_of_user?page=' +
+      '/api/tournaments/t_of_user?exclude_pending=yes&page=' +
         this.state.tour_page +
         '&uid=' +
         this.state.user_info.id

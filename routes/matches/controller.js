@@ -794,11 +794,13 @@ exports.matches_of_team = function(req, res, next) {
 
 exports.matches_of_user = function(req, res, next) {
   const teams = req.query.teams.split(',');
-  new Item()
-    .orderBy('created_at', 'DESC')
-    .query(function(qb) {
-      qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
-    })
+  let mdl = new Item().orderBy('created_at', 'DESC').query(function(qb) {
+    qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+  });
+  if (req.query.exclude_pending == 'yes') {
+    mdl = mdl.where('status', 'NOT LIKE', 'pending');
+  }
+  mdl
     .fetchPage({
       page: req.query.page ? req.query.page : 1,
       pageSize: 5,

@@ -119,7 +119,10 @@ class TeamInfo extends React.Component {
     if (!this.state.team_info.ladder) {
       return;
     }
-    fetch('/api/matches/matches_of_team/?team_id=' + this.props.params.team_id)
+    fetch(
+      '/api/matches/matches_of_team/?exclude_pending=yes&team_id=' +
+        this.props.params.team_id
+    )
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
@@ -324,10 +327,10 @@ class TeamInfo extends React.Component {
           backgroundImage: "url('" + this.state.new_cover_pic + "')"
         }
       : this.state.team_info && this.state.team_info.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
+          }
+        : {};
 
     return (
       <div>
