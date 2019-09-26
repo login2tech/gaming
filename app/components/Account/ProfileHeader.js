@@ -6,7 +6,7 @@ import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
 import moment from 'moment';
 import Following from '../Modules/Modals/Following';
-import game_user_ids from '../../../config/game_user_ids';
+// import game_user_ids from '../../../config/game_user_ids';
 class ProfileHeader extends React.Component {
   state = {};
   addFriend(event) {

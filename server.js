@@ -140,7 +140,7 @@ app.get('/api/user_suggest', function(req, res, next) {
     return;
   }
   new User()
-    .where('username', 'LIKE', '%' + req.query.q + '%')
+    .where('username', 'LIKE', '' + req.query.q + '%')
     .fetchAll()
     .then(function(items) {
       res.status(200).send({items: items.toJSON(), ok: true});

@@ -158,27 +158,57 @@ exports.invite = function(req, res, next) {
             return;
           }
           const user_id = user.id;
-          new ItemChild({
-            team_id: team.id,
-            user_id: user_id,
-            accepted: false
-          })
-            .save()
-            .then(function() {
-              res.status(200).send({
-                ok: true,
-                msg: 'User invited successfully.'
-              });
-              new Notif()
-                .save({
-                  user_id: user_id,
-                  description: 'You have been invited to a team',
-                  type: 'team_invite',
-                  object_id: team.id
+
+          new ItemChild()
+            .where({
+              user_id: req.user.id,
+              removed: false
+            })
+            .fetchAll({
+              withRelated: ['team_info']
+            })
+            .then(function(teams) {
+              teams = teams.toJSON();
+              for (let i = 0; i < teams.length; i++) {
+                if (teams[i].team_info.ladder_id == parseInt(req.body.ladder)) {
+                  // failed;
+                  return res.status(400).send({
+                    ok: false,
+                    msg:
+                      'The user is already a member of another team for this ladder.'
+                  });
+                }
+              }
+
+              new ItemChild({
+                team_id: team.id,
+                user_id: user_id,
+                accepted: false
+              })
+                .save()
+                .then(function() {
+                  res.status(200).send({
+                    ok: true,
+                    msg: 'User invited successfully.'
+                  });
+                  new Notif()
+                    .save({
+                      user_id: user_id,
+                      description: 'You have been invited to a team',
+                      type: 'team_invite',
+                      object_id: team.id
+                    })
+                    .then(function() {})
+                    .catch(function(er) {
+                      console.log(er);
+                    });
                 })
-                .then(function() {})
-                .catch(function(er) {
-                  console.log(er);
+                .catch(function(err) {
+                  console.log(err);
+                  res.status(400).send({
+                    ok: false,
+                    msg: 'failed to invite user'
+                  });
                 });
             })
             .catch(function(err) {
@@ -205,6 +235,7 @@ exports.invite = function(req, res, next) {
       });
     });
 };
+
 exports.team_of_user = function(req, res, next) {
   const a = new ItemChild().where({
     user_id: req.query.uid,
@@ -301,23 +332,51 @@ exports.addItem = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
-  new Item({
-    title: req.body.title,
-    ladder_id: req.body.ladder,
-    team_creator: req.user.id
-  })
-    .save()
-    .then(function(item) {
-      res.send({
-        ok: true,
-        msg: 'New Item has been created successfully.',
-        team: item.toJSON()
-      });
-      new ItemChild({
-        team_id: item.id,
-        user_id: req.user.id,
-        accepted: true
-      }).save();
+
+  new ItemChild()
+    .where({
+      user_id: req.user.id,
+      removed: false
+    })
+    .fetchAll({
+      withRelated: ['team_info']
+    })
+
+    .then(function(teams) {
+      teams = teams.toJSON();
+      for (let i = 0; i < teams.length; i++) {
+        if (teams[i].team_info.ladder_id == parseInt(req.body.ladder)) {
+          // failed;
+          return res.status(400).send({
+            ok: false,
+            msg: 'You are already a member of another team for this ladder.'
+          });
+        }
+      }
+      new Item({
+        title: req.body.title,
+        ladder_id: req.body.ladder,
+        team_creator: req.user.id
+      })
+        .save()
+        .then(function(item) {
+          res.send({
+            ok: true,
+            msg: 'New Item has been created successfully.',
+            team: item.toJSON()
+          });
+          new ItemChild({
+            team_id: item.id,
+            user_id: req.user.id,
+            accepted: true
+          }).save();
+        })
+        .catch(function(err) {
+          console.log(err);
+          return res
+            .status(400)
+            .send({msg: 'Something went wrong while created a new Item'});
+        });
     })
     .catch(function(err) {
       console.log(err);

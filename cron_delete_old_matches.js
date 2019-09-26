@@ -18,7 +18,15 @@ function reset_ticker() {
   TICKER = 0;
 }
 const delete_match = function(ta) {
-  new Match().where({id: ta}).destroy();
+  new Match()
+    .where({id: ta})
+    .destroy()
+    .then(function(d) {
+      //
+    })
+    .catch(function(err) {
+      //
+    });
 };
 new Match()
   .where('starts_at', '<', moment())
