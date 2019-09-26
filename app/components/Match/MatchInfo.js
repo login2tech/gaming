@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
 import {join_match, saveScores} from '../../actions/match';
-
+import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
 
 class MatchInfo extends React.Component {
@@ -28,7 +28,7 @@ class MatchInfo extends React.Component {
   }
 
   showGamerTag() {
-    //
+    return game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
   }
 
   handleChange(event) {
@@ -669,7 +669,7 @@ class MatchInfo extends React.Component {
                                       ]
                                     ) : (
                                       <span className="text-danger">
-                                        No Gamertag
+                                        No UserId
                                       </span>
                                     )}
                                   </td>
@@ -720,7 +720,7 @@ class MatchInfo extends React.Component {
                             <thead>
                               <tr>
                                 <th>Username</th>
-                                <th>Gamer Tag</th>
+                                <th>{this.showGamerTag()}</th>
                                 <th>Role</th>
                               </tr>
                             </thead>
@@ -756,7 +756,7 @@ class MatchInfo extends React.Component {
                                           ]
                                         ) : (
                                           <span className="text-danger">
-                                            No Gamertag
+                                            No User id
                                           </span>
                                         )}
                                       </td>

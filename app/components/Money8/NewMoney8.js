@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 // import {Link} from 'react-router';
 import Messages from '../Modules/Messages';
 import {createMatch8} from '../../actions/match8';
+import game_user_ids from '../../../config/game_user_ids';
 
 import {Link} from 'react-router';
-// import moment from 'moment';
+
 class NewMoney8 extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,13 @@ class NewMoney8 extends React.Component {
       match_type: '',
       match_fee: 0
     };
+  }
+
+  showGamerTag(ladder) {
+    if (!ladder) {
+      return 'Platform User id';
+    }
+    return game_user_ids.tag_names[ladder.gamer_tag];
   }
 
   handleChange(event) {
@@ -195,7 +203,7 @@ class NewMoney8 extends React.Component {
                       */}
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="title">Gamer Tag Required</label>
+                      <label htmlFor="title">User Id Required</label>
                       <br />
                       <strong>
                         {this.state.ladder
@@ -281,7 +289,7 @@ class NewMoney8 extends React.Component {
                           <thead>
                             <tr>
                               <th>Username</th>
-                              <th>Gamer Tag</th>
+                              <th>{this.showGamerTag(ladder)}</th>
                               <th>Eligibility</th>
                             </tr>
                           </thead>
@@ -307,7 +315,7 @@ class NewMoney8 extends React.Component {
                                       team_user['gamer_tag_' + ladder.gamer_tag]
                                     ) : (
                                       <span className="text-danger">
-                                        No Gamertag
+                                        No user id
                                       </span>
                                     )}
                                   </td>

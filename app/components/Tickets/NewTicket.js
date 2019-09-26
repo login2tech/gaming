@@ -170,8 +170,8 @@ class NewTicket extends React.Component {
                           <option value="Customer Support - Email Issues">
                             Customer Support - Email Issues
                           </option>
-                          <option value="Customer Support - Gamertag Issues">
-                            Customer Support - Gamertag Issues
+                          <option value="Customer Support - Platform User ID Issues">
+                            Customer Support - Platform User ID Issues
                           </option>
                           <option value="Customer Support - Other">
                             Customer Support - Other

@@ -11,6 +11,7 @@ import {
 } from '../../actions/team';
 import Messages from '../Modules/Messages';
 import axios from 'axios';
+import game_user_ids from '../../../config/game_user_ids';
 
 class TeamInfo extends React.Component {
   constructor(props) {
@@ -24,6 +25,9 @@ class TeamInfo extends React.Component {
       removing: [],
       is_edit_mode: false
     };
+  }
+  showGamerTag() {
+    return game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
   }
   approveRequest(event, reject) {
     event.preventDefault();
@@ -538,7 +542,7 @@ class TeamInfo extends React.Component {
                         {this.state.is_edit_mode && <th>{'remove'}</th>}
                         <th>Username</th>
                         <th>Role</th>
-                        <th>Gamer Tag</th>
+                        <th>{this.showGamerTag()}</th>
                         <th>Eligible</th>
                         <th>Date Joined</th>
                       </tr>

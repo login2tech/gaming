@@ -301,7 +301,7 @@ class NewTeam extends React.Component {
                       </div>
                       <br />
                       <div className="form-group col-md-12">
-                        <label htmlFor="title">Gamer Tag Required</label>
+                        <label htmlFor="title">User Id Required</label>
                         <br />
                         <strong>
                           {
@@ -452,7 +452,13 @@ class NewTeam extends React.Component {
                               <tr>
                                 <th>Username</th>
                                 <th>Role</th>
-                                <th>Gamer Tag</th>
+                                <th>
+                                  {
+                                    this.tag_names[
+                                      this.state.team_info.ladder.gamer_tag
+                                    ]
+                                  }
+                                </th>
                                 <th>Eligibility</th>
                                 <th>Include</th>
                               </tr>
@@ -500,7 +506,7 @@ class NewTeam extends React.Component {
                                           ]
                                         ) : (
                                           <span className="text-danger">
-                                            No Gamertag
+                                            No user Id
                                           </span>
                                         )}
                                       </td>

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 // const moment = require('moment');
 import {join_match, saveScores} from '../../actions/match8';
+import game_user_ids from '../../../config/game_user_ids';
 
 import Messages from '../Modules/Messages';
 
@@ -25,6 +26,10 @@ class Money8Info extends React.Component {
       their_score: '',
       approve_join: false
     };
+  }
+
+  showGamerTag() {
+    return game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
   }
 
   handleChange(event) {
@@ -154,7 +159,7 @@ class Money8Info extends React.Component {
       if (!this.props.user['gamer_tag_' + this.state.match.ladder.gamer_tag]) {
         disabled = true;
         disabled_reason =
-          'You do not have the required gamer tag set to join this pool.';
+          'You do not have the required user id set to join this pool.';
       }
     }
 
@@ -358,7 +363,7 @@ class Money8Info extends React.Component {
           <thead>
             <tr>
               <th>Username</th>
-              <th>Gamer Tag</th>
+              <th>{this.showGamerTag()}</th>
             </tr>
           </thead>
           <tbody>
@@ -380,7 +385,7 @@ class Money8Info extends React.Component {
                             'gamer_tag_' + this.state.match.ladder.gamer_tag
                           ]
                         ) : (
-                          <span className="text-danger">No Gamertag</span>
+                          <span className="text-danger">No User id</span>
                         )}
                       </td>
                     </tr>
@@ -420,7 +425,7 @@ class Money8Info extends React.Component {
           <thead>
             <tr>
               <th>Username</th>
-              <th>Gamer Tag</th>
+              <th>{this.showGamerTag()}</th>
             </tr>
           </thead>
           <tbody>
@@ -442,7 +447,7 @@ class Money8Info extends React.Component {
                             'gamer_tag_' + this.state.match.ladder.gamer_tag
                           ]
                         ) : (
-                          <span className="text-danger">No Gamertag</span>
+                          <span className="text-danger">No user id</span>
                         )}
                       </td>
                     </tr>
@@ -570,7 +575,7 @@ class Money8Info extends React.Component {
                       <thead>
                         <tr>
                           <th>Username</th>
-                          <th>Gamer Tag</th>
+                          <th>{this.showGamerTag()}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -597,7 +602,7 @@ class Money8Info extends React.Component {
                                     ]
                                   ) : (
                                     <span className="text-danger">
-                                      No Gamertag
+                                      No user id
                                     </span>
                                   )}
                                 </td>
