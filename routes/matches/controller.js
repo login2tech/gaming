@@ -799,6 +799,7 @@ exports.matches_of_user = function(req, res, next) {
   });
   if (req.query.exclude_pending == 'yes') {
     mdl = mdl.where('status', 'NOT LIKE', 'pending');
+    mdl = mdl.where('status', '!=', 'pending');
   }
   mdl
     .fetchPage({
