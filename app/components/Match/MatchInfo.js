@@ -186,6 +186,9 @@ class MatchInfo extends React.Component {
   }
 
   saveScore() {
+    if (!this.props.user) {
+      return false;
+    }
     // const scrore = '';
     const val = {};
     const me = this.props.user.id;
@@ -211,6 +214,9 @@ class MatchInfo extends React.Component {
   }
 
   showMatch() {
+    if (!this.props.user) {
+      return;
+    }
     fetch(
       '/api/teams/team_of_user/?uid=' +
         this.props.user.id +
@@ -254,6 +260,9 @@ class MatchInfo extends React.Component {
       return false;
     }
 
+    if (!this.props.user) {
+      return false;
+    }
     // return false;
     const me = this.props.user.id;
     // let team_1_players = this.state.match.team_1_players.split('|');
@@ -318,6 +327,9 @@ class MatchInfo extends React.Component {
   }
 
   renderScoreSubmit() {
+    if (!this.props.user) {
+      return false;
+    }
     if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
       return false;
     }
@@ -928,18 +940,13 @@ class MatchInfo extends React.Component {
                         </li>
                       );
                     })}
-                  {this.state.eligible_teams_loaded &&
-                    !this.state.team_selected && (
-                      <li>
-                        <a
-                          target="_blank"
-                          href={'/u/' + this.props.user.username + '/teams/new'}
-                        >
-                          <img src="/images/team_new.png" />
-                        </a>
-                      </li>
-                    )}
                 </ul>
+                {this.state.eligible_teams_loaded &&
+                  !this.state.team_selected && (
+                    <div className="alert alert-warning">
+                      You dont have a team for this ladder
+                    </div>
+                  )}
               </div>
             </div>
           </div>
