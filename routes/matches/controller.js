@@ -799,6 +799,7 @@ exports.matches_of_user = function(req, res, next) {
     qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
   });
   if (req.query.exclude_pending == 'yes') {
+    console.log('yesysey');
     mdl = mdl.where('status', 'NOT LIKE', 'pending');
     mdl = mdl.where('status', '!=', 'pending');
   }
