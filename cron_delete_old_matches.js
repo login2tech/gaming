@@ -25,7 +25,7 @@ const delete_match = function(ta) {
       //
     })
     .catch(function(err) {
-      //
+      console.log(err);
     });
 };
 new Match()
@@ -39,7 +39,7 @@ new Match()
       return;
     }
     matches = matches.toJSON();
-    // console.log(tournaments);
+    console.log(matches.length);
     for (let i = 0; i < matches.length; i++) {
       // `
       // tournaments`
