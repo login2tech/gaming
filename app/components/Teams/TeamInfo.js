@@ -731,51 +731,52 @@ class TeamInfo extends React.Component {
                 ) : (
                   false
                 )}
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
-                <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <th>Match</th>
+                        <th>Opponent</th>
+                        <th>Status</th>
 
-                <table className="table table-striped table-ongray table-hover">
-                  <thead>
-                    <tr>
-                      <th>Match</th>
-                      <th>Opponent</th>
-                      <th>Status</th>
+                        <th>Date</th>
+                        <th>Info</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.match_played.map((match, i) => {
+                        return (
+                          <tr key={match.id}>
+                            <td>
+                              <Link to={'/m/' + match.id}>#{match.id}</Link>
+                            </td>
+                            <td>
+                              {match.team_1_id == this.state.team_info.id ? (
+                                <Link to={'/teams/view' + match.team_1_id}>
+                                  {match.team_1_info.title}
+                                </Link>
+                              ) : (
+                                <Link to={'/teams/view' + match.team_2_id}>
+                                  {match.team_2_info.title}
+                                </Link>
+                              )}
+                            </td>
 
-                      <th>Date</th>
-                      <th>Info</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.match_played.map((match, i) => {
-                      return (
-                        <tr key={match.id}>
-                          <td>
-                            <Link to={'/m/' + match.id}>#{match.id}</Link>
-                          </td>
-                          <td>
-                            {match.team_1_id == this.state.team_info.id ? (
-                              <Link to={'/teams/view' + match.team_1_id}>
-                                {match.team_1_info.title}
-                              </Link>
-                            ) : (
-                              <Link to={'/teams/view' + match.team_2_id}>
-                                {match.team_2_info.title}
-                              </Link>
-                            )}
-                          </td>
+                            <td>{match.status}</td>
 
-                          <td>{match.status}</td>
-
-                          <td>{moment(match.created_at).format('lll')}</td>
-                          <td>
-                            {' '}
-                            <Link to={'/m/' + match.id}>View Match</Link>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                            <td>{moment(match.created_at).format('lll')}</td>
+                            <td>
+                              {' '}
+                              <Link to={'/m/' + match.id}>View Match</Link>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

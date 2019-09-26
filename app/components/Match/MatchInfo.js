@@ -226,24 +226,22 @@ class MatchInfo extends React.Component {
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          this.setState(
-            {
-              // is_loaded: true,f
-              eligible_teams: json.teams,
-              eligible_teams_loaded: true
-            },
-            () => {
-              // scroll
-              const element = document.getElementById('tlst');
-              if (element) {
-                element.scrollIntoView({
-                  behavior: 'smooth',
-                  block: 'end',
-                  inline: 'nearest'
-                });
-              }
+          const obj = {eligible_teams: json.teams, eligible_teams_loaded: true};
+          if (json.teams && json.teams.length && json.teams[0].removed != 1) {
+            obj.team_selected = json.teams[0].team_info;
+          }
+
+          this.setState(obj, () => {
+            // scroll
+            const element = document.getElementById('tlst');
+            if (element) {
+              element.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+                inline: 'nearest'
+              });
             }
-          );
+          });
         }
       });
   }
@@ -349,7 +347,7 @@ class MatchInfo extends React.Component {
       this.state.match.team_1_result
     ) {
       return (
-        <p className="text-success">
+        <p className="alert alert-info">
           You have updated score as {this.state.match.team_1_result}
         </p>
       );
@@ -360,7 +358,7 @@ class MatchInfo extends React.Component {
       this.state.match.team_2_result
     ) {
       return (
-        <p className="text-success">
+        <p className="alert alert-info">
           You have updated score as {this.state.match.team_2_result}
         </p>
       );
@@ -605,99 +603,14 @@ class MatchInfo extends React.Component {
                     <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
                   <br />
-
-                  <h6 className="prizes_desclaimer">
-                    <Link to={'/teams/view/' + this.state.match.team_1_id}>
-                      {this.state.match.team_1_info.title}
-                    </Link>
-                    {this.state.match.status == 'complete' &&
-                    this.state.match.result == 'team_1' ? (
-                      <span>
-                        {' '}
-                        - <span className="text text-success">W</span>
-                      </span>
-                    ) : (
-                      false
-                    )}
-                    {(this.state.match.status == 'complete' ||
-                      this.state.match.status == 'Complete') &&
-                    this.state.match.result == 'team_2' ? (
-                      <span>
-                        {' '}
-                        - <span className="text text-danger">L</span>
-                      </span>
-                    ) : (
-                      false
-                    )}
-                  </h6>
-
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        <th>Username</th>
-                        <th>{this.showGamerTag()}</th>
-                        <th>Role</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.match.team_1_info.team_users.map(
-                        (team_user, i) => {
-                          if (
-                            team_1_players.indexOf(
-                              '' + team_user.user_info.id
-                            ) < 0
-                          ) {
-                            return false;
-                          }
-                          return (
-                            <tr key={team_user.id}>
-                              <td>
-                                <Link
-                                  target="_blank"
-                                  to={'/u/' + team_user.user_info.username}
-                                >
-                                  {team_user.user_info.username}
-                                </Link>
-                              </td>
-                              <td>
-                                {team_user.user_info[
-                                  'gamer_tag_' +
-                                    this.state.match.ladder.gamer_tag
-                                ] ? (
-                                  team_user.user_info[
-                                    'gamer_tag_' +
-                                      this.state.match.ladder.gamer_tag
-                                  ]
-                                ) : (
-                                  <span className="text-danger">
-                                    No Gamertag
-                                  </span>
-                                )}
-                              </td>
-
-                              <td>
-                                {team_user.user_id ==
-                                this.state.match.team_1_info.team_creator
-                                  ? 'Leader'
-                                  : 'Member'}
-                              </td>
-                            </tr>
-                          );
-                        }
-                      )}
-                    </tbody>
-                  </table>
-
-                  <br />
-                  {this.state.match.team_2_id ? (
-                    <div>
+                  {this.state.match.status != 'pending' ? (
+                    <>
                       <h6 className="prizes_desclaimer">
-                        <Link to={'/teams/view/' + this.state.match.team_2_id}>
-                          {this.state.match.team_2_info.title}
-                        </Link>{' '}
-                        {(this.state.match.status == 'complete' ||
-                          this.state.match.status == 'Complete') &&
-                        this.state.match.result == 'team_2' ? (
+                        <Link to={'/teams/view/' + this.state.match.team_1_id}>
+                          {this.state.match.team_1_info.title}
+                        </Link>
+                        {this.state.match.status == 'complete' &&
+                        this.state.match.result == 'team_1' ? (
                           <span>
                             {' '}
                             - <span className="text text-success">W</span>
@@ -705,8 +618,9 @@ class MatchInfo extends React.Component {
                         ) : (
                           false
                         )}
-                        {this.state.match.status == 'complete' &&
-                        this.state.match.result == 'team_1' ? (
+                        {(this.state.match.status == 'complete' ||
+                          this.state.match.status == 'Complete') &&
+                        this.state.match.result == 'team_2' ? (
                           <span>
                             {' '}
                             - <span className="text text-danger">L</span>
@@ -715,19 +629,20 @@ class MatchInfo extends React.Component {
                           false
                         )}
                       </h6>
+
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
                             <th>Username</th>
-                            <th>Gamer Tag</th>
+                            <th>{this.showGamerTag()}</th>
                             <th>Role</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {this.state.match.team_2_info.team_users.map(
+                          {this.state.match.team_1_info.team_users.map(
                             (team_user, i) => {
                               if (
-                                team_2_players.indexOf(
+                                team_1_players.indexOf(
                                   '' + team_user.user_info.id
                                 ) < 0
                               ) {
@@ -737,6 +652,7 @@ class MatchInfo extends React.Component {
                                 <tr key={team_user.id}>
                                   <td>
                                     <Link
+                                      target="_blank"
                                       to={'/u/' + team_user.user_info.username}
                                     >
                                       {team_user.user_info.username}
@@ -757,9 +673,10 @@ class MatchInfo extends React.Component {
                                       </span>
                                     )}
                                   </td>
+
                                   <td>
                                     {team_user.user_id ==
-                                    this.state.match.team_2_info.team_creator
+                                    this.state.match.team_1_info.team_creator
                                       ? 'Leader'
                                       : 'Member'}
                                   </td>
@@ -769,9 +686,102 @@ class MatchInfo extends React.Component {
                           )}
                         </tbody>
                       </table>
-                    </div>
+
+                      <br />
+                      {this.state.match.team_2_id ? (
+                        <div>
+                          <h6 className="prizes_desclaimer">
+                            <Link
+                              to={'/teams/view/' + this.state.match.team_2_id}
+                            >
+                              {this.state.match.team_2_info.title}
+                            </Link>{' '}
+                            {(this.state.match.status == 'complete' ||
+                              this.state.match.status == 'Complete') &&
+                            this.state.match.result == 'team_2' ? (
+                              <span>
+                                {' '}
+                                - <span className="text text-success">W</span>
+                              </span>
+                            ) : (
+                              false
+                            )}
+                            {this.state.match.status == 'complete' &&
+                            this.state.match.result == 'team_1' ? (
+                              <span>
+                                {' '}
+                                - <span className="text text-danger">L</span>
+                              </span>
+                            ) : (
+                              false
+                            )}
+                          </h6>
+                          <table className="table table-striped table-ongray table-hover">
+                            <thead>
+                              <tr>
+                                <th>Username</th>
+                                <th>Gamer Tag</th>
+                                <th>Role</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {this.state.match.team_2_info.team_users.map(
+                                (team_user, i) => {
+                                  if (
+                                    team_2_players.indexOf(
+                                      '' + team_user.user_info.id
+                                    ) < 0
+                                  ) {
+                                    return false;
+                                  }
+                                  return (
+                                    <tr key={team_user.id}>
+                                      <td>
+                                        <Link
+                                          to={
+                                            '/u/' + team_user.user_info.username
+                                          }
+                                        >
+                                          {team_user.user_info.username}
+                                        </Link>
+                                      </td>
+                                      <td>
+                                        {team_user.user_info[
+                                          'gamer_tag_' +
+                                            this.state.match.ladder.gamer_tag
+                                        ] ? (
+                                          team_user.user_info[
+                                            'gamer_tag_' +
+                                              this.state.match.ladder.gamer_tag
+                                          ]
+                                        ) : (
+                                          <span className="text-danger">
+                                            No Gamertag
+                                          </span>
+                                        )}
+                                      </td>
+                                      <td>
+                                        {team_user.user_id ==
+                                        this.state.match.team_2_info
+                                          .team_creator
+                                          ? 'Leader'
+                                          : 'Member'}
+                                      </td>
+                                    </tr>
+                                  );
+                                }
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      ) : (
+                        false
+                      )}
+                    </>
                   ) : (
-                    false
+                    <div className="alert alert-info">
+                      Team details will be visible once the match is accepted.
+                    </div>
                   )}
                 </div>
                 <br />
@@ -780,7 +790,7 @@ class MatchInfo extends React.Component {
 
                 {this.state.team_selected ? (
                   <div>
-                    <button
+                    {/*}<button
                       className="  btn btn-primary btn-sm max-width-300"
                       onClick={() => {
                         this.setState({
@@ -790,7 +800,7 @@ class MatchInfo extends React.Component {
                     >
                       <i className="fa fa-arrow-left" /> back to team list
                     </button>
-                    <br />
+                    <br />*/}
                     <form
                       onSubmit={event => {
                         this.agreeToTermsForMatchJoin(event);
