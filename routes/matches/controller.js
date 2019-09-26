@@ -766,18 +766,18 @@ exports.addItem = function(req, res, next) {
 };
 
 exports.matches_of_team = function(req, res, next) {
-  let mdl = new Item()
-    .orderBy('created_at', 'DESC')
-
-    .query(function(qb) {
-      qb.where('team_1_id', req.query.team_id).orWhere(
-        'team_2_id',
-        req.query.team_id
-      );
-    });
+  let mdl = new Item();
+  mdl = mdl.orderBy('created_at', 'DESC');
   if (req.query.exclude_pending == 'yes') {
     mdl = mdl.where('status', 'NOT LIKE', 'pending');
   }
+  mdl = mdl.query(function(qb) {
+    qb.where('team_1_id', req.query.team_id).orWhere(
+      'team_2_id',
+      req.query.team_id
+    );
+  });
+
   mdl
     .fetchAll({withRelated: ['ladder', 'game', 'team_1_info', 'team_2_info']})
     .then(function(item) {

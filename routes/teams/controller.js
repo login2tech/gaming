@@ -161,7 +161,7 @@ exports.invite = function(req, res, next) {
 
           new ItemChild()
             .where({
-              user_id: req.user.id,
+              user_id: user_id,
               removed: false
             })
             .fetchAll({
@@ -170,7 +170,9 @@ exports.invite = function(req, res, next) {
             .then(function(teams) {
               teams = teams.toJSON();
               for (let i = 0; i < teams.length; i++) {
-                if (teams[i].team_info.ladder_id == parseInt(req.body.ladder)) {
+                if (
+                  teams[i].team_info.ladder_id == parseInt(req.body.ladder_id)
+                ) {
                   // failed;
                   return res.status(400).send({
                     ok: false,

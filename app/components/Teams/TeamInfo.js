@@ -48,7 +48,8 @@ class TeamInfo extends React.Component {
       inviteToTeam(
         {
           username: this.state.new_invite_user_name,
-          team_id: this.state.team_info.id
+          team_id: this.state.team_info.id,
+          ladder_id: this.state.team_info.ladder_id
         },
         st => {
           if (st) {
