@@ -766,7 +766,7 @@ exports.addItem = function(req, res, next) {
 };
 
 exports.matches_of_team = function(req, res, next) {
-  new Item()
+  let mdl = new Item()
     .orderBy('created_at', 'DESC')
 
     .query(function(qb) {
@@ -774,7 +774,11 @@ exports.matches_of_team = function(req, res, next) {
         'team_2_id',
         req.query.team_id
       );
-    })
+    });
+  if (req.query.exclude_pending == 'yes') {
+    mdl = mdl.where('status', 'NOT LIKE', 'pending');
+  }
+  mdl
     .fetchAll({withRelated: ['ladder', 'game', 'team_1_info', 'team_2_info']})
     .then(function(item) {
       if (!item) {

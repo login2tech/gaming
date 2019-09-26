@@ -130,7 +130,7 @@ class Profile extends React.Component {
     team_array = team_array.join(',');
 
     fetch(
-      '/api/matches/matches_of_user?page=' +
+      '/api/matches/matches_of_user?exclude_pending=yes&page=' +
         this.state.matchfinder_page +
         '&uid=' +
         this.state.user_info.id +
