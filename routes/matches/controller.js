@@ -795,14 +795,19 @@ exports.matches_of_team = function(req, res, next) {
 exports.matches_of_user = function(req, res, next) {
   console.log(req.query);
   const teams = req.query.teams.split(',');
-  let mdl = new Item().orderBy('created_at', 'DESC').query(function(qb) {
-    qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
-  });
+  let mdl = new Item();
+  mdl = mdl.orderBy('created_at', 'DESC');
+
   if (req.query.exclude_pending == 'yes') {
     console.log('yesysey');
     mdl = mdl.where('status', 'NOT LIKE', 'pending');
-    mdl = mdl.where('status', '!=', 'pending');
+    // mdl = mdl.where('status', '!=', 'pending');
   }
+
+  mdl = mdl.query(function(qb) {
+    qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+  });
+
   mdl
     .fetchPage({
       page: req.query.page ? req.query.page : 1,
