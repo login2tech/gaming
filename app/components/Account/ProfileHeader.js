@@ -330,6 +330,12 @@ class ProfileHeader extends React.Component {
                           <span
                             style={{
                               position: 'absolute',
+                              background:
+                                'url(/images/blank_ctrl.png) center no-repeat',
+                              marginTop: '5px',
+                              backgroundSize: 'contain',
+                              padding: '5px 20px 9px 20px',
+                              marginLeft: '-20px',
                               left:
                                 '' +
                                 this.rank_percent_based_on_xp(
