@@ -27,7 +27,10 @@ class TeamInfo extends React.Component {
     };
   }
   showGamerTag() {
-    return game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
+    if (!this.state.team_info || !this.state.team_info.ladder) {
+      return '';
+    }
+    return game_user_ids.tag_names[this.state.team_info.ladder.gamer_tag];
   }
   approveRequest(event, reject) {
     event.preventDefault();
