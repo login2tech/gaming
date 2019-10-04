@@ -150,10 +150,9 @@ class Reactions extends React.Component {
             })}
           </tbody>
         </table>
-        {this.state.is_loaded &&
-          this.state.items.length < 1 && (
-            <div className="alert alert-warning">No Users in this list</div>
-          )}
+        {this.state.is_loaded && this.state.items.length < 1 && (
+          <div className="alert alert-warning">No Users in this list</div>
+        )}
       </div>
     );
   }

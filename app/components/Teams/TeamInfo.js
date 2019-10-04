@@ -335,10 +335,10 @@ class TeamInfo extends React.Component {
           backgroundImage: "url('" + this.state.new_cover_pic + "')"
         }
       : this.state.team_info && this.state.team_info.cover_picture
-        ? {
-            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
-          }
-        : {};
+      ? {
+          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
+        }
+      : {};
 
     return (
       <div>

@@ -362,12 +362,12 @@ const giveXPtoTeam = function(team_id, players, match_id) {
   }
 };
 
-const takeXPfromTeam = function(team_id, players, match_id) {
-  for (let i = players.length - 1; i >= 0; i--) {
-    const uid = parseInt(players[i]);
-    takeXpFromMember(uid, match_id);
-  }
-};
+// const takeXPfromTeam = function(team_id, players, match_id) {
+//   for (let i = players.length - 1; i >= 0; i--) {
+//     const uid = parseInt(players[i]);
+//     takeXpFromMember(uid, match_id);
+//   }
+// };
 
 const giveMoneyBackToTeam = function(
   team_id,

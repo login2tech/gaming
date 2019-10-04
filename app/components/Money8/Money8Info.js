@@ -122,9 +122,9 @@ class Money8Info extends React.Component {
     let i_am_in_pool = false;
 
     const me = this.props.user.id;
-    console.log(this.state.match.players);
+    // console.log(this.state.match.players);
     const users = JSON.parse(this.state.match.players);
-    console.log(users);
+    // console.log(users);
 
     for (let i = 0; i < users.length; i++) {
       // console.log(users[i] , me)
