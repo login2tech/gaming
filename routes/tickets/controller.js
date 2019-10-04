@@ -102,6 +102,8 @@ exports.addItem = function(req, res, next) {
     description: req.body.ticket_description,
     type: req.body.ticket_type,
     user_id: req.user.id,
+    extra_1: req.body.extra_1,
+    extra_2: req.body.extra_2,
     attachment: req.body.ticket_attachment ? req.body.ticket_attachment : ''
   })
     .save()

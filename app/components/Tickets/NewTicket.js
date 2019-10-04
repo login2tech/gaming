@@ -10,7 +10,9 @@ class NewTicket extends React.Component {
       ticket_type: '',
       ticket_title: '',
       ticket_description: '',
-      new_post_image: ''
+      new_post_image: '',
+      extra_1: '',
+      extra_2: ''
     };
   }
 
@@ -70,7 +72,9 @@ class NewTicket extends React.Component {
         ticket_type: this.state.ticket_type,
         ticket_title: this.state.ticket_title,
         ticket_description: this.state.ticket_description,
-        ticket_attachment: this.state.new_post_image
+        ticket_attachment: this.state.new_post_image,
+        extra_1: this.state.extra_1,
+        extra_2: this.state.extra_2
       })
     }).then(rawResponse => {
       rawResponse
@@ -147,7 +151,8 @@ class NewTicket extends React.Component {
                     <div className="col-md-12">
                       <div className="form-group">
                         <label htmlFor="ticket_type_id">
-                          * Select Ticket Type:
+                          Select Ticket Type:
+                          <span className="text-danger">*</span>
                         </label>
                         <select
                           className="form-control"
@@ -225,7 +230,10 @@ class NewTicket extends React.Component {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="title">* Title</label>
+                        <label htmlFor="ticket_title">
+                          Title
+                          <span className="text-danger">*</span>
+                        </label>
                         <input
                           type="text"
                           className="form-control"
@@ -239,6 +247,52 @@ class NewTicket extends React.Component {
                       </div>
                     </div>
                   </div>
+
+                  {this.state.ticket_type == 'Match Support - Match Dispute' ? (
+                    <>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <label htmlFor="extra_1">
+                              Match Id
+                              <span className="text-danger">*</span>
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="extra_1"
+                              name="extra_1"
+                              required
+                              value={this.state.extra_1}
+                              onChange={this.handleChange.bind(this)}
+                              placeholder="Enter Match Id"
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="form-group">
+                            <label htmlFor="extra_2">Your Team Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="extra_2"
+                              name="extra_2"
+                              required
+                              value={this.state.extra_2}
+                              onChange={this.handleChange.bind(this)}
+                              placeholder="Enter Your Team Name"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    false
+                  )}
+
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
