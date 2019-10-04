@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-// import { resetPassword } from '../../actions/auth';
-// import Messages from 'Messages';
 
-// import NotFound from './Pages/NotFound';
+import {openModal, closeModal} from '../../actions/modals';
+
+import PaymentModal from '../Modules/Modals/PaymentModal';
 
 class Records extends React.Component {
   constructor(props) {
@@ -13,10 +13,81 @@ class Records extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchNotifications();
+    this.fetchrecords();
   }
 
-  fetchNotifications() {
+  onGetToken(token) {
+    fetch('/api/user/reset/score', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token_id: token.id,
+        action: 'score_' + this.props.params.duration,
+        duration: this.props.params.duration
+      })
+    }).then(response => {
+      this.props.dispatch(
+        closeModal({
+          id: 'payment'
+        })
+      );
+      if (response.ok) {
+        // this.props.refresh();
+        this.props.dispatch({type: 'CLEAR_MESSAGES'});
+        this.props.dispatch(
+          openModal({
+            id: 'trello_snack',
+            type: 'snackbar',
+            zIndex: 1076,
+            content: 'Reseting Score... please wait...'
+          })
+        );
+        setTimeout(() => {
+          this.props.dispatch(
+            closeModal({
+              id: 'trello_snack'
+            })
+          );
+          window.location.reload();
+        }, 5000);
+      } else {
+        this.props.dispatch({
+          type: 'GENERIC_FAILURE',
+          messages: Array.isArray(response) ? response : [response]
+        });
+      }
+    });
+  }
+
+  resetOverall(e) {
+    e.preventDefault();
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'payment',
+        zIndex: 534,
+        heading: 'Reset Records',
+        content: (
+          <PaymentModal
+            msg={
+              'You need to pay a small amount to reset ' +
+              this.props.params.duration +
+              ' records. This will have no impact on your life and season score.'
+            }
+            amount={5}
+            // refresh={props.refresh}
+            onGetToken={token => {
+              this.onGetToken(token);
+            }}
+          />
+        )
+      })
+    );
+  }
+
+  fetchrecords() {
     fetch(
       '/api/user_info/records?username=' +
         this.props.params.username +
@@ -48,7 +119,7 @@ class Records extends React.Component {
   }
 
   render() {
-    console.log(this.state.ladders);
+    // console.log(this.state.ladders);
 
     const rec = Object.keys(this.state.ladders);
     // console.log(rec);
@@ -73,6 +144,20 @@ class Records extends React.Component {
                   <Link to={'/u/' + this.props.params.username}>
                     <span className="fa fa-arrow-left" /> back to profile
                   </Link>
+
+                  {this.props.user.username == this.props.params.username &&
+                  rec.length > 0 &&
+                  this.state.loaded ? (
+                    <>
+                      {' '}
+                      |{' '}
+                      <a href="#" onClick={this.resetOverall.bind(this)}>
+                        <span className="fa fa-repeat" /> reset ($5)
+                      </a>
+                    </>
+                  ) : (
+                    false
+                  )}
                 </div>
               </div>
             </div>
@@ -83,9 +168,12 @@ class Records extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {rec.length == 0 && this.state.loaded && (
-                  <div className="alert alert-warning">No records to show</div>
-                )}
+                {rec.length == 0 &&
+                  this.state.loaded && (
+                    <div className="alert alert-warning">
+                      No records to show
+                    </div>
+                  )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container">
@@ -130,7 +218,8 @@ class Records extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    messages: state.messages
   };
 };
 

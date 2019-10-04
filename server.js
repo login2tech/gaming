@@ -196,6 +196,12 @@ app.post(
 );
 
 app.post(
+  '/api/user/reset/score',
+  userController.ensureAuthenticated,
+  userController.resetScore
+);
+
+app.post(
   '/accountPics',
   userController.ensureAuthenticated,
   userController.accountPic

@@ -2,7 +2,9 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
+import {openModal, closeModal} from '../../actions/modals';
 
+import PaymentModal from '../Modules/Modals/PaymentModal';
 import ProfileHeader from './ProfileHeader';
 
 import ReactPaginate from 'react-paginate';
@@ -50,6 +52,74 @@ class Profile extends React.Component {
       this.fetchUserInfo(true);
     }
     //
+  }
+
+  onGetToken(token) {
+    fetch('/api/user/reset/score', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        token_id: token.id,
+        action: 'overallScore'
+      })
+    }).then(response => {
+      this.props.dispatch(
+        closeModal({
+          id: 'payment'
+        })
+      );
+      if (response.ok) {
+        // this.props.refresh();
+        this.props.dispatch({type: 'CLEAR_MESSAGES'});
+        this.props.dispatch(
+          openModal({
+            id: 'trello_snack',
+            type: 'snackbar',
+            zIndex: 1076,
+            content: 'Reseting Score... please wait...'
+          })
+        );
+        setTimeout(() => {
+          this.props.dispatch(
+            closeModal({
+              id: 'trello_snack'
+            })
+          );
+          window.location.reload();
+        }, 5000);
+      } else {
+        this.props.dispatch({
+          type: 'GENERIC_FAILURE',
+          messages: Array.isArray(response) ? response : [response]
+        });
+      }
+    });
+  }
+
+  resetOverall(e) {
+    e.preventDefault();
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'payment',
+        zIndex: 534,
+        heading: 'Reset Score',
+        content: (
+          <PaymentModal
+            msg={
+              'You need to pay a small amount to reset overall score. This will have no impact on your life and season score.'
+            }
+            amount={5}
+            // refresh={props.refresh}
+            onGetToken={token => {
+              this.onGetToken(token);
+            }}
+          />
+        )
+      })
+    );
   }
 
   getTeams(match) {
@@ -272,6 +342,19 @@ class Profile extends React.Component {
                               L
                             </span>
                           </div>
+                          {this.props.user.id == this.state.user_info.id &&
+                          (this.state.user_info.wins ||
+                            this.state.user_info.loss) ? (
+                            <a
+                              style={{float: 'right'}}
+                              href="#"
+                              onClick={this.resetOverall.bind(this)}
+                            >
+                              <span className="fa fa-repeat" /> reset ($5)
+                            </a>
+                          ) : (
+                            false
+                          )}
                           <div>
                             {this.state.user_info.wins +
                               this.state.user_info.loss ==

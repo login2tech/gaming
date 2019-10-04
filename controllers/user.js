@@ -811,3 +811,71 @@ exports.records = function(req, res, next) {
 exports.authFacebookCallback = function(req, res) {
   res.render('loading');
 };
+
+exports.resetScore = function(req, res, next) {
+  const action = req.body.action;
+  const year = moment().format('YYYY');
+  const season = moment().format('Q');
+  switch (action) {
+    case 'overallScore':
+      new User()
+        .where({id: req.user.id})
+        .save(
+          {
+            wins: 0,
+            loss: 0
+          },
+          {
+            patch: true
+          }
+        )
+        .then(function(score) {
+          return res.status(200).send({ok: true, msg: 'Score reset done.'});
+        })
+        .catch(function(err) {
+          console.log(err);
+          return res
+            .status(400)
+            .send({ok: false, msg: 'failed to reset score.'});
+        });
+      break;
+    case 'score_life':
+      new Score()
+        .where({
+          user_id: req.user.id
+        })
+        .destroy()
+        .then(function() {
+          return res.status(200).send({ok: false, msg: 'records reset done.'});
+        })
+        .catch(function() {
+          return res.status(400).send({
+            ok: false,
+            msg: 'Failed to delete records or nothing to delete'
+          });
+        });
+      break;
+    case 'score_season':
+      new Score()
+        .where({
+          user_id: req.user.id,
+          year: year,
+          season: season
+        })
+        .destroy()
+        .then(function() {
+          return res.status(200).send({ok: false, msg: 'records reset done.'});
+        })
+        .catch(function(err) {
+          console.log(err);
+          return res.status(400).send({
+            ok: false,
+            msg: 'Failed to delete records or nothing to delete'
+          });
+        });
+      break;
+    default:
+      res.status(400).send({ok: false, msg: 'action not found'});
+      break;
+  }
+};

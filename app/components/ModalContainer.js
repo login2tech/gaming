@@ -41,7 +41,7 @@ class Modal extends React.Component {
                 <h5 className="modal-title">{this.props.item.heading}</h5>
                 <button
                   type="button"
-                  className="close"
+                  className="close text-white"
                   data-dismiss="modal"
                   aria-label="Close"
                   onClick={() => this.onClose()}
