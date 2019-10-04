@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {Link} from 'react-router';
-// import moment from 'moment';
+import {openModal, closeModal} from '../../actions/modals';
+
 import {add_post} from '../../actions/social';
 import axios from 'axios';
 class NewPost extends React.Component {
@@ -25,11 +25,35 @@ class NewPost extends React.Component {
           post_type: this.state.new_post_type,
           image_url: this.state.new_post_image,
           video_url: this.state.new_post_video,
-          content: this.state.new_post_content
+          content: this.state.new_post_content,
+          is_private: this.props.is_private ? true : false
         },
         this.props.token,
         (result, post) => {
           if (result && post) {
+            this.setState({
+              post_type: 'text',
+              image_url: '',
+              video_url: '',
+              content: ''
+            });
+            this.props.dispatch(
+              openModal({
+                id: 'trello_snack',
+                type: 'snackbar',
+                zIndex: 1076,
+                content: 'Your Post has been added.'
+              })
+            );
+            setTimeout(() => {
+              this.props.dispatch(
+                closeModal({
+                  id: 'trello_snack'
+                })
+              );
+              // window.location.reload();
+            }, 4000);
+
             post.user = this.props.user;
             this.props.onSubmit && this.props.onSubmit(post);
           }

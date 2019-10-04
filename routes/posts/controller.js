@@ -376,6 +376,7 @@ exports.listItemAll = function(req, res, next) {
     // console.log(req.query.hashtag);
     n = n.where('post', 'LIKE', '%' + req.query.hastag + '%');
   }
+  n = n.where({is_private: false});
   let p;
   if (req.query.page && parseInt(req.query.page) > 1) {
     p = parseInt(req.query.page);
@@ -684,6 +685,7 @@ exports.addItem = function(req, res, next) {
     video_url: req.body.video_url ? req.body.video_url : '',
     user_id: req.user.id,
     is_repost: req.body.is_repost ? true : false,
+    is_private: req.body.is_private ? true : false,
     repost_of: req.body.is_repost ? req.body.repost_from : null,
     repost_of_user_id: req.body.is_repost ? req.body.repost_of_user_id : null
   })

@@ -1,9 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {Link} from 'react-router';
-// import moment from 'moment';
-// import {add_post, add_friend} from '../../actions/social';
-// import axios from 'axios';
+import NewPost from '../Account/NewPost';
+
 import Timeline from '../Social/Timeline';
 class FeedMy extends React.Component {
   constructor(props) {
@@ -75,6 +73,21 @@ class FeedMy extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-8 offset-md-2">
+                    <NewPost
+                      is_private
+                      user_info={this.props.user}
+                      onSubmit={post => {
+                        const posts = this.state.posts;
+                        posts.unshift(post);
+                        this.setState({
+                          posts: posts,
+                          new_post_type: 'text',
+                          new_post_image: '',
+                          new_post_video: '',
+                          new_post_content: ''
+                        });
+                      }}
+                    />
                     {this.state.loaded && this.state.posts.length == 0 ? (
                       <div className="alert alert-warning">
                         No posts to show on this page{' '}
@@ -93,7 +106,7 @@ class FeedMy extends React.Component {
                       {this.state.loading ? (
                         <span className="fa fa-spin fa-spinner text-white" />
                       ) : this.state.pagination.pageCount >
-                        this.state.posts_page ? (
+                      this.state.posts_page ? (
                         <button
                           onClick={() => {
                             this.setState(

@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 
 import Timeline from '../Social/Timeline';
+import NewPost from '../Account/NewPost';
+
 class Feed extends React.Component {
   constructor(props) {
     super(props);
@@ -88,6 +90,22 @@ class Feed extends React.Component {
                       Latest Posts
                       {hashtag ? ' - #' + hashtag : ''}
                     </h4>
+
+                    <NewPost
+                      user_info={this.props.user}
+                      onSubmit={post => {
+                        const posts = this.state.posts;
+                        posts.unshift(post);
+                        this.setState({
+                          posts: posts,
+                          new_post_type: 'text',
+                          new_post_image: '',
+                          new_post_video: '',
+                          new_post_content: ''
+                        });
+                      }}
+                    />
+
                     {this.state.loaded && this.state.posts.length == 0 ? (
                       <div className="alert alert-warning">
                         No posts to show on this page{' '}
@@ -106,7 +124,7 @@ class Feed extends React.Component {
                       {this.state.loading ? (
                         <span className="fa fa-spin fa-spinner text-white" />
                       ) : this.state.pagination.pageCount >
-                        this.state.posts_page ? (
+                      this.state.posts_page ? (
                         <button
                           onClick={() => {
                             this.setState(
