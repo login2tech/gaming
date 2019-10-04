@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 // const moment = require('moment');
-import {join_match, saveScores} from '../../actions/match8';
+import {join_match, saveScores, leave_match} from '../../actions/match8';
 import game_user_ids from '../../../config/game_user_ids';
 
 import Messages from '../Modules/Messages';
@@ -18,7 +18,8 @@ class Money8Info extends React.Component {
         team_1: '',
         team_2: '',
         game: {},
-        ladder: {}
+        ladder: {},
+        players: '[]'
       },
       ladder: '',
       games: [],
@@ -57,13 +58,6 @@ class Money8Info extends React.Component {
   componentDidMount() {
     this.fetchMatch();
   }
-
-  // matchLink(orign) {
-  //   if (this.props.user) {
-  //     return orign;
-  //   }
-  //   return '/login';
-  // }
 
   saveScore() {
     const team_1 = this.state.match.team_1.split('|');
@@ -108,6 +102,84 @@ class Money8Info extends React.Component {
     this.setState({
       approve_join: true
     });
+  }
+
+  leavePool(e) {
+    this.props.dispatch(
+      leave_match(
+        {
+          match_id: this.state.match.id
+        },
+        this.props.user
+      )
+    );
+  }
+
+  renderLeave() {
+    if (this.state.match.players_joined >= this.state.match.players_total) {
+      return false;
+    }
+    let i_am_in_pool = false;
+
+    const me = this.props.user.id;
+    console.log(this.state.match.players);
+    const users = JSON.parse(this.state.match.players);
+    console.log(users);
+
+    for (let i = 0; i < users.length; i++) {
+      // console.log(users[i] , me)
+      if (users[i] == me) {
+        i_am_in_pool = true;
+        break;
+      }
+    }
+
+    if (!i_am_in_pool) {
+      return false;
+    }
+
+    if (this.state.confirmLeave) {
+      return (
+        <div className="btn-group">
+          <button
+            type="button"
+            onClick={e => {
+              this.leavePool(e);
+            }}
+            className="btn btn-default bttn_submit mw_200"
+          >
+            Are you Sure?
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              this.setState({
+                confirmLeave: false
+              });
+            }}
+            className="btn btn-danger bttn_submit mw_200"
+          >
+            X
+          </button>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <button
+          type="button"
+          // disabled={disabled}
+          onClick={() => {
+            this.setState({confirmLeave: true});
+          }}
+          className="btn btn-danger bttn_submit mw_200"
+        >
+          Leave Pool
+        </button>
+      </div>
+    );
   }
 
   renderJoin() {
@@ -551,6 +623,7 @@ class Money8Info extends React.Component {
                       </div>
                     </div>
                     {this.renderJoin()}
+                    {this.renderLeave()}
                   </div>
                 </div>
               </div>
@@ -620,8 +693,6 @@ class Money8Info extends React.Component {
                   ? false
                   : this.renderStartedMatch()}
 
-                <br />
-                {this.renderJoin()}
                 <br />
               </div>
             </div>

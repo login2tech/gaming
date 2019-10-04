@@ -6,6 +6,7 @@ module.exports = routes;
 
 routes.get('/list', ctrl.listItem);
 routes.post('/join', u_ctrl.ensureAuthenticated, ctrl.join);
+routes.post('/leave', u_ctrl.ensureAuthenticated, ctrl.leave);
 routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);
 routes.get('/user_info', ctrl.listItem);
 routes.get('/single/:id', ctrl.listSingleItem);

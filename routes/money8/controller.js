@@ -628,6 +628,83 @@ exports.saveScore = function(req, res, next) {
     });
 };
 
+exports.leave = function(req, res, next) {
+  if (!req.body.match_id) {
+    res.status(400).send({ok: false, msg: 'Please enter Match ID'});
+    return;
+  }
+  new Item({id: req.body.match_id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        res.status(400).send({
+          ok: false,
+          msg: "Match doesn't exist"
+        });
+        return;
+      }
+      const players_total = match.get('players_total');
+      const players_joined = match.get('players_joined');
+
+      if (players_total <= players_joined) {
+        res.status(400).send({
+          ok: false,
+          msg: 'Pool is already full. You can not leave now.'
+        });
+        return;
+      }
+
+      let players = match.get('players');
+      if (!players) {
+        players = '[]';
+      }
+      console.log(players);
+
+      players = JSON.parse(players);
+      console.log(players);
+      if (players.indexOf(req.user.id) > -1) {
+        players.splice(players.indexOf(req.user.id), 1);
+        // players_joined -= 1;
+
+        const obj = {
+          players: JSON.stringify(players),
+          players_joined: players_joined - 1
+        };
+        match
+          .save(obj)
+          .then(function(match) {
+            match = match.toJSON();
+            res.status(200).send({
+              ok: true,
+              msg: 'Left successfully.',
+              match: match
+            });
+          })
+          .catch(function(err) {
+            console.log(err);
+            res.status(400).send({
+              ok: false,
+              msg: 'Left successfully.'
+            });
+          });
+      } else {
+        res.status(400).send({
+          ok: false,
+          msg: 'You have already not a part of this pool'
+        });
+        return;
+      }
+      // players joined is less than players_total;
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed to fetch match'
+      });
+    });
+};
+
 exports.join = function(req, res, next) {
   if (!req.body.match_id) {
     res.status(400).send({ok: false, msg: 'Please enter Match ID'});
