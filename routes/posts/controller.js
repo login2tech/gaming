@@ -1,5 +1,6 @@
 // const fs = require('fs');
 const Item = require('./Post');
+const User = require('../../models/User');
 const ItemUpvotes = require('./PostUpvotes');
 const ItemComments = require('./PostComments');
 const UsereFollower = require('../../models/UserFollower');
@@ -186,6 +187,15 @@ exports.listSingleItem = function(req, res, next) {
           }
         },
         {
+          timeline_owner: function(qb) {
+            qb.column('id');
+            qb.column('username');
+            qb.column('first_name');
+            qb.column('last_name');
+            qb.column('profile_picture');
+          }
+        },
+        {
           upvotes: function(qb) {
             qb.column('post_id')
               .column('type')
@@ -246,6 +256,15 @@ exports.listItemMyFeed = function(req, res, next) {
       },
       {
         original_poster: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        timeline_owner: function(qb) {
           qb.column('id');
           qb.column('username');
           qb.column('first_name');
@@ -330,6 +349,15 @@ exports.listItemMy = function(req, res, next) {
         }
       },
       {
+        timeline_owner: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
         upvotes: function(qb) {
           qb.column('post_id')
             .column('type')
@@ -406,6 +434,15 @@ exports.listItemAll = function(req, res, next) {
         }
       },
       {
+        timeline_owner: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
         upvotes: function(qb) {
           qb.column('post_id')
             .column('type')
@@ -465,6 +502,15 @@ exports.famousWeek = function(req, res, next) {
       },
       {
         original_poster: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
+        timeline_owner: function(qb) {
           qb.column('id');
           qb.column('username');
           qb.column('first_name');
@@ -547,6 +593,15 @@ exports.famousDay = function(req, res, next) {
         }
       },
       {
+        timeline_owner: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
         upvotes: function(qb) {
           qb.column('post_id')
             .column('type')
@@ -621,6 +676,15 @@ exports.famousMonth = function(req, res, next) {
         }
       },
       {
+        timeline_owner: function(qb) {
+          qb.column('id');
+          qb.column('username');
+          qb.column('first_name');
+          qb.column('last_name');
+          qb.column('profile_picture');
+        }
+      },
+      {
         upvotes: function(qb) {
           qb.column('post_id')
             .column('type')
@@ -687,7 +751,8 @@ exports.addItem = function(req, res, next) {
     is_repost: req.body.is_repost ? true : false,
     is_private: req.body.is_private ? true : false,
     repost_of: req.body.is_repost ? req.body.repost_from : null,
-    repost_of_user_id: req.body.is_repost ? req.body.repost_of_user_id : null
+    repost_of_user_id: req.body.is_repost ? req.body.repost_of_user_id : null,
+    in_timeline_of: req.body.is_in_timeline ? req.body.timeline_of : null
   })
     .save()
     .then(function(item) {
@@ -710,6 +775,48 @@ exports.addItem = function(req, res, next) {
           })
           .catch(function(err) {
             console.log(err);
+          });
+      }
+      const mentions = [];
+      let content = req.body.content;
+      content = content.split(' ');
+      for (let i = 0; i < content.length; i++) {
+        if (content[i][0] == '@') {
+          const uname = content[i]
+            .replace('@', '')
+            .replace('?', '')
+            .replace(',', '');
+          if (uname != req.user.username) {
+            mentions.push(uname);
+          }
+        }
+      }
+      for (let i = 0; i < mentions.length; i++) {
+        new User()
+          .where({username: mentions[i]})
+          .fetch()
+          .then(function(notif_usr) {
+            if (!notif_usr) {
+              return;
+            }
+            notif_usr = notif_usr.toJSON();
+            notif_usr = notif_usr.id;
+
+            new Notif()
+              .save({
+                user_id: notif_usr,
+                description:
+                  '@' + req.user.username + ' has mentioned you in a post.',
+                type: 'post',
+                object_id: item.id
+              })
+              .then(function() {})
+              .catch(function(er) {
+                console.log(er);
+              });
+          })
+          .catch(function(er) {
+            console.log(er);
           });
       }
     })

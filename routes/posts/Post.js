@@ -21,6 +21,9 @@ const Post = bookshelf.Model.extend({
   },
   original_poster: function() {
     return this.belongsTo(User, 'repost_of_user_id');
+  },
+  timeline_owner: function() {
+    return this.belongsTo(User, 'in_timeline_of');
   }
 });
 

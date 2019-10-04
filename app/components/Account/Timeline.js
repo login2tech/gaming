@@ -113,20 +113,39 @@ class Profile extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-8 offset-md-2">
-                    <NewPost
-                      user_info={this.state.user_info}
-                      onSubmit={post => {
-                        const posts = this.state.posts;
-                        posts.unshift(post);
-                        this.setState({
-                          posts: posts,
-                          new_post_type: 'text',
-                          new_post_image: '',
-                          new_post_video: '',
-                          new_post_content: ''
-                        });
-                      }}
-                    />
+                    {this.props.user.id == this.state.user_info.id ? (
+                      <NewPost
+                        user_info={this.state.user_info}
+                        onSubmit={post => {
+                          const posts = this.state.posts;
+                          posts.unshift(post);
+                          this.setState({
+                            posts: posts,
+                            new_post_type: 'text',
+                            new_post_image: '',
+                            new_post_video: '',
+                            new_post_content: ''
+                          });
+                        }}
+                      />
+                    ) : (
+                      <NewPost
+                        user_info={this.state.user_info}
+                        is_in_timeline
+                        onSubmit={post => {
+                          const posts = this.state.posts;
+                          posts.unshift(post);
+                          this.setState({
+                            posts: posts,
+                            new_post_type: 'text',
+                            new_post_image: '',
+                            new_post_video: '',
+                            new_post_content: ''
+                          });
+                        }}
+                      />
+                    )}
+
                     <br />
                     <h4 className="text-white">Latest Posts</h4>
                     <ul className="timeline">

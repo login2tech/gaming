@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Timeline from './Timeline';
-import moment from 'moment';
+// import moment from 'moment';
 
 class SinlgePost extends React.Component {
   constructor(props) {

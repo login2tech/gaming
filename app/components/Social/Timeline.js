@@ -155,6 +155,17 @@ class Timeline extends React.Component {
             ) : (
               false
             )}
+            {post.in_timeline_of && post.timeline_owner ? (
+              <span>
+                (in timeline of{' '}
+                <Link to={'/u/' + post.timeline_owner.username} target="_blank">
+                  @{post.timeline_owner.username}
+                </Link>
+                )
+              </span>
+            ) : (
+              false
+            )}
           </span>
         </span>
         {post.image_url ? (
