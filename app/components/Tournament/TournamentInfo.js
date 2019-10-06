@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
 import {join_tournament, saveScores} from '../../actions/tournament';
+import game_user_ids from '../../../config/game_user_ids';
 
 // import {Bracket} from 'react-tournament-bracket';
 
@@ -661,7 +662,14 @@ class TournamentInfo extends React.Component {
             <div className="tourn-info">
               <div className="tourn-info-title">Ladder</div>
               <div className="tourn-info-box tourn-info-game">
-                {this.state.tournament.ladder.title}
+                {this.state.tournament.ladder.title}{' '}
+                <span
+                  className={
+                    game_user_ids.tag_icons[
+                      this.state.tournament.ladder.gamer_tag
+                    ]
+                  }
+                />
               </div>
             </div>
           </div>
@@ -1252,16 +1260,17 @@ class TournamentInfo extends React.Component {
                 </li>
               );
             })}
-          {this.state.eligible_teams_loaded && !this.state.team_selected && (
-            <li>
-              <a
-                target="_blank"
-                href={'/u/' + this.props.user.username + '/teams/new'}
-              >
-                <img src="/images/team_new.png" />
-              </a>
-            </li>
-          )}
+          {this.state.eligible_teams_loaded &&
+            !this.state.team_selected && (
+              <li>
+                <a
+                  target="_blank"
+                  href={'/u/' + this.props.user.username + '/teams/new'}
+                >
+                  <img src="/images/team_new.png" />
+                </a>
+              </li>
+            )}
         </ul>
       </div>
     );
@@ -1280,6 +1289,13 @@ class TournamentInfo extends React.Component {
                   </div>
 
                   <span className="game_station">
+                    <span
+                      className={
+                        game_user_ids.tag_icons[
+                          this.state.tournament.ladder.gamer_tag
+                        ]
+                      }
+                    />
                     {this.state.tournament.game.title} @{' '}
                     {this.state.tournament.ladder.title}
                   </span>

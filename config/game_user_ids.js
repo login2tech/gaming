@@ -8,8 +8,16 @@ const tag_names = [
   'Steam Username',
   'Battletag'
 ];
-
+const tag_icons = [
+  '',
+  'pf_icon fab fa-xbox',
+  'pf_icon fab fa-playstation',
+  'pf_icon fa fa-laptop',
+  'pf_icon fab fa-steam',
+  'pf_icon fab fa-battle-net'
+];
 export default {
   tags,
-  tag_names
+  tag_names,
+  tag_icons
 };

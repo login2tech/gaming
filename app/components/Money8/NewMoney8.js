@@ -25,7 +25,12 @@ class NewMoney8 extends React.Component {
     if (!ladder) {
       return 'Platform User id';
     }
-    return game_user_ids.tag_names[ladder.gamer_tag];
+    return (
+      <>
+        <span className={game_user_ids.tag_icons[ladder.gamer_tag]} />
+        {game_user_ids.tag_names[ladder.gamer_tag]}
+      </>
+    );
   }
 
   handleChange(event) {
@@ -110,16 +115,6 @@ class NewMoney8 extends React.Component {
 
     return true;
   }
-
-  tag_names = [
-    '',
-    'Xbox Live Gamertag',
-    'PSN',
-    'Epic Games Username',
-    'Steam Username',
-    'Battletag'
-  ];
-
   render() {
     let p = this.state.ladder;
     let ladder = false;
@@ -205,11 +200,7 @@ class NewMoney8 extends React.Component {
                     <div className="form-group col-md-12">
                       <label htmlFor="title">User Id Required</label>
                       <br />
-                      <strong>
-                        {this.state.ladder
-                          ? this.tag_names[ladder.gamer_tag]
-                          : ' - '}
-                      </strong>
+                      <strong>{this.showGamerTag(ladder)}</strong>
                     </div>
                     <div className="form-group col-md-12">
                       <label htmlFor="title">Match Type</label>

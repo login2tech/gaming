@@ -5089,3 +5089,15 @@ ul.pagination .disabled a {
   flex: 1;
   align-self: stretch;
 }
+
+.pf_icon {
+    font-size: 40px !important;
+    float: left;
+    margin-right:5px;
+}
+th .pf_icon , td .pf_icon{
+  font-size:14px !important;float:none;
+}
+.text-grey{
+  color:grey;
+}

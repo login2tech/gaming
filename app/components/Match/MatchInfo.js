@@ -478,10 +478,17 @@ class MatchInfo extends React.Component {
                         {this.state.match.team_2_info.title}
                       </Link>
                     ) : (
-                      false
+                      <span className="text-grey">Pending Team</span>
                     )}
                   </span>
                   <span className="game_station">
+                    <span
+                      className={
+                        game_user_ids.tag_icons[
+                          this.state.match.ladder.gamer_tag
+                        ] + ' float-none'
+                      }
+                    />{' '}
                     {this.state.match.game.title} @{' '}
                     {this.state.match.ladder.title}
                   </span>

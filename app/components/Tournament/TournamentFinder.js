@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
+import game_user_ids from '../../../config/game_user_ids';
 
 // import Messages from '../Modules/Messages';
 
@@ -107,8 +108,15 @@ class TournamentFinder extends React.Component {
                             <div className="tournament-body">
                               <Link
                                 to={this.matchLink('/t/' + match.id)}
-                                className="tournament-name"
+                                className="tournament-name text-white"
                               >
+                                <span
+                                  className={
+                                    game_user_ids.tag_icons[
+                                      match.ladder.gamer_tag
+                                    ]
+                                  }
+                                />
                                 {match.game.title} - {match.ladder.title}
                               </Link>
 

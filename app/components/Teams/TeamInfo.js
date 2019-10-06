@@ -30,7 +30,16 @@ class TeamInfo extends React.Component {
     if (!this.state.team_info || !this.state.team_info.ladder) {
       return '';
     }
-    return game_user_ids.tag_names[this.state.team_info.ladder.gamer_tag];
+    return (
+      <>
+        <span
+          className={
+            game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
+          }
+        />
+        {game_user_ids.tag_names[this.state.team_info.ladder.gamer_tag]}
+      </>
+    );
   }
   approveRequest(event, reject) {
     event.preventDefault();
@@ -335,10 +344,10 @@ class TeamInfo extends React.Component {
           backgroundImage: "url('" + this.state.new_cover_pic + "')"
         }
       : this.state.team_info && this.state.team_info.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
+          }
+        : {};
 
     return (
       <div>
@@ -446,6 +455,13 @@ class TeamInfo extends React.Component {
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
+                  <span
+                    className={
+                      game_user_ids.tag_icons[
+                        this.state.team_info.ladder.gamer_tag
+                      ]
+                    }
+                  />
                   <h3>
                     {this.state.team_info.title}
                     {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}

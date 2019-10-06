@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 // import {Link} from 'react-router';
 import Messages from '../Modules/Messages';
 import {createMatch} from '../../actions/match';
+import game_user_ids from '../../../config/game_user_ids';
 
 import {Link} from 'react-router';
 // import moment from 'moment';
@@ -297,7 +298,14 @@ class NewTeam extends React.Component {
                           {this.state.game_info.title +
                             ' - ' +
                             this.state.team_info.ladder.title}
-                        </strong>
+                        </strong>{' '}
+                        <span
+                          className={
+                            game_user_ids.tag_icons[
+                              this.state.team_info.ladder.gamer_tag
+                            ]
+                          }
+                        />
                       </div>
                       <br />
                       <div className="form-group col-md-12">
@@ -453,6 +461,13 @@ class NewTeam extends React.Component {
                                 <th>Username</th>
                                 <th>Role</th>
                                 <th>
+                                  <span
+                                    className={
+                                      game_user_ids.tag_icons[
+                                        this.state.team_info.ladder.gamer_tag
+                                      ]
+                                    }
+                                  />
                                   {
                                     this.tag_names[
                                       this.state.team_info.ladder.gamer_tag

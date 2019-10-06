@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
+import game_user_ids from '../../../config/game_user_ids';
 
 // import Messages from '../Modules/Messages';
 
@@ -100,7 +101,7 @@ class MatchFinder extends React.Component {
                       return (
                         <div className="content_box" key={game_id}>
                           <h5 className="prizes_desclaimer">
-                            🎮 {this.state.matches[game_id][0].game.title}
+                            {this.state.matches[game_id][0].game.title}
                           </h5>
 
                           <ul
@@ -117,8 +118,15 @@ class MatchFinder extends React.Component {
                                   <div className="tournament-body">
                                     <Link
                                       to={this.matchLink('/m/' + match.id)}
-                                      className="tournament-name"
+                                      className="tournament-name text-white"
                                     >
+                                      <span
+                                        className={
+                                          game_user_ids.tag_icons[
+                                            match.ladder.gamer_tag
+                                          ] + ' float-none'
+                                        }
+                                      />
                                       {match.game.title} - {match.ladder.title}
                                     </Link>
 
@@ -129,7 +137,6 @@ class MatchFinder extends React.Component {
                                       Starts {moment(match.starts_at).fromNow()}
                                     </span>
                                   </div>
-
                                   <div className="tournament-footer">
                                     <div className="col">
                                       <div className="col-item">

@@ -569,6 +569,13 @@ class Money8Info extends React.Component {
                     )}
                   </span> */}
                   <span className="game_station">
+                    <span
+                      className={
+                        game_user_ids.tag_icons[
+                          this.state.match.ladder.gamer_tag
+                        ]
+                      }
+                    />
                     {this.state.match.game.title} @{' '}
                     {this.state.match.ladder.title}
                   </span>
