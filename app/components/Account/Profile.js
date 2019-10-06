@@ -342,7 +342,8 @@ class Profile extends React.Component {
                               L
                             </span>
                           </div>
-                          {this.props.user.id == this.state.user_info.id &&
+                          {this.props.user &&
+                          this.props.user.id == this.state.user_info.id &&
                           (this.state.user_info.wins ||
                             this.state.user_info.loss) ? (
                             <a
@@ -796,13 +797,15 @@ class Profile extends React.Component {
                               <td>
                                 {match.result ? (
                                   match.result == 'team_1' ? (
-                                    team_1.indexOf(this.props.user.id) > -1 ? (
+                                    team_1.indexOf(this.state.user_info.id) >
+                                    -1 ? (
                                       <span className="text-success">W</span>
                                     ) : (
                                       <span className="text-danger">L</span>
                                     )
                                   ) : match.result == 'team_2' ? (
-                                    team_2.indexOf(this.props.user.id) > -1 ? (
+                                    team_2.indexOf(this.state.user_info.id) >
+                                    -1 ? (
                                       <span className="text-success">W</span>
                                     ) : (
                                       <span className="text-danger">L</span>
