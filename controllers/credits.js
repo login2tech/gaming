@@ -2,8 +2,40 @@ const User = require('../models/User');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const credit_cost = 1;
 const currency = 'usd';
-
-const __addNewCreditPointTransaction = function(user_id, payment_id, points) {};
+const CashTransactions = require('../models/CashTransactions');
+const CreditTransactions = require('../models/CreditTransactions');
+const __addNewCreditPointTransaction = function(
+  user_id,
+  payment_id,
+  points,
+  init_transaction_mode
+) {
+  if (init_transaction_mode == 'credit') {
+    new CreditTransactions()
+      .save({
+        user_id: user_id,
+        obj_type: 'shop',
+        details: 'Credits bought.',
+        qty: points
+      })
+      .then(function(o) {})
+      .catch(function(err) {
+        console.log(8, err);
+      });
+  } else {
+    new CashTransactions()
+      .save({
+        user_id: user_id,
+        obj_type: 'shop',
+        details: 'OCG Cash bought.',
+        qty: points
+      })
+      .then(function(o) {})
+      .catch(function(err) {
+        console.log(8, err);
+      });
+  }
+};
 
 const __addNewCredit_points = function(
   init_transaction_mode,
@@ -27,7 +59,12 @@ const __addNewCredit_points = function(
       )
       .then(function(new_user) {
         cb(true);
-        __addNewCreditPointTransaction(user_id, payment_id, points);
+        __addNewCreditPointTransaction(
+          user_id,
+          payment_id,
+          points,
+          init_transaction_mode
+        );
       })
       .catch(function(err) {
         cb(false);

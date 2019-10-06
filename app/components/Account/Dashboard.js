@@ -36,7 +36,11 @@ class Profile extends React.Component {
       gamer_tag_5: props.user.gamer_tag_5 ? props.user.gamer_tag_5 : '',
       gamer_tag_6: props.user.gamer_tag_6 ? props.user.gamer_tag_6 : '',
 
-      name_on_card: ''
+      name_on_card: '',
+
+      amount_to_withdraw: '',
+      withdraw_method: '',
+      withdraw_path: ''
     };
   }
 
@@ -414,6 +418,102 @@ class Profile extends React.Component {
       });
   }
 
+  withdrawFormSubmit() {
+    //
+  }
+
+  renderWithDrawBox() {
+    return (
+      <div className="row">
+        <div className="col-md-12">
+          <hr />
+          <div className="contnet_box_border">
+            <form
+              onSubmit={this.withdrawFormSubmit.bind(this)}
+              className="field_form"
+            >
+              <Messages messages={this.props.messages} />
+              <div className="form-group   m-t-2">
+                <label
+                  htmlFor="amount_to_withdraw"
+                  className=" form-control-label text-white"
+                >
+                  Amount to Withdraw
+                </label>
+                <input
+                  type="number"
+                  min="1"
+                  max={this.props.user.cash_balance}
+                  required
+                  autoFocus
+                  name="amount_to_withdraw"
+                  placeholder=""
+                  id="amount_to_withdraw"
+                  className="form-control text-black"
+                  value={this.state.amount_to_withdraw}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+
+              <div className="form-group   m-t-2">
+                <label
+                  htmlFor="withdraw_method"
+                  className=" form-control-label text-white"
+                >
+                  Withdraw Method
+                </label>
+
+                <select
+                  // type="text"
+                  required
+                  // autoFocus
+                  name="withdraw_method"
+                  // placeholder=""
+                  id="withdraw_method"
+                  className="form-control text-black"
+                  value={this.state.withdraw_method}
+                  onChange={this.handleChange.bind(this)}
+                >
+                  <option value="">Select</option>
+                  <option value="paypal">Paypal</option>
+                  <option value="cheque">Cheque</option>
+                  <option value="bank_transfer">Bank Transfer</option>
+                </select>
+              </div>
+              <div className="form-group  m-t-2">
+                <label
+                  htmlFor="withdraw_path"
+                  className=" form-control-label text-white"
+                >
+                  {this.state.withdraw_method == 'paypal'
+                    ? 'PayPal Id'
+                    : this.state.withdraw_method == 'bank_transfer'
+                      ? 'Bank Account Details: '
+                      : this.state.withdraw_method == 'cheque'
+                        ? 'Bank acccount and shipping address:'
+                        : 'Withdrawal destination Details'}
+                </label>
+                <textarea
+                  required
+                  name="withdraw_path"
+                  id="withdraw_path"
+                  className="form-control text-black"
+                  value={this.state.withdraw_path}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+              <input
+                type="submit"
+                value="Withdraw"
+                className="btn btn-primary"
+              />
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   renderBuyBox(type) {
     return this.state.buy_balance_init ? (
       <div className="row">
@@ -436,19 +536,44 @@ class Profile extends React.Component {
 
           <div className="row">
             <div className="col-md-8">
-              <input
-                type="number"
-                id="add_new_bal_number"
-                placeholder={
-                  this.state.init_transaction_mode == 'credit'
-                    ? 'Add Credit Points'
-                    : 'Deposit Cash'
-                }
-                className="form-control"
-                name="add_new_bal_number"
-                value={this.state.add_new_bal_number}
-                onChange={this.handleChange.bind(this)}
-              />
+              {this.state.init_transaction_mode == 'credit' ? (
+                <select
+                  type="number"
+                  id="add_new_bal_number"
+                  placeholder={'Add Credit Points'}
+                  className="form-control"
+                  name="add_new_bal_number"
+                  value={this.state.add_new_bal_number}
+                  onChange={this.handleChange.bind(this)}
+                >
+                  <option value="">Add Credit Points</option>
+                  <option value="5">5 points</option>
+                  <option value="10">10 points</option>
+                  <option value="15">15 points</option>
+                  <option value="25">25 points</option>
+                  <option value="50">50 points</option>
+                  <option value="75">75 points</option>
+                  <option value="100">100 points</option>
+                  <option value="200">200 points</option>
+                  <option value="250">250 points</option>
+                  <option value="300">300 points</option>
+                  <option value="500">500 points</option>
+                </select>
+              ) : (
+                <input
+                  type="number"
+                  id="add_new_bal_number"
+                  placeholder={
+                    this.state.init_transaction_mode == 'credit'
+                      ? 'Add Credit Points'
+                      : 'Deposit Cash'
+                  }
+                  className="form-control"
+                  name="add_new_bal_number"
+                  value={this.state.add_new_bal_number}
+                  onChange={this.handleChange.bind(this)}
+                />
+              )}
             </div>
             <div className="col-md-4">
               <input
@@ -496,6 +621,9 @@ class Profile extends React.Component {
                       value="Add Credits"
                       onClick={() => {
                         this.setState({init_transaction_mode: 'credit'});
+                        this.props.dispatch({
+                          type: 'CLEAR_MESSAGES'
+                        });
                       }}
                       className="btn btn-default bttn_submit"
                     />
@@ -522,6 +650,8 @@ class Profile extends React.Component {
               </div>
               {this.state.init_transaction_mode == 'cash' ? (
                 this.renderBuyBox('cash')
+              ) : this.state.init_transaction_mode == 'Withdraw' ? (
+                this.renderWithDrawBox()
               ) : (
                 <div className="row">
                   <div className="row">
@@ -531,6 +661,9 @@ class Profile extends React.Component {
                         value="Deposit"
                         onClick={() => {
                           this.setState({init_transaction_mode: 'cash'});
+                          this.props.dispatch({
+                            type: 'CLEAR_MESSAGES'
+                          });
                         }}
                         className="btn btn-default bttn_submit"
                       />
@@ -971,10 +1104,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.props.user.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.props.user.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+          }
+        : {};
 
     return (
       <div>

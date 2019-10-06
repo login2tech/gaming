@@ -368,6 +368,9 @@ class Shop extends React.Component {
                             type="submit"
                             value="Buy Official Comp Membership"
                             onClick={() => {
+                              this.props.dispatch({
+                                type: 'CLEAR_MESSAGES'
+                              });
                               this.setState(
                                 {
                                   buy_balance_init: true,
@@ -425,6 +428,9 @@ class Shop extends React.Component {
                             type="submit"
                             value="Enable Double XP"
                             onClick={() => {
+                              this.props.dispatch({
+                                type: 'CLEAR_MESSAGES'
+                              });
                               this.setState(
                                 {
                                   buy_balance_init: true,
@@ -482,6 +488,9 @@ class Shop extends React.Component {
                             init_transaction_mode: 'credit',
                             clicked: false
                           });
+                          this.props.dispatch({
+                            type: 'CLEAR_MESSAGES'
+                          });
                         }}
                         className="btn btn-default bttn_submit"
                       />
@@ -517,6 +526,9 @@ class Shop extends React.Component {
                           this.setState({
                             init_transaction_mode: 'cash',
                             clicked: false
+                          });
+                          this.props.dispatch({
+                            type: 'CLEAR_MESSAGES'
                           });
                         }}
                         className="btn btn-default bttn_submit"

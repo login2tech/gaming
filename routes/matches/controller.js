@@ -507,7 +507,7 @@ exports.saveScore = function(req, res, next) {
         // console.log(
         // 'pehle se result koi b ni posted, first time post ho rha h but lose dala h khud ka toh close match'
         // );
-        const winner = false;
+        // const winner = false;
         // console.log(val);
         if (val.team_1_result) {
           const tmp = val.team_1_result.split('-');
