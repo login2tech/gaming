@@ -66,9 +66,9 @@ const withdraw = function(req, res, next) {
     .then(function(usr) {
       if (usr) {
         let cash_balance = usr.get('cash_balance');
-        console.log(cash_balance);
+        // console.log(cash_balance);
         cash_balance -= parseInt(req.body.amount_to_withdraw);
-        console.log(cash_balance);
+        // console.log(cash_balance);
         usr
           .save({cash_balance: cash_balance}, {patch: true})
           .then(function(usr) {
@@ -76,7 +76,7 @@ const withdraw = function(req, res, next) {
               .save({
                 user_id: req.user.id,
                 details: 'Cash Debit for withdrawal',
-                qty: -parseFloat(req.user.cash_balance)
+                qty: -parseFloat(req.body.amount_to_withdraw)
               })
               .then(function(o) {})
               .catch(function(err) {
@@ -88,7 +88,7 @@ const withdraw = function(req, res, next) {
                 user_id: req.user.id,
                 method: req.body.withdraw_method,
                 path: req.body.withdraw_path,
-                amount: req.user.cash_balance,
+                amount: req.body.amount_to_withdraw,
                 status: 'pending'
               })
               .then(function(o) {

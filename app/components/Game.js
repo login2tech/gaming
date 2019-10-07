@@ -5,7 +5,37 @@ import {Link} from 'react-router';
 class Game extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {matches: {[props.params.id]: []}, done_matches: []};
+    this.state = {
+      matches: {[props.params.id]: []},
+      done_matches: [],
+      new_chat_msg: '',
+      chats: [
+        {
+          user: {username: 'vasuchawla', id: 1},
+          id: 1,
+          msg: 'hi there how are you'
+        },
+        {user: {username: 'vasuchawla', id: 1}, id: 2, msg: 'hello hello hello'}
+      ]
+    };
+  }
+
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
+  newMsgSubmit(e) {
+    e.preventDefault();
+    const {chats} = this.state;
+    chats.push({
+      user: this.props.user,
+      msg: this.state.new_chat_msg,
+      id: Math.random()
+    });
+    this.setState({
+      new_chat_msg: '',
+      chats: chats
+    });
   }
 
   componentDidMount() {
@@ -79,6 +109,44 @@ class Game extends React.Component {
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
                   <h4>Chatbox</h4>
+                  <div className="chat_box">
+                    <div className="chat_box_message_list">
+                      {this.state.chats.map((chat, i) => {
+                        return (
+                          <div key={chat.id} className="single_chat">
+                            <span className="chat_user_image">
+                              <img src="" />
+                            </span>
+
+                            <span className="chat_user_name">
+                              <Link to={'/u/' + chat.user.username}>
+                                @vasuchawla
+                              </Link>
+                            </span>
+
+                            <span className="chat_msg">
+                              hi there, how are you?
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="chat_box_message_post">
+                      <form onSubmit={this.newMsgSubmit.bind(this)}>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="new_chat_msg"
+                          id="new_chat_msg"
+                          value={this.state.new_chat_msg}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                        <button style={{display: 'none'}} type="submit">
+                          Submit
+                        </button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12">
@@ -256,7 +324,12 @@ class Game extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return state;
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    settings: state.settings,
+    messages: state.messages
+  };
 };
 
 export default connect(mapStateToProps)(Game);

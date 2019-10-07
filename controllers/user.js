@@ -553,12 +553,6 @@ exports.singleUser_info = function(req, res, next) {
           }
         },
         'xp_obj'
-        // 'followerCount'
-        // {
-        //   followersCount: function(qb) {
-        //     qb.count();
-        //   }
-        // }
       ]
     })
     .then(function(usr) {
