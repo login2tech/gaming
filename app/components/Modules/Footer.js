@@ -14,7 +14,8 @@ class Footer extends React.Component {
   doneT(st) {
     if (st) {
       this.setState({
-        form_submitted: true
+        form_submitted: true,
+        subsribed_y: true
       });
     }
   }
@@ -57,7 +58,7 @@ class Footer extends React.Component {
                           target="_blank"
                           to={this.props.settings.facebook_url}
                         >
-                          <i className="fa fa-facebook" />
+                          <i className="fab fa-facebook" />
                         </Link>
                       </li>
                       <li>
@@ -65,7 +66,7 @@ class Footer extends React.Component {
                           target="_blank"
                           to={this.props.settings.twitter_url}
                         >
-                          <i className="fa fa-twitter" />
+                          <i className="fab fa-twitter" />
                         </Link>
                       </li>
                       <li>
@@ -73,7 +74,7 @@ class Footer extends React.Component {
                           target="_blank"
                           to={this.props.settings.instagram_url}
                         >
-                          <i className="fa fa-instagram" />
+                          <i className="fab fa-instagram" />
                         </Link>
                       </li>
                       <li>
@@ -81,7 +82,7 @@ class Footer extends React.Component {
                           target="_blank"
                           to={this.props.settings.linkedin_url}
                         >
-                          <i className="fa fa-linkedin" />
+                          <i className="fab fa-linkedin" />
                         </Link>
                       </li>
                     </ul>
@@ -118,7 +119,11 @@ class Footer extends React.Component {
                 <div className="contact-col-4 contact-inner">
                   <h4>SUBSCRIBE</h4>
                   <p>Please subscribe for latest game updates.</p>
-                  <Messages messages={this.props.messages} />
+                  {this.state.subsribed_y ? (
+                    <Messages messages={this.props.messages} />
+                  ) : (
+                    false
+                  )}
                   {this.state.form_submitted ? (
                     false
                   ) : (

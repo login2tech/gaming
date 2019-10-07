@@ -28,7 +28,14 @@ class MatchInfo extends React.Component {
   }
 
   showGamerTag() {
-    return game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
+    return (
+      <>
+        <span
+          className={game_user_ids.tag_icons[this.state.match.ladder.gamer_tag]}
+        />
+        {game_user_ids.tag_names[this.state.match.ladder.gamer_tag]}
+      </>
+    );
   }
 
   handleChange(event) {

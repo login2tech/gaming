@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 // import {Link} from 'react-router';
 import Messages from '../Modules/Messages';
 import {createTeam} from '../../actions/team';
+import game_user_ids from '../../../config/game_user_ids';
 
 class NewTeam extends React.Component {
   constructor(props) {
@@ -33,6 +34,31 @@ class NewTeam extends React.Component {
           );
         }
       });
+  }
+
+  showGamerTag() {
+    const {games} = this.state;
+    for (let i = 0; i < games.length; i++) {
+      const tmp_game = games[i];
+      for (let j = 0; j < tmp_game.ladders.length; j++) {
+        if (tmp_game.ladders[j].id == this.state.ladder) {
+          return (
+            <>
+              <span
+                className={
+                  game_user_ids.tag_icons[tmp_game.ladders[j].gamer_tag]
+                }
+              />
+              {game_user_ids.tag_names[tmp_game.ladders[j].gamer_tag]}
+              <br />
+              <br />
+            </>
+          );
+          // break;
+        }
+      }
+    }
+    return '-';
   }
 
   handleCreation(event) {
@@ -99,6 +125,12 @@ class NewTeam extends React.Component {
                         })}
                         }
                       </select>
+                    </div>
+                    <div className="form-group col-md-12">
+                      <label htmlFor="title">User Id Required</label>
+                      <div>
+                        {!this.state.ladder ? ' - ' : this.showGamerTag()}
+                      </div>
                     </div>
                     <div className="form-group col-md-12 text-center">
                       <button

@@ -21,6 +21,7 @@ class Header extends React.Component {
           >
             <img src={this.props.user.picture || this.props.user.gravatar} />{' '}
             {this.props.user.name ||
+              this.props.user.first_name ||
               this.props.user.email ||
               this.props.user.id}{' '}
             <i className="caret" />
@@ -72,12 +73,6 @@ class Header extends React.Component {
           <div id="navbar" className="navbar-collapse collapse">
             {this.props.user ? (
               <ul className="nav navbar-nav">
-                <li>
-                  <IndexLink to="/" activeStyle={active}>
-                    Home
-                  </IndexLink>
-                </li>
-
                 <li>
                   <Link
                     className="dropdown-toggle"
@@ -158,10 +153,13 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/topics">List Topics</Link>
+                      <Link to="/topics">Forum Topics</Link>
                     </li>
                     <li>
-                      <Link to="/threads">List Threads</Link>
+                      <Link to="/threads">Forum Threads</Link>
+                    </li>
+                    <li>
+                      <Link to="/posts">Social</Link>
                     </li>
                   </ul>
                 </li>
@@ -174,28 +172,11 @@ class Header extends React.Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Support Tickets
+                    Tickets
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
                       <Link to="/tickets">List Tickets</Link>
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  <Link
-                    className="dropdown-toggle"
-                    data-toggle="dropdown"
-                    role="button"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Social Posts
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link to="/posts">All Posts</Link>
                     </li>
                   </ul>
                 </li>
@@ -220,6 +201,30 @@ class Header extends React.Component {
                     </li>
                     <li>
                       <Link to="/forms/subscribers">Subscribers</Link>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Withdrawals
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link to="/withdrawal/pending">
+                        Pending Withdrwal Requests
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/withdrawal/completed">
+                        Completed Withdrwal Requests
+                      </Link>
                     </li>
                   </ul>
                 </li>

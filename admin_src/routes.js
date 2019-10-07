@@ -26,6 +26,9 @@ import Subscribers from './components/DataRows/Subscribers';
 import ApplyStaff from './components/DataRows/ApplyStaff';
 import AdvertiseWithUs from './components/DataRows/AdvertiseWithUs';
 
+import WithdrawalCompleted from './components/DataRows/WithdrawalCompleted';
+import WithdrawalPending from './components/DataRows/WithdrawalPending';
+
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
     // if (!store.getState().auth.token) {
@@ -66,6 +69,19 @@ export default function getRoutes(store) {
       <Route
         path="/forms/subscribers"
         component={Subscribers}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+
+      <Route
+        path="/withdrawal/pending"
+        component={WithdrawalPending}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/withdrawal/completed"
+        component={WithdrawalCompleted}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
