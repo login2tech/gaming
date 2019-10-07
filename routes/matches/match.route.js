@@ -23,6 +23,7 @@ routes.get(
   ctrl.matches_of_team
 );
 
+routes.post('/leave_match', ctrl.leave_match);
 // routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
 routes.get('/user_info', ctrl.listItem);
 // routes.get('/listPaged', ctrl.listPaged);

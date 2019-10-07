@@ -232,7 +232,7 @@ const addScoreForMember = function(uid, ladder_id, type) {
 };
 
 const giveMoneyToMember = function(uid, input_val, match_id) {
-  console.log('match_fee is: ', input_val);
+  // console.log('match_fee is: ', input_val);
   new User()
     .where({id: uid})
     .fetch()
@@ -351,7 +351,7 @@ const addScoreForTeam = function(game_id, ladder_id, type, team_members) {
 };
 
 exports.resolveDispute = function(req, res, next) {
-  console.log(req.body);
+  // console.log(req.body);
   new Item({id: req.body.id})
     .fetch()
     .then(function(match) {
@@ -793,7 +793,7 @@ exports.matches_of_team = function(req, res, next) {
 };
 
 exports.matches_of_user = function(req, res, next) {
-  console.log(req.query);
+  // console.log(req.query);
   const teams = req.query.teams.split(',');
   let mdl = new Item();
   mdl = mdl.orderBy('created_at', 'DESC');
@@ -963,6 +963,71 @@ exports.listSingleItem = function(req, res, next) {
         title: '',
         content: '',
         msg: 'Failed to fetch from db'
+      });
+    });
+};
+
+exports.leave_match = function(req, res, next) {
+  if (!req.body.match_id) {
+    res.status(400).send({ok: false, msg: 'Please enter Match ID'});
+    return;
+  }
+  new Item({id: req.body.match_id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        res.status(400).send({
+          ok: false,
+          msg: "Match doesn't exist"
+        });
+        return;
+      }
+      if (match.get('status') != 'accepted') {
+        return res
+          .status(400)
+          .send({ok: false, msg: 'Match can not be cancelled at this stage.'});
+      }
+      if (match.get('cancel_requested')) {
+        const requested_by = match.get('cancel_requested_by');
+        if (req.body.team != requested_by) {
+          // cancel kr match ko.
+          return match
+            .save({
+              status: 'cancelled'
+            })
+            .then(function(m) {
+              return res
+                .status(200)
+                .send({ok: true, msg: 'Match has been cancelled.'});
+            })
+            .catch(function(err) {
+              res
+                .status(400)
+                .send({ok: false, msg: 'Match cancellation Failed.'});
+            });
+        } else {
+          res.status(200).send({ok: true, msg: 'Match cancellation requested'});
+        }
+      }
+      return match
+        .save({
+          cancel_requested: true,
+          cancel_requested_by: req.body.team
+        })
+        .then(function(m) {
+          res.status(200).send({ok: true, msg: 'Match cancellation requested'});
+        })
+        .catch(function(err) {
+          res.status(400).send({ok: false, msg: 'Match cancellation Failed.'});
+        });
+
+      //
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.status(400).send({
+        ok: false,
+        msg: 'Failed to fetch match'
       });
     });
 };

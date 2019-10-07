@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
-import {join_match, saveScores} from '../../actions/match';
+import {join_match, saveScores, leave_match} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
 
@@ -253,6 +253,111 @@ class MatchInfo extends React.Component {
       });
   }
 
+  leaveMatchRequest(e) {
+    this.props.dispatch(
+      leave_match(
+        {
+          match_id: this.state.match.id,
+          team:
+            this.state.match.team_1_info.team_creator == this.props.user.id
+              ? 'team_1'
+              : 'team_2'
+        },
+        this.props.user
+      )
+    );
+  }
+
+  renderRequestCancel() {
+    if (this.state.clicked) {
+      return false;
+    }
+
+    if (!this.state.is_loaded) {
+      return false;
+    }
+    if (!this.state.match.team_2_id) {
+      return false;
+    }
+    if (!this.props.user) {
+      return false;
+    }
+    if (this.state.match.status == 'cancelled') {
+      return false;
+    }
+    if (this.state.match.cancel_requested) {
+      if (
+        (this.state.match.cancel_requested_by == 'team_1' &&
+          this.state.match.team_2_info.team_creator == this.props.user.id) ||
+        (this.state.match.cancel_requested_by == 'team_2' &&
+          this.state.match.team_1_info.team_creator == this.props.user.id)
+      ) {
+        return (
+          <button
+            type="button"
+            onClick={e => {
+              this.leaveMatchRequest(e);
+            }}
+            className="btn btn-danger bttn_submit"
+            style={{width: 'auto'}}
+          >
+            Accept cancellation
+          </button>
+        );
+      }
+      //
+      // .
+      return false;
+    }
+
+    // console.log(this.state.match.team_1_info);
+    if (
+      this.state.match.team_1_info.team_creator == this.props.user.id ||
+      this.state.match.team_2_info.team_creator == this.props.user.id
+    ) {
+      if (this.state.confirmLeave) {
+        return (
+          <div className="btn-group">
+            <button
+              type="button"
+              onClick={e => {
+                this.leaveMatchRequest(e);
+              }}
+              className="btn btn-default bttn_submit mw_200"
+            >
+              Are you Sure?
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                this.setState({
+                  confirmLeave: false
+                });
+              }}
+              className="btn btn-danger bttn_submit mw_200"
+            >
+              X
+            </button>
+          </div>
+        );
+      }
+      return (
+        <button
+          type="button"
+          onClick={() => {
+            this.setState({confirmLeave: true});
+          }}
+          className="btn btn-danger bttn_submit"
+          style={{width: 'auto'}}
+        >
+          Request cancellation
+        </button>
+      );
+    }
+    return false;
+  }
+
   renderJoin() {
     if (this.state.clicked) {
       return false;
@@ -335,6 +440,7 @@ class MatchInfo extends React.Component {
     if (!this.props.user) {
       return false;
     }
+
     if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
       return false;
     }
@@ -346,6 +452,9 @@ class MatchInfo extends React.Component {
       me != this.state.match.team_1_info.team_creator &&
       this.state.match.team_2_info.team_creator != me
     ) {
+      return false;
+    }
+    if (this.state.match.status == 'cancelled') {
       return false;
     }
 
@@ -389,7 +498,6 @@ class MatchInfo extends React.Component {
               this.saveScore();
             }}
           >
-            <Messages messages={this.props.messages} />
             <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
@@ -542,6 +650,7 @@ class MatchInfo extends React.Component {
                         </p>
                       </div>
                     </div>
+                    {this.renderRequestCancel()}
                     {this.renderJoin()}
                   </div>
                 </div>
@@ -554,6 +663,7 @@ class MatchInfo extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
+                <Messages messages={this.props.messages} />
                 {this.renderScoreSubmit()}
 
                 {/*}   <h5 className="prizes_desclaimer">Match Rules</h5>
