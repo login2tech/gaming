@@ -5107,3 +5107,9 @@ th .pf_icon , td .pf_icon{
 .avatar_img_r  a{
   color:#fff;
 }
+.rank_imgg{
+  max-width: 200px;
+  float:right;
+  margin-right:82px;
+  margin-bottom:30px;
+}

@@ -42,10 +42,42 @@ class ProfileHeader extends React.Component {
     return xp;
   }
 
+  image_based_on_i(xpo) {
+    const xp = this.getXp(xpo);
+    if (xp < 50) {
+      return 'amateur';
+    }
+    if (xp < 200) {
+      return 'beginner';
+    }
+    if (xp < 500) {
+      return 'upcoming';
+    }
+    if (xp < 1000) {
+      return 'bronze';
+    }
+    if (xp < 1500) {
+      return 'silver';
+    }
+    if (xp < 2000) {
+      return 'gold';
+    }
+    if (xp < 3000) {
+      return 'platinum';
+    }
+    if (xp < 3500) {
+      return 'diamond';
+    }
+    if (xp < 4000) {
+      return 'elite';
+    }
+    return 'elite';
+  }
+
   rank_based_on_xp(xpo) {
     const xp = this.getXp(xpo);
     if (xp < 50) {
-      return 'Amatuer (' + xp + ' XP)';
+      return 'Amateur (' + xp + ' XP)';
     }
     if (xp < 200) {
       return 'Beginner (' + xp + ' XP)';
@@ -300,8 +332,17 @@ class ProfileHeader extends React.Component {
                       )}
                     </div>
                     <div className="col-md-1"> </div>
-                    <div className="col-md-6  d-flex align-items-end justify-content-end align-content-end">
+                    <div className="col-md-6  align-items-end justify-content-end align-content-end">
                       <br />
+
+                      <img
+                        className="rank_imgg"
+                        src={
+                          '/assets/rank/' +
+                          this.image_based_on_i(user_info.xp_obj) +
+                          '.png'
+                        }
+                      />
 
                       <div className="float-right rank_box_wrap">
                         rank : {this.rank_based_on_xp(user_info.xp_obj)}
