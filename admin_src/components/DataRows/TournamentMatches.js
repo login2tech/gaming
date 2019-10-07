@@ -4,24 +4,106 @@ import Fetcher from '../../actions/Fetcher';
 import moment from 'moment';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
-import CashHistory from '../Modules/Modals/CashHistory';
+
 import {openModal} from '../../actions/modals';
-class MatchFinder extends React.Component {
+import CashHistory from '../Modules/Modals/CashHistory';
+import NewTournament from '../Modules/Modals/NewTournament';
+class Tournament extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       is_loaded: false,
       page: 1,
+      match_page: 1,
       items: [],
-      refresh: false,
-      pagination: {},
-      showing_for:
-        props.params && props.params.team_id
-          ? props.params.team_id
-          : props.params.status && props.params.status == 'disputed'
-            ? 'disputed'
-            : 'all'
+      matches: [],
+      match_pagination: {},
+      pagination: {}
     };
+  }
+
+  resolveDispute(id, team_id) {
+    const key = 'dispute';
+    this.setState(
+      {
+        ['update_' + key + id]: true
+      },
+      () => {
+        Fetcher.post('/api/tournament/resolveDispute', {
+          id: id,
+          winner: team_id
+        })
+          .then(resp => {
+            this.setState({
+              ['update_' + key + id]: false
+            });
+            if (resp.ok) {
+              this.loadData();
+            } else {
+              this.props.dispatch({type: 'FAILURE', messages: [resp]});
+            }
+          })
+          .catch(err => {
+            console.log(err);
+            const msg = 'Failed to perform Action';
+            this.props.dispatch({
+              type: 'FAILURE',
+              messages: [{msg: msg}]
+            });
+          });
+      }
+    );
+  }
+
+  createTournament() {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'newtournament',
+        zIndex: 534,
+        heading: 'New Tournament',
+        content: <NewTournament onComplete={this.loadData.bind(this)} />
+      })
+    );
+  }
+
+  doAction(action, obj) {
+    if (action === 'show_xp') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: <CashHistory type={'xp_tx'} obj_type={'t_' + obj.id} />
+        })
+      );
+      return;
+    } else if (action === 'show_credit') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'credits'} obj_type={'t_' + obj.id} />
+        })
+      );
+      return;
+    } else if (action === 'show_cash') {
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: <CashHistory type={'cash'} obj_type={'t_' + obj.id} />
+        })
+      );
+      return;
+    }
+
+    alert(action + ' ' + obj.id);
   }
 
   handlePageClick = data => {
@@ -32,57 +114,19 @@ class MatchFinder extends React.Component {
     });
   };
 
-  static getDerivedStateFromProps(props, state) {
-    if (
-      state.showing_for == 'all' &&
-      (!props || !props.params || !props.params.team_id || !props.params.status)
-    ) {
-      // console.log('here')
-      return null;
-    }
-    if (props.params && props.params.team_id) {
-      if (props.params.team_id != state.showing_for) {
-        return {
-          refresh: true,
-          page: 1
-        };
-      }
-      return null;
-    } else if (props.params && props.params.status) {
-      if (props.params.status != state.showing_for) {
-        return {
-          refresh: true,
-          page: 1
-        };
-      }
-      return null;
-    } else if (state.showing_for != 'all') {
-      return {
-        refresh: true,
-        page: 1
-      };
-    }
-    // console.log('here2')
-    return null;
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.refresh !== prevState.refresh) {
-      this.loadData();
-    }
-  }
+  handleMatchPageCount = data => {
+    // console.log(data)
+    const selected = parseInt(data.selected) + 1;
+    this.setState({match_page: selected}, () => {
+      this.loadTournamentMatches();
+    });
+  };
 
   loadData() {
     let other = '';
-    other = 'related=ladder,game,team_1_info,team_2_info';
-    if (this.props.params && this.props.params.team_id) {
-      other += '&filter_team_id_for_match=' + this.props.params.team_id;
-    }
-    if (this.props.params && this.props.params.status) {
-      other += '&filter_status=' + this.props.params.status;
-    }
+    other = 'related=ladder,game';
     Fetcher.get(
-      '/api/admin/listPaged/matches?' + other + '&page=' + this.state.page
+      '/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page
     )
       .then(resp => {
         if (resp.ok) {
@@ -108,6 +152,54 @@ class MatchFinder extends React.Component {
       });
   }
 
+  showMatchesOf(t_id) {
+    this.setState(
+      {
+        showing_matches_of: t_id,
+        match_page: 1,
+        match_pagination: {}
+      },
+      this.loadTournamentMatches
+    );
+  }
+
+  loadTournamentMatches() {
+    let other = '';
+    other = 'related=team_1_info,team_2_info';
+    // if (this.props.params && this.props.params.team_id) {
+    other += '&filter_tournament_id=' + this.state.showing_matches_of;
+    // }
+    console.log('doing');
+    Fetcher.get(
+      '/api/admin/listPaged/tournamentmaches?' +
+        other +
+        '&page=' +
+        this.state.match_page
+    )
+      .then(resp => {
+        if (resp.ok) {
+          this.setState({
+            is_loaded: true,
+            matches: resp.items,
+            match_pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          this.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      })
+      .catch(err => {
+        // console.log(err);
+        const msg = 'Failed to load users';
+        this.props.dispatch({
+          type: 'FAILURE',
+          messages: [{msg: msg}]
+        });
+      });
+  }
+
   resolveDispute(id, team_id) {
     const key = 'dispute';
     this.setState(
@@ -115,7 +207,7 @@ class MatchFinder extends React.Component {
         ['update_' + key + id]: true
       },
       () => {
-        Fetcher.post('/api/matches/resolveDispute', {id: id, winner: team_id})
+        Fetcher.post('/api/money8/resolveDispute', {id: id, winner: team_id})
           .then(resp => {
             this.setState({
               ['update_' + key + id]: false
@@ -138,44 +230,38 @@ class MatchFinder extends React.Component {
     );
   }
 
-  doAction(action, obj) {
-    if (action === 'show_xp') {
-      this.props.dispatch(
-        openModal({
-          type: 'custom',
-          id: 'tx',
-          zIndex: 534,
-          heading: 'User XP Transactions - @' + obj.username,
-          content: <CashHistory type={'xp_tx'} obj_type={'m_' + obj.id} />
-        })
-      );
-      return;
-    } else if (action === 'show_credit') {
-      this.props.dispatch(
-        openModal({
-          type: 'custom',
-          id: 'tx',
-          zIndex: 534,
-          heading: 'User Credit Transactions - @' + obj.username,
-          content: <CashHistory type={'credits'} obj_type={'m_' + obj.id} />
-        })
-      );
-      return;
-    } else if (action === 'show_cash') {
-      this.props.dispatch(
-        openModal({
-          type: 'custom',
-          id: 'tx',
-          zIndex: 534,
-          heading: 'User Credit Transactions - @' + obj.username,
-          content: <CashHistory type={'cash'} obj_type={'m_' + obj.id} />
-        })
-      );
-      return;
-    }
-
-    alert(action + ' ' + obj.id);
-  }
+  // deleteItem(id) {
+  //   const r = confirm('Are you sure you want to delete the user? ');
+  //   if (r == true) {
+  //   } else {
+  //   }
+  //   this.setState(
+  //     {
+  //       ['update_' + key + id]: true
+  //     },
+  //     () => {
+  //       Fetcher.post('/api/admin/delete/matches', {id: id})
+  //         .then(resp => {
+  //           this.setState({
+  //              ['update_' + key + id]: false
+  //           });
+  //           if (resp.ok) {
+  //             this.loadData();
+  //           } else {
+  //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+  //           }
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //           const msg = 'Failed to perform Action';
+  //           this.props.dispatch({
+  //             type: 'FAILURE',
+  //             messages: [{msg: msg}]
+  //           });
+  //         });
+  //     }
+  //   );
+  // }
 
   componentDidMount() {
     this.loadData();
@@ -185,44 +271,26 @@ class MatchFinder extends React.Component {
     // todo
   }
 
-  render() {
-    if (!this.state.is_loaded) {
-      return (
-        <div className="container-fluid">
-          <div className="panel">
-            <div className="panel-body">
-              <i className="fa fa-spinner fa-spin" style={{fontSize: 40}} />
-            </div>
-          </div>
-        </div>
-      );
+  renderMatches() {
+    if (!this.state.showing_matches_of) {
+      return false;
     }
     return (
-      <div className="container-fluid">
+      <div>
         <div className="panel">
           <div className="panel-body">
             <h2 style={{padding: 0, margin: 0}}>
-              Matches{' '}
-              {this.props.params && this.props.params.team_id
-                ? ' of team #' + this.props.params.team_id
-                : ''}
-              {this.props.params &&
-              this.props.params.status &&
-              this.props.params.status == 'disputed'
-                ? ' - Disputed'
-                : ''}
+              Matches of Tournament #{this.state.showing_matches_of}
             </h2>
           </div>
         </div>
         <div className="panel">
           <div className="panel-body">
-            <Messages messages={this.props.messages} />
             <table className="table  table-hover  table-responsive   table-striped table-bordered">
               <thead>
                 <tr>
                   <th>ID</th>
-                  <th>Game</th>
-                  <th>Ladder</th>
+                  <th>Round</th>
                   <th>Team 1</th>
                   <th>Team 2</th>
                   <th>Status</th>
@@ -236,13 +304,13 @@ class MatchFinder extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.state.items &&
-                  this.state.items.map((u, i) => {
+                {this.state.matches &&
+                  this.state.matches.map((u, i) => {
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
-                        <td>{u.game.title}</td>
-                        <td>{u.ladder.title}</td>
+
+                        <td>{u.match_round}</td>
                         <td>
                           {u.result == 'team_2' ? (
                             <span className="text-danger">
@@ -422,14 +490,54 @@ class MatchFinder extends React.Component {
               nextLabel={'next'}
               breakLabel={'...'}
               breakClassName={'break-me'}
-              pageCount={this.state.pagination.pageCount}
+              pageCount={this.state.match_pagination.pageCount}
               marginPagesDisplayed={2}
               pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
+              onPageChange={this.handleMatchPageCount}
               containerClassName={'pagination'}
               subContainerClassName={'pages pagination'}
               activeClassName={'active'}
             />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    if (!this.state.is_loaded) {
+      return (
+        <div className="container-fluid">
+          <div className="panel">
+            <div className="panel-body">
+              <i className="fa fa-spinner fa-spin" style={{fontSize: 40}} />
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return (
+      <div className="container-fluid">
+        <div className="panel">
+          <div className="panel-body">
+            <h2 style={{padding: 0, margin: 0}}>
+              Tournaments Matches
+              {this.props.params && this.props.params.team_id
+                ? ' of team #' + this.props.params.team_id
+                : ''}
+              {this.props.params &&
+              this.props.params.status &&
+              this.props.params.status == 'disputed'
+                ? ' - Disputed'
+                : ''}
+            </h2>
+          </div>
+        </div>
+        <div className="panel">
+          <div className="panel-body">
+            <Messages messages={this.props.messages} />
+
+            {this.renderMatches()}
           </div>
         </div>
       </div>
@@ -445,4 +553,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(MatchFinder);
+export default connect(mapStateToProps)(Tournament);

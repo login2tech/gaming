@@ -25,6 +25,7 @@ import Tickets from './components/DataRows/Tickets';
 import Subscribers from './components/DataRows/Subscribers';
 import ApplyStaff from './components/DataRows/ApplyStaff';
 import AdvertiseWithUs from './components/DataRows/AdvertiseWithUs';
+import TournamentMatches from './components/DataRows/TournamentMatches';
 
 import WithdrawalCompleted from './components/DataRows/WithdrawalCompleted';
 import WithdrawalPending from './components/DataRows/WithdrawalPending';
@@ -116,8 +117,24 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route
+        path="/matchfinder/filter/:status"
+        component={Matchfinder}
+        onLeave={clearMessages}
+      />
+      <Route
         path="/matchfinder"
         component={Matchfinder}
+        onLeave={clearMessages}
+      />
+
+      <Route
+        path="/money8/filter/:status"
+        component={Money8}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/tournamentmatches/filter/:status"
+        component={TournamentMatches}
         onLeave={clearMessages}
       />
       <Route path="/money8" component={Money8} onLeave={clearMessages} />

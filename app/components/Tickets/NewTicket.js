@@ -12,7 +12,7 @@ class NewTicket extends React.Component {
       ticket_description: '',
       new_post_image: '',
       extra_1: '',
-      extra_2: ''
+      extra_2: '',
       extra_3: ''
     };
   }
@@ -278,17 +278,20 @@ class NewTicket extends React.Component {
                           <div className="form-group">
                             <label htmlFor="extra_2">Match Type</label>
                             <select
-                               className="form-control"
+                              className="form-control"
                               id="extra_3"
                               name="extra_3"
                               required
                               value={this.state.extra_3}
                               onChange={this.handleChange.bind(this)}
                             >
-                            <option value=''>Select</option>
-                            <option value='MatchFinder'>MatchFinder</option>
-                            <option value='Mix-and-match'>Mix-and-match</option>
-                            <option value='Tournament'>Tournament</option>
+                              <option value="">Select</option>
+                              <option value="MatchFinder">MatchFinder</option>
+                              <option value="Mix-and-match">
+                                Mix-and-match
+                              </option>
+                              <option value="Tournament">Tournament</option>
+                            </select>
                           </div>
                         </div>
                       </div>

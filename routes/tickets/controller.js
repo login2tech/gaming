@@ -104,6 +104,7 @@ exports.addItem = function(req, res, next) {
     user_id: req.user.id,
     extra_1: req.body.extra_1,
     extra_2: req.body.extra_2,
+    extra_3: req.body.extra_3,
     attachment: req.body.ticket_attachment ? req.body.ticket_attachment : ''
   })
     .save()

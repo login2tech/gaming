@@ -31,6 +31,9 @@ class MatchFinder extends React.Component {
     // {
     //   other += "&filter_team_id_for_match="+this.props.params.team_id;
     // }
+    if (this.props.params && this.props.params.status) {
+      other += '&filter_status=' + this.props.params.status;
+    }
     Fetcher.get(
       '/api/admin/listPaged/money8?' + other + '&page=' + this.state.page
     )
@@ -156,6 +159,11 @@ class MatchFinder extends React.Component {
               {this.props.params && this.props.params.team_id
                 ? ' of team #' + this.props.params.team_id
                 : ''}
+              {this.props.params &&
+              this.props.params.status &&
+              this.props.params.status == 'disputed'
+                ? ' - Disputed'
+                : ''}
             </h2>
           </div>
         </div>
@@ -237,8 +245,8 @@ class MatchFinder extends React.Component {
                           {u.match_type == 'cash'
                             ? '' + u.match_fee + '/- OCG CASH'
                             : u.match_type == 'credits'
-                            ? '' + u.match_fee + '/- Credits'
-                            : 'FREE'}
+                              ? '' + u.match_fee + '/- Credits'
+                              : 'FREE'}
                         </td>
 
                         <td>

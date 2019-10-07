@@ -218,13 +218,40 @@ class Header extends React.Component {
                   <ul className="dropdown-menu">
                     <li>
                       <Link to="/withdrawal/pending">
-                        Pending Withdrwal Requests
+                        Pending Withdrawal Requests
                       </Link>
                     </li>
                     <li>
                       <Link to="/withdrawal/completed">
-                        Completed Withdrwal Requests
+                        Completed Withdrawal Requests
                       </Link>
+                    </li>
+                  </ul>
+                </li>
+
+                <li>
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Disputes
+                  </Link>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a href="/admin/#/matchfinder/filter/disputed">
+                        matchfinder
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/admin/#/money8/filter/disputed">money 8</a>
+                    </li>
+                    <li>
+                      <a href="/admin/#/tournamentmatches/filter/disputed">
+                        tournament matches
+                      </a>
                     </li>
                   </ul>
                 </li>
