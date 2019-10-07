@@ -812,6 +812,19 @@ exports.authFacebookCallback = function(req, res) {
   res.render('loading');
 };
 
+exports.leaderboard = function(req, res, next) {
+  new User()
+    .orderBy('life_xp', 'DESC')
+    .fetchPage({page: 1, pageSize: 100})
+    .then(function(usrs) {
+      return res.status(200).send({ok: true, items: usrs.toJSON()});
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.status(400).send({ok: false, items: []});
+    });
+};
+
 exports.resetScore = function(req, res, next) {
   const action = req.body.action;
   const year = moment().format('YYYY');

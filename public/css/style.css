@@ -5101,3 +5101,9 @@ th .pf_icon , td .pf_icon{
 .text-grey{
   color:grey;
 }
+.avatar_img_r img{
+  width:30px;height:30px;border-radius:15px;margin-right:10px;
+}
+.avatar_img_r  a{
+  color:#fff;
+}

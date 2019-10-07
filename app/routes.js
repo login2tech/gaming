@@ -22,7 +22,7 @@ import Dashboard from './components/Account/Dashboard';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
 import Game from './components/Game';
-// import Leaderboards from './components/leaderboards';
+import Leaderboards from './components/Leaderboards';
 
 import Topics from './components/Forums/Topic';
 import Threads from './components/Forums/Threads';
@@ -99,11 +99,7 @@ export default function getRoutes(store) {
         path="/records/:username/:duration"
         component={Records}
       />
-      {/*}<Route path="/leaderboards" component={Leaderboards} />
-
-      https://www.checkmategaming.com/leaderboards
-
-      */}
+      <Route path="/leaderboards" component={Leaderboards} />
 
       <Route
         onEnter={ensureAuthenticated}

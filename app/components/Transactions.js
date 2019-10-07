@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
+// import {Link} from 'react-router';
 // import { resetPassword } from '../../actions/auth';
 // import Messages from 'Messages';
 
-import NotFound from './Pages/NotFound';
+// import NotFound from './Pages/NotFound';
 
 class Transaction extends React.Component {
   constructor(props) {
@@ -38,9 +38,9 @@ class Transaction extends React.Component {
   }
 
   render() {
-    if (this.state.is_loaded && !this.state.is_page) {
-      return <NotFound />;
-    }
+    // if (this.state.is_loaded && !this.state.is_page) {
+    //   return <NotFound />;
+    // }
     return (
       <div>
         <section className="page_title_bar">

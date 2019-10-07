@@ -212,12 +212,14 @@ app.post('/api/user/follower/add', userController.addFollower);
 app.get('/api/user_info/followers/list', userController.listFollower);
 app.get('/api/user_info/following/list', userController.listFollowing);
 app.get('/api/user_info/records', userController.records);
+app.get('/api/leaderboard/list', userController.leaderboard);
 
 app.delete(
   '/account',
   userController.ensureAuthenticated,
   userController.accountDelete
 );
+
 //
 // app.post(
 //   '/api/submission/new',
