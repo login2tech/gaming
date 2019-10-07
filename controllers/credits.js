@@ -2,8 +2,11 @@ const User = require('../models/User');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const credit_cost = 1;
 const currency = 'usd';
+
 const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
+const WithdrawalRequest = require('../models/Withdrawal');
+
 const __addNewCreditPointTransaction = function(
   user_id,
   payment_id,
@@ -35,6 +38,82 @@ const __addNewCreditPointTransaction = function(
         console.log(8, err);
       });
   }
+};
+
+const withdraw = function(req, res, next) {
+  if (
+    !req.body.amount_to_withdraw ||
+    !req.body.withdraw_method ||
+    !req.body.withdraw_path
+  ) {
+    return res
+      .status(400)
+      .send({ok: false, msg: 'Not all values were provided.'});
+  }
+  // console.log(parseFloat(req.user.cash_balance));
+  // console.log(parseFloat(req.body.amount_to_withdraw));
+  if (
+    parseFloat(req.user.cash_balance) < parseFloat(req.body.amount_to_withdraw)
+  ) {
+    return res
+      .status(400)
+      .send({ok: false, msg: 'You dont have sufficient balance'});
+  }
+
+  new User()
+    .where({id: req.user.id})
+    .fetch()
+    .then(function(usr) {
+      if (usr) {
+        let cash_balance = usr.get('cash_balance');
+        console.log(cash_balance);
+        cash_balance -= parseInt(req.body.amount_to_withdraw);
+        console.log(cash_balance);
+        usr
+          .save({cash_balance: cash_balance}, {patch: true})
+          .then(function(usr) {
+            new CashTransactions()
+              .save({
+                user_id: req.user.id,
+                details: 'Cash Debit for withdrawal',
+                qty: -parseFloat(req.user.cash_balance)
+              })
+              .then(function(o) {})
+              .catch(function(err) {
+                console.log(4, err);
+              });
+
+            new WithdrawalRequest()
+              .save({
+                user_id: req.user.id,
+                method: req.body.withdraw_method,
+                path: req.body.withdraw_path,
+                amount: req.user.cash_balance,
+                status: 'pending'
+              })
+              .then(function(o) {
+                return res.status(200).send({
+                  ok: true,
+                  msg:
+                    'Withdrawal Request Created. You will receive funds shortly.'
+                });
+              })
+              .catch(function(err) {
+                console.log(5, err);
+                return res
+                  .status(400)
+                  .send({ok: true, msg: 'Failed to create '});
+              });
+          })
+          .catch(function(err) {
+            console.log(141, err);
+            return res.status(400).send({ok: true, msg: 'Failed to create '});
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(11, err);
+    });
 };
 
 const __addNewCredit_points = function(
@@ -326,6 +405,7 @@ const newCredits = function(req, res, next) {
     });
 };
 exports.new = newCredits;
+exports.withdraw = withdraw;
 
 exports.stopRenewal = function(req, res, next) {
   req.assert('type', 'Type cannot be blank').notEmpty();

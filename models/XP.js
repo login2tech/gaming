@@ -10,4 +10,3 @@ const XP = bookshelf.Model.extend({
 });
 
 module.exports = bookshelf.model('XP', XP);
- 

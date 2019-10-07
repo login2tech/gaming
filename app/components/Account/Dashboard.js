@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {charge} from '../../actions/stripe';
+import {charge, withdraw} from '../../actions/stripe';
 import Messages from '../Modules/Messages';
 import timezones from '../Modules/timezones';
 import {Link} from 'react-router';
@@ -111,7 +111,8 @@ class Profile extends React.Component {
               {
                 clicked: false,
                 buy_balance_init: false,
-                add_new_bal_number: ''
+                add_new_bal_number: '',
+                prev_success_type: 'insert'
               },
               () => {
                 const usr = this.props.user;
@@ -418,8 +419,31 @@ class Profile extends React.Component {
       });
   }
 
-  withdrawFormSubmit() {
-    //
+  withdrawFormSubmit(e) {
+    e.preventDefault();
+
+    this.props.dispatch(
+      withdraw(
+        {
+          amount_to_withdraw: this.state.amount_to_withdraw,
+          withdraw_method: this.state.withdraw_method,
+          withdraw_path: this.state.withdraw_path
+        },
+
+        st => {
+          this.setState({
+            init_transaction_mode: false,
+            prev_success_type: 'withdraw'
+          });
+          // const obj = {saving_cover_photo: false};
+          // if (st) {
+          //   obj.new_cover_pic = '';
+          //   obj.new_cover_pic_saved = false;
+          // }
+          // this.setState(obj);
+        }
+      )
+    );
   }
 
   renderWithDrawBox() {
@@ -432,7 +456,6 @@ class Profile extends React.Component {
               onSubmit={this.withdrawFormSubmit.bind(this)}
               className="field_form"
             >
-              <Messages messages={this.props.messages} />
               <div className="form-group   m-t-2">
                 <label
                   htmlFor="amount_to_withdraw"
@@ -648,6 +671,13 @@ class Profile extends React.Component {
                 />
                 <br /> ${this.props.user.cash_balance}
               </div>
+
+              {this.state.prev_success_type == 'withdraw' ? (
+                <Messages messages={this.props.messages} />
+              ) : (
+                false
+              )}
+
               {this.state.init_transaction_mode == 'cash' ? (
                 this.renderBuyBox('cash')
               ) : this.state.init_transaction_mode == 'Withdraw' ? (

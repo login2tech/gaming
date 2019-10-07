@@ -40,6 +40,39 @@ export function charge(obj, token, cb) {
   };
 }
 
+export function withdraw(obj, cb) {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/api/credits/withdraw', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          cb(true);
+          dispatch({
+            type: 'SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        cb(false);
+        return response.json().then(json => {
+          dispatch({
+            type: 'FAILURE',
+            messages: [json]
+          });
+        });
+      }
+    });
+  };
+}
+
 export function chargeChange(id, token) {
   return dispatch => {
     dispatch({
