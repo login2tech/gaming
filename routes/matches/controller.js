@@ -833,7 +833,8 @@ exports.listupcoming = function(req, res, next) {
   let a = new Item()
     .orderBy('game_id', 'DESC')
     // .orderBy('created_at', 'DESC')
-    .where('starts_at', '>', moment());
+    .where('starts_at', '>', moment())
+    .where('status', '=', 'pending');
 
   if (req.query.filter_id) {
     a = a.where({
