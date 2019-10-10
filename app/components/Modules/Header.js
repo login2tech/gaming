@@ -269,7 +269,7 @@ class Header extends React.Component {
                                   <span className="menu_prof_name_bot">
                                     ${props.user.cash_balance} |{' '}
                                     {props.user.credit_balance} credits |{' '}
-                                    {props.user.life_xp} XP
+                                    {props.user.life_xp} life XP
                                   </span>
                                 </span>
                               </span>

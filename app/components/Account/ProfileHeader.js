@@ -77,35 +77,35 @@ class ProfileHeader extends React.Component {
   rank_based_on_xp(xpo) {
     const xp = this.getXp(xpo);
     if (xp < 50) {
-      return 'Amateur (' + xp + ' XP)';
+      return 'Amateur (' + xp + ' season XP)';
     }
     if (xp < 200) {
-      return 'Beginner (' + xp + ' XP)';
+      return 'Beginner (' + xp + ' season XP)';
     }
     if (xp < 500) {
-      return 'Upcoming (' + xp + ' XP)';
+      return 'Upcoming (' + xp + ' season XP)';
     }
     if (xp < 1000) {
-      return 'Bronze (' + xp + ' XP)';
+      return 'Bronze (' + xp + ' season XP)';
     }
     if (xp < 1500) {
-      return 'Silver (' + xp + ' XP)';
+      return 'Silver (' + xp + ' season XP)';
     }
     if (xp < 2000) {
-      return 'Gold (' + xp + ' XP)';
+      return 'Gold (' + xp + ' season XP)';
     }
     if (xp < 3000) {
-      return 'Platinum (' + xp + ' XP)';
+      return 'Platinum (' + xp + ' season XP)';
     }
     if (xp < 3500) {
-      return 'Diamond (' + xp + ' XP)';
+      return 'Diamond (' + xp + ' season XP)';
     }
     if (xp < 4000) {
-      return 'Elite (' + xp + ' XP)';
+      return 'Elite (' + xp + ' season XP)';
     }
 
     // if (xp >  5000) {
-    return 'Elite (' + xp + ' XP)';
+    return 'Elite (' + xp + ' season XP)';
     // }
   }
 
