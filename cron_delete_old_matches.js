@@ -49,6 +49,16 @@ new Match()
     //
   });
 
+new Match()
+  .where('status', 'cancelled')
+  .destroy()
+  .then(function() {
+    //
+  })
+  .catch(function(err) {
+    console.log('deleted');
+  });
+
 setInterval(function() {
   console.log('.');
   if (TICKER > 0) {
