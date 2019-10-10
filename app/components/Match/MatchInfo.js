@@ -1061,7 +1061,8 @@ class MatchInfo extends React.Component {
                 )}
 
                 <ul className="team_list" id="tlst">
-                  {this.state.eligible_teams_loaded &&
+                  {0 &&
+                    this.state.eligible_teams_loaded &&
                     !this.state.team_selected &&
                     this.state.eligible_teams.map((team_parent, i) => {
                       if (team_parent.team_info.removed) {
