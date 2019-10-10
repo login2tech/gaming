@@ -243,6 +243,11 @@ exports.team_of_user = function(req, res, next) {
     user_id: req.query.uid,
     removed: false
   });
+  if (req.query.filter_actives && req.query.filter_actives == 'yes') {
+    a = a.where({
+      removed: false
+    });
+  }
   if (req.query.filter_active && req.query.filter_active == 'yes') {
     a = a.where({
       removed: false

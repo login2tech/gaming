@@ -225,7 +225,7 @@ class MatchInfo extends React.Component {
       return;
     }
     fetch(
-      '/api/teams/team_of_user/?filter_active=yes&uid=' +
+      '/api/teams/team_of_user/?filter_actives=yes&uid=' +
         this.props.user.id +
         '&filter_ladder=' +
         this.state.match.ladder_id
@@ -233,10 +233,32 @@ class MatchInfo extends React.Component {
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          const obj = {eligible_teams: json.teams, eligible_teams_loaded: true};
-          if (json.teams && json.teams.length && json.teams[0].removed != 1) {
-            obj.team_selected = json.teams[0].team_info;
+          const obj = {
+            eligible_teams: json.teams ? json.teams : [],
+            eligible_teams_loaded: true
+          };
+
+          if (json.teams && json.teams.length) {
+            for (let i = 0; i < json.teams.length; i++) {
+              if (
+                json.teams[i].removed ||
+                !json.teams[i].team_info ||
+                json.teams[i].team_info.removed ||
+                json.teams[i].team_info.ladder_id != this.state.match.ladder_id
+              ) {
+                break;
+              }
+              if (
+                json.teams[i].team_info.ladder_id != this.state.match.ladder_id
+              ) {
+                obj.team_selected = json.teams[0].team_info;
+              }
+            }
           }
+          //
+          // if (json.teams && json.teams.length && json.teams[0].removed != 1) {
+          //   obj.team_selected = json.teams[0].team_info;
+          // }
 
           this.setState(obj, () => {
             // scroll
@@ -386,7 +408,7 @@ class MatchInfo extends React.Component {
       // console.log(users);
       // console.log(users[i].id, me);
       if (parseInt(team_1_players[i].user_id) == me) {
-        console.log(team_1_players[i], me);
+        // console.log(team_1_players[i], me);
         return false;
       }
     }
