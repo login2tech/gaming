@@ -103,6 +103,7 @@ class Profile extends React.Component {
     return (
       <div>
         <ProfileHeader
+          is_loaded={this.state.is_loaded}
           user_info={this.state.user_info}
           current_tab="timeline"
         />

@@ -292,7 +292,11 @@ class Profile extends React.Component {
   render() {
     return (
       <div>
-        <ProfileHeader user_info={this.state.user_info} current_tab="profile" />
+        <ProfileHeader
+          user_info={this.state.user_info}
+          is_loaded={this.state.is_loaded}
+          current_tab="profile"
+        />
         <section className="contet_part single_match_details">
           <div className="container">
             {this.state.is_loaded ? (

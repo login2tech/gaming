@@ -239,7 +239,7 @@ exports.invite = function(req, res, next) {
 };
 
 exports.team_of_user = function(req, res, next) {
-  const a = new ItemChild().where({
+  let a = new ItemChild().where({
     user_id: req.query.uid,
     removed: false
   });

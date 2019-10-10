@@ -396,37 +396,6 @@ class ProfileHeader extends React.Component {
                   </div>
                 </div>
               </div>
-              {this.props.user &&
-              this.state.is_loaded &&
-              this.props.user.id != user_info.id &&
-              user_info.followers.length < 1 ? (
-                <Link
-                  onClick={event => {
-                    this.addFriend(event);
-                  }}
-                  className="btn btn-default bttn_submit btn-outline mw_200"
-                >
-                  Follow
-                </Link>
-              ) : (
-                false
-              )}
-
-              {this.props.user &&
-              this.state.is_loaded &&
-              this.props.user.id != user_info.id &&
-              user_info.followers.length > 0 ? (
-                <Link
-                  onClick={event => {
-                    this.addFriend(event);
-                  }}
-                  className="btn btn-default bttn_submit active mw_200"
-                >
-                  Unfollow
-                </Link>
-              ) : (
-                false
-              )}
             </div>
           </div>
 
@@ -464,7 +433,39 @@ class ProfileHeader extends React.Component {
                 <span> TIME ZONE </span>
                 <p>{user_info.timezone ? user_info.timezone : '-'}</p>
               </div>*/}
+              <div className="col-md-2 text-right">
+                {this.props.user &&
+                this.props.is_loaded &&
+                this.props.user.id != user_info.id &&
+                user_info.followers.length < 1 ? (
+                  <Link
+                    onClick={event => {
+                      this.addFriend(event);
+                    }}
+                    className="btn btn-default bttn_submit btn-outline mw_200"
+                  >
+                    Follow
+                  </Link>
+                ) : (
+                  false
+                )}
 
+                {this.props.user &&
+                this.props.is_loaded &&
+                this.props.user.id != user_info.id &&
+                user_info.followers.length > 0 ? (
+                  <Link
+                    onClick={event => {
+                      this.addFriend(event);
+                    }}
+                    className="btn btn-default bttn_submit active mw_200"
+                  >
+                    Unfollow
+                  </Link>
+                ) : (
+                  false
+                )}
+              </div>
               <div className="col-md-2">
                 <span>
                   <a
@@ -510,6 +511,7 @@ class ProfileHeader extends React.Component {
                   </a>
                 </p>
               </div>
+
               {/*}
             <div className="col-md-4">
               <span>LIFETIME EARNINGS</span>
