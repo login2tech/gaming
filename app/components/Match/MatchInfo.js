@@ -225,7 +225,7 @@ class MatchInfo extends React.Component {
       return;
     }
     fetch(
-      '/api/teams/team_of_user/?uid=' +
+      '/api/teams/team_of_user/?filter_active=yes&uid=' +
         this.props.user.id +
         '&filter_ladder=' +
         this.state.match.ladder_id
@@ -282,7 +282,11 @@ class MatchInfo extends React.Component {
     if (!this.props.user) {
       return false;
     }
-    if (this.state.match.status == 'cancelled') {
+    if (
+      this.state.match.status == 'cancelled' ||
+      this.state.match.status == 'disputed' ||
+      this.state.match.status == 'complete'
+    ) {
       return false;
     }
     if (this.state.match.cancel_requested) {

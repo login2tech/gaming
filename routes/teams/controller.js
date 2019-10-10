@@ -4,7 +4,7 @@ const ItemChild = require('./TeamUser');
 const User = require('../../models/User');
 const ObjName = 'Team';
 const Notif = require('../../models/Notification');
-
+const Match = require('../matches/Match');
 exports.team_pic = function(req, res, next) {
   if (!req.body.profile_picture && !req.body.cover_picture) {
     return res.status(400).send({ok: false, msg: 'Image missing'});
@@ -243,11 +243,11 @@ exports.team_of_user = function(req, res, next) {
     user_id: req.query.uid,
     removed: false
   });
-  // if (req.query.filter_ladder) {
-  //   a = a.where({
-  //     ladder_id: req.query.filter_ladder
-  //   });
-  // }
+  if (req.query.filter_active && req.query.filter_active == 'yes') {
+    a = a.where({
+      removed: false
+    });
+  }
   a.fetchAll({
     withRelated: [
       'team_info',
@@ -481,5 +481,15 @@ exports.disband = function(req, res, next) {
     )
     .then(function(data) {
       res.status(200).send({ok: true, msg: 'Successfully removed team.'});
+      new Match()
+        .where({
+          team_1: team_id,
+          status: 'pending'
+        })
+        .destroy()
+        .then(function() {})
+        .catch(function() {
+          //
+        });
     });
 };
