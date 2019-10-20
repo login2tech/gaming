@@ -1059,7 +1059,7 @@ class MatchInfo extends React.Component {
                 ) : (
                   false
                 )}
-
+                {/*
                 <ul className="team_list" id="tlst">
                   {0 &&
                     this.state.eligible_teams_loaded &&
@@ -1101,7 +1101,7 @@ class MatchInfo extends React.Component {
                         </li>
                       );
                     })}
-                </ul>
+                </ul>*/}
                 {this.state.eligible_teams_loaded &&
                   !this.state.team_selected && (
                     <div className="alert alert-warning">

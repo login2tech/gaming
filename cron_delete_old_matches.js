@@ -39,7 +39,7 @@ new Match()
       return;
     }
     matches = matches.toJSON();
-    console.log(matches.length);
+    // console.log(matches.length);
     for (let i = 0; i < matches.length; i++) {
       // `
       // tournaments`
@@ -53,10 +53,11 @@ new Match()
   .where('status', 'cancelled')
   .destroy()
   .then(function() {
-    //
+    reset_ticker();
+    console.log('deleted');
   })
   .catch(function(err) {
-    console.log('deleted');
+    console.log(err);
   });
 
 setInterval(function() {
