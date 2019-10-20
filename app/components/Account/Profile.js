@@ -39,7 +39,25 @@ class Profile extends React.Component {
       posts_page: 1
     };
   }
-
+  fetchUserInfo(forward) {
+    fetch('/api/user_info?uid=' + this.props.params.username)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              is_loaded: true,
+              user_info: json.user_info
+            },
+            () => {
+              if (forward) {
+                this.fetchPosts();
+              }
+            }
+          );
+        }
+      });
+  }
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.params.username != prevState.username) {
       return {username: nextProps.params.username};
@@ -139,7 +157,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    setTimeout(function() {
+    setTimeout(() => {
       const element = document.getElementById('is_top');
       if (element) {
         element.scrollIntoView({

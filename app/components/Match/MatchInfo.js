@@ -246,12 +246,19 @@ class MatchInfo extends React.Component {
                 json.teams[i].team_info.removed ||
                 json.teams[i].team_info.ladder_id != this.state.match.ladder_id
               ) {
-                break;
+                continue;
               }
+              // console.log(json.teams[i]);
+              // if (
+              //   json.teams[i].team_info.ladder_id != this.state.match.ladder_id
+              // ) {
+              //   obj.team_selected = json.teams[0].team_info;
+              // }
+
               if (
-                json.teams[i].team_info.ladder_id != this.state.match.ladder_id
+                json.teams[i].team_info.ladder_id == this.state.match.ladder_id
               ) {
-                obj.team_selected = json.teams[0].team_info;
+                obj.team_selected = json.teams[i].team_info;
               }
             }
           }

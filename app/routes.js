@@ -43,6 +43,7 @@ import SingleTicket from './components/Tickets/SingleTicket';
 import Tickets from './components/Tickets/MyTickets';
 
 import NewMatch from './components/Match/NewMatch';
+import NewMatchTeamSelect from './components/Match/NewMatchTeamSelect';
 import MatchFinder from './components/Match/MatchFinder';
 import MatchInfo from './components/Match/MatchInfo';
 
@@ -178,6 +179,19 @@ export default function getRoutes(store) {
         component={MatchFinder}
       />
 
+      <Route
+        path="/matchfinder/new/:ladder/:id"
+        component={NewMatch}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/matchfinder/new"
+        component={NewMatchTeamSelect}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+
       <Route onLeave={clearMessages} path="/game/:id/:title" component={Game} />
 
       <Route
@@ -201,12 +215,6 @@ export default function getRoutes(store) {
         component={MatchInfo}
       />
 
-      <Route
-        path="/matchfinder/new/:ladder/:id"
-        component={NewMatch}
-        onEnter={ensureAuthenticated}
-        onLeave={clearMessages}
-      />
       <Route
         path="/mix-and-match/new/"
         component={NewMoney8}
