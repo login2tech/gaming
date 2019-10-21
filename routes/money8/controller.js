@@ -169,7 +169,7 @@ const giveXpToMember = function(uid, match_id) {
 //     });
 // };
 
-const addScoreForMember = function(uid, ladder_id, type) {
+const addScoreForMember = function(uid, ladder_id, game_id, type) {
   console.log('168');
   const year = moment().format('YYYY');
   const season = moment().format('Q');
@@ -178,6 +178,7 @@ const addScoreForMember = function(uid, ladder_id, type) {
     .where({
       year: year,
       ladder_id: ladder_id,
+      game_id: game_id,
       season: season,
       user_id: uid
     })
@@ -383,7 +384,7 @@ const giveMoneyBackToTeam = function(
 
 const addScoreForTeam = function(game_id, ladder_id, type, team_members) {
   for (let i = team_members.length - 1; i >= 0; i--) {
-    addScoreForMember(parseInt(team_members[i]), ladder_id, type);
+    addScoreForMember(parseInt(team_members[i]), ladder_id, game_id, type);
   }
 };
 
