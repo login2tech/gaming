@@ -17,9 +17,9 @@ const shuffle = function(array) {
 const getXPBasedOn = function(current_xp) {
   return 10;
 };
-const getXPRemoveBasedOn = function(current_xp) {
-  return 3;
-};
+// const getXPRemoveBasedOn = function(current_xp) {
+//   return 3;
+// };
 
 const giveXpToMember = function(uid, match_id) {
   new User()
@@ -96,78 +96,78 @@ const giveXpToMember = function(uid, match_id) {
       console.log(6, err);
     });
 };
-
-const takeXpFromMember = function(uid, match_id) {
-  new User()
-    .where({id: uid})
-    .fetch()
-    .then(function(usr) {
-      if (usr) {
-        let xp = usr.get('life_xp');
-        const xP_to_add = getXPRemoveBasedOn(xp);
-
-        xp -= xP_to_add;
-        usr
-          .save({life_xp: xp}, {patch: true})
-          .then(function(usr) {})
-          .catch(function(err) {
-            console.log(1, err);
-          });
-
-        const year = moment().format('YYYY');
-        const season = moment().format('Q');
-
-        new XP()
-          .where({
-            year: year,
-            season: season,
-            user_id: uid
-          })
-          .fetch()
-          .then(function(xpObj) {
-            if (xpObj) {
-              xpObj
-                .save({
-                  xp: xpObj.get('xp') - xP_to_add
-                })
-                .then(function(o) {})
-                .catch(function(err) {
-                  console.log(2, err);
-                });
-            } else {
-              new XP()
-                .save({
-                  year: year,
-                  season: season,
-                  user_id: uid,
-                  xp: -xP_to_add
-                })
-                .then(function(o) {})
-                .catch(function(err) {
-                  console.log(3, err);
-                });
-            }
-            new XPTransactions()
-              .save({
-                user_id: uid,
-                obj_type: 'm8_' + match_id,
-                details: 'XP Debit for losing money-8 match #' + match_id,
-                qty: -xP_to_add
-              })
-              .then(function(o) {})
-              .catch(function(err) {
-                console.log(4, err);
-              });
-          })
-          .catch(function(err) {
-            console.log(5, err);
-          });
-      }
-    })
-    .catch(function(err) {
-      console.log(6, err);
-    });
-};
+//
+// const takeXpFromMember = function(uid, match_id) {
+//   new User()
+//     .where({id: uid})
+//     .fetch()
+//     .then(function(usr) {
+//       if (usr) {
+//         let xp = usr.get('life_xp');
+//         const xP_to_add = getXPRemoveBasedOn(xp);
+//
+//         xp -= xP_to_add;
+//         usr
+//           .save({life_xp: xp}, {patch: true})
+//           .then(function(usr) {})
+//           .catch(function(err) {
+//             console.log(1, err);
+//           });
+//
+//         const year = moment().format('YYYY');
+//         const season = moment().format('Q');
+//
+//         new XP()
+//           .where({
+//             year: year,
+//             season: season,
+//             user_id: uid
+//           })
+//           .fetch()
+//           .then(function(xpObj) {
+//             if (xpObj) {
+//               xpObj
+//                 .save({
+//                   xp: xpObj.get('xp') - xP_to_add
+//                 })
+//                 .then(function(o) {})
+//                 .catch(function(err) {
+//                   console.log(2, err);
+//                 });
+//             } else {
+//               new XP()
+//                 .save({
+//                   year: year,
+//                   season: season,
+//                   user_id: uid,
+//                   xp: -xP_to_add
+//                 })
+//                 .then(function(o) {})
+//                 .catch(function(err) {
+//                   console.log(3, err);
+//                 });
+//             }
+//             new XPTransactions()
+//               .save({
+//                 user_id: uid,
+//                 obj_type: 'm8_' + match_id,
+//                 details: 'XP Debit for losing money-8 match #' + match_id,
+//                 qty: -xP_to_add
+//               })
+//               .then(function(o) {})
+//               .catch(function(err) {
+//                 console.log(4, err);
+//               });
+//           })
+//           .catch(function(err) {
+//             console.log(5, err);
+//           });
+//       }
+//     })
+//     .catch(function(err) {
+//       console.log(6, err);
+//     });
+// };
 
 const addScoreForMember = function(uid, ladder_id, type) {
   console.log('168');
@@ -855,11 +855,14 @@ exports.addItem = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
+  const expires_in = req.body.expires_in;
+
   new Item({
     match_type: req.body.match_type,
     players_total: req.body.players_total,
     game_id: req.body.game_id,
     ladder_id: req.body.ladder_id,
+    expires_in: moment().add(expires_in[0], expires_in[1]),
     players: JSON.stringify([req.user.id]),
     match_fee: req.body.match_fee
   })
