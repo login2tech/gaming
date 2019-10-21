@@ -22,7 +22,7 @@ class ProfileHeader extends React.Component {
           } else {
             //
             setTimeout(() => {
-              this.fetchUserInfo(false);
+              this.props.fetchUserInfo(false);
             }, 200);
           }
         }

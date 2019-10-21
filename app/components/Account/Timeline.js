@@ -105,6 +105,7 @@ class Profile extends React.Component {
         <ProfileHeader
           is_loaded={this.state.is_loaded}
           user_info={this.state.user_info}
+          fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="timeline"
         />
 

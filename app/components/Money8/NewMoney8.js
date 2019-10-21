@@ -16,6 +16,7 @@ class NewMoney8 extends React.Component {
       games: [],
       players_total: '',
       players: [props.user],
+      expires_in: '',
       match_type: '',
       match_fee: 0
     };
@@ -75,6 +76,7 @@ class NewMoney8 extends React.Component {
           // match_players: this.state.player,
           game_id: game_id,
           ladder_id: ladder_id,
+          expires_in: this.state.expires_in,
           match_fee: this.state.match_type == 'free' ? '' : this.state.match_fee
         },
         this.props.user
@@ -154,7 +156,7 @@ class NewMoney8 extends React.Component {
                   <br />
                   <form onSubmit={this.handleCreation.bind(this)}>
                     <div className="form-group col-md-12">
-                      <label htmlFor="title">Match Ladder</label>
+                      <label htmlFor="ladder">Match Ladder</label>
 
                       <select
                         className="form-control"
@@ -203,7 +205,7 @@ class NewMoney8 extends React.Component {
                       <strong>{this.showGamerTag(ladder)}</strong>
                     </div>
                     <div className="form-group col-md-12">
-                      <label htmlFor="title">Match Type</label>
+                      <label htmlFor="match_type">Match Type</label>
                       <select
                         required
                         onChange={this.handleChange.bind(this)}
@@ -219,7 +221,7 @@ class NewMoney8 extends React.Component {
                     </div>
 
                     <div className="form-group col-md-12">
-                      <label htmlFor="title">
+                      <label htmlFor="players_total">
                         Total Players In mix-and-match Pool
                       </label>
                       <select
@@ -235,6 +237,28 @@ class NewMoney8 extends React.Component {
                         <option value="8">8</option>
                         <option value="12">12</option>
                         <option value="16">16</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group col-md-12">
+                      <label htmlFor="expires_in">Match Expires in</label>
+                      <select
+                        required
+                        onChange={this.handleChange.bind(this)}
+                        className="form-control"
+                        name="expires_in"
+                        id="expires_in"
+                      >
+                        <option value="">Select</option>
+                        <option value="5|minutes">5 minutes</option>
+                        <option value="10|minutes">10 minutes</option>
+                        <option value="15|minutes">15 minutes</option>
+                        <option value="20|minutes">20 minutes</option>
+                        <option value="30|minutes">30 minutes</option>
+                        <option value="45|minutes">45 minutes</option>
+                        <option value="60|minutes">1 hour</option>
+                        <option value="120|minutes">2 hours</option>
+                        <option value="5|hours">5 hours</option>
                       </select>
                     </div>
 

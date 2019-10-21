@@ -39,25 +39,7 @@ class Profile extends React.Component {
       posts_page: 1
     };
   }
-  fetchUserInfo(forward) {
-    fetch('/api/user_info?uid=' + this.props.params.username)
-      .then(res => res.json())
-      .then(json => {
-        if (json.ok) {
-          this.setState(
-            {
-              is_loaded: true,
-              user_info: json.user_info
-            },
-            () => {
-              if (forward) {
-                this.fetchPosts();
-              }
-            }
-          );
-        }
-      });
-  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.params.username != prevState.username) {
       return {username: nextProps.params.username};
@@ -313,6 +295,7 @@ class Profile extends React.Component {
         <ProfileHeader
           user_info={this.state.user_info}
           is_loaded={this.state.is_loaded}
+          fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="profile"
         />
         <section className="contet_part single_match_details">
