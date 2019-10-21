@@ -33,11 +33,11 @@ class Game extends React.Component {
     }
     // e.preventDefault();
     const {chats} = this.state;
-    chats.push({
-      user: this.props.user,
-      msg: this.state.new_chat_msg,
-      id: Math.random()
-    });
+    // chats.push({
+    //   user: this.props.user,
+    //   msg: this.state.new_chat_msg,
+    //   id: Math.random()
+    // });
 
     this.props.dispatch(
       sendMsg(
@@ -46,7 +46,11 @@ class Game extends React.Component {
           game_id: this.props.params.id,
           msg: this.state.new_chat_msg
         },
-        () => {
+        chat => {
+          if (chat) {
+            chat.user = this.props.user;
+            chats.push(chat);
+          }
           this.setState({
             new_chat_msg: '',
             chats: chats
@@ -86,14 +90,25 @@ class Game extends React.Component {
   reloadChats() {
     let str = 'game_id=' + this.props.params.id;
     if (this.state.min_time) {
-      str = '&min_time=' + this.state.min_time;
+      str += '&min_time=' + this.state.min_time;
     }
     fetch('/api/messaging/list?' + str)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
+          let chats;
+          if (json.chats && json.chats.length) {
+            chats = this.state.chats.concat(json.chats);
+          } else {
+            chats = this.state.chats;
+          }
+          chats = chats.filter(
+            (chat, index, self) =>
+              index === self.findIndex(t => t.id === chat.id)
+          );
+
           this.setState({
-            chats: this.state.chats.concat[json.chats],
+            chats: chats,
             min_time: json.fetched_on ? json.fetched_on : false
           });
         }
@@ -148,6 +163,12 @@ class Game extends React.Component {
                   <div className="chat_box">
                     <div className="chat_box_message_list">
                       {this.state.chats.map((chat, i) => {
+                        if (!chat.user) {
+                          chat.user = chat.from;
+                        }
+                        if (!chat.user) {
+                          chat.user = {id: '', username: ''};
+                        }
                         const image_url =
                           chat.user && chat.user.profile_picture
                             ? chat.user.profile_picture

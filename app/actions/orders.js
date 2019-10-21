@@ -14,7 +14,7 @@ export function sendMsg(data, cb) {
             type: 'CONTACT_FORM_SUCCESS',
             messages: [json]
           });
-          cb && cb();
+          cb && cb(json.chatItem);
           // setTimeout(() => {
           //   window.location.href = '/dashboard/customer';
           // }, 1000);

@@ -16,8 +16,8 @@ exports.new = function(req, res, next) {
       game_id: req.body.game_id,
       msg: req.body.msg
     })
-    .then(function() {
-      return res.status(200).send({ok: true});
+    .then(function(item) {
+      return res.status(200).send({ok: true, chatItem: item.toJSON()});
     })
     .catch(function(err) {
       return res.status(400).send({ok: false});
@@ -25,8 +25,8 @@ exports.new = function(req, res, next) {
 };
 
 exports.list = function(req, res, next) {
-  if (!req.body.game_id) {
-    return res.status(400).send({ok: false, chats: []});
+  if (!req.query.game_id) {
+    return res.status(200).send({ok: true, chats: []});
   }
 
   let a = new Message().where({
@@ -38,11 +38,11 @@ exports.list = function(req, res, next) {
   if (req.body.min_time) {
     a = a.where('created_at', '>=', req.body.min_time);
   } else {
-    a = a.where('created_at', '>=', moment().subtract(30, 'seconds'));
+    a = a.where('created_at', '>=', moment().subtract(5, 'seconds'));
   }
 
   a.fetchAll({
-    withRelated: ['user']
+    withRelated: ['from']
   })
     .then(function(items) {
       return res
@@ -51,6 +51,6 @@ exports.list = function(req, res, next) {
     })
     .catch(function(err) {
       console.log(err);
-      return res.status(400).send({ok: false});
+      return res.status(400).send({ok: false, chats: []});
     });
 };
