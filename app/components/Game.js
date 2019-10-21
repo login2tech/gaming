@@ -51,10 +51,18 @@ class Game extends React.Component {
             chat.user = this.props.user;
             chats.push(chat);
           }
-          this.setState({
-            new_chat_msg: '',
-            chats: chats
-          });
+          this.setState(
+            {
+              new_chat_msg: '',
+              chats: chats
+            },
+            () => {
+              window.setTimeout(function() {
+                const a = jQuery('.msg_history');
+                a[0].scrollTop = a[0].scrollHeight;
+              }, 100);
+            }
+          );
         }
       )
     );
@@ -107,10 +115,18 @@ class Game extends React.Component {
               index === self.findIndex(t => t.id === chat.id)
           );
 
-          this.setState({
-            chats: chats,
-            min_time: json.fetched_on ? json.fetched_on : false
-          });
+          this.setState(
+            {
+              chats: chats,
+              min_time: json.fetched_on ? json.fetched_on : false
+            },
+            () => {
+              window.setTimeout(function() {
+                const a = jQuery('.msg_history');
+                a[0].scrollTop = a[0].scrollHeight;
+              }, 100);
+            }
+          );
         }
       });
   }
@@ -131,7 +147,7 @@ class Game extends React.Component {
               total_done: json.total_done
             },
             () => {
-              setInterval(this.reloadChats.bind(this), 3000);
+              setInterval(this.reloadChats.bind(this), 1000);
             }
           );
         }
@@ -161,7 +177,7 @@ class Game extends React.Component {
                 <div>
                   <h4>Chatbox</h4>
                   <div className="chat_box">
-                    <div className="chat_box_message_list">
+                    <div className="chat_box_message_list msg_history">
                       {this.state.chats.map((chat, i) => {
                         if (!chat.user) {
                           chat.user = chat.from;
