@@ -186,7 +186,7 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route
-        path="/matchfinder/new"
+        path="/match/new"
         component={NewMatchTeamSelect}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}

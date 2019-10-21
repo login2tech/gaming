@@ -11,7 +11,7 @@ const moment = require('moment');
 // const UserGroup = require('./models/UserGroup');
 // const Group = require('./models/Group');
 const Match = require('./routes/matches/Match');
-const Money8 = require('./routes/money8/Money8');
+const Money8 = require('./routes/money8/Money8Match');
 
 let TICKER = 0;
 function reset_ticker() {
@@ -61,7 +61,7 @@ new Match()
     //
   });
 
-new Match()
+new Money8()
   .where('expires_in', '<', moment())
   .where('status', 'LIKE', 'pending')
   // .where({status: 'pending'})

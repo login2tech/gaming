@@ -64,7 +64,7 @@ class MatchFinder extends React.Component {
                 <div className="t_big_heading">Play. Win. Collect.</div>
 
                 <Link
-                  to={'/matchfinder/new/ '}
+                  to={'/match/new'}
                   className="btn btn-default bttn_submit max-width-300"
                 >
                   Create a match

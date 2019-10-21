@@ -855,8 +855,9 @@ exports.addItem = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
-  const expires_in = req.body.expires_in;
+  let expires_in = req.body.expires_in;
 
+  expires_in = expires_in.split('|');
   new Item({
     match_type: req.body.match_type,
     players_total: req.body.players_total,
