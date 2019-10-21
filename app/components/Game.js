@@ -20,6 +20,12 @@ class Game extends React.Component {
     };
   }
 
+  matchLink(orign) {
+    if (this.props.user) {
+      return orign;
+    }
+    return '/login';
+  }
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
@@ -167,78 +173,50 @@ class Game extends React.Component {
                   ) : (
                     false
                   )}
-                  <ul
-                    id="upcoming-tournament"
-                    className="tournament-list active"
-                  >
-                    {this.state.matches &&
-                      this.state.matches[game_id] &&
-                      this.state.matches[game_id].map((match, i) => {
-                        return (
-                          <li
-                            key={match.id}
-                            className="tournament-box"
-                            style={{background: '#27204d'}}
-                          >
-                            <div className="tournament-body">
-                              <Link
-                                to={this.matchLink('/m/' + match.id)}
-                                className="tournament-name"
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <th>Match</th>
+                        <th>Starts At</th>
+                        <th>Players</th>
+                        <th> </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.matches &&
+                        this.state.matches['game_' + game_id] &&
+                        this.state.matches['game_' + game_id].map(
+                          (match, i) => {
+                            return (
+                              <tr
+                                key={match.id}
+                                className="tournament-box"
+                                style={{background: '#27204d'}}
                               >
-                                {match.ladder.title}
-                              </Link>
+                                <td>
+                                  <Link
+                                    to={this.matchLink('/m/' + match.id)}
+                                    className="tournament-name"
+                                  >
+                                    {match.ladder.title}
+                                  </Link>
+                                </td>
+                                <td>{moment(match.starts_at).format('lll')}</td>
 
-                              <span className="date">
-                                {moment(match.starts_at).format('lll')}
-                              </span>
-                              <span className="date">
-                                Starts {moment(match.starts_at).fromNow()}
-                              </span>
-                            </div>
-
-                            <div className="tournament-footer">
-                              <div className="col">
-                                <div className="col-item">
-                                  <h5>Status</h5>
-                                  <p>{match.status}</p>
-                                </div>
-                                <div className="col-item">
-                                  <h5>TYPE</h5>
-                                  <p>
-                                    {match.match_type == 'paid'
-                                      ? 'CASHOUT'
-                                      : 'LADDER'}
-                                  </p>
-                                </div>
-                                <div className="col-item">
-                                  <h5>Prize pool</h5>
-                                  <p>
-                                    {match.match_type == 'paid'
-                                      ? '$ ' + match.match_fee + ' USD'
-                                      : '--'}
-                                  </p>
-                                </div>
-                                <div className="col-item">
-                                  <h5>Players</h5>
-                                  <p>
-                                    {match.match_players}v{match.match_players}
-                                  </p>
-                                </div>
-                              </div>
-
-                              <div className="col align-right">
-                                <Link
-                                  to={this.matchLink('/m/' + match.id)}
-                                  className="btn-default"
-                                >
-                                  Accept Match
-                                </Link>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                  </ul>
+                                <td className="col-item">
+                                  {match.match_players}v{match.match_players}
+                                </td>
+                                <td>
+                                  <Link to={this.matchLink('/m/' + match.id)}>
+                                    Accept Match
+                                  </Link>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
