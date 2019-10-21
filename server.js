@@ -357,6 +357,9 @@ app.use('/api/matches', matchRoute);
 const money8Route = require('./routes/money8/money8.route');
 app.use('/api/money8', money8Route);
 
+const messagingRoutes = require('./routes/messaging/message.route');
+app.use('/api/messaging', messagingRoutes);
+
 const tournamentsRoutes = require('./routes/tournaments/tournaments.route.js');
 app.use('/api/tournaments', tournamentsRoutes);
 

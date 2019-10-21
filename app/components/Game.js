@@ -2,21 +2,17 @@ import React from 'react';
 import {connect} from 'react-redux';
 const moment = require('moment');
 import {Link} from 'react-router';
+import {sendMsg} from '../actions/orders';
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      matches: {[props.params.id]: []},
+      matches: {['game_' + props.params.id]: []},
       done_matches: [],
       new_chat_msg: '',
-      chats: [
-        {
-          user: {username: 'vasuchawla', id: 1},
-          id: 1,
-          msg: 'hi there how are you'
-        },
-        {user: {username: 'vasuchawla', id: 1}, id: 2, msg: 'hello hello hello'}
-      ]
+      min_time: false,
+      chats: []
     };
   }
 
@@ -32,16 +28,32 @@ class Game extends React.Component {
 
   newMsgSubmit(e) {
     e.preventDefault();
+    if (this.state.new_chat_msg.trim() == '') {
+      return;
+    }
+    // e.preventDefault();
     const {chats} = this.state;
     chats.push({
       user: this.props.user,
       msg: this.state.new_chat_msg,
       id: Math.random()
     });
-    this.setState({
-      new_chat_msg: '',
-      chats: chats
-    });
+
+    this.props.dispatch(
+      sendMsg(
+        {
+          from_id: this.props.user.id,
+          game_id: this.props.params.id,
+          msg: this.state.new_chat_msg
+        },
+        () => {
+          this.setState({
+            new_chat_msg: '',
+            chats: chats
+          });
+        }
+      )
+    );
   }
 
   componentDidMount() {
@@ -49,6 +61,7 @@ class Game extends React.Component {
   }
   fetchUpcomingMatches() {
     let str = '';
+    // str;
     if (this.props.params && this.props.params.id) {
       str = '?&filter_id=' + this.props.params.id;
     }
@@ -70,6 +83,23 @@ class Game extends React.Component {
       });
   }
 
+  reloadChats() {
+    let str = 'game_id=' + this.props.params.id;
+    if (this.state.min_time) {
+      str = '&min_time=' + this.state.min_time;
+    }
+    fetch('/api/messaging/list?' + str)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState({
+            chats: this.state.chats.concat[json.chats],
+            min_time: json.fetched_on ? json.fetched_on : false
+          });
+        }
+      });
+  }
+
   fetchRecentMatches() {
     let str = '';
     if (this.props.params && this.props.params.id) {
@@ -86,7 +116,7 @@ class Game extends React.Component {
               total_done: json.total_done
             },
             () => {
-              this.fetch;
+              setInterval(this.reloadChats.bind(this), 3000);
             }
           );
         }
@@ -118,21 +148,28 @@ class Game extends React.Component {
                   <div className="chat_box">
                     <div className="chat_box_message_list">
                       {this.state.chats.map((chat, i) => {
+                        const image_url =
+                          chat.user && chat.user.profile_picture
+                            ? chat.user.profile_picture
+                            : 'https://ui-avatars.com/api/?size=30&name=' +
+                              (chat.user ? chat.user.first_name : ' ') +
+                              ' ' +
+                              (chat.user ? chat.user.last_name : ' ') +
+                              '&color=223cf3&background=000000';
+
                         return (
                           <div key={chat.id} className="single_chat">
                             <span className="chat_user_image">
-                              <img src="" />
+                              <img src={image_url} />
                             </span>
 
                             <span className="chat_user_name">
                               <Link to={'/u/' + chat.user.username}>
-                                @vasuchawla
+                                {chat.user.username}
                               </Link>
                             </span>
 
-                            <span className="chat_msg">
-                              hi there, how are you?
-                            </span>
+                            <span className="chat_msg">{chat.msg}</span>
                           </div>
                         );
                       })}
@@ -144,6 +181,7 @@ class Game extends React.Component {
                           className="form-control"
                           name="new_chat_msg"
                           id="new_chat_msg"
+                          placeholder="Type your message and press enter key to send a message.."
                           value={this.state.new_chat_msg}
                           onChange={this.handleChange.bind(this)}
                         />

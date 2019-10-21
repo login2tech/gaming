@@ -8,6 +8,7 @@ const XP = require('../../models/XP');
 const CashTransactions = require('../../models/CashTransactions');
 const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
+const TeamScore = require('../../models/TeamScore');
 
 const getXPBasedOn = function(current_xp) {
   return 10;
@@ -174,7 +175,7 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
     .where({
       year: year,
       ladder_id: ladder_id,
-      game_id: game_id,
+
       season: season,
       user_id: uid
     })
@@ -183,6 +184,7 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
       if (scoreObj) {
         scoreObj
           .save({
+            game_id: game_id,
             [type]: scoreObj.get(type) + 1
           })
           .then(function(o) {})
@@ -194,6 +196,7 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
           .save({
             year: year,
             season: season,
+            game_id: game_id,
             user_id: uid,
             ladder_id: ladder_id,
             [type]: 1
@@ -345,10 +348,56 @@ const takeMoneyFromTeam = function(team_id, input_val, team_members, match_id) {
   }
 };
 
-const addScoreForTeam = function(game_id, ladder_id, type, team_members) {
+const addScoreForTeam = function(
+  game_id,
+  ladder_id,
+  type,
+  team_members,
+  team_id
+) {
   for (let i = team_members.length - 1; i >= 0; i--) {
     addScoreForMember(parseInt(team_members[i]), ladder_id, game_id, type);
   }
+  const year = moment().format('YYYY');
+  const season = moment().format('Q');
+  new TeamScore.where({
+    year: year,
+    ladder_id: ladder_id,
+    game_id: game_id,
+    season: season,
+    team_id: team_id
+  })
+    .fetch()
+    .then(function(scoreObj) {
+      if (scoreObj) {
+        scoreObj
+          .save({
+            game_id: game_id,
+            [type]: scoreObj.get(type) + 1
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(4, err);
+          });
+      } else {
+        new TeamScore()
+          .save({
+            year: year,
+            season: season,
+            team_id: team_id,
+            game_id: game_id,
+            ladder_id: ladder_id,
+            [type]: 1
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(4, err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(7, err);
+    });
 };
 
 exports.resolveDispute = function(req, res, next) {

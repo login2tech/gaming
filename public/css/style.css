@@ -5144,3 +5144,13 @@ th .pf_icon , td .pf_icon{
 .chat_msg {
     flex: 6;
 }
+span.chat_user_image{
+  text-align: center;;
+}
+
+span.chat_user_image img {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 1px solid #fff;
+}

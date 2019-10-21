@@ -178,7 +178,7 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
     .where({
       year: year,
       ladder_id: ladder_id,
-      game_id: game_id,
+
       season: season,
       user_id: uid
     })
@@ -187,6 +187,7 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
       if (scoreObj) {
         scoreObj
           .save({
+            game_id: game_id,
             [type]: scoreObj.get(type) + 1
           })
           .then(function(o) {})
@@ -199,6 +200,7 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
             year: year,
             season: season,
             user_id: uid,
+            game_id: game_id,
             ladder_id: ladder_id,
             [type]: 1
           })
