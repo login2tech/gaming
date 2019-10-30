@@ -40,7 +40,10 @@ class NewPost extends React.Component {
               post_type: 'text',
               image_url: '',
               video_url: '',
-              content: ''
+              content: '',
+              new_post_content: '',
+              new_post_image: '',
+              new_post_video: ''
             });
             this.props.dispatch(
               openModal({
