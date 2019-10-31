@@ -2,7 +2,7 @@ function linkHashTags(txt){
   txt= txt.replace(/#(\S+)/g,'<a href="/feed/hashtag/$1" title="Find more posts tagged with #$1">#$1</a>');
   txt= txt.replace(/@\((\S+)\)/g,'<a href="/u/$1" title="User profile of #$1">@$1</a>');
 
-  txt = txt.replace(/(?:http:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g, '<iframe width="420" height="345" src="http://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
+  txt = txt.replace(/(?:http:\/\/)?(?:https:\/\/)?(?:www\.)?(?:youtube\.com|youtu\.be)\/(?:watch\?v=)?(.+)/g, '<iframe width="420" height="345" src="http://www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>');
 
   var pattern1 = /(?:http?s?:\/\/)?(?:www\.)?(?:vimeo\.com)\/?(.+)/g;
   var pattern2 = /(?:http?s?:\/\/)?(?:www\.)?(?:instagram\.com)\/?(.+)/g;
