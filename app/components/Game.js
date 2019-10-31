@@ -262,6 +262,9 @@ class Game extends React.Component {
                         this.state.matches['game_' + game_id] &&
                         this.state.matches['game_' + game_id].map(
                           (match, i) => {
+                            if (match.status == 'expired') {
+                              return false;
+                            }
                             return (
                               <tr
                                 key={match.id}
@@ -313,6 +316,12 @@ class Game extends React.Component {
                     </thead>
                     <tbody>
                       {this.state.done_matches.map((match, i) => {
+                        if (match.status == 'expired') {
+                          return false;
+                        }
+                        if (!match.team_2) {
+                          return false;
+                        }
                         let wl_1 = false;
                         let wl_2 = false;
                         if (match.result) {
