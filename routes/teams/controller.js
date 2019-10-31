@@ -257,7 +257,8 @@ exports.team_of_user = function(req, res, next) {
     withRelated: [
       'team_info',
       'team_info.team_users',
-      'team_info.team_users.user_info'
+      'team_info.team_users.user_info',
+      'team_info.score'
     ]
   })
     .then(function(team_info) {

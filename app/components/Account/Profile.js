@@ -616,7 +616,24 @@ class Profile extends React.Component {
                               }
                             >
                               <img src="/images/team_bg.png" />
-                              <div className="info">{team.title}</div>
+                              <div className="info">
+                                {team.title}
+                                <br />
+                                <div className="info_sub">
+                                  {team.score ? (
+                                    <div>
+                                      <span className="text-success">10 W</span>{' '}
+                                      -{' '}
+                                      <span className="text-danger">10 L</span>
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      <span className="text-success">0 W</span>{' '}
+                                      - <span className="text-danger">0 L</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
                             </Link>
                           </li>
                         );

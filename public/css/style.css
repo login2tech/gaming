@@ -3908,7 +3908,7 @@ ul.team_list li {
     margin-bottom: 10px
 }
 
-ul.team_list li .info {
+ul.team_list li .info  {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -5153,4 +5153,8 @@ span.chat_user_image img {
     height: 30px;
     border-radius: 6px;
     border: 1px solid #fff;
+}
+
+.info_sub {
+    border-top: 1px solid #5a5a5a;
 }
