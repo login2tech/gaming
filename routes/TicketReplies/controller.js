@@ -1,5 +1,7 @@
 const Item = require('./TicketReply');
+const Ticket = require('../tickets/Ticket');
 const ObjName = 'TicketReply';
+const Notif = require('../../models/Notification');
 
 exports.listItem = function(req, res, next) {
   const n = new Item().orderBy('id', 'ASC');
@@ -99,6 +101,28 @@ exports.addItem = function(req, res, next) {
     .save()
     .then(function(item) {
       res.send({ok: true, msg: 'New Comment has been created successfully.'});
+
+      if (req.user.role == 'admin') {
+        new Ticket()
+          .where({
+            id: req.body.ticket_id
+          })
+          .fetch()
+          .then(function(tckt) {
+            if (!tckt) {
+              return;
+            }
+            tckt = tckt.toJSON();
+            const tckt_creator = tckt.user_id;
+
+            new Notif().save({
+              description: 'You have a reply on ticket',
+              user_id: tckt_creator,
+              type: 'ticket',
+              object_id: req.body.ticket_id
+            });
+          });
+      }
     })
     .catch(function(err) {
       console.log(err);
