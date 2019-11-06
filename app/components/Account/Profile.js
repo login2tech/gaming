@@ -304,12 +304,6 @@ class Profile extends React.Component {
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12">
                   <div className="content_box">
-                    <h5 className="prizes_desclaimer">
-                      <i className="fa fa-trophy" aria-hidden="true" />{' '}
-                      ACHIEVEMENT
-                    </h5>
-                    <br />
-
                     <div className="user-profile-stats">
                       <div className="user-profile-header-data">
                         <div className="rank-data">
