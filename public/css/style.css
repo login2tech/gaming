@@ -3913,7 +3913,9 @@ ul.team_list li .info  {
     bottom: 0;
     width: 100%;
     text-align: center;
-    background: rgb(255, 255, 255, 0.5);
+    
+    background: #fff;
+    color: #114afb;
 }
 
 ul.team_list li img {
