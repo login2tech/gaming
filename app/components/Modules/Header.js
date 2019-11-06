@@ -170,8 +170,7 @@ class Header extends React.Component {
                           return (
                             <li key={u.id}>
                               <Link to={'/u/' + u.username}>
-                                {u.first_name + ' ' + u.last_name}
-                                <span className="text-sm">{u.username}</span>
+                                <span className="text-sm">@{u.username}</span>
                               </Link>
                             </li>
                           );

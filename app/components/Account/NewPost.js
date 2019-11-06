@@ -375,7 +375,7 @@ class NewPost extends React.Component {
 
                         '&multiLine': {
                           control: {
-                            fontFamily: 'monospace',
+                            // fontFamily: 'monospace',
                             border: '1px solid silver'
                           },
 
@@ -419,7 +419,7 @@ class NewPost extends React.Component {
                         trigger="@"
                         data={this.fetchUsers.bind(this)}
                         style={{
-                          backgroundColor: '#cee4e5'
+                          backgroundColor: '#114afb'
                         }}
                       />
                     </MentionsInput>

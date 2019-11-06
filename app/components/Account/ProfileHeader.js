@@ -263,7 +263,13 @@ class ProfileHeader extends React.Component {
     const {user_info} = this.props;
     if (!user_info || !user_info.id) {
       return (
-        <section className="page_title_bar less_padding" id="is_top">
+        <section
+          className="page_title_bar less_padding"
+          id="is_top"
+          style={{
+            backgroundPosition: 'bottom'
+          }}
+        >
           <br />
           <br />
           <br />
