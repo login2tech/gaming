@@ -1,6 +1,7 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
-// import moment from 'moment';
+
+import axios from 'axios';
 import Fetcher from '../../../actions/Fetcher';
 import Messages from '../../Messages';
 import React from 'react';
@@ -8,6 +9,8 @@ class NewGame extends React.Component {
   constructor(props) {
     super(props);
     this.state = {loaded: true, title: '', image_url: '', banner_url: ''};
+    this.image_url_ref = React.createRef();
+    this.banner_url_ref = React.createRef();
   }
 
   doClose() {
@@ -22,12 +25,8 @@ class NewGame extends React.Component {
       );
     }, 500);
   }
-  onSubmit(e) {
-    e.preventDefault();
-    this.setState({
-      loaded: false
-    });
 
+  finalSubmit() {
     Fetcher.post('/api/games/add', {
       title: this.state.title,
       image_url: this.state.image_url,
@@ -57,6 +56,73 @@ class NewGame extends React.Component {
       });
   }
 
+  uploadFile2() {
+    const data = new FormData();
+
+    const node = this.banner_url_ref.current;
+
+    const file_1 = node.files[0];
+    data.append('file', file_1, file_1.name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          });
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            banner_url: res.data.file
+          },
+          () => {
+            this.finalSubmit();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        // console.log(err);
+      });
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.setState({
+      loaded: false
+    });
+
+    const data = new FormData();
+
+    const node = this.image_url_ref.current;
+
+    const file_1 = node.files[0];
+    data.append('file', file_1, file_1.name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          });
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            image_url: res.data.file
+          },
+          () => {
+            this.uploadFile2();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        // console.log(err);
+      });
+  }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
@@ -71,7 +137,6 @@ class NewGame extends React.Component {
         ) : (
           <div className="show_loader">
             <div className="is_loader" />
-            sdf
           </div>
         )}
         <div>
@@ -101,6 +166,8 @@ class NewGame extends React.Component {
                   type="file"
                   className="form-control"
                   name="image_url"
+                  ref={this.image_url_ref}
+                  required
                   // onChange={this.handleChange.bind(this)}
                   id="image_url"
                   // value={this.state.title}
@@ -113,6 +180,8 @@ class NewGame extends React.Component {
                   type="file"
                   className="form-control"
                   name="banner_url"
+                  required
+                  ref={this.banner_url_ref}
                   // onChange={this.handleChange.bind(this)}
                   id="banner_url"
                   // value={this.state.title}

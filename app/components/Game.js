@@ -69,8 +69,29 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchUpcomingMatches();
+    this.fetchGame();
+    //
   }
+
+  fetchGame() {
+    fetch('/api/games/single/' + this.props.params.id)
+      .then(res => res.json())
+      .then(json => {
+        if (!json.ok) {
+          this.fetchUpcomingMatches();
+          return;
+        }
+        this.setState(
+          {
+            game: json.item
+          },
+          () => {
+            this.fetchUpcomingMatches();
+          }
+        );
+      });
+  }
+
   fetchUpcomingMatches() {
     let str = '';
     // str;
@@ -158,7 +179,14 @@ class Game extends React.Component {
     const game_id = this.props.params.id;
     return (
       <div>
-        <section className="page_title_bar">
+        <section
+          className="page_title_bar"
+          style={
+            this.state.game
+              ? {backgroundImage: "url('" + this.state.game.banner_url + "')"}
+              : {}
+          }
+        >
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">

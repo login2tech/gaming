@@ -4,7 +4,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var checkStatus = function checkStatus(response) {
   // if (response.ok) {
@@ -44,7 +44,7 @@ var Fetcher = {
   }
 };
 var _default = Fetcher;
-exports["default"] = _default;
+exports.default = _default;
 
 },{}],2:[function(require,module,exports){
 "use strict";
@@ -67,7 +67,7 @@ var _reactCookie = _interopRequireDefault(require("react-cookie"));
 
 var _reactRouter = require("react-router");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function login(email, password) {
   return function (dispatch) {
@@ -92,8 +92,8 @@ function login(email, password) {
             user: json.user
           });
 
-          _reactCookie["default"].save('token', json.token, {
-            expires: (0, _moment["default"])().add(1, 'month').toDate()
+          _reactCookie.default.save('token', json.token, {
+            expires: (0, _moment.default)().add(1, 'month').toDate()
           });
 
           _reactRouter.browserHistory.push('/account');
@@ -136,8 +136,8 @@ function signup(name, email, password) {
 
           _reactRouter.browserHistory.push('/');
 
-          _reactCookie["default"].save('token', json.token, {
-            expires: (0, _moment["default"])().add(1, 'month').toDate()
+          _reactCookie.default.save('token', json.token, {
+            expires: (0, _moment.default)().add(1, 'month').toDate()
           });
         } else {
           dispatch({
@@ -151,7 +151,7 @@ function signup(name, email, password) {
 }
 
 function logout() {
-  _reactCookie["default"].remove('token', {
+  _reactCookie.default.remove('token', {
     path: '/'
   });
 
@@ -330,7 +330,7 @@ function deleteAccount(token) {
   };
 }
 
-},{"moment":91,"react-cookie":99,"react-router":151}],3:[function(require,module,exports){
+},{"moment":117,"react-cookie":125,"react-router":177}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -362,7 +362,7 @@ exports.closeModal = closeModal;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -372,7 +372,7 @@ var _auth = require("../../actions/auth");
 
 var _Messages = _interopRequireDefault(require("../Messages"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -425,21 +425,21 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("form", {
+      }), _react.default.createElement("form", {
         onSubmit: this.handleForgot.bind(this)
-      }, _react["default"].createElement("legend", null, "Forgot Password"), _react["default"].createElement("div", {
+      }, _react.default.createElement("legend", null, "Forgot Password"), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("p", null, "Enter your email address below and we'll send you password reset instructions."), _react["default"].createElement("label", {
+      }, _react.default.createElement("p", null, "Enter your email address below and we'll send you password reset instructions."), _react.default.createElement("label", {
         htmlFor: "email"
-      }, "Email"), _react["default"].createElement("input", {
+      }, "Email"), _react.default.createElement("input", {
         type: "email",
         name: "email",
         id: "email",
@@ -448,7 +448,7 @@ function (_React$Component) {
         autoFocus: true,
         value: this.state.email,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("button", {
+      })), _react.default.createElement("button", {
         type: "submit",
         className: "btn btn-success"
       }, "Reset Password")))));
@@ -456,7 +456,7 @@ function (_React$Component) {
   }]);
 
   return Forgot;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -466,15 +466,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Forgot);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/auth":2,"../Messages":31,"react":161,"react-redux":120}],5:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146}],5:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -486,7 +486,7 @@ var _auth = require("../../actions/auth");
 
 var _Messages = _interopRequireDefault(require("../Messages"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -540,21 +540,21 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "login-container container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("form", {
+      }), _react.default.createElement("form", {
         onSubmit: this.handleLogin.bind(this)
-      }, _react["default"].createElement("legend", null, "Log In"), _react["default"].createElement("div", {
+      }, _react.default.createElement("legend", null, "Log In"), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "email"
-      }, "Email"), _react["default"].createElement("input", {
+      }, "Email"), _react.default.createElement("input", {
         type: "email",
         name: "email",
         id: "email",
@@ -563,11 +563,11 @@ function (_React$Component) {
         className: "form-control",
         value: this.state.email,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "password"
-      }, "Password"), _react["default"].createElement("input", {
+      }, "Password"), _react.default.createElement("input", {
         type: "password",
         name: "password",
         id: "password",
@@ -575,23 +575,23 @@ function (_React$Component) {
         className: "form-control",
         value: this.state.password,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement(_reactRouter.Link, {
         to: "/forgot"
-      }, _react["default"].createElement("strong", null, "Forgot your password?"))), _react["default"].createElement("button", {
+      }, _react.default.createElement("strong", null, "Forgot your password?"))), _react.default.createElement("button", {
         type: "submit",
         className: "btn btn-success"
-      }, "Log in")))), _react["default"].createElement("p", {
+      }, "Log in")))), _react.default.createElement("p", {
         className: "text-center"
-      }, "Don't have an account?", ' ', _react["default"].createElement(_reactRouter.Link, {
+      }, "Don't have an account?", ' ', _react.default.createElement(_reactRouter.Link, {
         to: "/signup"
-      }, _react["default"].createElement("strong", null, "Sign up"))));
+      }, _react.default.createElement("strong", null, "Sign up"))));
     }
   }]);
 
   return Login;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -601,15 +601,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Login);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/auth":2,"../Messages":31,"react":161,"react-redux":120,"react-router":151}],6:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146,"react-router":177}],6:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -619,7 +619,7 @@ var _auth = require("../../actions/auth");
 
 var _Messages = _interopRequireDefault(require("../Messages"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -706,92 +706,92 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("form", {
+      }), _react.default.createElement("form", {
         onSubmit: this.handleProfileUpdate.bind(this),
         className: "form-horizontal"
-      }, _react["default"].createElement("legend", null, "Profile Information"), _react["default"].createElement("div", {
+      }, _react.default.createElement("legend", null, "Profile Information"), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "email",
         className: "col-sm-3"
-      }, "Email"), _react["default"].createElement("div", {
+      }, "Email"), _react.default.createElement("div", {
         className: "col-sm-7"
-      }, _react["default"].createElement("input", {
+      }, _react.default.createElement("input", {
         type: "email",
         name: "email",
         id: "email",
         className: "form-control",
         value: this.state.email,
         onChange: this.handleChange.bind(this)
-      }))), _react["default"].createElement("div", {
+      }))), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "name",
         className: "col-sm-3"
-      }, "Name"), _react["default"].createElement("div", {
+      }, "Name"), _react.default.createElement("div", {
         className: "col-sm-7"
-      }, _react["default"].createElement("input", {
+      }, _react.default.createElement("input", {
         type: "text",
         name: "name",
         id: "name",
         className: "form-control",
         value: this.state.name,
         onChange: this.handleChange.bind(this)
-      }))), _react["default"].createElement("div", {
+      }))), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "col-sm-offset-3 col-sm-4"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         type: "submit",
         className: "btn btn-success"
-      }, "Update Profile")))))), _react["default"].createElement("div", {
+      }, "Update Profile")))))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("form", {
+      }, _react.default.createElement("form", {
         onSubmit: this.handleChangePassword.bind(this),
         className: "form-horizontal"
-      }, _react["default"].createElement("legend", null, "Change Password"), _react["default"].createElement("div", {
+      }, _react.default.createElement("legend", null, "Change Password"), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "password",
         className: "col-sm-3"
-      }, "New Password"), _react["default"].createElement("div", {
+      }, "New Password"), _react.default.createElement("div", {
         className: "col-sm-7"
-      }, _react["default"].createElement("input", {
+      }, _react.default.createElement("input", {
         type: "password",
         name: "password",
         id: "password",
         className: "form-control",
         value: this.state.password,
         onChange: this.handleChange.bind(this)
-      }))), _react["default"].createElement("div", {
+      }))), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "confirm",
         className: "col-sm-3"
-      }, "Confirm Password"), _react["default"].createElement("div", {
+      }, "Confirm Password"), _react.default.createElement("div", {
         className: "col-sm-7"
-      }, _react["default"].createElement("input", {
+      }, _react.default.createElement("input", {
         type: "password",
         name: "confirm",
         id: "confirm",
         className: "form-control",
         value: this.state.confirm,
         onChange: this.handleChange.bind(this)
-      }))), _react["default"].createElement("div", {
+      }))), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "col-sm-4 col-sm-offset-3"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         type: "submit",
         className: "btn btn-success"
       }, "Change Password")))))));
@@ -799,7 +799,7 @@ function (_React$Component) {
   }]);
 
   return Profile;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -811,15 +811,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/auth":2,"../Messages":31,"react":161,"react-redux":120}],7:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146}],7:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -829,7 +829,7 @@ var _auth = require("../../actions/auth");
 
 var _Messages = _interopRequireDefault(require("../Messages"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -883,21 +883,21 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("form", {
+      }), _react.default.createElement("form", {
         onSubmit: this.handleReset.bind(this)
-      }, _react["default"].createElement("legend", null, "Reset Password"), _react["default"].createElement("div", {
+      }, _react.default.createElement("legend", null, "Reset Password"), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "password"
-      }, "New Password"), _react["default"].createElement("input", {
+      }, "New Password"), _react.default.createElement("input", {
         type: "password",
         name: "password",
         id: "password",
@@ -906,11 +906,11 @@ function (_React$Component) {
         autoFocus: true,
         value: this.state.password,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "confirm"
-      }, "Confirm Password"), _react["default"].createElement("input", {
+      }, "Confirm Password"), _react.default.createElement("input", {
         type: "password",
         name: "confirm",
         id: "confirm",
@@ -918,9 +918,9 @@ function (_React$Component) {
         className: "form-control",
         value: this.state.confirm,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         type: "submit",
         className: "btn btn-success"
       }, "Change Password"))))));
@@ -928,7 +928,7 @@ function (_React$Component) {
   }]);
 
   return Reset;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return state;
@@ -936,15 +936,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Reset);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/auth":2,"../Messages":31,"react":161,"react-redux":120}],8:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146}],8:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -956,7 +956,7 @@ var _auth = require("../../actions/auth");
 
 var _Messages = _interopRequireDefault(require("../Messages"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1011,21 +1011,21 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "login-container container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("form", {
+      }), _react.default.createElement("form", {
         onSubmit: this.handleSignup.bind(this)
-      }, _react["default"].createElement("legend", null, "Create an account"), _react["default"].createElement("div", {
+      }, _react.default.createElement("legend", null, "Create an account"), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "name"
-      }, "Name"), _react["default"].createElement("input", {
+      }, "Name"), _react.default.createElement("input", {
         type: "text",
         name: "name",
         id: "name",
@@ -1034,11 +1034,11 @@ function (_React$Component) {
         className: "form-control",
         value: this.state.name,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "email"
-      }, "Email"), _react["default"].createElement("input", {
+      }, "Email"), _react.default.createElement("input", {
         type: "email",
         name: "email",
         id: "email",
@@ -1046,11 +1046,11 @@ function (_React$Component) {
         className: "form-control",
         value: this.state.email,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", {
+      }, _react.default.createElement("label", {
         htmlFor: "password"
-      }, "Password"), _react["default"].createElement("input", {
+      }, "Password"), _react.default.createElement("input", {
         type: "password",
         name: "password",
         id: "password",
@@ -1058,19 +1058,19 @@ function (_React$Component) {
         className: "form-control",
         value: this.state.password,
         onChange: this.handleChange.bind(this)
-      })), _react["default"].createElement("button", {
+      })), _react.default.createElement("button", {
         type: "submit",
         className: "btn btn-success"
-      }, "Create an account")))), _react["default"].createElement("p", {
+      }, "Create an account")))), _react.default.createElement("p", {
         className: "text-center"
-      }, "Already have an account?", ' ', _react["default"].createElement(_reactRouter.Link, {
+      }, "Already have an account?", ' ', _react.default.createElement(_reactRouter.Link, {
         to: "/login"
-      }, _react["default"].createElement("strong", null, "Log in"))));
+      }, _react.default.createElement("strong", null, "Log in"))));
     }
   }]);
 
   return Signup;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -1080,15 +1080,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Signup);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/auth":2,"../Messages":31,"react":161,"react-redux":120,"react-router":151}],9:[function(require,module,exports){
+},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146,"react-router":177}],9:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -1100,7 +1100,7 @@ var _ModalContainer = _interopRequireDefault(require("./ModalContainer"));
 
 var _reactRedux = require("react-redux");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1172,12 +1172,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", null, _react["default"].createElement(_Header["default"], null), this.state.loaded ? this.props.children : false, _react["default"].createElement(_Footer["default"], null), _react["default"].createElement(_ModalContainer["default"], null));
+      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), this.state.loaded ? this.props.children : false, _react.default.createElement(_Footer.default, null), _react.default.createElement(_ModalContainer.default, null));
     }
   }]);
 
   return App;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -1189,15 +1189,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(App);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"./Footer":28,"./Header":29,"./ModalContainer":32,"react":161,"react-redux":120}],10:[function(require,module,exports){
+},{"./Footer":28,"./Header":29,"./ModalContainer":32,"react":187,"react-redux":146}],10:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -1209,7 +1209,7 @@ var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
 var _Messages = _interopRequireDefault(require("../Messages"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1268,7 +1268,7 @@ function (_React$Component) {
     value: function loadUsers() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/users?filter_role=admin&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/users?filter_role=admin&page=' + this.state.page).then(function (resp) {
         console.log(resp);
 
         if (resp.ok) {
@@ -1283,7 +1283,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -1305,7 +1305,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/admin/update/users', {
+        _Fetcher.default.post('/api/admin/update/users', {
           id: id,
           data: data
         }).then(function (resp) {
@@ -1319,7 +1319,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -1379,13 +1379,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -1393,63 +1393,63 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "text-right pull-right push-right align-right"
-      }), _react["default"].createElement("h2", {
+      }), _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Admin Users"))), _react["default"].createElement("div", {
+      }, "Admin Users"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Name"), _react["default"].createElement("th", null, "Email"), _react["default"].createElement("th", null, "Active"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.admin_users && this.state.admin_users.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Active"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.admin_users && this.state.admin_users.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.first_name, " ", u.last_name), _react["default"].createElement("td", null, u.email), _react["default"].createElement("td", null, u.status ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.first_name, " ", u.last_name), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, u.status ? _react.default.createElement("span", {
           className: "label label-primary"
-        }, "Active") : _react["default"].createElement("span", {
+        }, "Active") : _react.default.createElement("span", {
           className: "label label-danger"
-        }, "In-Active")), _react["default"].createElement("td", null, u.status ? _react["default"].createElement("button", {
+        }, "In-Active")), _react.default.createElement("td", null, u.status ? _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.updateItem(u.id, {
               status: false
             });
           },
           className: "btn btn-warning btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Disable") : _react["default"].createElement("button", {
+        }) : false, ' ', "Disable") : _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.updateItem(u.id, {
               status: true
             });
           },
           className: "btn btn-success btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Enable"), ' ', _react["default"].createElement("button", {
+        }) : false, ' ', "Enable"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.updateItem(u.id, {
               role: 'user'
             }, 'role_');
           },
           className: "btn btn-warning btn-xs"
-        }, _this4.state['update_role_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_role_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Make User")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -1466,7 +1466,7 @@ function (_React$Component) {
   }]);
 
   return AdminUsers;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -1478,15 +1478,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(AdminUsers);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../Messages":31,"react":161,"react-paginate":109,"react-redux":120}],11:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../Messages":31,"react":187,"react-paginate":135,"react-redux":146}],11:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -1502,7 +1502,7 @@ var _modals = require("../../actions/modals");
 
 var _MoreInfoGeneric = _interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1564,7 +1564,7 @@ function (_React$Component) {
         id: 'profile',
         zIndex: 534,
         heading: 'More Info - ' + obj.id,
-        content: _react["default"].createElement(_MoreInfoGeneric["default"], {
+        content: _react.default.createElement(_MoreInfoGeneric.default, {
           data: obj
         })
       }));
@@ -1575,7 +1575,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/advertisers?page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/advertisers?page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -1588,7 +1588,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -1614,7 +1614,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/advertisers', {
+        _Fetcher.default.post('/api/admin/delete/advertisers', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -1627,7 +1627,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -1651,13 +1651,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -1665,44 +1665,44 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Submissions for ", _react["default"].createElement("code", null, "Advertise with us"), " Form"))), _react["default"].createElement("div", {
+      }, "Submissions for ", _react.default.createElement("code", null, "Advertise with us"), " Form"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Email"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.email), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, _react.default.createElement("button", {
           className: "btn btn-priamry btn-xs",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction(u);
           }
-        }, "More Info"), ' ', _react["default"].createElement("button", {
+        }, "More Info"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Delete")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -1719,7 +1719,7 @@ function (_React$Component) {
   }]);
 
   return AdvertiseWithUs;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -1731,15 +1731,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(AdvertiseWithUs);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":161,"react-paginate":109,"react-redux":120}],12:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":187,"react-paginate":135,"react-redux":146}],12:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -1759,7 +1759,7 @@ var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
 var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -1818,7 +1818,7 @@ function (_React$Component) {
     value: function loadUsers() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/users?filter_role=user&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/users?filter_role=user&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -1831,7 +1831,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         var msg = 'Failed to load users';
 
         _this2.props.dispatch({
@@ -1852,7 +1852,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/admin/update/users', {
+        _Fetcher.default.post('/api/admin/update/users', {
           id: id,
           data: data
         }).then(function (resp) {
@@ -1866,7 +1866,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -1893,7 +1893,7 @@ function (_React$Component) {
           id: 'profile',
           zIndex: 534,
           heading: 'User Details - @' + obj.username,
-          content: _react["default"].createElement(_MoreInfo["default"], {
+          content: _react.default.createElement(_MoreInfo.default, {
             data: obj
           })
         }));
@@ -1904,7 +1904,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User XP Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'xp_tx',
             id: obj.id
           })
@@ -1916,7 +1916,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'credits',
             id: obj.id
           })
@@ -1928,7 +1928,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'cash',
             id: obj.id
           })
@@ -1944,13 +1944,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -1958,97 +1958,97 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "text-right pull-right push-right align-right"
-      }), _react["default"].createElement("h2", {
+      }), _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, " App Users"))), _react["default"].createElement("div", {
+      }, " App Users"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Name"), _react["default"].createElement("th", null, "Username"), _react["default"].createElement("th", null, "Email"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, " "), _react["default"].createElement("th", null, " "))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Username"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, " "), _react.default.createElement("th", null, " "))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
         // return JSON.stringify(u);
-        return _react["default"].createElement("tr", {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.first_name, " ", u.last_name), _react["default"].createElement("td", null, u.username), _react["default"].createElement("td", null, u.email), _react["default"].createElement("td", null, u.banned ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.first_name, " ", u.last_name), _react.default.createElement("td", null, u.username), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, u.banned ? _react.default.createElement("span", {
           className: "label label-danger"
-        }, "In-Active") : _react["default"].createElement("span", {
+        }, "In-Active") : _react.default.createElement("span", {
           className: "label label-primary"
-        }, "Active")), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }, "Active")), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Details", _react["default"].createElement("span", {
+        }, "Details", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
-        }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('profile', u);
           }
-        }, "Profile Info")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Profile Info")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/u/' + u.username,
           target: "_blank"
-        }, "Public Profile")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Public Profile")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_xp', u);
           }
-        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_credit', u);
           }
-        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_cash', u);
           }
-        }, "Show Cash Transactions")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+        }, "Show Cash Transactions")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
           to: '/teams/' + u.id
-        }, "Teams"))))), _react["default"].createElement("td", null, !u.status ? _react["default"].createElement("button", {
+        }, "Teams"))))), _react.default.createElement("td", null, !u.status ? _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.updateItem(u.id, {
               status: true
             }, '');
           },
           className: "btn btn-success btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Enable") : _react["default"].createElement("button", {
+        }) : false, ' ', "Enable") : _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.updateItem(u.id, {
               status: false
             }, '');
           },
           className: "btn btn-warning btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Disable"), ' ', _react["default"].createElement("button", {
+        }) : false, ' ', "Disable"), ' ', _react.default.createElement("button", {
           onClick: function onClick(e) {
             e.preventDefault();
 
@@ -2057,10 +2057,10 @@ function (_React$Component) {
             }, 'make_admin');
           },
           className: "btn btn-warning btn-xs"
-        }, _this4.state['update_make_admin' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_make_admin' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Make Admin")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -2077,7 +2077,7 @@ function (_React$Component) {
   }]);
 
   return AppUsers;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -2089,15 +2089,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(AppUsers);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/MoreInfo":34,"react":161,"react-paginate":109,"react-redux":120,"react-router":151}],13:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/MoreInfo":34,"react":187,"react-paginate":135,"react-redux":146,"react-router":177}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -2113,7 +2113,7 @@ var _modals = require("../../actions/modals");
 
 var _MoreInfoGeneric = _interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -2175,7 +2175,7 @@ function (_React$Component) {
         id: 'profile',
         zIndex: 534,
         heading: 'More Info - ' + obj.id,
-        content: _react["default"].createElement(_MoreInfoGeneric["default"], {
+        content: _react.default.createElement(_MoreInfoGeneric.default, {
           data: obj
         })
       }));
@@ -2186,7 +2186,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/staff_applications?page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/staff_applications?page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -2199,7 +2199,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -2225,7 +2225,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/staff_applications', {
+        _Fetcher.default.post('/api/admin/delete/staff_applications', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -2238,7 +2238,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -2262,13 +2262,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -2276,44 +2276,44 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Submissions for ", _react["default"].createElement("code", null, "Apply for Staff"), " Form"))), _react["default"].createElement("div", {
+      }, "Submissions for ", _react.default.createElement("code", null, "Apply for Staff"), " Form"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Email"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.email), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, _react.default.createElement("button", {
           className: "btn btn-priamry btn-xs",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction(u);
           }
-        }, "More Info"), ' ', _react["default"].createElement("button", {
+        }, "More Info"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Delete")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -2330,7 +2330,7 @@ function (_React$Component) {
   }]);
 
   return ApplyStaff;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -2342,15 +2342,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(ApplyStaff);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":161,"react-paginate":109,"react-redux":120}],14:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":187,"react-paginate":135,"react-redux":146}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -2366,7 +2366,7 @@ var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
 var _modals = require("../../actions/modals");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -2425,7 +2425,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/games?page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/games?page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -2438,7 +2438,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -2491,7 +2491,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/games', {
+        _Fetcher.default.post('/api/admin/delete/games', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -2504,7 +2504,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -2530,7 +2530,7 @@ function (_React$Component) {
         id: 'newgame',
         zIndex: 534,
         heading: 'New Game',
-        content: _react["default"].createElement(_NewGame["default"], {
+        content: _react.default.createElement(_NewGame.default, {
           onComplete: this.loadData.bind(this)
         })
       }));
@@ -2543,7 +2543,7 @@ function (_React$Component) {
         id: 'newgame',
         zIndex: 534,
         heading: 'New Game',
-        content: _react["default"].createElement(_NewGame["default"], {
+        content: _react.default.createElement(_NewGame.default, {
           mode: 'edit',
           id: id,
           data: data,
@@ -2557,13 +2557,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -2571,51 +2571,51 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "text-right pull-right push-right align-right"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         className: "btn btn-success btn-xs",
         onClick: this.addItem.bind(this)
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "fa fa-plus"
-      }), " Add new game")), _react["default"].createElement("h2", {
+      }), " Add new game")), _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Games"))), _react["default"].createElement("div", {
+      }, "Games"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Name"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.title), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.editItem(u.id, u);
           },
           className: "btn btn-warning btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Edit"), ' ', _react["default"].createElement("button", {
+        }) : false, ' ', "Edit"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Delete")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -2632,7 +2632,7 @@ function (_React$Component) {
   }]);
 
   return Games;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -2644,15 +2644,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Games);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewGame":36,"react":161,"react-paginate":109,"react-redux":120}],15:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewGame":36,"react":187,"react-paginate":135,"react-redux":146}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -2668,7 +2668,7 @@ var _modals = require("../../actions/modals");
 
 var _NewLadder = _interopRequireDefault(require("../Modules/Modals/NewLadder"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -2734,7 +2734,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/ladders?related=game_info&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/ladders?related=game_info&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -2747,7 +2747,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -2800,7 +2800,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/ladders', {
+        _Fetcher.default.post('/api/admin/delete/ladders', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -2813,7 +2813,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -2839,7 +2839,7 @@ function (_React$Component) {
         id: 'newladder',
         zIndex: 534,
         heading: 'New Ladder',
-        content: _react["default"].createElement(_NewLadder["default"], {
+        content: _react.default.createElement(_NewLadder.default, {
           onComplete: this.loadData.bind(this)
         })
       }));
@@ -2850,13 +2850,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -2864,44 +2864,44 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "text-right pull-right push-right align-right"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         className: "btn btn-success btn-xs",
         onClick: this.addItem.bind(this)
-      }, _react["default"].createElement("i", {
+      }, _react.default.createElement("i", {
         className: "fa fa-plus"
-      }), " Add new Ladder")), _react["default"].createElement("h2", {
+      }), " Add new Ladder")), _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Ladders"))), _react["default"].createElement("div", {
+      }, "Ladders"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Name"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Min Players"), _react["default"].createElement("th", null, "Max Players"), _react["default"].createElement("th", null, "Gamer Tag Used"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Min Players"), _react.default.createElement("th", null, "Max Players"), _react.default.createElement("th", null, "Gamer Tag Used"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.title), _react["default"].createElement("td", null, u.game_info && u.game_info.title), _react["default"].createElement("td", null, u.min_players), _react["default"].createElement("td", null, u.max_players), _react["default"].createElement("td", null, _this4.gamer_tags['tag_' + u.gamer_tag]), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.game_info && u.game_info.title), _react.default.createElement("td", null, u.min_players), _react.default.createElement("td", null, u.max_players), _react.default.createElement("td", null, _this4.gamer_tags['tag_' + u.gamer_tag]), _react.default.createElement("td", null, _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Delete")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -2918,7 +2918,7 @@ function (_React$Component) {
   }]);
 
   return Ladders;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -2930,15 +2930,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Ladders);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewLadder":37,"react":161,"react-paginate":109,"react-redux":120}],16:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewLadder":37,"react":187,"react-paginate":135,"react-redux":146}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -2956,7 +2956,7 @@ var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory
 
 var _modals = require("../../actions/modals");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3035,7 +3035,7 @@ function (_React$Component) {
         other += '&filter_status=' + this.props.params.status;
       }
 
-      _Fetcher["default"].get('/api/admin/listPaged/matches?' + other + '&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/matches?' + other + '&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -3048,7 +3048,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -3067,7 +3067,7 @@ function (_React$Component) {
 
       var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/matches/resolveDispute', {
+        _Fetcher.default.post('/api/matches/resolveDispute', {
           id: id,
           winner: team_id
         }).then(function (resp) {
@@ -3081,7 +3081,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -3103,7 +3103,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User XP Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'xp_tx',
             obj_type: 'm_' + obj.id
           })
@@ -3115,7 +3115,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'credits',
             obj_type: 'm_' + obj.id
           })
@@ -3127,7 +3127,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'cash',
             obj_type: 'm_' + obj.id
           })
@@ -3152,13 +3152,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container-fluid"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -3166,102 +3166,102 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container-fluid"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react["default"].createElement("div", {
+      }, "Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Team 1"), _react["default"].createElement("th", null, "Team 2"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Result"), _react["default"].createElement("th", null, "Match type"), _react["default"].createElement("th", null, "Team 1 Result"), _react["default"].createElement("th", null, "Team 2 Result"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Starts At"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Starts At"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.game.title), _react["default"].createElement("td", null, u.ladder.title), _react["default"].createElement("td", null, u.result == 'team_2' ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.game.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.result == 'team_2' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, u.team_1_info.title) : u.result == 'team_1' ? _react["default"].createElement("span", {
+        }, u.team_1_info.title) : u.result == 'team_1' ? _react.default.createElement("span", {
           className: "text-success"
-        }, u.team_1_info.title) : u.team_1_info.title), _react["default"].createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react["default"].createElement("span", {
+        }, u.team_1_info.title) : u.team_1_info.title), _react.default.createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, u.team_2_info.title) : u.result == 'team_2' ? _react["default"].createElement("span", {
+        }, u.team_2_info.title) : u.result == 'team_2' ? _react.default.createElement("span", {
           className: "text-success"
-        }, u.team_2_info.title) : u.team_2_info.title : _react["default"].createElement("span", {
+        }, u.team_2_info.title) : u.team_2_info.title : _react.default.createElement("span", {
           className: "text-danger"
-        }, "Yet to Join")), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
+        }, "Yet to Join")), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
           className: "badge badge-success"
-        }, "Complete") : u.status), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react["default"].createElement("span", {
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, "Disputed") : _react["default"].createElement("span", {
+        }, "Disputed") : _react.default.createElement("span", {
           className: "text-warning"
-        }, u.result) : _react["default"].createElement("span", {
+        }, u.result) : _react.default.createElement("span", {
           className: "text-warning"
-        }, "Yet to declare")), _react["default"].createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react["default"].createElement("td", null, u.team_1_result), _react["default"].createElement("td", null, u.team_2_result), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Actions", _react["default"].createElement("span", {
+        }, "Actions", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
-        }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/m/' + u.id,
           target: "_blank"
-        }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/teams/view/' + u.team_1_info.id,
           target: "_blank"
-        }, "View Team 1 Public Page")), u.team_2_info ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Team 1 Public Page")), u.team_2_info ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/teams/view/' + u.team_2_info.id,
           target: "_blank"
-        }, "View Team 2 Public Page")) : false, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Team 2 Public Page")) : false, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_xp', u);
           }
-        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_credit', u);
           }
-        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_cash', u);
           }
-        }, "Show Cash Transactions")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.resolveDispute(u.id, 'team_1');
           }
-        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.resolveDispute(u.id, 'team_2');
           }
-        }, "Resolve dispute by giving win to team 2")) : false))), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -3314,7 +3314,7 @@ function (_React$Component) {
   }]);
 
   return MatchFinder;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -3326,15 +3326,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"moment":91,"react":161,"react-paginate":109,"react-redux":120}],17:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -3350,7 +3350,7 @@ var _modals = require("../../actions/modals");
 
 var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3419,7 +3419,7 @@ function (_React$Component) {
         other += '&filter_status=' + this.props.params.status;
       }
 
-      _Fetcher["default"].get('/api/admin/listPaged/money8?' + other + '&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/money8?' + other + '&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -3432,7 +3432,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -3451,7 +3451,7 @@ function (_React$Component) {
 
       var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/money8/resolveDispute', {
+        _Fetcher.default.post('/api/money8/resolveDispute', {
           id: id,
           winner: team_id
         }).then(function (resp) {
@@ -3465,7 +3465,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -3487,7 +3487,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User XP Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'xp_tx',
             obj_type: 'm8_' + obj.id
           })
@@ -3499,7 +3499,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'credits',
             obj_type: 'm8_' + obj.id
           })
@@ -3511,7 +3511,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'cash',
             obj_type: 'm8_' + obj.id
           })
@@ -3536,13 +3536,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container-fluid"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -3550,26 +3550,26 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container-fluid"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Money 8 Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react["default"].createElement("div", {
+      }, "Money 8 Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Result"), _react["default"].createElement("th", null, "Match type"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Team 1"), _react["default"].createElement("th", null, "Team 2"), _react["default"].createElement("th", null, "Team 1 Result"), _react["default"].createElement("th", null, "Team 2 Result"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
         var team_1 = false;
         var team_2 = false;
 
@@ -3585,100 +3585,100 @@ function (_React$Component) {
           });
         }
 
-        return _react["default"].createElement("tr", {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.game.title), _react["default"].createElement("td", null, u.ladder.title), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.game.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
           className: "badge badge-success"
-        }, "Complete") : u.status, u.status == 'pending' ? ' (' + u.players_joined + '/' + u.players_total + ')' : ''), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'dispute' ? _react["default"].createElement("span", {
+        }, "Complete") : u.status, u.status == 'pending' ? ' (' + u.players_joined + '/' + u.players_total + ')' : ''), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'dispute' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, "Disputed") : _react["default"].createElement("span", {
+        }, "Disputed") : _react.default.createElement("span", {
           className: "text-warning"
-        }, u.result) : _react["default"].createElement("span", {
+        }, u.result) : _react.default.createElement("span", {
           className: "text-warning"
-        }, "Yet to declare")), _react["default"].createElement("td", null, u.match_type == 'cash' ? '' + u.match_fee + '/- OCG CASH' : u.match_type == 'credits' ? '' + u.match_fee + '/- Credits' : 'FREE'), _react["default"].createElement("td", null, team_1 && team_1.length ? _react["default"].createElement("div", {
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'cash' ? '' + u.match_fee + '/- OCG CASH' : u.match_type == 'credits' ? '' + u.match_fee + '/- Credits' : 'FREE'), _react.default.createElement("td", null, team_1 && team_1.length ? _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Team 1 Users ", _react["default"].createElement("span", {
+        }, "Team 1 Users ", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
         }, team_1.map(function (id, i) {
-          return _react["default"].createElement("li", {
+          return _react.default.createElement("li", {
             key: id
-          }, _react["default"].createElement("a", {
+          }, _react.default.createElement("a", {
             href: '/uid/' + id,
             target: "_blank"
           }, "@", id));
-        }))) : false), _react["default"].createElement("td", null, team_2 && team_2.length ? _react["default"].createElement("div", {
+        }))) : false), _react.default.createElement("td", null, team_2 && team_2.length ? _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Team 2 Users ", _react["default"].createElement("span", {
+        }, "Team 2 Users ", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
         }, team_2.map(function (id, i) {
-          return _react["default"].createElement("li", {
+          return _react.default.createElement("li", {
             key: id
-          }, _react["default"].createElement("a", {
+          }, _react.default.createElement("a", {
             href: '/uid/' + id,
             target: "_blank"
           }, "@", id));
-        }))) : false), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }))) : false), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Actions", _react["default"].createElement("span", {
+        }, "Actions", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
-        }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/money8/' + u.id,
           target: "_blank"
-        }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_xp', u);
           }
-        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_credit', u);
           }
-        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction('show_cash', u);
           }
-        }, "Show Cash Transactions")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.resolveDispute(u.id, 'team_1');
           }
-        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.resolveDispute(u.id, 'team_2');
           }
-        }, "Resolve dispute by giving win to team 2")) : false))), _react["default"].createElement("td", null, u.team_1_result), _react["default"].createElement("td", null, u.team_2_result));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result));
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -3695,7 +3695,7 @@ function (_React$Component) {
   }]);
 
   return MatchFinder;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -3707,15 +3707,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"react":161,"react-paginate":109,"react-redux":120}],18:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"react":187,"react-paginate":135,"react-redux":146}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -3731,7 +3731,7 @@ var _modals = require("../../actions/modals");
 
 var _NewLadder = _interopRequireDefault(require("../Modules/Modals/NewLadder"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -3790,7 +3790,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/posts?related=user&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/posts?related=user&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -3803,7 +3803,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -3856,7 +3856,7 @@ function (_React$Component) {
 
       var key = 'del_';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/posts', {
+        _Fetcher.default.post('/api/admin/delete/posts', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + key + id, false));
@@ -3874,7 +3874,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -3900,7 +3900,7 @@ function (_React$Component) {
         id: 'newladder',
         zIndex: 534,
         heading: 'New Ladder',
-        content: _react["default"].createElement(_NewLadder["default"], {
+        content: _react.default.createElement(_NewLadder.default, {
           onComplete: this.loadData.bind(this)
         })
       }));
@@ -3918,13 +3918,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -3932,60 +3932,60 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "text-right pull-right push-right align-right"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         className: "btn btn-success btn-xs",
         onClick: this.addItem.bind(this)
-      }, _react["default"].createElement("i", {
+      }, _react.default.createElement("i", {
         className: "fa fa-plus"
-      }), " Add new Ladder")), _react["default"].createElement("h2", {
+      }), " Add new Ladder")), _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Posts"))), _react["default"].createElement("div", {
+      }, "Posts"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Post"), _react["default"].createElement("th", null, "Is a repost?"), _react["default"].createElement("th", null, "Type"), _react["default"].createElement("th", null, "Post By"), _react["default"].createElement("th", null, "reposts"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Post"), _react.default.createElement("th", null, "Is a repost?"), _react.default.createElement("th", null, "Type"), _react.default.createElement("th", null, "Post By"), _react.default.createElement("th", null, "reposts"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.post), _react["default"].createElement("td", null, u.is_repost ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.post), _react.default.createElement("td", null, u.is_repost ? _react.default.createElement("span", {
           className: "badge badge-success"
-        }, "Yes") : false), _react["default"].createElement("td", null, u.video ? _react["default"].createElement("span", {
+        }, "Yes") : false), _react.default.createElement("td", null, u.video ? _react.default.createElement("span", {
           className: "badge badge-primary"
-        }, "Video") : u.image ? _react["default"].createElement("span", {
+        }, "Video") : u.image ? _react.default.createElement("span", {
           className: "badge badge-primary"
-        }, "Image") : _react["default"].createElement("span", {
+        }, "Image") : _react.default.createElement("span", {
           className: "badge badge-primary"
-        }, "Text")), _react["default"].createElement("td", null, u.user ? '@' + u.user.username : ''), _react["default"].createElement("td", null, u.repost_count), _react["default"].createElement("td", null, _react["default"].createElement("a", {
+        }, "Text")), _react.default.createElement("td", null, u.user ? '@' + u.user.username : ''), _react.default.createElement("td", null, u.repost_count), _react.default.createElement("td", null, _react.default.createElement("a", {
           href: '/post/' + u.id,
           target: "_blank",
           className: "btn btn-primary btn-xs"
-        }, "View ", _react["default"].createElement("span", {
+        }, "View ", _react.default.createElement("span", {
           className: "fa fa-comment"
-        })), ' ', _react["default"].createElement("button", {
+        })), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_del_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_del_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Delete ", _react["default"].createElement("span", {
+        }) : false, ' ', "Delete ", _react.default.createElement("span", {
           className: "fa fa-trash"
         }))));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -4002,7 +4002,7 @@ function (_React$Component) {
   }]);
 
   return Posts;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -4014,15 +4014,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Posts);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewLadder":37,"react":161,"react-paginate":109,"react-redux":120}],19:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewLadder":37,"react":187,"react-paginate":135,"react-redux":146}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -4038,7 +4038,7 @@ var _modals = require("../../actions/modals");
 
 var _MoreInfoGeneric = _interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4100,7 +4100,7 @@ function (_React$Component) {
         id: 'profile',
         zIndex: 534,
         heading: 'More Info - ' + obj.id,
-        content: _react["default"].createElement(_MoreInfoGeneric["default"], {
+        content: _react.default.createElement(_MoreInfoGeneric.default, {
           data: obj
         })
       }));
@@ -4111,7 +4111,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/subscribers?page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/subscribers?page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -4124,7 +4124,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -4150,7 +4150,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/subscribers', {
+        _Fetcher.default.post('/api/admin/delete/subscribers', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -4163,7 +4163,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -4187,13 +4187,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -4201,44 +4201,44 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Subscribers"))), _react["default"].createElement("div", {
+      }, "Subscribers"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Email"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.email), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, _react.default.createElement("button", {
           className: "btn btn-priamry btn-xs",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction(u);
           }
-        }, "More Info"), ' ', _react["default"].createElement("button", {
+        }, "More Info"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Delete")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -4255,7 +4255,7 @@ function (_React$Component) {
   }]);
 
   return Subscribers;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -4267,15 +4267,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Subscribers);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":161,"react-paginate":109,"react-redux":120}],20:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":187,"react-paginate":135,"react-redux":146}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -4293,7 +4293,7 @@ var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
 var _reactRouter = require("react-router");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4371,7 +4371,7 @@ function (_React$Component) {
         url = '/api/admin/listPaged/teams?' + other_filter + '&page=' + this.state.page + '&related=ladder,ladder.game_info,team_users,team_users.user_info';
       }
 
-      _Fetcher["default"].get(url).then(function (resp) {
+      _Fetcher.default.get(url).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -4389,7 +4389,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         _this2.setState({
           refresh: false
         });
@@ -4410,7 +4410,7 @@ function (_React$Component) {
       var _this3 = this;
 
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/admin/update/users', {
+        _Fetcher.default.post('/api/admin/update/users', {
           id: id,
           data: data
         }).then(function (resp) {
@@ -4424,7 +4424,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -4451,7 +4451,7 @@ function (_React$Component) {
           id: 'profile',
           zIndex: 534,
           heading: 'User Details - @' + obj.username,
-          content: _react["default"].createElement(_MoreInfo["default"], {
+          content: _react.default.createElement(_MoreInfo.default, {
             data: obj
           })
         }));
@@ -4466,13 +4466,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -4480,52 +4480,52 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "text-right pull-right push-right align-right"
-      }), _react["default"].createElement("h2", {
+      }), _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, ' ', "Teams", ' ', this.props.params.uid ? ' of user #' + this.props.params.uid : ''))), _react["default"].createElement("div", {
+      }, ' ', "Teams", ' ', this.props.params.uid ? ' of user #' + this.props.params.uid : ''))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Team"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Users"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (k, i) {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Team"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Users"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (k, i) {
         var u = k;
 
         if (u.team_info) {
           u = u.team_info;
         }
 
-        return _react["default"].createElement("tr", {
+        return _react.default.createElement("tr", {
           key: u.id,
           className: u.removed ? ' table-danger ' : ''
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.title), _react["default"].createElement("td", null, u.ladder.title), _react["default"].createElement("td", null, u.ladder.game_info.title), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.ladder.game_info.title), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Users List ", _react["default"].createElement("span", {
+        }, "Users List ", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
         }, u.team_users && u.team_users.map(function (tu, j) {
-          return _react["default"].createElement("li", {
+          return _react.default.createElement("li", {
             key: tu.id,
             className: tu.removed ? ' table-danger  ' : ''
-          }, _react["default"].createElement("a", {
+          }, _react.default.createElement("a", {
             href: "#",
             onClick: function onClick(e) {
               e.preventDefault();
@@ -4533,23 +4533,23 @@ function (_React$Component) {
               _this4.doAction('profile', tu.user_info);
             }
           }, '#' + tu.user_info.id + ' - @' + tu.user_info.username, ' ', "( ", tu.user_info.first_name, ' ', tu.user_info.last_name, " )"));
-        })))), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        })))), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Actions ", _react["default"].createElement("span", {
+        }, "Actions ", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
-        }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+        }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
           to: '/matchfinder/' + u.id
-        }, "View Matches of Team")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Matches of Team")), _react.default.createElement("li", null, _react.default.createElement("a", {
           target: "_blank",
           href: '/teams/view/' + u.id
         }, "View Public Profile of Team"))))));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -4594,7 +4594,7 @@ function (_React$Component) {
   }]);
 
   return Teams;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -4606,15 +4606,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Teams);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfo":34,"react":161,"react-paginate":109,"react-redux":120,"react-router":151}],21:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfo":34,"react":187,"react-paginate":135,"react-redux":146,"react-router":177}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -4630,7 +4630,7 @@ var _modals = require("../../actions/modals");
 
 var _ViewThread = _interopRequireDefault(require("../Modules/Modals/ViewThread"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4689,7 +4689,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/threads?related=topic&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/threads?related=topic&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -4702,7 +4702,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -4723,7 +4723,7 @@ function (_React$Component) {
         modal_class: '   modal-lg',
         zIndex: 534,
         heading: 'View Thread',
-        content: _react["default"].createElement(_ViewThread["default"], {
+        content: _react.default.createElement(_ViewThread.default, {
           id: id
         })
       }));
@@ -4741,7 +4741,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/threads', {
+        _Fetcher.default.post('/api/admin/delete/threads', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -4754,7 +4754,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -4778,13 +4778,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -4792,42 +4792,42 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Threads"))), _react["default"].createElement("div", {
+      }, "Threads"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Title"), _react["default"].createElement("th", null, "Topic"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Topic"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.title), _react["default"].createElement("td", null, u.topic && u.topic.title), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.topic && u.topic.title), _react.default.createElement("td", null, _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : false, ' ', "Delete"), ' ', _react["default"].createElement("button", {
+        }) : false, ' ', "Delete"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.viewItem(u.id);
           },
           className: "btn btn-success btn-xs"
         }, "View")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -4844,7 +4844,7 @@ function (_React$Component) {
   }]);
 
   return Threads;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -4856,15 +4856,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Threads);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/ViewThread":41,"react":161,"react-paginate":109,"react-redux":120}],22:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/ViewThread":41,"react":187,"react-paginate":135,"react-redux":146}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -4884,7 +4884,7 @@ var _ReplyTicket = _interopRequireDefault(require("../Modules/Modals/ReplyTicket
 
 var _ViewTicket = _interopRequireDefault(require("../Modules/Modals/ViewTicket"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4943,7 +4943,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/tickets?related=user&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/tickets?related=user&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -4956,7 +4956,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -4981,7 +4981,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'delete_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/tickets', {
+        _Fetcher.default.post('/api/admin/delete/tickets', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'delete_' + id, false));
@@ -4994,7 +4994,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           _this3.setState(_defineProperty({}, 'delete_' + id, false));
 
           var msg = 'Failed to perform Action';
@@ -5021,7 +5021,7 @@ function (_React$Component) {
         id: 'replyticket',
         zIndex: 534,
         heading: 'View Ticket',
-        content: _react["default"].createElement(_ReplyTicket["default"], {
+        content: _react.default.createElement(_ReplyTicket.default, {
           id: id
         })
       }));
@@ -5035,7 +5035,7 @@ function (_React$Component) {
         modal_class: '   modal-lg',
         zIndex: 534,
         heading: 'View Ticket',
-        content: _react["default"].createElement(_ViewTicket["default"], {
+        content: _react.default.createElement(_ViewTicket.default, {
           id: id
         })
       }));
@@ -5046,13 +5046,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -5060,53 +5060,53 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Support Tickets"))), _react["default"].createElement("div", {
+      }, "Support Tickets"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Title"), _react["default"].createElement("th", null, "Type"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Created By"), _react["default"].createElement("th", null, "Created On"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Type"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Created By"), _react.default.createElement("th", null, "Created On"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.title), _react["default"].createElement("td", null, u.type), _react["default"].createElement("td", null, u.status), _react["default"].createElement("td", null, u.user ? '@' + u.user.username : ' '), _react["default"].createElement("td", null, (0, _moment["default"])(u.created_at).format('lll')), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.type), _react.default.createElement("td", null, u.status), _react.default.createElement("td", null, u.user ? '@' + u.user.username : ' '), _react.default.createElement("td", null, (0, _moment.default)(u.created_at).format('lll')), _react.default.createElement("td", null, _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.reply(u.id);
           },
           className: "btn btn-success btn-xs"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "fa fa-reply"
-        }), " Reply"), ' ', _react["default"].createElement("button", {
+        }), " Reply"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.veiwItem(u.id);
           },
           className: "btn btn-primary btn-xs"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "fa fa-view"
-        }), " View"), ' ', _react["default"].createElement("button", {
+        }), " View"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['delete_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['delete_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
-        }) : _react["default"].createElement("span", {
+        }) : _react.default.createElement("span", {
           className: "fa fa-trash"
         }), ' ', "Delete")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -5123,7 +5123,7 @@ function (_React$Component) {
   }]);
 
   return Tickets;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -5135,15 +5135,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Tickets);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/ReplyTicket":40,"../Modules/Modals/ViewTicket":42,"moment":91,"react":161,"react-paginate":109,"react-redux":120}],23:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/ReplyTicket":40,"../Modules/Modals/ViewTicket":42,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -5159,7 +5159,7 @@ var _modals = require("../../actions/modals");
 
 var _NewTopic = _interopRequireDefault(require("../Modules/Modals/NewTopic"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -5218,7 +5218,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/topics?page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/topics?page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -5231,7 +5231,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -5284,7 +5284,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher["default"].post('/api/admin/delete/topics', {
+        _Fetcher.default.post('/api/admin/delete/topics', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -5297,7 +5297,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -5323,7 +5323,7 @@ function (_React$Component) {
         id: 'newtopic',
         zIndex: 534,
         heading: 'New Topic',
-        content: _react["default"].createElement(_NewTopic["default"], {
+        content: _react.default.createElement(_NewTopic.default, {
           onComplete: this.loadData.bind(this)
         })
       }));
@@ -5334,13 +5334,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -5348,44 +5348,44 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "text-right pull-right push-right align-right"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         className: "btn btn-success btn-xs",
         onClick: this.addItem.bind(this)
-      }, _react["default"].createElement("i", {
+      }, _react.default.createElement("i", {
         className: "fa fa-plus"
-      }), " Add new Topic")), _react["default"].createElement("h2", {
+      }), " Add new Topic")), _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Topics"))), _react["default"].createElement("div", {
+      }, "Topics"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Title"), _react["default"].createElement("th", null, "Sub Title"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Sub Title"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.title), _react["default"].createElement("td", null, u.sub_title), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.sub_title), _react.default.createElement("td", null, _react.default.createElement("button", {
           onClick: function onClick() {
             _this4.deleteItem(u.id);
           },
           className: "btn btn-danger btn-xs"
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Delete")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -5402,7 +5402,7 @@ function (_React$Component) {
   }]);
 
   return Topics;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -5414,15 +5414,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Topics);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewTopic":38,"react":161,"react-paginate":109,"react-redux":120}],24:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewTopic":38,"react":187,"react-paginate":135,"react-redux":146}],24:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -5442,7 +5442,7 @@ var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory
 
 var _NewTournament = _interopRequireDefault(require("../Modules/Modals/NewTournament"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -5517,7 +5517,7 @@ function (_React$Component) {
 
       var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/tournament/resolveDispute', {
+        _Fetcher.default.post('/api/tournament/resolveDispute', {
           id: id,
           winner: team_id
         }).then(function (resp) {
@@ -5531,7 +5531,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -5552,7 +5552,7 @@ function (_React$Component) {
         id: 'newtournament',
         zIndex: 534,
         heading: 'New Tournament',
-        content: _react["default"].createElement(_NewTournament["default"], {
+        content: _react.default.createElement(_NewTournament.default, {
           onComplete: this.loadData.bind(this)
         })
       }));
@@ -5566,7 +5566,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User XP Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'xp_tx',
             obj_type: 't_' + obj.id
           })
@@ -5578,7 +5578,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'credits',
             obj_type: 't_' + obj.id
           })
@@ -5590,7 +5590,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'cash',
             obj_type: 't_' + obj.id
           })
@@ -5608,7 +5608,7 @@ function (_React$Component) {
       var other = '';
       other = 'related=ladder,game';
 
-      _Fetcher["default"].get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this3.setState({
             is_loaded: true,
@@ -5621,7 +5621,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -5654,7 +5654,7 @@ function (_React$Component) {
 
       console.log('doing');
 
-      _Fetcher["default"].get('/api/admin/listPaged/tournamentmaches?' + other + '&page=' + this.state.match_page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/tournamentmaches?' + other + '&page=' + this.state.match_page).then(function (resp) {
         if (resp.ok) {
           _this4.setState({
             is_loaded: true,
@@ -5667,7 +5667,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -5686,7 +5686,7 @@ function (_React$Component) {
 
       var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/money8/resolveDispute', {
+        _Fetcher.default.post('/api/money8/resolveDispute', {
           id: id,
           winner: team_id
         }).then(function (resp) {
@@ -5700,7 +5700,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -5763,98 +5763,98 @@ function (_React$Component) {
         return false;
       }
 
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Matches of Tournament #", this.state.showing_matches_of))), _react["default"].createElement("div", {
+      }, "Matches of Tournament #", this.state.showing_matches_of))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Round"), _react["default"].createElement("th", null, "Team 1"), _react["default"].createElement("th", null, "Team 2"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Result"), _react["default"].createElement("th", null, "Match type"), _react["default"].createElement("th", null, "Team 1 Result"), _react["default"].createElement("th", null, "Team 2 Result"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Starts At"))), _react["default"].createElement("tbody", null, this.state.matches && this.state.matches.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Round"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Starts At"))), _react.default.createElement("tbody", null, this.state.matches && this.state.matches.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.match_round), _react["default"].createElement("td", null, u.result == 'team_2' ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.match_round), _react.default.createElement("td", null, u.result == 'team_2' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, u.team_1_info.title) : u.result == 'team_1' ? _react["default"].createElement("span", {
+        }, u.team_1_info.title) : u.result == 'team_1' ? _react.default.createElement("span", {
           className: "text-success"
-        }, u.team_1_info.title) : u.team_1_info.title), _react["default"].createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react["default"].createElement("span", {
+        }, u.team_1_info.title) : u.team_1_info.title), _react.default.createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, u.team_2_info.title) : u.result == 'team_2' ? _react["default"].createElement("span", {
+        }, u.team_2_info.title) : u.result == 'team_2' ? _react.default.createElement("span", {
           className: "text-success"
-        }, u.team_2_info.title) : u.team_2_info.title : _react["default"].createElement("span", {
+        }, u.team_2_info.title) : u.team_2_info.title : _react.default.createElement("span", {
           className: "text-danger"
-        }, "Yet to Join")), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
+        }, "Yet to Join")), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
           className: "badge badge-success"
-        }, "Complete") : u.status), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react["default"].createElement("span", {
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, "Disputed") : _react["default"].createElement("span", {
+        }, "Disputed") : _react.default.createElement("span", {
           className: "text-warning"
-        }, u.result) : _react["default"].createElement("span", {
+        }, u.result) : _react.default.createElement("span", {
           className: "text-warning"
-        }, "Yet to declare")), _react["default"].createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react["default"].createElement("td", null, u.team_1_result), _react["default"].createElement("td", null, u.team_2_result), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Actions", _react["default"].createElement("span", {
+        }, "Actions", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
-        }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/m/' + u.id,
           target: "_blank"
-        }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/teams/view/' + u.team_1_info.id,
           target: "_blank"
-        }, "View Team 1 Public Page")), u.team_2_info ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Team 1 Public Page")), u.team_2_info ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/teams/view/' + u.team_2_info.id,
           target: "_blank"
-        }, "View Team 2 Public Page")) : false, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Team 2 Public Page")) : false, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.doAction('show_xp', u);
           }
-        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.doAction('show_credit', u);
           }
-        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.doAction('show_cash', u);
           }
-        }, "Show Cash Transactions")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.resolveDispute(u.id, 'team_1');
           }
-        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.resolveDispute(u.id, 'team_2');
           }
-        }, "Resolve dispute by giving win to team 2")) : false))), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -5872,13 +5872,13 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container-fluid"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -5886,29 +5886,29 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container-fluid"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Tournaments Matches", this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react["default"].createElement("div", {
+      }, "Tournaments Matches", this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
       }), this.renderMatches())));
     }
   }]);
 
   return Tournament;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -5920,15 +5920,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Tournament);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/NewTournament":39,"moment":91,"react":161,"react-paginate":109,"react-redux":120}],25:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/NewTournament":39,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],25:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -5948,7 +5948,7 @@ var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory
 
 var _NewTournament = _interopRequireDefault(require("../Modules/Modals/NewTournament"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -6023,7 +6023,7 @@ function (_React$Component) {
 
       var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/tournament/resolveDispute', {
+        _Fetcher.default.post('/api/tournament/resolveDispute', {
           id: id,
           winner: team_id
         }).then(function (resp) {
@@ -6037,7 +6037,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -6058,7 +6058,7 @@ function (_React$Component) {
         id: 'newtournament',
         zIndex: 534,
         heading: 'New Tournament',
-        content: _react["default"].createElement(_NewTournament["default"], {
+        content: _react.default.createElement(_NewTournament.default, {
           onComplete: this.loadData.bind(this)
         })
       }));
@@ -6072,7 +6072,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User XP Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'xp_tx',
             obj_type: 't_' + obj.id
           })
@@ -6084,7 +6084,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'credits',
             obj_type: 't_' + obj.id
           })
@@ -6096,7 +6096,7 @@ function (_React$Component) {
           id: 'tx',
           zIndex: 534,
           heading: 'User Credit Transactions - @' + obj.username,
-          content: _react["default"].createElement(_CashHistory["default"], {
+          content: _react.default.createElement(_CashHistory.default, {
             type: 'cash',
             obj_type: 't_' + obj.id
           })
@@ -6114,7 +6114,7 @@ function (_React$Component) {
       var other = '';
       other = 'related=ladder,game';
 
-      _Fetcher["default"].get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this3.setState({
             is_loaded: true,
@@ -6127,7 +6127,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -6160,7 +6160,7 @@ function (_React$Component) {
 
       console.log('doing');
 
-      _Fetcher["default"].get('/api/admin/listPaged/tournamentmaches?' + other + '&page=' + this.state.match_page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/tournamentmaches?' + other + '&page=' + this.state.match_page).then(function (resp) {
         if (resp.ok) {
           _this4.setState({
             is_loaded: true,
@@ -6173,7 +6173,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -6192,7 +6192,7 @@ function (_React$Component) {
 
       var key = 'dispute';
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/money8/resolveDispute', {
+        _Fetcher.default.post('/api/money8/resolveDispute', {
           id: id,
           winner: team_id
         }).then(function (resp) {
@@ -6206,7 +6206,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -6269,98 +6269,98 @@ function (_React$Component) {
         return false;
       }
 
-      return _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Matches of Tournament #", this.state.showing_matches_of))), _react["default"].createElement("div", {
+      }, "Matches of Tournament #", this.state.showing_matches_of))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Round"), _react["default"].createElement("th", null, "Team 1"), _react["default"].createElement("th", null, "Team 2"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Result"), _react["default"].createElement("th", null, "Match type"), _react["default"].createElement("th", null, "Team 1 Result"), _react["default"].createElement("th", null, "Team 2 Result"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Starts At"))), _react["default"].createElement("tbody", null, this.state.matches && this.state.matches.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Round"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Starts At"))), _react.default.createElement("tbody", null, this.state.matches && this.state.matches.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.match_round), _react["default"].createElement("td", null, u.result == 'team_2' ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.match_round), _react.default.createElement("td", null, u.result == 'team_2' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, u.team_1_info.title) : u.result == 'team_1' ? _react["default"].createElement("span", {
+        }, u.team_1_info.title) : u.result == 'team_1' ? _react.default.createElement("span", {
           className: "text-success"
-        }, u.team_1_info.title) : u.team_1_info.title), _react["default"].createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react["default"].createElement("span", {
+        }, u.team_1_info.title) : u.team_1_info.title), _react.default.createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, u.team_2_info.title) : u.result == 'team_2' ? _react["default"].createElement("span", {
+        }, u.team_2_info.title) : u.result == 'team_2' ? _react.default.createElement("span", {
           className: "text-success"
-        }, u.team_2_info.title) : u.team_2_info.title : _react["default"].createElement("span", {
+        }, u.team_2_info.title) : u.team_2_info.title : _react.default.createElement("span", {
           className: "text-danger"
-        }, "Yet to Join")), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
+        }, "Yet to Join")), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
           className: "badge badge-success"
-        }, "Complete") : u.status), _react["default"].createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react["default"].createElement("span", {
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react.default.createElement("span", {
           className: "text-danger"
-        }, "Disputed") : _react["default"].createElement("span", {
+        }, "Disputed") : _react.default.createElement("span", {
           className: "text-warning"
-        }, u.result) : _react["default"].createElement("span", {
+        }, u.result) : _react.default.createElement("span", {
           className: "text-warning"
-        }, "Yet to declare")), _react["default"].createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react["default"].createElement("td", null, u.team_1_result), _react["default"].createElement("td", null, u.team_2_result), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Actions", _react["default"].createElement("span", {
+        }, "Actions", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
-        }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/m/' + u.id,
           target: "_blank"
-        }, "View Match Public Page")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/teams/view/' + u.team_1_info.id,
           target: "_blank"
-        }, "View Team 1 Public Page")), u.team_2_info ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Team 1 Public Page")), u.team_2_info ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/teams/view/' + u.team_2_info.id,
           target: "_blank"
-        }, "View Team 2 Public Page")) : false, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "View Team 2 Public Page")) : false, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.doAction('show_xp', u);
           }
-        }, "Show XP Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.doAction('show_credit', u);
           }
-        }, "Show Credit Transactions")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.doAction('show_cash', u);
           }
-        }, "Show Cash Transactions")), u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.resolveDispute(u.id, 'team_1');
           }
-        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
           href: "#",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this6.resolveDispute(u.id, 'team_2');
           }
-        }, "Resolve dispute by giving win to team 2")) : false))), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -6380,13 +6380,13 @@ function (_React$Component) {
       var _this7 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container-fluid"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -6394,31 +6394,31 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container-fluid"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         onClick: function onClick() {
           _this7.createTournament();
         },
         className: "btn btn-success pull-right btn-xs"
-      }, "Create new Tournament"), "Tournaments", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react["default"].createElement("div", {
+      }, "Create new Tournament"), "Tournaments", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Game"), _react["default"].createElement("th", null, "Ladder"), _react["default"].createElement("th", null, "Total Teams"), _react["default"].createElement("th", null, "Total Joined"), _react["default"].createElement("th", null, "Status"), _react["default"].createElement("th", null, "Entry Fees"), _react["default"].createElement("th", null, "Max Players Per Team"), _react["default"].createElement("th", null, "Actions"), _react["default"].createElement("th", null, "Reg Period"), _react["default"].createElement("th", null, "Starts at"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Total Teams"), _react.default.createElement("th", null, "Total Joined"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Entry Fees"), _react.default.createElement("th", null, "Max Players Per Team"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Reg Period"), _react.default.createElement("th", null, "Starts at"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
         var team_1 = false;
         var team_2 = false;
 
@@ -6434,30 +6434,30 @@ function (_React$Component) {
           });
         }
 
-        return _react["default"].createElement("tr", {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.game.title), _react["default"].createElement("td", null, u.ladder.title), _react["default"].createElement("td", null, u.total_teams), _react["default"].createElement("td", null, u.teams_registered), _react["default"].createElement("td", null, u.status == 'complete' ? _react["default"].createElement("span", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.game.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.total_teams), _react.default.createElement("td", null, u.teams_registered), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
           className: "badge badge-success"
-        }, "Complete") : u.status), _react["default"].createElement("td", null, u.entry_fee), _react["default"].createElement("td", null, u.max_players), _react["default"].createElement("td", null, _react["default"].createElement("div", {
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.entry_fee), _react.default.createElement("td", null, u.max_players), _react.default.createElement("td", null, _react.default.createElement("div", {
           className: "dropdown"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs dropdown-toggle",
           type: "button",
           "data-toggle": "dropdown"
-        }, "Actions ", _react["default"].createElement("span", {
+        }, "Actions ", _react.default.createElement("span", {
           className: "caret"
-        })), _react["default"].createElement("ul", {
+        })), _react.default.createElement("ul", {
           className: "dropdown-menu"
-        }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
           href: '/t/' + u.id,
           target: "_blank"
-        }, "View Public Page"))))), _react["default"].createElement("td", null, (0, _moment["default"])(u.registration_start_at).format('lll'), ' ', _react["default"].createElement("code", null, "to"), ' ', (0, _moment["default"])(u.registration_end_at).format('lll')), _react["default"].createElement("td", null, (0, _moment["default"])(u.starts_at).format('lll')), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, "View Public Page"))))), _react.default.createElement("td", null, (0, _moment.default)(u.registration_start_at).format('lll'), ' ', _react.default.createElement("code", null, "to"), ' ', (0, _moment.default)(u.registration_end_at).format('lll')), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')), _react.default.createElement("td", null, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs",
           onClick: function onClick() {
             _this7.showMatchesOf(u.id);
           }
         }, "Show matches")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -6474,7 +6474,7 @@ function (_React$Component) {
   }]);
 
   return Tournament;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -6486,15 +6486,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Tournament);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/NewTournament":39,"moment":91,"react":161,"react-paginate":109,"react-redux":120}],26:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/NewTournament":39,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -6506,7 +6506,7 @@ var _Messages = _interopRequireDefault(require("../Messages"));
 
 var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -6566,7 +6566,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this2 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/withdrawal?related=user&filter_status=completed&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/withdrawal?related=user&filter_status=completed&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this2.setState({
             is_loaded: true,
@@ -6579,7 +6579,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -6600,13 +6600,13 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -6614,30 +6614,30 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Completed withdrawal Requests"))), _react["default"].createElement("div", {
+      }, "Completed withdrawal Requests"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Name"), _react["default"].createElement("th", null, "Email"), _react["default"].createElement("th", null, "Amount"), _react["default"].createElement("th", null, "Method"), _react["default"].createElement("th", null, "Path"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Amount"), _react.default.createElement("th", null, "Method"), _react.default.createElement("th", null, "Path"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.user && u.user.first_name + ' ' + u.user.last_name), _react["default"].createElement("td", null, u.user && u.user.email), _react["default"].createElement("td", null, u.amount), _react["default"].createElement("td", null, u.method), _react["default"].createElement("td", null, u.path));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.user && u.user.first_name + ' ' + u.user.last_name), _react.default.createElement("td", null, u.user && u.user.email), _react.default.createElement("td", null, u.amount), _react.default.createElement("td", null, u.method), _react.default.createElement("td", null, u.path));
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -6654,7 +6654,7 @@ function (_React$Component) {
   }]);
 
   return WithdrawalCompleted;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -6666,15 +6666,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(WithdrawalCompleted);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../Messages":31,"react":161,"react-paginate":109,"react-redux":120}],27:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../Messages":31,"react":187,"react-paginate":135,"react-redux":146}],27:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -6686,7 +6686,7 @@ var _Messages = _interopRequireDefault(require("../Messages"));
 
 var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -6754,7 +6754,7 @@ function (_React$Component) {
         status: 'completed'
       };
       this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
-        _Fetcher["default"].post('/api/admin/update/withdrawal', {
+        _Fetcher.default.post('/api/admin/update/withdrawal', {
           id: id,
           data: data
         }).then(function (resp) {
@@ -6768,7 +6768,7 @@ function (_React$Component) {
               messages: [resp]
             });
           }
-        })["catch"](function (err) {
+        }).catch(function (err) {
           console.log(err);
           var msg = 'Failed to perform Action';
 
@@ -6787,7 +6787,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this3 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/withdrawal?related=user&filter_status=pending&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/withdrawal?related=user&filter_status=pending&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this3.setState({
             is_loaded: true,
@@ -6800,7 +6800,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -6823,13 +6823,13 @@ function (_React$Component) {
       var _this4 = this;
 
       if (!this.state.is_loaded) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "container"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "panel-body"
-        }, _react["default"].createElement("i", {
+        }, _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin",
           style: {
             fontSize: 40
@@ -6837,39 +6837,39 @@ function (_React$Component) {
         }))));
       }
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement("h2", {
+      }, _react.default.createElement("h2", {
         style: {
           padding: 0,
           margin: 0
         }
-      }, "Pending withdrawal Requests"))), _react["default"].createElement("div", {
+      }, "Pending withdrawal Requests"))), _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("table", {
+      }), _react.default.createElement("table", {
         className: "table  table-hover  table-responsive   table-striped table-bordered"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, _react["default"].createElement("th", null, "ID"), _react["default"].createElement("th", null, "Name"), _react["default"].createElement("th", null, "Email"), _react["default"].createElement("th", null, "Amount"), _react["default"].createElement("th", null, "Method"), _react["default"].createElement("th", null, "Path"), _react["default"].createElement("th", null, "Actions"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Amount"), _react.default.createElement("th", null, "Method"), _react.default.createElement("th", null, "Path"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
           key: u.id
-        }, _react["default"].createElement("td", null, u.id), _react["default"].createElement("td", null, u.user && u.user.first_name + ' ' + u.user.last_name), _react["default"].createElement("td", null, u.user && u.user.email), _react["default"].createElement("td", null, u.amount), _react["default"].createElement("td", null, u.method), _react["default"].createElement("td", null, u.path), _react["default"].createElement("td", null, _react["default"].createElement("button", {
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.user && u.user.first_name + ' ' + u.user.last_name), _react.default.createElement("td", null, u.user && u.user.email), _react.default.createElement("td", null, u.amount), _react.default.createElement("td", null, u.method), _react.default.createElement("td", null, u.path), _react.default.createElement("td", null, _react.default.createElement("button", {
           className: "btn btn-primary btn-xs",
           onClick: function onClick(e) {
             e.preventDefault();
 
             _this4.doAction(u);
           }
-        }, _this4.state['update_' + u.id] ? _react["default"].createElement("i", {
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
           className: "fa fa-spinner fa-spin"
         }) : false, ' ', "Mark as paid")));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -6886,7 +6886,7 @@ function (_React$Component) {
   }]);
 
   return WithdrawalPending;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -6898,19 +6898,19 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(WithdrawalPending);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../Messages":31,"react":161,"react-paginate":109,"react-redux":120}],28:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../Messages":31,"react":187,"react-paginate":135,"react-redux":146}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -6944,23 +6944,23 @@ function (_React$Component) {
   _createClass(Footer, [{
     key: "render",
     value: function render() {
-      return _react["default"].createElement("footer", null, _react["default"].createElement("p", null, "\xA9 OCG - All Rights Reserved."));
+      return _react.default.createElement("footer", null, _react.default.createElement("p", null, "\xA9 OCG - All Rights Reserved."));
     }
   }]);
 
   return Footer;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var _default = Footer;
-exports["default"] = _default;
+exports.default = _default;
 
-},{"react":161}],29:[function(require,module,exports){
+},{"react":187}],29:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -6970,7 +6970,7 @@ var _reactRedux = require("react-redux");
 
 var _auth = require("../actions/auth");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7013,173 +7013,173 @@ function (_React$Component) {
       var active = {
         borderBottomColor: '#3f51b5'
       };
-      var rightNav = this.props.token ? _react["default"].createElement("ul", {
+      var rightNav = this.props.token ? _react.default.createElement("ul", {
         className: "nav navbar-nav navbar-right"
-      }, _react["default"].createElement("li", {
+      }, _react.default.createElement("li", {
         className: "dropdown"
-      }, _react["default"].createElement("a", {
+      }, _react.default.createElement("a", {
         href: "#",
         "data-toggle": "dropdown",
         className: "navbar-avatar dropdown-toggle"
-      }, _react["default"].createElement("img", {
+      }, _react.default.createElement("img", {
         src: this.props.user.picture || this.props.user.gravatar
-      }), ' ', this.props.user.name || this.props.user.first_name || this.props.user.email || this.props.user.id, ' ', _react["default"].createElement("i", {
+      }), ' ', this.props.user.name || this.props.user.first_name || this.props.user.email || this.props.user.id, ' ', _react.default.createElement("i", {
         className: "caret"
-      })), _react["default"].createElement("ul", {
+      })), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/account"
-      }, "My Account")), _react["default"].createElement("li", {
+      }, "My Account")), _react.default.createElement("li", {
         className: "divider"
-      }), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+      }), _react.default.createElement("li", null, _react.default.createElement("a", {
         href: "#",
         onClick: this.handleLogout.bind(this)
-      }, "Logout"))))) : _react["default"].createElement("ul", {
+      }, "Logout"))))) : _react.default.createElement("ul", {
         className: "nav navbar-nav navbar-right"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/login",
         activeStyle: active
-      }, "Log in")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+      }, "Log in")), _react.default.createElement("li", null, _react.default.createElement("a", {
         href: "/signup"
       }, "Sign up")));
-      return _react["default"].createElement("nav", {
+      return _react.default.createElement("nav", {
         className: "navbar navbar-default navbar-static-top"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "navbar-header"
-      }, _react["default"].createElement("button", {
+      }, _react.default.createElement("button", {
         type: "button",
         "data-toggle": "collapse",
         "data-target": "#navbar",
         className: "navbar-toggle collapsed"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "sr-only"
-      }, "Toggle navigation"), _react["default"].createElement("span", {
+      }, "Toggle navigation"), _react.default.createElement("span", {
         className: "icon-bar"
-      }), _react["default"].createElement("span", {
+      }), _react.default.createElement("span", {
         className: "icon-bar"
-      }), _react["default"].createElement("span", {
+      }), _react.default.createElement("span", {
         className: "icon-bar"
-      })), _react["default"].createElement(_reactRouter.IndexLink, {
+      })), _react.default.createElement(_reactRouter.IndexLink, {
         to: "/",
         className: "navbar-brand"
-      }, "OCG")), _react["default"].createElement("div", {
+      }, "OCG")), _react.default.createElement("div", {
         id: "navbar",
         className: "navbar-collapse collapse"
-      }, this.props.user ? _react["default"].createElement("ul", {
+      }, this.props.user ? _react.default.createElement("ul", {
         className: "nav navbar-nav"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Users"), _react["default"].createElement("ul", {
+      }, "Users"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/admin_users"
-      }, "Admin Users")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Admin Users")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/app_users"
-      }, "Web App User")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Web App User")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/teams",
         activeStyle: active
-      }, "Teams")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Teams")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Matches"), _react["default"].createElement("ul", {
+      }, "Matches"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/matchfinder"
-      }, "MatchFinder")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "MatchFinder")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/money8"
-      }, "Money 8")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Money 8")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/tournaments"
-      }, "Tournaments")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Tournaments")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Games & Ladders"), _react["default"].createElement("ul", {
+      }, "Games & Ladders"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/games"
-      }, "List Games")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "List Games")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/ladders"
-      }, "List Ladders")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "List Ladders")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Community"), _react["default"].createElement("ul", {
+      }, "Community"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/topics"
-      }, "Forum Topics")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Forum Topics")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/threads"
-      }, "Forum Threads")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Forum Threads")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/posts"
-      }, "Social")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Social")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Tickets"), _react["default"].createElement("ul", {
+      }, "Tickets"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/tickets"
-      }, "List Tickets")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "List Tickets")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Form Submissions"), _react["default"].createElement("ul", {
+      }, "Form Submissions"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/forms/apply_for_staff"
-      }, "Apply for staff")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Apply for staff")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/forms/advertise_with_us"
-      }, "Advertise with Us")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Advertise with Us")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/forms/subscribers"
-      }, "Subscribers")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Subscribers")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Withdrawals"), _react["default"].createElement("ul", {
+      }, "Withdrawals"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/withdrawal/pending"
-      }, "Pending Withdrawal Requests")), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Pending Withdrawal Requests")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/withdrawal/completed"
-      }, "Completed Withdrawal Requests")))), _react["default"].createElement("li", null, _react["default"].createElement(_reactRouter.Link, {
+      }, "Completed Withdrawal Requests")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
         role: "button",
         "aria-haspopup": "true",
         "aria-expanded": "false"
-      }, "Disputes"), _react["default"].createElement("ul", {
+      }, "Disputes"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react["default"].createElement("li", null, _react["default"].createElement("a", {
+      }, _react.default.createElement("li", null, _react.default.createElement("a", {
         href: "/admin/#/matchfinder/filter/disputed"
-      }, "matchfinder")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+      }, "matchfinder")), _react.default.createElement("li", null, _react.default.createElement("a", {
         href: "/admin/#/money8/filter/disputed"
-      }, "money 8")), _react["default"].createElement("li", null, _react["default"].createElement("a", {
+      }, "money 8")), _react.default.createElement("li", null, _react.default.createElement("a", {
         href: "/admin/#/tournamentmatches/filter/disputed"
       }, "tournament matches"))))) : false, rightNav)));
     }
   }]);
 
   return Header;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -7190,15 +7190,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Header);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../actions/auth":2,"react":161,"react-redux":120,"react-router":151}],30:[function(require,module,exports){
+},{"../actions/auth":2,"react":187,"react-redux":146,"react-router":177}],30:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -7206,7 +7206,7 @@ var _reactRedux = require("react-redux");
 
 var _Messages = _interopRequireDefault(require("./Messages"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7240,24 +7240,24 @@ function (_React$Component) {
   _createClass(Home, [{
     key: "render",
     value: function render() {
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: "container"
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("div", {
+      }), _react.default.createElement("div", {
         className: "row"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "col-sm-12"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "panel-body"
       }, "Welcome to the admin panel of OCG")))));
     }
   }]);
 
   return Home;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -7267,19 +7267,19 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(Home);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"./Messages":31,"react":161,"react-redux":120}],31:[function(require,module,exports){
+},{"./Messages":31,"react":187,"react-redux":146}],31:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7313,25 +7313,25 @@ function (_React$Component) {
   _createClass(Messages, [{
     key: "render",
     value: function render() {
-      return this.props.messages.success ? _react["default"].createElement("div", {
+      return this.props.messages.success ? _react.default.createElement("div", {
         role: "alert",
         className: "alert alert-success"
       }, this.props.messages.success.map(function (message, index) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           key: index
         }, message.msg);
-      })) : this.props.messages.error ? _react["default"].createElement("div", {
+      })) : this.props.messages.error ? _react.default.createElement("div", {
         role: "alert",
         className: "alert alert-danger"
       }, this.props.messages.error.map(function (message, index) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           key: index
         }, message.msg);
-      })) : this.props.messages.info ? _react["default"].createElement("div", {
+      })) : this.props.messages.info ? _react.default.createElement("div", {
         role: "alert",
         className: "alert alert-info"
       }, this.props.messages.info.map(function (message, index) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           key: index
         }, message.msg);
       })) : null;
@@ -7339,18 +7339,18 @@ function (_React$Component) {
   }]);
 
   return Messages;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var _default = Messages;
-exports["default"] = _default;
+exports.default = _default;
 
-},{"react":161}],32:[function(require,module,exports){
+},{"react":187}],32:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _reactRedux = require("react-redux");
 
@@ -7358,7 +7358,7 @@ var _react = _interopRequireDefault(require("react"));
 
 var _modals = require("../actions/modals");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7418,22 +7418,22 @@ function (_React$Component) {
 
       if (type === 'custom') {
         var content = this.props.item.content;
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: 'modal must_show ',
           id: 'modal_' + this.props.item.id,
           tabIndex: "-1",
           role: "dialog"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: 'modal-dialog modal-dialog-centered' + (this.props.item.modal_class ? this.props.item.modal_class : ' '),
           style: {
             zIndex: this.props.item.zIndex + 2
           },
           role: "document"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "modal-content"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "modal-header"
-        }, _react["default"].createElement("button", {
+        }, _react.default.createElement("button", {
           type: "button",
           className: "close",
           "data-dismiss": "modal",
@@ -7441,27 +7441,27 @@ function (_React$Component) {
           onClick: function onClick() {
             return _this.onClose();
           }
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           "aria-hidden": "true"
-        }, "\xD7")), _react["default"].createElement("h5", {
+        }, "\xD7")), _react.default.createElement("h5", {
           className: "modal-title"
         }, this.props.item.heading)), content)));
       } else if (type == 'snackbar') {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           id: 'snack_' + this.props.item.id,
           className: "snackbar"
-        }, this.props.item.content, ' ', this.props.item.link ? _react["default"].createElement("a", {
+        }, this.props.item.content, ' ', this.props.item.link ? _react.default.createElement("a", {
           href: this.props.item.link,
           target: "_blank"
         }, this.props.item.link_label) : false);
       }
 
-      return _react["default"].createElement("div", null);
+      return _react.default.createElement("div", null);
     }
   }]);
 
   return Modal;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var Modals =
 /*#__PURE__*/
@@ -7480,7 +7480,7 @@ function (_React$Component2) {
       var _this2 = this;
 
       var modals = this.props.modals.map(function (item, i) {
-        return _react["default"].createElement(Modal, {
+        return _react.default.createElement(Modal, {
           item: item,
           key: item.id,
           zIndex: i,
@@ -7489,14 +7489,14 @@ function (_React$Component2) {
           }
         });
       });
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: modals.length > 0 ? 'modals' : ''
       }, modals);
     }
   }]);
 
   return Modals;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var ModalContainer = (0, _reactRedux.connect)(function mapStateToProps(state) {
   return {
@@ -7508,15 +7508,15 @@ var ModalContainer = (0, _reactRedux.connect)(function mapStateToProps(state) {
   };
 })(Modals);
 var _default = ModalContainer;
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../actions/modals":3,"react":161,"react-redux":120}],33:[function(require,module,exports){
+},{"../actions/modals":3,"react":187,"react-redux":146}],33:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -7528,7 +7528,7 @@ var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7630,21 +7630,21 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      })), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table table-stripped table-bordered table-hovered table-hover"
-      }, _react["default"].createElement("thead", null, _react["default"].createElement("tr", null, this.props.obj_type ? _react["default"].createElement("th", null, "User") : false, _react["default"].createElement("th", null, "Details"), _react["default"].createElement("th", null, "Amount"), _react["default"].createElement("th", null, "Date/time"))), _react["default"].createElement("tbody", null, this.state.items && this.state.items.map(function (order, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, this.props.obj_type ? _react.default.createElement("th", null, "User") : false, _react.default.createElement("th", null, "Details"), _react.default.createElement("th", null, "Amount"), _react.default.createElement("th", null, "Date/time"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (order, i) {
+        return _react.default.createElement("tr", {
           key: order.id
-        }, _this3.props.obj_type ? _react["default"].createElement("td", null, order.user ? order.user.first_name + ' ' + order.user.last_name : ' ') : false, _react["default"].createElement("td", null, order.details), _react["default"].createElement("td", null, order.qty), _react["default"].createElement("td", null, (0, _moment["default"])(order.created_at).format('MMM DD, YYYY')));
-      }))), _react["default"].createElement(_reactPaginate["default"], {
+        }, _this3.props.obj_type ? _react.default.createElement("td", null, order.user ? order.user.first_name + ' ' + order.user.last_name : ' ') : false, _react.default.createElement("td", null, order.details), _react.default.createElement("td", null, order.qty), _react.default.createElement("td", null, (0, _moment.default)(order.created_at).format('MMM DD, YYYY')));
+      }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
         breakLabel: '...',
@@ -7661,7 +7661,7 @@ function (_React$Component) {
   }]);
 
   return CashHistory;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -7673,15 +7673,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(CashHistory);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/modals":3,"moment":91,"react":161,"react-paginate":109,"react-redux":120}],34:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],34:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -7691,7 +7691,7 @@ var _moment = _interopRequireDefault(require("moment"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7738,30 +7738,30 @@ function (_React$Component) {
     value: function render() {
       var data = this.props.data; // console.log(data);
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table table-stripped"
-      }, _react["default"].createElement("tbody", null, _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Id"), _react["default"].createElement("td", null, data.id)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "First_name"), _react["default"].createElement("td", null, data.first_name)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Last_name"), _react["default"].createElement("td", null, data.last_name)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Email"), _react["default"].createElement("td", null, data.email)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Profile_views"), _react["default"].createElement("td", null, data.profile_views)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Username"), _react["default"].createElement("td", null, data.username)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Email_verified"), _react["default"].createElement("td", null, data.email_verified)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Created at"), _react["default"].createElement("td", null, (0, _moment["default"])(data.created_at).format('lll'))), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Gender"), _react["default"].createElement("td", null, data.gender)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Cover Picture"), _react["default"].createElement("td", null, _react["default"].createElement("img", {
+      }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", null, "Id"), _react.default.createElement("td", null, data.id)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "First_name"), _react.default.createElement("td", null, data.first_name)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Last_name"), _react.default.createElement("td", null, data.last_name)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Email"), _react.default.createElement("td", null, data.email)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Profile_views"), _react.default.createElement("td", null, data.profile_views)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Username"), _react.default.createElement("td", null, data.username)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Email_verified"), _react.default.createElement("td", null, data.email_verified)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Created at"), _react.default.createElement("td", null, (0, _moment.default)(data.created_at).format('lll'))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gender"), _react.default.createElement("td", null, data.gender)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Cover Picture"), _react.default.createElement("td", null, _react.default.createElement("img", {
         src: data.cover_picture,
         width: "100px",
         height: "100px"
-      }))), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Picture"), _react["default"].createElement("td", null, _react["default"].createElement("img", {
+      }))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Picture"), _react.default.createElement("td", null, _react.default.createElement("img", {
         src: data.picture,
         width: "100px",
         height: "100px"
-      }))), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Profile_picture"), _react["default"].createElement("td", null, _react["default"].createElement("img", {
+      }))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Profile_picture"), _react.default.createElement("td", null, _react.default.createElement("img", {
         src: data.profile_picture,
         width: "100px",
         height: "100px"
-      }))), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Stripe_user_id"), _react["default"].createElement("td", null, data.stripe_user_id)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Status"), _react["default"].createElement("td", null, data.status)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Credit_balance"), _react["default"].createElement("td", null, data.credit_balance)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Cash_balance"), _react["default"].createElement("td", null, data.cash_balance)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Life_earning"), _react["default"].createElement("td", null, data.life_earning)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Role"), _react["default"].createElement("td", null, data.role)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Life_xp"), _react["default"].createElement("td", null, data.life_xp)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Wins"), _react["default"].createElement("td", null, data.wins)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Loss"), _react["default"].createElement("td", null, data.loss)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Dob"), _react["default"].createElement("td", null, data.dob)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Double_xp"), _react["default"].createElement("td", null, data.double_xp)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Prime"), _react["default"].createElement("td", null, data.prime)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Xp_rank"), _react["default"].createElement("td", null, data.xp_rank)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Timezone"), _react["default"].createElement("td", null, data.timezone)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Gamer_tag_1"), _react["default"].createElement("td", null, data.gamer_tag_1)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Gamer_tag_2"), _react["default"].createElement("td", null, data.gamer_tag_2)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Gamer_tag_3"), _react["default"].createElement("td", null, data.gamer_tag_3)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Gamer_tag_4"), _react["default"].createElement("td", null, data.gamer_tag_4)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Gamer_tag_5"), _react["default"].createElement("td", null, data.gamer_tag_5)), _react["default"].createElement("tr", null, _react["default"].createElement("td", null, "Gamer_tag_6"), _react["default"].createElement("td", null, data.gamer_tag_6)))))));
+      }))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Stripe_user_id"), _react.default.createElement("td", null, data.stripe_user_id)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Status"), _react.default.createElement("td", null, data.status)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Credit_balance"), _react.default.createElement("td", null, data.credit_balance)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Cash_balance"), _react.default.createElement("td", null, data.cash_balance)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Life_earning"), _react.default.createElement("td", null, data.life_earning)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Role"), _react.default.createElement("td", null, data.role)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Life_xp"), _react.default.createElement("td", null, data.life_xp)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Wins"), _react.default.createElement("td", null, data.wins)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Loss"), _react.default.createElement("td", null, data.loss)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Dob"), _react.default.createElement("td", null, data.dob)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Double_xp"), _react.default.createElement("td", null, data.double_xp)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Prime"), _react.default.createElement("td", null, data.prime)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Xp_rank"), _react.default.createElement("td", null, data.xp_rank)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Timezone"), _react.default.createElement("td", null, data.timezone)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_1"), _react.default.createElement("td", null, data.gamer_tag_1)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_2"), _react.default.createElement("td", null, data.gamer_tag_2)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_3"), _react.default.createElement("td", null, data.gamer_tag_3)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_4"), _react.default.createElement("td", null, data.gamer_tag_4)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_5"), _react.default.createElement("td", null, data.gamer_tag_5)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_6"), _react.default.createElement("td", null, data.gamer_tag_6)))))));
     }
   }]);
 
   return MoreInfo;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -7773,15 +7773,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MoreInfo);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/modals":3,"moment":91,"react":161,"react-redux":120}],35:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":117,"react":187,"react-redux":146}],35:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -7789,7 +7789,7 @@ var _reactRedux = require("react-redux");
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7836,22 +7836,22 @@ function (_React$Component) {
     value: function render() {
       var data = this.props.data;
       var keys = Object.keys(data);
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("table", {
+      }, _react.default.createElement("table", {
         className: "table table-stripped"
-      }, _react["default"].createElement("tbody", null, keys.map(function (key, i) {
-        return _react["default"].createElement("tr", {
+      }, _react.default.createElement("tbody", null, keys.map(function (key, i) {
+        return _react.default.createElement("tr", {
           key: key
-        }, _react["default"].createElement("td", null, _react["default"].createElement("strong", null, key)), _react["default"].createElement("td", null, data[key]));
+        }, _react.default.createElement("td", null, _react.default.createElement("strong", null, key)), _react.default.createElement("td", null, data[key]));
       }))))));
     }
   }]);
 
   return MoreInfoGeneric;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {};
@@ -7859,19 +7859,21 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MoreInfoGeneric);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/modals":3,"react":161,"react-redux":120}],36:[function(require,module,exports){
+},{"../../../actions/modals":3,"react":187,"react-redux":146}],36:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
 var _reactRedux = require("react-redux");
+
+var _axios = _interopRequireDefault(require("axios"));
 
 var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
 
@@ -7879,7 +7881,7 @@ var _Messages = _interopRequireDefault(require("../../Messages"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -7918,6 +7920,8 @@ function (_React$Component) {
       image_url: '',
       banner_url: ''
     };
+    _this.image_url_ref = _react.default.createRef();
+    _this.banner_url_ref = _react.default.createRef();
     return _this;
   }
 
@@ -7936,16 +7940,11 @@ function (_React$Component) {
       }, 500);
     }
   }, {
-    key: "onSubmit",
-    value: function onSubmit(e) {
+    key: "finalSubmit",
+    value: function finalSubmit() {
       var _this3 = this;
 
-      e.preventDefault();
-      this.setState({
-        loaded: false
-      });
-
-      _Fetcher["default"].post('/api/games/add', {
+      _Fetcher.default.post('/api/games/add', {
         title: this.state.title,
         image_url: this.state.image_url,
         banner_url: this.state.banner_url
@@ -7964,7 +7963,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         _this3.setState({
           loaded: true
@@ -7981,6 +7980,62 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "uploadFile2",
+    value: function uploadFile2() {
+      var _this4 = this;
+
+      var data = new FormData();
+      var node = this.banner_url_ref.current;
+      var file_1 = node.files[0];
+      data.append('file', file_1, file_1.name);
+
+      _axios.default.post('/upload', data, {
+        onUploadProgress: function onUploadProgress(ProgressEvent) {
+          _this4.setState({
+            loaded: ProgressEvent.loaded / ProgressEvent.total * 100
+          });
+        }
+      }).then(function (res) {
+        _this4.setState({
+          banner_url: res.data.file
+        }, function () {
+          _this4.finalSubmit();
+        });
+      }).catch(function (err) {
+        alert('some error occoured.'); // console.log(err);
+      });
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+      var data = new FormData();
+      var node = this.image_url_ref.current;
+      var file_1 = node.files[0];
+      data.append('file', file_1, file_1.name);
+
+      _axios.default.post('/upload', data, {
+        onUploadProgress: function onUploadProgress(ProgressEvent) {
+          _this5.setState({
+            loaded: ProgressEvent.loaded / ProgressEvent.total * 100
+          });
+        }
+      }).then(function (res) {
+        _this5.setState({
+          image_url: res.data.file
+        }, function () {
+          _this5.uploadFile2();
+        });
+      }).catch(function (err) {
+        alert('some error occoured.'); // console.log(err);
+      });
+    }
+  }, {
     key: "handleChange",
     value: function handleChange(event) {
       this.setState(_defineProperty({}, event.target.name, event.target.value));
@@ -7988,27 +8043,27 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this4 = this;
+      var _this6 = this;
 
       // const {data} = this.props;
       // console.log(data);
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      }), "sdf"), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("form", {
+      }, _react.default.createElement("form", {
         onSubmit: function onSubmit(e) {
-          _this4.onSubmit(e);
+          _this6.onSubmit(e);
         }
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("div", {
+      }), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Game Name"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Game Name"), _react.default.createElement("input", {
         type: "text",
         required: true,
         className: "form-control",
@@ -8016,25 +8071,29 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "title",
         value: this.state.title
-      })), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Game Image"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Game Image"), _react.default.createElement("input", {
         type: "file",
         className: "form-control",
-        name: "image_url" // onChange={this.handleChange.bind(this)}
+        name: "image_url",
+        ref: this.image_url_ref,
+        required: true // onChange={this.handleChange.bind(this)}
         ,
         id: "image_url" // value={this.state.title}
 
-      })), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Game Banner"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Game Banner"), _react.default.createElement("input", {
         type: "file",
         className: "form-control",
-        name: "banner_url" // onChange={this.handleChange.bind(this)}
+        name: "banner_url",
+        required: true,
+        ref: this.banner_url_ref // onChange={this.handleChange.bind(this)}
         ,
         id: "banner_url" // value={this.state.title}
 
-      })), _react["default"].createElement("br", null), _react["default"].createElement("input", {
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
         value: "Create Game",
         type: "submit",
         className: "btn btn-primary"
@@ -8043,7 +8102,7 @@ function (_React$Component) {
   }]);
 
   return NewGame;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -8055,15 +8114,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(NewGame);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":161,"react-redux":120}],37:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"axios":57,"react":187,"react-redux":146}],37:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -8075,7 +8134,7 @@ var _Messages = _interopRequireDefault(require("../../Messages"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -8145,7 +8204,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this3 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/games?per_page=10000&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/games?per_page=10000&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this3.setState({
             loaded: true,
@@ -8158,7 +8217,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -8180,7 +8239,7 @@ function (_React$Component) {
         loaded: false
       });
 
-      _Fetcher["default"].post('/api/ladder/add', {
+      _Fetcher.default.post('/api/ladder/add', {
         title: this.state.title,
         game_id: this.state.game_id,
         min_players: this.state.min_players,
@@ -8206,7 +8265,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         _this4.setState({
           loaded: true
@@ -8234,23 +8293,23 @@ function (_React$Component) {
 
       // const {data} = this.props;
       // console.log(data);
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      }), "sdf"), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("form", {
+      }, _react.default.createElement("form", {
         onSubmit: function onSubmit(e) {
           _this5.onSubmit(e);
         }
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("div", {
+      }), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Ladder Name"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Ladder Name"), _react.default.createElement("input", {
         type: "text",
         required: true,
         className: "form-control",
@@ -8258,46 +8317,46 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "title",
         value: this.state.title
-      })), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Game"), _react["default"].createElement("select", {
+      }, _react.default.createElement("label", null, "Game"), _react.default.createElement("select", {
         className: "form-control",
         name: "game_id",
         onChange: this.handleChange.bind(this),
         id: "game_id",
         value: this.state.game_id,
         required: true
-      }, _react["default"].createElement("option", {
+      }, _react.default.createElement("option", {
         value: ""
       }, "Select"), this.state.games.map(function (g, i) {
-        return _react["default"].createElement("option", {
+        return _react.default.createElement("option", {
           value: g.id,
           key: g.id
         }, g.title);
-      }))), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      }))), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "User Gamer Tag"), _react["default"].createElement("select", {
+      }, _react.default.createElement("label", null, "User Gamer Tag"), _react.default.createElement("select", {
         className: "form-control",
         name: "gamer_tag",
         onChange: this.handleChange.bind(this),
         id: "gamer_tag",
         value: this.state.gamer_tag,
         required: true
-      }, _react["default"].createElement("option", {
+      }, _react.default.createElement("option", {
         value: ""
-      }, "Select"), _react["default"].createElement("option", {
+      }, "Select"), _react.default.createElement("option", {
         value: "1"
-      }, "Xbox Live Gamertag"), _react["default"].createElement("option", {
+      }, "Xbox Live Gamertag"), _react.default.createElement("option", {
         value: "2"
-      }, "PSN"), _react["default"].createElement("option", {
+      }, "PSN"), _react.default.createElement("option", {
         value: "3"
-      }, "Epic Games Username"), _react["default"].createElement("option", {
+      }, "Epic Games Username"), _react.default.createElement("option", {
         value: "4"
-      }, "Steam Username"), _react["default"].createElement("option", {
+      }, "Steam Username"), _react.default.createElement("option", {
         value: "5"
-      }, "Battleta"))), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      }, "Battleta"))), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Ladder Min players"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Ladder Min players"), _react.default.createElement("input", {
         type: "number",
         className: "form-control",
         min: "1",
@@ -8306,9 +8365,9 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "min_players",
         value: this.state.min_players
-      })), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Ladder Max players"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Ladder Max players"), _react.default.createElement("input", {
         type: "number",
         className: "form-control",
         min: this.state.min_players ? this.state.min_players : 1,
@@ -8316,15 +8375,15 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "max_players",
         value: this.state.max_players
-      })), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Rules"), _react["default"].createElement("textarea", {
+      }, _react.default.createElement("label", null, "Rules"), _react.default.createElement("textarea", {
         className: "form-control",
         name: "rules",
         onChange: this.handleChange.bind(this),
         id: "rules",
         value: this.state.rules
-      })), _react["default"].createElement("br", null), _react["default"].createElement("input", {
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
         value: "Create Ladder",
         type: "submit",
         className: "btn btn-primary"
@@ -8333,7 +8392,7 @@ function (_React$Component) {
   }]);
 
   return NewLadder;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -8345,15 +8404,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(NewLadder);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":161,"react-redux":120}],38:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],38:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -8365,7 +8424,7 @@ var _Messages = _interopRequireDefault(require("../../Messages"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -8430,7 +8489,7 @@ function (_React$Component) {
         loaded: false
       });
 
-      _Fetcher["default"].post('/api/topic/add', {
+      _Fetcher.default.post('/api/topic/add', {
         title: this.state.title,
         sub_title: this.state.sub_title
       }).then(function (resp) {
@@ -8452,7 +8511,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         _this3.setState({
           loaded: true
@@ -8478,23 +8537,23 @@ function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      }), "sdf"), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("form", {
+      }, _react.default.createElement("form", {
         onSubmit: function onSubmit(e) {
           _this4.onSubmit(e);
         }
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("div", {
+      }), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Topic Title"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Topic Title"), _react.default.createElement("input", {
         type: "text",
         required: true,
         className: "form-control",
@@ -8502,9 +8561,9 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "title",
         value: this.state.title
-      })), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Topic Sub-Title"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Topic Sub-Title"), _react.default.createElement("input", {
         type: "text",
         required: true,
         className: "form-control",
@@ -8512,7 +8571,7 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "sub_title",
         value: this.state.sub_title
-      })), _react["default"].createElement("br", null), _react["default"].createElement("input", {
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
         value: "Create Topic",
         type: "submit",
         className: "btn btn-primary"
@@ -8521,7 +8580,7 @@ function (_React$Component) {
   }]);
 
   return NewTopic;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -8533,15 +8592,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(NewTopic);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":161,"react-redux":120}],39:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],39:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -8553,7 +8612,7 @@ var _Messages = _interopRequireDefault(require("../../Messages"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -8642,7 +8701,7 @@ function (_React$Component) {
         }
 
         return a.map(function (b, i) {
-          return _react["default"].createElement("option", {
+          return _react.default.createElement("option", {
             value: b,
             key: b
           }, b, "v", b);
@@ -8661,7 +8720,7 @@ function (_React$Component) {
     value: function loadData() {
       var _this4 = this;
 
-      _Fetcher["default"].get('/api/admin/listPaged/games?per_page=10000&page=' + this.state.page).then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/games?per_page=10000&page=' + this.state.page).then(function (resp) {
         if (resp.ok) {
           _this4.setState({
             loaded: true,
@@ -8674,7 +8733,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -8696,7 +8755,7 @@ function (_React$Component) {
         ladder_id: ''
       });
 
-      _Fetcher["default"].get('/api/admin/listPaged/ladders?filter_game_id=' + id + '&per_page=10000&page=1').then(function (resp) {
+      _Fetcher.default.get('/api/admin/listPaged/ladders?filter_game_id=' + id + '&per_page=10000&page=1').then(function (resp) {
         if (resp.ok) {
           _this5.setState({
             loaded: true,
@@ -8709,7 +8768,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         var msg = 'Failed to load users';
 
@@ -8731,7 +8790,7 @@ function (_React$Component) {
         loaded: false
       });
 
-      _Fetcher["default"].post('/api/tournaments/add', {
+      _Fetcher.default.post('/api/tournaments/add', {
         title: this.state.title,
         game_id: this.state.game_id,
         ladder_id: this.state.ladder_id,
@@ -8763,7 +8822,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         _this6.setState({
           loaded: true
@@ -8796,23 +8855,23 @@ function (_React$Component) {
 
       // const {data} = this.props;
       // console.log(data);
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      }), "sdf"), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("form", {
+      }, _react.default.createElement("form", {
         onSubmit: function onSubmit(e) {
           _this7.onSubmit(e);
         }
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("div", {
+      }), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Title"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Title"), _react.default.createElement("input", {
         type: "text",
         name: "title",
         onChange: this.handleChange.bind(this),
@@ -8821,41 +8880,41 @@ function (_React$Component) {
         required: true,
         placeholder: "Tournament Title",
         className: "form-control"
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Game"), _react["default"].createElement("select", {
+      }, _react.default.createElement("label", null, "Game"), _react.default.createElement("select", {
         className: "form-control",
         name: "game_id",
         onChange: this.handleChange.bind(this),
         id: "game_id",
         value: this.state.game_id,
         required: true
-      }, _react["default"].createElement("option", {
+      }, _react.default.createElement("option", {
         value: ""
       }, "Select"), this.state.games.map(function (g, i) {
-        return _react["default"].createElement("option", {
+        return _react.default.createElement("option", {
           value: g.id,
           key: g.id
         }, g.title);
-      }))), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      }))), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Ladder"), _react["default"].createElement("select", {
+      }, _react.default.createElement("label", null, "Ladder"), _react.default.createElement("select", {
         className: "form-control",
         name: "ladder_id",
         onChange: this.handleChange.bind(this),
         id: "ladder_id",
         value: this.state.ladder_id,
         required: true
-      }, _react["default"].createElement("option", {
+      }, _react.default.createElement("option", {
         value: ""
       }, "Select"), this.state.ladders && this.state.ladders.map(function (g, i) {
-        return _react["default"].createElement("option", {
+        return _react.default.createElement("option", {
           value: g.id,
           key: g.id
         }, g.title);
-      }))), _react["default"].createElement("br", null), _react["default"].createElement("div", {
+      }))), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Total number of Teams"), _react["default"].createElement("select", {
+      }, _react.default.createElement("label", null, "Total number of Teams"), _react.default.createElement("select", {
         required: true,
         placeholder: "Total Number of Teams",
         className: "form-control",
@@ -8863,17 +8922,17 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "total_teams",
         value: this.state.total_teams
-      }, _react["default"].createElement("option", {
+      }, _react.default.createElement("option", {
         value: ""
-      }, "Select"), _react["default"].createElement("option", {
+      }, "Select"), _react.default.createElement("option", {
         value: "4"
-      }, "4 Teams"), _react["default"].createElement("option", {
+      }, "4 Teams"), _react.default.createElement("option", {
         value: "4"
-      }, "8 Teams"), _react["default"].createElement("option", {
+      }, "8 Teams"), _react.default.createElement("option", {
         value: "4"
-      }, "16 Teams"))), _react["default"].createElement("div", {
+      }, "16 Teams"))), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Members only Tournament"), _react["default"].createElement("select", {
+      }, _react.default.createElement("label", null, "Members only Tournament"), _react.default.createElement("select", {
         required: true,
         placeholder: "Members only Tournament",
         className: "form-control",
@@ -8881,15 +8940,15 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "member_tournament",
         value: this.state.member_tournament
-      }, _react["default"].createElement("option", {
+      }, _react.default.createElement("option", {
         value: ""
-      }, "Select"), _react["default"].createElement("option", {
+      }, "Select"), _react.default.createElement("option", {
         value: "yes"
-      }, "Yes"), _react["default"].createElement("option", {
+      }, "Yes"), _react.default.createElement("option", {
         value: "no"
-      }, "No"))), _react["default"].createElement("div", {
+      }, "No"))), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Users Per Team"), _react["default"].createElement("select", {
+      }, _react.default.createElement("label", null, "Users Per Team"), _react.default.createElement("select", {
         required: true,
         placeholder: "Users Per Team",
         className: "form-control",
@@ -8897,11 +8956,11 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "max_players",
         value: this.state.max_players
-      }, _react["default"].createElement("option", {
+      }, _react.default.createElement("option", {
         value: ""
-      }, "Select"), this.returnOptionForMaxPPT())), _react["default"].createElement("div", {
+      }, "Select"), this.returnOptionForMaxPPT())), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Tournament Starts On"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Tournament Starts On"), _react.default.createElement("input", {
         type: "datetime-local",
         name: "starts_at",
         onChange: this.handleChange.bind(this),
@@ -8910,9 +8969,9 @@ function (_React$Component) {
         required: true,
         placeholder: "Enter Tournament Start Date Time",
         className: "form-control"
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Registration Starts On"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Registration Starts On"), _react.default.createElement("input", {
         type: "datetime-local",
         name: "registration_start_at",
         onChange: this.handleChange.bind(this),
@@ -8921,9 +8980,9 @@ function (_React$Component) {
         required: true,
         placeholder: "Registration Start Date Time",
         className: "form-control"
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Registration ends on"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Registration ends on"), _react.default.createElement("input", {
         type: "datetime-local",
         name: "registration_end_at",
         onChange: this.handleChange.bind(this),
@@ -8932,9 +8991,9 @@ function (_React$Component) {
         required: true,
         placeholder: "Registration End Date Time",
         className: "form-control"
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Entry Fee (credits)"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Entry Fee (credits)"), _react.default.createElement("input", {
         type: "number",
         name: "entry_fee",
         onChange: this.handleChange.bind(this),
@@ -8943,9 +9002,9 @@ function (_React$Component) {
         required: true,
         placeholder: "Entry Fee",
         className: "form-control"
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "First Price"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "First Price"), _react.default.createElement("input", {
         type: "number",
         name: "first_winner_price",
         onChange: this.handleChange.bind(this),
@@ -8954,9 +9013,9 @@ function (_React$Component) {
         required: true,
         placeholder: "First Winner - Price Amount",
         className: "form-control"
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Second Price"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Second Price"), _react.default.createElement("input", {
         type: "number",
         name: "second_winner_price",
         onChange: this.handleChange.bind(this),
@@ -8965,9 +9024,9 @@ function (_React$Component) {
         required: true,
         placeholder: "Second Winner - Price Amount",
         className: "form-control"
-      })), _react["default"].createElement("div", {
+      })), _react.default.createElement("div", {
         className: "form-group"
-      }, _react["default"].createElement("label", null, "Third Price"), _react["default"].createElement("input", {
+      }, _react.default.createElement("label", null, "Third Price"), _react.default.createElement("input", {
         type: "number",
         name: "third_winner_price",
         onChange: this.handleChange.bind(this),
@@ -8976,7 +9035,7 @@ function (_React$Component) {
         required: true,
         placeholder: "Third Winner - Price Amount",
         className: "form-control"
-      })), _react["default"].createElement("br", null), _react["default"].createElement("input", {
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
         value: "Create Tournament",
         type: "submit",
         className: "btn btn-primary"
@@ -8985,7 +9044,7 @@ function (_React$Component) {
   }]);
 
   return NewTournament;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -8997,15 +9056,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(NewTournament);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":161,"react-redux":120}],40:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],40:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -9017,7 +9076,7 @@ var _Messages = _interopRequireDefault(require("../../Messages"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -9081,7 +9140,7 @@ function (_React$Component) {
         loaded: false
       });
 
-      _Fetcher["default"].post('/api/ticket_replies/add', {
+      _Fetcher.default.post('/api/ticket_replies/add', {
         text: this.state.text,
         ticket_id: this.props.id
       }).then(function (resp) {
@@ -9099,7 +9158,7 @@ function (_React$Component) {
             messages: [resp]
           });
         }
-      })["catch"](function (err) {
+      }).catch(function (err) {
         // console.log(err);
         _this3.setState({
           loaded: true
@@ -9127,23 +9186,23 @@ function (_React$Component) {
 
       // const {data} = this.props;
       // console.log(data);
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      }), "sdf"), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("form", {
+      }, _react.default.createElement("form", {
         onSubmit: function onSubmit(e) {
           _this4.onSubmit(e);
         }
-      }, _react["default"].createElement(_Messages["default"], {
+      }, _react.default.createElement(_Messages.default, {
         messages: this.props.messages
-      }), _react["default"].createElement("div", {
+      }), _react.default.createElement("div", {
         className: "input-control"
-      }, _react["default"].createElement("label", null, "Reply Text"), _react["default"].createElement("textarea", {
+      }, _react.default.createElement("label", null, "Reply Text"), _react.default.createElement("textarea", {
         type: "text",
         required: true,
         className: "form-control",
@@ -9151,7 +9210,7 @@ function (_React$Component) {
         onChange: this.handleChange.bind(this),
         id: "text",
         value: this.state.text
-      })), _react["default"].createElement("br", null), _react["default"].createElement("input", {
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
         value: "Create Game",
         type: "submit",
         className: "btn btn-primary"
@@ -9160,7 +9219,7 @@ function (_React$Component) {
   }]);
 
   return ReplyTicket;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -9172,15 +9231,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(ReplyTicket);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":161,"react-redux":120}],41:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],41:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -9190,7 +9249,7 @@ var _moment = _interopRequireDefault(require("moment"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -9294,73 +9353,73 @@ function (_React$Component) {
     value: function render() {
       var data = this.props.data; // console.log(data);
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      })), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "col-sm-12"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "card post"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "date"
-      }, (0, _moment["default"])(this.state.thread.created_at).format('lll')), _react["default"].createElement("div", {
+      }, (0, _moment.default)(this.state.thread.created_at).format('lll')), _react.default.createElement("div", {
         className: "row"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "col-sm-3 ticket_item_av"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "profile_menu_item ticket_item"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "profile_menu_item_inner"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "menu_avatar"
-      }, _react["default"].createElement("img", {
+      }, _react.default.createElement("img", {
         src: this.state.thread.user.profile_picture ? this.state.thread.user.profile_picture : this.state.thread.user.gravatar,
         className: "img-fluid profile_pic_outline"
-      })), _react["default"].createElement("span", {
+      })), _react.default.createElement("span", {
         className: "menu_prof_name_w"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "menu_prof_name_top"
-      }, "By", ' ', this.state.thread.user.first_name + ' ' + this.state.thread.user.last_name), _react["default"].createElement("span", {
+      }, "By", ' ', this.state.thread.user.first_name + ' ' + this.state.thread.user.last_name), _react.default.createElement("span", {
         className: "menu_prof_name_bot"
-      }, (0, _moment["default"])(this.state.thread.created_at).format('lll')))))), _react["default"].createElement("div", {
+      }, (0, _moment.default)(this.state.thread.created_at).format('lll')))))), _react.default.createElement("div", {
         className: "col-sm-9 post-content"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         dangerouslySetInnerHTML: {
           __html: this.state.thread.description
         }
       }))))), this.state.items.map(function (item, i) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "col-sm-12",
           key: item.id
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "card post"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "row"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "col-sm-3 ticket_item_av"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "profile_menu_item ticket_item"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "profile_menu_item_inner"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "menu_avatar"
-        }, _react["default"].createElement("img", {
+        }, _react.default.createElement("img", {
           src: item.user.profile_picture ? item.user.profile_picture : item.user.gravatar,
           className: "img-fluid profile_pic_outline"
-        })), _react["default"].createElement("span", {
+        })), _react.default.createElement("span", {
           className: "menu_prof_name_w"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "menu_prof_name_top"
-        }, "By", ' ', item.user.first_name + ' ' + item.user.last_name), _react["default"].createElement("span", {
+        }, "By", ' ', item.user.first_name + ' ' + item.user.last_name), _react.default.createElement("span", {
           className: "menu_prof_name_bot"
-        }, (0, _moment["default"])(item.created_at).format('lll')))))), _react["default"].createElement("div", {
+        }, (0, _moment.default)(item.created_at).format('lll')))))), _react.default.createElement("div", {
           className: "col-sm-9 post-content"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           dangerouslySetInnerHTML: {
             __html: item.content
           }
@@ -9370,7 +9429,7 @@ function (_React$Component) {
   }]);
 
   return ViewThread;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -9382,15 +9441,15 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(ViewThread);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/modals":3,"moment":91,"react":161,"react-redux":120}],42:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":117,"react":187,"react-redux":146}],42:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _modals = require("../../../actions/modals");
 
@@ -9400,7 +9459,7 @@ var _moment = _interopRequireDefault(require("moment"));
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -9482,7 +9541,7 @@ function (_React$Component) {
             is_404: true
           });
         }
-      })["catch"](function (a) {
+      }).catch(function (a) {
         console.log(a);
       });
     }
@@ -9522,78 +9581,78 @@ function (_React$Component) {
 
       var data = this.props.data; // console.log(data);
 
-      return _react["default"].createElement("div", {
+      return _react.default.createElement("div", {
         className: ""
-      }, this.state.loaded ? false : _react["default"].createElement("div", {
+      }, this.state.loaded ? false : _react.default.createElement("div", {
         className: "show_loader"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "is_loader"
-      })), _react["default"].createElement("div", null, _react["default"].createElement("div", {
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "col-sm-12"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "card post"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "row"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         className: "col-sm-3 ticket_item_av"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "profile_menu_item ticket_item"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "profile_menu_item_inner"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "menu_avatar"
-      }, _react["default"].createElement("img", {
+      }, _react.default.createElement("img", {
         src: this.state.ticket.user.profile_picture ? this.state.ticket.user.profile_picture : this.state.ticket.user.gravatar,
         className: "img-fluid profile_pic_outline"
-      })), _react["default"].createElement("span", {
+      })), _react.default.createElement("span", {
         className: "menu_prof_name_w"
-      }, _react["default"].createElement("span", {
+      }, _react.default.createElement("span", {
         className: "menu_prof_name_top"
-      }, "By", ' ', this.state.ticket.user.first_name + ' ' + this.state.ticket.user.last_name), _react["default"].createElement("span", {
+      }, "By", ' ', this.state.ticket.user.first_name + ' ' + this.state.ticket.user.last_name), _react.default.createElement("span", {
         className: "menu_prof_name_bot"
-      }, (0, _moment["default"])(this.state.ticket.created_at).format('lll')))))), _react["default"].createElement("div", {
+      }, (0, _moment.default)(this.state.ticket.created_at).format('lll')))))), _react.default.createElement("div", {
         className: "col-sm-9 post-content"
-      }, _react["default"].createElement("div", {
+      }, _react.default.createElement("div", {
         dangerouslySetInnerHTML: {
           __html: this.state.ticket.description
         }
-      }), this.state.ticket.attachment ? _react["default"].createElement("a", {
+      }), this.state.ticket.attachment ? _react.default.createElement("a", {
         download: true,
         href: this.state.ticket.attachment
       }, "Download attachment") : false)))), this.state.items.map(function (item, i) {
-        return _react["default"].createElement("div", {
+        return _react.default.createElement("div", {
           className: "col-sm-12",
           key: item.id
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "card post"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "row"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           className: "col-sm-3 ticket_item_av"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: 'profile_menu_item ticket_item ' + (item.from_admin && _this4.state.ticket.user_id != item.user_id ? ' from_admin ' : ' ')
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "profile_menu_item_inner"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "menu_avatar"
-        }, _react["default"].createElement("img", {
+        }, _react.default.createElement("img", {
           src: item.user.profile_picture ? item.user.profile_picture : item.user.gravatar,
           className: "img-fluid profile_pic_outline"
-        })), _react["default"].createElement("span", {
+        })), _react.default.createElement("span", {
           className: "menu_prof_name_w"
-        }, _react["default"].createElement("span", {
+        }, _react.default.createElement("span", {
           className: "menu_prof_name_top"
-        }, item.from_admin && _this4.state.ticket.user_id != item.user_id ? 'SUPPORT STAFF' : '' + item.user.first_name + ' ' + item.user.last_name), _react["default"].createElement("span", {
+        }, item.from_admin && _this4.state.ticket.user_id != item.user_id ? 'SUPPORT STAFF' : '' + item.user.first_name + ' ' + item.user.last_name), _react.default.createElement("span", {
           className: "menu_prof_name_bot"
-        }, (0, _moment["default"])(item.created_at).format('lll')))))), _react["default"].createElement("div", {
+        }, (0, _moment.default)(item.created_at).format('lll')))))), _react.default.createElement("div", {
           className: "col-sm-9 post-content"
-        }, _react["default"].createElement("div", {
+        }, _react.default.createElement("div", {
           dangerouslySetInnerHTML: {
             __html: item.content
           }
-        }), item.attachment ? _react["default"].createElement("a", {
+        }), item.attachment ? _react.default.createElement("a", {
           download: true,
           href: item.attachment
         }, "Download attachment") : false))));
@@ -9602,7 +9661,7 @@ function (_React$Component) {
   }]);
 
   return ViewTicket;
-}(_react["default"].Component);
+}(_react.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -9614,30 +9673,30 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(ViewTicket);
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"../../../actions/modals":3,"moment":91,"react":161,"react-redux":120}],43:[function(require,module,exports){
+},{"../../../actions/modals":3,"moment":117,"react":187,"react-redux":146}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var NotFound = function NotFound(props) {
-  return _react["default"].createElement("div", {
+  return _react.default.createElement("div", {
     className: "container text-center"
-  }, _react["default"].createElement("h1", null, "404"), _react["default"].createElement("p", null, "Page Not Found"));
+  }, _react.default.createElement("h1", null, "404"), _react.default.createElement("p", null, "Page Not Found"));
 };
 
 var _default = NotFound;
-exports["default"] = _default;
+exports.default = _default;
 
-},{"react":161}],44:[function(require,module,exports){
+},{"react":187}],44:[function(require,module,exports){
 "use strict";
 
 require("whatwg-fetch");
@@ -9654,25 +9713,25 @@ var _configureStore = _interopRequireDefault(require("./store/configureStore"));
 
 var _routes = _interopRequireDefault(require("./routes"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _configureStore["default"])(window.INITIAL_STATE);
+var store = (0, _configureStore.default)(window.INITIAL_STATE);
 
-_reactDom["default"].render(_react["default"].createElement(_reactRedux.Provider, {
+_reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   store: store
-}, _react["default"].createElement(_reactRouter.Router, {
+}, _react.default.createElement(_reactRouter.Router, {
   history: _reactRouter.hashHistory,
   basename: '/admin',
-  routes: (0, _routes["default"])(store)
+  routes: (0, _routes.default)(store)
 })), document.getElementById('app'));
 
-},{"./routes":49,"./store/configureStore":50,"react":161,"react-dom":102,"react-redux":120,"react-router":151,"whatwg-fetch":174}],45:[function(require,module,exports){
+},{"./routes":49,"./store/configureStore":50,"react":187,"react-dom":128,"react-redux":146,"react-router":177,"whatwg-fetch":200}],45:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = auth;
+exports.default = auth;
 var initialState = {
   token: null,
   user: {}
@@ -9717,7 +9776,7 @@ function auth() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.default = void 0;
 
 var _redux = require("redux");
 
@@ -9727,23 +9786,23 @@ var _auth = _interopRequireDefault(require("./auth"));
 
 var _modals = _interopRequireDefault(require("./modals"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var _default = (0, _redux.combineReducers)({
-  messages: _messages["default"],
-  auth: _auth["default"],
-  modals: _modals["default"]
+  messages: _messages.default,
+  auth: _auth.default,
+  modals: _modals.default
 });
 
-exports["default"] = _default;
+exports.default = _default;
 
-},{"./auth":45,"./messages":47,"./modals":48,"redux":164}],47:[function(require,module,exports){
+},{"./auth":45,"./messages":47,"./modals":48,"redux":190}],47:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = messages;
+exports.default = messages;
 
 function messages() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -9789,7 +9848,7 @@ function messages() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = modals;
+exports.default = modals;
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -9842,7 +9901,7 @@ function modals() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = getRoutes;
+exports.default = getRoutes;
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -9900,7 +9959,7 @@ var _WithdrawalCompleted = _interopRequireDefault(require("./components/DataRows
 
 var _WithdrawalPending = _interopRequireDefault(require("./components/DataRows/WithdrawalPending"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function getRoutes(store) {
   var ensureAuthenticated = function ensureAuthenticated(nextState, replace) {// if (!store.getState().auth.token) {
@@ -9920,164 +9979,164 @@ function getRoutes(store) {
     });
   };
 
-  return _react["default"].createElement(_reactRouter.Route, {
+  return _react.default.createElement(_reactRouter.Route, {
     path: "/",
-    component: _App["default"]
-  }, _react["default"].createElement(_reactRouter.IndexRoute, {
-    component: _Home["default"],
+    component: _App.default
+  }, _react.default.createElement(_reactRouter.IndexRoute, {
+    component: _Home.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/account",
-    component: _Profile["default"],
+    component: _Profile.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/forms/advertise_with_us",
-    component: _AdvertiseWithUs["default"],
+    component: _AdvertiseWithUs.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/forms/apply_for_staff",
-    component: _ApplyStaff["default"],
+    component: _ApplyStaff.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/forms/subscribers",
-    component: _Subscribers["default"],
+    component: _Subscribers.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/withdrawal/pending",
-    component: _WithdrawalPending["default"],
+    component: _WithdrawalPending.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/withdrawal/completed",
-    component: _WithdrawalCompleted["default"],
+    component: _WithdrawalCompleted.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/admin_users",
-    component: _AdminUsers["default"],
+    component: _AdminUsers.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/app_users",
-    component: _AppUsers["default"],
+    component: _AppUsers.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/teams/:uid",
-    component: _Teams["default"],
+    component: _Teams.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/teams",
-    component: _Teams["default"],
+    component: _Teams.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/matchfinder/:team_id",
-    component: _Matchfinder["default"],
+    component: _Matchfinder.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/matchfinder/filter/:status",
-    component: _Matchfinder["default"],
+    component: _Matchfinder.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/matchfinder",
-    component: _Matchfinder["default"],
+    component: _Matchfinder.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/money8/filter/:status",
-    component: _Money["default"],
+    component: _Money.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/tournamentmatches/filter/:status",
-    component: _TournamentMatches["default"],
+    component: _TournamentMatches.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/money8",
-    component: _Money["default"],
+    component: _Money.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/tournaments",
-    component: _Tournaments["default"],
+    component: _Tournaments.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/games",
-    component: _Games["default"],
+    component: _Games.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/topics",
-    component: _Topics["default"],
+    component: _Topics.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/threads",
-    component: _Threads["default"],
+    component: _Threads.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/tickets",
-    component: _Tickets["default"],
+    component: _Tickets.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/posts",
-    component: _Posts["default"],
+    component: _Posts.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/games/add",
-    component: _Games["default"],
+    component: _Games.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/games/edit",
-    component: _Games["default"],
+    component: _Games.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/ladders",
-    component: _Ladders["default"],
+    component: _Ladders.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/ladders/add",
-    component: _Ladders["default"],
+    component: _Ladders.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/ladders/edit",
-    component: _Ladders["default"],
+    component: _Ladders.default,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/login",
-    component: _Login["default"],
+    component: _Login.default,
     onEnter: skipIfAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/signup",
-    component: _Signup["default"],
+    component: _Signup.default,
     onEnter: skipIfAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/forgot",
-    component: _Forgot["default"],
+    component: _Forgot.default,
     onEnter: skipIfAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "/reset/:token",
-    component: _Reset["default"],
+    component: _Reset.default,
     onEnter: skipIfAuthenticated,
     onLeave: clearMessages
-  }), _react["default"].createElement(_reactRouter.Route, {
+  }), _react.default.createElement(_reactRouter.Route, {
     path: "*",
-    component: _NotFound["default"],
+    component: _NotFound.default,
     onLeave: clearMessages
   }));
 }
 
-},{"./components/Account/Forgot":4,"./components/Account/Login":5,"./components/Account/Profile":6,"./components/Account/Reset":7,"./components/Account/Signup":8,"./components/App":9,"./components/DataRows/AdminUsers":10,"./components/DataRows/AdvertiseWithUs":11,"./components/DataRows/AppUsers":12,"./components/DataRows/ApplyStaff":13,"./components/DataRows/Games":14,"./components/DataRows/Ladders":15,"./components/DataRows/Matchfinder":16,"./components/DataRows/Money8":17,"./components/DataRows/Posts":18,"./components/DataRows/Subscribers":19,"./components/DataRows/Teams":20,"./components/DataRows/Threads":21,"./components/DataRows/Tickets":22,"./components/DataRows/Topics":23,"./components/DataRows/TournamentMatches":24,"./components/DataRows/Tournaments":25,"./components/DataRows/WithdrawalCompleted":26,"./components/DataRows/WithdrawalPending":27,"./components/Home":30,"./components/NotFound":43,"react":161,"react-router":151}],50:[function(require,module,exports){
+},{"./components/Account/Forgot":4,"./components/Account/Login":5,"./components/Account/Profile":6,"./components/Account/Reset":7,"./components/Account/Signup":8,"./components/App":9,"./components/DataRows/AdminUsers":10,"./components/DataRows/AdvertiseWithUs":11,"./components/DataRows/AppUsers":12,"./components/DataRows/ApplyStaff":13,"./components/DataRows/Games":14,"./components/DataRows/Ladders":15,"./components/DataRows/Matchfinder":16,"./components/DataRows/Money8":17,"./components/DataRows/Posts":18,"./components/DataRows/Subscribers":19,"./components/DataRows/Teams":20,"./components/DataRows/Threads":21,"./components/DataRows/Tickets":22,"./components/DataRows/Topics":23,"./components/DataRows/TournamentMatches":24,"./components/DataRows/Tournaments":25,"./components/DataRows/WithdrawalCompleted":26,"./components/DataRows/WithdrawalPending":27,"./components/Home":30,"./components/NotFound":43,"react":187,"react-router":177}],50:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = configureStore;
+exports.default = configureStore;
 
 var _redux = require("redux");
 
@@ -10087,16 +10146,16 @@ var _reduxPromise = _interopRequireDefault(require("redux-promise"));
 
 var _reducers = _interopRequireDefault(require("../reducers"));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import createLogger from 'redux-logger';
 function configureStore(initialState) {
   // const logger = createLogger();
-  var store = (0, _redux.createStore)(_reducers["default"], initialState, (0, _redux.applyMiddleware)(_reduxThunk["default"], _reduxPromise["default"]));
+  var store = (0, _redux.createStore)(_reducers.default, initialState, (0, _redux.applyMiddleware)(_reduxThunk.default, _reduxPromise.default));
   return store;
 }
 
-},{"../reducers":46,"redux":164,"redux-promise":162,"redux-thunk":163}],51:[function(require,module,exports){
+},{"../reducers":46,"redux":190,"redux-promise":188,"redux-thunk":189}],51:[function(require,module,exports){
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -10137,7 +10196,7 @@ module.exports = _inheritsLoose;
 },{}],54:[function(require,module,exports){
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
-    "default": obj
+    default: obj
   };
 }
 
@@ -10163,7 +10222,7 @@ function _interopRequireWildcard(obj) {
       }
     }
 
-    newObj["default"] = obj;
+    newObj.default = obj;
     return newObj;
   }
 }
@@ -10187,6 +10246,1428 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 
 module.exports = _objectWithoutPropertiesLoose;
 },{}],57:[function(require,module,exports){
+module.exports = require('./lib/axios');
+},{"./lib/axios":59}],58:[function(require,module,exports){
+(function (process){
+'use strict';
+
+var utils = require('./../utils');
+var settle = require('./../core/settle');
+var buildURL = require('./../helpers/buildURL');
+var parseHeaders = require('./../helpers/parseHeaders');
+var isURLSameOrigin = require('./../helpers/isURLSameOrigin');
+var createError = require('../core/createError');
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || require('./../helpers/btoa');
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if (process.env.NODE_ENV !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = require('./../helpers/cookies');
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+}).call(this,require('_process'))
+},{"../core/createError":65,"./../core/settle":68,"./../helpers/btoa":72,"./../helpers/buildURL":73,"./../helpers/cookies":75,"./../helpers/isURLSameOrigin":77,"./../helpers/parseHeaders":79,"./../utils":81,"_process":119}],59:[function(require,module,exports){
+'use strict';
+
+var utils = require('./utils');
+var bind = require('./helpers/bind');
+var Axios = require('./core/Axios');
+var defaults = require('./defaults');
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(utils.merge(defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = require('./cancel/Cancel');
+axios.CancelToken = require('./cancel/CancelToken');
+axios.isCancel = require('./cancel/isCancel');
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = require('./helpers/spread');
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+},{"./cancel/Cancel":60,"./cancel/CancelToken":61,"./cancel/isCancel":62,"./core/Axios":63,"./defaults":70,"./helpers/bind":71,"./helpers/spread":80,"./utils":81}],60:[function(require,module,exports){
+'use strict';
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+},{}],61:[function(require,module,exports){
+'use strict';
+
+var Cancel = require('./Cancel');
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+},{"./Cancel":60}],62:[function(require,module,exports){
+'use strict';
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+},{}],63:[function(require,module,exports){
+'use strict';
+
+var defaults = require('./../defaults');
+var utils = require('./../utils');
+var InterceptorManager = require('./InterceptorManager');
+var dispatchRequest = require('./dispatchRequest');
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = utils.merge({
+      url: arguments[0]
+    }, arguments[1]);
+  }
+
+  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
+  config.method = config.method.toLowerCase();
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+},{"./../defaults":70,"./../utils":81,"./InterceptorManager":64,"./dispatchRequest":66}],64:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+},{"./../utils":81}],65:[function(require,module,exports){
+'use strict';
+
+var enhanceError = require('./enhanceError');
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+},{"./enhanceError":67}],66:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+var transformData = require('./transformData');
+var isCancel = require('../cancel/isCancel');
+var defaults = require('../defaults');
+var isAbsoluteURL = require('./../helpers/isAbsoluteURL');
+var combineURLs = require('./../helpers/combineURLs');
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers || {}
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+},{"../cancel/isCancel":62,"../defaults":70,"./../helpers/combineURLs":74,"./../helpers/isAbsoluteURL":76,"./../utils":81,"./transformData":69}],67:[function(require,module,exports){
+'use strict';
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+},{}],68:[function(require,module,exports){
+'use strict';
+
+var createError = require('./createError');
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+},{"./createError":65}],69:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+},{"./../utils":81}],70:[function(require,module,exports){
+(function (process){
+'use strict';
+
+var utils = require('./utils');
+var normalizeHeaderName = require('./helpers/normalizeHeaderName');
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = require('./adapters/xhr');
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = require('./adapters/http');
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+}).call(this,require('_process'))
+},{"./adapters/http":58,"./adapters/xhr":58,"./helpers/normalizeHeaderName":78,"./utils":81,"_process":119}],71:[function(require,module,exports){
+'use strict';
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+},{}],72:[function(require,module,exports){
+'use strict';
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error;
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+    // initialize result and counter
+    var block, charCode, idx = 0, map = chars;
+    // if the next str index does not exist:
+    //   change the mapping table to "="
+    //   check if d has no fractional digits
+    str.charAt(idx | 0) || (map = '=', idx % 1);
+    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+  ) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
+
+},{}],73:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      } else {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+},{"./../utils":81}],74:[function(require,module,exports){
+'use strict';
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+},{}],75:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+  (function standardBrowserEnv() {
+    return {
+      write: function write(name, value, expires, path, domain, secure) {
+        var cookie = [];
+        cookie.push(name + '=' + encodeURIComponent(value));
+
+        if (utils.isNumber(expires)) {
+          cookie.push('expires=' + new Date(expires).toGMTString());
+        }
+
+        if (utils.isString(path)) {
+          cookie.push('path=' + path);
+        }
+
+        if (utils.isString(domain)) {
+          cookie.push('domain=' + domain);
+        }
+
+        if (secure === true) {
+          cookie.push('secure');
+        }
+
+        document.cookie = cookie.join('; ');
+      },
+
+      read: function read(name) {
+        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+        return (match ? decodeURIComponent(match[3]) : null);
+      },
+
+      remove: function remove(name) {
+        this.write(name, '', Date.now() - 86400000);
+      }
+    };
+  })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return {
+      write: function write() {},
+      read: function read() { return null; },
+      remove: function remove() {}
+    };
+  })()
+);
+
+},{"./../utils":81}],76:[function(require,module,exports){
+'use strict';
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+},{}],77:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+  (function standardBrowserEnv() {
+    var msie = /(msie|trident)/i.test(navigator.userAgent);
+    var urlParsingNode = document.createElement('a');
+    var originURL;
+
+    /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+    function resolveURL(url) {
+      var href = url;
+
+      if (msie) {
+        // IE needs attribute set twice to normalize properties
+        urlParsingNode.setAttribute('href', href);
+        href = urlParsingNode.href;
+      }
+
+      urlParsingNode.setAttribute('href', href);
+
+      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+      return {
+        href: urlParsingNode.href,
+        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+        host: urlParsingNode.host,
+        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+        hostname: urlParsingNode.hostname,
+        port: urlParsingNode.port,
+        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+                  urlParsingNode.pathname :
+                  '/' + urlParsingNode.pathname
+      };
+    }
+
+    originURL = resolveURL(window.location.href);
+
+    /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+    return function isURLSameOrigin(requestURL) {
+      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+      return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+    };
+  })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return function isURLSameOrigin() {
+      return true;
+    };
+  })()
+);
+
+},{"./../utils":81}],78:[function(require,module,exports){
+'use strict';
+
+var utils = require('../utils');
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+},{"../utils":81}],79:[function(require,module,exports){
+'use strict';
+
+var utils = require('./../utils');
+
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
+    }
+  });
+
+  return parsed;
+};
+
+},{"./../utils":81}],80:[function(require,module,exports){
+'use strict';
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+},{}],81:[function(require,module,exports){
+'use strict';
+
+var bind = require('./helpers/bind');
+var isBuffer = require('is-buffer');
+
+/*global toString:true*/
+
+// utils is a library of generic helper functions non-specific to axios
+
+var toString = Object.prototype.toString;
+
+/**
+ * Determine if a value is an Array
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Array, otherwise false
+ */
+function isArray(val) {
+  return toString.call(val) === '[object Array]';
+}
+
+/**
+ * Determine if a value is an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an ArrayBuffer, otherwise false
+ */
+function isArrayBuffer(val) {
+  return toString.call(val) === '[object ArrayBuffer]';
+}
+
+/**
+ * Determine if a value is a FormData
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an FormData, otherwise false
+ */
+function isFormData(val) {
+  return (typeof FormData !== 'undefined') && (val instanceof FormData);
+}
+
+/**
+ * Determine if a value is a view on an ArrayBuffer
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a view on an ArrayBuffer, otherwise false
+ */
+function isArrayBufferView(val) {
+  var result;
+  if ((typeof ArrayBuffer !== 'undefined') && (ArrayBuffer.isView)) {
+    result = ArrayBuffer.isView(val);
+  } else {
+    result = (val) && (val.buffer) && (val.buffer instanceof ArrayBuffer);
+  }
+  return result;
+}
+
+/**
+ * Determine if a value is a String
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a String, otherwise false
+ */
+function isString(val) {
+  return typeof val === 'string';
+}
+
+/**
+ * Determine if a value is a Number
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Number, otherwise false
+ */
+function isNumber(val) {
+  return typeof val === 'number';
+}
+
+/**
+ * Determine if a value is undefined
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if the value is undefined, otherwise false
+ */
+function isUndefined(val) {
+  return typeof val === 'undefined';
+}
+
+/**
+ * Determine if a value is an Object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is an Object, otherwise false
+ */
+function isObject(val) {
+  return val !== null && typeof val === 'object';
+}
+
+/**
+ * Determine if a value is a Date
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Date, otherwise false
+ */
+function isDate(val) {
+  return toString.call(val) === '[object Date]';
+}
+
+/**
+ * Determine if a value is a File
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a File, otherwise false
+ */
+function isFile(val) {
+  return toString.call(val) === '[object File]';
+}
+
+/**
+ * Determine if a value is a Blob
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Blob, otherwise false
+ */
+function isBlob(val) {
+  return toString.call(val) === '[object Blob]';
+}
+
+/**
+ * Determine if a value is a Function
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Function, otherwise false
+ */
+function isFunction(val) {
+  return toString.call(val) === '[object Function]';
+}
+
+/**
+ * Determine if a value is a Stream
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a Stream, otherwise false
+ */
+function isStream(val) {
+  return isObject(val) && isFunction(val.pipe);
+}
+
+/**
+ * Determine if a value is a URLSearchParams object
+ *
+ * @param {Object} val The value to test
+ * @returns {boolean} True if value is a URLSearchParams object, otherwise false
+ */
+function isURLSearchParams(val) {
+  return typeof URLSearchParams !== 'undefined' && val instanceof URLSearchParams;
+}
+
+/**
+ * Trim excess whitespace off the beginning and end of a string
+ *
+ * @param {String} str The String to trim
+ * @returns {String} The String freed of excess whitespace
+ */
+function trim(str) {
+  return str.replace(/^\s*/, '').replace(/\s*$/, '');
+}
+
+/**
+ * Determine if we're running in a standard browser environment
+ *
+ * This allows axios to run in a web worker, and react-native.
+ * Both environments support XMLHttpRequest, but not fully standard globals.
+ *
+ * web workers:
+ *  typeof window -> undefined
+ *  typeof document -> undefined
+ *
+ * react-native:
+ *  navigator.product -> 'ReactNative'
+ */
+function isStandardBrowserEnv() {
+  if (typeof navigator !== 'undefined' && navigator.product === 'ReactNative') {
+    return false;
+  }
+  return (
+    typeof window !== 'undefined' &&
+    typeof document !== 'undefined'
+  );
+}
+
+/**
+ * Iterate over an Array or an Object invoking a function for each item.
+ *
+ * If `obj` is an Array callback will be called passing
+ * the value, index, and complete array for each item.
+ *
+ * If 'obj' is an Object callback will be called passing
+ * the value, key, and complete object for each property.
+ *
+ * @param {Object|Array} obj The object to iterate
+ * @param {Function} fn The callback to invoke for each item
+ */
+function forEach(obj, fn) {
+  // Don't bother if no value provided
+  if (obj === null || typeof obj === 'undefined') {
+    return;
+  }
+
+  // Force an array if not already something iterable
+  if (typeof obj !== 'object') {
+    /*eslint no-param-reassign:0*/
+    obj = [obj];
+  }
+
+  if (isArray(obj)) {
+    // Iterate over array values
+    for (var i = 0, l = obj.length; i < l; i++) {
+      fn.call(null, obj[i], i, obj);
+    }
+  } else {
+    // Iterate over object keys
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        fn.call(null, obj[key], key, obj);
+      }
+    }
+  }
+}
+
+/**
+ * Accepts varargs expecting each argument to be an object, then
+ * immutably merges the properties of each object and returns result.
+ *
+ * When multiple objects contain the same key the later object in
+ * the arguments list will take precedence.
+ *
+ * Example:
+ *
+ * ```js
+ * var result = merge({foo: 123}, {foo: 456});
+ * console.log(result.foo); // outputs 456
+ * ```
+ *
+ * @param {Object} obj1 Object to merge
+ * @returns {Object} Result of all merge properties
+ */
+function merge(/* obj1, obj2, obj3, ... */) {
+  var result = {};
+  function assignValue(val, key) {
+    if (typeof result[key] === 'object' && typeof val === 'object') {
+      result[key] = merge(result[key], val);
+    } else {
+      result[key] = val;
+    }
+  }
+
+  for (var i = 0, l = arguments.length; i < l; i++) {
+    forEach(arguments[i], assignValue);
+  }
+  return result;
+}
+
+/**
+ * Extends object a by mutably adding to it the properties of object b.
+ *
+ * @param {Object} a The object to be extended
+ * @param {Object} b The object to copy properties from
+ * @param {Object} thisArg The object to bind function to
+ * @return {Object} The resulting value of object a
+ */
+function extend(a, b, thisArg) {
+  forEach(b, function assignValue(val, key) {
+    if (thisArg && typeof val === 'function') {
+      a[key] = bind(val, thisArg);
+    } else {
+      a[key] = val;
+    }
+  });
+  return a;
+}
+
+module.exports = {
+  isArray: isArray,
+  isArrayBuffer: isArrayBuffer,
+  isBuffer: isBuffer,
+  isFormData: isFormData,
+  isArrayBufferView: isArrayBufferView,
+  isString: isString,
+  isNumber: isNumber,
+  isObject: isObject,
+  isUndefined: isUndefined,
+  isDate: isDate,
+  isFile: isFile,
+  isBlob: isBlob,
+  isFunction: isFunction,
+  isStream: isStream,
+  isURLSearchParams: isURLSearchParams,
+  isStandardBrowserEnv: isStandardBrowserEnv,
+  forEach: forEach,
+  merge: merge,
+  extend: extend,
+  trim: trim
+};
+
+},{"./helpers/bind":71,"is-buffer":112}],82:[function(require,module,exports){
 /*!
  * cookie
  * Copyright(c) 2012-2014 Roman Shtylman
@@ -10383,7 +11864,7 @@ function tryDecode(str, decode) {
   }
 }
 
-},{}],58:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -11313,7 +12794,7 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 module.exports = factory;
 
 }).call(this,require('_process'))
-},{"_process":93,"fbjs/lib/emptyObject":61,"fbjs/lib/invariant":62,"fbjs/lib/warning":63,"object-assign":92}],59:[function(require,module,exports){
+},{"_process":119,"fbjs/lib/emptyObject":86,"fbjs/lib/invariant":87,"fbjs/lib/warning":88,"object-assign":118}],84:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -11343,7 +12824,7 @@ module.exports = factory(
   ReactNoopUpdateQueue
 );
 
-},{"./factory":58,"react":161}],60:[function(require,module,exports){
+},{"./factory":83,"react":187}],85:[function(require,module,exports){
 "use strict";
 
 /**
@@ -11380,7 +12861,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],61:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -11400,7 +12881,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":93}],62:[function(require,module,exports){
+},{"_process":119}],87:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -11456,7 +12937,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":93}],63:[function(require,module,exports){
+},{"_process":119}],88:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -11521,7 +13002,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":60,"_process":93}],64:[function(require,module,exports){
+},{"./emptyFunction":85,"_process":119}],89:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11547,7 +13028,7 @@ function isFSA(action) {
 function isError(action) {
   return action.error === true;
 }
-},{"lodash.isplainobject":65}],65:[function(require,module,exports){
+},{"lodash.isplainobject":90}],90:[function(require,module,exports){
 /**
  * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -11652,7 +13133,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"lodash._basefor":87,"lodash.isarguments":88,"lodash.keysin":90}],66:[function(require,module,exports){
+},{"lodash._basefor":113,"lodash.isarguments":114,"lodash.keysin":116}],91:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11675,7 +13156,7 @@ var REPLACE = exports.REPLACE = 'REPLACE';
  * for more information.
  */
 var POP = exports.POP = 'POP';
-},{}],67:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -11732,7 +13213,7 @@ var loopAsync = exports.loopAsync = function loopAsync(turns, work, callback) {
 
   next();
 };
-},{}],68:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11832,7 +13313,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 var go = exports.go = function go(n) {
   if (n) window.history.go(n);
 };
-},{"./DOMStateStorage":69,"./DOMUtils":70,"./ExecutionEnvironment":71,"./LocationUtils":73,"./PathUtils":74}],69:[function(require,module,exports){
+},{"./DOMStateStorage":94,"./DOMUtils":95,"./ExecutionEnvironment":96,"./LocationUtils":98,"./PathUtils":99}],94:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -11920,7 +13401,7 @@ var readState = exports.readState = function readState(key) {
   return undefined;
 };
 }).call(this,require('_process'))
-},{"_process":93,"warning":173}],70:[function(require,module,exports){
+},{"_process":119,"warning":199}],95:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -11970,12 +13451,12 @@ var supportsPopstateOnHashchange = exports.supportsPopstateOnHashchange = functi
 var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
   return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
 };
-},{}],71:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = exports.canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-},{}],72:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12114,7 +13595,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
   });
 };
 }).call(this,require('_process'))
-},{"./BrowserProtocol":68,"./DOMStateStorage":69,"./DOMUtils":70,"./LocationUtils":73,"./PathUtils":74,"_process":93,"warning":173}],73:[function(require,module,exports){
+},{"./BrowserProtocol":93,"./DOMStateStorage":94,"./DOMUtils":95,"./LocationUtils":98,"./PathUtils":99,"_process":119,"warning":199}],98:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12209,7 +13690,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
   a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && statesAreEqual(a.state, b.state);
 };
 }).call(this,require('_process'))
-},{"./Actions":66,"./PathUtils":74,"_process":93,"invariant":86,"warning":173}],74:[function(require,module,exports){
+},{"./Actions":91,"./PathUtils":99,"_process":119,"invariant":111,"warning":199}],99:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12308,7 +13789,7 @@ var createPath = exports.createPath = function createPath(location) {
   return path;
 };
 }).call(this,require('_process'))
-},{"_process":93,"warning":173}],75:[function(require,module,exports){
+},{"_process":119,"warning":199}],100:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -12346,7 +13827,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
   window.location.replace((0, _PathUtils.createPath)(location));
   return false; // Don't update location
 };
-},{"./BrowserProtocol":68,"./LocationUtils":73,"./PathUtils":74}],76:[function(require,module,exports){
+},{"./BrowserProtocol":93,"./LocationUtils":98,"./PathUtils":99}],101:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12442,7 +13923,7 @@ var createBrowserHistory = function createBrowserHistory() {
 
 exports.default = createBrowserHistory;
 }).call(this,require('_process'))
-},{"./BrowserProtocol":68,"./DOMUtils":70,"./ExecutionEnvironment":71,"./RefreshProtocol":75,"./createHistory":78,"_process":93,"invariant":86}],77:[function(require,module,exports){
+},{"./BrowserProtocol":93,"./DOMUtils":95,"./ExecutionEnvironment":96,"./RefreshProtocol":100,"./createHistory":103,"_process":119,"invariant":111}],102:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12592,7 +14073,7 @@ var createHashHistory = function createHashHistory() {
 
 exports.default = createHashHistory;
 }).call(this,require('_process'))
-},{"./DOMUtils":70,"./ExecutionEnvironment":71,"./HashProtocol":72,"./createHistory":78,"_process":93,"invariant":86,"warning":173}],78:[function(require,module,exports){
+},{"./DOMUtils":95,"./ExecutionEnvironment":96,"./HashProtocol":97,"./createHistory":103,"_process":119,"invariant":111,"warning":199}],103:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -12769,7 +14250,7 @@ var createHistory = function createHistory() {
 };
 
 exports.default = createHistory;
-},{"./Actions":66,"./AsyncUtils":67,"./LocationUtils":73,"./PathUtils":74,"./runTransitionHook":80}],79:[function(require,module,exports){
+},{"./Actions":91,"./AsyncUtils":92,"./LocationUtils":98,"./PathUtils":99,"./runTransitionHook":105}],104:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12912,7 +14393,7 @@ var createMemoryHistory = function createMemoryHistory() {
 
 exports.default = createMemoryHistory;
 }).call(this,require('_process'))
-},{"./Actions":66,"./LocationUtils":73,"./PathUtils":74,"./createHistory":78,"_process":93,"invariant":86,"warning":173}],80:[function(require,module,exports){
+},{"./Actions":91,"./LocationUtils":98,"./PathUtils":99,"./createHistory":103,"_process":119,"invariant":111,"warning":199}],105:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -12938,7 +14419,7 @@ var runTransitionHook = function runTransitionHook(hook, location, callback) {
 
 exports.default = runTransitionHook;
 }).call(this,require('_process'))
-},{"_process":93,"warning":173}],81:[function(require,module,exports){
+},{"_process":119,"warning":199}],106:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13048,7 +14529,7 @@ var useBasename = function useBasename(createHistory) {
 };
 
 exports.default = useBasename;
-},{"./PathUtils":74,"./runTransitionHook":80}],82:[function(require,module,exports){
+},{"./PathUtils":99,"./runTransitionHook":105}],107:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -13170,7 +14651,7 @@ var useQueries = function useQueries(createHistory) {
 };
 
 exports.default = useQueries;
-},{"./LocationUtils":73,"./PathUtils":74,"./runTransitionHook":80,"query-string":83}],83:[function(require,module,exports){
+},{"./LocationUtils":98,"./PathUtils":99,"./runTransitionHook":105,"query-string":108}],108:[function(require,module,exports){
 'use strict';
 var strictUriEncode = require('strict-uri-encode');
 var objectAssign = require('object-assign');
@@ -13377,7 +14858,7 @@ exports.stringify = function (obj, opts) {
 	}).join('&') : '';
 };
 
-},{"object-assign":92,"strict-uri-encode":84}],84:[function(require,module,exports){
+},{"object-assign":118,"strict-uri-encode":109}],109:[function(require,module,exports){
 'use strict';
 module.exports = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -13385,7 +14866,7 @@ module.exports = function (str) {
 	});
 };
 
-},{}],85:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
 'use strict';
 
 /**
@@ -13490,7 +14971,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{"react-is":105}],86:[function(require,module,exports){
+},{"react-is":131}],111:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -13543,7 +15024,30 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":93}],87:[function(require,module,exports){
+},{"_process":119}],112:[function(require,module,exports){
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
+},{}],113:[function(require,module,exports){
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -13593,7 +15097,7 @@ function createBaseFor(fromRight) {
 
 module.exports = baseFor;
 
-},{}],88:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -13824,7 +15328,7 @@ function isObjectLike(value) {
 
 module.exports = isArguments;
 
-},{}],89:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -14006,7 +15510,7 @@ function isNative(value) {
 
 module.exports = isArray;
 
-},{}],90:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 /**
  * lodash 3.0.8 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -14140,7 +15644,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"lodash.isarguments":88,"lodash.isarray":89}],91:[function(require,module,exports){
+},{"lodash.isarguments":114,"lodash.isarray":115}],117:[function(require,module,exports){
 //! moment.js
 
 ;(function (global, factory) {
@@ -18744,7 +20248,7 @@ module.exports = keysIn;
 
 })));
 
-},{}],92:[function(require,module,exports){
+},{}],118:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -18836,7 +20340,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],93:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -19022,7 +20526,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],94:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -19038,7 +20542,6 @@ var printWarning = function() {};
 if (process.env.NODE_ENV !== 'production') {
   var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
   var loggedTypeFailures = {};
-  var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
   printWarning = function(text) {
     var message = 'Warning: ' + text;
@@ -19068,7 +20571,7 @@ if (process.env.NODE_ENV !== 'production') {
 function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
   if (process.env.NODE_ENV !== 'production') {
     for (var typeSpecName in typeSpecs) {
-      if (has(typeSpecs, typeSpecName)) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
         var error;
         // Prop type validation may throw. In case they do, we don't want to
         // fail the render phase where it didn't fail before. So we log it.
@@ -19096,7 +20599,8 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
             'You may have forgotten to pass an argument to the type checker ' +
             'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' +
             'shape all require an argument).'
-          );
+          )
+
         }
         if (error instanceof Error && !(error.message in loggedTypeFailures)) {
           // Only monitor this failure once because there tends to be a lot of the
@@ -19114,21 +20618,10 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
   }
 }
 
-/**
- * Resets warning cache when testing.
- *
- * @private
- */
-checkPropTypes.resetWarningCache = function() {
-  if (process.env.NODE_ENV !== 'production') {
-    loggedTypeFailures = {};
-  }
-}
-
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":98,"_process":93}],95:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":124,"_process":119}],121:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -19141,8 +20634,6 @@ module.exports = checkPropTypes;
 var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
 
 function emptyFunction() {}
-function emptyFunctionWithReset() {}
-emptyFunctionWithReset.resetWarningCache = emptyFunction;
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -19176,25 +20667,22 @@ module.exports = function() {
     any: shim,
     arrayOf: getShim,
     element: shim,
-    elementType: shim,
     instanceOf: getShim,
     node: shim,
     objectOf: getShim,
     oneOf: getShim,
     oneOfType: getShim,
     shape: getShim,
-    exact: getShim,
-
-    checkPropTypes: emptyFunctionWithReset,
-    resetWarningCache: emptyFunction
+    exact: getShim
   };
 
+  ReactPropTypes.checkPropTypes = emptyFunction;
   ReactPropTypes.PropTypes = ReactPropTypes;
 
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":98}],96:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":124}],122:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -19205,13 +20693,11 @@ module.exports = function() {
 
 'use strict';
 
-var ReactIs = require('react-is');
 var assign = require('object-assign');
 
 var ReactPropTypesSecret = require('./lib/ReactPropTypesSecret');
 var checkPropTypes = require('./checkPropTypes');
 
-var has = Function.call.bind(Object.prototype.hasOwnProperty);
 var printWarning = function() {};
 
 if (process.env.NODE_ENV !== 'production') {
@@ -19322,7 +20808,6 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     any: createAnyTypeChecker(),
     arrayOf: createArrayOfTypeChecker,
     element: createElementTypeChecker(),
-    elementType: createElementTypeTypeChecker(),
     instanceOf: createInstanceTypeChecker,
     node: createNodeChecker(),
     objectOf: createObjectOfTypeChecker,
@@ -19476,18 +20961,6 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
     return createChainableTypeChecker(validate);
   }
 
-  function createElementTypeTypeChecker() {
-    function validate(props, propName, componentName, location, propFullName) {
-      var propValue = props[propName];
-      if (!ReactIs.isValidElementType(propValue)) {
-        var propType = getPropType(propValue);
-        return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected a single ReactElement type.'));
-      }
-      return null;
-    }
-    return createChainableTypeChecker(validate);
-  }
-
   function createInstanceTypeChecker(expectedClass) {
     function validate(props, propName, componentName, location, propFullName) {
       if (!(props[propName] instanceof expectedClass)) {
@@ -19502,16 +20975,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
   function createEnumTypeChecker(expectedValues) {
     if (!Array.isArray(expectedValues)) {
-      if (process.env.NODE_ENV !== 'production') {
-        if (arguments.length > 1) {
-          printWarning(
-            'Invalid arguments supplied to oneOf, expected an array, got ' + arguments.length + ' arguments. ' +
-            'A common mistake is to write oneOf(x, y, z) instead of oneOf([x, y, z]).'
-          );
-        } else {
-          printWarning('Invalid argument supplied to oneOf, expected an array.');
-        }
-      }
+      process.env.NODE_ENV !== 'production' ? printWarning('Invalid argument supplied to oneOf, expected an instance of array.') : void 0;
       return emptyFunctionThatReturnsNull;
     }
 
@@ -19523,14 +20987,8 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
         }
       }
 
-      var valuesString = JSON.stringify(expectedValues, function replacer(key, value) {
-        var type = getPreciseType(value);
-        if (type === 'symbol') {
-          return String(value);
-        }
-        return value;
-      });
-      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + String(propValue) + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
+      var valuesString = JSON.stringify(expectedValues);
+      return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of value `' + propValue + '` ' + ('supplied to `' + componentName + '`, expected one of ' + valuesString + '.'));
     }
     return createChainableTypeChecker(validate);
   }
@@ -19546,7 +21004,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
         return new PropTypeError('Invalid ' + location + ' `' + propFullName + '` of type ' + ('`' + propType + '` supplied to `' + componentName + '`, expected an object.'));
       }
       for (var key in propValue) {
-        if (has(propValue, key)) {
+        if (propValue.hasOwnProperty(key)) {
           var error = typeChecker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
           if (error instanceof Error) {
             return error;
@@ -19703,11 +21161,6 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       return true;
     }
 
-    // falsy value can't be a Symbol
-    if (!propValue) {
-      return false;
-    }
-
     // 19.4.3.5 Symbol.prototype[@@toStringTag] === 'Symbol'
     if (propValue['@@toStringTag'] === 'Symbol') {
       return true;
@@ -19782,14 +21235,13 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   }
 
   ReactPropTypes.checkPropTypes = checkPropTypes;
-  ReactPropTypes.resetWarningCache = checkPropTypes.resetWarningCache;
   ReactPropTypes.PropTypes = ReactPropTypes;
 
   return ReactPropTypes;
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":94,"./lib/ReactPropTypesSecret":98,"_process":93,"object-assign":92,"react-is":105}],97:[function(require,module,exports){
+},{"./checkPropTypes":120,"./lib/ReactPropTypesSecret":124,"_process":119,"object-assign":118}],123:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -19799,12 +21251,21 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
  */
 
 if (process.env.NODE_ENV !== 'production') {
-  var ReactIs = require('react-is');
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
 
   // By explicitly using `prop-types` you are opting into new development behavior.
   // http://fb.me/prop-types-in-prod
   var throwOnDirectAccess = true;
-  module.exports = require('./factoryWithTypeCheckers')(ReactIs.isElement, throwOnDirectAccess);
+  module.exports = require('./factoryWithTypeCheckers')(isValidElement, throwOnDirectAccess);
 } else {
   // By explicitly using `prop-types` you are opting into new production behavior.
   // http://fb.me/prop-types-in-prod
@@ -19812,7 +21273,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":95,"./factoryWithTypeCheckers":96,"_process":93,"react-is":105}],98:[function(require,module,exports){
+},{"./factoryWithThrowingShims":121,"./factoryWithTypeCheckers":122,"_process":119}],124:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -19826,7 +21287,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],99:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 var cookie = require('cookie');
 
 if (typeof Object.assign != 'function') {
@@ -19980,7 +21441,7 @@ if (typeof window !== 'undefined') {
 
 module.exports = reactCookie;
 
-},{"cookie":57}],100:[function(require,module,exports){
+},{"cookie":82}],126:[function(require,module,exports){
 (function (process){
 /** @license React v16.7.0
  * react-dom.development.js
@@ -40069,7 +41530,7 @@ module.exports = reactDom;
 }
 
 }).call(this,require('_process'))
-},{"_process":93,"object-assign":92,"prop-types/checkPropTypes":94,"react":161,"scheduler":169,"scheduler/tracing":170}],101:[function(require,module,exports){
+},{"_process":119,"object-assign":118,"prop-types/checkPropTypes":120,"react":187,"scheduler":195,"scheduler/tracing":196}],127:[function(require,module,exports){
 /** @license React v16.7.0
  * react-dom.production.min.js
  *
@@ -40320,7 +41781,7 @@ void 0:t("40");return a._reactRootContainer?(Uh(function(){fi(null,null,a,!1,fun
 Ka,La,Ca.injectEventPluginsByName,qa,Ra,function(a){za(a,Qa)},Ib,Jb,Jd,Ea]}};function hi(a,b){di(a)?void 0:t("299","unstable_createRoot");return new ci(a,!0,null!=b&&!0===b.hydrate)}(function(a){var b=a.findFiberByHostInstance;return We(n({},a,{overrideProps:null,findHostInstanceByFiber:function(a){a=nd(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null}}))})({findFiberByHostInstance:Ia,bundleType:0,version:"16.7.0",rendererPackageName:"react-dom"});
 var li={default:ki},mi=li&&ki||li;module.exports=mi.default||mi;
 
-},{"object-assign":92,"react":161,"scheduler":169}],102:[function(require,module,exports){
+},{"object-assign":118,"react":187,"scheduler":195}],128:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40362,9 +41823,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":100,"./cjs/react-dom.production.min.js":101,"_process":93}],103:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":126,"./cjs/react-dom.production.min.js":127,"_process":119}],129:[function(require,module,exports){
 (function (process){
-/** @license React v16.8.6
+/** @license React v16.11.0
  * react-is.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -40386,25 +41847,29 @@ Object.defineProperty(exports, '__esModule', { value: true });
 // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
 // nor polyfill, then a plain number is used for performance.
 var hasSymbol = typeof Symbol === 'function' && Symbol.for;
-
 var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
 var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
 var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
 var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
 var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
 var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
-var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace;
+var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace; // TODO: We don't use AsyncMode or ConcurrentMode anymore. They were temporary
+// (unstable) APIs that have been removed. Can we remove the symbols?
+
 var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
 var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
 var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
 var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
+var REACT_SUSPENSE_LIST_TYPE = hasSymbol ? Symbol.for('react.suspense_list') : 0xead8;
 var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
 var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
+var REACT_FUNDAMENTAL_TYPE = hasSymbol ? Symbol.for('react.fundamental') : 0xead5;
+var REACT_RESPONDER_TYPE = hasSymbol ? Symbol.for('react.responder') : 0xead6;
+var REACT_SCOPE_TYPE = hasSymbol ? Symbol.for('react.scope') : 0xead7;
 
 function isValidElementType(type) {
-  return typeof type === 'string' || typeof type === 'function' ||
-  // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
-  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE);
+  return typeof type === 'string' || typeof type === 'function' || // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+  type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || type === REACT_SUSPENSE_LIST_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE || type.$$typeof === REACT_FUNDAMENTAL_TYPE || type.$$typeof === REACT_RESPONDER_TYPE || type.$$typeof === REACT_SCOPE_TYPE);
 }
 
 /**
@@ -40420,12 +41885,11 @@ function isValidElementType(type) {
  * paths. Removing the logging code for production environments will keep the
  * same logic and follow the same code paths.
  */
-
-var lowPriorityWarning = function () {};
+var lowPriorityWarningWithoutStack = function () {};
 
 {
   var printWarning = function (format) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
       args[_key - 1] = arguments[_key];
     }
 
@@ -40433,9 +41897,11 @@ var lowPriorityWarning = function () {};
     var message = 'Warning: ' + format.replace(/%s/g, function () {
       return args[argIndex++];
     });
+
     if (typeof console !== 'undefined') {
       console.warn(message);
     }
+
     try {
       // --- Welcome to debugging React ---
       // This error was thrown as a convenience so that you can use this stack
@@ -40444,25 +41910,27 @@ var lowPriorityWarning = function () {};
     } catch (x) {}
   };
 
-  lowPriorityWarning = function (condition, format) {
+  lowPriorityWarningWithoutStack = function (condition, format) {
     if (format === undefined) {
-      throw new Error('`lowPriorityWarning(condition, format, ...args)` requires a warning ' + 'message argument');
+      throw new Error('`lowPriorityWarningWithoutStack(condition, format, ...args)` requires a warning ' + 'message argument');
     }
+
     if (!condition) {
-      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+      for (var _len2 = arguments.length, args = new Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
         args[_key2 - 2] = arguments[_key2];
       }
 
-      printWarning.apply(undefined, [format].concat(args));
+      printWarning.apply(void 0, [format].concat(args));
     }
   };
 }
 
-var lowPriorityWarning$1 = lowPriorityWarning;
+var lowPriorityWarningWithoutStack$1 = lowPriorityWarningWithoutStack;
 
 function typeOf(object) {
   if (typeof object === 'object' && object !== null) {
     var $$typeof = object.$$typeof;
+
     switch ($$typeof) {
       case REACT_ELEMENT_TYPE:
         var type = object.type;
@@ -40475,6 +41943,7 @@ function typeOf(object) {
           case REACT_STRICT_MODE_TYPE:
           case REACT_SUSPENSE_TYPE:
             return type;
+
           default:
             var $$typeofType = type && type.$$typeof;
 
@@ -40483,10 +41952,13 @@ function typeOf(object) {
               case REACT_FORWARD_REF_TYPE:
               case REACT_PROVIDER_TYPE:
                 return $$typeofType;
+
               default:
                 return $$typeof;
             }
+
         }
+
       case REACT_LAZY_TYPE:
       case REACT_MEMO_TYPE:
       case REACT_PORTAL_TYPE:
@@ -40495,9 +41967,8 @@ function typeOf(object) {
   }
 
   return undefined;
-}
+} // AsyncMode is deprecated along with isAsyncMode
 
-// AsyncMode is deprecated along with isAsyncMode
 var AsyncMode = REACT_ASYNC_MODE_TYPE;
 var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
 var ContextConsumer = REACT_CONTEXT_TYPE;
@@ -40511,17 +41982,16 @@ var Portal = REACT_PORTAL_TYPE;
 var Profiler = REACT_PROFILER_TYPE;
 var StrictMode = REACT_STRICT_MODE_TYPE;
 var Suspense = REACT_SUSPENSE_TYPE;
+var hasWarnedAboutDeprecatedIsAsyncMode = false; // AsyncMode should be deprecated
 
-var hasWarnedAboutDeprecatedIsAsyncMode = false;
-
-// AsyncMode should be deprecated
 function isAsyncMode(object) {
   {
     if (!hasWarnedAboutDeprecatedIsAsyncMode) {
       hasWarnedAboutDeprecatedIsAsyncMode = true;
-      lowPriorityWarning$1(false, 'The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
+      lowPriorityWarningWithoutStack$1(false, 'The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
     }
   }
+
   return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
 }
 function isConcurrentMode(object) {
@@ -40593,8 +42063,8 @@ exports.isSuspense = isSuspense;
 }
 
 }).call(this,require('_process'))
-},{"_process":93}],104:[function(require,module,exports){
-/** @license React v16.8.6
+},{"_process":119}],130:[function(require,module,exports){
+/** @license React v16.11.0
  * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -40604,13 +42074,13 @@ exports.isSuspense = isSuspense;
  */
 
 'use strict';Object.defineProperty(exports,"__esModule",{value:!0});
-var b="function"===typeof Symbol&&Symbol.for,c=b?Symbol.for("react.element"):60103,d=b?Symbol.for("react.portal"):60106,e=b?Symbol.for("react.fragment"):60107,f=b?Symbol.for("react.strict_mode"):60108,g=b?Symbol.for("react.profiler"):60114,h=b?Symbol.for("react.provider"):60109,k=b?Symbol.for("react.context"):60110,l=b?Symbol.for("react.async_mode"):60111,m=b?Symbol.for("react.concurrent_mode"):60111,n=b?Symbol.for("react.forward_ref"):60112,p=b?Symbol.for("react.suspense"):60113,q=b?Symbol.for("react.memo"):
-60115,r=b?Symbol.for("react.lazy"):60116;function t(a){if("object"===typeof a&&null!==a){var u=a.$$typeof;switch(u){case c:switch(a=a.type,a){case l:case m:case e:case g:case f:case p:return a;default:switch(a=a&&a.$$typeof,a){case k:case n:case h:return a;default:return u}}case r:case q:case d:return u}}}function v(a){return t(a)===m}exports.typeOf=t;exports.AsyncMode=l;exports.ConcurrentMode=m;exports.ContextConsumer=k;exports.ContextProvider=h;exports.Element=c;exports.ForwardRef=n;
-exports.Fragment=e;exports.Lazy=r;exports.Memo=q;exports.Portal=d;exports.Profiler=g;exports.StrictMode=f;exports.Suspense=p;exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||"object"===typeof a&&null!==a&&(a.$$typeof===r||a.$$typeof===q||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n)};exports.isAsyncMode=function(a){return v(a)||t(a)===l};exports.isConcurrentMode=v;exports.isContextConsumer=function(a){return t(a)===k};
-exports.isContextProvider=function(a){return t(a)===h};exports.isElement=function(a){return"object"===typeof a&&null!==a&&a.$$typeof===c};exports.isForwardRef=function(a){return t(a)===n};exports.isFragment=function(a){return t(a)===e};exports.isLazy=function(a){return t(a)===r};exports.isMemo=function(a){return t(a)===q};exports.isPortal=function(a){return t(a)===d};exports.isProfiler=function(a){return t(a)===g};exports.isStrictMode=function(a){return t(a)===f};
-exports.isSuspense=function(a){return t(a)===p};
+var b="function"===typeof Symbol&&Symbol.for,c=b?Symbol.for("react.element"):60103,d=b?Symbol.for("react.portal"):60106,e=b?Symbol.for("react.fragment"):60107,f=b?Symbol.for("react.strict_mode"):60108,g=b?Symbol.for("react.profiler"):60114,h=b?Symbol.for("react.provider"):60109,k=b?Symbol.for("react.context"):60110,l=b?Symbol.for("react.async_mode"):60111,m=b?Symbol.for("react.concurrent_mode"):60111,n=b?Symbol.for("react.forward_ref"):60112,p=b?Symbol.for("react.suspense"):60113,q=b?Symbol.for("react.suspense_list"):
+60120,r=b?Symbol.for("react.memo"):60115,t=b?Symbol.for("react.lazy"):60116,v=b?Symbol.for("react.fundamental"):60117,w=b?Symbol.for("react.responder"):60118,x=b?Symbol.for("react.scope"):60119;function y(a){if("object"===typeof a&&null!==a){var u=a.$$typeof;switch(u){case c:switch(a=a.type,a){case l:case m:case e:case g:case f:case p:return a;default:switch(a=a&&a.$$typeof,a){case k:case n:case h:return a;default:return u}}case t:case r:case d:return u}}}function z(a){return y(a)===m}
+exports.typeOf=y;exports.AsyncMode=l;exports.ConcurrentMode=m;exports.ContextConsumer=k;exports.ContextProvider=h;exports.Element=c;exports.ForwardRef=n;exports.Fragment=e;exports.Lazy=t;exports.Memo=r;exports.Portal=d;exports.Profiler=g;exports.StrictMode=f;exports.Suspense=p;
+exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||a===q||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n||a.$$typeof===v||a.$$typeof===w||a.$$typeof===x)};exports.isAsyncMode=function(a){return z(a)||y(a)===l};exports.isConcurrentMode=z;exports.isContextConsumer=function(a){return y(a)===k};exports.isContextProvider=function(a){return y(a)===h};
+exports.isElement=function(a){return"object"===typeof a&&null!==a&&a.$$typeof===c};exports.isForwardRef=function(a){return y(a)===n};exports.isFragment=function(a){return y(a)===e};exports.isLazy=function(a){return y(a)===t};exports.isMemo=function(a){return y(a)===r};exports.isPortal=function(a){return y(a)===d};exports.isProfiler=function(a){return y(a)===g};exports.isStrictMode=function(a){return y(a)===f};exports.isSuspense=function(a){return y(a)===p};
 
-},{}],105:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40621,7 +42091,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-is.development.js":103,"./cjs/react-is.production.min.js":104,"_process":93}],106:[function(require,module,exports){
+},{"./cjs/react-is.development.js":129,"./cjs/react-is.production.min.js":130,"_process":119}],132:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -40672,7 +42142,7 @@ BreakView.propTypes = {
 
 exports.default = BreakView;
 
-},{"prop-types":97,"react":161}],107:[function(require,module,exports){
+},{"prop-types":123,"react":187}],133:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -40753,7 +42223,7 @@ PageView.propTypes = {
 
 exports.default = PageView;
 
-},{"prop-types":97,"react":161}],108:[function(require,module,exports){
+},{"prop-types":123,"react":187}],134:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41148,7 +42618,7 @@ PaginationBoxView.defaultProps = {
 };
 exports.default = PaginationBoxView;
 
-},{"./BreakView":106,"./PageView":107,"prop-types":97,"react":161}],109:[function(require,module,exports){
+},{"./BreakView":132,"./PageView":133,"prop-types":123,"react":187}],135:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -41163,7 +42633,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _PaginationBoxView2.default;
 
-},{"./PaginationBoxView":108}],110:[function(require,module,exports){
+},{"./PaginationBoxView":134}],136:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -41178,7 +42648,7 @@ var ReactReduxContext = _react.default.createContext(null);
 exports.ReactReduxContext = ReactReduxContext;
 var _default = ReactReduxContext;
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":54,"react":161}],111:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":54,"react":187}],137:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -41285,7 +42755,7 @@ Provider.propTypes = {
 };
 var _default = Provider;
 exports.default = _default;
-},{"./Context":110,"@babel/runtime/helpers/inheritsLoose":53,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/interopRequireWildcard":55,"prop-types":97,"react":161}],112:[function(require,module,exports){
+},{"./Context":136,"@babel/runtime/helpers/inheritsLoose":53,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/interopRequireWildcard":55,"prop-types":123,"react":187}],138:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -41296,9 +42766,9 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 exports.__esModule = true;
 exports.default = connectAdvanced;
 
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
-
 var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+
+var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
 
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
@@ -41313,14 +42783,6 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactIs = require("react-is");
 
 var _Context = require("./Context");
-
-var stringifyComponent = function stringifyComponent(Comp) {
-  try {
-    return JSON.stringify(Comp);
-  } catch (err) {
-    return String(Comp);
-  }
-};
 
 function connectAdvanced(
 /*
@@ -41365,12 +42827,12 @@ _ref) {
       connectOptions = (0, _objectWithoutPropertiesLoose2.default)(_ref2, ["getDisplayName", "methodName", "renderCountProp", "shouldHandleStateChanges", "storeKey", "withRef", "forwardRef", "context"]);
   (0, _invariant.default)(renderCountProp === undefined, "renderCountProp is removed. render counting is built into the latest React dev tools profiling extension");
   (0, _invariant.default)(!withRef, 'withRef is removed. To access the wrapped instance, use a ref on the connected component');
-  var customStoreWarningMessage = 'To use a custom Redux store for specific components,  create a custom React context with ' + "React.createContext(), and pass the context object to React Redux's Provider and specific components" + ' like:  <Provider context={MyContext}><ConnectedComponent context={MyContext} /></Provider>. ' + 'You may also pass a {context : MyContext} option to connect';
+  var customStoreWarningMessage = 'To use a custom Redux store for specific components,  create a custom React context with ' + "React.createContext(), and pass the context object to React-Redux's Provider and specific components" + ' like:  <Provider context={MyContext}><ConnectedComponent context={MyContext} /></Provider>. ' + 'You may also pass a {context : MyContext} option to connect';
   (0, _invariant.default)(storeKey === 'store', 'storeKey has been removed and does not do anything. ' + customStoreWarningMessage);
   var Context = context;
   return function wrapWithConnect(WrappedComponent) {
     if (process.env.NODE_ENV !== 'production') {
-      (0, _invariant.default)((0, _reactIs.isValidElementType)(WrappedComponent), "You must pass a component to the function returned by " + (methodName + ". Instead received " + stringifyComponent(WrappedComponent)));
+      (0, _invariant.default)((0, _reactIs.isValidElementType)(WrappedComponent), "You must pass a component to the function returned by " + (methodName + ". Instead received " + JSON.stringify(WrappedComponent)));
     }
 
     var wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -41387,6 +42849,7 @@ _ref) {
     });
     var pure = connectOptions.pure;
     var OuterBaseComponent = _react.Component;
+    var FinalWrappedComponent = WrappedComponent;
 
     if (pure) {
       OuterBaseComponent = _react.PureComponent;
@@ -41397,35 +42860,37 @@ _ref) {
       var lastState;
       var lastDerivedProps;
       var lastStore;
-      var lastSelectorFactoryOptions;
       var sourceSelector;
-      return function selectDerivedProps(state, props, store, selectorFactoryOptions) {
+      return function selectDerivedProps(state, props, store) {
         if (pure && lastProps === props && lastState === state) {
           return lastDerivedProps;
         }
 
-        if (store !== lastStore || lastSelectorFactoryOptions !== selectorFactoryOptions) {
+        if (store !== lastStore) {
           lastStore = store;
-          lastSelectorFactoryOptions = selectorFactoryOptions;
           sourceSelector = selectorFactory(store.dispatch, selectorFactoryOptions);
         }
 
         lastProps = props;
         lastState = state;
         var nextProps = sourceSelector(state, props);
+
+        if (lastDerivedProps === nextProps) {
+          return lastDerivedProps;
+        }
+
         lastDerivedProps = nextProps;
         return lastDerivedProps;
       };
     }
 
     function makeChildElementSelector() {
-      var lastChildProps, lastForwardRef, lastChildElement, lastComponent;
-      return function selectChildElement(WrappedComponent, childProps, forwardRef) {
-        if (childProps !== lastChildProps || forwardRef !== lastForwardRef || lastComponent !== WrappedComponent) {
+      var lastChildProps, lastForwardRef, lastChildElement;
+      return function selectChildElement(childProps, forwardRef) {
+        if (childProps !== lastChildProps || forwardRef !== lastForwardRef) {
           lastChildProps = childProps;
           lastForwardRef = forwardRef;
-          lastComponent = WrappedComponent;
-          lastChildElement = _react.default.createElement(WrappedComponent, (0, _extends2.default)({}, childProps, {
+          lastChildElement = _react.default.createElement(FinalWrappedComponent, (0, _extends2.default)({}, childProps, {
             ref: forwardRef
           }));
         }
@@ -41446,16 +42911,11 @@ _ref) {
         (0, _invariant.default)(forwardRef ? !props.wrapperProps[storeKey] : !props[storeKey], 'Passing redux store in props has been removed and does not do anything. ' + customStoreWarningMessage);
         _this.selectDerivedProps = makeDerivedPropsSelector();
         _this.selectChildElement = makeChildElementSelector();
-        _this.indirectRenderWrappedComponent = _this.indirectRenderWrappedComponent.bind((0, _assertThisInitialized2.default)(_this));
+        _this.renderWrappedComponent = _this.renderWrappedComponent.bind((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
         return _this;
       }
 
       var _proto = Connect.prototype;
-
-      _proto.indirectRenderWrappedComponent = function indirectRenderWrappedComponent(value) {
-        // calling renderWrappedComponent on prototype from indirectRenderWrappedComponent bound to `this`
-        return this.renderWrappedComponent(value);
-      };
 
       _proto.renderWrappedComponent = function renderWrappedComponent(value) {
         (0, _invariant.default)(value, "Could not find \"store\" in the context of " + ("\"" + displayName + "\". Either wrap the root component in a <Provider>, ") + "or pass a custom React context provider to <Provider> and the corresponding " + ("React context consumer to " + displayName + " in connect options."));
@@ -41469,13 +42929,13 @@ _ref) {
           forwardedRef = this.props.forwardedRef;
         }
 
-        var derivedProps = this.selectDerivedProps(storeState, wrapperProps, store, selectorFactoryOptions);
-        return this.selectChildElement(WrappedComponent, derivedProps, forwardedRef);
+        var derivedProps = this.selectDerivedProps(storeState, wrapperProps, store);
+        return this.selectChildElement(derivedProps, forwardedRef);
       };
 
       _proto.render = function render() {
-        var ContextToUse = this.props.context && this.props.context.Consumer && (0, _reactIs.isContextConsumer)(_react.default.createElement(this.props.context.Consumer, null)) ? this.props.context : Context;
-        return _react.default.createElement(ContextToUse.Consumer, null, this.indirectRenderWrappedComponent);
+        var ContextToUse = this.props.context || Context;
+        return _react.default.createElement(ContextToUse.Consumer, null, this.renderWrappedComponent);
       };
 
       return Connect;
@@ -41501,7 +42961,7 @@ _ref) {
   };
 }
 }).call(this,require('_process'))
-},{"./Context":110,"@babel/runtime/helpers/assertThisInitialized":51,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/inheritsLoose":53,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/interopRequireWildcard":55,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56,"_process":93,"hoist-non-react-statics":85,"invariant":86,"react":161,"react-is":105}],113:[function(require,module,exports){
+},{"./Context":136,"@babel/runtime/helpers/assertThisInitialized":51,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/inheritsLoose":53,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/interopRequireWildcard":55,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56,"_process":119,"hoist-non-react-statics":110,"invariant":111,"react":187,"react-is":131}],139:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -41617,7 +43077,7 @@ function createConnect(_temp) {
 var _default = createConnect();
 
 exports.default = _default;
-},{"../components/connectAdvanced":112,"../utils/shallowEqual":122,"./mapDispatchToProps":114,"./mapStateToProps":115,"./mergeProps":116,"./selectorFactory":117,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56}],114:[function(require,module,exports){
+},{"../components/connectAdvanced":138,"../utils/shallowEqual":148,"./mapDispatchToProps":140,"./mapStateToProps":141,"./mergeProps":142,"./selectorFactory":143,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56}],140:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -41650,7 +43110,7 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 
 var _default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
 exports.default = _default;
-},{"./wrapMapToProps":119,"redux":164}],115:[function(require,module,exports){
+},{"./wrapMapToProps":145,"redux":190}],141:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -41672,7 +43132,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 
 var _default = [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing];
 exports.default = _default;
-},{"./wrapMapToProps":119}],116:[function(require,module,exports){
+},{"./wrapMapToProps":145}],142:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -41729,7 +43189,7 @@ function whenMergePropsIsOmitted(mergeProps) {
 var _default = [whenMergePropsIsFunction, whenMergePropsIsOmitted];
 exports.default = _default;
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":123,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/interopRequireDefault":54,"_process":93}],117:[function(require,module,exports){
+},{"../utils/verifyPlainObject":149,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/interopRequireDefault":54,"_process":119}],143:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -41831,7 +43291,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   return selectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
 }
 }).call(this,require('_process'))
-},{"./verifySubselectors":118,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56,"_process":93}],118:[function(require,module,exports){
+},{"./verifySubselectors":144,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56,"_process":119}],144:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -41856,7 +43316,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
   verify(mapDispatchToProps, 'mapDispatchToProps', displayName);
   verify(mergeProps, 'mergeProps', displayName);
 }
-},{"../utils/warning":124,"@babel/runtime/helpers/interopRequireDefault":54}],119:[function(require,module,exports){
+},{"../utils/warning":150,"@babel/runtime/helpers/interopRequireDefault":54}],145:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -41935,7 +43395,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
   };
 }
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":123,"@babel/runtime/helpers/interopRequireDefault":54,"_process":93}],120:[function(require,module,exports){
+},{"../utils/verifyPlainObject":149,"@babel/runtime/helpers/interopRequireDefault":54,"_process":119}],146:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -41957,7 +43417,7 @@ exports.ReactReduxContext = _Context.ReactReduxContext;
 var _connect = _interopRequireDefault(require("./connect/connect"));
 
 exports.connect = _connect.default;
-},{"./components/Context":110,"./components/Provider":111,"./components/connectAdvanced":112,"./connect/connect":113,"@babel/runtime/helpers/interopRequireDefault":54}],121:[function(require,module,exports){
+},{"./components/Context":136,"./components/Provider":137,"./components/connectAdvanced":138,"./connect/connect":139,"@babel/runtime/helpers/interopRequireDefault":54}],147:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -41979,7 +43439,7 @@ function isPlainObject(obj) {
 
   return proto === baseProto;
 }
-},{}],122:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -42013,7 +43473,7 @@ function shallowEqual(objA, objB) {
 
   return true;
 }
-},{}],123:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -42030,7 +43490,7 @@ function verifyPlainObject(value, displayName, methodName) {
     (0, _warning.default)(methodName + "() in " + displayName + " must return a plain object. Instead received " + value + ".");
   }
 }
-},{"./isPlainObject":121,"./warning":124,"@babel/runtime/helpers/interopRequireDefault":54}],124:[function(require,module,exports){
+},{"./isPlainObject":147,"./warning":150,"@babel/runtime/helpers/interopRequireDefault":54}],150:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -42060,7 +43520,7 @@ function warning(message) {
   /* eslint-enable no-empty */
 
 }
-},{}],125:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -42149,7 +43609,7 @@ function mapAsync(array, work, callback) {
     });
   });
 }
-},{}],126:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -42275,7 +43735,7 @@ function ContextSubscriber(name) {
     }
   }, _ref4;
 }
-},{"prop-types":97}],127:[function(require,module,exports){
+},{"prop-types":123}],153:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -42309,7 +43769,7 @@ var IndexLink = (0, _createReactClass2.default)({
 
 exports.default = IndexLink;
 module.exports = exports['default'];
-},{"./Link":131,"create-react-class":59,"react":161}],128:[function(require,module,exports){
+},{"./Link":157,"create-react-class":84,"react":187}],154:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -42372,7 +43832,7 @@ var IndexRedirect = (0, _createReactClass2.default)({
 exports.default = IndexRedirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":130,"./Redirect":135,"./routerWarning":155,"_process":93,"create-react-class":59,"invariant":86,"prop-types":97}],129:[function(require,module,exports){
+},{"./InternalPropTypes":156,"./Redirect":161,"./routerWarning":181,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],155:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -42434,7 +43894,7 @@ var IndexRoute = (0, _createReactClass2.default)({
 exports.default = IndexRoute;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":130,"./RouteUtils":137,"./routerWarning":155,"_process":93,"create-react-class":59,"invariant":86,"prop-types":97}],130:[function(require,module,exports){
+},{"./InternalPropTypes":156,"./RouteUtils":163,"./routerWarning":181,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],156:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -42460,7 +43920,7 @@ var component = exports.component = (0, _propTypes.oneOfType)([_propTypes.func, 
 var components = exports.components = (0, _propTypes.oneOfType)([component, _propTypes.object]);
 var route = exports.route = (0, _propTypes.oneOfType)([_propTypes.object, _propTypes.element]);
 var routes = exports.routes = (0, _propTypes.oneOfType)([route, (0, _propTypes.arrayOf)(route)]);
-},{"prop-types":97}],131:[function(require,module,exports){
+},{"prop-types":123}],157:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -42610,7 +44070,7 @@ var Link = (0, _createReactClass2.default)({
 exports.default = Link;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":126,"./PropTypes":134,"_process":93,"create-react-class":59,"invariant":86,"prop-types":97,"react":161}],132:[function(require,module,exports){
+},{"./ContextUtils":152,"./PropTypes":160,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123,"react":187}],158:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -42857,7 +44317,7 @@ function formatPattern(pattern, params) {
   return pathname.replace(/\/+/g, '/');
 }
 }).call(this,require('_process'))
-},{"_process":93,"invariant":86}],133:[function(require,module,exports){
+},{"_process":119,"invariant":111}],159:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -42865,7 +44325,7 @@ exports.isPromise = isPromise;
 function isPromise(obj) {
   return obj && typeof obj.then === 'function';
 }
-},{}],134:[function(require,module,exports){
+},{}],160:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -42890,7 +44350,7 @@ var locationShape = exports.locationShape = (0, _propTypes.shape)({
   action: _propTypes.string.isRequired,
   key: _propTypes.string
 });
-},{"prop-types":97}],135:[function(require,module,exports){
+},{"prop-types":123}],161:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -42992,7 +44452,7 @@ var Redirect = (0, _createReactClass2.default)({
 exports.default = Redirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":130,"./PatternUtils":132,"./RouteUtils":137,"_process":93,"create-react-class":59,"invariant":86,"prop-types":97}],136:[function(require,module,exports){
+},{"./InternalPropTypes":156,"./PatternUtils":158,"./RouteUtils":163,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],162:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -43049,7 +44509,7 @@ var Route = (0, _createReactClass2.default)({
 exports.default = Route;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":130,"./RouteUtils":137,"_process":93,"create-react-class":59,"invariant":86,"prop-types":97}],137:[function(require,module,exports){
+},{"./InternalPropTypes":156,"./RouteUtils":163,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],163:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -43143,7 +44603,7 @@ function createRoutes(routes) {
 
   return routes;
 }
-},{"react":161}],138:[function(require,module,exports){
+},{"react":187}],164:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -43322,7 +44782,7 @@ var propTypes = {
 exports.default = Router;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":130,"./RouteUtils":137,"./RouterContext":139,"./RouterUtils":140,"./createTransitionManager":147,"./routerWarning":155,"_process":93,"create-react-class":59,"invariant":86,"prop-types":97,"react":161}],139:[function(require,module,exports){
+},{"./InternalPropTypes":156,"./RouteUtils":163,"./RouterContext":165,"./RouterUtils":166,"./createTransitionManager":173,"./routerWarning":181,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123,"react":187}],165:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -43457,7 +44917,7 @@ var RouterContext = (0, _createReactClass2.default)({
 exports.default = RouterContext;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":126,"./RouteUtils":137,"./getRouteParams":149,"_process":93,"create-react-class":59,"invariant":86,"prop-types":97,"react":161}],140:[function(require,module,exports){
+},{"./ContextUtils":152,"./RouteUtils":163,"./getRouteParams":175,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123,"react":187}],166:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -43486,7 +44946,7 @@ function assignRouterState(router, _ref) {
 
   return router;
 }
-},{}],141:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -43649,7 +45109,7 @@ function getTransitionUtils() {
   };
 }
 module.exports = exports['default'];
-},{"./AsyncUtils":125}],142:[function(require,module,exports){
+},{"./AsyncUtils":151}],168:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -43709,7 +45169,7 @@ exports.default = function () {
 
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouterContext":139,"./routerWarning":155,"_process":93,"react":161}],143:[function(require,module,exports){
+},{"./RouterContext":165,"./routerWarning":181,"_process":119,"react":187}],169:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -43726,7 +45186,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createRouterHistory2.default)(_createBrowserHistory2.default);
 module.exports = exports['default'];
-},{"./createRouterHistory":146,"history/lib/createBrowserHistory":76}],144:[function(require,module,exports){
+},{"./createRouterHistory":172,"history/lib/createBrowserHistory":101}],170:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -43802,7 +45262,7 @@ function computeChangedRoutes(prevState, nextState) {
 
 exports.default = computeChangedRoutes;
 module.exports = exports['default'];
-},{"./PatternUtils":132}],145:[function(require,module,exports){
+},{"./PatternUtils":158}],171:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -43834,7 +45294,7 @@ function createMemoryHistory(options) {
   return history;
 }
 module.exports = exports['default'];
-},{"history/lib/createMemoryHistory":79,"history/lib/useBasename":81,"history/lib/useQueries":82}],146:[function(require,module,exports){
+},{"history/lib/createMemoryHistory":104,"history/lib/useBasename":106,"history/lib/useQueries":107}],172:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -43854,7 +45314,7 @@ function createRouterHistory(createHistory) {
   return history;
 }
 module.exports = exports['default'];
-},{"./useRouterHistory":156}],147:[function(require,module,exports){
+},{"./useRouterHistory":182}],173:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -44141,7 +45601,7 @@ function createTransitionManager(history, routes) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./TransitionUtils":141,"./computeChangedRoutes":144,"./getComponents":148,"./isActive":152,"./matchRoutes":154,"./routerWarning":155,"_process":93}],148:[function(require,module,exports){
+},{"./TransitionUtils":167,"./computeChangedRoutes":170,"./getComponents":174,"./isActive":178,"./matchRoutes":180,"./routerWarning":181,"_process":119}],174:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44182,7 +45642,7 @@ function getComponents(nextState, callback) {
 
 exports.default = getComponents;
 module.exports = exports['default'];
-},{"./AsyncUtils":125,"./PromiseUtils":133}],149:[function(require,module,exports){
+},{"./AsyncUtils":151,"./PromiseUtils":159}],175:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44209,7 +45669,7 @@ function getRouteParams(route, params) {
 
 exports.default = getRouteParams;
 module.exports = exports['default'];
-},{"./PatternUtils":132}],150:[function(require,module,exports){
+},{"./PatternUtils":158}],176:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44226,7 +45686,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createRouterHistory2.default)(_createHashHistory2.default);
 module.exports = exports['default'];
-},{"./createRouterHistory":146,"history/lib/createHashHistory":77}],151:[function(require,module,exports){
+},{"./createRouterHistory":172,"history/lib/createHashHistory":102}],177:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44352,7 +45812,7 @@ exports.applyRouterMiddleware = _applyRouterMiddleware3.default;
 exports.browserHistory = _browserHistory3.default;
 exports.hashHistory = _hashHistory3.default;
 exports.createMemoryHistory = _createMemoryHistory3.default;
-},{"./IndexLink":127,"./IndexRedirect":128,"./IndexRoute":129,"./Link":131,"./PatternUtils":132,"./PropTypes":134,"./Redirect":135,"./Route":136,"./RouteUtils":137,"./Router":138,"./RouterContext":139,"./applyRouterMiddleware":142,"./browserHistory":143,"./createMemoryHistory":145,"./hashHistory":150,"./match":153,"./useRouterHistory":156,"./withRouter":157}],152:[function(require,module,exports){
+},{"./IndexLink":153,"./IndexRedirect":154,"./IndexRoute":155,"./Link":157,"./PatternUtils":158,"./PropTypes":160,"./Redirect":161,"./Route":162,"./RouteUtils":163,"./Router":164,"./RouterContext":165,"./applyRouterMiddleware":168,"./browserHistory":169,"./createMemoryHistory":171,"./hashHistory":176,"./match":179,"./useRouterHistory":182,"./withRouter":183}],178:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44505,7 +45965,7 @@ function isActive(_ref, indexOnly, currentLocation, routes, params) {
   return queryIsActive(query, currentLocation.query);
 }
 module.exports = exports['default'];
-},{"./PatternUtils":132}],153:[function(require,module,exports){
+},{"./PatternUtils":158}],179:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -44580,7 +46040,7 @@ function match(_ref, callback) {
 exports.default = match;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouteUtils":137,"./RouterUtils":140,"./createMemoryHistory":145,"./createTransitionManager":147,"_process":93,"history/lib/Actions":66,"invariant":86}],154:[function(require,module,exports){
+},{"./RouteUtils":163,"./RouterUtils":166,"./createMemoryHistory":171,"./createTransitionManager":173,"_process":119,"history/lib/Actions":91,"invariant":111}],180:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -44838,7 +46298,7 @@ function matchRoutes(routes, location, callback, remainingPathname) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./AsyncUtils":125,"./PatternUtils":132,"./PromiseUtils":133,"./RouteUtils":137,"./routerWarning":155,"_process":93}],155:[function(require,module,exports){
+},{"./AsyncUtils":151,"./PatternUtils":158,"./PromiseUtils":159,"./RouteUtils":163,"./routerWarning":181,"_process":119}],181:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44875,7 +46335,7 @@ function routerWarning(falseToWarn, message) {
 function _resetWarned() {
   warned = {};
 }
-},{"warning":173}],156:[function(require,module,exports){
+},{"warning":199}],182:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -44898,7 +46358,7 @@ function useRouterHistory(createHistory) {
   };
 }
 module.exports = exports['default'];
-},{"history/lib/useBasename":81,"history/lib/useQueries":82}],157:[function(require,module,exports){
+},{"history/lib/useBasename":106,"history/lib/useQueries":107}],183:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -44981,7 +46441,7 @@ function withRouter(WrappedComponent, options) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":126,"./PropTypes":134,"_process":93,"create-react-class":59,"hoist-non-react-statics":158,"invariant":86,"react":161}],158:[function(require,module,exports){
+},{"./ContextUtils":152,"./PropTypes":160,"_process":119,"create-react-class":84,"hoist-non-react-statics":184,"invariant":111,"react":187}],184:[function(require,module,exports){
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -45033,7 +46493,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
     return targetComponent;
 };
 
-},{}],159:[function(require,module,exports){
+},{}],185:[function(require,module,exports){
 (function (process){
 /** @license React v16.7.0
  * react.development.js
@@ -46920,7 +48380,7 @@ module.exports = react;
 }
 
 }).call(this,require('_process'))
-},{"_process":93,"object-assign":92,"prop-types/checkPropTypes":94}],160:[function(require,module,exports){
+},{"_process":119,"object-assign":118,"prop-types/checkPropTypes":120}],186:[function(require,module,exports){
 /** @license React v16.7.0
  * react.production.min.js
  *
@@ -46946,7 +48406,7 @@ _currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null};a.P
 if(null!=b){void 0!==b.ref&&(h=b.ref,f=K.current);void 0!==b.key&&(g=""+b.key);var l=void 0;a.type&&a.type.defaultProps&&(l=a.type.defaultProps);for(c in b)L.call(b,c)&&!M.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==l?l[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){l=Array(c);for(var m=0;m<c;m++)l[m]=arguments[m+2];d.children=l}return{$$typeof:p,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=N.bind(null,a);b.type=a;return b},isValidElement:O,version:"16.7.0",
 unstable_ConcurrentMode:x,unstable_Profiler:u,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:K,assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default||Z;
 
-},{"object-assign":92}],161:[function(require,module,exports){
+},{"object-assign":118}],187:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -46957,7 +48417,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":159,"./cjs/react.production.min.js":160,"_process":93}],162:[function(require,module,exports){
+},{"./cjs/react.development.js":185,"./cjs/react.production.min.js":186,"_process":119}],188:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -46991,7 +48451,7 @@ function promiseMiddleware(_ref) {
 }
 
 module.exports = exports['default'];
-},{"flux-standard-action":64}],163:[function(require,module,exports){
+},{"flux-standard-action":89}],189:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -47015,7 +48475,7 @@ var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 
 exports['default'] = thunk;
-},{}],164:[function(require,module,exports){
+},{}],190:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -47666,7 +49126,7 @@ exports.compose = compose;
 exports.__DO_NOT_USE__ActionTypes = ActionTypes;
 
 }).call(this,require('_process'))
-},{"_process":93,"symbol-observable":171}],165:[function(require,module,exports){
+},{"_process":119,"symbol-observable":197}],191:[function(require,module,exports){
 (function (process){
 /** @license React v0.12.0
  * scheduler-tracing.development.js
@@ -48093,7 +49553,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 }
 
 }).call(this,require('_process'))
-},{"_process":93}],166:[function(require,module,exports){
+},{"_process":119}],192:[function(require,module,exports){
 /** @license React v0.12.0
  * scheduler-tracing.production.min.js
  *
@@ -48105,7 +49565,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 'use strict';Object.defineProperty(exports,"__esModule",{value:!0});var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_wrap=function(a){return a};exports.unstable_subscribe=function(){};exports.unstable_unsubscribe=function(){};
 
-},{}],167:[function(require,module,exports){
+},{}],193:[function(require,module,exports){
 (function (process,global){
 /** @license React v0.12.0
  * scheduler.development.js
@@ -48812,7 +50272,7 @@ exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":93}],168:[function(require,module,exports){
+},{"_process":119}],194:[function(require,module,exports){
 (function (global){
 /** @license React v0.12.0
  * scheduler.production.min.js
@@ -48837,7 +50297,7 @@ b=d.previous;b.next=d.previous=a;a.next=d;a.previous=b}return a};exports.unstabl
 exports.unstable_shouldYield=function(){return!f&&(null!==c&&c.expirationTime<l||w())};exports.unstable_continueExecution=function(){null!==c&&p()};exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNode=function(){return c};
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],169:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -48848,7 +50308,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":167,"./cjs/scheduler.production.min.js":168,"_process":93}],170:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":193,"./cjs/scheduler.production.min.js":194,"_process":119}],196:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -48859,7 +50319,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler-tracing.development.js":165,"./cjs/scheduler-tracing.production.min.js":166,"_process":93}],171:[function(require,module,exports){
+},{"./cjs/scheduler-tracing.development.js":191,"./cjs/scheduler-tracing.production.min.js":192,"_process":119}],197:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -48891,7 +50351,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":172}],172:[function(require,module,exports){
+},{"./ponyfill.js":198}],198:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48915,7 +50375,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],173:[function(require,module,exports){
+},{}],199:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -48979,7 +50439,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":93}],174:[function(require,module,exports){
+},{"_process":119}],200:[function(require,module,exports){
 (function(self) {
   'use strict';
 
