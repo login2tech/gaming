@@ -7990,10 +7990,9 @@ function (_React$Component) {
       data.append('file', file_1, file_1.name);
 
       _axios.default.post('/upload', data, {
-        onUploadProgress: function onUploadProgress(ProgressEvent) {
-          _this4.setState({
-            loaded: ProgressEvent.loaded / ProgressEvent.total * 100
-          });
+        onUploadProgress: function onUploadProgress(ProgressEvent) {// this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
         }
       }).then(function (res) {
         _this4.setState({
@@ -8002,7 +8001,12 @@ function (_React$Component) {
           _this4.finalSubmit();
         });
       }).catch(function (err) {
-        alert('some error occoured.'); // console.log(err);
+        alert('some error occoured.');
+
+        _this4.setState({
+          loaded: true
+        }); // console.log(err);
+
       });
     }
   }, {
@@ -8021,8 +8025,7 @@ function (_React$Component) {
 
       _axios.default.post('/upload', data, {
         onUploadProgress: function onUploadProgress(ProgressEvent) {
-          _this5.setState({
-            loaded: ProgressEvent.loaded / ProgressEvent.total * 100
+          _this5.setState({// loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
           });
         }
       }).then(function (res) {
@@ -8032,7 +8035,12 @@ function (_React$Component) {
           _this5.uploadFile2();
         });
       }).catch(function (err) {
-        alert('some error occoured.'); // console.log(err);
+        alert('some error occoured.');
+
+        _this5.setState({
+          loaded: true
+        }); // console.log(err);
+
       });
     }
   }, {

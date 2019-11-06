@@ -8,14 +8,21 @@ import Reactions from '../Modules/Modals/Reactions';
 class UpvoteButton extends React.Component {
   state = {changed: false, doChange: 0};
   changeVote(already_voted, e, type, old_type) {
-    if (old_type && old_type == type) {
-      this.handleDownVote(e);
-    } else {
-      this.handleDownVote(e);
-      setTimeout(() => {
-        this.handleUpVote(e, type);
-      }, 500);
-    }
+    this.setState(
+      {
+        loading_for_emoji: type
+      },
+      () => {
+        if (old_type && old_type == type) {
+          this.handleDownVote(e, true);
+        } else {
+          this.handleDownVote(e);
+          setTimeout(() => {
+            this.handleUpVote(e, type);
+          }, 500);
+        }
+      }
+    );
   }
 
   handleUpVote(e, type) {
@@ -32,13 +39,19 @@ class UpvoteButton extends React.Component {
               doChange: this.state.doChange + 1
             });
           }
+          this.setState({
+            loading_for_emoji: false
+          });
         }
       )
     );
   }
 
-  handleDownVote(e) {
+  handleDownVote(e, d) {
     if (this.props.total_count == 0 && !this.state.changed) {
+      this.setState({
+        loading_for_emoji: false
+      });
       return;
     }
     this.props.dispatch(
@@ -52,6 +65,11 @@ class UpvoteButton extends React.Component {
             this.setState({
               changed: 'NO',
               doChange: this.state.doChange - 1
+            });
+          }
+          if (d) {
+            this.setState({
+              loading_for_emoji: false
             });
           }
         }
@@ -84,8 +102,8 @@ class UpvoteButton extends React.Component {
       likes = [];
     }
     const likes_count = likes.length;
-    console.log('--------');
-    console.log('total likes : ', likes_count);
+    // console.log('--------');
+    // console.log('total likes : ', likes_count);
     for (let i = 0; i < likes_count; i++) {
       if (!like_counts[likes[i].type]) {
         like_counts[likes[i].type] = 1;
@@ -104,7 +122,7 @@ class UpvoteButton extends React.Component {
       i_have_liked = false;
     }
 
-    console.log(i_have_liked, original_liked);
+    // console.log(i_have_liked, original_liked);
     if (original_liked === false && i_have_liked !== false) {
       like_counts[i_have_liked]++;
     }
@@ -113,7 +131,7 @@ class UpvoteButton extends React.Component {
       if (like_counts[original_liked] < 1) {
         like_counts[original_liked] = 0;
       }
-      console.log('adding to ', i_have_liked, like_counts[i_have_liked]);
+      // console.log('adding to ', i_have_liked, like_counts[i_have_liked]);
       if (i_have_liked) {
         if (!like_counts[i_have_liked]) {
           like_counts[i_have_liked] = 0;
@@ -179,13 +197,19 @@ class UpvoteButton extends React.Component {
                 this.changeVote(voted, e, emoji.em, i_have_liked);
               }}
             >
-              <img
-                src={'/images/emoji/emoji_' + emoji.em + '.png'}
-                style={{
-                  width: '20px',
-                  marginRight: 5
-                }}
-              />
+              {this.state.loading_for_emoji == emoji.em ? (
+                <>
+                  <span className="fa fa-spin fa-spinner" />{' '}
+                </>
+              ) : (
+                <img
+                  src={'/images/emoji/emoji_' + emoji.em + '.png'}
+                  style={{
+                    width: '20px',
+                    marginRight: 5
+                  }}
+                />
+              )}
               <span className="hidden-sm-down">
                 <span>
                   ({like_counts[emoji.em] ? like_counts[emoji.em] : '0'})

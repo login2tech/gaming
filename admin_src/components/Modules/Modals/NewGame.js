@@ -66,9 +66,9 @@ class NewGame extends React.Component {
     axios
       .post('/upload', data, {
         onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          });
+          // this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
         }
       })
       .then(res => {
@@ -83,6 +83,9 @@ class NewGame extends React.Component {
       })
       .catch(err => {
         alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
         // console.log(err);
       });
   }
@@ -103,7 +106,7 @@ class NewGame extends React.Component {
       .post('/upload', data, {
         onUploadProgress: ProgressEvent => {
           this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+            // loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
           });
         }
       })
@@ -119,6 +122,9 @@ class NewGame extends React.Component {
       })
       .catch(err => {
         alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
         // console.log(err);
       });
   }
