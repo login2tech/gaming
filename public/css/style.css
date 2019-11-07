@@ -1,8 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700&display=swap');
-
-
-
- a,a:hover {
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700&display=swap'); a,a:hover {
     text-decoration: none;
     font-weight: 400;
 }
@@ -25,13 +21,15 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     color: #fefefe
 }
+
 body {
-      color: #fefefe
+    color: #fefefe
 }
 
-.btn-vote{
-      color: #000
+.btn-vote {
+    color: #000
 }
+
 ul {
     margin: 0px;
     padding: 0px;
@@ -1360,6 +1358,7 @@ a.read-blog {
     color: #A2A0A0;
     bottom: -30px;
 }
+
 span.em_count {
     color: #706a6a;
 }
@@ -1372,7 +1371,6 @@ span.em_count {
 .modal button.upvoted span.em_count {
     color: red;
 }
-
 
 .owl-carousel .owl-item .blog-item img {
     width: auto;
@@ -2366,17 +2364,20 @@ span.em_count {
     color: #585858;
 }
 
-
 .social-contacts ul li a {
     font-size: 18px;
     color: #fff;
-}.contact-inner ul li a:hover, .social-contacts ul li a:hover{
+}
+
+.contact-inner ul li a:hover, .social-contacts ul li a:hover {
     color: #fff
 }
+
 a.image_avar {
     display: inline-block;
     margin-bottom: 10px;
 }
+
 .contact-inner ul li {
     margin-bottom: 5px;
 }
@@ -3721,7 +3722,8 @@ th {
     background: #8386af1c;
     color: #fff;
 }
-.ticket_item_av{
+
+.ticket_item_av {
     color: #fff;
 }
 
@@ -3731,6 +3733,7 @@ span.profile_menu_item.ticket_item {
     background: black;
     border-radius: 9px;
 }
+
 /*}*/
 .profile-link {
     background: #8386af2e;
@@ -3908,12 +3911,11 @@ ul.team_list li {
     margin-bottom: 10px
 }
 
-ul.team_list li .info  {
+ul.team_list li .info {
     position: absolute;
     bottom: 0;
     width: 100%;
     text-align: center;
-    
     background: #fff;
     color: #114afb;
 }
@@ -4336,6 +4338,7 @@ ul.submenu {
     top: 99%;
     display: none;
 }
+
 .has_search_form ul.submenu {
     right: -100px;
 }
@@ -4550,20 +4553,21 @@ ul.submenu.notification_list {
 }
 
 .float-right.rank_box_wrap {
-    background: #ffffff6e;
     padding: 15px;
     border-radius: 34px;
+    background: url('/images/meter.png')
 }
 
 .float-right.rank_box_wrap {
-    background: #ffffff6e;
-    padding: 5px 32px;
-    border-radius: 34px;
+    padding: 15px 25px 45px 35px;
+    border-radius: 0;
     color: #fff;
     text-transform: uppercase;
-    font-size: 20px;
+    font-size: 13px;
     text-align: center;
     font-weight: bold;
+    background: url('/images/meter_bg.png') center no-repeat;
+    background-size: contain;
 }
 
 span.rank_prog_done {
@@ -4597,24 +4601,26 @@ span.rank_prog_done {
     color: #8e8e8e;
     letter-spacing: 1px;
 }
+
 /*
 .float-right.rank_box_wrap {
     position: absolute;
     bottom: 0;
     right: 0;
 } */
-
 .must_show {
     display: block;
 }
 
-.modal-content, .modal-content div{
+.modal-content, .modal-content div {
     background: #222;
     color: #fff;
 }
-.modal-content .btn:not(.upvoted){
+
+.modal-content .btn:not(.upvoted) {
     background: none;
 }
+
 .modal-content:after {
     position: fixed;
     content: ' ';
@@ -4656,8 +4662,8 @@ button.btn.btn-danger:not(.btn-sm) {
     border: 0;
     height: 40px;
 }
-.btn.btn-sm.btn-danger
-{
+
+.btn.btn-sm.btn-danger {
     margin-left: 5px;
 }
 
@@ -4758,7 +4764,7 @@ p.score_obj_scr {
 .user-profile-header-data {
     height: 100%;
     padding: 0 40px;
-    padding-right:20px;
+    padding-right: 20px;
     border-right: 1px solid #404040;
     display: flex;
     flex-direction: column;
@@ -4766,7 +4772,6 @@ p.score_obj_scr {
 }
 
 .user-profile-header-data {
-
     flex: 1;
 }
 
@@ -4876,17 +4881,17 @@ p.score_obj_scr {
 }
 
 .user-profile-trophies-container>div div.trophy-image {
-  width: 100px;
-  height: 100%;
-  flex-shrink: 0;
-  background-color: #111111;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  position: relative;
-  border: 0;
-  padding: 5px;
+    width: 100px;
+    height: 100%;
+    flex-shrink: 0;
+    background-color: #111111;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+    border: 0;
+    padding: 5px;
 }
 
 .user-profile-trophies-container>div div.trophy-info {
@@ -4932,18 +4937,20 @@ div.trophy-info .trophy-name.gold {
 img.img-circle {
     border-radius: 50%;
 }
+
 .image_avar img {
     margin-right: 10px;
     width: 50px;
     height: 50px;
 }
+
 span.dot.notif_dot {
     /*position: absolute;
     width: 5px;
     height: 5px;
     background: red;
     border-radius: 6px;*/
-        position: absolute;
+    position: absolute;
     width: 20px;
     height: 20px;
     border: 2px solid red;
@@ -4952,10 +4959,12 @@ span.dot.notif_dot {
     font-size: 9px;
     line-height: 16px;
 }
+
 ul.lnkss a:hover {
     color: #fff;
     background: black;
 }
+
 ul.submenu.notification_list li {
     position: relative;
 }
@@ -4971,26 +4980,23 @@ button.btn.removeNotif {
 /*.game_pic_tournament.profile_pic_outline{
     max-height: 200px;overflow: hidden;
 }*/
-
-.square.profile_pic_outline{
-      width: 100%;
-  position: relative;
-
+.square.profile_pic_outline {
+    width: 100%;
+    position: relative;
 }
 
-
 .square.profile_pic_outline:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
+    content: "";
+    display: block;
+    padding-bottom: 100%;
 }
 
 .square.profile_pic_outline .content {
-  position: absolute;
-  width: 100%;
-  height: 100%;overflow: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
-
 
 .photo_progress {
     position: absolute;
@@ -5004,6 +5010,7 @@ button.btn.removeNotif {
     font-size: 50px;
     background: #111;
 }
+
 .comment_list li {
     margin-top: 9px;
 }
@@ -5016,10 +5023,12 @@ a:hover {
     color: #afafaf;
     text-decoration: none;
 }
+
 .post_image.post_image_smaller {
     max-height: 200px;
     overflow: hidden;
-    position: relative;display: inline-block;
+    position: relative;
+    display: inline-block;
 }
 
 .post_image.post_image_smaller:after {
@@ -5031,18 +5040,23 @@ a:hover {
     width: 100%;
     right: 0;
     text-align: center;
-    padding-top: 68px;font-size:12px;
+    padding-top: 68px;
+    font-size: 12px;
     color: #5b5b5b;
 }
-.no-case-change{
+
+.no-case-change {
     text-transform: none !important;
 }
-.m-b-20{
+
+.m-b-20 {
     margin-bottom: 20px;
 }
+
 td a {
     color: #547dff;
 }
+
 .game_pic_tournament.profile_pic_outline.square {
     background: #161d24;
 }
@@ -5050,8 +5064,9 @@ td a {
 span.profile_menu_item.ticket_item.from_admin {
     border: 2px solid #124afb;
 }
-.modal-title{
-    color:#fff;
+
+.modal-title {
+    color: #fff;
 }
 
 ul.pagination a {
@@ -5083,50 +5098,58 @@ ul.pagination .disabled a {
     cursor: not-allowed;
 }
 
-
-.trof_a{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex: 1;
-  align-self: stretch;
+.trof_a {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    align-self: stretch;
 }
 
 .pf_icon {
     font-size: 40px !important;
     float: left;
-    margin-right:5px;
-}
-th .pf_icon , td .pf_icon{
-  font-size:14px !important;float:none;
-}
-.text-grey{
-  color:grey;
-}
-.avatar_img_r img{
-  width:30px;height:30px;border-radius:15px;margin-right:10px;
-}
-.avatar_img_r  a{
-  color:#fff;
-}
-.rank_imgg{
-  max-width: 200px;
-  float:right;
-  margin-right:82px;
-  margin-bottom:30px;
+    margin-right: 5px;
 }
 
-.table thead th, .table thead td{
-  border:0px;
-  border-bottom:0px;
+th .pf_icon , td .pf_icon {
+    font-size: 14px !important;
+    float: none;
+}
+
+.text-grey {
+    color: grey;
+}
+
+.avatar_img_r img {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 10px;
+}
+
+.avatar_img_r a {
+    color: #fff;
+}
+
+.rank_imgg {
+    max-width: 200px;
+    float: right;
+    margin-right: 82px;
+    margin-bottom: 30px;
+}
+
+.table thead th, .table thead td {
+    border: 0px;
+    border-bottom: 0px;
 }
 
 .chat_box_message_list {
-  height: 400px;
-  border: 1px solid #7a7a7a;
-  border-bottom: 0px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+    height: 400px;
+    border: 1px solid #7a7a7a;
+    border-bottom: 0px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .single_chat {
@@ -5146,9 +5169,10 @@ th .pf_icon , td .pf_icon{
 .chat_msg {
     flex: 6;
 }
-span.chat_user_image{
-  text-align: center;;
-}
+
+span.chat_user_image {
+    text-align: center;
+    ; }
 
 span.chat_user_image img {
     width: 30px;

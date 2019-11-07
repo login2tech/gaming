@@ -6,7 +6,29 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const jwt = require('jsonwebtoken');
-const fileUpload = require('express-fileupload');
+const aws = require('aws-sdk');
+
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+
+const s3 = new aws.S3({
+  /* ... */
+});
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'some-bucket',
+    metadata: function(req, file, cb) {
+      // const dt =
+      // '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';
+
+      cb(null, {fieldName: file.fieldname});
+    },
+    key: function(req, file, cb) {
+      cb(null, Date.now().toString());
+    }
+  })
+});
 
 // const request = require('request');
 // ES6 Transpiler
@@ -35,7 +57,7 @@ const transactionsController = require('./controllers/transactions');
 const langs = {};
 
 const app = express();
-app.use(fileUpload());
+// app.use(fileUpload());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -106,26 +128,27 @@ app.get('/me', userController.ensureAuthenticated, function(req, res, next) {
   return res.status(400).send({ok: false});
 });
 
-app.post('/upload', (req, res, next) => {
-  const mkdirp = require('mkdirp');
-  const uploadFile = req.files.file;
-  const fileName = req.files.file.name;
-  const rand = Math.floor(Math.random() * 100000) + 1;
+app.post('/upload', upload.single('file'), (req, res, next) => {
+  // const mkdirp = require('mkdirp');
+  // const uploadFile = req.files.file;
+  // const fileName = req.files.file.name;
+  // const rand = Math.floor(Math.random() * 100000) + 1;
+  //
+  // const dt = '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';
+  //
+  // mkdirp.sync(__dirname + '/public/files/' + dt);
+  // let final_path = fileName.replace(/ /g, '_');
+  // final_path = `/files/${dt}/f_${rand}_${final_path}`;
+  // uploadFile.mv(`${__dirname}/public${final_path}`, function(err) {
+  //   if (err) {
+  //     return res.status(500).send(err);
+  //   }
+  // res.send('Successfully uploaded ' + req.files.length + ' files!');
 
-  const dt = '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';
-
-  mkdirp.sync(__dirname + '/public/files/' + dt);
-  let final_path = fileName.replace(/ /g, '_');
-  final_path = `/files/${dt}/f_${rand}_${final_path}`;
-  uploadFile.mv(`${__dirname}/public${final_path}`, function(err) {
-    if (err) {
-      return res.status(500).send(err);
-    }
-
-    res.json({
-      file: final_path
-    });
+  res.json({
+    file: req.file
   });
+  // });
 });
 
 app.post('/contact', contactController.contactPost);

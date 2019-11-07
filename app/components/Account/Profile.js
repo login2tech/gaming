@@ -600,9 +600,9 @@ class Profile extends React.Component {
                           return false;
                         }
 
-                        const wins = 0;
-                        const loss = 0;
-                        console.log(team.score);
+                        let wins = 0;
+                        let loss = 0;
+                        // console.log(team.score);
                         let score = team.score;
                         if (!score) {
                           score = [];
