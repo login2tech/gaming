@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
 import {openModal, closeModal} from '../../actions/modals';
-
+import game_user_ids from '../../../config/game_user_ids';
 import PaymentModal from '../Modules/Modals/PaymentModal';
 import ProfileHeader from './ProfileHeader';
 
@@ -278,17 +278,6 @@ class Profile extends React.Component {
     });
   };
 
-  tags = [1, 2, 3, 4, 5];
-  tag_names = [
-    '',
-    'Xbox Live Gamertag',
-    'PSN',
-    // 'Username',
-    'Epic Games Username',
-    'Steam Username',
-    'Battletag'
-  ];
-
   render() {
     return (
       <div>
@@ -360,9 +349,11 @@ class Profile extends React.Component {
                               this.state.user_info.loss ==
                             0
                               ? 100
-                              : (this.state.user_info.wins * 100) /
-                                (this.state.user_info.wins +
-                                  this.state.user_info.loss)}
+                              : parseFloat(
+                                  (this.state.user_info.wins * 100) /
+                                    (this.state.user_info.wins +
+                                      this.state.user_info.loss)
+                                ).toFixed(2)}
                             % WIN RATE
                           </div>
                         </div>
@@ -561,14 +552,14 @@ class Profile extends React.Component {
                           </p>
                         </div>
 
-                        <div className="col-md-4">
+                        {/*}<div className="col-md-4">
                           <span>Rank</span>
                           <p>-</p>
-                        </div>
+                        </div>*/}
                       </div>
 
                       <div className="row">
-                        {this.tags.map((k, i) => {
+                        {game_user_ids.tags.map((k, i) => {
                           if (
                             !this.state.user_info['gamer_tag_' + k] ||
                             this.state.user_info['gamer_tag_' + k] == ''
@@ -577,7 +568,10 @@ class Profile extends React.Component {
                           }
                           return (
                             <div className="col-md-4" key={k}>
-                              <span>{this.tag_names[k]}</span>
+                              <span>
+                                <span className={game_user_ids.tag_icons[k]} />
+                              </span>
+                              <span>{game_user_ids.tag_names[k]}</span>
                               <p>{this.state.user_info['gamer_tag_' + k]}</p>
                             </div>
                           );

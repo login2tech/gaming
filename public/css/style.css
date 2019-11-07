@@ -5184,3 +5184,8 @@ span.chat_user_image img {
 .info_sub {
     border-top: 1px solid #5a5a5a;
 }
+
+span.t-bl {
+    font-size: 14px;
+    color: #124af1;
+}

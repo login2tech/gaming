@@ -77,35 +77,75 @@ class ProfileHeader extends React.Component {
   rank_based_on_xp(xpo) {
     const xp = this.getXp(xpo);
     if (xp < 50) {
-      return 'Amateur (' + xp + ' season XP)';
+      return (
+        <>
+          Amateur <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 200) {
-      return 'Beginner (' + xp + ' season XP)';
+      return (
+        <>
+          Beginner <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 500) {
-      return 'Upcoming (' + xp + ' season XP)';
+      return (
+        <>
+          Upcoming <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 1000) {
-      return 'Bronze (' + xp + ' season XP)';
+      return (
+        <>
+          Bronze <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 1500) {
-      return 'Silver (' + xp + ' season XP)';
+      return (
+        <>
+          Silver <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 2000) {
-      return 'Gold (' + xp + ' season XP)';
+      return (
+        <>
+          Gold <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 3000) {
-      return 'Platinum (' + xp + ' season XP)';
+      return (
+        <>
+          Platinum <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 3500) {
-      return 'Diamond (' + xp + ' season XP)';
+      return (
+        <>
+          Diamond <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
     if (xp < 4000) {
-      return 'Elite (' + xp + ' season XP)';
+      return (
+        <>
+          Elite <span className="t-bl">({xp} season XP)</span>
+        </>
+      );
     }
 
     // if (xp >  5000) {
-    return 'Elite (' + xp + ' season XP)';
+    return (
+      <>
+        Elite <span className="t-bl">({xp} season XP)</span>
+      </>
+    );
     // }
   }
 
@@ -117,6 +157,9 @@ class ProfileHeader extends React.Component {
       if (xpo[i].year == year && season == xpo[i].season) {
         xp = xpo[i].xp;
       }
+    }
+    if (xp < 0) {
+      xp = 0;
     }
     if (xp < 50) {
       return '0';
@@ -162,6 +205,9 @@ class ProfileHeader extends React.Component {
         xp = xpo[i].xp;
       }
     }
+    if (xp < 0) {
+      xp = 0;
+    }
     if (xp < 50) {
       return '50';
     }
@@ -203,6 +249,9 @@ class ProfileHeader extends React.Component {
         xp = xpo[i].xp;
       }
     }
+    if (xp < 0) {
+      xp = 0;
+    }
     if (xp < 50) {
       return (xp * 10) / 5;
     }
@@ -230,6 +279,7 @@ class ProfileHeader extends React.Component {
     if (xp < 4000) {
       return ((xp - 3000) / 500) * 100;
     }
+    // if(xp)
     // if (xp >  5000) {
     return 100;
     // }
@@ -349,55 +399,6 @@ class ProfileHeader extends React.Component {
                           '.png'
                         }
                       />
-
-                      <div className="float-right rank_box_wrap">
-                        rank : {this.rank_based_on_xp(user_info.xp_obj)}
-                        <div
-                          className="rank_box_prog_outer"
-                          style={{
-                            position: 'relative'
-                          }}
-                        >
-                          <div className="rank_box_prog">
-                            <span
-                              className="rank_prog_done"
-                              style={{
-                                width:
-                                  '' +
-                                  this.rank_percent_based_on_xp(
-                                    user_info.xp_obj
-                                  ) +
-                                  '%'
-                              }}
-                            />
-                          </div>
-                          <span>
-                            {this.rank_min_based_on_xp(user_info.xp_obj)}
-                          </span>
-                          <span
-                            style={{
-                              position: 'absolute',
-                              background:
-                                'url(/images/blank_ctrl.png) center no-repeat',
-                              marginTop: '5px',
-                              backgroundSize: 'contain',
-                              padding: '5px 20px 9px 20px',
-                              marginLeft: '-20px',
-                              left:
-                                '' +
-                                this.rank_percent_based_on_xp(
-                                  user_info.xp_obj
-                                ) +
-                                '%'
-                            }}
-                          >
-                            {this.getXp(user_info.xp_obj)}
-                          </span>
-                          <span>
-                            {this.rank_max_based_on_xp(user_info.xp_obj)}
-                          </span>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -439,7 +440,7 @@ class ProfileHeader extends React.Component {
                 <span> TIME ZONE </span>
                 <p>{user_info.timezone ? user_info.timezone : '-'}</p>
               </div>*/}
-              <div className="col-md-2 text-right">
+              <div className="col-md-2 ">
                 {this.props.user &&
                 this.props.is_loaded &&
                 this.props.user.id != user_info.id &&
@@ -516,6 +517,49 @@ class ProfileHeader extends React.Component {
                     {user_info.followerCount}
                   </a>
                 </p>
+              </div>
+
+              <div className="col-md-2">
+                <div className="float-right rank_box_wrap">
+                  rank : {this.rank_based_on_xp(user_info.xp_obj)}
+                  <div
+                    className="rank_box_prog_outer"
+                    style={{
+                      position: 'relative'
+                    }}
+                  >
+                    <div className="rank_box_prog">
+                      <span
+                        className="rank_prog_done"
+                        style={{
+                          width:
+                            '' +
+                            this.rank_percent_based_on_xp(user_info.xp_obj) +
+                            '%'
+                        }}
+                      />
+                    </div>
+                    <span>{this.rank_min_based_on_xp(user_info.xp_obj)}</span>
+                    <span
+                      style={{
+                        position: 'absolute',
+                        background:
+                          'url(/images/blank_ctrl2.png) center no-repeat',
+                        marginTop: '5px',
+                        backgroundSize: 'contain',
+                        padding: '5px 20px 9px 20px',
+                        marginLeft: '-20px',
+                        left:
+                          '' +
+                          this.rank_percent_based_on_xp(user_info.xp_obj) +
+                          '%'
+                      }}
+                    >
+                      {this.getXp(user_info.xp_obj)}
+                    </span>
+                    <span>{this.rank_max_based_on_xp(user_info.xp_obj)}</span>
+                  </div>
+                </div>
               </div>
 
               {/*}
