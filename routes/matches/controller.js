@@ -5,16 +5,24 @@ const Item = require('./Match');
 const User = require('../../models/User');
 const Notif = require('../../models/Notification');
 const XP = require('../../models/XP');
+const TeamXP = require('../../models/TeamXP');
 const CashTransactions = require('../../models/CashTransactions');
 const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
 
 const getXPBasedOn = function(current_xp) {
-  return 10;
+  return 15;
 };
 const getXPRemoveBasedOn = function(current_xp) {
-  return 3;
+  return 7;
+};
+const getTeamWpForWinner = function() {
+  return 15;
+};
+
+const getTeamWpForLooser = function() {
+  return 7;
 };
 
 const giveXpToMember = function(uid, match_id) {
@@ -243,20 +251,27 @@ const giveMoneyToMember = function(uid, input_val, match_id) {
     .then(function(usr) {
       if (usr) {
         let cash_balance = usr.get('cash_balance');
+        let life_earning = usr.get('life_earning');
 
         const prime = usr.get('prime');
         let val;
 
         if (prime) {
           val = parseFloat(input_val) + parseFloat(input_val);
+          life_earning += parseFloat(input_val);
         } else {
           val =
             parseFloat((4 / 5) * parseFloat(input_val)) + parseFloat(input_val);
+          life_earning += parseFloat((4 / 5) * parseFloat(input_val));
         }
 
         cash_balance += val;
+
         usr
-          .save({cash_balance: cash_balance}, {patch: true})
+          .save(
+            {cash_balance: cash_balance, life_earning: life_earning},
+            {patch: true}
+          )
           .then(function(usr) {
             new CashTransactions()
               .save({
@@ -322,6 +337,43 @@ const giveXPtoTeam = function(team_id, players, match_id) {
     const uid = parseInt(players[i]);
     giveXpToMember(uid, match_id);
   }
+  const xP_to_add = getTeamWpForWinner();
+  const year = moment().format('YYYY');
+  const season = moment().format('Q');
+  new TeamXP()
+    .where({
+      year: year,
+      season: season,
+      team_id: team_id
+    })
+    .fetch()
+    .then(function(xpObj) {
+      if (xpObj) {
+        xpObj
+          .save({
+            xp: xpObj.get('xp') + xP_to_add
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(2, err);
+          });
+      } else {
+        new TeamXP()
+          .save({
+            year: year,
+            season: season,
+            team_id: team_id,
+            xp: xP_to_add
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(3, err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(5, err);
+    });
 };
 
 const takeXPfromTeam = function(team_id, players, match_id) {
@@ -329,6 +381,44 @@ const takeXPfromTeam = function(team_id, players, match_id) {
     const uid = parseInt(players[i]);
     takeXpFromMember(uid, match_id);
   }
+  const xP_to_add = getTeamWpForLooser();
+  const year = moment().format('YYYY');
+  const season = moment().format('Q');
+
+  new TeamXP()
+    .where({
+      year: year,
+      season: season,
+      team_id: team_id
+    })
+    .fetch()
+    .then(function(xpObj) {
+      if (xpObj) {
+        xpObj
+          .save({
+            xp: xpObj.get('xp') - xP_to_add
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(2, err);
+          });
+      } else {
+        new TeamXP()
+          .save({
+            year: year,
+            season: season,
+            team_id: team_id,
+            xp: -xP_to_add
+          })
+          .then(function(o) {})
+          .catch(function(err) {
+            console.log(3, err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(5, err);
+    });
 };
 
 const giveMoneyBackToTeam = function(

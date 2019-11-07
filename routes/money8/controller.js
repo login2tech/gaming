@@ -170,7 +170,7 @@ const giveXpToMember = function(uid, match_id) {
 // };
 
 const addScoreForMember = function(uid, ladder_id, game_id, type) {
-  console.log('168');
+  console.log('73');
   const year = moment().format('YYYY');
   const season = moment().format('Q');
 

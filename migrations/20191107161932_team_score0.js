@@ -1,8 +1,8 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
-    knex.schema.createTable('xp', function(table) {
+    knex.schema.createTable('team_xp', function(table) {
       table.increments();
-      table.integer('user_id').references('users.id');
+      table.integer('team_id').references('teams.id');
       table.integer('season');
       table.integer('year');
       table.integer('xp');
@@ -11,5 +11,5 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return Promise.all([knex.schema.dropTable('xp')]);
+  return Promise.all([knex.schema.dropTable('team_xp')]);
 };

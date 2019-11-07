@@ -806,9 +806,22 @@ exports.authFacebookCallback = function(req, res) {
   res.render('loading');
 };
 
-exports.leaderboard = function(req, res, next) {
+exports.leaderboard_1 = function(req, res, next) {
   new User()
     .orderBy('life_xp', 'DESC')
+    .fetchPage({page: 1, pageSize: 100})
+    .then(function(usrs) {
+      return res.status(200).send({ok: true, items: usrs.toJSON()});
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.status(400).send({ok: false, items: []});
+    });
+};
+
+exports.leaderboard_2 = function(req, res, next) {
+  new User()
+    .orderBy('life_earning', 'DESC')
     .fetchPage({page: 1, pageSize: 100})
     .then(function(usrs) {
       return res.status(200).send({ok: true, items: usrs.toJSON()});
