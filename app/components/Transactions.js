@@ -59,6 +59,7 @@ class Transaction extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col">
+                {/*}
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
                     <i className="fa fa-trophy" aria-hidden="true" /> XP
@@ -89,6 +90,9 @@ class Transaction extends React.Component {
                   </div>
                 </div>
 
+
+                */}
+
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
                     <i className="fa fa-trophy" aria-hidden="true" /> OCG CASH
@@ -118,7 +122,6 @@ class Transaction extends React.Component {
                     </table>
                   </div>
                 </div>
-
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
                     <i className="fa fa-trophy" aria-hidden="true" /> CREDIT
