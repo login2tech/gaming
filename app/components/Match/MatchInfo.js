@@ -460,9 +460,9 @@ class MatchInfo extends React.Component {
       result = 'Tie';
     } else {
       if (this.state.match.result == 'team_1') {
-        result = 'Mix Wins';
+        result = this.state.match.team_1_info.title + ' Wins';
       } else {
-        result = 'Match Wins';
+        result = this.state.match.team_2_info.title + ' Wins';
       }
     }
 

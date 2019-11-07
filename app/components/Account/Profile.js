@@ -599,6 +599,18 @@ class Profile extends React.Component {
                         if (team.removed) {
                           return false;
                         }
+
+                        const wins = 0;
+                        const loss = 0;
+                        console.log(team.score);
+                        let score = team.score;
+                        if (!score) {
+                          score = [];
+                        }
+                        for (let i = 0; i < score.length; i++) {
+                          wins += score[i].wins;
+                          loss += score[i].loss;
+                        }
                         return (
                           <li className="item" key={team.id}>
                             <Link
@@ -616,9 +628,13 @@ class Profile extends React.Component {
                                 <div className="info_sub">
                                   {team.score ? (
                                     <div>
-                                      <span className="text-success">10 W</span>{' '}
+                                      <span className="text-success">
+                                        {wins} W
+                                      </span>{' '}
                                       -{' '}
-                                      <span className="text-danger">10 L</span>
+                                      <span className="text-danger">
+                                        {loss} L
+                                      </span>
                                     </div>
                                   ) : (
                                     <div>

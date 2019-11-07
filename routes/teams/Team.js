@@ -14,7 +14,7 @@ const Team = bookshelf.Model.extend({
     return this.belongsTo('Ladder');
   },
   score: function() {
-    return this.belongsTo('TeamScore');
+    return this.hasMany('TeamScore');
   }
 
   // thread_count: function() {

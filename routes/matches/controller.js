@@ -360,13 +360,14 @@ const addScoreForTeam = function(
   }
   const year = moment().format('YYYY');
   const season = moment().format('Q');
-  new TeamScore.where({
-    year: year,
-    ladder_id: ladder_id,
-    game_id: game_id,
-    season: season,
-    team_id: team_id
-  })
+  new TeamScore()
+    .where({
+      year: year,
+      ladder_id: ladder_id,
+      game_id: game_id,
+      season: season,
+      team_id: team_id
+    })
     .fetch()
     .then(function(scoreObj) {
       if (scoreObj) {
@@ -439,6 +440,10 @@ exports.resolveDispute = function(req, res, next) {
             match: match.toJSON()
           });
 
+          if (final_result != 'team_1' && final_result != 'team_2') {
+            return;
+          }
+
           // get players
           let win_team_members;
           let loose_team_members;
@@ -478,13 +483,15 @@ exports.resolveDispute = function(req, res, next) {
             tmp_match.game_id,
             tmp_match.ladder_id,
             'wins',
-            win_team_members
+            win_team_members,
+            award_team_id
           );
           addScoreForTeam(
             tmp_match.game_id,
             tmp_match.ladder_id,
             'loss',
-            loose_team_members
+            loose_team_members,
+            loose_team_id
           );
         })
         .catch(function(err) {
@@ -627,18 +634,21 @@ exports.saveScore = function(req, res, next) {
                 tmp_match.id
               );
             }
-            // console.log('score resotlo');
+            console.log('score resotlo');
+            console.log(award_team_id, loose_team_id);
             addScoreForTeam(
               tmp_match.game_id,
               tmp_match.ladder_id,
               'wins',
-              win_team_members
+              win_team_members,
+              award_team_id
             );
             addScoreForTeam(
               tmp_match.game_id,
               tmp_match.ladder_id,
               'loss',
-              loose_team_members
+              loose_team_members,
+              loose_team_id
             );
           }
         })

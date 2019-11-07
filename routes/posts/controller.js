@@ -393,7 +393,7 @@ exports.listItemMy = function(req, res, next) {
 };
 
 exports.listItemAll = function(req, res, next) {
-  const cur_u = req.user.id ? req.user.id : 99999;
+  const cur_u = req.user && req.user.id ? req.user.id : 99999;
 
   let n = new Item().orderBy('id', 'DESC');
   // .where({

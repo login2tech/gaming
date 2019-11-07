@@ -29,6 +29,35 @@ class Money8Info extends React.Component {
     };
   }
 
+  dynamicStatus() {
+    if (!this.state.match.team_1) {
+      return 'Pending';
+    }
+    if (!this.state.match.team_1_result && !this.state.match.team_2_result) {
+      return 'Pending Results';
+    }
+    if (!this.state.match.team_1_result || !this.state.match.team_2_result) {
+      return 'Pending Results Confirmation';
+    }
+    if (this.state.match.team_1_result != this.state.match.team_2_result) {
+      return 'Disputed';
+    }
+
+    let result;
+
+    if (this.state.match.result == 'tie') {
+      result = 'Tie';
+    } else {
+      if (this.state.match.result == 'team_1') {
+        result = 'Mix Wins';
+      } else {
+        result = 'Match Wins';
+      }
+    }
+
+    return 'Complete - ' + result;
+  }
+
   showGamerTag() {
     return game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
   }
@@ -605,7 +634,7 @@ class Money8Info extends React.Component {
 
                       <div className="col-md-4">
                         <span> STATUS</span>
-                        <p>{this.state.match.status}</p>
+                        <p>{this.dynamicStatus(this.state.match.status)}</p>
                       </div>
 
                       <div className="col-md-4">
