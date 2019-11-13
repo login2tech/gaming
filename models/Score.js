@@ -6,13 +6,11 @@ const Score = bookshelf.Model.extend({
   tableName: 'score',
   hasTimestamps: false,
   user: function() {
-    return this.belongsTo(User);
+    return this.belongsTo('User');
   },
-   ladder: function() {
+  ladder: function() {
     return this.belongsTo('Ladder');
   }
 });
 
-
 module.exports = bookshelf.model('Score', Score);
- 

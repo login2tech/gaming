@@ -1,5 +1,44 @@
 // const fs = require('fs');
 const Game = require('./Game');
+const Score = require('../../models/Score');
+
+exports.leaderboards = function(req, res, next) {
+  if (!req.query.game_id) {
+    return res.status(200).send({
+      ok: true,
+      items: []
+    });
+  }
+  new Score()
+    .where({
+      game_id: req.query.game_id
+    })
+    .fetchAll({
+      withRelated: [
+        {
+          ladder: function(qb) {
+            qb.select('id', 'title');
+          },
+          user: function(qb) {
+            qb.select('id', 'username');
+          }
+        }
+      ]
+    })
+    .then(function(items) {
+      return res.status(200).send({
+        ok: true,
+        items: items.toJSON()
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res.status(200).send({
+        ok: true,
+        items: []
+      });
+    });
+};
 
 exports.listGame = function(req, res, next) {
   new Game()

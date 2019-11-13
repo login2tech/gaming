@@ -11,3 +11,4 @@ routes.get('/single/:id', ctrl.listSingleGame);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addGame);
 routes.post('/edit', u_ctrl.ensureAuthenticated, ctrl.updateGame);
 routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteGame);
+routes.get('/leaderboards', ctrl.leaderboards);

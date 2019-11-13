@@ -5248,3 +5248,6 @@ span.t-bl {
 #demo2 .carousel-inner img {
     width: auto;
 }
+.table td, .table th{
+  border:0;
+}

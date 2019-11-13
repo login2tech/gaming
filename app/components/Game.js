@@ -12,7 +12,8 @@ class Game extends React.Component {
       done_matches: [],
       new_chat_msg: '',
       min_time: false,
-      chats: []
+      chats: [],
+      leaderboards: {}
     };
   }
 
@@ -22,6 +23,7 @@ class Game extends React.Component {
     }
     return '/login';
   }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
@@ -116,6 +118,59 @@ class Game extends React.Component {
       });
   }
 
+  fetchLeaderBoards() {
+    let str = '';
+    // str;
+    if (this.props.params && this.props.params.id) {
+      str = '?&game_id=' + this.props.params.id;
+    }
+    fetch('/api/games/leaderboards' + str)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          const items = json.items;
+          const leaderboards = {};
+          // const ladders = [];
+          // console.log(ladders, ladders);
+          let k = false;
+          for (let i = 0; i < items.length; i++) {
+            const item = items[i];
+            if (!leaderboards['l_' + item.ladder_id]) {
+              leaderboards['l_' + item.ladder_id] = {
+                ladder: item.ladder
+              };
+              if (!k) {
+                k = 'l_' + item.ladder_id;
+              }
+              // ladders.push(item.ladder);
+            }
+            if (!leaderboards['l_' + item.ladder_id]['u_' + item.user_id]) {
+              item.user.gravatar = '';
+              leaderboards['l_' + item.ladder_id]['u_' + item.user_id] = {
+                user: item.user,
+                wins: 0,
+                loss: 0
+              };
+            }
+            leaderboards['l_' + item.ladder_id][
+              'u_' + item.user_id
+            ].wins += item.wins ? item.wins : 0;
+            leaderboards['l_' + item.ladder_id][
+              'u_' + item.user_id
+            ].loss += item.loss ? item.loss : 0;
+          }
+          this.setState(
+            {
+              is_loaded_4: true,
+              leaderboards: leaderboards,
+              active_leaderboard: k
+            },
+            () => {}
+          );
+        }
+      });
+  }
+
   reloadChats() {
     let str = 'game_id=' + this.props.params.id;
     if (this.state.min_time) {
@@ -169,13 +224,70 @@ class Game extends React.Component {
             },
             () => {
               setInterval(this.reloadChats.bind(this), 1000);
+              this.fetchLeaderBoards();
             }
           );
         }
       });
   }
 
+  compareByRate(a, b) {
+    if (a.rate < b.rate) {
+      return 1;
+    }
+    if (a.rate > b.rate) {
+      return -1;
+    }
+    return 0;
+  }
+
+  renderLeaderBoard() {
+    const {leaderboards, active_leaderboard} = this.state;
+    if (!leaderboards || !leaderboards[active_leaderboard]) {
+      return false;
+    }
+    const data = [];
+    const keys = Object.keys(leaderboards[active_leaderboard]);
+    for (let i = 0; i < keys.length; i++) {
+      const user = keys[i];
+      if (user == 'ladder') {
+        continue;
+      }
+      data.push({
+        idx: i,
+        username: leaderboards[active_leaderboard][user].user.username,
+        wins: leaderboards[active_leaderboard][user].wins,
+        loss: leaderboards[active_leaderboard][user].loss,
+        rate: parseFloat(
+          (100 * leaderboards[active_leaderboard][user].wins) /
+            (leaderboards[active_leaderboard][user].loss +
+              leaderboards[active_leaderboard][user].wins)
+        )
+      });
+    }
+    data.sort(this.compareByRate);
+    return (
+      <tbody>
+        {data.map((item, idx) => {
+          // console.log(leaderboards[active_leaderboard][user]);
+          return (
+            <tr key={item.idx}>
+              <td>{item.idx}</td>
+              <td>
+                <Link to={'/u/' + item.username}>@{item.username}</Link>
+              </td>
+              <td className="text-success">{item.wins}</td>
+              <td className="text-danger">{item.loss}</td>
+              <td>{item.rate.toFixed(2)}%</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    );
+  }
+
   render() {
+    const {leaderboards, active_leaderboard} = this.state;
     const game_id = this.props.params.id;
     return (
       <div>
@@ -403,6 +515,40 @@ class Game extends React.Component {
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
                   <h4>Leaderboard</h4>
+                  <div className="btn-group">
+                    {Object.keys(leaderboards).map((ladder, idx) => {
+                      return (
+                        <button
+                          onClick={() => {
+                            this.setState({
+                              active_leaderboard: ladder
+                            });
+                          }}
+                          className={
+                            'btn ' +
+                            (active_leaderboard == ladder ? ' btn-primary' : '')
+                          }
+                          key={ladder}
+                        >
+                          {leaderboards[ladder].ladder.title}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <br />
+                  <br />
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <td>Game Rank</td>
+                        <td>User</td>
+                        <td>Wins</td>
+                        <td>Loss</td>
+                        <td>Win Rate</td>
+                      </tr>
+                    </thead>
+                    {this.renderLeaderBoard()}
+                  </table>
                 </div>
               </div>
             </div>
