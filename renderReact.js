@@ -62,10 +62,7 @@ module.exports = function(app, langs) {
               {store: store},
               <LocalizeProvider
                 initialize={{
-                  languages: [
-                    {name: 'English', code: 'en'},
-                    {name: 'French', code: 'fr'}
-                  ],
+                  languages: [{name: 'English', code: 'en'}],
                   translation: langs,
                   options: {
                     defaultLanguage: 'en',

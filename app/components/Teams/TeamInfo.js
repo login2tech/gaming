@@ -352,7 +352,7 @@ class TeamInfo extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar less_padding"
+          className="page_title_bar less_padding bigger_bg"
           id="is_top"
           style={divStyle}
         >

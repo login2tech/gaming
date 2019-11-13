@@ -517,7 +517,7 @@ new Lang().fetchAll().then(function(data) {
   if (data) {
     data = data.toJSON();
     for (let i = 0; i < data.length; i++) {
-      langs[data[i].key] = [data[i].l_1, data[i].l_2];
+      langs[data[i].key] = [data[i].l_1];
     }
   }
 });
@@ -537,7 +537,7 @@ app.get('/clearTranslationCache', function(req, res, next) {
     } else {
       // console.log('no data');
     }
-    res.status(302).redirect('/admin_panel');
+    res.status(302).redirect('/admin');
   });
 });
 

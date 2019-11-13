@@ -58,7 +58,10 @@ class Trophies extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3 className="no-case-change">
+                  <h3
+                  // className="no-case-change"
+                  // style={{textTransform: 'capitalize !important'}}
+                  >
                     {this.props.params.type} Trophies
                   </h3>
                   <br />

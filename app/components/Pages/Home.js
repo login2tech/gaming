@@ -241,19 +241,10 @@ class Home extends React.Component {
           </div>
         </section>
 
-        <section className="call_action">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-center">
-                  <h3>Go Prime, Get More Out of OnlyCompGaming Gaming.</h3>
-                  <Link className="play_match_btn" to="/shop">
-                    View Plans
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+        <section className="call_action no_bg">
+          <Link className="play_match_btn stretched-link" to="/shop">
+            View Plans
+          </Link>
         </section>
       </div>
     );
