@@ -337,7 +337,7 @@ class Shop extends React.Component {
       <section className="middle_part_login">
         <div className="container text-center">
           <Messages messages={this.props.messages} />
-          <div className="row" style={{marginBottom: '20px'}}>
+          <div className="row shop_row" style={{marginBottom: '20px'}}>
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
@@ -459,7 +459,7 @@ class Shop extends React.Component {
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row shop_row">
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">

@@ -293,26 +293,26 @@ class Profile extends React.Component {
               <div className="row">
                 <div className="col-md-12 col-sm-12 col-xs-12">
                   <div className="content_box">
-                    <div className="user-profile-stats">
-                      <div className="user-profile-header-data">
+                    <div className="prof_stat row">
+                      <div className="col-6 col-md-3 usr_obj">
                         <div className="rank-data">
                           <div>RANK</div>{' '}
                           <div>{this.state.user_info.xp_rank}</div>{' '}
                           <div>{this.state.user_info.life_xp} XP</div>
                         </div>
                       </div>
-                      <div className="user-profile-header-data">
+                      <div className="col-6 col-md-3 usr_obj">
                         <div className="winnings-data">
                           <div>WINNINGS</div>{' '}
                           <div>
                             $
-                            {this.state.user_info.lifetime_earning
-                              ? this.state.user_info.lifetime_earning
+                            {this.state.user_info.life_earning
+                              ? this.state.user_info.life_earning
                               : '0'}
                           </div>
                         </div>
                       </div>
-                      <div className="user-profile-header-data">
+                      <div className="col-6 col-md-3 usr_obj">
                         <div className="career-data">
                           <div>CAREER RECORD</div>{' '}
                           <div>
@@ -358,7 +358,7 @@ class Profile extends React.Component {
                           </div>
                         </div>
                       </div>
-                      <div className="user-profile-header-data">
+                      <div className="col-6 col-md-3 usr_obj">
                         <div className="views-data">
                           <div>PROFILE VIEWS</div>{' '}
                           <div>
@@ -372,8 +372,8 @@ class Profile extends React.Component {
                     </div>
 
                     <div className="user-profile-trophies-wrapper">
-                      <div className="user-profile-trophies-container">
-                        <div className="single-trophy-container">
+                      <div className="user-profile-trophies-container row">
+                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -393,7 +393,7 @@ class Profile extends React.Component {
                             </div>
                           </Link>
                         </div>
-                        <div className="single-trophy-container">
+                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -416,7 +416,7 @@ class Profile extends React.Component {
                             </div>
                           </Link>
                         </div>
-                        <div className="single-trophy-container">
+                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -439,30 +439,29 @@ class Profile extends React.Component {
                             </div>
                           </Link>
                         </div>
-                      </div>
-                    </div>
 
-                    <div className="user-profile-trophies-wrapper">
-                      <div className="user-profile-trophies-container">
-                        <div className="single-trophy-container">
-                          <div className="trophy-image">
-                            <img src="/images/shield-gold.png" />
-                          </div>
-                          <div className="trophy-info">
-                            <Link
-                              to={
-                                '/records/' +
-                                this.state.user_info.username +
-                                '/season'
-                              }
-                              className="trophy-name gold"
-                            >
-                              Seasonal Records
-                            </Link>
-                          </div>
+                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
+                          <Link
+                            to={
+                              '/records/' +
+                              this.state.user_info.username +
+                              '/season'
+                            }
+                            className="trof_a"
+                          >
+                            <div className="trophy-image">
+                              <img src="/images/shield-gold.png" />
+                            </div>
+                            <div className="trophy-info">
+                              <div className="trophy-name blue">
+                                Seasonal Records
+                              </div>
+                              <div className="trophy-count"> </div>
+                            </div>
+                          </Link>
                         </div>
 
-                        <div className="single-trophy-container">
+                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -486,43 +485,26 @@ class Profile extends React.Component {
                           </Link>
                         </div>
 
-                        <div className="single-trophy-container">
-                          <div className="trophy-image">
-                            <img src="/images/shield-gold.png" />
-                          </div>
-                          <div className="trophy-info">
-                            <Link
-                              to={
-                                '/records/' +
-                                this.state.user_info.username +
-                                '/life'
-                              }
-                              className="trophy-name gold"
-                            >
-                              Career Records
-                            </Link>
-                          </div>
-                        </div>
-
-                        {/*this.state.user_info.score.map((xp, i) => {
-                        return (
-                          <div className="single-trophy-container" key={xp.id}>
+                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
+                          <Link
+                            to={
+                              '/records/' +
+                              this.state.user_info.username +
+                              '/life'
+                            }
+                            className="trof_a"
+                          >
                             <div className="trophy-image">
                               <img src="/images/shield-gold.png" />
                             </div>
                             <div className="trophy-info">
-                              <div className="trophy-name gold">
-                                {xp.ladder.title}
+                              <div className="trophy-name blue">
+                                Career Records
                               </div>
-                              <div className="trophy-count">
-                                <span className="text-success">{xp.wins}W</span>{' '}
-                                -{' '}
-                                <span className="text-danger">{xp.loss}L</span>
-                              </div>
+                              <div className="trophy-count"> </div>
                             </div>
-                          </div>
-                        );
-                      })*/}
+                          </Link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -532,7 +514,7 @@ class Profile extends React.Component {
                       <i className="fa fa-user" aria-hidden="true" /> ABOUT
                     </h5>
 
-                    <div className="list_pad">
+                    <div className="list_pad prof_abt">
                       <div className="row">
                         <div className="col-md-4">
                           <span> MEMBER SINCE</span>

@@ -11,5 +11,5 @@
 <!-- 10. leaderboard in game -->
 <!-- 11. leaderboard based on earnings -->
 12. trophies count
-13. big pagination when no match in list(game page, profile, team profile)
-14. rank
+<!-- 13. big pagination when no match in list(game page, profile, team profile) -->
+<!-- 14. rank -->

@@ -2524,9 +2524,11 @@ a.image_avar {
     position: relative;
     padding-top: 30px;
 }
-.profile_pic_outline .img-fluid{
-  width:100%;
+
+.profile_pic_outline .img-fluid {
+    width: 100%;
 }
+
 .page_title_bar.bigger_bg {
     background-image: url(../images/cover_big.jpg);
 }
@@ -4795,29 +4797,47 @@ p.score_obj_scr {
     letter-spacing: 1px;
 }
 
-.user-profile-stats {
-    display: flex;
-    /* position: absolute; */
-    /* bottom: 30px; */
-    left: 0;
-    height: 150px;
+.prof_stat {
     padding: 20px 40px;
-    width: 100%;
-    /* background-color: rgba(0,0,0,.7); */
 }
 
-.user-profile-header-data {
-    height: 100%;
+.usr_obj {
+    border-right: 1px solid #404040;
     padding: 0 40px;
     padding-right: 20px;
-    border-right: 1px solid #404040;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    height: 130px;
 }
 
-.user-profile-header-data {
-    flex: 1;
+.usr_obj:last-of-type {
+    border: none;
+}
+
+.prof_stat img.rank-image {
+    height: 100%;
+    width: auto;
+    display: inline-block;
+}
+
+.usr_obj>div>div:first-of-type {
+    text-transform: uppercase;
+    color: #2947f3;
+    font-weight: bolder;
+    font-size: 15.4px;
+}
+
+.usr_obj>div>div:nth-of-type(2) {
+    color: #fff;
+    font-size: 23.8px;
+    font-weight: bolder;
+    margin-bottom: 5px;
+    margin-top: -5px;
+    min-height: 34px;
+}
+
+.usr_obj>div>div:nth-of-type(3) {
+    font-size: 12.6px;
+    color: #b3b3b3;
+    height: 20px;
 }
 
 .snackbar {
@@ -4866,63 +4886,20 @@ p.score_obj_scr {
     }
 }
 
-.user-profile-header-data:last-of-type {
-    border: none;
-}
-
-.user-profile-stats img.rank-image {
-    height: 100%;
-    width: auto;
-    display: inline-block;
-}
-
-.user-profile-header-data>div>div:first-of-type {
-    text-transform: uppercase;
-    color: #2947f3;
-    font-weight: bolder;
-    font-size: 15.4px;
-}
-
-.user-profile-header-data>div>div:nth-of-type(2) {
-    color: #fff;
-    font-size: 23.8px;
-    font-weight: bolder;
-    margin-bottom: 5px;
-    margin-top: -5px;
-    min-height: 34px;
-}
-
-.user-profile-header-data>div>div:nth-of-type(3) {
-    font-size: 12.6px;
-    color: #b3b3b3;
-    height: 20px;
-}
-
 .user-profile-trophies-wrapper {
     position: relative;
-    margin: 20px;
+    /* margin: 20px; */
     z-index: 1;
 }
 
-.user-profile-trophies-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
 .user-profile-trophies-container>div {
-    width: calc(33% - 10px);
-    display: flex;
     align-items: center;
+    margin-bottom : 10px;
     border-radius: 4px;
-    /* border: 0.5px solid #124afb; */
-    height: 100px;
-    background-color: #222d39;
 }
 
-.user-profile-trophies-container>div:first-of-type {
-    padding-left: 0;
+.user-profile-trophies-container>div > a, .user-profile-trophies-container>div > .link_alt {
+    background-color: #222d39;
 }
 
 .user-profile-trophies-container>div div.trophy-image {
@@ -4954,8 +4931,7 @@ p.score_obj_scr {
     text-transform: uppercase;
     font-family: Saira,sans-serif;
     font-weight: bolder;
-    line-height: 13px;
-    padding-top: 5px;
+    line-height: 47px;
 }
 
 .user-profile-trophies-container>div div.trophy-info .trophy-count {
@@ -5145,6 +5121,7 @@ ul.pagination .disabled a {
 
 .trof_a {
     width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     flex: 1;
@@ -5250,6 +5227,84 @@ span.t-bl {
 #demo2 .carousel-inner img {
     width: auto;
 }
-.table td, .table th{
-  border:0;
+
+.table td, .table th {
+    border: 0;
+}
+.list_pad.prof_abt .col-md-4 {
+    margin-bottom: 20px;
+}
+@media screen and (max-width: 600px) {
+    .contact-col-3.contact-inner ul li a {
+        width: 100%;
+        padding: 5px 10px;
+        display: inline-block;
+        background: #101010;
+    }
+
+    .social-contacts.text-center a {
+        padding: 10px;
+        font-size: 30px;
+    }
+
+    span.social_btns button {
+        margin-bottom: 10px;
+    }
+
+    span.social_btns span {
+        display: inline-block;
+    }
+
+    p.feed_post_content iframe {
+        width: 100%;
+    }
+
+    .comment_list li {
+        margin-left: 0 !important;
+    }
+
+    .t_big_heading {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    .authorize_box {
+        padding: 20px
+    }
+
+    .shop_row {
+        margin-bottom: 0 !important
+    }
+
+    .authorize_box.shop {
+        margin-bottom: 20px
+    }
+
+    .photo_progress {
+        z-index: 5;
+        background: rgba(17, 17, 17, 0.5);
+    }
+
+    .tab-block .tab-mnu li {
+        padding: 11px 14px;
+        font-size: 13px;
+    }
+
+    .tab-pane .authorize_box {
+        margin-bottom: 10px
+    }
+
+    .prof_stat.row .col-6 {
+        margin-bottom: 20px
+    }
+
+    .usr_obj:nth-child(even) {
+        border-right: 0;
+    }
+    ul.team_list li{
+      width:45%;
+    }
+    .middle_part_login{
+      margin-top:20px
+    }
 }

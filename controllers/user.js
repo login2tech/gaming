@@ -809,6 +809,8 @@ exports.authFacebookCallback = function(req, res) {
 exports.leaderboard_1 = function(req, res, next) {
   new User()
     .orderBy('life_xp', 'DESC')
+    .orderBy('life_earning', 'DESC')
+    .orderBy('id', 'DESC')
     .fetchPage({page: 1, pageSize: 100})
     .then(function(usrs) {
       return res.status(200).send({ok: true, items: usrs.toJSON()});

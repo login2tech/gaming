@@ -201,7 +201,7 @@ class Timeline extends React.Component {
           dangerouslySetInnerHTML={{__html: linkHashTags(post.post)}}
         />
         <span className="text-date" />
-        <span className="">
+        <span className="social_btns">
           <span className="float-right">
             {
               <button

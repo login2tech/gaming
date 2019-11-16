@@ -397,7 +397,9 @@ class Profile extends React.Component {
   }
 
   askFile(cls, cb) {
-    // console.log('here');
+    if (!this.state[cls]) {
+      return;
+    }
     const data = new FormData();
     data.append('file', this.state[cls], this.state[cls].name);
     axios
@@ -637,20 +639,18 @@ class Profile extends React.Component {
               {this.state.init_transaction_mode == 'credit' ? (
                 this.renderBuyBox('credit')
               ) : (
-                <div className="row">
-                  <div className="col-md-6 offset-md-3 text-center">
-                    <input
-                      type="submit"
-                      value="Add Credits"
-                      onClick={() => {
-                        this.setState({init_transaction_mode: 'credit'});
-                        this.props.dispatch({
-                          type: 'CLEAR_MESSAGES'
-                        });
-                      }}
-                      className="btn btn-default bttn_submit"
-                    />
-                  </div>
+                <div className="col-md-6 offset-md-3 text-center">
+                  <input
+                    type="submit"
+                    value="Add Credits"
+                    onClick={() => {
+                      this.setState({init_transaction_mode: 'credit'});
+                      this.props.dispatch({
+                        type: 'CLEAR_MESSAGES'
+                      });
+                    }}
+                    className="btn btn-default bttn_submit"
+                  />
                 </div>
               )}
             </div>
@@ -684,31 +684,29 @@ class Profile extends React.Component {
                 this.renderWithDrawBox()
               ) : (
                 <div className="row">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <input
-                        type="submit"
-                        value="Deposit"
-                        onClick={() => {
-                          this.setState({init_transaction_mode: 'cash'});
-                          this.props.dispatch({
-                            type: 'CLEAR_MESSAGES'
-                          });
-                        }}
-                        className="btn btn-default bttn_submit"
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <input
-                        type="submit"
-                        value="Withdraw"
-                        disabled={this.props.user.cash_balance < 0.1}
-                        onClick={() => {
-                          this.setState({init_transaction_mode: 'Withdraw'});
-                        }}
-                        className="btn btn-default bttn_submit"
-                      />
-                    </div>
+                  <div className="col-md-6">
+                    <input
+                      type="submit"
+                      value="Deposit"
+                      onClick={() => {
+                        this.setState({init_transaction_mode: 'cash'});
+                        this.props.dispatch({
+                          type: 'CLEAR_MESSAGES'
+                        });
+                      }}
+                      className="btn btn-default bttn_submit"
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <input
+                      type="submit"
+                      value="Withdraw"
+                      disabled={this.props.user.cash_balance < 0.1}
+                      onClick={() => {
+                        this.setState({init_transaction_mode: 'Withdraw'});
+                      }}
+                      className="btn btn-default bttn_submit"
+                    />
                   </div>
                 </div>
               )}
@@ -1257,14 +1255,14 @@ class Profile extends React.Component {
                   {/* <div className="game_platform_icon">About</div> */}
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-6">
                         <span> MEMBER SINCE</span>
                         <p>
                           {moment(this.props.user.created_at).format('lll')}
                         </p>
                       </div>
 
-                      <div className="col-md-4">
+                      <div className="col-6">
                         <span> TIME ZONE </span>
                         <p>
                           {this.props.user.timezone

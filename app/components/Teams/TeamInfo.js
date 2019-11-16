@@ -255,7 +255,9 @@ class TeamInfo extends React.Component {
   }
 
   askFile(cls, cb) {
-    // console.log('here');
+    if (!this.state[cls]) {
+      return;
+    }
     const data = new FormData();
     data.append('file', this.state[cls], this.state[cls].name);
     axios
