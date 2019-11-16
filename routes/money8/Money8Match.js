@@ -4,6 +4,7 @@ const bookshelf = require('../../config/bookshelf');
 // const Ladder = require('../games/Ladder');
 // const Game = require('../games/Game');
 
+const Ticket = require('../tickets/Ticket');
 const Money8Match = bookshelf.Model.extend({
   tableName: 'money_8_match',
   hasTimestamps: true,
@@ -12,6 +13,9 @@ const Money8Match = bookshelf.Model.extend({
   // },
   ladder: function() {
     return this.belongsTo('Ladder');
+  },
+  tickets: function() {
+    return this.hasMany(Ticket, 'extra_1');
   },
   game: function() {
     return this.belongsTo('Game', 'game_id');

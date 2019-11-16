@@ -5,6 +5,8 @@ import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
 import CashHistory from '../Modules/Modals/CashHistory';
+import ViewTicket from '../Modules/Modals/ViewTicket';
+
 class MatchFinder extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,18 @@ class MatchFinder extends React.Component {
       items: [],
       pagination: {}
     };
+  }
+  viewTicket(id) {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: <ViewTicket id={id} />
+      })
+    );
   }
 
   handlePageClick = data => {
@@ -32,6 +46,9 @@ class MatchFinder extends React.Component {
     //   other += "&filter_team_id_for_match="+this.props.params.team_id;
     // }
     if (this.props.params && this.props.params.status) {
+      if (this.props.params.status == 'disputed') {
+        other = other.replace('related=', 'related=tickets,');
+      }
       other += '&filter_status=' + this.props.params.status;
     }
     Fetcher.get(
@@ -385,6 +402,26 @@ class MatchFinder extends React.Component {
                               ) : (
                                 false
                               )}
+                              {u.tickets
+                                ? u.tickets.map((ticket, i) => {
+                                    if (ticket.extra_3 != 'Mix-and-match') {
+                                      return false;
+                                    }
+                                    return (
+                                      <li key={ticket.id}>
+                                        <a
+                                          href="#"
+                                          onClick={e => {
+                                            e.preventDefault();
+                                            this.viewTicket(ticket.id);
+                                          }}
+                                        >
+                                          Show Ticket {i + 1} #{ticket.id}
+                                        </a>
+                                      </li>
+                                    );
+                                  })
+                                : false}
                             </ul>
                           </div>
                         </td>

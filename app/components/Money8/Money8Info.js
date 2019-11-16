@@ -145,6 +145,9 @@ class Money8Info extends React.Component {
   }
 
   renderLeave() {
+    if (!this.props.user) {
+      return;
+    }
     if (this.state.match.players_joined >= this.state.match.players_total) {
       return false;
     }

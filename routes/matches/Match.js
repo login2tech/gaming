@@ -3,6 +3,7 @@ const TeamUser = require('../teams/TeamUser');
 const Team = require('../teams/Team');
 const Ladder = require('../games/Ladder');
 const Game = require('../games/Game');
+const Ticket = require('../tickets/Ticket');
 
 const Match = bookshelf.Model.extend({
   tableName: 'matches',
@@ -15,6 +16,9 @@ const Match = bookshelf.Model.extend({
   },
   game: function() {
     return this.belongsTo('Game', 'game_id');
+  },
+  tickets: function() {
+    return this.hasMany(Ticket, 'extra_1');
   },
   team_1_info: function() {
     return this.belongsTo('Team', 'team_1_id');

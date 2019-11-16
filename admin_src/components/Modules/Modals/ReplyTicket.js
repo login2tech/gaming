@@ -22,6 +22,7 @@ class ReplyTicket extends React.Component {
       );
     }, 500);
   }
+
   onSubmit(e) {
     e.preventDefault();
     this.setState({
@@ -96,7 +97,7 @@ class ReplyTicket extends React.Component {
               <br />
 
               <input
-                value="Create Game"
+                value="Create Reply"
                 type="submit"
                 className="btn btn-primary"
               />

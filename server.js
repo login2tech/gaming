@@ -11,13 +11,14 @@ const aws = require('aws-sdk');
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
+aws.config.region = 'us-east-2';
 const s3 = new aws.S3({
   /* ... */
 });
 const upload = multer({
   storage: multerS3({
     s3: s3,
-    bucket: 'some-bucket',
+    bucket: process.env.S3_BUCKET,
     metadata: function(req, file, cb) {
       // const dt =
       // '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';

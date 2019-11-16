@@ -1,7 +1,9 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
 import moment from 'moment';
+import Fetcher from '../../../actions/Fetcher';
 import React from 'react';
+import Messages from '../../Messages';
 class ViewTicket extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +12,8 @@ class ViewTicket extends React.Component {
       items: [],
       cur_page: 1,
       ticket: {user: {first_name: '', last_name: ''}},
-      pageCount: 1
+      pageCount: 1,
+      text: ''
     };
   }
 
@@ -85,8 +88,48 @@ class ViewTicket extends React.Component {
     this.fetchData();
   }
 
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    this.setState({
+      loaded: false
+    });
+
+    Fetcher.post('/api/ticket_replies/add', {
+      text: this.state.text,
+      ticket_id: this.state.ticket.id
+    })
+      .then(resp => {
+        this.setState({
+          loaded: true
+        });
+        if (resp.ok) {
+          this.setState({
+            text: ''
+          });
+          this.fetchReplies();
+        } else {
+          this.props.dispatch({type: 'FAILURE', messages: [resp]});
+        }
+      })
+      .catch(err => {
+        // console.log(err);
+        this.setState({
+          loaded: true
+        });
+        const msg = 'Failed to perform Action';
+        this.props.dispatch({
+          type: 'FAILURE',
+          messages: [{msg: msg}]
+        });
+      });
+  }
+
   render() {
-    const {data} = this.props;
+    // const {data} = this.props;
     // console.log(data);
     return (
       <div className="">
@@ -205,6 +248,34 @@ class ViewTicket extends React.Component {
                 </div>
               );
             })}
+          </div>
+          <div className="modal-footer">
+            <form
+              onSubmit={e => {
+                this.onSubmit(e);
+              }}
+            >
+              <Messages messages={this.props.messages} />
+              <div className="input-control">
+                <label>Reply Text</label>
+                <textarea
+                  type="text"
+                  required
+                  className="form-control"
+                  name="text"
+                  onChange={this.handleChange.bind(this)}
+                  id="text"
+                  value={this.state.text}
+                />
+              </div>
+              <br />
+
+              <input
+                value="Create reply"
+                type="submit"
+                className="btn btn-primary"
+              />
+            </form>
           </div>
         </div>
       </div>

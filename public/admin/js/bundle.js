@@ -2956,6 +2956,8 @@ var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory
 
 var _modals = require("../../actions/modals");
 
+var _ViewTicket = _interopRequireDefault(require("../Modules/Modals/ViewTicket"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -3032,6 +3034,10 @@ function (_React$Component) {
       }
 
       if (this.props.params && this.props.params.status) {
+        if (this.props.params.status == 'disputed') {
+          other = other.replace('related=', 'related=tickets,');
+        }
+
         other += '&filter_status=' + this.props.params.status;
       }
 
@@ -3147,6 +3153,20 @@ function (_React$Component) {
     value: function addItem() {// todo
     }
   }, {
+    key: "viewTicket",
+    value: function viewTicket(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ViewTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this4 = this;
@@ -3260,7 +3280,22 @@ function (_React$Component) {
 
             _this4.resolveDispute(u.id, 'team_2');
           }
-        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
+        }, "Resolve dispute by giving win to team 2")) : false, u.tickets ? u.tickets.map(function (ticket, i) {
+          if (ticket.extra_3 != 'MatchFinder') {
+            return false;
+          }
+
+          return _react.default.createElement("li", {
+            key: ticket.id
+          }, _react.default.createElement("a", {
+            href: "#",
+            onClick: function onClick(e) {
+              e.preventDefault();
+
+              _this4.viewTicket(ticket.id);
+            }
+          }, "Show Ticket ", i + 1, " #", ticket.id));
+        }) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
       }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
@@ -3328,7 +3363,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
 exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],17:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/ViewTicket":42,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3349,6 +3384,8 @@ var _reactPaginate = _interopRequireDefault(require("react-paginate"));
 var _modals = require("../../actions/modals");
 
 var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+var _ViewTicket = _interopRequireDefault(require("../Modules/Modals/ViewTicket"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3405,6 +3442,20 @@ function (_React$Component) {
   }
 
   _createClass(MatchFinder, [{
+    key: "viewTicket",
+    value: function viewTicket(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ViewTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
     key: "loadData",
     value: function loadData() {
       var _this2 = this;
@@ -3416,6 +3467,10 @@ function (_React$Component) {
       // }
 
       if (this.props.params && this.props.params.status) {
+        if (this.props.params.status == 'disputed') {
+          other = other.replace('related=', 'related=tickets,');
+        }
+
         other += '&filter_status=' + this.props.params.status;
       }
 
@@ -3677,7 +3732,22 @@ function (_React$Component) {
 
             _this4.resolveDispute(u.id, 'team_2');
           }
-        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result));
+        }, "Resolve dispute by giving win to team 2")) : false, u.tickets ? u.tickets.map(function (ticket, i) {
+          if (ticket.extra_3 != 'Mix-and-match') {
+            return false;
+          }
+
+          return _react.default.createElement("li", {
+            key: ticket.id
+          }, _react.default.createElement("a", {
+            href: "#",
+            onClick: function onClick(e) {
+              e.preventDefault();
+
+              _this4.viewTicket(ticket.id);
+            }
+          }, "Show Ticket ", i + 1, " #", ticket.id));
+        }) : false))), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result));
       }))), _react.default.createElement(_reactPaginate.default, {
         previousLabel: 'previous',
         nextLabel: 'next',
@@ -3709,7 +3779,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
 
 exports.default = _default;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"react":187,"react-paginate":135,"react-redux":146}],18:[function(require,module,exports){
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/ViewTicket":42,"react":187,"react-paginate":135,"react-redux":146}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9219,7 +9289,7 @@ function (_React$Component) {
         id: "text",
         value: this.state.text
       })), _react.default.createElement("br", null), _react.default.createElement("input", {
-        value: "Create Game",
+        value: "Create Reply",
         type: "submit",
         className: "btn btn-primary"
       })))));
@@ -9359,8 +9429,8 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var data = this.props.data; // console.log(data);
-
+      // const {data} = this.props;
+      // console.log(data);
       return _react.default.createElement("div", {
         className: ""
       }, this.state.loaded ? false : _react.default.createElement("div", {
@@ -9465,11 +9535,17 @@ var _reactRedux = require("react-redux");
 
 var _moment = _interopRequireDefault(require("moment"));
 
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
 var _react = _interopRequireDefault(require("react"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -9508,7 +9584,8 @@ function (_React$Component) {
           last_name: ''
         }
       },
-      pageCount: 1
+      pageCount: 1,
+      text: ''
     };
     return _this;
   }
@@ -9583,12 +9660,63 @@ function (_React$Component) {
       this.fetchData();
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
       var _this4 = this;
 
-      var data = this.props.data; // console.log(data);
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
 
+      _Fetcher.default.post('/api/ticket_replies/add', {
+        text: this.state.text,
+        ticket_id: this.state.ticket.id
+      }).then(function (resp) {
+        _this4.setState({
+          loaded: true
+        });
+
+        if (resp.ok) {
+          _this4.setState({
+            text: ''
+          });
+
+          _this4.fetchReplies();
+        } else {
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this4.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this4.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      // const {data} = this.props;
+      // console.log(data);
       return _react.default.createElement("div", {
         className: ""
       }, this.state.loaded ? false : _react.default.createElement("div", {
@@ -9640,7 +9768,7 @@ function (_React$Component) {
         }, _react.default.createElement("div", {
           className: "col-sm-3 ticket_item_av"
         }, _react.default.createElement("span", {
-          className: 'profile_menu_item ticket_item ' + (item.from_admin && _this4.state.ticket.user_id != item.user_id ? ' from_admin ' : ' ')
+          className: 'profile_menu_item ticket_item ' + (item.from_admin && _this5.state.ticket.user_id != item.user_id ? ' from_admin ' : ' ')
         }, _react.default.createElement("span", {
           className: "profile_menu_item_inner"
         }, _react.default.createElement("span", {
@@ -9652,7 +9780,7 @@ function (_React$Component) {
           className: "menu_prof_name_w"
         }, _react.default.createElement("span", {
           className: "menu_prof_name_top"
-        }, item.from_admin && _this4.state.ticket.user_id != item.user_id ? 'SUPPORT STAFF' : '' + item.user.first_name + ' ' + item.user.last_name), _react.default.createElement("span", {
+        }, item.from_admin && _this5.state.ticket.user_id != item.user_id ? 'SUPPORT STAFF' : '' + item.user.first_name + ' ' + item.user.last_name), _react.default.createElement("span", {
           className: "menu_prof_name_bot"
         }, (0, _moment.default)(item.created_at).format('lll')))))), _react.default.createElement("div", {
           className: "col-sm-9 post-content"
@@ -9664,7 +9792,29 @@ function (_React$Component) {
           download: true,
           href: item.attachment
         }, "Download attachment") : false))));
-      }))));
+      })), _react.default.createElement("div", {
+        className: "modal-footer"
+      }, _react.default.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this5.onSubmit(e);
+        }
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Reply Text"), _react.default.createElement("textarea", {
+        type: "text",
+        required: true,
+        className: "form-control",
+        name: "text",
+        onChange: this.handleChange.bind(this),
+        id: "text",
+        value: this.state.text
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
+        value: "Create reply",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
     }
   }]);
 
@@ -9683,7 +9833,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(ViewTicket);
 
 exports.default = _default;
 
-},{"../../../actions/modals":3,"moment":117,"react":187,"react-redux":146}],43:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"moment":117,"react":187,"react-redux":146}],43:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

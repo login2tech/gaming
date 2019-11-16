@@ -68,7 +68,7 @@ class ViewThread extends React.Component {
   }
 
   render() {
-    const {data} = this.props;
+    // const {data} = this.props;
     // console.log(data);
     return (
       <div className="">

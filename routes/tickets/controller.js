@@ -8,7 +8,8 @@ exports.listItem = function(req, res, next) {
   // TODO:
   // new Item()
   //   .orderBy('id', 'DESC')
-  Item.fetchAll()
+  Item.orderBy('id', 'DESC')
+    .fetchAll()
     .then(function(items) {
       if (!items) {
         return res.status(200).send({ok: true, items: []});
