@@ -18,15 +18,17 @@ const s3 = new aws.S3({
 const upload = multer({
   storage: multerS3({
     s3: s3,
+    acl: 'public-read',
     bucket: process.env.S3_BUCKET,
     metadata: function(req, file, cb) {
-      // const dt =
-      // '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';
-
       cb(null, {fieldName: file.fieldname});
     },
     key: function(req, file, cb) {
-      cb(null, Date.now().toString());
+      let path = '' + Date.now().toString() + '_' + file.originalname;
+      if (req.user) {
+        path = 'u_' + req.user.id + path;
+      }
+      cb(null, path);
     }
   })
 });
@@ -130,26 +132,13 @@ app.get('/me', userController.ensureAuthenticated, function(req, res, next) {
 });
 
 app.post('/upload', upload.single('file'), (req, res, next) => {
-  // const mkdirp = require('mkdirp');
-  // const uploadFile = req.files.file;
-  // const fileName = req.files.file.name;
-  // const rand = Math.floor(Math.random() * 100000) + 1;
-  //
-  // const dt = '' + new Date().getFullYear() + '/' + new Date().getMonth() + '';
-  //
-  // mkdirp.sync(__dirname + '/public/files/' + dt);
-  // let final_path = fileName.replace(/ /g, '_');
-  // final_path = `/files/${dt}/f_${rand}_${final_path}`;
-  // uploadFile.mv(`${__dirname}/public${final_path}`, function(err) {
-  //   if (err) {
-  //     return res.status(500).send(err);
-  //   }
-  // res.send('Successfully uploaded ' + req.files.length + ' files!');
-
-  res.json({
-    file: req.file
-  });
-  // });
+  if (req.file && req.file.location) {
+    res.json({
+      file: req.file.location
+    });
+  } else {
+    res.status(400).send({ok: false, msg: 'failed to upload'});
+  }
 });
 
 app.post('/contact', contactController.contactPost);

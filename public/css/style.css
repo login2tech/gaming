@@ -2524,9 +2524,11 @@ a.image_avar {
     position: relative;
     padding-top: 30px;
 }
-
+.profile_pic_outline .img-fluid{
+  width:100%;
+}
 .page_title_bar.bigger_bg {
-    background: url(../images/cover_big.jpg) no-repeat;
+    background-image: url(../images/cover_big.jpg);
 }
 
 .page_title_bar:before {
