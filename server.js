@@ -24,7 +24,7 @@ const upload = multer({
       cb(null, {fieldName: file.fieldname});
     },
     key: function(req, file, cb) {
-      let path = '' + Date.now().toString() + '_' + file.originalname;
+      let path = '/' + Date.now().toString() + '_' + file.originalname;
       if (req.user) {
         path = 'u_' + req.user.id + path;
       }
