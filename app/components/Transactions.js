@@ -67,7 +67,7 @@ class Transaction extends React.Component {
                   </h5>
                   <br />
                   <div className=" ">
-                    <table className="table table-stripped">
+                    <div className="table_wrapper"><table className="table table-stripped">
                       <thead>
                         <tr>
                           <th>Id</th>
@@ -86,7 +86,7 @@ class Transaction extends React.Component {
                           );
                         })}
                       </tbody>
-                    </table>
+                    </table></div>
                   </div>
                 </div>
 
@@ -100,26 +100,28 @@ class Transaction extends React.Component {
                   </h5>
                   <br />
                   <div className=" ">
-                    <table className="table table-stripped">
-                      <thead>
-                        <tr>
-                          <th style={{width: '10%'}}>Id</th>
-                          <th style={{width: '75%'}}>Description</th>
-                          <th style={{width: '15%'}}>OCH Cash</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.cash_transactions.map((k, i) => {
-                          return (
-                            <tr key={k.id}>
-                              <td>{i + 1}</td>
-                              <td>{k.details}</td>
-                              <td>{k.qty}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    <div className="table_wrapper">
+                      <table className="table table-stripped">
+                        <thead>
+                          <tr>
+                            <th style={{width: '10%'}}>Id</th>
+                            <th style={{width: '75%'}}>Description</th>
+                            <th style={{width: '15%'}}>OCH Cash</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.cash_transactions.map((k, i) => {
+                            return (
+                              <tr key={k.id}>
+                                <td>{i + 1}</td>
+                                <td>{k.details}</td>
+                                <td>{k.qty}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
                 <div className="content_box">
@@ -129,26 +131,28 @@ class Transaction extends React.Component {
                   </h5>
                   <br />
                   <div className=" ">
-                    <table className="table table-stripped">
-                      <thead>
-                        <tr>
-                          <th style={{width: '10%'}}>Id</th>
-                          <th style={{width: '75%'}}>Description</th>
-                          <th style={{width: '15%'}}>Credits</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.credit_transactions.map((k, i) => {
-                          return (
-                            <tr key={k.id}>
-                              <td>{i + 1}</td>
-                              <td>{k.details}</td>
-                              <td>{k.qty}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    <div className="table_wrapper">
+                      <table className="table table-stripped">
+                        <thead>
+                          <tr>
+                            <th style={{width: '10%'}}>Id</th>
+                            <th style={{width: '75%'}}>Description</th>
+                            <th style={{width: '15%'}}>Credits</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.credit_transactions.map((k, i) => {
+                            return (
+                              <tr key={k.id}>
+                                <td>{i + 1}</td>
+                                <td>{k.details}</td>
+                                <td>{k.qty}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

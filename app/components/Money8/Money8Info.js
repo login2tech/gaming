@@ -463,43 +463,46 @@ class Money8Info extends React.Component {
             false
           )}
         </h5>
-        <table className="table table-striped table-ongray table-hover">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>{this.showGamerTag()}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.match.players_obj &&
-              this.state.match.players_obj.map((team_user, i) => {
-                if (team_1.indexOf('' + team_user.id) > -1) {
-                  return (
-                    <tr key={team_user.id}>
-                      <td>
-                        <Link target="_blank" to={'/u/' + team_user.username}>
-                          {team_user.username}
-                        </Link>
-                      </td>
-                      <td>
-                        {team_user[
-                          'gamer_tag_' + this.state.match.ladder.gamer_tag
-                        ] ? (
-                          team_user[
+
+        <div className="table_wrapper">
+          <table className="table table-striped table-ongray table-hover">
+            <thead>
+              <tr>
+                <th style={{width: '50%'}}>Username</th>
+                <th>{this.showGamerTag()}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.match.players_obj &&
+                this.state.match.players_obj.map((team_user, i) => {
+                  if (team_1.indexOf('' + team_user.id) > -1) {
+                    return (
+                      <tr key={team_user.id}>
+                        <td>
+                          <Link target="_blank" to={'/u/' + team_user.username}>
+                            {team_user.username}
+                          </Link>
+                        </td>
+                        <td>
+                          {team_user[
                             'gamer_tag_' + this.state.match.ladder.gamer_tag
-                          ]
-                        ) : (
-                          <span className="text-danger">No User id</span>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                } else {
-                  return false;
-                }
-              })}
-          </tbody>
-        </table>
+                          ] ? (
+                            team_user[
+                              'gamer_tag_' + this.state.match.ladder.gamer_tag
+                            ]
+                          ) : (
+                            <span className="text-danger">No User id</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    return false;
+                  }
+                })}
+            </tbody>
+          </table>
+        </div>
 
         <br />
 
@@ -525,43 +528,46 @@ class Money8Info extends React.Component {
             false
           )}
         </h5>
-        <table className="table table-striped table-ongray table-hover">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>{this.showGamerTag()}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.match.players_obj &&
-              this.state.match.players_obj.map((team_user, i) => {
-                if (team_2.indexOf('' + team_user.id) > -1) {
-                  return (
-                    <tr key={team_user.id}>
-                      <td>
-                        <Link target="_blank" to={'/u/' + team_user.username}>
-                          {team_user.username}
-                        </Link>
-                      </td>
-                      <td>
-                        {team_user[
-                          'gamer_tag_' + this.state.match.ladder.gamer_tag
-                        ] ? (
-                          team_user[
+
+        <div className="table_wrapper">
+          <table className="table table-striped table-ongray table-hover">
+            <thead>
+              <tr>
+                <th style={{width: '50%'}}>Username</th>
+                <th>{this.showGamerTag()}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.match.players_obj &&
+                this.state.match.players_obj.map((team_user, i) => {
+                  if (team_2.indexOf('' + team_user.id) > -1) {
+                    return (
+                      <tr key={team_user.id}>
+                        <td>
+                          <Link target="_blank" to={'/u/' + team_user.username}>
+                            {team_user.username}
+                          </Link>
+                        </td>
+                        <td>
+                          {team_user[
                             'gamer_tag_' + this.state.match.ladder.gamer_tag
-                          ]
-                        ) : (
-                          <span className="text-danger">No user id</span>
-                        )}
-                      </td>
-                    </tr>
-                  );
-                } else {
-                  return false;
-                }
-              })}
-          </tbody>
-        </table>
+                          ] ? (
+                            team_user[
+                              'gamer_tag_' + this.state.match.ladder.gamer_tag
+                            ]
+                          ) : (
+                            <span className="text-danger">No user id</span>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  } else {
+                    return false;
+                  }
+                })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
@@ -683,7 +689,8 @@ class Money8Info extends React.Component {
                     </h5>
                     <br />
 
-                    <table className="table table-striped table-ongray table-hover">
+
+                    <div className="table_wrapper"><table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
                           <th>Username</th>
@@ -723,6 +730,7 @@ class Money8Info extends React.Component {
                           })}
                       </tbody>
                     </table>
+                    </div>
                   </div>
                 ) : (
                   this.renderStartedMatch()

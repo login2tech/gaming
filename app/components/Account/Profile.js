@@ -646,109 +646,113 @@ class Profile extends React.Component {
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th>Match</th>
-                          <th>Team</th>
-                          <th>Opponent</th>
-                          <th>Result</th>
-                          <th>Date</th>
-                          <th>Info</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.match_played.map((match, i) => {
-                          const teams = this.getTeams(match);
-                          let is_win = false;
-                          let is_loss = false;
-                          // is_status = true;
-                          if (match.result) {
-                            if (match.result == 'team_1') {
-                              if (teams[2] == 1) {
-                                is_win = true;
+                    <div className="table_wrapper">
+                      <table className="table table-striped table-ongray table-hover">
+                        <thead>
+                          <tr>
+                            <th>Match</th>
+                            <th>Team</th>
+                            <th>Opponent</th>
+                            <th>Result</th>
+                            <th>Date</th>
+                            <th>Info</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.match_played.map((match, i) => {
+                            const teams = this.getTeams(match);
+                            let is_win = false;
+                            let is_loss = false;
+                            // is_status = true;
+                            if (match.result) {
+                              if (match.result == 'team_1') {
+                                if (teams[2] == 1) {
+                                  is_win = true;
+                                } else {
+                                  is_loss = false;
+                                }
+                              } else if (match.result == 'team_2') {
+                                if (teams[2] == 2) {
+                                  is_win = true;
+                                } else {
+                                  is_loss = false;
+                                }
                               } else {
-                                is_loss = false;
+                                // is_status = true;
                               }
-                            } else if (match.result == 'team_2') {
-                              if (teams[2] == 2) {
-                                is_win = true;
-                              } else {
-                                is_loss = false;
-                              }
-                            } else {
-                              // is_status = true;
                             }
-                          }
-                          {
-                            is_win ? (
-                              <span className="text-success">W</span>
-                            ) : (
-                              false
-                            );
-                          }
-                          {
-                            is_loss ? (
-                              <span className="text-danger">L</span>
-                            ) : (
-                              false
-                            );
-                          }
-                          {
-                            !is_win && !is_loss ? match.status : false;
-                          }
+                            {
+                              is_win ? (
+                                <span className="text-success">W</span>
+                              ) : (
+                                false
+                              );
+                            }
+                            {
+                              is_loss ? (
+                                <span className="text-danger">L</span>
+                              ) : (
+                                false
+                              );
+                            }
+                            {
+                              !is_win && !is_loss ? match.status : false;
+                            }
 
-                          return (
-                            <tr key={match.id}>
-                              <td>
-                                <Link to={'/m/' + match.id}>#{match.id}</Link>
-                              </td>
-                              <td>
-                                <Link to={'/teams/view/' + teams[0].id}>
-                                  {teams[0].title}
-                                </Link>
-                              </td>
-                              <td>
-                                {teams[1] ? (
+                            return (
+                              <tr key={match.id}>
+                                <td>
+                                  <Link to={'/m/' + match.id}>#{match.id}</Link>
+                                </td>
+                                <td>
                                   <Link to={'/teams/view/' + teams[0].id}>
-                                    {teams[1].title}
+                                    {teams[0].title}
                                   </Link>
-                                ) : (
-                                  ' '
-                                )}
-                              </td>
-                              <td>
-                                {match.result ? (
-                                  match.result == 'team_1' ? (
-                                    teams[2] == 1 ? (
-                                      <span className="text-success">W</span>
+                                </td>
+                                <td>
+                                  {teams[1] ? (
+                                    <Link to={'/teams/view/' + teams[0].id}>
+                                      {teams[1].title}
+                                    </Link>
+                                  ) : (
+                                    ' '
+                                  )}
+                                </td>
+                                <td>
+                                  {match.result ? (
+                                    match.result == 'team_1' ? (
+                                      teams[2] == 1 ? (
+                                        <span className="text-success">W</span>
+                                      ) : (
+                                        <span className="text-danger">L</span>
+                                      )
+                                    ) : match.result == 'team_2' ? (
+                                      teams[2] == 2 ? (
+                                        <span className="text-success">W</span>
+                                      ) : (
+                                        <span className="text-danger">L</span>
+                                      )
                                     ) : (
-                                      <span className="text-danger">L</span>
-                                    )
-                                  ) : match.result == 'team_2' ? (
-                                    teams[2] == 2 ? (
-                                      <span className="text-success">W</span>
-                                    ) : (
-                                      <span className="text-danger">L</span>
+                                      match.result
                                     )
                                   ) : (
-                                    match.result
-                                  )
-                                ) : (
-                                  match.status
-                                )}
-                              </td>
-                              {/* <td>{''}</td> */}
-                              <td>{moment(match.created_at).format('lll')}</td>
-                              <td>
-                                {' '}
-                                <Link to={'/m/' + match.id}>View Match</Link>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                                    match.status
+                                  )}
+                                </td>
+                                {/* <td>{''}</td> */}
+                                <td>
+                                  {moment(match.created_at).format('lll')}
+                                </td>
+                                <td>
+                                  {' '}
+                                  <Link to={'/m/' + match.id}>View Match</Link>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                     <ReactPaginate
                       previousLabel={'previous'}
                       nextLabel={'next'}
@@ -769,73 +773,77 @@ class Profile extends React.Component {
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">MIX & MATCH Matches</h5>
 
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th>Match</th>
-                          <th>Result</th>
-                          <th>Date</th>
-                          <th>Info</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.money8_played.map((match, i) => {
-                          // const teams = this.getTeams(match);
-                          // const is_win = false;
-                          // const is_loss = false;
-                          let team_1 = [];
-                          let team_2 = [];
-                          if (match.status != 'pending') {
-                            team_1 = match.team_1.split('|').map(function(a) {
-                              return parseInt(a);
-                            });
+                    <div className="table_wrapper">
+                      <table className="table table-striped table-ongray table-hover">
+                        <thead>
+                          <tr>
+                            <th>Match</th>
+                            <th>Result</th>
+                            <th>Date</th>
+                            <th>Info</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.money8_played.map((match, i) => {
+                            // const teams = this.getTeams(match);
+                            // const is_win = false;
+                            // const is_loss = false;
+                            let team_1 = [];
+                            let team_2 = [];
+                            if (match.status != 'pending') {
+                              team_1 = match.team_1.split('|').map(function(a) {
+                                return parseInt(a);
+                              });
 
-                            team_2 = match.team_2.split('|').map(function(a) {
-                              return parseInt(a);
-                            });
-                          }
-                          return (
-                            <tr key={match.id}>
-                              <td>
-                                <Link to={'/mix-and-match/' + match.id}>
-                                  #{match.id}
-                                </Link>
-                              </td>
+                              team_2 = match.team_2.split('|').map(function(a) {
+                                return parseInt(a);
+                              });
+                            }
+                            return (
+                              <tr key={match.id}>
+                                <td>
+                                  <Link to={'/mix-and-match/' + match.id}>
+                                    #{match.id}
+                                  </Link>
+                                </td>
 
-                              <td>
-                                {match.result ? (
-                                  match.result == 'team_1' ? (
-                                    team_1.indexOf(this.state.user_info.id) >
-                                    -1 ? (
-                                      <span className="text-success">W</span>
+                                <td>
+                                  {match.result ? (
+                                    match.result == 'team_1' ? (
+                                      team_1.indexOf(this.state.user_info.id) >
+                                      -1 ? (
+                                        <span className="text-success">W</span>
+                                      ) : (
+                                        <span className="text-danger">L</span>
+                                      )
+                                    ) : match.result == 'team_2' ? (
+                                      team_2.indexOf(this.state.user_info.id) >
+                                      -1 ? (
+                                        <span className="text-success">W</span>
+                                      ) : (
+                                        <span className="text-danger">L</span>
+                                      )
                                     ) : (
-                                      <span className="text-danger">L</span>
-                                    )
-                                  ) : match.result == 'team_2' ? (
-                                    team_2.indexOf(this.state.user_info.id) >
-                                    -1 ? (
-                                      <span className="text-success">W</span>
-                                    ) : (
-                                      <span className="text-danger">L</span>
+                                      match.result
                                     )
                                   ) : (
-                                    match.result
-                                  )
-                                ) : (
-                                  match.status
-                                )}
-                              </td>
-                              <td>{moment(match.created_at).format('lll')}</td>
-                              <td>
-                                <Link to={'/mix-and-match/' + match.id}>
-                                  View Match
-                                </Link>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                                    match.status
+                                  )}
+                                </td>
+                                <td>
+                                  {moment(match.created_at).format('lll')}
+                                </td>
+                                <td>
+                                  <Link to={'/mix-and-match/' + match.id}>
+                                    View Match
+                                  </Link>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                     <ReactPaginate
                       previousLabel={'previous'}
                       nextLabel={'next'}
@@ -856,37 +864,39 @@ class Profile extends React.Component {
                   <div className="content_box">
                     <h5 className="prizes_desclaimer">RECENT TOURNAMENTS</h5>
 
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th>Tournament</th>
-                          <th>Tournament Placing</th>
-                          <th>Date</th>
-                          <th>Status</th>
-                          <th>Info</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.tournaments.map((match, i) => {
-                          return (
-                            <tr key={match.id}>
-                              <td>{match.id}</td>
-                              <td>
-                                {match.game.title} - {match.ladder.title}
-                              </td>
-                              <td>{moment(match.starts_at).format('lll')}</td>
-                              <td>{match.status}</td>
-                              <td>
-                                {' '}
-                                <Link to={'/t/' + match.id}>
-                                  View Tournament
-                                </Link>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    <div className="table_wrapper">
+                      <table className="table table-striped table-ongray table-hover">
+                        <thead>
+                          <tr>
+                            <th>Tournament</th>
+                            <th>Tournament Placing</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Info</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.tournaments.map((match, i) => {
+                            return (
+                              <tr key={match.id}>
+                                <td>{match.id}</td>
+                                <td>
+                                  {match.game.title} - {match.ladder.title}
+                                </td>
+                                <td>{moment(match.starts_at).format('lll')}</td>
+                                <td>{match.status}</td>
+                                <td>
+                                  {' '}
+                                  <Link to={'/t/' + match.id}>
+                                    View Tournament
+                                  </Link>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                     <ReactPaginate
                       previousLabel={'previous'}
                       nextLabel={'next'}

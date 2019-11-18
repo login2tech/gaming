@@ -80,50 +80,54 @@ class Threads extends React.Component {
 
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <table className="table table-striped table-ongray table-hover">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Author</th>
-                      <th>Replies</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.threads.map((item, i) => {
-                      return (
-                        <tr key={item.id}>
-                          <td>
-                            <a href={'/forums/thread/' + item.id + '/page/1/'}>
-                              {item.title}
-                            </a>
-                          </td>
-                          <td className="lb-user">
-                            <div className="lb-userimg">
-                              <a href={'/u/' + item.user.username}>
-                                <img
-                                  src={
-                                    item.user.profile_picture ||
-                                    item.user.gravatar
-                                  }
-                                  style={{
-                                    width: 50,
-                                    height: 50,
-                                    borderRadius: 25
-                                  }}
-                                />
+                <div className="table_wrapper">
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Replies</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.threads.map((item, i) => {
+                        return (
+                          <tr key={item.id}>
+                            <td>
+                              <a
+                                href={'/forums/thread/' + item.id + '/page/1/'}
+                              >
+                                {item.title}
                               </a>
-                              <a href={'/u/' + item.user.username}>
-                                {' '}
-                                {item.user.username}
-                              </a>
-                            </div>
-                          </td>
-                          <td>{item.thread_repliesCount} replies</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                            </td>
+                            <td className="lb-user">
+                              <div className="lb-userimg">
+                                <a href={'/u/' + item.user.username}>
+                                  <img
+                                    src={
+                                      item.user.profile_picture ||
+                                      item.user.gravatar
+                                    }
+                                    style={{
+                                      width: 50,
+                                      height: 50,
+                                      borderRadius: 25
+                                    }}
+                                  />
+                                </a>
+                                <a href={'/u/' + item.user.username}>
+                                  {' '}
+                                  {item.user.username}
+                                </a>
+                              </div>
+                            </td>
+                            <td>{item.thread_repliesCount} replies</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

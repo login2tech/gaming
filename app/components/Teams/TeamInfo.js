@@ -557,140 +557,144 @@ class TeamInfo extends React.Component {
                     <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
 
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        {this.state.is_edit_mode && <th>{'remove'}</th>}
-                        <th>Username</th>
-                        <th>Role</th>
-                        <th>{this.showGamerTag()}</th>
-                        <th>Eligible</th>
-                        <th>Date Joined</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.team_info.team_users.map((team_user, i) => {
-                        if (team_user.removed == 1) {
-                          return false;
-                        }
-                        // console.log(team_user.user_info.id, this.props.user.id);
-                        return (
-                          <tr key={team_user.id}>
-                            {this.state.is_edit_mode && (
-                              <td>
-                                {this.props.user &&
-                                  team_user.user_info.id !=
-                                    this.props.user.id && (
-                                    <input
-                                      type="checkbox"
-                                      checked={
-                                        this.state.removing.indexOf(
-                                          team_user.user_info.id
-                                        ) > -1
-                                      }
-                                      onChange={() => {
-                                        const removing = this.state.removing;
-                                        const idx = removing.indexOf(
-                                          team_user.user_info.id
-                                        );
-                                        if (idx > -1) {
-                                          removing.splice(idx, 1);
-                                        } else {
-                                          removing.push(team_user.user_info.id);
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          {this.state.is_edit_mode && <th>{'remove'}</th>}
+                          <th>Username</th>
+                          <th>Role</th>
+                          <th>{this.showGamerTag()}</th>
+                          <th>Eligible</th>
+                          <th>Date Joined</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.team_info.team_users.map((team_user, i) => {
+                          if (team_user.removed == 1) {
+                            return false;
+                          }
+                          // console.log(team_user.user_info.id, this.props.user.id);
+                          return (
+                            <tr key={team_user.id}>
+                              {this.state.is_edit_mode && (
+                                <td>
+                                  {this.props.user &&
+                                    team_user.user_info.id !=
+                                      this.props.user.id && (
+                                      <input
+                                        type="checkbox"
+                                        checked={
+                                          this.state.removing.indexOf(
+                                            team_user.user_info.id
+                                          ) > -1
                                         }
-                                        this.setState({
-                                          removing: removing
-                                        });
-                                      }}
-                                    />
-                                  )}
+                                        onChange={() => {
+                                          const removing = this.state.removing;
+                                          const idx = removing.indexOf(
+                                            team_user.user_info.id
+                                          );
+                                          if (idx > -1) {
+                                            removing.splice(idx, 1);
+                                          } else {
+                                            removing.push(
+                                              team_user.user_info.id
+                                            );
+                                          }
+                                          this.setState({
+                                            removing: removing
+                                          });
+                                        }}
+                                      />
+                                    )}
+                                </td>
+                              )}
+                              <td>
+                                <Link to={'/u/' + team_user.user_info.username}>
+                                  {team_user.user_info.username}
+                                </Link>
                               </td>
-                            )}
-                            <td>
-                              <Link to={'/u/' + team_user.user_info.username}>
-                                {team_user.user_info.username}
-                              </Link>
-                            </td>
 
-                            <td>
-                              {team_user.user_id ==
-                              this.state.team_info.team_creator
-                                ? 'Leader'
-                                : 'Member'}
-                            </td>
-                            <td>
-                              {this.state.team_info &&
-                              this.state.team_info.ladder &&
-                              this.state.team_info.ladder.gamer_tag
-                                ? team_user.user_info[
-                                    'gamer_tag_' +
-                                      this.state.team_info.ladder.gamer_tag
-                                  ]
-                                : ''}
-                            </td>
-                            <td>
-                              {this.state.team_info &&
-                              this.state.team_info.ladder &&
-                              this.state.team_info.ladder.gamer_tag &&
-                              team_user.user_info[
-                                'gamer_tag_' +
-                                  this.state.team_info.ladder.gamer_tag
-                              ] ? (
-                                <span className="text-success">
-                                  <img
-                                    className="icon_size"
-                                    src="/images/controller-green.svg"
-                                  />{' '}
-                                  Eligible
-                                </span>
-                              ) : (
-                                <span className="text-danger">
-                                  <img
-                                    className="icon_size"
-                                    src="/images/controller-red.svg"
-                                  />{' '}
-                                  Not Eligible
-                                </span>
-                              )}
-                            </td>
-                            <td>
-                              {team_user.accepted
-                                ? moment(team_user.created_at).format('lll')
-                                : 'Not Yet Accepted'}{' '}
-                              {this.props.user &&
-                              !team_user.accepted &&
-                              team_user.user_id == this.props.user.id ? (
-                                <button
-                                  className="btn btn-sm btn-success"
-                                  onClick={event => {
-                                    this.approveRequest(event);
-                                  }}
-                                >
-                                  Accept
-                                </button>
-                              ) : (
-                                false
-                              )}
-                              {this.props.user &&
-                              !team_user.accepted &&
-                              team_user.user_id == this.props.user.id ? (
-                                <button
-                                  className="btn btn-sm btn-danger"
-                                  onClick={event => {
-                                    this.approveRequest(event, 'reject');
-                                  }}
-                                >
-                                  Reject
-                                </button>
-                              ) : (
-                                false
-                              )}
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                              <td>
+                                {team_user.user_id ==
+                                this.state.team_info.team_creator
+                                  ? 'Leader'
+                                  : 'Member'}
+                              </td>
+                              <td>
+                                {this.state.team_info &&
+                                this.state.team_info.ladder &&
+                                this.state.team_info.ladder.gamer_tag
+                                  ? team_user.user_info[
+                                      'gamer_tag_' +
+                                        this.state.team_info.ladder.gamer_tag
+                                    ]
+                                  : ''}
+                              </td>
+                              <td>
+                                {this.state.team_info &&
+                                this.state.team_info.ladder &&
+                                this.state.team_info.ladder.gamer_tag &&
+                                team_user.user_info[
+                                  'gamer_tag_' +
+                                    this.state.team_info.ladder.gamer_tag
+                                ] ? (
+                                  <span className="text-success">
+                                    <img
+                                      className="icon_size"
+                                      src="/images/controller-green.svg"
+                                    />{' '}
+                                    Eligible
+                                  </span>
+                                ) : (
+                                  <span className="text-danger">
+                                    <img
+                                      className="icon_size"
+                                      src="/images/controller-red.svg"
+                                    />{' '}
+                                    Not Eligible
+                                  </span>
+                                )}
+                              </td>
+                              <td>
+                                {team_user.accepted
+                                  ? moment(team_user.created_at).format('lll')
+                                  : 'Not Yet Accepted'}{' '}
+                                {this.props.user &&
+                                !team_user.accepted &&
+                                team_user.user_id == this.props.user.id ? (
+                                  <button
+                                    className="btn btn-sm btn-success"
+                                    onClick={event => {
+                                      this.approveRequest(event);
+                                    }}
+                                  >
+                                    Accept
+                                  </button>
+                                ) : (
+                                  false
+                                )}
+                                {this.props.user &&
+                                !team_user.accepted &&
+                                team_user.user_id == this.props.user.id ? (
+                                  <button
+                                    className="btn btn-sm btn-danger"
+                                    onClick={event => {
+                                      this.approveRequest(event, 'reject');
+                                    }}
+                                  >
+                                    Reject
+                                  </button>
+                                ) : (
+                                  false
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                   {this.state.is_edit_mode && (
                     <div>
                       {' '}
@@ -759,48 +763,50 @@ class TeamInfo extends React.Component {
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        <th>Match</th>
-                        <th>Opponent</th>
-                        <th>Status</th>
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Match</th>
+                          <th>Opponent</th>
+                          <th>Status</th>
 
-                        <th>Date</th>
-                        <th>Info</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.match_played.map((match, i) => {
-                        return (
-                          <tr key={match.id}>
-                            <td>
-                              <Link to={'/m/' + match.id}>#{match.id}</Link>
-                            </td>
-                            <td>
-                              {match.team_1_id == this.state.team_info.id ? (
-                                <Link to={'/teams/view' + match.team_1_id}>
-                                  {match.team_1_info.title}
-                                </Link>
-                              ) : (
-                                <Link to={'/teams/view' + match.team_2_id}>
-                                  {match.team_2_info.title}
-                                </Link>
-                              )}
-                            </td>
+                          <th>Date</th>
+                          <th>Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.match_played.map((match, i) => {
+                          return (
+                            <tr key={match.id}>
+                              <td>
+                                <Link to={'/m/' + match.id}>#{match.id}</Link>
+                              </td>
+                              <td>
+                                {match.team_1_id == this.state.team_info.id ? (
+                                  <Link to={'/teams/view' + match.team_1_id}>
+                                    {match.team_1_info.title}
+                                  </Link>
+                                ) : (
+                                  <Link to={'/teams/view' + match.team_2_id}>
+                                    {match.team_2_info.title}
+                                  </Link>
+                                )}
+                              </td>
 
-                            <td>{match.status}</td>
+                              <td>{match.status}</td>
 
-                            <td>{moment(match.created_at).format('lll')}</td>
-                            <td>
-                              {' '}
-                              <Link to={'/m/' + match.id}>View Match</Link>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                              <td>{moment(match.created_at).format('lll')}</td>
+                              <td>
+                                {' '}
+                                <Link to={'/m/' + match.id}>View Match</Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

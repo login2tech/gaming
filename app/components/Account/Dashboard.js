@@ -729,20 +729,25 @@ class Profile extends React.Component {
     return (
       <div className="tab-pane" data-tab="tab2">
         <div className="win_loss">
-          <table id="threads-table" className="table table-striped table-gray">
-            <thead>
-              <tr>
-                <th>Place</th>
-                <th>Team Name</th>
-                <th>W-L</th>
-                <th>Win %</th>
-                <th>Strk</th>
-                <th>Xp</th>
-                <th>Level</th>
-              </tr>
-            </thead>
-            <tbody />
-          </table>
+          <div className="table_wrapper">
+            <table
+              id="threads-table"
+              className="table table-striped table-gray"
+            >
+              <thead>
+                <tr>
+                  <th>Place</th>
+                  <th>Team Name</th>
+                  <th>W-L</th>
+                  <th>Win %</th>
+                  <th>Strk</th>
+                  <th>Xp</th>
+                  <th>Level</th>
+                </tr>
+              </thead>
+              <tbody />
+            </table>
+          </div>
         </div>
       </div>
     );

@@ -786,64 +786,66 @@ class MatchInfo extends React.Component {
                           false
                         )}
                       </h6>
-
-                      <table className="table table-striped table-ongray table-hover">
-                        <thead>
-                          <tr>
-                            <th>Username</th>
-                            <th>{this.showGamerTag()}</th>
-                            <th>Role</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.match.team_1_info.team_users.map(
-                            (team_user, i) => {
-                              if (
-                                team_1_players.indexOf(
-                                  '' + team_user.user_info.id
-                                ) < 0
-                              ) {
-                                return false;
-                              }
-                              return (
-                                <tr key={team_user.id}>
-                                  <td>
-                                    <Link
-                                      target="_blank"
-                                      to={'/u/' + team_user.user_info.username}
-                                    >
-                                      {team_user.user_info.username}
-                                    </Link>
-                                  </td>
-                                  <td>
-                                    {team_user.user_info[
-                                      'gamer_tag_' +
-                                        this.state.match.ladder.gamer_tag
-                                    ] ? (
-                                      team_user.user_info[
+                      <div className="table_wrapper">
+                        <table className="table table-striped table-ongray table-hover">
+                          <thead>
+                            <tr>
+                              <th>Username</th>
+                              <th>{this.showGamerTag()}</th>
+                              <th>Role</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {this.state.match.team_1_info.team_users.map(
+                              (team_user, i) => {
+                                if (
+                                  team_1_players.indexOf(
+                                    '' + team_user.user_info.id
+                                  ) < 0
+                                ) {
+                                  return false;
+                                }
+                                return (
+                                  <tr key={team_user.id}>
+                                    <td>
+                                      <Link
+                                        target="_blank"
+                                        to={
+                                          '/u/' + team_user.user_info.username
+                                        }
+                                      >
+                                        {team_user.user_info.username}
+                                      </Link>
+                                    </td>
+                                    <td>
+                                      {team_user.user_info[
                                         'gamer_tag_' +
                                           this.state.match.ladder.gamer_tag
-                                      ]
-                                    ) : (
-                                      <span className="text-danger">
-                                        No UserId
-                                      </span>
-                                    )}
-                                  </td>
+                                      ] ? (
+                                        team_user.user_info[
+                                          'gamer_tag_' +
+                                            this.state.match.ladder.gamer_tag
+                                        ]
+                                      ) : (
+                                        <span className="text-danger">
+                                          No UserId
+                                        </span>
+                                      )}
+                                    </td>
 
-                                  <td>
-                                    {team_user.user_id ==
-                                    this.state.match.team_1_info.team_creator
-                                      ? 'Leader'
-                                      : 'Member'}
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                        </tbody>
-                      </table>
-
+                                    <td>
+                                      {team_user.user_id ==
+                                      this.state.match.team_1_info.team_creator
+                                        ? 'Leader'
+                                        : 'Member'}
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
                       <br />
                       {this.state.match.team_2_id ? (
                         <div>
@@ -873,63 +875,67 @@ class MatchInfo extends React.Component {
                               false
                             )}
                           </h6>
-                          <table className="table table-striped table-ongray table-hover">
-                            <thead>
-                              <tr>
-                                <th>Username</th>
-                                <th>{this.showGamerTag()}</th>
-                                <th>Role</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {this.state.match.team_2_info.team_users.map(
-                                (team_user, i) => {
-                                  if (
-                                    team_2_players.indexOf(
-                                      '' + team_user.user_info.id
-                                    ) < 0
-                                  ) {
-                                    return false;
-                                  }
-                                  return (
-                                    <tr key={team_user.id}>
-                                      <td>
-                                        <Link
-                                          to={
-                                            '/u/' + team_user.user_info.username
-                                          }
-                                        >
-                                          {team_user.user_info.username}
-                                        </Link>
-                                      </td>
-                                      <td>
-                                        {team_user.user_info[
-                                          'gamer_tag_' +
-                                            this.state.match.ladder.gamer_tag
-                                        ] ? (
-                                          team_user.user_info[
+                          <div className="table_wrapper">
+                            <table className="table table-striped table-ongray table-hover">
+                              <thead>
+                                <tr>
+                                  <th>Username</th>
+                                  <th>{this.showGamerTag()}</th>
+                                  <th>Role</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {this.state.match.team_2_info.team_users.map(
+                                  (team_user, i) => {
+                                    if (
+                                      team_2_players.indexOf(
+                                        '' + team_user.user_info.id
+                                      ) < 0
+                                    ) {
+                                      return false;
+                                    }
+                                    return (
+                                      <tr key={team_user.id}>
+                                        <td>
+                                          <Link
+                                            to={
+                                              '/u/' +
+                                              team_user.user_info.username
+                                            }
+                                          >
+                                            {team_user.user_info.username}
+                                          </Link>
+                                        </td>
+                                        <td>
+                                          {team_user.user_info[
                                             'gamer_tag_' +
                                               this.state.match.ladder.gamer_tag
-                                          ]
-                                        ) : (
-                                          <span className="text-danger">
-                                            No User id
-                                          </span>
-                                        )}
-                                      </td>
-                                      <td>
-                                        {team_user.user_id ==
-                                        this.state.match.team_2_info
-                                          .team_creator
-                                          ? 'Leader'
-                                          : 'Member'}
-                                      </td>
-                                    </tr>
-                                  );
-                                }
-                              )}
-                            </tbody>
-                          </table>
+                                          ] ? (
+                                            team_user.user_info[
+                                              'gamer_tag_' +
+                                                this.state.match.ladder
+                                                  .gamer_tag
+                                            ]
+                                          ) : (
+                                            <span className="text-danger">
+                                              No User id
+                                            </span>
+                                          )}
+                                        </td>
+                                        <td>
+                                          {team_user.user_id ==
+                                          this.state.match.team_2_info
+                                            .team_creator
+                                            ? 'Leader'
+                                            : 'Member'}
+                                        </td>
+                                      </tr>
+                                    );
+                                  }
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       ) : (
                         false
@@ -966,85 +972,89 @@ class MatchInfo extends React.Component {
                       <h6 className="prizes_desclaimer">
                         {this.state.team_selected.title} - Squad
                       </h6>
-                      <table className="table table-striped table-ongray table-hover">
-                        <thead>
-                          <tr>
-                            <th>Username</th>
-                            <th>Role</th>
-                            <th>Eligibility</th>
-                            <th>Include</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.team_selected.team_users.map(
-                            (team_user, i) => {
-                              if (team_user.removed == 1) {
-                                return false;
-                              }
-                              if (team_user.acceepted == false) {
-                                return false;
-                              }
-                              return (
-                                <tr key={team_user.id}>
-                                  <td>
-                                    <Link
-                                      to={'/u/' + team_user.user_info.username}
-                                    >
-                                      {team_user.user_info.username}
-                                    </Link>
-                                  </td>
+                      <div className="table_wrapper">
+                        <table className="table table-striped table-ongray table-hover">
+                          <thead>
+                            <tr>
+                              <th>Username</th>
+                              <th>Role</th>
+                              <th>Eligibility</th>
+                              <th>Include</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {this.state.team_selected.team_users.map(
+                              (team_user, i) => {
+                                if (team_user.removed == 1) {
+                                  return false;
+                                }
+                                if (team_user.acceepted == false) {
+                                  return false;
+                                }
+                                return (
+                                  <tr key={team_user.id}>
+                                    <td>
+                                      <Link
+                                        to={
+                                          '/u/' + team_user.user_info.username
+                                        }
+                                      >
+                                        {team_user.user_info.username}
+                                      </Link>
+                                    </td>
 
-                                  <td>
-                                    {team_user.user_id ==
-                                    this.state.team_selected.team_creator
-                                      ? 'Leader'
-                                      : 'Member'}
-                                  </td>
-                                  <td>{this.amIEligible(team_user)}</td>
-                                  <td>
-                                    <label>
-                                      <input
-                                        disabled={
-                                          !this.amIEligibleFlag(team_user)
-                                        }
-                                        type="checkbox"
-                                        checked={
-                                          this.state.using_users.indexOf(
-                                            team_user.user_info.id
-                                          ) > -1
-                                        }
-                                        onChange={() => {
-                                          const using_users = this.state
-                                            .using_users;
-                                          if (
-                                            using_users.indexOf(
+                                    <td>
+                                      {team_user.user_id ==
+                                      this.state.team_selected.team_creator
+                                        ? 'Leader'
+                                        : 'Member'}
+                                    </td>
+                                    <td>{this.amIEligible(team_user)}</td>
+                                    <td>
+                                      <label>
+                                        <input
+                                          disabled={
+                                            !this.amIEligibleFlag(team_user)
+                                          }
+                                          type="checkbox"
+                                          checked={
+                                            this.state.using_users.indexOf(
                                               team_user.user_info.id
                                             ) > -1
-                                          ) {
-                                            using_users.splice(
+                                          }
+                                          onChange={() => {
+                                            const using_users = this.state
+                                              .using_users;
+                                            if (
                                               using_users.indexOf(
                                                 team_user.user_info.id
-                                              ),
-                                              1
-                                            );
-                                          } else {
-                                            using_users.push(
-                                              team_user.user_info.id
-                                            );
-                                          }
-                                          this.setState({
-                                            using_users: using_users
-                                          });
-                                        }}
-                                      />
-                                    </label>
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                        </tbody>
-                      </table>
+                                              ) > -1
+                                            ) {
+                                              using_users.splice(
+                                                using_users.indexOf(
+                                                  team_user.user_info.id
+                                                ),
+                                                1
+                                              );
+                                            } else {
+                                              using_users.push(
+                                                team_user.user_info.id
+                                              );
+                                            }
+                                            this.setState({
+                                              using_users: using_users
+                                            });
+                                          }}
+                                        />
+                                      </label>
+                                    </td>
+                                  </tr>
+                                );
+                              }
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
                       <br />
                       <label>
                         <input type="checkbox" required /> I agree to the terms

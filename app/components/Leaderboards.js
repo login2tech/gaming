@@ -117,7 +117,7 @@ class Leaderboards extends React.Component {
             <div className="row">
               <div className="col">
                 <div className="content_box">
-                  <div className=" ">
+                  <div className="table_wrapper">
                     <table className="table table-stripped has_hover">
                       <thead>
                         <tr>

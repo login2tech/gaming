@@ -109,50 +109,53 @@ class Reactions extends React.Component {
         </ul>
         <br />
         <br />
-        <table>
-          <tbody>
-            {this.state.items.map((item, i) => {
-              if (
-                this.state.showing != 'all' &&
-                item.type != this.state.showing
-              ) {
-                return false;
-              }
-              const image_url =
-                item.user && item.user.profile_picture
-                  ? item.user.profile_picture
-                  : 'https://ui-avatars.com/api/?size=30&name=' +
-                    (item.user ? item.user.first_name : ' ') +
-                    ' ' +
-                    (item.user ? item.user.last_name : ' ') +
-                    '&color=223cf3&background=000000';
+        <div className="table_wrapper">
+          <table className="table">
+            <tbody>
+              {this.state.items.map((item, i) => {
+                if (
+                  this.state.showing != 'all' &&
+                  item.type != this.state.showing
+                ) {
+                  return false;
+                }
+                const image_url =
+                  item.user && item.user.profile_picture
+                    ? item.user.profile_picture
+                    : 'https://ui-avatars.com/api/?size=30&name=' +
+                      (item.user ? item.user.first_name : ' ') +
+                      ' ' +
+                      (item.user ? item.user.last_name : ' ') +
+                      '&color=223cf3&background=000000';
 
-              return (
-                <tr key={item.id}>
-                  <td>
-                    <Link
-                      onClick={() => {
-                        this.props.dispatch(
-                          closeModal({
-                            id: 'following'
-                          })
-                        );
-                      }}
-                      className="image_avar"
-                      to={item.user ? '/u/' + item.user.username : '#'}
-                    >
-                      <img className="img-circle " src={image_url} />@
-                      {item.user.username}
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        {this.state.is_loaded && this.state.items.length < 1 && (
-          <div className="alert alert-warning">No Users in this list</div>
-        )}
+                return (
+                  <tr key={item.id}>
+                    <td>
+                      <Link
+                        onClick={() => {
+                          this.props.dispatch(
+                            closeModal({
+                              id: 'following'
+                            })
+                          );
+                        }}
+                        className="image_avar"
+                        to={item.user ? '/u/' + item.user.username : '#'}
+                      >
+                        <img className="img-circle " src={image_url} />@
+                        {item.user.username}
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {this.state.is_loaded &&
+          this.state.items.length < 1 && (
+            <div className="alert alert-warning">No Users in this list</div>
+          )}
       </div>
     );
   }

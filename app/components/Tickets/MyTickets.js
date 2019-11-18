@@ -69,34 +69,36 @@ class Tickets extends React.Component {
 
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <table className="table table-striped table-ongray table-hover">
-                  <thead>
-                    <tr>
-                      <th width="30">ID</th>
-                      <th>Title</th>
-                      <th>Department</th>
-                      <th>Last Updated</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {this.state.items.map((item, i) => {
-                      return (
-                        <tr key={item.id}>
-                          <td>{item.id}</td>
-                          <td>
-                            <a href={'/support/tickets/ticket/' + item.id}>
-                              {item.title}
-                            </a>
-                          </td>
-                          <td>{item.type}</td>
-                          <td>{moment(item.updated_at).fromNow()}</td>
-                          <td>{item.status}</td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+                <div className="table_wrapper">
+                  <table className="table table-striped table-ongray table-hover">
+                    <thead>
+                      <tr>
+                        <th width="30">ID</th>
+                        <th>Title</th>
+                        <th>Department</th>
+                        <th>Last Updated</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {this.state.items.map((item, i) => {
+                        return (
+                          <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>
+                              <a href={'/support/tickets/ticket/' + item.id}>
+                                {item.title}
+                              </a>
+                            </td>
+                            <td>{item.type}</td>
+                            <td>{moment(item.updated_at).fromNow()}</td>
+                            <td>{item.status}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

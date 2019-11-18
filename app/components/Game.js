@@ -388,53 +388,57 @@ class Game extends React.Component {
                   ) : (
                     false
                   )}
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        <th>Match</th>
-                        <th>Starts At</th>
-                        <th>Players</th>
-                        <th> </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.matches &&
-                        this.state.matches['game_' + game_id] &&
-                        this.state.matches['game_' + game_id].map(
-                          (match, i) => {
-                            if (match.status == 'expired') {
-                              return false;
-                            }
-                            return (
-                              <tr
-                                key={match.id}
-                                className="tournament-box"
-                                style={{background: '#27204d'}}
-                              >
-                                <td>
-                                  <Link
-                                    to={this.matchLink('/m/' + match.id)}
-                                    className="tournament-name"
-                                  >
-                                    {match.ladder.title}
-                                  </Link>
-                                </td>
-                                <td>{moment(match.starts_at).format('lll')}</td>
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Match</th>
+                          <th>Starts At</th>
+                          <th>Players</th>
+                          <th> </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.matches &&
+                          this.state.matches['game_' + game_id] &&
+                          this.state.matches['game_' + game_id].map(
+                            (match, i) => {
+                              if (match.status == 'expired') {
+                                return false;
+                              }
+                              return (
+                                <tr
+                                  key={match.id}
+                                  className="tournament-box"
+                                  style={{background: '#27204d'}}
+                                >
+                                  <td>
+                                    <Link
+                                      to={this.matchLink('/m/' + match.id)}
+                                      className="tournament-name"
+                                    >
+                                      {match.ladder.title}
+                                    </Link>
+                                  </td>
+                                  <td>
+                                    {moment(match.starts_at).format('lll')}
+                                  </td>
 
-                                <td className="col-item">
-                                  {match.match_players}v{match.match_players}
-                                </td>
-                                <td>
-                                  <Link to={this.matchLink('/m/' + match.id)}>
-                                    Accept Match
-                                  </Link>
-                                </td>
-                              </tr>
-                            );
-                          }
-                        )}
-                    </tbody>
-                  </table>
+                                  <td className="col-item">
+                                    {match.match_players}v{match.match_players}
+                                  </td>
+                                  <td>
+                                    <Link to={this.matchLink('/m/' + match.id)}>
+                                      Accept Match
+                                    </Link>
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>
@@ -444,72 +448,76 @@ class Game extends React.Component {
                 <div>
                   <h4>Recent Matches</h4>
 
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        <th>Match</th>
-                        <th>Team 1</th>
-                        <th>Team 2</th>
-                        <th>Date</th>
-                        <th>Info</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.done_matches.map((match, i) => {
-                        if (match.status == 'expired') {
-                          return false;
-                        }
-                        if (!match.team_2) {
-                          return false;
-                        }
-                        let wl_1 = false;
-                        let wl_2 = false;
-                        if (match.result) {
-                          if (match.result == 'team_1') {
-                            wl_1 = <span className="text-success"> W</span>;
-                            wl_2 = <span className="text-danger"> L</span>;
-                          } else if (match.result == 'team_2') {
-                            wl_2 = <span className="text-success"> W</span>;
-                            wl_1 = <span className="text-danger"> L</span>;
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Match</th>
+                          <th>Team 1</th>
+                          <th>Team 2</th>
+                          <th>Date</th>
+                          <th>Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.done_matches.map((match, i) => {
+                          if (match.status == 'expired') {
+                            return false;
                           }
-                        }
+                          if (!match.team_2) {
+                            return false;
+                          }
+                          let wl_1 = false;
+                          let wl_2 = false;
+                          if (match.result) {
+                            if (match.result == 'team_1') {
+                              wl_1 = <span className="text-success"> W</span>;
+                              wl_2 = <span className="text-danger"> L</span>;
+                            } else if (match.result == 'team_2') {
+                              wl_2 = <span className="text-success"> W</span>;
+                              wl_1 = <span className="text-danger"> L</span>;
+                            }
+                          }
 
-                        return (
-                          <tr key={match.id}>
-                            <td>
-                              <Link to={'/m/' + match.id}>#{match.id}</Link>
-                            </td>
-                            <td>
-                              <Link to={'/teams/view/' + match.team_1_info.id}>
-                                {match.team_1_info.title}
-                              </Link>
-                              {wl_1}
-                            </td>
-                            <td>
-                              {match.team_2_info ? (
-                                <>
-                                  <Link
-                                    to={'/teams/view/' + match.team_2_info.id}
-                                  >
-                                    {match.team_2_info.title}
-                                  </Link>
-                                  {wl_2}
-                                </>
-                              ) : (
-                                ' '
-                              )}
-                            </td>
+                          return (
+                            <tr key={match.id}>
+                              <td>
+                                <Link to={'/m/' + match.id}>#{match.id}</Link>
+                              </td>
+                              <td>
+                                <Link
+                                  to={'/teams/view/' + match.team_1_info.id}
+                                >
+                                  {match.team_1_info.title}
+                                </Link>
+                                {wl_1}
+                              </td>
+                              <td>
+                                {match.team_2_info ? (
+                                  <>
+                                    <Link
+                                      to={'/teams/view/' + match.team_2_info.id}
+                                    >
+                                      {match.team_2_info.title}
+                                    </Link>
+                                    {wl_2}
+                                  </>
+                                ) : (
+                                  ' '
+                                )}
+                              </td>
 
-                            <td>{moment(match.created_at).format('lll')}</td>
-                            <td>
-                              {' '}
-                              <Link to={'/m/' + match.id}>View Match</Link>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
+                              <td>{moment(match.created_at).format('lll')}</td>
+                              <td>
+                                {' '}
+                                <Link to={'/m/' + match.id}>View Match</Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12">
@@ -537,18 +545,20 @@ class Game extends React.Component {
                   </div>
                   <br />
                   <br />
-                  <table className="table table-striped table-ongray table-hover">
-                    <thead>
-                      <tr>
-                        <td>Game Rank</td>
-                        <td>User</td>
-                        <td>Wins</td>
-                        <td>Loss</td>
-                        <td>Win Rate</td>
-                      </tr>
-                    </thead>
-                    {this.renderLeaderBoard()}
-                  </table>
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <td>Game Rank</td>
+                          <td>User</td>
+                          <td>Wins</td>
+                          <td>Loss</td>
+                          <td>Win Rate</td>
+                        </tr>
+                      </thead>
+                      {this.renderLeaderBoard()}
+                    </table>
+                  </div>
                 </div>
               </div>
             </div>

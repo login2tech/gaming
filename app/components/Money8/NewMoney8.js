@@ -304,68 +304,74 @@ class NewMoney8 extends React.Component {
                           <i className="fa fa-users" aria-hidden="true" />{' '}
                           Players
                         </h5>
-
-                        <table className="table table-striped table-ongray table-hover">
-                          <thead>
-                            <tr>
-                              <th>Username</th>
-                              <th>{this.showGamerTag(ladder)}</th>
-                              <th>Eligibility</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {this.state.players.map((team_user, i) => {
-                              return (
-                                <tr key={team_user.id}>
-                                  <td>
-                                    <Link
-                                      to={
-                                        team_user
-                                          ? '/u/' + team_user.username
-                                          : ''
-                                      }
-                                    >
-                                      {team_user.username}
-                                    </Link>
-                                  </td>
-                                  <td>
-                                    {team_user[
-                                      'gamer_tag_' + ladder.gamer_tag
-                                    ] ? (
-                                      team_user['gamer_tag_' + ladder.gamer_tag]
-                                    ) : (
-                                      <span className="text-danger">
-                                        No user id
-                                      </span>
-                                    )}
-                                  </td>
-                                  <td>
-                                    {this.amIEligible(team_user, ladder) ==
-                                    'waiting' ? (
-                                      ' -- '
-                                    ) : this.amIEligible(team_user, ladder) ? (
-                                      <span className="text-success">
-                                        <img
-                                          className="icon_size"
-                                          src="/images/controller-green.svg"
-                                        />{' '}
-                                        Eligible
-                                      </span>
-                                    ) : (
-                                      <span className="text-danger">
-                                        <img
-                                          className="icon_size"
-                                          src="/images/controller-red.svg"
-                                        />{' '}
-                                        Not Eligible
-                                      </span>
-                                    )}
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                        <div className="table_wrapper">
+                          <table className="table table-striped table-ongray table-hover">
+                            <thead>
+                              <tr>
+                                <th>Username</th>
+                                <th>{this.showGamerTag(ladder)}</th>
+                                <th>Eligibility</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {this.state.players.map((team_user, i) => {
+                                return (
+                                  <tr key={team_user.id}>
+                                    <td>
+                                      <Link
+                                        to={
+                                          team_user
+                                            ? '/u/' + team_user.username
+                                            : ''
+                                        }
+                                      >
+                                        {team_user.username}
+                                      </Link>
+                                    </td>
+                                    <td>
+                                      {team_user[
+                                        'gamer_tag_' + ladder.gamer_tag
+                                      ] ? (
+                                        team_user[
+                                          'gamer_tag_' + ladder.gamer_tag
+                                        ]
+                                      ) : (
+                                        <span className="text-danger">
+                                          No user id
+                                        </span>
+                                      )}
+                                    </td>
+                                    <td>
+                                      {this.amIEligible(team_user, ladder) ==
+                                      'waiting' ? (
+                                        ' -- '
+                                      ) : this.amIEligible(
+                                        team_user,
+                                        ladder
+                                      ) ? (
+                                        <span className="text-success">
+                                          <img
+                                            className="icon_size"
+                                            src="/images/controller-green.svg"
+                                          />{' '}
+                                          Eligible
+                                        </span>
+                                      ) : (
+                                        <span className="text-danger">
+                                          <img
+                                            className="icon_size"
+                                            src="/images/controller-red.svg"
+                                          />{' '}
+                                          Not Eligible
+                                        </span>
+                                      )}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>

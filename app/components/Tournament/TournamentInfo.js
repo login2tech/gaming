@@ -537,7 +537,7 @@ class TournamentInfo extends React.Component {
       <div className="col-md-12">
         {/* <div className="row">
           <div className="col-sm-8">
-            <table className="t-page-title-table">
+            <div className="table_wrapper"><table className="t-page-title-table">
               <tbody>
                 <tr>
                   <td>
@@ -555,7 +555,7 @@ class TournamentInfo extends React.Component {
                   </td>
                 </tr>
               </tbody>
-            </table>
+            </table></div>
           </div>
           <div className="col-sm-4">
             <div className="tourn-flags" />
@@ -565,23 +565,25 @@ class TournamentInfo extends React.Component {
           <div className="col-sm-4 col-6">
             <div className="t-prizes">
               <div className="t-prizes-place p1">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span className="hc-trophy-icon">
-                          <img
-                            src="/images/goldtrophy.png"
-                            style={{width: '40px'}}
-                          />
-                        </span>
-                      </td>
-                      <td>
-                        1<sup>st</sup> Place
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="table_wrapper">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span className="hc-trophy-icon">
+                            <img
+                              src="/images/goldtrophy.png"
+                              style={{width: '40px'}}
+                            />
+                          </span>
+                        </td>
+                        <td>
+                          1<sup>st</sup> Place
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div className="t-prizes-amount">
                 ${this.state.tournament.first_winner_price}
@@ -592,23 +594,25 @@ class TournamentInfo extends React.Component {
           <div className="col-sm-4 col-6">
             <div className="t-prizes">
               <div className="t-prizes-place p2">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span className="hc-trophy-icon">
-                          <img
-                            src="/images/silvertrophy.png"
-                            style={{width: '40px'}}
-                          />
-                        </span>
-                      </td>
-                      <td>
-                        2<sup>nd</sup> Place
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="table_wrapper">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span className="hc-trophy-icon">
+                            <img
+                              src="/images/silvertrophy.png"
+                              style={{width: '40px'}}
+                            />
+                          </span>
+                        </td>
+                        <td>
+                          2<sup>nd</sup> Place
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div className="t-prizes-amount">
                 ${this.state.tournament.second_winner_price}
@@ -619,23 +623,25 @@ class TournamentInfo extends React.Component {
           <div className="col-sm-4 col-6">
             <div className="t-prizes">
               <div className="t-prizes-place p3">
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
-                        <span className="hc-trophy-icon">
-                          <img
-                            src="/images/bronzetrophy.png"
-                            style={{width: '40px'}}
-                          />
-                        </span>
-                      </td>
-                      <td>
-                        3<sup>rd</sup> Place
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="table_wrapper">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span className="hc-trophy-icon">
+                            <img
+                              src="/images/bronzetrophy.png"
+                              style={{width: '40px'}}
+                            />
+                          </span>
+                        </td>
+                        <td>
+                          3<sup>rd</sup> Place
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
               <div className="t-prizes-amount">
                 ${this.state.tournament.third_winner_price}
@@ -826,38 +832,40 @@ class TournamentInfo extends React.Component {
           return (
             <div key={team.id}>
               <h6 className="prizes_desclaimer">{team.title}</h6>
-              <table className="table table-striped table-ongray table-hover">
-                <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {usrs_list.map((usr, i) => {
-                    const team_user =
-                      this.state.users_data &&
-                      this.state.users_data['usr_' + usr]
-                        ? this.state.users_data['usr_' + usr]
-                        : {};
-                    return (
-                      <tr key={team_user.id}>
-                        <td>
-                          <Link to={'/u/' + team_user.username}>
-                            {team_user.username}
-                          </Link>
-                        </td>
+              <div className="table_wrapper">
+                <table className="table table-striped table-ongray table-hover">
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Role</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {usrs_list.map((usr, i) => {
+                      const team_user =
+                        this.state.users_data &&
+                        this.state.users_data['usr_' + usr]
+                          ? this.state.users_data['usr_' + usr]
+                          : {};
+                      return (
+                        <tr key={team_user.id}>
+                          <td>
+                            <Link to={'/u/' + team_user.username}>
+                              {team_user.username}
+                            </Link>
+                          </td>
 
-                        <td>
-                          {team_user.id == team.team_creator
-                            ? 'Leader'
-                            : 'Member'}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                          <td>
+                            {team_user.id == team.team_creator
+                              ? 'Leader'
+                              : 'Member'}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           );
         })}
@@ -1035,24 +1043,26 @@ class TournamentInfo extends React.Component {
       <div className="col-md-12">
         <h6 className="prizes_desclaimer">Round 1</h6>
         <div>
-          <table className="table table-striped table-ongray table-hover">
-            <thead>
-              <tr>
-                <th>Match</th>
-                <th>Team</th>
-                <th>Opponent</th>
-                <th>Result</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Info</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.tournament.matches.map((match, i) => {
-                return this.renderMatchLine(match, i, 1);
-              })}
-            </tbody>
-          </table>
+          <div className="table_wrapper">
+            <table className="table table-striped table-ongray table-hover">
+              <thead>
+                <tr>
+                  <th>Match</th>
+                  <th>Team</th>
+                  <th>Opponent</th>
+                  <th>Result</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Info</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.tournament.matches.map((match, i) => {
+                  return this.renderMatchLine(match, i, 1);
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
@@ -1070,24 +1080,26 @@ class TournamentInfo extends React.Component {
         <div className="col-md-12" key={round}>
           <h6 className="prizes_desclaimer">Round {round}</h6>
           <div>
-            <table className="table table-striped table-ongray table-hover">
-              <thead>
-                <tr>
-                  <th>Match</th>
-                  <th>Team</th>
-                  <th>Opponent</th>
-                  <th>Result</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Info</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.tournament.matches.map((match, i) => {
-                  return this.renderMatchLine(match, i, round);
-                })}
-              </tbody>
-            </table>
+            <div className="table_wrapper">
+              <table className="table table-striped table-ongray table-hover">
+                <thead>
+                  <tr>
+                    <th>Match</th>
+                    <th>Team</th>
+                    <th>Opponent</th>
+                    <th>Result</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Info</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.tournament.matches.map((match, i) => {
+                    return this.renderMatchLine(match, i, round);
+                  })}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       );
@@ -1139,73 +1151,78 @@ class TournamentInfo extends React.Component {
               <h6 className="prizes_desclaimer">
                 {this.state.team_selected.title} - Squad
               </h6>
-              <table className="table table-striped table-ongray table-hover">
-                <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Role</th>
-                    <th>Eligibility</th>
-                    <th>Include</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.team_selected.team_users.map((team_user, i) => {
-                    if (team_user.removed == 1) {
-                      return false;
-                    }
-                    if (team_user.acceepted == false) {
-                      return false;
-                    }
-                    return (
-                      <tr key={team_user.id}>
-                        <td>
-                          <Link to={'/u/' + team_user.user_info.username}>
-                            {team_user.user_info.username}
-                          </Link>
-                        </td>
+              <div className="table_wrapper">
+                <table className="table table-striped table-ongray table-hover">
+                  <thead>
+                    <tr>
+                      <th>Username</th>
+                      <th>Role</th>
+                      <th>Eligibility</th>
+                      <th>Include</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.team_selected.team_users.map((team_user, i) => {
+                      if (team_user.removed == 1) {
+                        return false;
+                      }
+                      if (team_user.acceepted == false) {
+                        return false;
+                      }
+                      return (
+                        <tr key={team_user.id}>
+                          <td>
+                            <Link to={'/u/' + team_user.user_info.username}>
+                              {team_user.user_info.username}
+                            </Link>
+                          </td>
 
-                        <td>
-                          {team_user.user_id ==
-                          this.state.team_selected.team_creator
-                            ? 'Leader'
-                            : 'Member'}
-                        </td>
-                        <td>{this.amIEligible(team_user)}</td>
-                        <td>
-                          <label>
-                            <input
-                              disabled={!this.amIEligibleFlag(team_user)}
-                              type="checkbox"
-                              checked={
-                                this.state.using_users.indexOf(
-                                  team_user.user_info.id
-                                ) > -1
-                              }
-                              onChange={() => {
-                                const using_users = this.state.using_users;
-                                if (
-                                  using_users.indexOf(team_user.user_info.id) >
-                                  -1
-                                ) {
-                                  using_users.splice(
-                                    using_users.indexOf(team_user.user_info.id),
-                                    1
-                                  );
-                                } else {
-                                  using_users.push(team_user.user_info.id);
+                          <td>
+                            {team_user.user_id ==
+                            this.state.team_selected.team_creator
+                              ? 'Leader'
+                              : 'Member'}
+                          </td>
+                          <td>{this.amIEligible(team_user)}</td>
+                          <td>
+                            <label>
+                              <input
+                                disabled={!this.amIEligibleFlag(team_user)}
+                                type="checkbox"
+                                checked={
+                                  this.state.using_users.indexOf(
+                                    team_user.user_info.id
+                                  ) > -1
                                 }
-                                this.setState({
-                                  using_users: using_users
-                                });
-                              }}
-                            />
-                          </label>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                                onChange={() => {
+                                  const using_users = this.state.using_users;
+                                  if (
+                                    using_users.indexOf(
+                                      team_user.user_info.id
+                                    ) > -1
+                                  ) {
+                                    using_users.splice(
+                                      using_users.indexOf(
+                                        team_user.user_info.id
+                                      ),
+                                      1
+                                    );
+                                  } else {
+                                    using_users.push(team_user.user_info.id);
+                                  }
+                                  this.setState({
+                                    using_users: using_users
+                                  });
+                                }}
+                              />
+                            </label>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
               <br />
               <label>
                 <input type="checkbox" required /> I agree to the terms to join
