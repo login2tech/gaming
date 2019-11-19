@@ -76,76 +76,77 @@ class ProfileHeader extends React.Component {
 
   rank_based_on_xp(xpo) {
     const xp = this.getXp(xpo);
-    if (xp < 50) {
-      return (
-        <>
-          Amateur <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 200) {
-      return (
-        <>
-          Beginner <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 500) {
-      return (
-        <>
-          Upcoming <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 1000) {
-      return (
-        <>
-          Bronze <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 1500) {
-      return (
-        <>
-          Silver <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 2000) {
-      return (
-        <>
-          Gold <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 3000) {
-      return (
-        <>
-          Platinum <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 3500) {
-      return (
-        <>
-          Diamond <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-    if (xp < 4000) {
-      return (
-        <>
-          Elite <span className="t-bl">({xp} season XP)</span>
-        </>
-      );
-    }
-
-    // if (xp >  5000) {
-    return (
-      <>
-        Elite <span className="t-bl">({xp} season XP)</span>
-      </>
-    );
+    return xp + ' season XP';
+    // if (xp < 50) {
+    //   return (
+    //     <>
+    //       Amateur <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 200) {
+    //   return (
+    //     <>
+    //       Beginner <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 500) {
+    //   return (
+    //     <>
+    //       Upcoming <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 1000) {
+    //   return (
+    //     <>
+    //       Bronze <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 1500) {
+    //   return (
+    //     <>
+    //       Silver <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 2000) {
+    //   return (
+    //     <>
+    //       Gold <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 3000) {
+    //   return (
+    //     <>
+    //       Platinum <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 3500) {
+    //   return (
+    //     <>
+    //       Diamond <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    // if (xp < 4000) {
+    //   return (
+    //     <>
+    //       Elite <span className="t-bl">({xp} season XP)</span>
+    //     </>
+    //   );
+    // }
+    //
+    // // if (xp >  5000) {
+    // return (
+    //   <>
+    //     Elite <span className="t-bl">({xp} season XP)</span>
+    //   </>
+    // );
     // }
   }
 
@@ -309,6 +310,120 @@ class ProfileHeader extends React.Component {
     );
   }
 
+  renderProfilePicture() {
+    const {user_info} = this.props;
+    return (
+      <div className="game_pic_tournament profile_pic_outline square">
+        <div className="content">
+          {user_info.profile_picture ? (
+            <img
+              src={user_info.profile_picture}
+              className={'img-fluid ' + (user_info.prime ? ' prime ' : ' ')}
+            />
+          ) : (
+            <img
+              className={'img-fluid ' + (user_info.prime ? ' prime ' : ' ')}
+              src={
+                'https://ui-avatars.com/api/?size=512&name=' +
+                user_info.first_name +
+                ' ' +
+                user_info.last_name +
+                '&color=223cf3&background=000000'
+              }
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  renderXPMeter() {
+    const {user_info} = this.props;
+    return (
+      <div className="float-right rank_box_wrap">
+        {/*rank : */}
+        {this.rank_based_on_xp(user_info.xp_obj)}
+        <div
+          className="rank_box_prog_outer"
+          style={{
+            position: 'relative'
+          }}
+        >
+          <div className="rank_box_prog">
+            <span
+              className="rank_prog_done"
+              style={{
+                width:
+                  '' + this.rank_percent_based_on_xp(user_info.xp_obj) + '%'
+              }}
+            />
+          </div>
+          <span>{this.rank_min_based_on_xp(user_info.xp_obj)}</span>
+          <span
+            style={{
+              position: 'absolute',
+              background: 'url(/images/blank_ctrl2.png) center no-repeat',
+              marginTop: '5px',
+              backgroundSize: 'contain',
+              padding: '5px 20px 9px 20px',
+              marginLeft: '-20px',
+              left: '' + this.rank_percent_based_on_xp(user_info.xp_obj) + '%'
+            }}
+          >
+            {this.getXp(user_info.xp_obj)}
+          </span>
+          <span>{this.rank_max_based_on_xp(user_info.xp_obj)}</span>
+        </div>
+      </div>
+    );
+  }
+
+  renderNameAndFollow(for_m) {
+    const {user_info} = this.props;
+    let cls = '';
+    if (for_m == 'desktop') {
+      cls = ' d-none d-md-block text-center';
+    } else if (for_m == 'mobile') {
+      cls = '  d-md-none text-center';
+    }
+    return (
+      <div className={cls}>
+        <h1 className="no-case-change text-center">@{user_info.username}</h1>
+        {this.props.user &&
+        this.props.is_loaded &&
+        this.props.user.id != user_info.id &&
+        user_info.followers.length < 1 ? (
+          <Link
+            onClick={event => {
+              this.addFriend(event);
+            }}
+            className="btn btn-primary bttn_submit btn-outline mw_200 m0a"
+          >
+            Follow
+          </Link>
+        ) : (
+          false
+        )}
+
+        {this.props.user &&
+        this.props.is_loaded &&
+        this.props.user.id != user_info.id &&
+        user_info.followers.length > 0 ? (
+          <Link
+            onClick={event => {
+              this.addFriend(event);
+            }}
+            className="btn btn-primary bttn_submit active mw_200 m0a"
+          >
+            Unfollow
+          </Link>
+        ) : (
+          false
+        )}
+      </div>
+    );
+  }
+
   render() {
     const {user_info} = this.props;
     if (!user_info || !user_info.id) {
@@ -343,248 +458,88 @@ class ProfileHeader extends React.Component {
         id="is_top"
         style={divStyle}
       >
-        <div className="container-fluid">
+        <div className="container profile_container">
           <div className="row">
-            <div className="col-md-3 col-sm-3 col-xs-12 d-flex align-items-end">
-              <div className="game_pic_tournament profile_pic_outline square">
-                <div className="content">
-                  {user_info.profile_picture ? (
-                    <img
-                      src={user_info.profile_picture}
-                      className={
-                        'img-fluid ' + (user_info.prime ? ' prime ' : ' ')
-                      }
-                    />
-                  ) : (
-                    <img
-                      className={
-                        'img-fluid ' + (user_info.prime ? ' prime ' : ' ')
-                      }
-                      src={
-                        'https://ui-avatars.com/api/?size=512&name=' +
-                        user_info.first_name +
-                        ' ' +
-                        user_info.last_name +
-                        '&color=223cf3&background=000000'
-                      }
-                    />
-                  )}
-                </div>
-              </div>
+            <div className="col-md-3 text-center">
+              {this.renderProfilePicture()}
+              {this.renderNameAndFollow('mobile')}
             </div>
-            <div className="col-md-9 col-sm-9 col-xs-12 d-flex align-items-end justify-content-end align-content-end">
-              <div
-                className="section-headline white-headline text-left"
-                style={{width: '100%'}}
-              >
-                <div className="list_pad">
-                  <div className="row">
-                    <div className="col-md-4">
-                      {user_info.prime && (
-                        <img
-                          src="/assets/icons/ocg_member.png"
-                          className="img-fluid"
-                        />
-                      )}
-                    </div>
-                    <div className="col-md-1"> </div>
-                    <div className="col-md-6  align-items-end justify-content-end align-content-end">
-                      <br />
-
-                      <img
-                        className="rank_imgg"
-                        src={
-                          '/assets/rank/' +
-                          this.image_based_on_i(user_info.xp_obj) +
-                          '.png'
-                        }
-                      />
-                    </div>
-                  </div>
-                </div>
+            <div className="col-md-5 text-center">
+              {user_info.prime && (
+                <img src="/assets/icons/ocg_member.png" className="img-fluid" />
+              )}
+            </div>
+            <div className="col-md-4 justify-content-end d-flex flex-column">
+              <div> </div>
+              <div>
+                <img
+                  className="  img-fluid"
+                  src={
+                    '/assets/rank/' +
+                    this.image_based_on_i(user_info.xp_obj) +
+                    '.png'
+                  }
+                />
               </div>
             </div>
           </div>
 
-          <div className="list_pad">
-            <div className="row">
-              <div className="col-md-3">
-                <h3 className="no-case-change text-center">
-                  @{user_info.username}
-                </h3>
-              </div>
-
-              {/*game_user_ids.tags.map((k, i) => {
-                if (
-                  !user_info['gamer_tag_' + k] ||
-                  user_info['gamer_tag_' + k] == ''
-                ) {
-                  return false;
-                }
-                return (
-                  <div className="col-md-3" key={k}>
-                    <span>{game_user_ids.tag_names[k]}</span>
-                    <p>{user_info['gamer_tag_' + k]}</p>
-                  </div>
-                );
-              })*/}
-
-              {/*}
-
-              <div className="col-md-3">
-                <span> MEMBER SINCE</span>
-                <p>{moment(user_info.created_at).format('lll')}</p>
-              </div>
-
-              <div className="col-md-2">
-                <span> TIME ZONE </span>
-                <p>{user_info.timezone ? user_info.timezone : '-'}</p>
-              </div>*/}
-              <div className="col-md-2 ">
-                {this.props.user &&
-                this.props.is_loaded &&
-                this.props.user.id != user_info.id &&
-                user_info.followers.length < 1 ? (
-                  <Link
-                    onClick={event => {
-                      this.addFriend(event);
-                    }}
-                    className="btn btn-default bttn_submit btn-outline mw_200"
-                  >
-                    Follow
-                  </Link>
-                ) : (
-                  false
-                )}
-
-                {this.props.user &&
-                this.props.is_loaded &&
-                this.props.user.id != user_info.id &&
-                user_info.followers.length > 0 ? (
-                  <Link
-                    onClick={event => {
-                      this.addFriend(event);
-                    }}
-                    className="btn btn-default bttn_submit active mw_200"
-                  >
-                    Unfollow
-                  </Link>
-                ) : (
-                  false
-                )}
-              </div>
-              <div className="col-md-2">
-                <span>
-                  <a
-                    href="#"
-                    onClick={e => {
-                      e.preventDefault();
-                      this.showFollowing(user_info.id);
-                    }}
-                  >
-                    Following
-                  </a>
-                </span>
-                <p>
-                  <a
-                    href="#"
-                    onClick={e => {
-                      e.preventDefault();
-                      this.showFollowing(user_info.id);
-                    }}
-                  >
-                    {user_info.followingCount}
-                  </a>
-                </p>
-              </div>
-
-              <div className="col-md-2">
-                <span>
-                  <a
-                    onClick={() => {
-                      this.showFollowers(user_info.id);
-                    }}
-                  >
-                    Followers
-                  </a>
-                </span>
-                <p>
-                  <a
-                    onClick={() => {
-                      this.showFollowers(user_info.id);
-                    }}
-                  >
-                    {user_info.followerCount}
-                  </a>
-                </p>
-              </div>
-
-              <div className="col-md-2">
-                <div className="float-right rank_box_wrap">
-                  rank : {this.rank_based_on_xp(user_info.xp_obj)}
-                  <div
-                    className="rank_box_prog_outer"
-                    style={{
-                      position: 'relative'
-                    }}
-                  >
-                    <div className="rank_box_prog">
-                      <span
-                        className="rank_prog_done"
-                        style={{
-                          width:
-                            '' +
-                            this.rank_percent_based_on_xp(user_info.xp_obj) +
-                            '%'
-                        }}
-                      />
-                    </div>
-                    <span>{this.rank_min_based_on_xp(user_info.xp_obj)}</span>
-                    <span
-                      style={{
-                        position: 'absolute',
-                        background:
-                          'url(/images/blank_ctrl2.png) center no-repeat',
-                        marginTop: '5px',
-                        backgroundSize: 'contain',
-                        padding: '5px 20px 9px 20px',
-                        marginLeft: '-20px',
-                        left:
-                          '' +
-                          this.rank_percent_based_on_xp(user_info.xp_obj) +
-                          '%'
-                      }}
-                    >
-                      {this.getXp(user_info.xp_obj)}
-                    </span>
-                    <span>{this.rank_max_based_on_xp(user_info.xp_obj)}</span>
-                  </div>
-                </div>
-              </div>
-
-              {/*}
-            <div className="col-md-4">
-              <span>LIFETIME EARNINGS</span>
-              <p>12/30/18 2:00PM</p>
-            </div>*/}
+          <div className="row">
+            <div className="col-md-3">
+              {this.renderNameAndFollow('desktop')}
+            </div>
+            <div className="col-md-1 " />
+            <div className=" order-md-last col-md-4">
+              {this.renderXPMeter()}
+            </div>
+            <div className="col-6 col-md-2 following_btn">
+              <span>
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.showFollowing(user_info.id);
+                  }}
+                >
+                  Following
+                </a>
+              </span>
+              <p>
+                <a
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
+                    this.showFollowing(user_info.id);
+                  }}
+                >
+                  {user_info.followingCount}
+                </a>
+              </p>
             </div>
 
-            {/*}<div className="col-md-4">
+            <div className="col-6 col-md-2 following_btn">
               <span>
-                <i className="fa fa-bar-chart" aria-hidden="true" />
-                40,222nd
+                <a
+                  onClick={() => {
+                    this.showFollowers(user_info.id);
+                  }}
+                >
+                  Followers
+                </a>
               </span>
-              <p>OCG Rank </p>
-            </div>*/}
-
-            {/*<div className="col-md-4">
-              <span>
-                <i className="fa fa-eye" aria-hidden="true" /> 739
-              </span>
-              <p>Profile Views </p>
-            </div>*/}
+              <p>
+                <a
+                  onClick={() => {
+                    this.showFollowers(user_info.id);
+                  }}
+                >
+                  {user_info.followerCount}
+                </a>
+              </p>
+            </div>
           </div>
         </div>
+
         <div className="baris">
           <div className="container">
             <ul className="lnkss">

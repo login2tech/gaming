@@ -287,7 +287,10 @@ class Profile extends React.Component {
           fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="profile"
         />
-        <section className="contet_part single_match_details">
+        <section
+          className="contet_part single_match_details"
+          style={{paddingTop: 0}}
+        >
           <div className="container">
             {this.state.is_loaded ? (
               <div className="row">

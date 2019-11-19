@@ -660,12 +660,12 @@ class MatchInfo extends React.Component {
                   </div> */}
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-6">
                         <span> MATCH ID</span>
                         <p>#{this.state.match.id}</p>
                       </div>
 
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-6">
                         <span> STATUS</span>
                         <p>
                           {moment().isAfter(moment(this.state.match.starts_at))
@@ -674,7 +674,7 @@ class MatchInfo extends React.Component {
                         </p>
                       </div>
 
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-6">
                         <span>TYPE</span>
                         <p>
                           {this.state.match.match_type == 'paid'

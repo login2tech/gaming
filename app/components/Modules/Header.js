@@ -68,23 +68,23 @@ class Header extends React.Component {
     const props = this.props;
     return (
       <nav id="mainNav">
-        <div className="container">
+        <div className="container header_container">
           <div className="row">
-            <div className="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+            <div className="col-lg-3 col-md-3  col-2 text-right">
+              <a href="#" className="toggle-menu">
+                &#9776;
+              </a>
+            </div>
+            <div className=" col-4">
               <div className="mobile-display">
                 <Link to="/">
                   <img src="/images/logo.png" alt="onlycompgaming" />
                 </Link>
               </div>
             </div>
-            <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-right">
-              <a href="#" className="toggle-menu">
-                &#9776;
-              </a>
-            </div>
           </div>
           <div className="row">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mobile_padding_remove">
+            <div className="col-lg-12 col-md-12  col-xs-12 mobile_padding_remove">
               <div className="main-menu">
                 <div className="navbar-collapse">
                   <ul className="nav-list nav-open" id="nav">
