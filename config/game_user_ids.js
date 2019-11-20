@@ -3,10 +3,10 @@ const tag_names = [
   '',
   'Xbox Live Gamertag',
   'PSN',
-  // 'Username',
   'Epic Games Username',
   'Steam Username',
-  'Battletag'
+  'Battletag',
+  'Activision ID'
 ];
 const tag_icons = [
   '',
@@ -14,7 +14,8 @@ const tag_icons = [
   'pf_icon fab fa-playstation',
   'pf_icon fa fa-laptop',
   'pf_icon fab fa-steam',
-  'pf_icon fab fa-battle-net'
+  'pf_icon fab fa-battle-net',
+  'pf_icon actision_logo'
 ];
 export default {
   tags,

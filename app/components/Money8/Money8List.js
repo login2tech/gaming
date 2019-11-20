@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-// const moment = require('moment');
+const moment = require('moment');
 import game_user_ids from '../../../config/game_user_ids';
 
 // import Messages from '../Modules/Messages';
@@ -128,12 +128,12 @@ class Money8List extends React.Component {
                             </div>
 
                             <div className="tournament-footer">
-                              <div className="col">
-                                <div className="col-item">
+                              <div className="row">
+                                <div className="col-6 col-md-3 t-col">
                                   <h5>Status</h5>
                                   <p>{match.status}</p>
                                 </div>
-                                <div className="col-item">
+                                <div className="col-6 col-md-2 t-col">
                                   <h5>TYPE</h5>
                                   <p>
                                     {match.match_type == 'free' ? (
@@ -145,7 +145,7 @@ class Money8List extends React.Component {
                                     )}
                                   </p>
                                 </div>
-                                <div className="col-item">
+                                <div className="col-6 col-md-2 t-col">
                                   <h5>Prize pool</h5>
                                   <p>
                                     {match.match_type != 'free'
@@ -158,13 +158,17 @@ class Money8List extends React.Component {
                                       : '--'}
                                   </p>
                                 </div>
-                                <div className="col-item">
+                                <div className="col-6 col-md-2 t-col">
                                   <h5>Players</h5>
                                   <p>
                                     {match.players_total / 2}
                                     <small> v </small>
                                     {match.players_total / 2}
                                   </p>
+                                </div>
+                                <div className="col-6 col-md-3 t-col">
+                                  <h5>EXPIRES</h5>
+                                  <p>{moment(match.expires_in).fromNow()}</p>
                                 </div>
                               </div>
 

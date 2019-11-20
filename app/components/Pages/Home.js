@@ -103,7 +103,7 @@ class Home extends React.Component {
         </section>
 
         <section className="games">
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-center">
@@ -115,12 +115,12 @@ class Home extends React.Component {
 
             <div className="row">
               {this.state.games.map((games, i) => {
-                if (i > 3) {
+                if (i > 6) {
                   return false;
                 }
                 return (
                   <div
-                    className="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                    className="col-lg-2 col-md-2 col-sm-6 col-12"
                     key={games.id}
                   >
                     <div className="game_c_box">
@@ -146,7 +146,7 @@ class Home extends React.Component {
             </div>
 
             <div className="row">
-              {this.state.games.map((games, i) => {
+              {/*this.state.games.map((games, i) => {
                 if (i < 4 || i > 7) {
                   return false;
                 }
@@ -174,7 +174,7 @@ class Home extends React.Component {
                     </div>
                   </div>
                 );
-              })}
+              })*/}
             </div>
           </div>
         </section>

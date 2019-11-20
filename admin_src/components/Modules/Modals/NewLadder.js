@@ -179,7 +179,8 @@ class NewLadder extends React.Component {
                   <option value="2">PSN</option>
                   <option value="3">Epic Games Username</option>
                   <option value="4">Steam Username</option>
-                  <option value="5">Battleta</option>
+                  <option value="5">Battletag</option>
+                  <option value="6">Activision ID</option>
                 </select>
               </div>
               <br />

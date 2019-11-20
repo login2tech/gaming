@@ -45,6 +45,7 @@ class Profile extends React.Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
     this.setState({[event.target.name]: event.target.value});
   }
 
@@ -88,6 +89,20 @@ class Profile extends React.Component {
     this.props.dispatch(
       changePassword(this.state.password, this.state.confirm, this.props.token)
     );
+    setTimeout(() => {
+      const element = document.body;
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        });
+      }
+      this.setState({
+        password: '',
+        confirm: ''
+      });
+    }, 700);
   }
 
   handleStopRenewal(event, item) {
@@ -716,42 +731,16 @@ class Profile extends React.Component {
       </div>
     );
   }
-  tags = [1, 2, 3, 4, 5];
+  tags = [1, 2, 3, 4, 5, 6];
   tag_names = [
     '',
     'Xbox Live Gamertag',
     'PSN',
     'Epic Games Username',
     'Steam Username',
-    'Battletag'
+    'Battletag',
+    'Activision Id'
   ];
-  renderStep3() {
-    return (
-      <div className="tab-pane" data-tab="tab2">
-        <div className="win_loss">
-          <div className="table_wrapper">
-            <table
-              id="threads-table"
-              className="table table-striped table-gray"
-            >
-              <thead>
-                <tr>
-                  <th>Place</th>
-                  <th>Team Name</th>
-                  <th>W-L</th>
-                  <th>Win %</th>
-                  <th>Strk</th>
-                  <th>Xp</th>
-                  <th>Level</th>
-                </tr>
-              </thead>
-              <tbody />
-            </table>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   renderStep5() {
     return (
@@ -1123,13 +1112,13 @@ class Profile extends React.Component {
     );
   }
 
-  renderStep1() {
-    return (
-      <div className="tab-pane" data-tab="tab0">
-        <ul id="upcoming-tournament" className="tournament-list active" />
-      </div>
-    );
-  }
+  // renderStep1() {
+  //   return (
+  //     <div className="tab-pane" data-tab="tab0">
+  //       <ul id="upcoming-tournament" className="tournament-list active" />
+  //     </div>
+  //   );
+  // }
 
   render() {
     const divStyle = this.state.new_cover_pic
@@ -1360,9 +1349,7 @@ class Profile extends React.Component {
                   </ul>
 
                   <div className="tab-cont">
-                    {this.state.currentStep == 1 ? this.renderStep1() : false}
                     {this.state.currentStep == 2 ? this.renderStep2() : false}
-                    {this.state.currentStep == 3 ? this.renderStep3() : false}
                     {this.state.currentStep == 4 ? this.renderStep4() : false}
                     {this.state.currentStep == 5 ? this.renderStep5() : false}
                   </div>

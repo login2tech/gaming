@@ -2705,14 +2705,18 @@ a.image_avar {
 }
 
 .tournament-list .tournament-box .tournament-footer .col h5 {
-    font: 600 0.75em/1 "Raleway",sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    font-family:  "Raleway",sans-serif;
     color: #636f7d;
+    text-transform: uppercase;
     margin-bottom: 4px;
 }
 
 .tournament-list .tournament-box .tournament-footer .col p {
     font: 600 0.875em/1 "Raleway",sans-serif;
     color: #fff;
+    font-size: 1.1em;
 }
 
 .tournament-list .tournament-box .tournament-footer .col .col-item:not(:first-of-type) {
@@ -2726,7 +2730,7 @@ a.image_avar {
     justify-content: flex-end;
 }
 
-.tournament-list .tournament-box .tournament-footer .col {
+.tournament-list .tournament-box .tournament-footer > .col {
     display: -webkit-flex;
     display: flex;
     text-transform: uppercase;
@@ -2770,7 +2774,7 @@ a.image_avar {
 }
 
 .tournament-footer .col-item {
-    min-width: 85px;
+    min-width: 100px;
 }
 
 .team-list {
@@ -5239,6 +5243,14 @@ span.t-bl {
 
 .list_pad.prof_abt .col-md-4 {
     margin-bottom: 20px;
+}
+.t-col h5{
+  width: 100%;
+  display: block;
+}
+
+.actision_logo{
+  background:url('./images/activision.svg') no-repeat;
 }
 
 @media screen and (max-width: 768px) {

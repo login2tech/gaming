@@ -247,9 +247,7 @@ exports.accountPut = function(req, res, next) {
       .then(function(user) {
         if ('password' in req.body) {
           res.send({
-            m: {
-              msg: 'Your password has been changed.'
-            },
+            msg: 'Your password has been changed.',
             user: user.toJSON()
           });
         } else {
@@ -269,7 +267,7 @@ exports.accountPut = function(req, res, next) {
           });
         }
       });
-  }, 1000);
+  }, 2000);
 };
 
 exports.accountPic = function(req, res, next) {
