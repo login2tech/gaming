@@ -464,7 +464,7 @@ class Game extends React.Component {
                           if (match.status == 'expired') {
                             return false;
                           }
-                          if (!match.team_2) {
+                          if (!match.team_2_info) {
                             return false;
                           }
                           let wl_1 = false;
