@@ -1,4 +1,4 @@
-const tags = [1, 2, 3, 4, 5];
+const tags = [1, 2, 3, 4, 5, 6];
 const tag_names = [
   '',
   'Xbox Live Gamertag',

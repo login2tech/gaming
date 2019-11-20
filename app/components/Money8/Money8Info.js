@@ -607,6 +607,7 @@ class Money8Info extends React.Component {
                     )}
                   </span> */}
                   <span className="game_station">
+                    <br />
                     <span
                       className={
                         game_user_ids.tag_icons[
@@ -623,6 +624,7 @@ class Money8Info extends React.Component {
                       : 'Match Starts'}{' '}
                     {moment(this.state.match.starts_at).format('lll')} ({' '}
                     {moment(this.state.match.starts_at).fromNow()} ) */}
+                    <br />
                     <strong>
                       {this.state.match.players_joined}/
                       {this.state.match.players_total}
@@ -633,7 +635,7 @@ class Money8Info extends React.Component {
                     {this.state.match.players_total / 2} VS{' '}
                     {this.state.match.players_total / 2} MATCH
                   </div>
-
+                  <br />
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-4">

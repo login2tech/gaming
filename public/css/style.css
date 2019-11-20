@@ -5248,9 +5248,15 @@ span.t-bl {
   width: 100%;
   display: block;
 }
-
-.actision_logo{
-  background:url('./images/activision.svg') no-repeat;
+.avatr img{
+  width:100%;
+}
+.actision_logo {
+    background: url(../images/activision.svg) center no-repeat;
+    width: 60px;
+    display: inline-block;
+    height: 60px;
+    background-size: 102%;
 }
 
 @media screen and (max-width: 768px) {

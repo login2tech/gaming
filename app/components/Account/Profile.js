@@ -600,7 +600,13 @@ class Profile extends React.Component {
                                 team.id
                               }
                             >
-                              <img src="/images/team_bg.png" />
+                              <figure className="avatr">
+                                {team.profile_picture ? (
+                                  <img src={team.profile_picture} />
+                                ) : (
+                                  <img src="/images/team_bg.png" />
+                                )}
+                              </figure>
                               <div className="info">
                                 {team.title}
                                 <br />

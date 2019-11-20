@@ -784,12 +784,12 @@ class TeamInfo extends React.Component {
                               </td>
                               <td>
                                 {match.team_1_id == this.state.team_info.id ? (
-                                  <Link to={'/teams/view' + match.team_1_id}>
-                                    {match.team_1_info.title}
-                                  </Link>
-                                ) : (
                                   <Link to={'/teams/view' + match.team_2_id}>
                                     {match.team_2_info.title}
+                                  </Link>
+                                ) : (
+                                  <Link to={'/teams/view' + match.team_1_id}>
+                                    {match.team_1_info.title}
                                   </Link>
                                 )}
                               </td>
