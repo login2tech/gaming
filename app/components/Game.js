@@ -144,19 +144,19 @@ class Game extends React.Component {
               }
               // ladders.push(item.ladder);
             }
-            if (!leaderboards['l_' + item.ladder_id]['u_' + item.user_id]) {
-              item.user.gravatar = '';
-              leaderboards['l_' + item.ladder_id]['u_' + item.user_id] = {
-                user: item.user,
+            if (!leaderboards['l_' + item.ladder_id]['u_' + item.team_id]) {
+              item.team.gravatar = '';
+              leaderboards['l_' + item.ladder_id]['u_' + item.team_id] = {
+                team: item.team,
                 wins: 0,
                 loss: 0
               };
             }
             leaderboards['l_' + item.ladder_id][
-              'u_' + item.user_id
+              'u_' + item.team_id
             ].wins += item.wins ? item.wins : 0;
             leaderboards['l_' + item.ladder_id][
-              'u_' + item.user_id
+              'u_' + item.team_id
             ].loss += item.loss ? item.loss : 0;
           }
           this.setState(
@@ -249,19 +249,19 @@ class Game extends React.Component {
     const data = [];
     const keys = Object.keys(leaderboards[active_leaderboard]);
     for (let i = 0; i < keys.length; i++) {
-      const user = keys[i];
-      if (user == 'ladder') {
+      const team = keys[i];
+      if (team == 'ladder') {
         continue;
       }
       data.push({
         idx: i,
-        username: leaderboards[active_leaderboard][user].user.username,
-        wins: leaderboards[active_leaderboard][user].wins,
-        loss: leaderboards[active_leaderboard][user].loss,
+        username: leaderboards[active_leaderboard][team].team.title,
+        wins: leaderboards[active_leaderboard][team].wins,
+        loss: leaderboards[active_leaderboard][team].loss,
         rate: parseFloat(
-          (100 * leaderboards[active_leaderboard][user].wins) /
-            (leaderboards[active_leaderboard][user].loss +
-              leaderboards[active_leaderboard][user].wins)
+          (100 * leaderboards[active_leaderboard][team].wins) /
+            (leaderboards[active_leaderboard][team].loss +
+              leaderboards[active_leaderboard][team].wins)
         )
       });
     }
@@ -274,7 +274,7 @@ class Game extends React.Component {
             <tr key={item.idx}>
               <td>{item.idx}</td>
               <td>
-                <Link to={'/u/' + item.username}>@{item.username}</Link>
+                <Link to={'/teams/view/' + item.id}>{item.username}</Link>
               </td>
               <td className="text-success">{item.wins}</td>
               <td className="text-danger">{item.loss}</td>
@@ -550,7 +550,7 @@ class Game extends React.Component {
                       <thead>
                         <tr>
                           <td>Game Rank</td>
-                          <td>User</td>
+                          <td>Team</td>
                           <td>Wins</td>
                           <td>Loss</td>
                           <td>Win Rate</td>

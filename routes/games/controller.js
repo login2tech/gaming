@@ -1,6 +1,6 @@
 // const fs = require('fs');
 const Game = require('./Game');
-const Score = require('../../models/Score');
+const TeamScore = require('../../models/TeamScore');
 
 exports.leaderboards = function(req, res, next) {
   if (!req.query.game_id) {
@@ -9,7 +9,7 @@ exports.leaderboards = function(req, res, next) {
       items: []
     });
   }
-  new Score()
+  new TeamScore()
     .where({
       game_id: req.query.game_id
     })
@@ -19,8 +19,8 @@ exports.leaderboards = function(req, res, next) {
           ladder: function(qb) {
             qb.select('id', 'title');
           },
-          user: function(qb) {
-            qb.select('id', 'username');
+          team: function(qb) {
+            qb.select('id', 'title');
           }
         }
       ]
