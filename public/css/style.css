@@ -5372,4 +5372,7 @@ span.t-bl {
     .match_heading h4{
       font-size: 30px
     }
+    .tournament-list .tournament-box{
+      flex-direction: column;
+    }
 }

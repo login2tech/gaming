@@ -225,6 +225,7 @@ class Timeline extends React.Component {
             {this.props.user ? (
               <UpvoteButton
                 post_id={post.id}
+                key={post.id}
                 likes={post.like_count}
                 me={this.props.user.id}
                 disabled={!this.props.user}

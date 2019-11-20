@@ -340,6 +340,23 @@ class TeamInfo extends React.Component {
     );
   }
 
+  renderStatus(result, t_1, t_2, status) {
+    const my_team = this.state.team_info.id;
+    let winner = false;
+    if (result == 'team_1') {
+      winner = parseInt(t_1);
+    } else if (result == 'team_2') {
+      winner = parseInt(t_2);
+    }
+    if (!winner) {
+      return status;
+    }
+    if (winner == my_team) {
+      return <span className="text-success">W</span>;
+    }
+    return <span className="text-danger">L</span>;
+  }
+
   render() {
     const divStyle = this.state.new_cover_pic
       ? {
@@ -794,7 +811,16 @@ class TeamInfo extends React.Component {
                                 )}
                               </td>
 
-                              <td>{match.status}</td>
+                              <td>
+                                {match.result
+                                  ? this.renderStatus(
+                                      match.result,
+                                      match.team_1_id,
+                                      match.team_2_id,
+                                      match.status
+                                    )
+                                  : match.status}
+                              </td>
 
                               <td>{moment(match.created_at).format('lll')}</td>
                               <td>

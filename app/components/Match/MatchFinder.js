@@ -137,12 +137,12 @@ class MatchFinder extends React.Component {
                                     </span>
                                   </div>
                                   <div className="tournament-footer">
-                                    <div className="col">
-                                      <div className="col-item">
+                                    <div className="row">
+                                      <div className="col-6 col-md-3 t-col">
                                         <h5>Status</h5>
                                         <p>{match.status}</p>
                                       </div>
-                                      <div className="col-item">
+                                      <div className="col-6 col-md-3 t-col">
                                         <h5>TYPE</h5>
                                         <p>
                                           {match.match_type == 'paid'
@@ -150,7 +150,7 @@ class MatchFinder extends React.Component {
                                             : 'FREE'}
                                         </p>
                                       </div>
-                                      <div className="col-item">
+                                      <div className="col-6 col-md-3 t-col">
                                         <h5>Prize pool</h5>
                                         <p>
                                           {match.match_type == 'paid'
@@ -158,7 +158,7 @@ class MatchFinder extends React.Component {
                                             : '--'}
                                         </p>
                                       </div>
-                                      <div className="col-item">
+                                      <div className="col-6 col-md-3 t-col">
                                         <h5>Players</h5>
                                         <p>
                                           {match.match_players}v

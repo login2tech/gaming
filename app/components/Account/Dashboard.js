@@ -90,7 +90,8 @@ class Profile extends React.Component {
       changePassword(this.state.password, this.state.confirm, this.props.token)
     );
     setTimeout(() => {
-      const element = document.body;
+      // const element = document.body;
+      const element = jQuery('.contet_part')[0];
       if (element) {
         element.scrollIntoView({
           behavior: 'smooth',
@@ -102,7 +103,7 @@ class Profile extends React.Component {
         password: '',
         confirm: ''
       });
-    }, 700);
+    }, 1000);
   }
 
   handleStopRenewal(event, item) {

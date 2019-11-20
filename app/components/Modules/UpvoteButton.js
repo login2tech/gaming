@@ -6,17 +6,29 @@ import {upVote, downVote} from '../../actions/social';
 import {openModal} from '../../actions/modals';
 import Reactions from '../Modules/Modals/Reactions';
 class UpvoteButton extends React.Component {
-  state = {changed: false, doChange: 0};
-  changeVote(already_voted, e, type, old_type) {
+  state = {
+    original_likes: this.props.likes ? this.props.likes : [],
+    my_original_like: '',
+    current_like: '',
+    likes_obj: {
+      like: 0,
+      heart: 0,
+      angry: 0,
+      '100': 0
+    },
+    total_count: this.props.likes ? this.props.likes.length : 0
+  };
+
+  changeVote(e, type) {
     this.setState(
       {
         loading_for_emoji: type
       },
       () => {
-        if (old_type && old_type == type) {
-          this.handleDownVote(e, true);
+        if (this.state.current_like == type) {
+          this.handleDownVote(e, type, true);
         } else {
-          this.handleDownVote(e);
+          this.handleDownVote(e, this.state.current_like);
           setTimeout(() => {
             this.handleUpVote(e, type);
           }, 500);
@@ -34,9 +46,12 @@ class UpvoteButton extends React.Component {
         },
         res => {
           if (res) {
+            const likes_obj = this.state.likes_obj;
+            likes_obj[type]++;
             this.setState({
-              changed: type,
-              doChange: this.state.doChange + 1
+              likes_obj: likes_obj,
+              current_like: type,
+              total_count: this.state.total_count + 1
             });
           }
           this.setState({
@@ -47,24 +62,21 @@ class UpvoteButton extends React.Component {
     );
   }
 
-  handleDownVote(e, d) {
-    if (this.props.total_count == 0 && !this.state.changed) {
-      this.setState({
-        loading_for_emoji: false
-      });
-      return;
-    }
+  handleDownVote(e, type, d) {
     this.props.dispatch(
       downVote(
         {
           post_id: this.props.post_id
-          // type:this
         },
         res => {
           if (res) {
+            const likes_obj = this.state.likes_obj;
+
+            likes_obj[type]--;
             this.setState({
-              changed: 'NO',
-              doChange: this.state.doChange - 1
+              likes_obj: likes_obj,
+              current_like: '',
+              total_count: this.state.total_count - 1
             });
           }
           if (d) {
@@ -77,75 +89,55 @@ class UpvoteButton extends React.Component {
     );
   }
 
-  render() {
-    let voted = this.props.liked ? true : false;
-    if (this.state.changed) {
-      voted = !voted;
-    }
+  componentDidMount() {
+    this.storeOriginal();
+  }
 
+  emojis = [
+    {key: 4, em: 'like'},
+    {key: 3, em: 'heart'},
+    {key: 2, em: 'angry'},
+    {key: 1, em: '100'}
+  ];
+
+  storeOriginal() {
+    console.log(this.props.likes);
+    const total_count = this.props.likes.length;
+    let my_original_like = '';
+    const likes_obj = {
+      like: 0,
+      heart: 0,
+      angry: 0,
+      '100': 0
+    };
+    for (let i = 0; i < total_count; i++) {
+      likes_obj[this.props.likes[i].type]++;
+      if (this.props.likes[i].user_id == this.props.user.id) {
+        my_original_like = this.props.likes[i].type;
+      }
+    }
+    this.setState({
+      original_likes: this.props.likes,
+      my_original_like: my_original_like,
+      current_like: my_original_like,
+      likes_obj: likes_obj,
+      total_count: total_count
+    });
+  }
+
+  render() {
+    // let voted = this.props.liked ? true : false;
+    // if (this.state.changed) {
+    //   voted = !voted;
+    // }
     let btn_class = 'btn btn-sm btn-vote pulsate-fwd action-upvote ';
-    // btn_class += voted ? ' upvoted ' : '';
     btn_class += 'btn_4_ques_' + this.props.post_id;
     btn_class += this.props.disabled ? ' disabled ' : '';
-    const emojis = [
-      {key: 4, em: 'like'},
-      {key: 3, em: 'heart'},
-      {key: 2, em: 'angry'},
-      {key: 1, em: '100'}
-    ];
-    const like_counts = {};
-    let i_have_liked = false;
-    let original_liked = false;
-    let {likes} = this.props;
 
-    if (!likes) {
-      likes = [];
-    }
-    const likes_count = likes.length;
-    // console.log('--------');
-    // console.log('total likes : ', likes_count);
-    for (let i = 0; i < likes_count; i++) {
-      if (!like_counts[likes[i].type]) {
-        like_counts[likes[i].type] = 1;
-      } else {
-        like_counts[likes[i].type]++;
-      }
-      if (likes[i].user_id == this.props.me) {
-        i_have_liked = likes[i].type;
-        original_liked = likes[i].type;
-      }
-    }
-    if (this.state.changed) {
-      i_have_liked = this.state.changed;
-    }
-    if (i_have_liked == 'NO') {
-      i_have_liked = false;
-    }
-
-    // console.log(i_have_liked, original_liked);
-    if (original_liked === false && i_have_liked !== false) {
-      like_counts[i_have_liked]++;
-    }
-    if (original_liked && i_have_liked && i_have_liked != original_liked) {
-      like_counts[original_liked]--;
-      if (like_counts[original_liked] < 1) {
-        like_counts[original_liked] = 0;
-      }
-      // console.log('adding to ', i_have_liked, like_counts[i_have_liked]);
-      if (i_have_liked) {
-        if (!like_counts[i_have_liked]) {
-          like_counts[i_have_liked] = 0;
-        }
-        like_counts[i_have_liked]++;
-      }
-
-      // alert(like_counts[i_have_liked]);
-
-      // like_counts[likes[i].type]++;
-    }
+    console.log(this.state);
     return (
       <span>
-        {likes_count > 0 ? (
+        {this.state.total_count > 0 ? (
           <small style={{fontStyle: 'italic'}}>
             this post got{' '}
             <Link
@@ -170,7 +162,7 @@ class UpvoteButton extends React.Component {
               }}
             >
               {' '}
-              {likes_count} reactions
+              {this.state.total_count} reactions
             </Link>
           </small>
         ) : (
@@ -179,7 +171,7 @@ class UpvoteButton extends React.Component {
           </small>
         )}
         <br />
-        {emojis.map((emoji, i) => {
+        {this.emojis.map((emoji, i) => {
           return (
             <button
               style={{marginRight: '5px'}}
@@ -187,14 +179,14 @@ class UpvoteButton extends React.Component {
               type="button"
               className={
                 btn_class +
-                (i_have_liked && i_have_liked == emoji.em ? ' upvoted ' : '   ')
+                (this.state.current_like == emoji.em ? ' upvoted ' : '   ')
               }
               data-id={this.props.post_id}
               onClick={e => {
                 if (this.props.disabled) {
                   return;
                 }
-                this.changeVote(voted, e, emoji.em, i_have_liked);
+                this.changeVote(e, emoji.em);
               }}
             >
               {this.state.loading_for_emoji == emoji.em ? (
@@ -212,7 +204,11 @@ class UpvoteButton extends React.Component {
               )}
               <span className="hidden-sm-down">
                 <span>
-                  ({like_counts[emoji.em] ? like_counts[emoji.em] : '0'})
+                  (
+                  {this.state.likes_obj[emoji.em]
+                    ? this.state.likes_obj[emoji.em]
+                    : '0'}
+                  )
                   {/* {this.state.changed
                     ? this.props.total_count
                       ? this.props.total_count + this.state.doChange
@@ -232,7 +228,8 @@ class UpvoteButton extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.auth.token
+    token: state.auth.token,
+    user: state.auth.user
   };
 };
 
