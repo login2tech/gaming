@@ -806,7 +806,7 @@ exports.listSingleItem = function(req, res, next) {
 exports.listupcoming = function(req, res, next) {
   new Item()
     .orderBy('created_at', 'DESC')
-    .where('starts_at', '>', moment())
+    .where('status', 'NOT LIKE', 'complete')
     // .where('registration_end_at', '>', moment())
     .fetchAll({withRelated: ['ladder', 'game']})
     .then(function(item) {

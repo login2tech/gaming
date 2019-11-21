@@ -394,6 +394,8 @@ class Game extends React.Component {
                         <tr>
                           <th>Match</th>
                           <th>Starts At</th>
+                          <th>Type</th>
+                          <th>Fee</th>
                           <th>Players</th>
                           <th> </th>
                         </tr>
@@ -422,6 +424,16 @@ class Game extends React.Component {
                                   </td>
                                   <td>
                                     {moment(match.starts_at).format('lll')}
+                                  </td>
+                                  <td>
+                                    {match.match_type == 'paid'
+                                      ? 'PAID'
+                                      : 'FREE'}
+                                  </td>
+                                  <td>
+                                    {match.match_type == 'paid'
+                                      ? '$ ' + match.match_fee
+                                      : '--'}
                                   </td>
 
                                   <td className="col-item">

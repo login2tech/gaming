@@ -52,16 +52,15 @@ class Money8List extends React.Component {
         <section className="page_title_bar">
           <div className="container">
             <div className="row">
-              <div className="col-md-8 col-sm-12 col-xs-12">
+              <div className="col">
                 <div className="all_t_heading">
                   Upcoming Mix and Match Matches
                 </div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
-              </div>
-              <div className="col-md-4 col-sm-12 col-xs-12">
+
                 <Link
                   to={'/mix-and-match/new/'}
-                  className="btn btn-default bttn_submit"
+                  className="btn btn-default bttn_submit max-width-300"
                 >
                   Create a mix-and-match pool
                 </Link>

@@ -3629,7 +3629,7 @@ font-weight: 600; text-transform: uppercase; }
 }
 
 .t_big_heading {
-    font-size: 65px;
+    font-size: 40px;
     line-height: 70px;
     letter-spacing: -3px;
     color: #fff;
@@ -4813,8 +4813,9 @@ p.score_obj_scr {
 .usr_obj {
     border-right: 1px solid #404040;
     padding: 0 40px;
-    padding-right: 20px;
+    /* padding-right: 20px; */
     height: 130px;
+    text-align: center;
 }
 
 .usr_obj:last-of-type {
