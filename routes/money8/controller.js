@@ -15,10 +15,10 @@ const shuffle = function(array) {
 };
 
 const getXPBasedOn = function(current_xp) {
-  return 10;
+  return 15;
 };
 // const getXPRemoveBasedOn = function(current_xp) {
-//   return 3;
+//   return 7;
 // };
 
 const giveXpToMember = function(uid, match_id) {
