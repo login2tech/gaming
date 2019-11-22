@@ -102,7 +102,11 @@ class UpvoteButton extends React.Component {
 
   storeOriginal() {
     console.log(this.props.likes);
-    const total_count = this.props.likes.length;
+    let likes = this.props.likes;
+    if (!likes) {
+      likes = [];
+    }
+    const total_count = likes.length;
     let my_original_like = '';
     const likes_obj = {
       like: 0,
@@ -111,13 +115,13 @@ class UpvoteButton extends React.Component {
       '100': 0
     };
     for (let i = 0; i < total_count; i++) {
-      likes_obj[this.props.likes[i].type]++;
-      if (this.props.likes[i].user_id == this.props.user.id) {
-        my_original_like = this.props.likes[i].type;
+      likes_obj[likes[i].type]++;
+      if (likes[i].user_id == this.props.user.id) {
+        my_original_like = likes[i].type;
       }
     }
     this.setState({
-      original_likes: this.props.likes,
+      original_likes: likes,
       my_original_like: my_original_like,
       current_like: my_original_like,
       likes_obj: likes_obj,

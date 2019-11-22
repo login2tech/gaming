@@ -124,6 +124,9 @@ class NewPost extends React.Component {
   };
 
   askFile(cls, cb) {
+    if (!this.state[cls]) {
+      return;
+    }
     const data = new FormData();
     data.append('file', this.state[cls], this.state[cls].name);
     axios
@@ -229,7 +232,7 @@ class NewPost extends React.Component {
                       });
                     }}
                   >
-                    <i className="fa fa-video-camera" />
+                    <i className="fa fa-video" />
                   </a>
                 </li>
               </ul>
