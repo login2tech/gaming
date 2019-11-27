@@ -587,18 +587,14 @@ class Profile extends React.Component {
                   value={this.state.add_new_bal_number}
                   onChange={this.handleChange.bind(this)}
                 >
-                  <option value="">Add Credit Points</option>
-                  <option value="5">5 points</option>
-                  <option value="10">10 points</option>
-                  <option value="15">15 points</option>
-                  <option value="25">25 points</option>
-                  <option value="50">50 points</option>
-                  <option value="75">75 points</option>
-                  <option value="100">100 points</option>
-                  <option value="200">200 points</option>
-                  <option value="250">250 points</option>
-                  <option value="300">300 points</option>
-                  <option value="500">500 points</option>
+                  <option value="">Add Credits</option>
+                  <option value="5">5 credits</option>
+                  <option value="10">10 credits</option>
+                  <option value="15">15 credits</option>
+                  <option value="25">25 credits</option>
+                  <option value="50">50 credits</option>
+                  <option value="75">75 credits</option>
+                  <option value="100">100 credits</option>
                 </select>
               ) : (
                 <input
