@@ -255,6 +255,7 @@ class Game extends React.Component {
       }
       data.push({
         idx: i,
+        id: leaderboards[active_leaderboard][team].team.id,
         username: leaderboards[active_leaderboard][team].team.title,
         wins: leaderboards[active_leaderboard][team].wins,
         loss: leaderboards[active_leaderboard][team].loss,
@@ -272,7 +273,7 @@ class Game extends React.Component {
           // console.log(leaderboards[active_leaderboard][user]);
           return (
             <tr key={item.idx}>
-              <td>{item.idx}</td>
+              <td>{idx}</td>
               <td>
                 <Link to={'/teams/view/' + item.id}>{item.username}</Link>
               </td>

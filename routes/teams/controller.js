@@ -361,7 +361,10 @@ exports.addItem = function(req, res, next) {
     .then(function(teams) {
       teams = teams.toJSON();
       for (let i = 0; i < teams.length; i++) {
-        if (teams[i].team_info.ladder_id == parseInt(req.body.ladder)) {
+        if (
+          teams[i].team_info.ladder_id == parseInt(req.body.ladder) &&
+          teams[i].team_info.team_type == req.body.team_type
+        ) {
           // failed;
           return res.status(400).send({
             ok: false,
@@ -372,7 +375,8 @@ exports.addItem = function(req, res, next) {
       new Item({
         title: req.body.title,
         ladder_id: req.body.ladder,
-        team_creator: req.user.id
+        team_creator: req.user.id,
+        team_type: req.body.team_type
       })
         .save()
         .then(function(item) {
