@@ -1138,6 +1138,23 @@ exports.leave_match = function(req, res, next) {
           .status(400)
           .send({ok: false, msg: 'Match can not be cancelled at this stage.'});
       }
+      if (req.body.do_cancel) {
+        return match
+          .save({
+            cancel_requested: false,
+            cancel_requested_by: ''
+          })
+          .then(function(m) {
+            res
+              .status(200)
+              .send({ok: true, msg: 'Match cancellation request cancelled.'});
+          })
+          .catch(function(err) {
+            res
+              .status(400)
+              .send({ok: false, msg: 'Cancel Match cancellation Failed.'});
+          });
+      }
       if (match.get('cancel_requested')) {
         const requested_by = match.get('cancel_requested_by');
         if (req.body.team != requested_by) {

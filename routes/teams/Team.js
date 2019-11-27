@@ -3,6 +3,7 @@ const TeamUser = require('./TeamUser');
 const Ladder = require('../games/Ladder');
 const Game = require('../games/Game');
 const TeamScore = require('../../models/TeamScore');
+const TeamXP = require('../../models/TeamXP');
 
 const Team = bookshelf.Model.extend({
   tableName: 'teams',
@@ -15,6 +16,9 @@ const Team = bookshelf.Model.extend({
   },
   score: function() {
     return this.hasMany('TeamScore');
+  },
+  xp_obj: function() {
+    return this.hasMany('TeamXP', 'team_id');
   }
 
   // thread_count: function() {

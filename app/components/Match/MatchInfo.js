@@ -282,11 +282,12 @@ class MatchInfo extends React.Component {
       });
   }
 
-  leaveMatchRequest(e) {
+  leaveMatchRequest(e, type) {
     this.props.dispatch(
       leave_match(
         {
           match_id: this.state.match.id,
+          do_cancel: type ? true : false,
           team:
             this.state.match.team_1_info.team_creator == this.props.user.id
               ? 'team_1'
@@ -311,6 +312,9 @@ class MatchInfo extends React.Component {
     if (!this.props.user) {
       return false;
     }
+    // if (this.props.result) {
+    //   return false;
+    // }
     if (
       this.state.match.status == 'cancelled' ||
       this.state.match.status == 'disputed' ||
@@ -326,16 +330,27 @@ class MatchInfo extends React.Component {
           this.state.match.team_1_info.team_creator == this.props.user.id)
       ) {
         return (
-          <button
-            type="button"
-            onClick={e => {
-              this.leaveMatchRequest(e);
-            }}
-            className="btn btn-danger bttn_submit"
-            style={{width: 'auto'}}
-          >
-            Accept cancellation
-          </button>
+          <div className="btn-group">
+            <button
+              type="button"
+              onClick={e => {
+                this.leaveMatchRequest(e);
+              }}
+              className="btn btn-danger bttn_submit"
+              style={{width: 'auto'}}
+            >
+              Accept cancellation
+            </button>
+            <button
+              type="button"
+              onClick={e => {
+                this.leaveMatchRequest(e, true);
+              }}
+              className="btn btn-primary bttn_submit mw_200"
+            >
+              X
+            </button>
+          </div>
         );
       }
       //
@@ -389,6 +404,49 @@ class MatchInfo extends React.Component {
       );
     }
     return false;
+  }
+
+  myTeamName() {
+    const team_1_players =
+      this.state.match && this.state.match.team_1_players
+        ? this.state.match.team_1_players.split('|')
+        : [];
+    const team_2_players =
+      this.state.match && this.state.match.team_2_players
+        ? this.state.match.team_2_players.split('|')
+        : [];
+    const me = '' + this.props.user.id;
+    if (team_1_players.indexOf(me) > -1) {
+      return this.state.match.team_1_info.title;
+    }
+    if (team_2_players.indexOf(me) > -1) {
+      return this.state.match.team_2_info.title;
+    }
+    return '';
+  }
+
+  renderTicketCreate() {
+    if (this.state.match.status != 'disputed') {
+      return false;
+    }
+    return (
+      <div>
+        <a
+          type="button"
+          href={
+            '/support/tickets/create/m/disputed/' +
+            this.state.match.id +
+            '/' +
+            this.myTeamName() +
+            ''
+          }
+          className="btn btn-primary bttn_submit"
+          style={{width: 'auto'}}
+        >
+          Create Ticket to resolve dispute
+        </a>
+      </div>
+    );
   }
 
   renderJoin() {
@@ -686,6 +744,7 @@ class MatchInfo extends React.Component {
                       </div>
                     </div>
                     {this.renderRequestCancel()}
+                    {this.renderTicketCreate()}
                     {this.renderJoin()}
                   </div>
                 </div>
@@ -767,7 +826,10 @@ class MatchInfo extends React.Component {
                       <h6 className="prizes_desclaimer">
                         <Link to={'/teams/view/' + this.state.match.team_1_id}>
                           {this.state.match.team_1_info.title}
-                        </Link>
+                        </Link>{' '}
+                        <span className="text-primary">
+                          {this.state.match.team_1_result}
+                        </span>{' '}
                         {this.state.match.status == 'complete' &&
                         this.state.match.result == 'team_1' ? (
                           <span>
@@ -857,6 +919,9 @@ class MatchInfo extends React.Component {
                             >
                               {this.state.match.team_2_info.title}
                             </Link>{' '}
+                            <span className="text-primary">
+                              {this.state.match.team_2_result}
+                            </span>{' '}
                             {(this.state.match.status == 'complete' ||
                               this.state.match.status == 'Complete') &&
                             this.state.match.result == 'team_2' ? (
@@ -954,7 +1019,7 @@ class MatchInfo extends React.Component {
                 <br />
 
                 {this.state.team_selected ? (
-                  <div>
+                  <div id="tlst">
                     {/*}<button
                       className="  btn btn-primary btn-sm max-width-300"
                       onClick={() => {
@@ -1123,7 +1188,7 @@ class MatchInfo extends React.Component {
                 </ul>*/}
                 {this.state.eligible_teams_loaded &&
                   !this.state.team_selected && (
-                    <div className="alert alert-warning">
+                    <div className="alert alert-warning" id="tlst">
                       You dont have a team for this ladder
                     </div>
                   )}

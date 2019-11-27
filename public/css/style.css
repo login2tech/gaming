@@ -3963,7 +3963,7 @@ ul.team_list li {
 }
 
 ul.team_list li .info {
-    position: absolute;
+    /* position: absolute; */
     bottom: 0;
     width: 100%;
     text-align: center;
@@ -4611,17 +4611,17 @@ ul.submenu.notification_list {
 }
 
 .float-right.rank_box_wrap {
-    padding: 15px 25px 45px 35px;
-     border-radius: 0;
-     color: #fff;
-     text-transform: uppercase;
-     font-size: 13px;
-     text-align: center;
-     font-weight: bold;
-      border: 1px solid #114afb;
-     box-shadow: 0px 0px 8px 3px #114afb;
-     background: #000;
-     width: 100%;
+    padding: 10px 25px 30px 35px;
+    border-radius: 0;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #114afb;
+    box-shadow: 0px 0px 8px 3px #114afb;
+    background: #000;
+    width: 100%;
      /* margin-left:10% */
 
 }
@@ -4639,10 +4639,13 @@ span.rank_prog_done {
     line-height: 10px;
     padding-top: 6px;
     color: #fff;
+
+    margin-top: -25px
 }
 
 .rank_box_prog_outer > span:last-child {
     float: right;
+    margin-top: -25px
 }
 
 .profile_pic_outline.prime {
@@ -5260,6 +5263,15 @@ span.t-bl {
     background-size: 102%;
 }
 
+figure.avatr {
+    margin: 0;
+}
+.square img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  max-width: none;
+}
 @media screen and (max-width: 768px) {
     .table_wrapper {
         overflow-x: scroll;

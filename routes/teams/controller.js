@@ -316,7 +316,15 @@ exports.listPaged = function(req, res, next) {
 exports.listSingleItem = function(req, res, next) {
   new Item()
     .where('id', req.params.id)
-    .fetch({withRelated: ['team_users', 'team_users.user_info', 'ladder']})
+    .fetch({
+      withRelated: [
+        'team_users',
+        'team_users.user_info',
+        'ladder',
+        'score',
+        'xp_obj'
+      ]
+    })
     .then(function(item) {
       if (!item) {
         return res.status(200).send({id: req.params.id});

@@ -472,14 +472,19 @@ class ProfileHeader extends React.Component {
             <div className="col-md-4 justify-content-end d-flex flex-column">
               <div> </div>
               <div>
-                <img
-                  className="  img-fluid"
-                  src={
-                    '/assets/rank/' +
-                    this.image_based_on_i(user_info.xp_obj) +
-                    '.png'
-                  }
-                />
+                <div className="row">
+                  <div className="col-md-1" />
+                  <div className="col-md-11">
+                    <img
+                      className="  img-fluid"
+                      src={
+                        '/assets/rank/' +
+                        this.image_based_on_i(user_info.xp_obj) +
+                        '.png'
+                      }
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -490,7 +495,10 @@ class ProfileHeader extends React.Component {
             </div>
             <div className="col-md-1 " />
             <div className=" order-md-last col-md-4">
-              {this.renderXPMeter()}
+              <div className="row">
+                <div className="col-md-1" />
+                <div className="col-md-11">{this.renderXPMeter()}</div>
+              </div>
             </div>
             <div className="col-6 col-md-2 following_btn">
               <span>

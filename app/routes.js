@@ -143,6 +143,12 @@ export default function getRoutes(store) {
       />
       <Route onLeave={clearMessages} path="/feed" component={Feed} />
       <Route
+        path="/support/tickets/create/:mtype/:type/:mid/:ttile"
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        component={NewTicket}
+      />
+      <Route
         path="/support/tickets/create"
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}

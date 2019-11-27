@@ -357,16 +357,289 @@ class TeamInfo extends React.Component {
     return <span className="text-danger">L</span>;
   }
 
+  rank_based_on_xp(xpo) {
+    const xp = this.getXp(xpo);
+    return xp + ' season XP';
+  }
+
+  getXp(xpo) {
+    if (!xpo) {
+      xpo = [];
+    }
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
+    return xp;
+  }
+
+  rank_min_based_on_xp(xpo) {
+    if (!xpo) {
+      xpo = [];
+    }
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
+    if (xp < 0) {
+      xp = 0;
+    }
+    if (xp < 50) {
+      return '0';
+    }
+    if (xp < 200) {
+      return '50';
+    }
+    if (xp < 500) {
+      return '200';
+    }
+    if (xp < 1000) {
+      return '500';
+    }
+    if (xp < 1500) {
+      return '1000';
+    }
+    if (xp < 2000) {
+      return '1500';
+    }
+    if (xp < 3000) {
+      return '2000';
+    }
+    if (xp < 3500) {
+      return '3000';
+    }
+    if (xp < 4000) {
+      return '3500';
+    }
+    if (xp < 0) {
+      return 0;
+    }
+    // if (xp >  5000) {
+    return '4000';
+    // }
+  }
+
+  rank_max_based_on_xp(xpo) {
+    if (!xpo) {
+      xpo = [];
+    }
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
+    if (xp < 0) {
+      xp = 0;
+    }
+    if (xp < 50) {
+      return '50';
+    }
+    if (xp < 200) {
+      return '200';
+    }
+    if (xp < 500) {
+      return '500';
+    }
+    if (xp < 1000) {
+      return '1000';
+    }
+    if (xp < 1500) {
+      return '1500';
+    }
+    if (xp < 2000) {
+      return '2000';
+    }
+    if (xp < 3000) {
+      return '3000';
+    }
+    if (xp < 3500) {
+      return '3500';
+    }
+    if (xp < 4000) {
+      return '4000';
+    }
+    // if (xp >  5000) {
+    return '5000';
+    // }
+  }
+
+  rank_percent_based_on_xp(xpo) {
+    if (!xpo) {
+      xpo = [];
+    }
+    const year = moment().format('YYYY');
+    const season = moment().format('Q');
+    let xp = 0;
+    for (let i = xpo.length - 1; i >= 0; i--) {
+      if (xpo[i].year == year && season == xpo[i].season) {
+        xp = xpo[i].xp;
+      }
+    }
+    if (xp < 0) {
+      xp = 0;
+    }
+    if (xp < 50) {
+      return (xp * 10) / 5;
+    }
+    if (xp < 200) {
+      return ((xp - 50) / 150) * 100;
+    }
+    if (xp < 500) {
+      return ((xp - 50) / 300) * 100;
+    }
+    if (xp < 1000) {
+      return ((xp - 200) / 500) * 100;
+    }
+    if (xp < 1500) {
+      return ((xp - 500) / 500) * 100;
+    }
+    if (xp < 2000) {
+      return ((xp - 1000) / 500) * 100;
+    }
+    if (xp < 3000) {
+      return ((xp - 1500) / 1000) * 100;
+    }
+    if (xp < 3500) {
+      return ((xp - 2000) / 500) * 100;
+    }
+    if (xp < 4000) {
+      return ((xp - 3000) / 500) * 100;
+    }
+    // if(xp)
+    // if (xp >  5000) {
+    return 100;
+    // }
+  }
+
+  image_based_on_i(xpo) {
+    const xp = this.getXp(xpo);
+    if (xp < 50) {
+      return 'amateur';
+    }
+    if (xp < 200) {
+      return 'beginner';
+    }
+    if (xp < 500) {
+      return 'upcoming';
+    }
+    if (xp < 1000) {
+      return 'bronze';
+    }
+    if (xp < 1500) {
+      return 'silver';
+    }
+    if (xp < 2000) {
+      return 'gold';
+    }
+    if (xp < 3000) {
+      return 'platinum';
+    }
+    if (xp < 3500) {
+      return 'diamond';
+    }
+    if (xp < 4000) {
+      return 'elite';
+    }
+    return 'elite';
+  }
+  renderXPMeter() {
+    const {team_info} = this.state;
+    return (
+      <div className="float-right rank_box_wrap">
+        {/*rank : */}
+        {this.rank_based_on_xp(team_info.xp_obj)}
+        <div
+          className="rank_box_prog_outer"
+          style={{
+            position: 'relative'
+          }}
+        >
+          <div className="rank_box_prog">
+            <span
+              className="rank_prog_done"
+              style={{
+                width:
+                  '' + this.rank_percent_based_on_xp(team_info.xp_obj) + '%'
+              }}
+            />
+          </div>
+          <span>{this.rank_min_based_on_xp(team_info.xp_obj)}</span>
+          <span
+            style={{
+              position: 'absolute',
+              background: 'url(/images/blank_ctrl2.png) center no-repeat',
+              marginTop: '5px',
+              backgroundSize: 'contain',
+              padding: '5px 20px 9px 20px',
+              marginLeft: '-20px',
+              left: '' + this.rank_percent_based_on_xp(team_info.xp_obj) + '%'
+            }}
+          >
+            {this.getXp(team_info.xp_obj)}
+          </span>
+          <span>{this.rank_max_based_on_xp(team_info.xp_obj)}</span>
+        </div>
+      </div>
+    );
+  }
+
+  renderWinLoss() {
+    const team = this.state.team_info;
+    let wins = 0;
+    let loss = 0;
+    // console.log(team.score);
+    let score = team.score;
+    if (!score) {
+      score = [];
+    }
+    for (let i = 0; i < score.length; i++) {
+      wins += score[i].wins;
+      loss += score[i].loss;
+    }
+    const styl = {
+      fontSize: 30,
+      marginTop: 34,
+      fontWeight: 'bold'
+    };
+
+    return team.score ? (
+      <div style={styl}>
+        <span className="text-success">{wins} W</span> -{' '}
+        <span className="text-danger">{loss} L</span>
+      </div>
+    ) : (
+      <div style={styl}>
+        <span className="text-success">0 W</span> -{' '}
+        <span className="text-danger">0 L</span>
+      </div>
+    );
+  }
+
   render() {
     const divStyle = this.state.new_cover_pic
       ? {
-          backgroundImage: "url('" + this.state.new_cover_pic + "')"
+          backgroundImage: "url('" + this.state.new_cover_pic + "')",
+          paddingBottom: 30
         }
       : this.state.team_info && this.state.team_info.cover_picture
         ? {
-            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')'
+            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')',
+            paddingBottom: 30
           }
-        : {};
+        : {
+            paddingBottom: 30
+          };
 
     return (
       <div>
@@ -415,10 +688,16 @@ class TeamInfo extends React.Component {
           ) : (
             false
           )}
-          <div className="container">
+
+          <div className="container profile_container">
             <div className="row">
-              <div className="col-md-3 col-sm-3 col-xs-12">
-                <div className="game_pic_tournament profile_pic_outline square">
+              <div className="col-md-3 text-center">
+                <div
+                  className={
+                    'game_pic_tournament profile_pic_outline  ' +
+                    (this.state.new_profile_pic ? ' square' : '')
+                  }
+                >
                   <div className="content">
                     <div className="update_btn">
                       <label htmlFor="profile_image_select">
@@ -472,19 +751,71 @@ class TeamInfo extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-9 col-sm-9 col-xs-12">
-                <div className="section-headline white-headline text-left">
-                  <span
-                    className={
-                      game_user_ids.tag_icons[
-                        this.state.team_info.ladder.gamer_tag
-                      ]
+              <div className="col-md-3  ">
+                <span
+                  className={
+                    game_user_ids.tag_icons[
+                      this.state.team_info.ladder.gamer_tag
+                    ]
+                  }
+                />
+                <h3>
+                  {this.state.team_info.title}
+                  {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
+                </h3>
+                {this.renderWinLoss()}
+              </div>
+              <div className="col-md-2 text-center" />
+              <div className="col-md-4 justify-content-end d-flex flex-column">
+                <div> </div>
+                <div>
+                  <div className="row">
+                    <div className="col-md-1" />
+                    <div className="col-md-11">
+                      <img
+                        className="  img-fluid"
+                        src={
+                          '/assets/rank/team_' +
+                          this.image_based_on_i(this.state.team_info.xp_obj) +
+                          '.png'
+                        }
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-3 col-sm-3 col-xs-12 text-center">
+                {this.props.user &&
+                this.state.team_info.team_creator == this.props.user.id &&
+                !this.state.team_info.removed ? (
+                  <Link
+                    to={
+                      '/matchfinder/new/' +
+                      this.state.team_info.ladder.id +
+                      '/' +
+                      this.state.team_info.id
                     }
-                  />
-                  <h3>
-                    {this.state.team_info.title}
-                    {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
-                  </h3>
+                    className="btn btn-default bttn_submit mw_200"
+                    style={{margin: '0 auto'}}
+                  >
+                    Create a match
+                  </Link>
+                ) : (
+                  false
+                )}
+              </div>
+
+              <div className=" order-md-last col-md-4">
+                <div className="row">
+                  <div className="col-md-1" />
+                  <div className="col-md-11">{this.renderXPMeter()}</div>
+                </div>
+              </div>
+              <div className="col-md-5">
+                <div className="section-headline white-headline text-left">
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-4">
@@ -524,23 +855,6 @@ class TeamInfo extends React.Component {
                       <p>Profile Views </p>
                     </div>*/}
                     </div>
-                    {this.props.user &&
-                    this.state.team_info.team_creator == this.props.user.id &&
-                    !this.state.team_info.removed ? (
-                      <Link
-                        to={
-                          '/matchfinder/new/' +
-                          this.state.team_info.ladder.id +
-                          '/' +
-                          this.state.team_info.id
-                        }
-                        className="btn btn-default bttn_submit mw_200"
-                      >
-                        Create a match
-                      </Link>
-                    ) : (
-                      false
-                    )}
                   </div>
                 </div>
               </div>

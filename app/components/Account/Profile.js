@@ -635,7 +635,7 @@ class Profile extends React.Component {
                       })}
                       {this.props.user &&
                       this.state.user_info.id == this.props.user.id ? (
-                        <li>
+                        <li className="item ">
                           <a
                             href={
                               '/u/' +
@@ -643,7 +643,20 @@ class Profile extends React.Component {
                               '/teams/new'
                             }
                           >
-                            <img src="/images/team_new.png" />
+                            <figure className="avatr">
+                              <img src="/images/team_new.png" />
+                            </figure>
+                            <div
+                              className="info "
+                              style={
+                                {
+                                  // visibility: 'hidden'
+                                }
+                              }
+                            >
+                              <br />
+                              Create a new Team
+                            </div>
                           </a>
                         </li>
                       ) : (

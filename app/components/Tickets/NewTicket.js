@@ -6,14 +6,28 @@ import Messages from '../Modules/Messages';
 class NewTicket extends React.Component {
   constructor(props) {
     super(props);
+
+    let match_type = '';
+    if (props.params.mtype == 'm') {
+      match_type = 'MatchFinder';
+    } else if (props.params.mtype == 'mm') {
+      match_type = 'Mix-and-match';
+    } else if (props.params.mtype == 't') {
+      match_type = 'Tournament';
+    }
+
     this.state = {
-      ticket_type: '',
+      ticket_type:
+        props.params.type && props.params.type == 'disputed'
+          ? 'Match Support - Match Dispute'
+          : '',
       ticket_title: '',
       ticket_description: '',
       new_post_image: '',
-      extra_1: '',
-      extra_2: '',
-      extra_3: ''
+      extra_1: props.params.mid ? props.params.mid : '',
+      extra_2: props.params.ttile ? props.params.ttile : '',
+      extra_3: match_type,
+      readonlyFields: props.params.mid ? true : false
     };
   }
 
@@ -204,9 +218,14 @@ class NewTicket extends React.Component {
                           <option value="Match Support - Lag Issue">
                             Match Support - Lag Issue
                           </option>
-                          <option value="Match Support - Match Dispute">
-                            Match Support - Match Dispute
-                          </option>
+                          {this.state.readonlyFields ? (
+                            <option value="Match Support - Match Dispute">
+                              Match Support - Match Dispute
+                            </option>
+                          ) : (
+                            false
+                          )}
+
                           <option value="Match Support - No Show">
                             Match Support - No Show
                           </option>
@@ -226,6 +245,12 @@ class NewTicket extends React.Component {
                             Tournament Support - Tournament Related Questions
                           </option>
                         </select>
+                        <span className="text-white">
+                          To create tickets for match disputes, please use the{' '}
+                          <strong>"Create Ticket"</strong> button from the match
+                          details page.
+                          <br />
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -233,7 +258,7 @@ class NewTicket extends React.Component {
                     <div className="col-md-12">
                       <div className="form-group">
                         <label htmlFor="ticket_title">
-                          Title
+                          Title:
                           <span className="text-danger">*</span>
                         </label>
                         <input
@@ -268,6 +293,9 @@ class NewTicket extends React.Component {
                               value={this.state.extra_1}
                               onChange={this.handleChange.bind(this)}
                               placeholder="Enter Match Id"
+                              readOnly={
+                                this.state.readonlyFields ? true : false
+                              }
                             />
                           </div>
                         </div>
@@ -276,7 +304,7 @@ class NewTicket extends React.Component {
                       <div className="row">
                         <div className="col-md-12">
                           <div className="form-group">
-                            <label htmlFor="extra_2">Match Type</label>
+                            <label htmlFor="extra_3">Match Type</label>
                             <select
                               className="form-control"
                               id="extra_3"
@@ -284,6 +312,9 @@ class NewTicket extends React.Component {
                               required
                               value={this.state.extra_3}
                               onChange={this.handleChange.bind(this)}
+                              disabled={
+                                this.state.readonlyFields ? true : false
+                              }
                             >
                               <option value="">Select</option>
                               <option value="MatchFinder">MatchFinder</option>
@@ -309,6 +340,9 @@ class NewTicket extends React.Component {
                               value={this.state.extra_2}
                               onChange={this.handleChange.bind(this)}
                               placeholder="Enter Your Team Name"
+                              readOnly={
+                                this.state.readonlyFields ? true : false
+                              }
                             />
                           </div>
                         </div>
@@ -321,7 +355,10 @@ class NewTicket extends React.Component {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="comment">* Describe your issue:</label>
+                        <label htmlFor="comment">
+                          Describe your issue:
+                          <span className="text-danger">*</span>
+                        </label>
                         <textarea
                           rows="8"
                           className="form-control"
