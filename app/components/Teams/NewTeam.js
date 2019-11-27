@@ -11,7 +11,8 @@ class NewTeam extends React.Component {
     this.state = {
       title: '',
       ladder: '',
-      games: []
+      games: [],
+      team_type: ''
     };
   }
 
@@ -91,7 +92,7 @@ class NewTeam extends React.Component {
                         type="text"
                         id="title"
                         className="form-control"
-                        required=""
+                        required="required"
                         placeholder="Enter Team Name"
                         name="title"
                         value={this.state.title}
@@ -103,7 +104,7 @@ class NewTeam extends React.Component {
 
                       <select
                         className="form-control"
-                        required=""
+                        required="required"
                         name="ladder"
                         id="ladder"
                         value={this.state.ladder}
@@ -124,6 +125,22 @@ class NewTeam extends React.Component {
                           );
                         })}
                         }
+                      </select>
+                    </div>
+                    <div className="form-group col-md-12">
+                      <label htmlFor="title">Team Type</label>
+
+                      <select
+                        className="form-control"
+                        required="required"
+                        name="team_type"
+                        id="team_type"
+                        value={this.state.team_type}
+                        onChange={this.handleChange.bind(this)}
+                      >
+                        <option value="">Select Team Type</option>
+                        <option value="matchfinder">Matchfinder</option>
+                        <option value="tournaments">Tournaments</option>
                       </select>
                     </div>
                     <div className="form-group col-md-12">
