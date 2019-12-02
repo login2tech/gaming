@@ -16,7 +16,9 @@ export function createMatch8(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/mix-and-match/' + json.match.id;
+          setTimeout(function() {
+            window.location.href = '/mix-and-match/' + json.match.id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {

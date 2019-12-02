@@ -9,7 +9,7 @@ const CashTransactions = require('../../models/CashTransactions');
 const CreditTransactions = require('../../models/CreditTransactions');
 const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
-
+const utils = require('../utils');
 const shuffle = function(array) {
   array.sort(() => Math.random() - 0.5);
 };
@@ -17,9 +17,9 @@ const shuffle = function(array) {
 const getXPBasedOn = function(current_xp) {
   return 15;
 };
-// const getXPRemoveBasedOn = function(current_xp) {
-//   return 7;
-// };
+const getXPRemoveBasedOn = function(current_xp) {
+  return 7;
+};
 
 const giveXpToMember = function(uid, match_id) {
   new User()
@@ -97,77 +97,77 @@ const giveXpToMember = function(uid, match_id) {
     });
 };
 //
-// const takeXpFromMember = function(uid, match_id) {
-//   new User()
-//     .where({id: uid})
-//     .fetch()
-//     .then(function(usr) {
-//       if (usr) {
-//         let xp = usr.get('life_xp');
-//         const xP_to_add = getXPRemoveBasedOn(xp);
-//
-//         xp -= xP_to_add;
-//         usr
-//           .save({life_xp: xp}, {patch: true})
-//           .then(function(usr) {})
-//           .catch(function(err) {
-//             console.log(1, err);
-//           });
-//
-//         const year = moment().format('YYYY');
-//         const season = moment().format('Q');
-//
-//         new XP()
-//           .where({
-//             year: year,
-//             season: season,
-//             user_id: uid
-//           })
-//           .fetch()
-//           .then(function(xpObj) {
-//             if (xpObj) {
-//               xpObj
-//                 .save({
-//                   xp: xpObj.get('xp') - xP_to_add
-//                 })
-//                 .then(function(o) {})
-//                 .catch(function(err) {
-//                   console.log(2, err);
-//                 });
-//             } else {
-//               new XP()
-//                 .save({
-//                   year: year,
-//                   season: season,
-//                   user_id: uid,
-//                   xp: -xP_to_add
-//                 })
-//                 .then(function(o) {})
-//                 .catch(function(err) {
-//                   console.log(3, err);
-//                 });
-//             }
-//             new XPTransactions()
-//               .save({
-//                 user_id: uid,
-//                 obj_type: 'm8_' + match_id,
-//                 details: 'XP Debit for losing money-8 match #' + match_id,
-//                 qty: -xP_to_add
-//               })
-//               .then(function(o) {})
-//               .catch(function(err) {
-//                 console.log(4, err);
-//               });
-//           })
-//           .catch(function(err) {
-//             console.log(5, err);
-//           });
-//       }
-//     })
-//     .catch(function(err) {
-//       console.log(6, err);
-//     });
-// };
+const takeXpFromMember = function(uid, match_id) {
+  new User()
+    .where({id: uid})
+    .fetch()
+    .then(function(usr) {
+      if (usr) {
+        let xp = usr.get('life_xp');
+        const xP_to_add = getXPRemoveBasedOn(xp);
+
+        xp -= xP_to_add;
+        usr
+          .save({life_xp: xp}, {patch: true})
+          .then(function(usr) {})
+          .catch(function(err) {
+            console.log(1, err);
+          });
+
+        const year = moment().format('YYYY');
+        const season = moment().format('Q');
+
+        new XP()
+          .where({
+            year: year,
+            season: season,
+            user_id: uid
+          })
+          .fetch()
+          .then(function(xpObj) {
+            if (xpObj) {
+              xpObj
+                .save({
+                  xp: xpObj.get('xp') - xP_to_add
+                })
+                .then(function(o) {})
+                .catch(function(err) {
+                  console.log(2, err);
+                });
+            } else {
+              new XP()
+                .save({
+                  year: year,
+                  season: season,
+                  user_id: uid,
+                  xp: -xP_to_add
+                })
+                .then(function(o) {})
+                .catch(function(err) {
+                  console.log(3, err);
+                });
+            }
+            new XPTransactions()
+              .save({
+                user_id: uid,
+                obj_type: 'm8_' + match_id,
+                details: 'XP Debit for losing money-8 match #' + match_id,
+                qty: -xP_to_add
+              })
+              .then(function(o) {})
+              .catch(function(err) {
+                console.log(4, err);
+              });
+          })
+          .catch(function(err) {
+            console.log(5, err);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(6, err);
+    });
+};
 
 const addScoreForMember = function(uid, ladder_id, game_id, type) {
   console.log('73');
@@ -365,12 +365,12 @@ const giveXPtoTeam = function(team_id, players, match_id) {
   }
 };
 
-// const takeXPfromTeam = function(team_id, players, match_id) {
-//   for (let i = players.length - 1; i >= 0; i--) {
-//     const uid = parseInt(players[i]);
-//     takeXpFromMember(uid, match_id);
-//   }
-// };
+const takeXPfromTeam = function(team_id, players, match_id) {
+  for (let i = players.length - 1; i >= 0; i--) {
+    const uid = parseInt(players[i]);
+    takeXpFromMember(uid, match_id);
+  }
+};
 
 const giveMoneyBackToTeam = function(
   team_id,
@@ -447,6 +447,7 @@ exports.resolveDispute = function(req, res, next) {
           });
 
           giveXPtoTeam(null, win_team_members, tmp_match.id);
+          takeXPfromTeam(null, loose_team_members, tmp_match.id);
 
           if (
             tmp_match.match_type == 'cash' ||
@@ -583,6 +584,7 @@ exports.saveScore = function(req, res, next) {
             loose_team_members = loose_team_members.split('|');
 
             giveXPtoTeam(null, win_team_members, tmp_match.id);
+            takeXPfromTeam(null, loose_team_members, tmp_match.id);
 
             if (
               tmp_match.match_type == 'cash' ||
@@ -682,6 +684,22 @@ exports.leave = function(req, res, next) {
               msg: 'Left successfully.',
               match: match
             });
+
+            if (match.match_type == 'cash') {
+              utils.giveCashToUser(
+                req.user.id,
+                match.match_fee,
+                'Refund for leaving mix & match #' + match.id,
+                'm8_' + match.id
+              );
+            } else if (match.match_type == 'credits') {
+              utils.giveCreditsToUser(
+                req.user.id,
+                match.match_fee,
+                'Refund for leaving mix & match #' + match.id,
+                'm8_' + match.id
+              );
+            }
           })
           .catch(function(err) {
             console.log(err);

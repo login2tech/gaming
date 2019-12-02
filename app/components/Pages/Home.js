@@ -32,10 +32,9 @@ class Home extends React.Component {
       <div>
         <div className="main_slider_home">
           <div id="demo" className="carousel slide" data-ride="carousel">
-            {/*}<ul className="carousel-indicators">
-            <li data-target="#demo" data-slide-to="0" className="active" />
-            <li data-target="#demo" data-slide-to="1" />
-          </ul>*/}
+            <ul className="carousel-indicators">
+              <li data-target="#demo" data-slide-to="0" className="active" />
+            </ul>
             <div className="carousel-inner">
               <div
                 className="carousel-item active"
@@ -44,7 +43,94 @@ class Home extends React.Component {
                 <img src="images/banner_1.png" alt="" />
               </div>
             </div>
+          </div>
+        </div>
 
+        <section className="games" style={{marginBottom: 30}}>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12 ">
+                <div className="section-headline white-headline text-center">
+                  <h3>Find Your Game</h3>
+                  <p>Play Your Favourite Games</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="row no-gutters">
+              {this.state.games.map((games, i) => {
+                if (i > 6) {
+                  return false;
+                }
+                return (
+                  <div className=" col game_hover_effect" key={games.id}>
+                    <div className="game_c_box">
+                      <div className="game_pic">
+                        <a
+                          href={
+                            '/game/' +
+                            games.id +
+                            '/' +
+                            games.title.toLowerCase().replace(/ /g, '-')
+                          }
+                        >
+                          <img src={games.image_url} />
+                        </a>
+                      </div>
+
+                      <a
+                        href={
+                          '/game/' +
+                          games.id +
+                          '/' +
+                          games.title.toLowerCase().replace(/ /g, '-')
+                        }
+                        className="game_platform "
+                      >
+                        Play {games.title}
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="row">
+              {/*this.state.games.map((games, i) => {
+                        if (i < 4 || i > 7) {
+                          return false;
+                        }
+                        return (
+                          <div
+                            className="col-lg-3 col-md-3 col-sm-3 col-xs-12"
+                            key={games.id}
+                          >
+                            <div className="game_c_box">
+                              <div className="game_pic">
+                                <img src={games.image_url} />
+                              </div>
+
+                              <a
+                                href={
+                                  '/game/' +
+                                  games.id +
+                                  '/' +
+                                  games.title.toLowerCase().replace(/ /g, '-')
+                                }
+                                className="game_platform"
+                              >
+                                Play {games.title}
+                              </a>
+                            </div>
+                          </div>
+                        );
+                      })*/}
+            </div>
+          </div>
+        </section>
+
+        <div className="main_slider_home">
+          <div id="demo" className="carousel slide" data-ride="carousel">
             <div className="carousel-inner">
               <div
                 className="carousel-item active"
@@ -102,82 +188,6 @@ class Home extends React.Component {
           </div>
         </section>
 
-        <section className="games">
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-center">
-                  <h3>Find Your Game</h3>
-                  <p>Play Your Favourite Games</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="row">
-              {this.state.games.map((games, i) => {
-                if (i > 6) {
-                  return false;
-                }
-                return (
-                  <div
-                    className="col-lg-2 col-md-2 col-sm-6 col-12"
-                    key={games.id}
-                  >
-                    <div className="game_c_box">
-                      <div className="game_pic">
-                        <img src={games.image_url} />
-                      </div>
-
-                      <a
-                        href={
-                          '/game/' +
-                          games.id +
-                          '/' +
-                          games.title.toLowerCase().replace(/ /g, '-')
-                        }
-                        className="game_platform"
-                      >
-                        Play {games.title}
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="row">
-              {/*this.state.games.map((games, i) => {
-                if (i < 4 || i > 7) {
-                  return false;
-                }
-                return (
-                  <div
-                    className="col-lg-3 col-md-3 col-sm-3 col-xs-12"
-                    key={games.id}
-                  >
-                    <div className="game_c_box">
-                      <div className="game_pic">
-                        <img src={games.image_url} />
-                      </div>
-
-                      <a
-                        href={
-                          '/game/' +
-                          games.id +
-                          '/' +
-                          games.title.toLowerCase().replace(/ /g, '-')
-                        }
-                        className="game_platform"
-                      >
-                        Play {games.title}
-                      </a>
-                    </div>
-                  </div>
-                );
-              })*/}
-            </div>
-          </div>
-        </section>
         {/*<section className="tournaments">
           <div className="container">
 

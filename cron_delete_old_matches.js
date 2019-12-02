@@ -1,6 +1,7 @@
 // Libraries
 require('dotenv').config({silent: true});
 const moment = require('moment');
+const utils = require('./routes/utils');
 
 // Controllers
 // const EmailController = require('./controllers/emails');
@@ -30,7 +31,28 @@ const delete_match = function(ta) {
       console.log(err);
     });
 };
-const delete_money8 = function(ta) {
+const delete_money8 = function(ta, match) {
+  const match_players = JSON.parse(match.players);
+  if (match.match_type == 'cash' || match.match_type == 'credits') {
+    for (let i = 0; i < match_players.length; i++) {
+      if (match.match_type == 'cash') {
+        utils.giveCashToUser(
+          match_players[i],
+          match.match_fee,
+          'Refund for cancelled mix & match #' + match.id,
+          'm8_' + match.id
+        );
+      } else if (match.match_type == 'credits') {
+        utils.giveCreditsToUser(
+          match_players[i],
+          match.match_fee,
+          'Refund for cancelled mix & match #' + match.id,
+          'm8_' + match.id
+        );
+      }
+    }
+  }
+
   new Money8()
     .where({id: ta})
     .destroy()
@@ -97,7 +119,7 @@ new Money8()
     matches = matches.toJSON();
     // console.log(matches.length);
     for (let i = 0; i < matches.length; i++) {
-      delete_money8(matches[i].id);
+      delete_money8(matches[i].id, matches[i]);
     }
   })
   .catch(function(err) {

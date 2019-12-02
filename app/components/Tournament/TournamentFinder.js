@@ -53,7 +53,7 @@ class TournamentFinder extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="all_t_heading">Upcoming Matches</div>
+                <div className="all_t_heading">Upcoming Tournaments</div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
 
                 {/*<Link

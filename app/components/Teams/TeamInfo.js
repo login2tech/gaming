@@ -787,7 +787,7 @@ class TeamInfo extends React.Component {
             </div>
 
             <div className="row">
-              <div className="col-md-3 col-sm-3 col-xs-12 text-center">
+              <div className="col-md-3 col-sm-3 col-xs-12 text-center mt-2">
                 {this.props.user &&
                 this.state.team_info.team_creator == this.props.user.id &&
                 !this.state.team_info.removed ? (
