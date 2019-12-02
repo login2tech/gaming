@@ -101,7 +101,7 @@ class UpvoteButton extends React.Component {
   ];
 
   storeOriginal() {
-    console.log(this.props.likes);
+    // console.log(this.props.likes);
     let likes = this.props.likes;
     if (!likes) {
       likes = [];
@@ -138,7 +138,7 @@ class UpvoteButton extends React.Component {
     btn_class += 'btn_4_ques_' + this.props.post_id;
     btn_class += this.props.disabled ? ' disabled ' : '';
 
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <span>
         {this.state.total_count > 0 ? (

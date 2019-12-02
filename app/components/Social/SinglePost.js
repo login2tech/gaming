@@ -32,6 +32,25 @@ class SinlgePost extends React.Component {
       });
   }
 
+  renderGoBack() {
+    console.log(history.length);
+    return (
+      <a
+        href="/feed"
+        className=""
+        onClick={e => {
+          if (history.length == 1) {
+            return;
+          }
+          history.back();
+          e.preventDefault();
+        }}
+      >
+        <span className="fa fa-arrow-left" /> back to feed
+      </a>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -41,6 +60,8 @@ class SinlgePost extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3>Post</h3>
+                  <br />
+                  {this.renderGoBack()}
                 </div>
               </div>
             </div>
