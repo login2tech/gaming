@@ -467,7 +467,6 @@ class Profile extends React.Component {
 
   handleTransferSubmit(e) {
     e.preventDefault();
-    e.preventDefault();
 
     this.props.dispatch(
       transfer(
@@ -479,7 +478,7 @@ class Profile extends React.Component {
         st => {
           this.setState({
             init_transaction_mode: false,
-            prev_success_type: 'withdraw'
+            prev_success_type: 'transfer'
           });
           // const obj = {saving_cover_photo: false};
           // if (st) {
@@ -748,6 +747,11 @@ class Profile extends React.Component {
                 />
                 <br /> {this.props.user.credit_balance}
               </div>
+              {this.state.prev_success_type == 'transfer' ? (
+                <Messages messages={this.props.messages} />
+              ) : (
+                false
+              )}
               {this.state.init_transaction_mode == 'credit' ? (
                 this.renderBuyBox('credit')
               ) : this.state.init_transaction_mode == 'transfer' ? (
