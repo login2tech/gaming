@@ -13,3 +13,4 @@ routes.get('/single/:id', ctrl.listSingleItem);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
 routes.post('/edit', u_ctrl.ensureAuthenticated, ctrl.updateItem);
 routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);
+routes.post('/close', u_ctrl.ensureAuthenticated, ctrl.closeItem);

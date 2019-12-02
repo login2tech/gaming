@@ -34,19 +34,23 @@ exports.listMine = function(req, res, next) {
 };
 
 exports.delete = function(req, res, next) {
+  const obj = {user_id: req.user.id};
+  if (req.query.id) {
+    obj.id = req.query.id;
+  }
   new Notification()
-
-    .where({
-      user_id: req.user.id
-    })
+    .where(obj)
     .destroy()
     .then(function(user) {
-      // res.send({msg: ''});
+      if (req.query.id) {
+        res.status(200).send({ok: true});
+      }
       res.redirect('/notifications');
     })
     .catch(function(err) {
-      console.log(err);
+      if (req.query.id) {
+        res.status(200).send({ok: true});
+      }
       res.redirect('/notifications');
-      // return res.status(400).send({msg: ''});
     });
 };

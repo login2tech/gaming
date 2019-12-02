@@ -25,7 +25,7 @@ class ViewTicket extends React.Component {
     );
   }
 
-  fetchData() {
+  fetchData(skip_replies) {
     fetch('/api/tickets/single/' + this.props.id)
       .then(res => res.json())
       .then(json => {
@@ -37,7 +37,11 @@ class ViewTicket extends React.Component {
               ticket: json.item
             },
             () => {
-              this.fetchReplies();
+              if (skip_replies) {
+                //
+              } else {
+                this.fetchReplies();
+              }
             }
           );
         } else {
@@ -128,6 +132,71 @@ class ViewTicket extends React.Component {
       });
   }
 
+  renderDownloadAttachment(a) {
+    if (!a) {
+      return false;
+    }
+
+    const split = a.split('.');
+    const split_le = split.length;
+    const ext = split[split_le - 1];
+    if (
+      ext == 'jpg' ||
+      ext == 'png' ||
+      ext == 'jpeg' ||
+      ext == 'gif' ||
+      ext == 'bmp'
+    ) {
+      return (
+        <a download href={a}>
+          <img style={{width: '500px'}} className="img_fluid" src={a} />
+        </a>
+      );
+    }
+    return (
+      <a download href={a}>
+        Download attachment
+      </a>
+    );
+  }
+
+  closeTicketInner() {
+    this.setState({
+      loaded: false
+    });
+    Fetcher.post('/api/tickets/close', {
+      ticket_id: this.state.ticket.id
+    })
+      .then(resp => {
+        this.setState({
+          loaded: true
+        });
+        if (resp.ok) {
+          this.props.dispatch({type: 'SUCCESS', messages: [resp]});
+          this.fetchData(true);
+        } else {
+          this.props.dispatch({type: 'FAILURE', messages: [resp]});
+        }
+      })
+      .catch(err => {
+        // console.log(err);
+        this.setState({
+          loaded: true
+        });
+        const msg = 'Failed to perform Action';
+        this.props.dispatch({
+          type: 'FAILURE',
+          messages: [{msg: msg}]
+        });
+      });
+  }
+
+  closeTicket() {
+    if (confirm('Are you sure you want to close this ticket')) {
+      this.closeTicketInner();
+    }
+  }
+
   render() {
     // const {data} = this.props;
     // console.log(data);
@@ -178,12 +247,8 @@ class ViewTicket extends React.Component {
                         __html: this.state.ticket.description
                       }}
                     />
-                    {this.state.ticket.attachment ? (
-                      <a download href={this.state.ticket.attachment}>
-                        Download attachment
-                      </a>
-                    ) : (
-                      false
+                    {this.renderDownloadAttachment(
+                      this.state.ticket.attachment
                     )}
                   </div>
                 </div>
@@ -235,13 +300,7 @@ class ViewTicket extends React.Component {
                       </div>
                       <div className="col-sm-9 post-content">
                         <div dangerouslySetInnerHTML={{__html: item.content}} />
-                        {item.attachment ? (
-                          <a download href={item.attachment}>
-                            Download attachment
-                          </a>
-                        ) : (
-                          false
-                        )}
+                        {this.renderDownloadAttachment(item.attachment)}
                       </div>
                     </div>
                   </div>
@@ -250,32 +309,45 @@ class ViewTicket extends React.Component {
             })}
           </div>
           <div className="modal-footer">
-            <form
-              onSubmit={e => {
-                this.onSubmit(e);
-              }}
-            >
-              <Messages messages={this.props.messages} />
-              <div className="input-control">
-                <label>Reply Text</label>
-                <textarea
-                  type="text"
-                  required
-                  className="form-control"
-                  name="text"
-                  onChange={this.handleChange.bind(this)}
-                  id="text"
-                  value={this.state.text}
-                />
-              </div>
-              <br />
+            {this.state.ticket.status == 'closed' ? (
+              false
+            ) : (
+              <form
+                onSubmit={e => {
+                  this.onSubmit(e);
+                }}
+              >
+                <Messages messages={this.props.messages} />
+                <div className="input-control">
+                  <label>Reply Text</label>
+                  <textarea
+                    type="text"
+                    required
+                    className="form-control"
+                    name="text"
+                    onChange={this.handleChange.bind(this)}
+                    id="text"
+                    value={this.state.text}
+                  />
+                </div>
+                <br />
 
-              <input
-                value="Create reply"
-                type="submit"
-                className="btn btn-primary"
-              />
-            </form>
+                <input
+                  value="Close Ticket"
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => {
+                    this.closeTicket();
+                  }}
+                />
+
+                <input
+                  value="Create reply"
+                  type="submit"
+                  className="btn btn-primary"
+                />
+              </form>
+            )}
           </div>
         </div>
       </div>

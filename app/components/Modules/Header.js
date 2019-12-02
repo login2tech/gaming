@@ -49,6 +49,17 @@ class Header extends React.Component {
       });
   }
 
+  deleteNotif(id, link) {
+    fetch('/notifs/delete?id=' + id)
+      .then(res => res.json())
+      .then(json => {
+        window.location.href = link;
+      })
+      .catch(function() {
+        window.location.href = link;
+      });
+  }
+
   fetchNotifications() {
     if (!this.props.user) {
       return;
@@ -222,7 +233,15 @@ class Header extends React.Component {
 
                                 return (
                                   <li key={notif.id}>
-                                    <Link to={lnk}>{notif.description}</Link>{' '}
+                                    <a
+                                      onClick={e => {
+                                        e.preventDefault();
+                                        this.deleteNotif(notif.id, lnk);
+                                      }}
+                                      href={lnk}
+                                    >
+                                      {notif.description}
+                                    </a>{' '}
                                     <button
                                       style={{display: 'none'}}
                                       className="btn removeNotif"

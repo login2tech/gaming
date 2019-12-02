@@ -169,6 +169,28 @@ exports.updateItem = function(req, res, next) {
     });
 };
 
+exports.closeItem = function(req, res, next) {
+  new Item()
+    .where({id: req.body.ticket_id})
+    .save(
+      {
+        status: 'closed'
+      },
+      {method: 'update'}
+    )
+    .then(function(post) {
+      res
+        .status(200)
+        .send({ok: true, msg: 'The ticket has been successfully closed.'});
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res
+        .status(400)
+        .send({msg: 'Something went wrong while closing the ' + ObjName});
+    });
+};
+
 exports.deleteItem = function(req, res, next) {
   new Item({id: req.body.id})
     .destroy()

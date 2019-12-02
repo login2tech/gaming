@@ -11,8 +11,12 @@ class Tickets extends React.Component {
     super(props);
     this.state = {
       page_loaded: false,
+      showing_closed: false,
       items: []
     };
+  }
+  checkboxChange() {
+    this.setState({showing_closed: !this.state.showing_closed});
   }
 
   componentDidMount() {
@@ -56,10 +60,21 @@ class Tickets extends React.Component {
         <section className="contet_part">
           <div className="container content_box">
             <ul
-              className="nav  justify-content-end nav-tabs responsive-tabs"
+              className="nav  nav-tabs responsive-tabs"
               role="tablist"
-              style={{marginBottom: 40}}
+              style={{marginBottom: 40, justifyContent: 'space-between'}}
             >
+              <li
+                role="presentation"
+                style={{float: 'left'}}
+                className=" text-right"
+              >
+                <input
+                  type="checkbox"
+                  onChange={this.checkboxChange.bind(this)}
+                />{' '}
+                Show closed tickets too ?
+              </li>
               <li role="presentation" className="pull-right text-right">
                 <Link to="/support/tickets/create" role="tab">
                   <i className="fa fa-plus" /> Create New
@@ -82,6 +97,12 @@ class Tickets extends React.Component {
                     </thead>
                     <tbody>
                       {this.state.items.map((item, i) => {
+                        if (
+                          this.state.showing_closed == false &&
+                          item.status == 'closed'
+                        ) {
+                          return false;
+                        }
                         return (
                           <tr key={item.id}>
                             <td>{item.id}</td>
@@ -92,7 +113,13 @@ class Tickets extends React.Component {
                             </td>
                             <td>{item.type}</td>
                             <td>{moment(item.updated_at).fromNow()}</td>
-                            <td>{item.status}</td>
+                            <td>
+                              {item.status == 'closed' ? (
+                                <span className="text-success">Closed</span>
+                              ) : (
+                                <span className="text-primary">Open</span>
+                              )}
+                            </td>
                           </tr>
                         );
                       })}

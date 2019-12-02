@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
+// import {Link} from 'react-router';
 // import { resetPassword } from '../../actions/auth';
 // import Messages from 'Messages';
 
-import NotFound from './Pages/NotFound';
+// import NotFound from './Pages/NotFound';
 
 class Notifications extends React.Component {
   constructor(props) {
@@ -16,6 +16,16 @@ class Notifications extends React.Component {
     this.fetchNotifications();
   }
 
+  deleteNotif(id, link) {
+    fetch('/notifs/delete?id=' + id)
+      .then(res => res.json())
+      .then(json => {
+        window.location.href = link;
+      })
+      .catch(function() {
+        window.location.href = link;
+      });
+  }
   fetchNotifications() {
     fetch('/notifs/listMine')
       .then(res => res.json())
@@ -81,7 +91,15 @@ class Notifications extends React.Component {
 
                     return (
                       <li key={notif.id}>
-                        <Link to={lnk}>{notif.description}</Link>
+                        <a
+                          onClick={e => {
+                            e.preventDefault();
+                            this.deleteNotif(notif.id, lnk);
+                          }}
+                          href={lnk}
+                        >
+                          {notif.description}
+                        </a>
                       </li>
                     );
                   })}

@@ -9,7 +9,7 @@ import moment from 'moment';
 import ReplyTicket from '../Modules/Modals/ReplyTicket';
 import ViewTicket from '../Modules/Modals/ViewTicket';
 
-class Tickets extends React.Component {
+class TicketsClosed extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -30,7 +30,7 @@ class Tickets extends React.Component {
 
   loadData() {
     Fetcher.get(
-      '/api/admin/listPaged/tickets?filter_status=submitted&related=user&page=' +
+      '/api/admin/listPaged/tickets?filter_status=closed&related=user&page=' +
         this.state.page
     )
       .then(resp => {
@@ -234,4 +234,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Tickets);
+export default connect(mapStateToProps)(TicketsClosed);

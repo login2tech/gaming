@@ -22,6 +22,7 @@ import Topics from './components/DataRows/Topics';
 import Posts from './components/DataRows/Posts';
 import Threads from './components/DataRows/Threads';
 import Tickets from './components/DataRows/Tickets';
+import TicketsClosed from './components/DataRows/TicketsClosed';
 import Subscribers from './components/DataRows/Subscribers';
 import ApplyStaff from './components/DataRows/ApplyStaff';
 import AdvertiseWithUs from './components/DataRows/AdvertiseWithUs';
@@ -147,6 +148,12 @@ export default function getRoutes(store) {
       <Route path="/topics" component={Topics} onLeave={clearMessages} />
       <Route path="/threads" component={Threads} onLeave={clearMessages} />
       <Route path="/tickets" component={Tickets} onLeave={clearMessages} />
+      <Route
+        path="/tickets_closed"
+        component={TicketsClosed}
+        onLeave={clearMessages}
+      />
+
       <Route path="/posts" component={Posts} onLeave={clearMessages} />
       <Route path="/games/add" component={Games} onLeave={clearMessages} />
       <Route path="/games/edit" component={Games} onLeave={clearMessages} />

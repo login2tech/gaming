@@ -1,154 +1,10705 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var checkStatus=function(e){return e},parseJSON=function(e){return e.json()},header={Accept:"application/json","Content-Type":"application/json"},Fetcher={get:function(e,t,r){return fetch(e,{method:"GET",headers:r?Object.assign({Authorization:"Bearer ".concat(r)},header):header}).then(checkStatus).then(parseJSON)},post:function(e,t,r){return fetch(e,{method:"POST",headers:r?Object.assign({Authorization:"Bearer ".concat(r)},header):header,body:JSON.stringify(t)}).then(checkStatus).then(parseJSON)}},_default=Fetcher;exports.default=_default;
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var checkStatus = function checkStatus(response) {
+  // if (response.ok) {
+  return response; // } else {
+  //   // console.log(response);
+  //   // const error = new Error(response);
+  //   error.response = response;
+  //   throw error;
+  // }
+};
+
+var parseJSON = function parseJSON(res) {
+  return res.json();
+};
+
+var header = {
+  Accept: 'application/json',
+  'Content-Type': 'application/json'
+};
+var Fetcher = {
+  get: function get(path, data, token) {
+    return fetch(path, {
+      method: 'GET',
+      headers: token ? Object.assign({
+        Authorization: "Bearer ".concat(token)
+      }, header) : header
+    }).then(checkStatus).then(parseJSON);
+  },
+  post: function post(path, data, token) {
+    return fetch(path, {
+      method: 'POST',
+      headers: token ? Object.assign({
+        Authorization: "Bearer ".concat(token)
+      }, header) : header,
+      body: JSON.stringify(data)
+    }).then(checkStatus).then(parseJSON);
+  }
+};
+var _default = Fetcher;
+exports.default = _default;
 
 },{}],2:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.login=login,exports.signup=signup,exports.logout=logout,exports.forgotPassword=forgotPassword,exports.resetPassword=resetPassword,exports.updateProfile=updateProfile,exports.changePassword=changePassword,exports.deleteAccount=deleteAccount;var _moment=_interopRequireDefault(require("moment")),_reactCookie=_interopRequireDefault(require("react-cookie")),_reactRouter=require("react-router");function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function login(e,t){return function(n){return n({type:"CLEAR_MESSAGES"}),fetch("/login",{method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e,password:t})}).then(function(e){return e.ok?e.json().then(function(e){n({type:"LOGIN_SUCCESS",token:e.token,user:e.user}),_reactCookie.default.save("token",e.token,{expires:(0,_moment.default)().add(1,"month").toDate()}),_reactRouter.browserHistory.push("/account")}):e.json().then(function(e){n({type:"LOGIN_FAILURE",messages:Array.isArray(e)?e:[e]})})})}}function signup(e,t,n){return function(o){return o({type:"CLEAR_MESSAGES"}),fetch("/signup",{method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:e,email:t,password:n})}).then(function(e){return e.json().then(function(t){e.ok?(o({type:"SIGNUP_SUCCESS",token:t.token,user:t.user}),_reactRouter.browserHistory.push("/"),_reactCookie.default.save("token",t.token,{expires:(0,_moment.default)().add(1,"month").toDate()})):o({type:"SIGNUP_FAILURE",messages:Array.isArray(t)?t:[t]})})})}}function logout(){return _reactCookie.default.remove("token",{path:"/"}),setTimeout(function(){window.location.href="/"},1e3),{type:"LOGOUT_SUCCESS"}}function forgotPassword(e){return function(t){return t({type:"CLEAR_MESSAGES"}),fetch("/forgot",{method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:e})}).then(function(e){return e.ok?e.json().then(function(e){t({type:"FORGOT_PASSWORD_SUCCESS",messages:[e]})}):e.json().then(function(e){t({type:"FORGOT_PASSWORD_FAILURE",messages:Array.isArray(e)?e:[e]})})})}}function resetPassword(e,t,n){return function(o){return o({type:"CLEAR_MESSAGES"}),fetch("/reset/".concat(n),{method:"post",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:e,confirm:t})}).then(function(e){return e.ok?e.json().then(function(e){_reactRouter.browserHistory.push("/login"),o({type:"RESET_PASSWORD_SUCCESS",messages:[e]})}):e.json().then(function(e){o({type:"RESET_PASSWORD_FAILURE",messages:Array.isArray(e)?e:[e]})})})}}function updateProfile(e,t){return function(n){return n({type:"CLEAR_MESSAGES"}),fetch("/account",{method:"put",headers:{"Content-Type":"application/json",Authorization:"Bearer ".concat(t)},body:JSON.stringify({email:e.email,name:e.name,gender:e.gender,location:e.location,website:e.website})}).then(function(e){return e.ok?e.json().then(function(e){n({type:"UPDATE_PROFILE_SUCCESS",messages:[e]})}):e.json().then(function(e){n({type:"UPDATE_PROFILE_FAILURE",messages:Array.isArray(e)?e:[e]})})})}}function changePassword(e,t,n){return function(o){return o({type:"CLEAR_MESSAGES"}),fetch("/account",{method:"put",headers:{"Content-Type":"application/json",Authorization:"Bearer ".concat(n)},body:JSON.stringify({password:e,confirm:t})}).then(function(e){return e.ok?e.json().then(function(e){o({type:"CHANGE_PASSWORD_SUCCESS",messages:[e]})}):e.json().then(function(e){o({type:"CHANGE_PASSWORD_FAILURE",messages:Array.isArray(e)?e:[e]})})})}}function deleteAccount(e){return function(t){return t({type:"CLEAR_MESSAGES"}),fetch("/account",{method:"delete",headers:{"Content-Type":"application/json",Authorization:"Bearer ".concat(e)}}).then(function(e){if(e.ok)return e.json().then(function(e){t(logout()),t({type:"DELETE_ACCOUNT_SUCCESS",messages:[e]})})})}}
+"use strict";
 
-},{"moment":117,"react-cookie":125,"react-router":177}],3:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.closeModal=exports.openModal=void 0;var openModal=function(o){return{type:"OPEN_MODAL",obj:o}};exports.openModal=openModal;var closeModal=function(o){return{type:"CLOSE_MODAL",obj:o}};exports.closeModal=closeModal;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.login = login;
+exports.signup = signup;
+exports.logout = logout;
+exports.forgotPassword = forgotPassword;
+exports.resetPassword = resetPassword;
+exports.updateProfile = updateProfile;
+exports.changePassword = changePassword;
+exports.deleteAccount = deleteAccount;
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _reactCookie = _interopRequireDefault(require("react-cookie"));
+
+var _reactRouter = require("react-router");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function login(email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password
+      })
+    }).then(function (response) {
+      if (response.ok) {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'LOGIN_SUCCESS',
+            token: json.token,
+            user: json.user
+          });
+
+          _reactCookie.default.save('token', json.token, {
+            expires: (0, _moment.default)().add(1, 'month').toDate()
+          });
+
+          _reactRouter.browserHistory.push('/account');
+        });
+      } else {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'LOGIN_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+function signup(name, email, password) {
+  return function (dispatch) {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/signup', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email,
+        password: password
+      })
+    }).then(function (response) {
+      return response.json().then(function (json) {
+        if (response.ok) {
+          dispatch({
+            type: 'SIGNUP_SUCCESS',
+            token: json.token,
+            user: json.user
+          });
+
+          _reactRouter.browserHistory.push('/');
+
+          _reactCookie.default.save('token', json.token, {
+            expires: (0, _moment.default)().add(1, 'month').toDate()
+          });
+        } else {
+          dispatch({
+            type: 'SIGNUP_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        }
+      });
+    });
+  };
+}
+
+function logout() {
+  _reactCookie.default.remove('token', {
+    path: '/'
+  });
+
+  setTimeout(function () {
+    window.location.href = '/';
+  }, 1000);
+  return {
+    type: 'LOGOUT_SUCCESS'
+  };
+}
+
+function forgotPassword(email) {
+  return function (dispatch) {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/forgot', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email
+      })
+    }).then(function (response) {
+      if (response.ok) {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'FORGOT_PASSWORD_SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'FORGOT_PASSWORD_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+function resetPassword(password, confirm, pathToken) {
+  return function (dispatch) {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch("/reset/".concat(pathToken), {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        password: password,
+        confirm: confirm
+      })
+    }).then(function (response) {
+      if (response.ok) {
+        return response.json().then(function (json) {
+          _reactRouter.browserHistory.push('/login');
+
+          dispatch({
+            type: 'RESET_PASSWORD_SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'RESET_PASSWORD_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+function updateProfile(state, token) {
+  return function (dispatch) {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/account', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: "Bearer ".concat(token)
+      },
+      body: JSON.stringify({
+        email: state.email,
+        name: state.name,
+        gender: state.gender,
+        location: state.location,
+        website: state.website
+      })
+    }).then(function (response) {
+      if (response.ok) {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'UPDATE_PROFILE_SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'UPDATE_PROFILE_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+function changePassword(password, confirm, token) {
+  return function (dispatch) {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/account', {
+      method: 'put',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: "Bearer ".concat(token)
+      },
+      body: JSON.stringify({
+        password: password,
+        confirm: confirm
+      })
+    }).then(function (response) {
+      if (response.ok) {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'CHANGE_PASSWORD_SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        return response.json().then(function (json) {
+          dispatch({
+            type: 'CHANGE_PASSWORD_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+function deleteAccount(token) {
+  return function (dispatch) {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/account', {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: "Bearer ".concat(token)
+      }
+    }).then(function (response) {
+      if (response.ok) {
+        return response.json().then(function (json) {
+          dispatch(logout());
+          dispatch({
+            type: 'DELETE_ACCOUNT_SUCCESS',
+            messages: [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+},{"moment":118,"react-cookie":126,"react-router":178}],3:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.closeModal = exports.openModal = void 0;
+
+var openModal = function openModal(obj) {
+  return {
+    type: 'OPEN_MODAL',
+    obj: obj
+  };
+};
+
+exports.openModal = openModal;
+
+var closeModal = function closeModal(obj) {
+  return {
+    type: 'CLOSE_MODAL',
+    obj: obj
+  };
+};
+
+exports.closeModal = closeModal;
 
 },{}],4:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_auth=require("../../actions/auth"),_Messages=_interopRequireDefault(require("../Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Forgot=function(e){function t(e){var r;return _classCallCheck(this,t),(r=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={email:""},r}return _inherits(t,_react.default.Component),_createClass(t,[{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"handleForgot",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.forgotPassword)(this.state.email))}},{key:"render",value:function(){return _react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("form",{onSubmit:this.handleForgot.bind(this)},_react.default.createElement("legend",null,"Forgot Password"),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("p",null,"Enter your email address below and we'll send you password reset instructions."),_react.default.createElement("label",{htmlFor:"email"},"Email"),_react.default.createElement("input",{type:"email",name:"email",id:"email",placeholder:"Email",className:"form-control",autoFocus:!0,value:this.state.email,onChange:this.handleChange.bind(this)})),_react.default.createElement("button",{type:"submit",className:"btn btn-success"},"Reset Password")))))}}]),t}(),mapStateToProps=function(e){return{messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Forgot);exports.default=_default;
+"use strict";
 
-},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146}],5:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRouter=require("react-router"),_reactRedux=require("react-redux"),_auth=require("../../actions/auth"),_Messages=_interopRequireDefault(require("../Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Login=function(e){function t(e){var r;return _classCallCheck(this,t),(r=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={email:"",password:""},r}return _inherits(t,_react.default.Component),_createClass(t,[{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"handleLogin",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.login)(this.state.email,this.state.password))}},{key:"render",value:function(){return _react.default.createElement("div",{className:"login-container container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("form",{onSubmit:this.handleLogin.bind(this)},_react.default.createElement("legend",null,"Log In"),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"email"},"Email"),_react.default.createElement("input",{type:"email",name:"email",id:"email",placeholder:"Email",autoFocus:!0,className:"form-control",value:this.state.email,onChange:this.handleChange.bind(this)})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"password"},"Password"),_react.default.createElement("input",{type:"password",name:"password",id:"password",placeholder:"Password",className:"form-control",value:this.state.password,onChange:this.handleChange.bind(this)})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement(_reactRouter.Link,{to:"/forgot"},_react.default.createElement("strong",null,"Forgot your password?"))),_react.default.createElement("button",{type:"submit",className:"btn btn-success"},"Log in")))),_react.default.createElement("p",{className:"text-center"},"Don't have an account?"," ",_react.default.createElement(_reactRouter.Link,{to:"/signup"},_react.default.createElement("strong",null,"Sign up"))))}}]),t}(),mapStateToProps=function(e){return{messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Login);exports.default=_default;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
-},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146,"react-router":177}],6:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_auth=require("../../actions/auth"),_Messages=_interopRequireDefault(require("../Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Profile=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={name:"",email:"",gender:""},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"componentDidMount",value:function(){this.setState({email:this.props.user.email,name:this.props.user.name,gender:this.props.user.gender,password:"",confirm:""})}},{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"handleProfileUpdate",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.updateProfile)(this.state,this.props.token))}},{key:"handleChangePassword",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.changePassword)(this.state.password,this.state.confirm,this.props.token))}},{key:"handleDeleteAccount",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.deleteAccount)(this.props.token))}},{key:"render",value:function(){return _react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("form",{onSubmit:this.handleProfileUpdate.bind(this),className:"form-horizontal"},_react.default.createElement("legend",null,"Profile Information"),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"email",className:"col-sm-3"},"Email"),_react.default.createElement("div",{className:"col-sm-7"},_react.default.createElement("input",{type:"email",name:"email",id:"email",className:"form-control",value:this.state.email,onChange:this.handleChange.bind(this)}))),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"name",className:"col-sm-3"},"Name"),_react.default.createElement("div",{className:"col-sm-7"},_react.default.createElement("input",{type:"text",name:"name",id:"name",className:"form-control",value:this.state.name,onChange:this.handleChange.bind(this)}))),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("div",{className:"col-sm-offset-3 col-sm-4"},_react.default.createElement("button",{type:"submit",className:"btn btn-success"},"Update Profile")))))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("form",{onSubmit:this.handleChangePassword.bind(this),className:"form-horizontal"},_react.default.createElement("legend",null,"Change Password"),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"password",className:"col-sm-3"},"New Password"),_react.default.createElement("div",{className:"col-sm-7"},_react.default.createElement("input",{type:"password",name:"password",id:"password",className:"form-control",value:this.state.password,onChange:this.handleChange.bind(this)}))),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"confirm",className:"col-sm-3"},"Confirm Password"),_react.default.createElement("div",{className:"col-sm-7"},_react.default.createElement("input",{type:"password",name:"confirm",id:"confirm",className:"form-control",value:this.state.confirm,onChange:this.handleChange.bind(this)}))),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("div",{className:"col-sm-4 col-sm-offset-3"},_react.default.createElement("button",{type:"submit",className:"btn btn-success"},"Change Password")))))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Profile);exports.default=_default;
+var _react = _interopRequireDefault(require("react"));
 
-},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146}],7:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_auth=require("../../actions/auth"),_Messages=_interopRequireDefault(require("../Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Reset=function(e){function t(e){var r;return _classCallCheck(this,t),(r=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={password:"",confirm:""},r}return _inherits(t,_react.default.Component),_createClass(t,[{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"handleReset",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.resetPassword)(this.state.password,this.state.confirm,this.props.params.token))}},{key:"render",value:function(){return _react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("form",{onSubmit:this.handleReset.bind(this)},_react.default.createElement("legend",null,"Reset Password"),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"password"},"New Password"),_react.default.createElement("input",{type:"password",name:"password",id:"password",placeholder:"New password",className:"form-control",autoFocus:!0,value:this.state.password,onChange:this.handleChange.bind(this)})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"confirm"},"Confirm Password"),_react.default.createElement("input",{type:"password",name:"confirm",id:"confirm",placeholder:"Confirm password",className:"form-control",value:this.state.confirm,onChange:this.handleChange.bind(this)})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("button",{type:"submit",className:"btn btn-success"},"Change Password"))))))}}]),t}(),mapStateToProps=function(e){return e},_default=(0,_reactRedux.connect)(mapStateToProps)(Reset);exports.default=_default;
+var _reactRedux = require("react-redux");
 
-},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146}],8:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRouter=require("react-router"),_reactRedux=require("react-redux"),_auth=require("../../actions/auth"),_Messages=_interopRequireDefault(require("../Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Signup=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={name:"",email:"",password:""},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"handleSignup",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.signup)(this.state.name,this.state.email,this.state.password))}},{key:"render",value:function(){return _react.default.createElement("div",{className:"login-container container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("form",{onSubmit:this.handleSignup.bind(this)},_react.default.createElement("legend",null,"Create an account"),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"name"},"Name"),_react.default.createElement("input",{type:"text",name:"name",id:"name",placeholder:"Name",autoFocus:!0,className:"form-control",value:this.state.name,onChange:this.handleChange.bind(this)})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"email"},"Email"),_react.default.createElement("input",{type:"email",name:"email",id:"email",placeholder:"Email",className:"form-control",value:this.state.email,onChange:this.handleChange.bind(this)})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",{htmlFor:"password"},"Password"),_react.default.createElement("input",{type:"password",name:"password",id:"password",placeholder:"Password",className:"form-control",value:this.state.password,onChange:this.handleChange.bind(this)})),_react.default.createElement("button",{type:"submit",className:"btn btn-success"},"Create an account")))),_react.default.createElement("p",{className:"text-center"},"Already have an account?"," ",_react.default.createElement(_reactRouter.Link,{to:"/login"},_react.default.createElement("strong",null,"Log in"))))}}]),t}(),mapStateToProps=function(e){return{messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Signup);exports.default=_default;
+var _auth = require("../../actions/auth");
 
-},{"../../actions/auth":2,"../Messages":31,"react":187,"react-redux":146,"react-router":177}],9:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_Header=_interopRequireDefault(require("./Header")),_Footer=_interopRequireDefault(require("./Footer")),_ModalContainer=_interopRequireDefault(require("./ModalContainer")),_reactRedux=require("react-redux");function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var o=t[r];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var App=function(e){function t(){var e,r,o;_classCallCheck(this,t);for(var n=arguments.length,u=new Array(n),a=0;a<n;a++)u[a]=arguments[a];return _possibleConstructorReturn(o,(r=o=_possibleConstructorReturn(this,(e=_getPrototypeOf(t)).call.apply(e,[this].concat(u))),o.state={loaded:!1},r))}return _inherits(t,_react.default.Component),_createClass(t,[{key:"componentDidMount",value:function(){this.getCurrentState()}},{key:"getCurrentState",value:function(){var e=this;fetch("/me?shouldBeAdmin=true").then(function(t){return t.json().then(function(t){t.ok?(e.props.dispatch({type:"UPDATE_USER",user:t.user,token:t.token}),e.setState({loaded:!0})):window.location.href="/"})})}},{key:"render",value:function(){return _react.default.createElement("div",null,_react.default.createElement(_Header.default,null),!!this.state.loaded&&this.props.children,_react.default.createElement(_Footer.default,null),_react.default.createElement(_ModalContainer.default,null))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(App);exports.default=_default;
+var _Messages = _interopRequireDefault(require("../Messages"));
 
-},{"./Footer":28,"./Header":29,"./ModalContainer":32,"react":187,"react-redux":146}],10:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_Messages=_interopRequireDefault(require("../Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var AdminUsers=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadUsers()})},a.state={is_loaded:!1,page:1,admin_users:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadUsers",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/users?filter_role=admin&page="+this.state.page).then(function(t){console.log(t),t.ok?e.setState({is_loaded:!0,admin_users:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"updateItem",value:function(e,t,a){var n=this;a||(a=""),this.setState(_defineProperty({},"update_"+a+e,!0),function(){_Fetcher.default.post("/api/admin/update/users",{id:e,data:t}).then(function(t){n.setState(_defineProperty({},"update_"+a+e,!1)),t.ok?n.loadUsers():n.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);n.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadUsers()}},{key:"addUser",value:function(){}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("div",{className:"text-right pull-right push-right align-right"}),_react.default.createElement("h2",{style:{padding:0,margin:0}},"Admin Users"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Name"),_react.default.createElement("th",null,"Email"),_react.default.createElement("th",null,"Active"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.admin_users&&this.state.admin_users.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.first_name," ",t.last_name),_react.default.createElement("td",null,t.email),_react.default.createElement("td",null,t.status?_react.default.createElement("span",{className:"label label-primary"},"Active"):_react.default.createElement("span",{className:"label label-danger"},"In-Active")),_react.default.createElement("td",null,t.status?_react.default.createElement("button",{onClick:function(){e.updateItem(t.id,{status:!1})},className:"btn btn-warning btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Disable"):_react.default.createElement("button",{onClick:function(){e.updateItem(t.id,{status:!0})},className:"btn btn-success btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Enable")," ",_react.default.createElement("button",{onClick:function(){e.updateItem(t.id,{role:"user"},"role_")},className:"btn btn-warning btn-xs"},!!e.state["update_role_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Make User")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(AdminUsers);exports.default=_default;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../../actions/Fetcher":1,"../Messages":31,"react":187,"react-paginate":135,"react-redux":146}],11:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_MoreInfoGeneric=_interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var AdvertiseWithUs=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doAction",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"profile",zIndex:534,heading:"More Info - "+e.id,content:_react.default.createElement(_MoreInfoGeneric.default,{data:e})}))}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/advertisers?page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the item? ")&&this.setState(_defineProperty({},"update_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/advertisers",{id:e}).then(function(a){t.setState(_defineProperty({},"update_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Submissions for ",_react.default.createElement("code",null,"Advertise with us")," Form"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Email"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.email),_react.default.createElement("td",null,_react.default.createElement("button",{className:"btn btn-priamry btn-xs",onClick:function(a){a.preventDefault(),e.doAction(t)}},"More Info")," ",_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(AdvertiseWithUs);exports.default=_default;
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":187,"react-paginate":135,"react-redux":146}],12:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_modals=require("../../actions/modals"),_Messages=_interopRequireDefault(require("../Messages")),_MoreInfo=_interopRequireDefault(require("../Modules/Modals/MoreInfo")),_reactRouter=require("react-router"),_reactPaginate=_interopRequireDefault(require("react-paginate")),_CashHistory=_interopRequireDefault(require("../Modules/Modals/CashHistory"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var AppUsers=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadUsers()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadUsers",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/users?filter_role=user&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"updateItem",value:function(e,t,a){var r=this;a||(a=""),this.setState(_defineProperty({},"update_"+a+e,!0),function(){_Fetcher.default.post("/api/admin/update/users",{id:e,data:t}).then(function(t){r.setState(_defineProperty({},"update_"+a+e,!1)),t.ok?r.loadUsers():r.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);r.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadUsers()}},{key:"doAction",value:function(e,t){"profile"!=e?"show_xp"!==e?"show_credit"!==e?"show_cash"!==e?alert(e+" "+t.id):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"cash",id:t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"credits",id:t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User XP Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"xp_tx",id:t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"profile",zIndex:534,heading:"User Details - @"+t.username,content:_react.default.createElement(_MoreInfo.default,{data:t})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("div",{className:"text-right pull-right push-right align-right"}),_react.default.createElement("h2",{style:{padding:0,margin:0}}," App Users"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Name"),_react.default.createElement("th",null,"Username"),_react.default.createElement("th",null,"Email"),_react.default.createElement("th",null,"Status"),_react.default.createElement("th",null," "),_react.default.createElement("th",null," "))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.first_name," ",t.last_name),_react.default.createElement("td",null,t.username),_react.default.createElement("td",null,t.email),_react.default.createElement("td",null,t.banned?_react.default.createElement("span",{className:"label label-danger"},"In-Active"):_react.default.createElement("span",{className:"label label-primary"},"Active")),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Details",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("profile",t)}},"Profile Info")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"/u/"+t.username,target:"_blank"},"Public Profile")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_xp",t)}},"Show XP Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_credit",t)}},"Show Credit Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_cash",t)}},"Show Cash Transactions")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/teams/"+t.id},"Teams"))))),_react.default.createElement("td",null,t.status?_react.default.createElement("button",{onClick:function(){e.updateItem(t.id,{status:!1},"")},className:"btn btn-warning btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Disable"):_react.default.createElement("button",{onClick:function(){e.updateItem(t.id,{status:!0},"")},className:"btn btn-success btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Enable")," ",_react.default.createElement("button",{onClick:function(a){a.preventDefault(),e.updateItem(t.id,{role:"admin"},"make_admin")},className:"btn btn-warning btn-xs"},!!e.state["update_make_admin"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Make Admin")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(AppUsers);exports.default=_default;
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/MoreInfo":34,"react":187,"react-paginate":135,"react-redux":146,"react-router":177}],13:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_MoreInfoGeneric=_interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var ApplyStaff=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doAction",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"profile",zIndex:534,heading:"More Info - "+e.id,content:_react.default.createElement(_MoreInfoGeneric.default,{data:e})}))}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/staff_applications?page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the item? ")&&this.setState(_defineProperty({},"update_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/staff_applications",{id:e}).then(function(a){t.setState(_defineProperty({},"update_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Submissions for ",_react.default.createElement("code",null,"Apply for Staff")," Form"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Email"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.email),_react.default.createElement("td",null,_react.default.createElement("button",{className:"btn btn-priamry btn-xs",onClick:function(a){a.preventDefault(),e.doAction(t)}},"More Info")," ",_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(ApplyStaff);exports.default=_default;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":187,"react-paginate":135,"react-redux":146}],14:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_NewGame=_interopRequireDefault(require("../Modules/Modals/NewGame")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals");function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Games=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/games?page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the game? ")&&this.setState(_defineProperty({},"update_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/games",{id:e}).then(function(a){t.setState(_defineProperty({},"update_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"newgame",zIndex:534,heading:"New Game",content:_react.default.createElement(_NewGame.default,{onComplete:this.loadData.bind(this)})}))}},{key:"editItem",value:function(e,t){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"newgame",zIndex:534,heading:"New Game",content:_react.default.createElement(_NewGame.default,{mode:"edit",id:e,data:t,onComplete:this.loadData.bind(this)})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("div",{className:"text-right pull-right push-right align-right"},_react.default.createElement("button",{className:"btn btn-success btn-xs",onClick:this.addItem.bind(this)},_react.default.createElement("span",{className:"fa fa-plus"})," Add new game")),_react.default.createElement("h2",{style:{padding:0,margin:0}},"Games"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Name"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.title),_react.default.createElement("td",null,_react.default.createElement("button",{onClick:function(){e.editItem(t.id,t)},className:"btn btn-warning btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Edit")," ",_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Games);exports.default=_default;
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewGame":36,"react":187,"react-paginate":135,"react-redux":146}],15:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_NewLadder=_interopRequireDefault(require("../Modules/Modals/NewLadder"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Ladders=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.gamer_tags={tag_1:"Xbox Live Gamertag",tag_2:"PSN",tag_3:"Epic Games Username",tag_4:"Steam Username",tag_5:"Battletag"},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/ladders?related=game_info&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the ladder? ")&&this.setState(_defineProperty({},"update_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/ladders",{id:e}).then(function(a){t.setState(_defineProperty({},"update_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"newladder",zIndex:534,heading:"New Ladder",content:_react.default.createElement(_NewLadder.default,{onComplete:this.loadData.bind(this)})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("div",{className:"text-right pull-right push-right align-right"},_react.default.createElement("button",{className:"btn btn-success btn-xs",onClick:this.addItem.bind(this)},_react.default.createElement("i",{className:"fa fa-plus"})," Add new Ladder")),_react.default.createElement("h2",{style:{padding:0,margin:0}},"Ladders"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Name"),_react.default.createElement("th",null,"Game"),_react.default.createElement("th",null,"Min Players"),_react.default.createElement("th",null,"Max Players"),_react.default.createElement("th",null,"Gamer Tag Used"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.title),_react.default.createElement("td",null,t.game_info&&t.game_info.title),_react.default.createElement("td",null,t.min_players),_react.default.createElement("td",null,t.max_players),_react.default.createElement("td",null,e.gamer_tags["tag_"+t.gamer_tag]),_react.default.createElement("td",null,_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Ladders);exports.default=_default;
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewLadder":37,"react":187,"react-paginate":135,"react-redux":146}],16:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_moment=_interopRequireDefault(require("moment")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_CashHistory=_interopRequireDefault(require("../Modules/Modals/CashHistory")),_modals=require("../../actions/modals"),_ViewTicket=_interopRequireDefault(require("../Modules/Modals/ViewTicket"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var MatchFinder=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],refresh:!1,pagination:{},showing_for:e.params&&e.params.team_id?e.params.team_id:e.params.status&&"disputed"==e.params.status?"disputed":"all"},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"componentDidUpdate",value:function(e,t){this.state.refresh!==t.refresh&&this.loadData()}},{key:"loadData",value:function(){var e=this,t="";t="related=ladder,game,team_1_info,team_2_info",this.props.params&&this.props.params.team_id&&(t+="&filter_team_id_for_match="+this.props.params.team_id),this.props.params&&this.props.params.status&&("disputed"==this.props.params.status&&(t=t.replace("related=","related=tickets,")),t+="&filter_status="+this.props.params.status),_Fetcher.default.get("/api/admin/listPaged/matches?"+t+"&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"resolveDispute",value:function(e,t){var a=this;this.setState(_defineProperty({},"update_dispute"+e,!0),function(){_Fetcher.default.post("/api/matches/resolveDispute",{id:e,winner:t}).then(function(t){a.setState(_defineProperty({},"update_dispute"+e,!1)),t.ok?a.loadData():a.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);a.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"doAction",value:function(e,t){"show_xp"!==e?"show_credit"!==e?"show_cash"!==e?alert(e+" "+t.id):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"cash",obj_type:"m_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"credits",obj_type:"m_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User XP Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"xp_tx",obj_type:"m_"+t.id})}))}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){}},{key:"viewTicket",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"viewticket",modal_class:"   modal-lg",zIndex:534,heading:"View Ticket",content:_react.default.createElement(_ViewTicket.default,{id:e})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Matches"," ",this.props.params&&this.props.params.team_id?" of team #"+this.props.params.team_id:"",this.props.params&&this.props.params.status&&"disputed"==this.props.params.status?" - Disputed":""))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Game"),_react.default.createElement("th",null,"Ladder"),_react.default.createElement("th",null,"Team 1"),_react.default.createElement("th",null,"Team 2"),_react.default.createElement("th",null,"Status"),_react.default.createElement("th",null,"Result"),_react.default.createElement("th",null,"Match type"),_react.default.createElement("th",null,"Team 1 Result"),_react.default.createElement("th",null,"Team 2 Result"),_react.default.createElement("th",null,"Actions"),_react.default.createElement("th",null,"Starts At"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.game.title),_react.default.createElement("td",null,t.ladder.title),_react.default.createElement("td",null,"team_2"==t.result?_react.default.createElement("span",{className:"text-danger"},t.team_1_info.title):"team_1"==t.result?_react.default.createElement("span",{className:"text-success"},t.team_1_info.title):t.team_1_info.title),_react.default.createElement("td",null,t.team_2_info?"team_1"==t.result?_react.default.createElement("span",{className:"text-danger"},t.team_2_info.title):"team_2"==t.result?_react.default.createElement("span",{className:"text-success"},t.team_2_info.title):t.team_2_info.title:_react.default.createElement("span",{className:"text-danger"},"Yet to Join")),_react.default.createElement("td",null,"complete"==t.status?_react.default.createElement("span",{className:"badge badge-success"},"Complete"):t.status),_react.default.createElement("td",null,t.result?"team_2"==t.result?"Team 2 Wins":"team_1"==t.result?"Team 1 Wins":"disputed"==t.result?_react.default.createElement("span",{className:"text-danger"},"Disputed"):_react.default.createElement("span",{className:"text-warning"},t.result):_react.default.createElement("span",{className:"text-warning"},"Yet to declare")),_react.default.createElement("td",null,"paid"==t.match_type?t.match_fee+"/- OCG CASH":"FREE"),_react.default.createElement("td",null,t.team_1_result),_react.default.createElement("td",null,t.team_2_result),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Actions",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement("a",{href:"/m/"+t.id,target:"_blank"},"View Match Public Page")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"/teams/view/"+t.team_1_info.id,target:"_blank"},"View Team 1 Public Page")),!!t.team_2_info&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"/teams/view/"+t.team_2_info.id,target:"_blank"},"View Team 2 Public Page")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_xp",t)}},"Show XP Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_credit",t)}},"Show Credit Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_cash",t)}},"Show Cash Transactions")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_1")}},"Resolve dispute by giving win to team 1")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_2")}},"Resolve dispute by giving win to team 2")),!!t.tickets&&t.tickets.map(function(t,a){return"MatchFinder"==t.extra_3&&_react.default.createElement("li",{key:t.id},_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.viewTicket(t.id)}},"Show Ticket ",a+1," #",t.id))})))),_react.default.createElement("td",null,(0,_moment.default)(t.starts_at).format("lll")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}],[{key:"getDerivedStateFromProps",value:function(e,t){return"all"!=t.showing_for||e&&e.params&&e.params.team_id&&e.params.status?e.params&&e.params.team_id?e.params.team_id!=t.showing_for?{refresh:!0,page:1}:null:e.params&&e.params.status?e.params.status!=t.showing_for?{refresh:!0,page:1}:null:"all"!=t.showing_for?{refresh:!0,page:1}:null:null}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(MatchFinder);exports.default=_default;
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/ViewTicket":42,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],17:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_CashHistory=_interopRequireDefault(require("../Modules/Modals/CashHistory")),_ViewTicket=_interopRequireDefault(require("../Modules/Modals/ViewTicket"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var MatchFinder=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"viewTicket",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"viewticket",modal_class:"   modal-lg",zIndex:534,heading:"View Ticket",content:_react.default.createElement(_ViewTicket.default,{id:e})}))}},{key:"loadData",value:function(){var e=this,t="";t="related=ladder,game",this.props.params&&this.props.params.status&&("disputed"==this.props.params.status&&(t=t.replace("related=","related=tickets,")),t+="&filter_status="+this.props.params.status),_Fetcher.default.get("/api/admin/listPaged/money8?"+t+"&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"resolveDispute",value:function(e,t){var a=this;this.setState(_defineProperty({},"update_dispute"+e,!0),function(){_Fetcher.default.post("/api/money8/resolveDispute",{id:e,winner:t}).then(function(t){a.setState(_defineProperty({},"update_dispute"+e,!1)),t.ok?a.loadData():a.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);a.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"doAction",value:function(e,t){"show_xp"!==e?"show_credit"!==e?"show_cash"!==e?alert(e+" "+t.id):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"cash",obj_type:"m8_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"credits",obj_type:"m8_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User XP Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"xp_tx",obj_type:"m8_"+t.id})}))}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Money 8 Matches"," ",this.props.params&&this.props.params.team_id?" of team #"+this.props.params.team_id:"",this.props.params&&this.props.params.status&&"disputed"==this.props.params.status?" - Disputed":""))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Game"),_react.default.createElement("th",null,"Ladder"),_react.default.createElement("th",null,"Status"),_react.default.createElement("th",null,"Result"),_react.default.createElement("th",null,"Match type"),_react.default.createElement("th",null,"Actions"),_react.default.createElement("th",null,"Team 1"),_react.default.createElement("th",null,"Team 2"),_react.default.createElement("th",null,"Team 1 Result"),_react.default.createElement("th",null,"Team 2 Result"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){var r=!1,n=!1;return t.team_1&&(r=t.team_1.split("|").map(function(e){return parseInt(e)})),t.team_2&&(n=t.team_2.split("|").map(function(e){return parseInt(e)})),_react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.game.title),_react.default.createElement("td",null,t.ladder.title),_react.default.createElement("td",null,"complete"==t.status?_react.default.createElement("span",{className:"badge badge-success"},"Complete"):t.status,"pending"==t.status?" ("+t.players_joined+"/"+t.players_total+")":""),_react.default.createElement("td",null,t.result?"team_2"==t.result?"Team 2 Wins":"team_1"==t.result?"Team 1 Wins":"dispute"==t.result?_react.default.createElement("span",{className:"text-danger"},"Disputed"):_react.default.createElement("span",{className:"text-warning"},t.result):_react.default.createElement("span",{className:"text-warning"},"Yet to declare")),_react.default.createElement("td",null,"cash"==t.match_type?t.match_fee+"/- OCG CASH":"credits"==t.match_type?t.match_fee+"/- Credits":"FREE"),_react.default.createElement("td",null,!(!r||!r.length)&&_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Team 1 Users ",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},r.map(function(e,t){return _react.default.createElement("li",{key:e},_react.default.createElement("a",{href:"/uid/"+e,target:"_blank"},"@",e))})))),_react.default.createElement("td",null,!(!n||!n.length)&&_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Team 2 Users ",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},n.map(function(e,t){return _react.default.createElement("li",{key:e},_react.default.createElement("a",{href:"/uid/"+e,target:"_blank"},"@",e))})))),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Actions",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement("a",{href:"/money8/"+t.id,target:"_blank"},"View Match Public Page")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_xp",t)}},"Show XP Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_credit",t)}},"Show Credit Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_cash",t)}},"Show Cash Transactions")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_1")}},"Resolve dispute by giving win to team 1")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_2")}},"Resolve dispute by giving win to team 2")),!!t.tickets&&t.tickets.map(function(t,a){return"Mix-and-match"==t.extra_3&&_react.default.createElement("li",{key:t.id},_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.viewTicket(t.id)}},"Show Ticket ",a+1," #",t.id))})))),_react.default.createElement("td",null,t.team_1_result),_react.default.createElement("td",null,t.team_2_result))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(MatchFinder);exports.default=_default;
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/ViewTicket":42,"react":187,"react-paginate":135,"react-redux":146}],18:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_NewLadder=_interopRequireDefault(require("../Modules/Modals/NewLadder"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Posts=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/posts?related=user&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;if(confirm("Are you sure you want to delete the user? ")){this.setState(_defineProperty({},"update_del_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/posts",{id:e}).then(function(a){t.setState(_defineProperty({},"update_del_"+e,!1)),a.ok?(t.props.dispatch({type:"SUCCESS",messages:[a]}),t.loadData()):t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"newladder",zIndex:534,heading:"New Ladder",content:_react.default.createElement(_NewLadder.default,{onComplete:this.loadData.bind(this)})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("div",{className:"text-right pull-right push-right align-right"},_react.default.createElement("button",{className:"btn btn-success btn-xs",onClick:this.addItem.bind(this)},_react.default.createElement("i",{className:"fa fa-plus"})," Add new Ladder")),_react.default.createElement("h2",{style:{padding:0,margin:0}},"Posts"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Post"),_react.default.createElement("th",null,"Is a repost?"),_react.default.createElement("th",null,"Type"),_react.default.createElement("th",null,"Post By"),_react.default.createElement("th",null,"reposts"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.post),_react.default.createElement("td",null,!!t.is_repost&&_react.default.createElement("span",{className:"badge badge-success"},"Yes")),_react.default.createElement("td",null,t.video?_react.default.createElement("span",{className:"badge badge-primary"},"Video"):t.image?_react.default.createElement("span",{className:"badge badge-primary"},"Image"):_react.default.createElement("span",{className:"badge badge-primary"},"Text")),_react.default.createElement("td",null,t.user?"@"+t.user.username:""),_react.default.createElement("td",null,t.repost_count),_react.default.createElement("td",null,_react.default.createElement("a",{href:"/post/"+t.id,target:"_blank",className:"btn btn-primary btn-xs"},"View ",_react.default.createElement("span",{className:"fa fa-comment"}))," ",_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_del_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete ",_react.default.createElement("span",{className:"fa fa-trash"}))))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Posts);exports.default=_default;
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewLadder":37,"react":187,"react-paginate":135,"react-redux":146}],19:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_MoreInfoGeneric=_interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Subscribers=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doAction",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"profile",zIndex:534,heading:"More Info - "+e.id,content:_react.default.createElement(_MoreInfoGeneric.default,{data:e})}))}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/subscribers?page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the item? ")&&this.setState(_defineProperty({},"update_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/subscribers",{id:e}).then(function(a){t.setState(_defineProperty({},"update_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Subscribers"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Email"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.email),_react.default.createElement("td",null,_react.default.createElement("button",{className:"btn btn-priamry btn-xs",onClick:function(a){a.preventDefault(),e.doAction(t)}},"More Info")," ",_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Subscribers);exports.default=_default;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfoGeneric":35,"react":187,"react-paginate":135,"react-redux":146}],20:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_modals=require("../../actions/modals"),_Messages=_interopRequireDefault(require("../Messages")),_MoreInfo=_interopRequireDefault(require("../Modules/Modals/MoreInfo")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_reactRouter=require("react-router");function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Teams=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadUsers()})},a.state={is_loaded:!1,page:1,items:[],refresh:!1,pagination:{},showing_for:e.params&&e.params.uid?e.params.uid:"all"},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"componentDidUpdate",value:function(e,t){this.state.refresh!==t.refresh&&this.loadUsers()}},{key:"loadUsers",value:function(){var e=this,t="",a="";a=this.props.params&&this.props.params.uid?"/api/admin/listPaged/team_u?"+(t="filter_user_id="+this.props.params.uid)+"&page="+this.state.page+"&related=team_info,team_info.ladder,team_info.ladder.game_info,team_info.team_users,team_info.team_users.user_info":"/api/admin/listPaged/teams?"+t+"&page="+this.state.page+"&related=ladder,ladder.game_info,team_users,team_users.user_info",_Fetcher.default.get(a).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,refresh:!1,pagination:t.pagination?t.pagination:{}}):(e.setState({refresh:!1}),e.props.dispatch({type:"FAILURE",messages:[t]}))}).catch(function(t){e.setState({refresh:!1});e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"updateItem",value:function(e,t,a){var r=this;this.setState(_defineProperty({},"update_"+a+e,!0),function(){_Fetcher.default.post("/api/admin/update/users",{id:e,data:t}).then(function(t){r.setState(_defineProperty({},"update_"+a+e,!1)),t.ok?r.loadUsers():r.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);r.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadUsers()}},{key:"doAction",value:function(e,t){"profile"!=e?alert(e+" "+t.id):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"profile",zIndex:534,heading:"User Details - @"+t.username,content:_react.default.createElement(_MoreInfo.default,{data:t})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("div",{className:"text-right pull-right push-right align-right"}),_react.default.createElement("h2",{style:{padding:0,margin:0}}," ","Teams"," ",this.props.params.uid?" of user #"+this.props.params.uid:""))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Team"),_react.default.createElement("th",null,"Ladder"),_react.default.createElement("th",null,"Game"),_react.default.createElement("th",null,"Users"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){var r=t;return r.team_info&&(r=r.team_info),_react.default.createElement("tr",{key:r.id,className:r.removed?" table-danger ":""},_react.default.createElement("td",null,r.id),_react.default.createElement("td",null,r.title),_react.default.createElement("td",null,r.ladder.title),_react.default.createElement("td",null,r.ladder.game_info.title),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Users List ",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},r.team_users&&r.team_users.map(function(t,a){return _react.default.createElement("li",{key:t.id,className:t.removed?" table-danger  ":""},_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("profile",t.user_info)}},"#"+t.user_info.id+" - @"+t.user_info.username," ","( ",t.user_info.first_name," ",t.user_info.last_name," )"))})))),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Actions ",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/matchfinder/"+r.id},"View Matches of Team")),_react.default.createElement("li",null,_react.default.createElement("a",{target:"_blank",href:"/teams/view/"+r.id},"View Public Profile of Team"))))))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,forcePage:this.state.page-1,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}],[{key:"getDerivedStateFromProps",value:function(e,t){return"all"!=t.showing_for||e&&e.params&&e.params.uid?e.params&&e.params.uid?e.params.uid!=t.showing_for?{refresh:!0,page:1}:null:"all"!=t.showing_for?{refresh:!0,page:1}:null:null}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Teams);exports.default=_default;
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/MoreInfo":34,"react":187,"react-paginate":135,"react-redux":146,"react-router":177}],21:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_ViewThread=_interopRequireDefault(require("../Modules/Modals/ViewThread"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Threads=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/threads?related=topic&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"viewItem",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"viewthread",modal_class:"   modal-lg",zIndex:534,heading:"View Thread",content:_react.default.createElement(_ViewThread.default,{id:e})}))}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the thread? ")&&this.setState(_defineProperty({},"update_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/threads",{id:e}).then(function(a){t.setState(_defineProperty({},"update_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Threads"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Title"),_react.default.createElement("th",null,"Topic"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.title),_react.default.createElement("td",null,t.topic&&t.topic.title),_react.default.createElement("td",null,_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete")," ",_react.default.createElement("button",{onClick:function(){e.viewItem(t.id)},className:"btn btn-success btn-xs"},"View")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Threads);exports.default=_default;
+var Forgot =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Forgot, _React$Component);
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/ViewThread":41,"react":187,"react-paginate":135,"react-redux":146}],22:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_moment=_interopRequireDefault(require("moment")),_ReplyTicket=_interopRequireDefault(require("../Modules/Modals/ReplyTicket")),_ViewTicket=_interopRequireDefault(require("../Modules/Modals/ViewTicket"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Tickets=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/tickets?related=user&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the ticket? ")&&this.setState(_defineProperty({},"delete_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/tickets",{id:e}).then(function(a){t.setState(_defineProperty({},"delete_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(a){t.setState(_defineProperty({},"delete_"+e,!1));t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"reply",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"replyticket",zIndex:534,heading:"View Ticket",content:_react.default.createElement(_ReplyTicket.default,{id:e})}))}},{key:"veiwItem",value:function(e){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"viewticket",modal_class:"   modal-lg",zIndex:534,heading:"View Ticket",content:_react.default.createElement(_ViewTicket.default,{id:e})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Support Tickets"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Title"),_react.default.createElement("th",null,"Type"),_react.default.createElement("th",null,"Status"),_react.default.createElement("th",null,"Created By"),_react.default.createElement("th",null,"Created On"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.title),_react.default.createElement("td",null,t.type),_react.default.createElement("td",null,t.status),_react.default.createElement("td",null,t.user?"@"+t.user.username:" "),_react.default.createElement("td",null,(0,_moment.default)(t.created_at).format("lll")),_react.default.createElement("td",null,_react.default.createElement("button",{onClick:function(){e.reply(t.id)},className:"btn btn-success btn-xs"},_react.default.createElement("span",{className:"fa fa-reply"})," Reply")," ",_react.default.createElement("button",{onClick:function(){e.veiwItem(t.id)},className:"btn btn-primary btn-xs"},_react.default.createElement("span",{className:"fa fa-view"})," View")," ",_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},e.state["delete_"+t.id]?_react.default.createElement("i",{className:"fa fa-spinner fa-spin"}):_react.default.createElement("span",{className:"fa fa-trash"})," ","Delete")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Tickets);exports.default=_default;
+  function Forgot(props) {
+    var _this;
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/ReplyTicket":40,"../Modules/Modals/ViewTicket":42,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],23:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_NewTopic=_interopRequireDefault(require("../Modules/Modals/NewTopic"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Topics=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/topics?page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"deleteItem",value:function(e){var t=this;1==confirm("Are you sure you want to delete the topic? ")&&this.setState(_defineProperty({},"update_"+e,!0),function(){_Fetcher.default.post("/api/admin/delete/topics",{id:e}).then(function(a){t.setState(_defineProperty({},"update_"+e,!1)),a.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[a]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"newtopic",zIndex:534,heading:"New Topic",content:_react.default.createElement(_NewTopic.default,{onComplete:this.loadData.bind(this)})}))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("div",{className:"text-right pull-right push-right align-right"},_react.default.createElement("button",{className:"btn btn-success btn-xs",onClick:this.addItem.bind(this)},_react.default.createElement("i",{className:"fa fa-plus"})," Add new Topic")),_react.default.createElement("h2",{style:{padding:0,margin:0}},"Topics"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Title"),_react.default.createElement("th",null,"Sub Title"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.title),_react.default.createElement("td",null,t.sub_title),_react.default.createElement("td",null,_react.default.createElement("button",{onClick:function(){e.deleteItem(t.id)},className:"btn btn-danger btn-xs"},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Delete")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Topics);exports.default=_default;
+    _classCallCheck(this, Forgot);
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/NewTopic":38,"react":187,"react-paginate":135,"react-redux":146}],24:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_moment=_interopRequireDefault(require("moment")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_CashHistory=_interopRequireDefault(require("../Modules/Modals/CashHistory")),_NewTournament=_interopRequireDefault(require("../Modules/Modals/NewTournament"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Tournament=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.handleMatchPageCount=function(e){var t=parseInt(e.selected)+1;a.setState({match_page:t},function(){a.loadTournamentMatches()})},a.state={is_loaded:!1,page:1,match_page:1,items:[],matches:[],match_pagination:{},pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"resolveDispute",value:function(e,t){var a=this;this.setState(_defineProperty({},"update_dispute"+e,!0),function(){_Fetcher.default.post("/api/tournament/resolveDispute",{id:e,winner:t}).then(function(t){a.setState(_defineProperty({},"update_dispute"+e,!1)),t.ok?a.loadData():a.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);a.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"createTournament",value:function(){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"newtournament",zIndex:534,heading:"New Tournament",content:_react.default.createElement(_NewTournament.default,{onComplete:this.loadData.bind(this)})}))}},{key:"doAction",value:function(e,t){"show_xp"!==e?"show_credit"!==e?"show_cash"!==e?alert(e+" "+t.id):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"cash",obj_type:"t_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"credits",obj_type:"t_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User XP Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"xp_tx",obj_type:"t_"+t.id})}))}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/tournament?related=ladder,game&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"showMatchesOf",value:function(e){this.setState({showing_matches_of:e,match_page:1,match_pagination:{}},this.loadTournamentMatches)}},{key:"loadTournamentMatches",value:function(){var e=this,t="";t="related=team_1_info,team_2_info",t+="&filter_tournament_id="+this.state.showing_matches_of,console.log("doing"),_Fetcher.default.get("/api/admin/listPaged/tournamentmaches?"+t+"&page="+this.state.match_page).then(function(t){t.ok?e.setState({is_loaded:!0,matches:t.items,match_pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"resolveDispute",value:function(e,t){var a=this;this.setState(_defineProperty({},"update_dispute"+e,!0),function(){_Fetcher.default.post("/api/money8/resolveDispute",{id:e,winner:t}).then(function(t){a.setState(_defineProperty({},"update_dispute"+e,!1)),t.ok?a.loadData():a.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);a.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){}},{key:"renderMatches",value:function(){var e=this;return!!this.state.showing_matches_of&&_react.default.createElement("div",null,_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Matches of Tournament #",this.state.showing_matches_of))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Round"),_react.default.createElement("th",null,"Team 1"),_react.default.createElement("th",null,"Team 2"),_react.default.createElement("th",null,"Status"),_react.default.createElement("th",null,"Result"),_react.default.createElement("th",null,"Match type"),_react.default.createElement("th",null,"Team 1 Result"),_react.default.createElement("th",null,"Team 2 Result"),_react.default.createElement("th",null,"Actions"),_react.default.createElement("th",null,"Starts At"))),_react.default.createElement("tbody",null,this.state.matches&&this.state.matches.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.match_round),_react.default.createElement("td",null,"team_2"==t.result?_react.default.createElement("span",{className:"text-danger"},t.team_1_info.title):"team_1"==t.result?_react.default.createElement("span",{className:"text-success"},t.team_1_info.title):t.team_1_info.title),_react.default.createElement("td",null,t.team_2_info?"team_1"==t.result?_react.default.createElement("span",{className:"text-danger"},t.team_2_info.title):"team_2"==t.result?_react.default.createElement("span",{className:"text-success"},t.team_2_info.title):t.team_2_info.title:_react.default.createElement("span",{className:"text-danger"},"Yet to Join")),_react.default.createElement("td",null,"complete"==t.status?_react.default.createElement("span",{className:"badge badge-success"},"Complete"):t.status),_react.default.createElement("td",null,t.result?"team_2"==t.result?"Team 2 Wins":"team_1"==t.result?"Team 1 Wins":"disputed"==t.result?_react.default.createElement("span",{className:"text-danger"},"Disputed"):_react.default.createElement("span",{className:"text-warning"},t.result):_react.default.createElement("span",{className:"text-warning"},"Yet to declare")),_react.default.createElement("td",null,"paid"==t.match_type?t.match_fee+"/- OCG CASH":"FREE"),_react.default.createElement("td",null,t.team_1_result),_react.default.createElement("td",null,t.team_2_result),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Actions",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement("a",{href:"/m/"+t.id,target:"_blank"},"View Match Public Page")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"/teams/view/"+t.team_1_info.id,target:"_blank"},"View Team 1 Public Page")),!!t.team_2_info&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"/teams/view/"+t.team_2_info.id,target:"_blank"},"View Team 2 Public Page")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_xp",t)}},"Show XP Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_credit",t)}},"Show Credit Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_cash",t)}},"Show Cash Transactions")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_1")}},"Resolve dispute by giving win to team 1")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_2")}},"Resolve dispute by giving win to team 2"))))),_react.default.createElement("td",null,(0,_moment.default)(t.starts_at).format("lll")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.match_pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handleMatchPageCount,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"}))))}},{key:"render",value:function(){return this.state.is_loaded?_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Tournaments Matches",this.props.params&&this.props.params.team_id?" of team #"+this.props.params.team_id:"",this.props.params&&this.props.params.status&&"disputed"==this.props.params.status?" - Disputed":""))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),this.renderMatches()))):_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Tournament);exports.default=_default;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Forgot).call(this, props));
+    _this.state = {
+      email: ''
+    };
+    return _this;
+  }
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/NewTournament":39,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],25:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_moment=_interopRequireDefault(require("moment")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_modals=require("../../actions/modals"),_CashHistory=_interopRequireDefault(require("../Modules/Modals/CashHistory")),_NewTournament=_interopRequireDefault(require("../Modules/Modals/NewTournament"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var n=t[a];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(e,n.key,n)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Tournament=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.handleMatchPageCount=function(e){var t=parseInt(e.selected)+1;a.setState({match_page:t},function(){a.loadTournamentMatches()})},a.state={is_loaded:!1,page:1,match_page:1,items:[],matches:[],match_pagination:{},pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"resolveDispute",value:function(e,t){var a=this;this.setState(_defineProperty({},"update_dispute"+e,!0),function(){_Fetcher.default.post("/api/tournament/resolveDispute",{id:e,winner:t}).then(function(t){a.setState(_defineProperty({},"update_dispute"+e,!1)),t.ok?a.loadData():a.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);a.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"createTournament",value:function(){this.props.dispatch((0,_modals.openModal)({type:"custom",id:"newtournament",zIndex:534,heading:"New Tournament",content:_react.default.createElement(_NewTournament.default,{onComplete:this.loadData.bind(this)})}))}},{key:"doAction",value:function(e,t){"show_xp"!==e?"show_credit"!==e?"show_cash"!==e?alert(e+" "+t.id):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"cash",obj_type:"t_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User Credit Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"credits",obj_type:"t_"+t.id})})):this.props.dispatch((0,_modals.openModal)({type:"custom",id:"tx",zIndex:534,heading:"User XP Transactions - @"+t.username,content:_react.default.createElement(_CashHistory.default,{type:"xp_tx",obj_type:"t_"+t.id})}))}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/tournament?related=ladder,game&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"showMatchesOf",value:function(e){this.setState({showing_matches_of:e,match_page:1,match_pagination:{}},this.loadTournamentMatches)}},{key:"loadTournamentMatches",value:function(){var e=this,t="";t="related=team_1_info,team_2_info",t+="&filter_tournament_id="+this.state.showing_matches_of,console.log("doing"),_Fetcher.default.get("/api/admin/listPaged/tournamentmaches?"+t+"&page="+this.state.match_page).then(function(t){t.ok?e.setState({is_loaded:!0,matches:t.items,match_pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"resolveDispute",value:function(e,t){var a=this;this.setState(_defineProperty({},"update_dispute"+e,!0),function(){_Fetcher.default.post("/api/money8/resolveDispute",{id:e,winner:t}).then(function(t){a.setState(_defineProperty({},"update_dispute"+e,!1)),t.ok?a.loadData():a.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(e){console.log(e);a.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"addItem",value:function(){}},{key:"renderMatches",value:function(){var e=this;return!!this.state.showing_matches_of&&_react.default.createElement("div",null,_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Matches of Tournament #",this.state.showing_matches_of))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Round"),_react.default.createElement("th",null,"Team 1"),_react.default.createElement("th",null,"Team 2"),_react.default.createElement("th",null,"Status"),_react.default.createElement("th",null,"Result"),_react.default.createElement("th",null,"Match type"),_react.default.createElement("th",null,"Team 1 Result"),_react.default.createElement("th",null,"Team 2 Result"),_react.default.createElement("th",null,"Actions"),_react.default.createElement("th",null,"Starts At"))),_react.default.createElement("tbody",null,this.state.matches&&this.state.matches.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.match_round),_react.default.createElement("td",null,"team_2"==t.result?_react.default.createElement("span",{className:"text-danger"},t.team_1_info.title):"team_1"==t.result?_react.default.createElement("span",{className:"text-success"},t.team_1_info.title):t.team_1_info.title),_react.default.createElement("td",null,t.team_2_info?"team_1"==t.result?_react.default.createElement("span",{className:"text-danger"},t.team_2_info.title):"team_2"==t.result?_react.default.createElement("span",{className:"text-success"},t.team_2_info.title):t.team_2_info.title:_react.default.createElement("span",{className:"text-danger"},"Yet to Join")),_react.default.createElement("td",null,"complete"==t.status?_react.default.createElement("span",{className:"badge badge-success"},"Complete"):t.status),_react.default.createElement("td",null,t.result?"team_2"==t.result?"Team 2 Wins":"team_1"==t.result?"Team 1 Wins":"disputed"==t.result?_react.default.createElement("span",{className:"text-danger"},"Disputed"):_react.default.createElement("span",{className:"text-warning"},t.result):_react.default.createElement("span",{className:"text-warning"},"Yet to declare")),_react.default.createElement("td",null,"paid"==t.match_type?t.match_fee+"/- OCG CASH":"FREE"),_react.default.createElement("td",null,t.team_1_result),_react.default.createElement("td",null,t.team_2_result),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Actions",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement("a",{href:"/m/"+t.id,target:"_blank"},"View Match Public Page")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"/teams/view/"+t.team_1_info.id,target:"_blank"},"View Team 1 Public Page")),!!t.team_2_info&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"/teams/view/"+t.team_2_info.id,target:"_blank"},"View Team 2 Public Page")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_xp",t)}},"Show XP Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_credit",t)}},"Show Credit Transactions")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.doAction("show_cash",t)}},"Show Cash Transactions")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_1")}},"Resolve dispute by giving win to team 1")),"disputed"==t.result&&_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:function(a){a.preventDefault(),e.resolveDispute(t.id,"team_2")}},"Resolve dispute by giving win to team 2"))))),_react.default.createElement("td",null,(0,_moment.default)(t.starts_at).format("lll")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.match_pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handleMatchPageCount,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"}))))}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},_react.default.createElement("button",{onClick:function(){e.createTournament()},className:"btn btn-success pull-right btn-xs"},"Create new Tournament"),"Tournaments"," ",this.props.params&&this.props.params.team_id?" of team #"+this.props.params.team_id:""))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Game"),_react.default.createElement("th",null,"Ladder"),_react.default.createElement("th",null,"Total Teams"),_react.default.createElement("th",null,"Total Joined"),_react.default.createElement("th",null,"Status"),_react.default.createElement("th",null,"Entry Fees"),_react.default.createElement("th",null,"Max Players Per Team"),_react.default.createElement("th",null,"Actions"),_react.default.createElement("th",null,"Reg Period"),_react.default.createElement("th",null,"Starts at"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return t.team_1&&t.team_1.split("|").map(function(e){return parseInt(e)}),t.team_2&&t.team_2.split("|").map(function(e){return parseInt(e)}),_react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.game.title),_react.default.createElement("td",null,t.ladder.title),_react.default.createElement("td",null,t.total_teams),_react.default.createElement("td",null,t.teams_registered),_react.default.createElement("td",null,"complete"==t.status?_react.default.createElement("span",{className:"badge badge-success"},"Complete"):t.status),_react.default.createElement("td",null,t.entry_fee),_react.default.createElement("td",null,t.max_players),_react.default.createElement("td",null,_react.default.createElement("div",{className:"dropdown"},_react.default.createElement("button",{className:"btn btn-primary btn-xs dropdown-toggle",type:"button","data-toggle":"dropdown"},"Actions ",_react.default.createElement("span",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement("a",{href:"/t/"+t.id,target:"_blank"},"View Public Page"))))),_react.default.createElement("td",null,(0,_moment.default)(t.registration_start_at).format("lll")," ",_react.default.createElement("code",null,"to")," ",(0,_moment.default)(t.registration_end_at).format("lll")),_react.default.createElement("td",null,(0,_moment.default)(t.starts_at).format("lll")),_react.default.createElement("td",null,_react.default.createElement("button",{className:"btn btn-primary btn-xs",onClick:function(){e.showMatchesOf(t.id)}},"Show matches")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"}))),this.renderMatches()):_react.default.createElement("div",{className:"container-fluid"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Tournament);exports.default=_default;
+  _createClass(Forgot, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "handleForgot",
+    value: function handleForgot(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.forgotPassword)(this.state.email));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("form", {
+        onSubmit: this.handleForgot.bind(this)
+      }, _react.default.createElement("legend", null, "Forgot Password"), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("p", null, "Enter your email address below and we'll send you password reset instructions."), _react.default.createElement("label", {
+        htmlFor: "email"
+      }, "Email"), _react.default.createElement("input", {
+        type: "email",
+        name: "email",
+        id: "email",
+        placeholder: "Email",
+        className: "form-control",
+        autoFocus: true,
+        value: this.state.email,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("button", {
+        type: "submit",
+        className: "btn btn-success"
+      }, "Reset Password")))));
+    }
+  }]);
 
-},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":31,"../Modules/Modals/CashHistory":33,"../Modules/Modals/NewTournament":39,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],26:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var WithdrawalCompleted=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/withdrawal?related=user&filter_status=completed&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"render",value:function(){return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Completed withdrawal Requests"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Name"),_react.default.createElement("th",null,"Email"),_react.default.createElement("th",null,"Amount"),_react.default.createElement("th",null,"Method"),_react.default.createElement("th",null,"Path"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(e,t){return _react.default.createElement("tr",{key:e.id},_react.default.createElement("td",null,e.id),_react.default.createElement("td",null,e.user&&e.user.first_name+" "+e.user.last_name),_react.default.createElement("td",null,e.user&&e.user.email),_react.default.createElement("td",null,e.amount),_react.default.createElement("td",null,e.method),_react.default.createElement("td",null,e.path))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(WithdrawalCompleted);exports.default=_default;
+  return Forgot;
+}(_react.default.Component);
 
-},{"../../actions/Fetcher":1,"../Messages":31,"react":187,"react-paginate":135,"react-redux":146}],27:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../Messages")),_reactPaginate=_interopRequireDefault(require("react-paginate"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var WithdrawalPending=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.loadData()})},a.state={is_loaded:!1,page:1,items:[],pagination:{}},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doAction",value:function(e){var t=this,a=e.id,r={status:"completed"};this.setState(_defineProperty({},"update_"+a,!0),function(){_Fetcher.default.post("/api/admin/update/withdrawal",{id:a,data:r}).then(function(e){t.setState(_defineProperty({},"update_"+a,!1)),e.ok?t.loadData():t.props.dispatch({type:"FAILURE",messages:[e]})}).catch(function(e){console.log(e);t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})})}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/withdrawal?related=user&filter_status=pending&page="+this.state.page).then(function(t){t.ok?e.setState({is_loaded:!0,items:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"render",value:function(){var e=this;return this.state.is_loaded?_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("h2",{style:{padding:0,margin:0}},"Pending withdrawal Requests"))),_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("table",{className:"table  table-hover  table-responsive   table-striped table-bordered"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,_react.default.createElement("th",null,"ID"),_react.default.createElement("th",null,"Name"),_react.default.createElement("th",null,"Email"),_react.default.createElement("th",null,"Amount"),_react.default.createElement("th",null,"Method"),_react.default.createElement("th",null,"Path"),_react.default.createElement("th",null,"Actions"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},_react.default.createElement("td",null,t.id),_react.default.createElement("td",null,t.user&&t.user.first_name+" "+t.user.last_name),_react.default.createElement("td",null,t.user&&t.user.email),_react.default.createElement("td",null,t.amount),_react.default.createElement("td",null,t.method),_react.default.createElement("td",null,t.path),_react.default.createElement("td",null,_react.default.createElement("button",{className:"btn btn-primary btn-xs",onClick:function(a){a.preventDefault(),e.doAction(t)}},!!e.state["update_"+t.id]&&_react.default.createElement("i",{className:"fa fa-spinner fa-spin"})," ","Mark as paid")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"})))):_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},_react.default.createElement("i",{className:"fa fa-spinner fa-spin",style:{fontSize:40}}))))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(WithdrawalPending);exports.default=_default;
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    messages: state.messages
+  };
+};
 
-},{"../../actions/Fetcher":1,"../Messages":31,"react":187,"react-paginate":135,"react-redux":146}],28:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var o=t[r];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Footer=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,_getPrototypeOf(t).apply(this,arguments))}return _inherits(t,_react.default.Component),_createClass(t,[{key:"render",value:function(){return _react.default.createElement("footer",null,_react.default.createElement("p",null,"© OCG - All Rights Reserved."))}}]),t}(),_default=Footer;exports.default=_default;
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Forgot);
 
-},{"react":187}],29:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRouter=require("react-router"),_reactRedux=require("react-redux"),_auth=require("../actions/auth");function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Header=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,_getPrototypeOf(t).apply(this,arguments))}return _inherits(t,_react.default.Component),_createClass(t,[{key:"handleLogout",value:function(e){e.preventDefault(),this.props.dispatch((0,_auth.logout)())}},{key:"render",value:function(){var e={borderBottomColor:"#3f51b5"},t=this.props.token?_react.default.createElement("ul",{className:"nav navbar-nav navbar-right"},_react.default.createElement("li",{className:"dropdown"},_react.default.createElement("a",{href:"#","data-toggle":"dropdown",className:"navbar-avatar dropdown-toggle"},_react.default.createElement("img",{src:this.props.user.picture||this.props.user.gravatar})," ",this.props.user.name||this.props.user.first_name||this.props.user.email||this.props.user.id," ",_react.default.createElement("i",{className:"caret"})),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/account"},"My Account")),_react.default.createElement("li",{className:"divider"}),_react.default.createElement("li",null,_react.default.createElement("a",{href:"#",onClick:this.handleLogout.bind(this)},"Logout"))))):_react.default.createElement("ul",{className:"nav navbar-nav navbar-right"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/login",activeStyle:e},"Log in")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"/signup"},"Sign up")));return _react.default.createElement("nav",{className:"navbar navbar-default navbar-static-top"},_react.default.createElement("div",{className:"container"},_react.default.createElement("div",{className:"navbar-header"},_react.default.createElement("button",{type:"button","data-toggle":"collapse","data-target":"#navbar",className:"navbar-toggle collapsed"},_react.default.createElement("span",{className:"sr-only"},"Toggle navigation"),_react.default.createElement("span",{className:"icon-bar"}),_react.default.createElement("span",{className:"icon-bar"}),_react.default.createElement("span",{className:"icon-bar"})),_react.default.createElement(_reactRouter.IndexLink,{to:"/",className:"navbar-brand"},"OCG")),_react.default.createElement("div",{id:"navbar",className:"navbar-collapse collapse"},!!this.props.user&&_react.default.createElement("ul",{className:"nav navbar-nav"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Users"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/admin_users"},"Admin Users")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/app_users"},"Web App User")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/teams",activeStyle:e},"Teams")))),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Matches"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/matchfinder"},"MatchFinder")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/money8"},"Money 8")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/tournaments"},"Tournaments")))),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Games & Ladders"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/games"},"List Games")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/ladders"},"List Ladders")))),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Community"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/topics"},"Forum Topics")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/threads"},"Forum Threads")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/posts"},"Social")))),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Tickets"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/tickets"},"List Tickets")))),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Form Submissions"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/forms/apply_for_staff"},"Apply for staff")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/forms/advertise_with_us"},"Advertise with Us")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/forms/subscribers"},"Subscribers")))),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Withdrawals"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/withdrawal/pending"},"Pending Withdrawal Requests")),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{to:"/withdrawal/completed"},"Completed Withdrawal Requests")))),_react.default.createElement("li",null,_react.default.createElement(_reactRouter.Link,{className:"dropdown-toggle","data-toggle":"dropdown",role:"button","aria-haspopup":"true","aria-expanded":"false"},"Disputes"),_react.default.createElement("ul",{className:"dropdown-menu"},_react.default.createElement("li",null,_react.default.createElement("a",{href:"/admin/#/matchfinder/filter/disputed",onClick:function(e){window.location.href="/admin/#/matchfinder/filter/disputed",window.location.reload()}},"matchfinder")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"/admin/#/money8/filter/disputed",onClick:function(e){window.location.href="/admin/#/money8/filter/disputed",window.location.reload()}},"money 8")),_react.default.createElement("li",null,_react.default.createElement("a",{href:"/admin/#/tournamentmatches/filter/disputed",onClick:function(e){window.location.href="/admin/#/tournamentmatches/filter/disputed",window.location.reload()}},"tournament matches"))))),t)))}}]),t}(),mapStateToProps=function(e){return{token:e.auth.token,user:e.auth.user}},_default=(0,_reactRedux.connect)(mapStateToProps)(Header);exports.default=_default;
+exports.default = _default;
 
-},{"../actions/auth":2,"react":187,"react-redux":146,"react-router":177}],30:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react")),_reactRedux=require("react-redux"),_Messages=_interopRequireDefault(require("./Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var o=t[r];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Home=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,_getPrototypeOf(t).apply(this,arguments))}return _inherits(t,_react.default.Component),_createClass(t,[{key:"render",value:function(){return _react.default.createElement("div",{className:"container"},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("div",{className:"row"},_react.default.createElement("div",{className:"col-sm-12"},_react.default.createElement("div",{className:"panel"},_react.default.createElement("div",{className:"panel-body"},"Welcome to the admin panel of OCG")))))}}]),t}(),mapStateToProps=function(e){return{messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(Home);exports.default=_default;
+},{"../../actions/auth":2,"../Messages":32,"react":188,"react-redux":147}],5:[function(require,module,exports){
+"use strict";
 
-},{"./Messages":31,"react":187,"react-redux":146}],31:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var o=t[r];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Messages=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,_getPrototypeOf(t).apply(this,arguments))}return _inherits(t,_react.default.Component),_createClass(t,[{key:"render",value:function(){return this.props.messages.success?_react.default.createElement("div",{role:"alert",className:"alert alert-success"},this.props.messages.success.map(function(e,t){return _react.default.createElement("div",{key:t},e.msg)})):this.props.messages.error?_react.default.createElement("div",{role:"alert",className:"alert alert-danger"},this.props.messages.error.map(function(e,t){return _react.default.createElement("div",{key:t},e.msg)})):this.props.messages.info?_react.default.createElement("div",{role:"alert",className:"alert alert-info"},this.props.messages.info.map(function(e,t){return _react.default.createElement("div",{key:t},e.msg)})):null}}]),t}(),_default=Messages;exports.default=_default;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 
-},{"react":187}],32:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _reactRedux=require("react-redux"),_react=_interopRequireDefault(require("react")),_modals=require("../actions/modals");function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var o=0;o<t.length;o++){var r=t[o];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,o){return t&&_defineProperties(e.prototype,t),o&&_defineProperties(e,o),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var Modal=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,_getPrototypeOf(t).apply(this,arguments))}return _inherits(t,_react.default.Component),_createClass(t,[{key:"onClose",value:function(){this.props.item.onClose?(this.props.item.onClose(),this.props.onClose(this.props.item)):this.props.onClose(this.props.item)}},{key:"onConfirm",value:function(){this.props.item.onConfirm&&(this.props.item.onConfirm(),this.props.onClose(this.props.item))}},{key:"render",value:function(){var e=this,t=this.props.item.type;if("custom"===t){var o=this.props.item.content;return _react.default.createElement("div",{className:"modal must_show ",id:"modal_"+this.props.item.id,tabIndex:"-1",role:"dialog"},_react.default.createElement("div",{className:"modal-dialog modal-dialog-centered"+(this.props.item.modal_class?this.props.item.modal_class:" "),style:{zIndex:this.props.item.zIndex+2},role:"document"},_react.default.createElement("div",{className:"modal-content"},_react.default.createElement("div",{className:"modal-header"},_react.default.createElement("button",{type:"button",className:"close","data-dismiss":"modal","aria-label":"Close",onClick:function(){return e.onClose()}},_react.default.createElement("span",{"aria-hidden":"true"},"×")),_react.default.createElement("h5",{className:"modal-title"},this.props.item.heading)),o)))}return"snackbar"==t?_react.default.createElement("div",{id:"snack_"+this.props.item.id,className:"snackbar"},this.props.item.content," ",!!this.props.item.link&&_react.default.createElement("a",{href:this.props.item.link,target:"_blank"},this.props.item.link_label)):_react.default.createElement("div",null)}}]),t}(),Modals=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,_getPrototypeOf(t).apply(this,arguments))}return _inherits(t,_react.default.Component),_createClass(t,[{key:"render",value:function(){var e=this,t=this.props.modals.map(function(t,o){return _react.default.createElement(Modal,{item:t,key:t.id,zIndex:o,onClose:function(t){return e.props.dispatch((0,_modals.closeModal)(t))}})});return _react.default.createElement("div",{className:t.length>0?"modals":""},t)}}]),t}(),ModalContainer=(0,_reactRedux.connect)(function(e){return{modals:e.modals.modals}},function(e){return{dispatch:e}})(Modals),_default=ModalContainer;exports.default=_default;
+var _react = _interopRequireDefault(require("react"));
 
-},{"../actions/modals":3,"react":187,"react-redux":146}],33:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_moment=_interopRequireDefault(require("moment")),_reactPaginate=_interopRequireDefault(require("react-paginate")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var CashHistory=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).handlePageClick=function(e){var t=parseInt(e.selected)+1;a.setState({page:t},function(){a.fetchData()})},a.state={loaded:!1,items:[],pagination:{pageCount:1},page:1},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){this.props.dispatch((0,_modals.closeModal)({id:"tx"}))}},{key:"fetchData",value:function(){var e=this,t="/api/admin/listPaged/"+this.props.type+"?page="+this.state.page;this.props.id&&(t+="&filter_user_id="+this.props.id),this.props.obj_type&&(t+="&filter_obj_type="+this.props.obj_type+"&related=user"),fetch(t).then(function(t){if(t.ok)return t.json().then(function(t){t.ok&&e.setState({items:t.items?t.items:[],loaded:!0,pagination:t.pagination?t.pagination:{pageCount:1}})})})}},{key:"componentDidMount",value:function(){this.fetchData()}},{key:"render",value:function(){var e=this;return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"})),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("table",{className:"table table-stripped table-bordered table-hovered table-hover"},_react.default.createElement("thead",null,_react.default.createElement("tr",null,!!this.props.obj_type&&_react.default.createElement("th",null,"User"),_react.default.createElement("th",null,"Details"),_react.default.createElement("th",null,"Amount"),_react.default.createElement("th",null,"Date/time"))),_react.default.createElement("tbody",null,this.state.items&&this.state.items.map(function(t,a){return _react.default.createElement("tr",{key:t.id},!!e.props.obj_type&&_react.default.createElement("td",null,t.user?t.user.first_name+" "+t.user.last_name:" "),_react.default.createElement("td",null,t.details),_react.default.createElement("td",null,t.qty),_react.default.createElement("td",null,(0,_moment.default)(t.created_at).format("MMM DD, YYYY")))}))),_react.default.createElement(_reactPaginate.default,{previousLabel:"previous",nextLabel:"next",breakLabel:"...",breakClassName:"break-me",pageCount:this.state.pagination.pageCount,marginPagesDisplayed:2,pageRangeDisplayed:5,onPageChange:this.handlePageClick,containerClassName:"pagination",subContainerClassName:"pages pagination",activeClassName:"active"}))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(CashHistory);exports.default=_default;
+var _reactRouter = require("react-router");
 
-},{"../../../actions/modals":3,"moment":117,"react":187,"react-paginate":135,"react-redux":146}],34:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_moment=_interopRequireDefault(require("moment")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var l=0;l<t.length;l++){var a=t[l];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}function _createClass(e,t,l){return t&&_defineProperties(e.prototype,t),l&&_defineProperties(e,l),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var MoreInfo=function(e){function t(e){var l;return _classCallCheck(this,t),(l=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={},l}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){this.props.dispatch((0,_modals.closeModal)({id:"mode_info"}))}},{key:"render",value:function(){var e=this.props.data;return _react.default.createElement("div",{className:""},_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("table",{className:"table table-stripped"},_react.default.createElement("tbody",null,_react.default.createElement("tr",null,_react.default.createElement("td",null,"Id"),_react.default.createElement("td",null,e.id)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"First_name"),_react.default.createElement("td",null,e.first_name)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Last_name"),_react.default.createElement("td",null,e.last_name)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Email"),_react.default.createElement("td",null,e.email)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Profile_views"),_react.default.createElement("td",null,e.profile_views)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Username"),_react.default.createElement("td",null,e.username)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Email_verified"),_react.default.createElement("td",null,e.email_verified)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Created at"),_react.default.createElement("td",null,(0,_moment.default)(e.created_at).format("lll"))),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Gender"),_react.default.createElement("td",null,e.gender)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Cover Picture"),_react.default.createElement("td",null,_react.default.createElement("img",{src:e.cover_picture,width:"100px",height:"100px"}))),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Picture"),_react.default.createElement("td",null,_react.default.createElement("img",{src:e.picture,width:"100px",height:"100px"}))),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Profile_picture"),_react.default.createElement("td",null,_react.default.createElement("img",{src:e.profile_picture,width:"100px",height:"100px"}))),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Stripe_user_id"),_react.default.createElement("td",null,e.stripe_user_id)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Status"),_react.default.createElement("td",null,e.status)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Credit_balance"),_react.default.createElement("td",null,e.credit_balance)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Cash_balance"),_react.default.createElement("td",null,e.cash_balance)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Life_earning"),_react.default.createElement("td",null,e.life_earning)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Role"),_react.default.createElement("td",null,e.role)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Life_xp"),_react.default.createElement("td",null,e.life_xp)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Wins"),_react.default.createElement("td",null,e.wins)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Loss"),_react.default.createElement("td",null,e.loss)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Dob"),_react.default.createElement("td",null,e.dob)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Double_xp"),_react.default.createElement("td",null,e.double_xp)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Prime"),_react.default.createElement("td",null,e.prime)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Xp_rank"),_react.default.createElement("td",null,e.xp_rank)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Timezone"),_react.default.createElement("td",null,e.timezone)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Gamer_tag_1"),_react.default.createElement("td",null,e.gamer_tag_1)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Gamer_tag_2"),_react.default.createElement("td",null,e.gamer_tag_2)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Gamer_tag_3"),_react.default.createElement("td",null,e.gamer_tag_3)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Gamer_tag_4"),_react.default.createElement("td",null,e.gamer_tag_4)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Gamer_tag_5"),_react.default.createElement("td",null,e.gamer_tag_5)),_react.default.createElement("tr",null,_react.default.createElement("td",null,"Gamer_tag_6"),_react.default.createElement("td",null,e.gamer_tag_6)))))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(MoreInfo);exports.default=_default;
+var _reactRedux = require("react-redux");
 
-},{"../../../actions/modals":3,"moment":117,"react":187,"react-redux":146}],35:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var o=t[r];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var MoreInfoGeneric=function(e){function t(e){var r;return _classCallCheck(this,t),(r=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={},r}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){this.props.dispatch((0,_modals.closeModal)({id:"mode_info"}))}},{key:"render",value:function(){var e=this.props.data,t=Object.keys(e);return _react.default.createElement("div",{className:""},_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("table",{className:"table table-stripped"},_react.default.createElement("tbody",null,t.map(function(t,r){return _react.default.createElement("tr",{key:t},_react.default.createElement("td",null,_react.default.createElement("strong",null,t)),_react.default.createElement("td",null,e[t]))}))))))}}]),t}(),mapStateToProps=function(e){return{}},_default=(0,_reactRedux.connect)(mapStateToProps)(MoreInfoGeneric);exports.default=_default;
+var _auth = require("../../actions/auth");
 
-},{"../../../actions/modals":3,"react":187,"react-redux":146}],36:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_axios=_interopRequireDefault(require("axios")),_Fetcher=_interopRequireDefault(require("../../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../../Messages")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var NewGame=function(e){function t(e){var r;return _classCallCheck(this,t),(r=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={loaded:!0,title:"",image_url:"",banner_url:""},r.image_url_ref=_react.default.createRef(),r.banner_url_ref=_react.default.createRef(),r}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){var e=this;this.props.dispatch({type:"CLEAR_MESSAGES"}),setTimeout(function(){e.props.dispatch((0,_modals.closeModal)({id:"newgame"}))},500)}},{key:"finalSubmit",value:function(){var e=this;_Fetcher.default.post("/api/games/add",{title:this.state.title,image_url:this.state.image_url,banner_url:this.state.banner_url}).then(function(t){t.ok?(e.props.onComplete&&e.props.onComplete(),e.doClose(),e.setState({loaded:!0})):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.setState({loaded:!0});e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})}},{key:"uploadFile2",value:function(){var e=this,t=new FormData,r=this.banner_url_ref.current.files[0];t.append("file",r,r.name),_axios.default.post("/upload",t,{onUploadProgress:function(e){}}).then(function(t){e.setState({banner_url:t.data.file},function(){e.finalSubmit()})}).catch(function(t){alert("some error occoured."),e.setState({loaded:!0})})}},{key:"onSubmit",value:function(e){var t=this;e.preventDefault(),this.setState({loaded:!1});var r=new FormData,a=this.image_url_ref.current.files[0];r.append("file",a,a.name),_axios.default.post("/upload",r,{onUploadProgress:function(e){t.setState({})}}).then(function(e){t.setState({image_url:e.data.file},function(){t.uploadFile2()})}).catch(function(e){alert("some error occoured."),t.setState({loaded:!0})})}},{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"render",value:function(){var e=this;return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"})),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("form",{onSubmit:function(t){e.onSubmit(t)}},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Game Name"),_react.default.createElement("input",{type:"text",required:!0,className:"form-control",name:"title",onChange:this.handleChange.bind(this),id:"title",value:this.state.title})),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Game Image"),_react.default.createElement("input",{type:"file",className:"form-control",name:"image_url",ref:this.image_url_ref,required:!0,id:"image_url"})),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Game Banner"),_react.default.createElement("input",{type:"file",className:"form-control",name:"banner_url",required:!0,ref:this.banner_url_ref,id:"banner_url"})),_react.default.createElement("br",null),_react.default.createElement("input",{value:"Create Game",type:"submit",className:"btn btn-primary"})))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(NewGame);exports.default=_default;
+var _Messages = _interopRequireDefault(require("../Messages"));
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"axios":57,"react":187,"react-redux":146}],37:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../../Messages")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var NewLadder=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={loaded:!1,title:"",game_id:"",min_players:"",gamer_tag:"",rules:"",max_players:"",games:[]},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){var e=this;this.props.dispatch({type:"CLEAR_MESSAGES"}),setTimeout(function(){e.props.dispatch((0,_modals.closeModal)({id:"newladder"}))},500)}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/games?per_page=10000&page="+this.state.page).then(function(t){t.ok?e.setState({loaded:!0,games:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"onSubmit",value:function(e){var t=this;e.preventDefault(),this.setState({loaded:!1}),_Fetcher.default.post("/api/ladder/add",{title:this.state.title,game_id:this.state.game_id,min_players:this.state.min_players,max_players:this.state.max_players,rules:this.state.rules,gamer_tag:this.state.gamer_tag}).then(function(e){e.ok?(t.props.onComplete&&t.props.onComplete(),t.doClose(),t.setState({loaded:!0})):(t.setState({loaded:!0}),t.props.dispatch({type:"FAILURE",messages:[e]}))}).catch(function(e){t.setState({loaded:!0});t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})}},{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"render",value:function(){var e=this;return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"}),"sdf"),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("form",{onSubmit:function(t){e.onSubmit(t)}},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Ladder Name"),_react.default.createElement("input",{type:"text",required:!0,className:"form-control",name:"title",onChange:this.handleChange.bind(this),id:"title",value:this.state.title})),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Game"),_react.default.createElement("select",{className:"form-control",name:"game_id",onChange:this.handleChange.bind(this),id:"game_id",value:this.state.game_id,required:!0},_react.default.createElement("option",{value:""},"Select"),this.state.games.map(function(e,t){return _react.default.createElement("option",{value:e.id,key:e.id},e.title)}))),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"User Gamer Tag"),_react.default.createElement("select",{className:"form-control",name:"gamer_tag",onChange:this.handleChange.bind(this),id:"gamer_tag",value:this.state.gamer_tag,required:!0},_react.default.createElement("option",{value:""},"Select"),_react.default.createElement("option",{value:"1"},"Xbox Live Gamertag"),_react.default.createElement("option",{value:"2"},"PSN"),_react.default.createElement("option",{value:"3"},"Epic Games Username"),_react.default.createElement("option",{value:"4"},"Steam Username"),_react.default.createElement("option",{value:"5"},"Battletag"),_react.default.createElement("option",{value:"6"},"Activision ID"))),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Ladder Min players"),_react.default.createElement("input",{type:"number",className:"form-control",min:"1",max:this.state.max_players?this.state.max_players:99999,name:"min_players",onChange:this.handleChange.bind(this),id:"min_players",value:this.state.min_players})),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Ladder Max players"),_react.default.createElement("input",{type:"number",className:"form-control",min:this.state.min_players?this.state.min_players:1,name:"max_players",onChange:this.handleChange.bind(this),id:"max_players",value:this.state.max_players})),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Rules"),_react.default.createElement("textarea",{className:"form-control",name:"rules",onChange:this.handleChange.bind(this),id:"rules",value:this.state.rules})),_react.default.createElement("br",null),_react.default.createElement("input",{value:"Create Ladder",type:"submit",className:"btn btn-primary"})))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(NewLadder);exports.default=_default;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],38:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../../Messages")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var NewTopic=function(e){function t(e){var r;return _classCallCheck(this,t),(r=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={loaded:!0,title:"",sub_title:""},r}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){var e=this;this.props.dispatch({type:"CLEAR_MESSAGES"}),setTimeout(function(){e.props.dispatch((0,_modals.closeModal)({id:"newtopic"}))},500)}},{key:"onSubmit",value:function(e){var t=this;e.preventDefault(),this.setState({loaded:!1}),_Fetcher.default.post("/api/topic/add",{title:this.state.title,sub_title:this.state.sub_title}).then(function(e){e.ok?(t.props.onComplete&&t.props.onComplete(),t.doClose(),t.setState({loaded:!0})):(t.setState({loaded:!0}),t.props.dispatch({type:"FAILURE",messages:[e]}))}).catch(function(e){t.setState({loaded:!0});t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})}},{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"render",value:function(){var e=this;return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"}),"sdf"),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("form",{onSubmit:function(t){e.onSubmit(t)}},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Topic Title"),_react.default.createElement("input",{type:"text",required:!0,className:"form-control",name:"title",onChange:this.handleChange.bind(this),id:"title",value:this.state.title})),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Topic Sub-Title"),_react.default.createElement("input",{type:"text",required:!0,className:"form-control",name:"sub_title",onChange:this.handleChange.bind(this),id:"sub_title",value:this.state.sub_title})),_react.default.createElement("br",null),_react.default.createElement("input",{value:"Create Topic",type:"submit",className:"btn btn-primary"})))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(NewTopic);exports.default=_default;
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],39:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../../Messages")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var NewTournament=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={loaded:!1,title:"",game_id:"",ladder_id:"",min_players:"",gamer_tag:"",member_tournament:"no",rules:"",max_players:"",games:[],ladders:[]},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){var e=this;this.props.dispatch({type:"CLEAR_MESSAGES"}),setTimeout(function(){e.props.dispatch((0,_modals.closeModal)({id:"newtournament"}))},500)}},{key:"returnOptionForMaxPPT",value:function(){var e=this;if(!this.state.ladder_id)return!1;var t=this.state.ladders.filter(function(t){return e.state.ladder_id==t.id});if(t.length){for(var a=[],r=(t=t[0]).min_players;r<=t.max_players;r++)a.push(r);return a.map(function(e,t){return _react.default.createElement("option",{value:e,key:e},e,"v",e)})}return!1}},{key:"componentDidMount",value:function(){this.loadData()}},{key:"loadData",value:function(){var e=this;_Fetcher.default.get("/api/admin/listPaged/games?per_page=10000&page="+this.state.page).then(function(t){t.ok?e.setState({loaded:!0,games:t.items,pagination:t.pagination?t.pagination:{}}):e.props.dispatch({type:"FAILURE",messages:[t]})}).catch(function(t){e.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"loadLadder",value:function(e){var t=this;this.setState({loaded:!1,ladder_id:""}),_Fetcher.default.get("/api/admin/listPaged/ladders?filter_game_id="+e+"&per_page=10000&page=1").then(function(e){e.ok?t.setState({loaded:!0,ladders:e.items}):t.props.dispatch({type:"FAILURE",messages:[e]})}).catch(function(e){t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to load users"}]})})}},{key:"onSubmit",value:function(e){var t=this;e.preventDefault(),this.setState({loaded:!1}),_Fetcher.default.post("/api/tournaments/add",{title:this.state.title,game_id:this.state.game_id,ladder_id:this.state.ladder_id,max_players:this.state.max_players,total_teams:this.state.total_teams,starts_at:this.state.starts_at,registration_start_at:this.state.registration_start_at,registration_end_at:this.state.registration_end_at,entry_fee:this.state.entry_fee,first_winner_price:this.state.first_winner_price,second_winner_price:this.state.second_winner_price,third_winner_price:this.state.third_winner_price}).then(function(e){e.ok?(t.props.onComplete&&t.props.onComplete(),t.doClose(),t.setState({loaded:!0})):(t.setState({loaded:!0}),t.props.dispatch({type:"FAILURE",messages:[e]}))}).catch(function(e){t.setState({loaded:!0});t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})}},{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value)),"game_id"==e.target.name&&this.loadLadder(e.target.value)}},{key:"render",value:function(){var e=this;return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"}),"sdf"),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("form",{onSubmit:function(t){e.onSubmit(t)}},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Title"),_react.default.createElement("input",{type:"text",name:"title",onChange:this.handleChange.bind(this),id:"title",value:this.state.title,required:!0,placeholder:"Tournament Title",className:"form-control"})),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Game"),_react.default.createElement("select",{className:"form-control",name:"game_id",onChange:this.handleChange.bind(this),id:"game_id",value:this.state.game_id,required:!0},_react.default.createElement("option",{value:""},"Select"),this.state.games.map(function(e,t){return _react.default.createElement("option",{value:e.id,key:e.id},e.title)}))),_react.default.createElement("br",null),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Ladder"),_react.default.createElement("select",{className:"form-control",name:"ladder_id",onChange:this.handleChange.bind(this),id:"ladder_id",value:this.state.ladder_id,required:!0},_react.default.createElement("option",{value:""},"Select"),this.state.ladders&&this.state.ladders.map(function(e,t){return _react.default.createElement("option",{value:e.id,key:e.id},e.title)}))),_react.default.createElement("br",null),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Total number of Teams"),_react.default.createElement("select",{required:!0,placeholder:"Total Number of Teams",className:"form-control",name:"total_teams",onChange:this.handleChange.bind(this),id:"total_teams",value:this.state.total_teams},_react.default.createElement("option",{value:""},"Select"),_react.default.createElement("option",{value:"4"},"4 Teams"),_react.default.createElement("option",{value:"4"},"8 Teams"),_react.default.createElement("option",{value:"4"},"16 Teams"))),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Members only Tournament"),_react.default.createElement("select",{required:!0,placeholder:"Members only Tournament",className:"form-control",name:"member_tournament",onChange:this.handleChange.bind(this),id:"member_tournament",value:this.state.member_tournament},_react.default.createElement("option",{value:""},"Select"),_react.default.createElement("option",{value:"yes"},"Yes"),_react.default.createElement("option",{value:"no"},"No"))),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Users Per Team"),_react.default.createElement("select",{required:!0,placeholder:"Users Per Team",className:"form-control",name:"max_players",onChange:this.handleChange.bind(this),id:"max_players",value:this.state.max_players},_react.default.createElement("option",{value:""},"Select"),this.returnOptionForMaxPPT())),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Tournament Starts On"),_react.default.createElement("input",{type:"datetime-local",name:"starts_at",onChange:this.handleChange.bind(this),id:"starts_at",value:this.state.starts_at,required:!0,placeholder:"Enter Tournament Start Date Time",className:"form-control"})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Registration Starts On"),_react.default.createElement("input",{type:"datetime-local",name:"registration_start_at",onChange:this.handleChange.bind(this),id:"registration_start_at",value:this.state.registration_start_at,required:!0,placeholder:"Registration Start Date Time",className:"form-control"})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Registration ends on"),_react.default.createElement("input",{type:"datetime-local",name:"registration_end_at",onChange:this.handleChange.bind(this),id:"registration_end_at",value:this.state.registration_end_at,required:!0,placeholder:"Registration End Date Time",className:"form-control"})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Entry Fee (credits)"),_react.default.createElement("input",{type:"number",name:"entry_fee",onChange:this.handleChange.bind(this),id:"entry_fee",value:this.state.entry_fee,required:!0,placeholder:"Entry Fee",className:"form-control"})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"First Price"),_react.default.createElement("input",{type:"number",name:"first_winner_price",onChange:this.handleChange.bind(this),id:"first_winner_price",value:this.state.first_winner_price,required:!0,placeholder:"First Winner - Price Amount",className:"form-control"})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Second Price"),_react.default.createElement("input",{type:"number",name:"second_winner_price",onChange:this.handleChange.bind(this),id:"second_winner_price",value:this.state.second_winner_price,required:!0,placeholder:"Second Winner - Price Amount",className:"form-control"})),_react.default.createElement("div",{className:"form-group"},_react.default.createElement("label",null,"Third Price"),_react.default.createElement("input",{type:"number",name:"third_winner_price",onChange:this.handleChange.bind(this),id:"third_winner_price",value:this.state.third_winner_price,required:!0,placeholder:"Third Winner - Price Amount",className:"form-control"})),_react.default.createElement("br",null),_react.default.createElement("input",{value:"Create Tournament",type:"submit",className:"btn btn-primary"})))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(NewTournament);exports.default=_default;
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],40:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_Fetcher=_interopRequireDefault(require("../../../actions/Fetcher")),_Messages=_interopRequireDefault(require("../../Messages")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var r=0;r<t.length;r++){var o=t[r];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(e,o.key,o)}}function _createClass(e,t,r){return t&&_defineProperties(e.prototype,t),r&&_defineProperties(e,r),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var ReplyTicket=function(e){function t(e){var r;return _classCallCheck(this,t),(r=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={loaded:!0,text:""},r}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){var e=this;this.props.dispatch({type:"CLEAR_MESSAGES"}),setTimeout(function(){e.props.dispatch((0,_modals.closeModal)({id:"replyticket"}))},500)}},{key:"onSubmit",value:function(e){var t=this;e.preventDefault(),this.setState({loaded:!1}),_Fetcher.default.post("/api/ticket_replies/add",{text:this.state.text,ticket_id:this.props.id}).then(function(e){e.ok?(t.props.onComplete&&t.props.onComplete(),t.doClose(),t.setState({loaded:!0})):t.props.dispatch({type:"FAILURE",messages:[e]})}).catch(function(e){t.setState({loaded:!0});t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})}},{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"render",value:function(){var e=this;return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"}),"sdf"),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("form",{onSubmit:function(t){e.onSubmit(t)}},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Reply Text"),_react.default.createElement("textarea",{type:"text",required:!0,className:"form-control",name:"text",onChange:this.handleChange.bind(this),id:"text",value:this.state.text})),_react.default.createElement("br",null),_react.default.createElement("input",{value:"Create Reply",type:"submit",className:"btn btn-primary"})))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(ReplyTicket);exports.default=_default;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"react":187,"react-redux":146}],41:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_moment=_interopRequireDefault(require("moment")),_react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var ViewThread=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={loaded:!1,items:[],thread:{user:{}},pageCount:1},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){this.props.dispatch((0,_modals.closeModal)({id:"viewthread"}))}},{key:"fetchData",value:function(){var e=this;fetch("/api/thread/single/"+this.props.id).then(function(e){return e.json()}).then(function(t){t.ok?e.setState({thread:t.item},function(){e.fetchReplies()}):e.setState({})})}},{key:"fetchReplies",value:function(){var e=this,t=this.state.cur_page;fetch("/api/thread_replies/listPaged?thread_id="+this.props.id+"&paged="+t).then(function(e){return e.json()}).then(function(t){t.ok?e.setState({loaded:!0,items:t.items,pageCount:t.pagination.pageCount}):e.setState({is_page:!1,loaded:!0})})}},{key:"componentDidMount",value:function(){this.fetchData()}},{key:"render",value:function(){return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"})),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("div",{className:"col-sm-12"},_react.default.createElement("div",{className:"card post"},_react.default.createElement("span",{className:"date"},(0,_moment.default)(this.state.thread.created_at).format("lll")),_react.default.createElement("div",{className:"row"},_react.default.createElement("div",{className:"col-sm-3 ticket_item_av"},_react.default.createElement("span",{className:"profile_menu_item ticket_item"},_react.default.createElement("span",{className:"profile_menu_item_inner"},_react.default.createElement("span",{className:"menu_avatar"},_react.default.createElement("img",{src:this.state.thread.user.profile_picture?this.state.thread.user.profile_picture:this.state.thread.user.gravatar,className:"img-fluid profile_pic_outline"})),_react.default.createElement("span",{className:"menu_prof_name_w"},_react.default.createElement("span",{className:"menu_prof_name_top"},"By"," ",this.state.thread.user.first_name+" "+this.state.thread.user.last_name),_react.default.createElement("span",{className:"menu_prof_name_bot"},(0,_moment.default)(this.state.thread.created_at).format("lll")))))),_react.default.createElement("div",{className:"col-sm-9 post-content"},_react.default.createElement("div",{dangerouslySetInnerHTML:{__html:this.state.thread.description}}))))),this.state.items.map(function(e,t){return _react.default.createElement("div",{className:"col-sm-12",key:e.id},_react.default.createElement("div",{className:"card post"},_react.default.createElement("div",{className:"row"},_react.default.createElement("div",{className:"col-sm-3 ticket_item_av"},_react.default.createElement("span",{className:"profile_menu_item ticket_item"},_react.default.createElement("span",{className:"profile_menu_item_inner"},_react.default.createElement("span",{className:"menu_avatar"},_react.default.createElement("img",{src:e.user.profile_picture?e.user.profile_picture:e.user.gravatar,className:"img-fluid profile_pic_outline"})),_react.default.createElement("span",{className:"menu_prof_name_w"},_react.default.createElement("span",{className:"menu_prof_name_top"},"By"," ",e.user.first_name+" "+e.user.last_name),_react.default.createElement("span",{className:"menu_prof_name_bot"},(0,_moment.default)(e.created_at).format("lll")))))),_react.default.createElement("div",{className:"col-sm-9 post-content"},_react.default.createElement("div",{dangerouslySetInnerHTML:{__html:e.content}})))))}))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(ViewThread);exports.default=_default;
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-},{"../../../actions/modals":3,"moment":117,"react":187,"react-redux":146}],42:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _modals=require("../../../actions/modals"),_reactRedux=require("react-redux"),_moment=_interopRequireDefault(require("moment")),_Fetcher=_interopRequireDefault(require("../../../actions/Fetcher")),_react=_interopRequireDefault(require("react")),_Messages=_interopRequireDefault(require("../../Messages"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function _typeof(e){return(_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e})(e)}function _defineProperty(e,t,a){return t in e?Object.defineProperty(e,t,{value:a,enumerable:!0,configurable:!0,writable:!0}):e[t]=a,e}function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _defineProperties(e,t){for(var a=0;a<t.length;a++){var r=t[a];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(e,r.key,r)}}function _createClass(e,t,a){return t&&_defineProperties(e.prototype,t),a&&_defineProperties(e,a),e}function _possibleConstructorReturn(e,t){return!t||"object"!==_typeof(t)&&"function"!=typeof t?_assertThisInitialized(e):t}function _assertThisInitialized(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}function _getPrototypeOf(e){return(_getPrototypeOf=Object.setPrototypeOf?Object.getPrototypeOf:function(e){return e.__proto__||Object.getPrototypeOf(e)})(e)}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),t&&_setPrototypeOf(e,t)}function _setPrototypeOf(e,t){return(_setPrototypeOf=Object.setPrototypeOf||function(e,t){return e.__proto__=t,e})(e,t)}var ViewTicket=function(e){function t(e){var a;return _classCallCheck(this,t),(a=_possibleConstructorReturn(this,_getPrototypeOf(t).call(this,e))).state={loaded:!1,items:[],cur_page:1,ticket:{user:{first_name:"",last_name:""}},pageCount:1,text:""},a}return _inherits(t,_react.default.Component),_createClass(t,[{key:"doClose",value:function(){this.props.dispatch((0,_modals.closeModal)({id:"viewticket"}))}},{key:"fetchData",value:function(){var e=this;fetch("/api/tickets/single/"+this.props.id).then(function(e){return e.json()}).then(function(t){t.ok?e.setState({ticket:t.item},function(){e.fetchReplies()}):(t.msg&&e.props.dispatch({type:"FAILURE",messages:[t]}),e.setState({is_page:!1,page_loaded:!1,is_404:!0}))}).catch(function(e){console.log(e)})}},{key:"fetchReplies",value:function(){var e=this,t=this.state.cur_page;fetch("/api/ticket_replies/listPaged?per_page=999999&ticket_id="+this.props.id+"&paged="+t).then(function(e){return e.json()}).then(function(t){t.ok?e.setState({loaded:!0,items:t.items,pageCount:t.pagination.pageCount}):e.setState({is_page:!1,loaded:!0})})}},{key:"componentDidMount",value:function(){this.fetchData()}},{key:"handleChange",value:function(e){this.setState(_defineProperty({},e.target.name,e.target.value))}},{key:"onSubmit",value:function(e){var t=this;e.preventDefault(),this.setState({loaded:!1}),_Fetcher.default.post("/api/ticket_replies/add",{text:this.state.text,ticket_id:this.state.ticket.id}).then(function(e){t.setState({loaded:!0}),e.ok?(t.setState({text:""}),t.fetchReplies()):t.props.dispatch({type:"FAILURE",messages:[e]})}).catch(function(e){t.setState({loaded:!0});t.props.dispatch({type:"FAILURE",messages:[{msg:"Failed to perform Action"}]})})}},{key:"render",value:function(){var e=this;return _react.default.createElement("div",{className:""},!this.state.loaded&&_react.default.createElement("div",{className:"show_loader"},_react.default.createElement("div",{className:"is_loader"})),_react.default.createElement("div",null,_react.default.createElement("div",{className:"modal-body report_left_inner more_info_de"},_react.default.createElement("div",{className:"col-sm-12"},_react.default.createElement("div",{className:"card post"},_react.default.createElement("div",{className:"row"},_react.default.createElement("div",{className:"col-sm-3 ticket_item_av"},_react.default.createElement("span",{className:"profile_menu_item ticket_item"},_react.default.createElement("span",{className:"profile_menu_item_inner"},_react.default.createElement("span",{className:"menu_avatar"},_react.default.createElement("img",{src:this.state.ticket.user.profile_picture?this.state.ticket.user.profile_picture:this.state.ticket.user.gravatar,className:"img-fluid profile_pic_outline"})),_react.default.createElement("span",{className:"menu_prof_name_w"},_react.default.createElement("span",{className:"menu_prof_name_top"},"By"," ",this.state.ticket.user.first_name+" "+this.state.ticket.user.last_name),_react.default.createElement("span",{className:"menu_prof_name_bot"},(0,_moment.default)(this.state.ticket.created_at).format("lll")))))),_react.default.createElement("div",{className:"col-sm-9 post-content"},_react.default.createElement("div",{dangerouslySetInnerHTML:{__html:this.state.ticket.description}}),!!this.state.ticket.attachment&&_react.default.createElement("a",{download:!0,href:this.state.ticket.attachment},"Download attachment"))))),this.state.items.map(function(t,a){return _react.default.createElement("div",{className:"col-sm-12",key:t.id},_react.default.createElement("div",{className:"card post"},_react.default.createElement("div",{className:"row"},_react.default.createElement("div",{className:"col-sm-3 ticket_item_av"},_react.default.createElement("span",{className:"profile_menu_item ticket_item "+(t.from_admin&&e.state.ticket.user_id!=t.user_id?" from_admin ":" ")},_react.default.createElement("span",{className:"profile_menu_item_inner"},_react.default.createElement("span",{className:"menu_avatar"},_react.default.createElement("img",{src:t.user.profile_picture?t.user.profile_picture:t.user.gravatar,className:"img-fluid profile_pic_outline"})),_react.default.createElement("span",{className:"menu_prof_name_w"},_react.default.createElement("span",{className:"menu_prof_name_top"},t.from_admin&&e.state.ticket.user_id!=t.user_id?"SUPPORT STAFF":t.user.first_name+" "+t.user.last_name),_react.default.createElement("span",{className:"menu_prof_name_bot"},(0,_moment.default)(t.created_at).format("lll")))))),_react.default.createElement("div",{className:"col-sm-9 post-content"},_react.default.createElement("div",{dangerouslySetInnerHTML:{__html:t.content}}),!!t.attachment&&_react.default.createElement("a",{download:!0,href:t.attachment},"Download attachment")))))})),_react.default.createElement("div",{className:"modal-footer"},_react.default.createElement("form",{onSubmit:function(t){e.onSubmit(t)}},_react.default.createElement(_Messages.default,{messages:this.props.messages}),_react.default.createElement("div",{className:"input-control"},_react.default.createElement("label",null,"Reply Text"),_react.default.createElement("textarea",{type:"text",required:!0,className:"form-control",name:"text",onChange:this.handleChange.bind(this),id:"text",value:this.state.text})),_react.default.createElement("br",null),_react.default.createElement("input",{value:"Create reply",type:"submit",className:"btn btn-primary"})))))}}]),t}(),mapStateToProps=function(e){return{modals:e.modals.modals,user:e.auth.user,messages:e.messages}},_default=(0,_reactRedux.connect)(mapStateToProps)(ViewTicket);exports.default=_default;
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":31,"moment":117,"react":187,"react-redux":146}],43:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _react=_interopRequireDefault(require("react"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}var NotFound=function(e){return _react.default.createElement("div",{className:"container text-center"},_react.default.createElement("h1",null,"404"),_react.default.createElement("p",null,"Page Not Found"))},_default=NotFound;exports.default=_default;
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-},{"react":187}],44:[function(require,module,exports){
-"use strict";require("whatwg-fetch");var _react=_interopRequireDefault(require("react")),_reactDom=_interopRequireDefault(require("react-dom")),_reactRedux=require("react-redux"),_reactRouter=require("react-router"),_configureStore=_interopRequireDefault(require("./store/configureStore")),_routes=_interopRequireDefault(require("./routes"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}var store=(0,_configureStore.default)(window.INITIAL_STATE);_reactDom.default.render(_react.default.createElement(_reactRedux.Provider,{store:store},_react.default.createElement(_reactRouter.Router,{history:_reactRouter.hashHistory,basename:"/admin",routes:(0,_routes.default)(store)})),document.getElementById("app"));
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-},{"./routes":49,"./store/configureStore":50,"react":187,"react-dom":128,"react-redux":146,"react-router":177,"whatwg-fetch":200}],45:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=auth;var initialState={token:null,user:{}};function auth(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:initialState,t=arguments.length>1?arguments[1]:void 0;switch(e.hydrated||(e=Object.assign({},initialState,e,{hydrated:!0})),t.type){case"LOGIN_SUCCESS":case"SIGNUP_SUCCESS":case"OAUTH_SUCCESS":case"UPDATE_USER":return Object.assign({},e,{token:t.token,user:t.user});case"LOGOUT_SUCCESS":return initialState;default:return e}}
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-},{}],46:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=void 0;var _redux=require("redux"),_messages=_interopRequireDefault(require("./messages")),_auth=_interopRequireDefault(require("./auth")),_modals=_interopRequireDefault(require("./modals"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}var _default=(0,_redux.combineReducers)({messages:_messages.default,auth:_auth.default,modals:_modals.default});exports.default=_default;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-},{"./auth":45,"./messages":47,"./modals":48,"redux":190}],47:[function(require,module,exports){
-"use strict";function messages(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},s=arguments.length>1?arguments[1]:void 0;switch(s.type){case"LOGIN_FAILURE":case"UPDATE_PROFILE_FAILURE":case"CHANGE_PASSWORD_FAILURE":case"FORGOT_PASSWORD_FAILURE":case"RESET_PASSWORD_FAILURE":case"FAILURE":return{error:s.messages};case"UPDATE_PROFILE_SUCCESS":case"CHANGE_PASSWORD_SUCCESS":case"RESET_PASSWORD_SUCCESS":case"CONTACT_FORM_SUCCESS":return{success:s.messages};case"FORGOT_PASSWORD_SUCCESS":case"DELETE_ACCOUNT_SUCCESS":case"UNLINK_SUCCESS":return{info:s.messages};case"CLEAR_MESSAGES":return{};default:return e}}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=messages;
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-},{}],48:[function(require,module,exports){
-"use strict";function _objectSpread(e){for(var t=1;t<arguments.length;t++){var r=null!=arguments[t]?arguments[t]:{},o=Object.keys(r);"function"==typeof Object.getOwnPropertySymbols&&(o=o.concat(Object.getOwnPropertySymbols(r).filter(function(e){return Object.getOwnPropertyDescriptor(r,e).enumerable}))),o.forEach(function(t){_defineProperty(e,t,r[t])})}return e}function _defineProperty(e,t,r){return t in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=modals;var initialState={modals:[]};function modals(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:initialState,t=arguments.length>1?arguments[1]:void 0;switch(e.hydrated||(e=Object.assign({},initialState,e,{hydrated:!0})),t.type){case"OPEN_MODAL":return document&&document.body.classList.add("no-scroll"),_objectSpread({},e,{modals:e.modals.concat(t.obj)});case"CLOSE_MODAL":var r=_objectSpread({},e,{modals:e.modals.filter(function(e){return e.id!==t.obj.id})});return 0==r.modals.length&&document&&document.body.classList.remove("no-scroll"),r;default:return e}}
+var Login =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Login, _React$Component);
+
+  function Login(props) {
+    var _this;
+
+    _classCallCheck(this, Login);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Login).call(this, props));
+    _this.state = {
+      email: '',
+      password: ''
+    };
+    return _this;
+  }
+
+  _createClass(Login, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "handleLogin",
+    value: function handleLogin(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.login)(this.state.email, this.state.password));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "login-container container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("form", {
+        onSubmit: this.handleLogin.bind(this)
+      }, _react.default.createElement("legend", null, "Log In"), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "email"
+      }, "Email"), _react.default.createElement("input", {
+        type: "email",
+        name: "email",
+        id: "email",
+        placeholder: "Email",
+        autoFocus: true,
+        className: "form-control",
+        value: this.state.email,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "password"
+      }, "Password"), _react.default.createElement("input", {
+        type: "password",
+        name: "password",
+        id: "password",
+        placeholder: "Password",
+        className: "form-control",
+        value: this.state.password,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement(_reactRouter.Link, {
+        to: "/forgot"
+      }, _react.default.createElement("strong", null, "Forgot your password?"))), _react.default.createElement("button", {
+        type: "submit",
+        className: "btn btn-success"
+      }, "Log in")))), _react.default.createElement("p", {
+        className: "text-center"
+      }, "Don't have an account?", ' ', _react.default.createElement(_reactRouter.Link, {
+        to: "/signup"
+      }, _react.default.createElement("strong", null, "Sign up"))));
+    }
+  }]);
+
+  return Login;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Login);
+
+exports.default = _default;
+
+},{"../../actions/auth":2,"../Messages":32,"react":188,"react-redux":147,"react-router":178}],6:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _auth = require("../../actions/auth");
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Profile =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Profile, _React$Component);
+
+  function Profile(props) {
+    var _this;
+
+    _classCallCheck(this, Profile);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Profile).call(this, props));
+    _this.state = {
+      name: '',
+      email: '',
+      gender: ''
+    }; // console.log(props);
+    // this.state = {
+    //   email: props.user.email,
+    //   name: props.user.name,
+    //   gender: props.user.gender,
+    //   password: '',
+    //   confirm: ''
+    // };
+
+    return _this;
+  }
+
+  _createClass(Profile, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // console.log(this.props.user);
+      this.setState({
+        email: this.props.user.email,
+        name: this.props.user.name,
+        gender: this.props.user.gender,
+        password: '',
+        confirm: ''
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "handleProfileUpdate",
+    value: function handleProfileUpdate(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.updateProfile)(this.state, this.props.token));
+    }
+  }, {
+    key: "handleChangePassword",
+    value: function handleChangePassword(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.changePassword)(this.state.password, this.state.confirm, this.props.token));
+    }
+  }, {
+    key: "handleDeleteAccount",
+    value: function handleDeleteAccount(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.deleteAccount)(this.props.token));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("form", {
+        onSubmit: this.handleProfileUpdate.bind(this),
+        className: "form-horizontal"
+      }, _react.default.createElement("legend", null, "Profile Information"), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "email",
+        className: "col-sm-3"
+      }, "Email"), _react.default.createElement("div", {
+        className: "col-sm-7"
+      }, _react.default.createElement("input", {
+        type: "email",
+        name: "email",
+        id: "email",
+        className: "form-control",
+        value: this.state.email,
+        onChange: this.handleChange.bind(this)
+      }))), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "name",
+        className: "col-sm-3"
+      }, "Name"), _react.default.createElement("div", {
+        className: "col-sm-7"
+      }, _react.default.createElement("input", {
+        type: "text",
+        name: "name",
+        id: "name",
+        className: "form-control",
+        value: this.state.name,
+        onChange: this.handleChange.bind(this)
+      }))), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("div", {
+        className: "col-sm-offset-3 col-sm-4"
+      }, _react.default.createElement("button", {
+        type: "submit",
+        className: "btn btn-success"
+      }, "Update Profile")))))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("form", {
+        onSubmit: this.handleChangePassword.bind(this),
+        className: "form-horizontal"
+      }, _react.default.createElement("legend", null, "Change Password"), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "password",
+        className: "col-sm-3"
+      }, "New Password"), _react.default.createElement("div", {
+        className: "col-sm-7"
+      }, _react.default.createElement("input", {
+        type: "password",
+        name: "password",
+        id: "password",
+        className: "form-control",
+        value: this.state.password,
+        onChange: this.handleChange.bind(this)
+      }))), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "confirm",
+        className: "col-sm-3"
+      }, "Confirm Password"), _react.default.createElement("div", {
+        className: "col-sm-7"
+      }, _react.default.createElement("input", {
+        type: "password",
+        name: "confirm",
+        id: "confirm",
+        className: "form-control",
+        value: this.state.confirm,
+        onChange: this.handleChange.bind(this)
+      }))), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("div", {
+        className: "col-sm-4 col-sm-offset-3"
+      }, _react.default.createElement("button", {
+        type: "submit",
+        className: "btn btn-success"
+      }, "Change Password")))))));
+    }
+  }]);
+
+  return Profile;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
+
+exports.default = _default;
+
+},{"../../actions/auth":2,"../Messages":32,"react":188,"react-redux":147}],7:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _auth = require("../../actions/auth");
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Reset =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Reset, _React$Component);
+
+  function Reset(props) {
+    var _this;
+
+    _classCallCheck(this, Reset);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Reset).call(this, props));
+    _this.state = {
+      password: '',
+      confirm: ''
+    };
+    return _this;
+  }
+
+  _createClass(Reset, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "handleReset",
+    value: function handleReset(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.resetPassword)(this.state.password, this.state.confirm, this.props.params.token));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("form", {
+        onSubmit: this.handleReset.bind(this)
+      }, _react.default.createElement("legend", null, "Reset Password"), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "password"
+      }, "New Password"), _react.default.createElement("input", {
+        type: "password",
+        name: "password",
+        id: "password",
+        placeholder: "New password",
+        className: "form-control",
+        autoFocus: true,
+        value: this.state.password,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "confirm"
+      }, "Confirm Password"), _react.default.createElement("input", {
+        type: "password",
+        name: "confirm",
+        id: "confirm",
+        placeholder: "Confirm password",
+        className: "form-control",
+        value: this.state.confirm,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("button", {
+        type: "submit",
+        className: "btn btn-success"
+      }, "Change Password"))))));
+    }
+  }]);
+
+  return Reset;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return state;
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Reset);
+
+exports.default = _default;
+
+},{"../../actions/auth":2,"../Messages":32,"react":188,"react-redux":147}],8:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouter = require("react-router");
+
+var _reactRedux = require("react-redux");
+
+var _auth = require("../../actions/auth");
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Signup =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Signup, _React$Component);
+
+  function Signup(props) {
+    var _this;
+
+    _classCallCheck(this, Signup);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Signup).call(this, props));
+    _this.state = {
+      name: '',
+      email: '',
+      password: ''
+    };
+    return _this;
+  }
+
+  _createClass(Signup, [{
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "handleSignup",
+    value: function handleSignup(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.signup)(this.state.name, this.state.email, this.state.password));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "login-container container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("form", {
+        onSubmit: this.handleSignup.bind(this)
+      }, _react.default.createElement("legend", null, "Create an account"), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "name"
+      }, "Name"), _react.default.createElement("input", {
+        type: "text",
+        name: "name",
+        id: "name",
+        placeholder: "Name",
+        autoFocus: true,
+        className: "form-control",
+        value: this.state.name,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "email"
+      }, "Email"), _react.default.createElement("input", {
+        type: "email",
+        name: "email",
+        id: "email",
+        placeholder: "Email",
+        className: "form-control",
+        value: this.state.email,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", {
+        htmlFor: "password"
+      }, "Password"), _react.default.createElement("input", {
+        type: "password",
+        name: "password",
+        id: "password",
+        placeholder: "Password",
+        className: "form-control",
+        value: this.state.password,
+        onChange: this.handleChange.bind(this)
+      })), _react.default.createElement("button", {
+        type: "submit",
+        className: "btn btn-success"
+      }, "Create an account")))), _react.default.createElement("p", {
+        className: "text-center"
+      }, "Already have an account?", ' ', _react.default.createElement(_reactRouter.Link, {
+        to: "/login"
+      }, _react.default.createElement("strong", null, "Log in"))));
+    }
+  }]);
+
+  return Signup;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Signup);
+
+exports.default = _default;
+
+},{"../../actions/auth":2,"../Messages":32,"react":188,"react-redux":147,"react-router":178}],9:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Header = _interopRequireDefault(require("./Header"));
+
+var _Footer = _interopRequireDefault(require("./Footer"));
+
+var _ModalContainer = _interopRequireDefault(require("./ModalContainer"));
+
+var _reactRedux = require("react-redux");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _temp, _this;
+
+    _classCallCheck(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _possibleConstructorReturn(_this, (_temp = _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args))), _this.state = {
+      loaded: false
+    }, _temp));
+  }
+
+  _createClass(App, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.getCurrentState();
+    }
+  }, {
+    key: "getCurrentState",
+    value: function getCurrentState() {
+      var _this2 = this;
+
+      fetch('/me?shouldBeAdmin=true').then(function (response) {
+        return response.json().then(function (json) {
+          if (json.ok) {
+            _this2.props.dispatch({
+              type: 'UPDATE_USER',
+              user: json.user,
+              token: json.token
+            });
+
+            _this2.setState({
+              loaded: true
+            });
+          } else {
+            window.location.href = '/';
+          }
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), this.state.loaded ? this.props.children : false, _react.default.createElement(_Footer.default, null), _react.default.createElement(_ModalContainer.default, null));
+    }
+  }]);
+
+  return App;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(App);
+
+exports.default = _default;
+
+},{"./Footer":29,"./Header":30,"./ModalContainer":33,"react":188,"react-redux":147}],10:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var AdminUsers =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(AdminUsers, _React$Component);
+
+  function AdminUsers(props) {
+    var _this;
+
+    _classCallCheck(this, AdminUsers);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AdminUsers).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadUsers();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      admin_users: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(AdminUsers, [{
+    key: "loadUsers",
+    value: function loadUsers() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/users?filter_role=admin&page=' + this.state.page).then(function (resp) {
+        console.log(resp);
+
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            admin_users: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "updateItem",
+    value: function updateItem(id, data, key) {
+      var _this3 = this;
+
+      if (!key) {
+        key = '';
+      }
+
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/admin/update/users', {
+          id: id,
+          data: data
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this3.loadUsers();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    } // deleteItem(id) {
+    //   const r = confirm('Are you sure you want to delete the user? ');
+    //   if (r == true) {
+    //   } else {
+    //   }
+    //   this.setState(
+    //     {
+    //       ['delete_' + id]: true
+    //     },
+    //     () => {
+    //       Fetcher.post('/api/admin/delete/users', {id: id})
+    //         .then(resp => {
+    //           this.setState({
+    //             ['delete_' + id]: false
+    //           });
+    //           if (resp.ok) {
+    //             this.loadUsers();
+    //           } else {
+    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //           const msg = 'Failed to perform Action';
+    //           this.props.dispatch({
+    //             type: 'FAILURE',
+    //             messages: [{msg: msg}]
+    //           });
+    //         });
+    //     }
+    //   );
+    // }
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadUsers();
+    }
+  }, {
+    key: "addUser",
+    value: function addUser() {// todo
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("div", {
+        className: "text-right pull-right push-right align-right"
+      }), _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Admin Users"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Active"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.admin_users && this.state.admin_users.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.first_name, " ", u.last_name), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, u.status ? _react.default.createElement("span", {
+          className: "label label-primary"
+        }, "Active") : _react.default.createElement("span", {
+          className: "label label-danger"
+        }, "In-Active")), _react.default.createElement("td", null, u.status ? _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.updateItem(u.id, {
+              status: false
+            });
+          },
+          className: "btn btn-warning btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Disable") : _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.updateItem(u.id, {
+              status: true
+            });
+          },
+          className: "btn btn-success btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Enable"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.updateItem(u.id, {
+              role: 'user'
+            }, 'role_');
+          },
+          className: "btn btn-warning btn-xs"
+        }, _this4.state['update_role_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Make User")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return AdminUsers;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(AdminUsers);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../Messages":32,"react":188,"react-paginate":136,"react-redux":147}],11:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _MoreInfoGeneric = _interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var AdvertiseWithUs =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(AdvertiseWithUs, _React$Component);
+
+  function AdvertiseWithUs(props) {
+    var _this;
+
+    _classCallCheck(this, AdvertiseWithUs);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AdvertiseWithUs).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(AdvertiseWithUs, [{
+    key: "doAction",
+    value: function doAction(obj) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'profile',
+        zIndex: 534,
+        heading: 'More Info - ' + obj.id,
+        content: _react.default.createElement(_MoreInfoGeneric.default, {
+          data: obj
+        })
+      }));
+      return;
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/advertisers?page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      // const k = '';
+      var r = confirm('Are you sure you want to delete the item? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'update_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/advertisers', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Submissions for ", _react.default.createElement("code", null, "Advertise with us"), " Form"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, _react.default.createElement("button", {
+          className: "btn btn-priamry btn-xs",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction(u);
+          }
+        }, "More Info"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return AdvertiseWithUs;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(AdvertiseWithUs);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/MoreInfoGeneric":36,"react":188,"react-paginate":136,"react-redux":147}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _modals = require("../../actions/modals");
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _MoreInfo = _interopRequireDefault(require("../Modules/Modals/MoreInfo"));
+
+var _reactRouter = require("react-router");
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var AppUsers =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(AppUsers, _React$Component);
+
+  function AppUsers(props) {
+    var _this;
+
+    _classCallCheck(this, AppUsers);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(AppUsers).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadUsers();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(AppUsers, [{
+    key: "loadUsers",
+    value: function loadUsers() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/users?filter_role=user&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "updateItem",
+    value: function updateItem(id, data, key) {
+      var _this3 = this;
+
+      if (!key) {
+        key = '';
+      }
+
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/admin/update/users', {
+          id: id,
+          data: data
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this3.loadUsers();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadUsers();
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action == 'profile') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'profile',
+          zIndex: 534,
+          heading: 'User Details - @' + obj.username,
+          content: _react.default.createElement(_MoreInfo.default, {
+            data: obj
+          })
+        }));
+        return;
+      } else if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'xp_tx',
+            id: obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'credits',
+            id: obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'cash',
+            id: obj.id
+          })
+        }));
+        return;
+      }
+
+      alert(action + ' ' + obj.id);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("div", {
+        className: "text-right pull-right push-right align-right"
+      }), _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, " App Users"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Username"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, " "), _react.default.createElement("th", null, " "))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        // return JSON.stringify(u);
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.first_name, " ", u.last_name), _react.default.createElement("td", null, u.username), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, u.banned ? _react.default.createElement("span", {
+          className: "label label-danger"
+        }, "In-Active") : _react.default.createElement("span", {
+          className: "label label-primary"
+        }, "Active")), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Details", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('profile', u);
+          }
+        }, "Profile Info")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/u/' + u.username,
+          target: "_blank"
+        }, "Public Profile")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+          to: '/teams/' + u.id
+        }, "Teams"))))), _react.default.createElement("td", null, !u.status ? _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.updateItem(u.id, {
+              status: true
+            }, '');
+          },
+          className: "btn btn-success btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Enable") : _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.updateItem(u.id, {
+              status: false
+            }, '');
+          },
+          className: "btn btn-warning btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Disable"), ' ', _react.default.createElement("button", {
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.updateItem(u.id, {
+              role: 'admin'
+            }, 'make_admin');
+          },
+          className: "btn btn-warning btn-xs"
+        }, _this4.state['update_make_admin' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Make Admin")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return AppUsers;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(AppUsers);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/CashHistory":34,"../Modules/Modals/MoreInfo":35,"react":188,"react-paginate":136,"react-redux":147,"react-router":178}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _MoreInfoGeneric = _interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ApplyStaff =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ApplyStaff, _React$Component);
+
+  function ApplyStaff(props) {
+    var _this;
+
+    _classCallCheck(this, ApplyStaff);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ApplyStaff).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(ApplyStaff, [{
+    key: "doAction",
+    value: function doAction(obj) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'profile',
+        zIndex: 534,
+        heading: 'More Info - ' + obj.id,
+        content: _react.default.createElement(_MoreInfoGeneric.default, {
+          data: obj
+        })
+      }));
+      return;
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/staff_applications?page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      // const k = '';
+      var r = confirm('Are you sure you want to delete the item? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'update_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/staff_applications', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Submissions for ", _react.default.createElement("code", null, "Apply for Staff"), " Form"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, _react.default.createElement("button", {
+          className: "btn btn-priamry btn-xs",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction(u);
+          }
+        }, "More Info"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return ApplyStaff;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(ApplyStaff);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/MoreInfoGeneric":36,"react":188,"react-paginate":136,"react-redux":147}],14:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _NewGame = _interopRequireDefault(require("../Modules/Modals/NewGame"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Games =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Games, _React$Component);
+
+  function Games(props) {
+    var _this;
+
+    _classCallCheck(this, Games);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Games).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Games, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/games?page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    } // updateItem(id, data, key) {
+    //   this.setState(
+    //     {
+    //       ['update_' + key + id]: true
+    //     },
+    //     () => {
+    //       Fetcher.post('/api/admin/update/users', {id: id, data: data})
+    //         .then(resp => {
+    //           this.setState({
+    //             ['update_' + key + id]: false
+    //           });
+    //           if (resp.ok) {
+    //             this.loadData();
+    //           } else {
+    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //           const msg = 'Failed to perform Action';
+    //           this.props.dispatch({
+    //             type: 'FAILURE',
+    //             messages: [{msg: msg}]
+    //           });
+    //         });
+    //     }
+    //   );
+    // }
+
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      var r = confirm('Are you sure you want to delete the game? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'update_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/games', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newgame',
+        zIndex: 534,
+        heading: 'New Game',
+        content: _react.default.createElement(_NewGame.default, {
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    }
+  }, {
+    key: "editItem",
+    value: function editItem(id, data) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newgame',
+        zIndex: 534,
+        heading: 'New Game',
+        content: _react.default.createElement(_NewGame.default, {
+          mode: 'edit',
+          id: id,
+          data: data,
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("div", {
+        className: "text-right pull-right push-right align-right"
+      }, _react.default.createElement("button", {
+        className: "btn btn-success btn-xs",
+        onClick: this.addItem.bind(this)
+      }, _react.default.createElement("span", {
+        className: "fa fa-plus"
+      }), " Add new game")), _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Games"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.editItem(u.id, u);
+          },
+          className: "btn btn-warning btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Edit"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return Games;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Games);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/NewGame":37,"react":188,"react-paginate":136,"react-redux":147}],15:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _NewLadder = _interopRequireDefault(require("../Modules/Modals/NewLadder"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Ladders =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Ladders, _React$Component);
+
+  function Ladders(props) {
+    var _this;
+
+    _classCallCheck(this, Ladders);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Ladders).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.gamer_tags = {
+      tag_1: 'Xbox Live Gamertag',
+      tag_2: 'PSN',
+      tag_3: 'Epic Games Username',
+      tag_4: 'Steam Username',
+      tag_5: 'Battletag'
+    };
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Ladders, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/ladders?related=game_info&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    } // updateItem(id, data, key) {
+    //   this.setState(
+    //     {
+    //       ['update_' + key + id]: true
+    //     },
+    //     () => {
+    //       Fetcher.post('/api/admin/update/users', {id: id, data: data})
+    //         .then(resp => {
+    //           this.setState({
+    //             ['update_' + key + id]: false
+    //           });
+    //           if (resp.ok) {
+    //             this.loadData();
+    //           } else {
+    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //           const msg = 'Failed to perform Action';
+    //           this.props.dispatch({
+    //             type: 'FAILURE',
+    //             messages: [{msg: msg}]
+    //           });
+    //         });
+    //     }
+    //   );
+    // }
+
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      var k = '';
+      var r = confirm('Are you sure you want to delete the ladder? '); // console.log(r)
+
+      if (r == true) {} else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'update_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/ladders', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newladder',
+        zIndex: 534,
+        heading: 'New Ladder',
+        content: _react.default.createElement(_NewLadder.default, {
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("div", {
+        className: "text-right pull-right push-right align-right"
+      }, _react.default.createElement("button", {
+        className: "btn btn-success btn-xs",
+        onClick: this.addItem.bind(this)
+      }, _react.default.createElement("i", {
+        className: "fa fa-plus"
+      }), " Add new Ladder")), _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Ladders"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Min Players"), _react.default.createElement("th", null, "Max Players"), _react.default.createElement("th", null, "Gamer Tag Used"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.game_info && u.game_info.title), _react.default.createElement("td", null, u.min_players), _react.default.createElement("td", null, u.max_players), _react.default.createElement("td", null, _this4.gamer_tags['tag_' + u.gamer_tag]), _react.default.createElement("td", null, _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return Ladders;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Ladders);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/NewLadder":38,"react":188,"react-paginate":136,"react-redux":147}],16:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+var _modals = require("../../actions/modals");
+
+var _ViewTicket = _interopRequireDefault(require("../Modules/Modals/ViewTicket"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MatchFinder =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MatchFinder, _React$Component);
+
+  function MatchFinder(props) {
+    var _this;
+
+    _classCallCheck(this, MatchFinder);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MatchFinder).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      refresh: false,
+      pagination: {},
+      showing_for: props.params && props.params.team_id ? props.params.team_id : props.params.status && props.params.status == 'disputed' ? 'disputed' : 'all'
+    };
+    return _this;
+  }
+
+  _createClass(MatchFinder, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.state.refresh !== prevState.refresh) {
+        this.loadData();
+      }
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      var other = '';
+      other = 'related=ladder,game,team_1_info,team_2_info';
+
+      if (this.props.params && this.props.params.team_id) {
+        other += '&filter_team_id_for_match=' + this.props.params.team_id;
+      }
+
+      if (this.props.params && this.props.params.status) {
+        if (this.props.params.status == 'disputed') {
+          other = other.replace('related=', 'related=tickets,');
+        }
+
+        other += '&filter_status=' + this.props.params.status;
+      }
+
+      _Fetcher.default.get('/api/admin/listPaged/matches?' + other + '&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "resolveDispute",
+    value: function resolveDispute(id, team_id) {
+      var _this3 = this;
+
+      var key = 'dispute';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/matches/resolveDispute', {
+          id: id,
+          winner: team_id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'xp_tx',
+            obj_type: 'm_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'credits',
+            obj_type: 'm_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'cash',
+            obj_type: 'm_' + obj.id
+          })
+        }));
+        return;
+      }
+
+      alert(action + ' ' + obj.id);
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {// todo
+    }
+  }, {
+    key: "viewTicket",
+    value: function viewTicket(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ViewTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container-fluid"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container-fluid"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Starts At"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.game.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.result == 'team_2' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, u.team_1_info.title) : u.result == 'team_1' ? _react.default.createElement("span", {
+          className: "text-success"
+        }, u.team_1_info.title) : u.team_1_info.title), _react.default.createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, u.team_2_info.title) : u.result == 'team_2' ? _react.default.createElement("span", {
+          className: "text-success"
+        }, u.team_2_info.title) : u.team_2_info.title : _react.default.createElement("span", {
+          className: "text-danger"
+        }, "Yet to Join")), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
+          className: "badge badge-success"
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, "Disputed") : _react.default.createElement("span", {
+          className: "text-warning"
+        }, u.result) : _react.default.createElement("span", {
+          className: "text-warning"
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Actions", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/m/' + u.id,
+          target: "_blank"
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/teams/view/' + u.team_1_info.id,
+          target: "_blank"
+        }, "View Team 1 Public Page")), u.team_2_info ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/teams/view/' + u.team_2_info.id,
+          target: "_blank"
+        }, "View Team 2 Public Page")) : false, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.resolveDispute(u.id, 'team_1');
+          }
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.resolveDispute(u.id, 'team_2');
+          }
+        }, "Resolve dispute by giving win to team 2")) : false, u.tickets ? u.tickets.map(function (ticket, i) {
+          if (ticket.extra_3 != 'MatchFinder') {
+            return false;
+          }
+
+          return _react.default.createElement("li", {
+            key: ticket.id
+          }, _react.default.createElement("a", {
+            href: "#",
+            onClick: function onClick(e) {
+              e.preventDefault();
+
+              _this4.viewTicket(ticket.id);
+            }
+          }, "Show Ticket ", i + 1, " #", ticket.id));
+        }) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (state.showing_for == 'all' && (!props || !props.params || !props.params.team_id || !props.params.status)) {
+        // console.log('here')
+        return null;
+      }
+
+      if (props.params && props.params.team_id) {
+        if (props.params.team_id != state.showing_for) {
+          return {
+            refresh: true,
+            page: 1
+          };
+        }
+
+        return null;
+      } else if (props.params && props.params.status) {
+        if (props.params.status != state.showing_for) {
+          return {
+            refresh: true,
+            page: 1
+          };
+        }
+
+        return null;
+      } else if (state.showing_for != 'all') {
+        return {
+          refresh: true,
+          page: 1
+        };
+      } // console.log('here2')
+
+
+      return null;
+    }
+  }]);
+
+  return MatchFinder;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/CashHistory":34,"../Modules/Modals/ViewTicket":43,"moment":118,"react":188,"react-paginate":136,"react-redux":147}],17:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+var _ViewTicket = _interopRequireDefault(require("../Modules/Modals/ViewTicket"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MatchFinder =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MatchFinder, _React$Component);
+
+  function MatchFinder(props) {
+    var _this;
+
+    _classCallCheck(this, MatchFinder);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MatchFinder).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(MatchFinder, [{
+    key: "viewTicket",
+    value: function viewTicket(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ViewTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      var other = '';
+      other = 'related=ladder,game'; // if(this.props.params && this.props.params.team_id)
+      // {
+      //   other += "&filter_team_id_for_match="+this.props.params.team_id;
+      // }
+
+      if (this.props.params && this.props.params.status) {
+        if (this.props.params.status == 'disputed') {
+          other = other.replace('related=', 'related=tickets,');
+        }
+
+        other += '&filter_status=' + this.props.params.status;
+      }
+
+      _Fetcher.default.get('/api/admin/listPaged/money8?' + other + '&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "resolveDispute",
+    value: function resolveDispute(id, team_id) {
+      var _this3 = this;
+
+      var key = 'dispute';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/money8/resolveDispute', {
+          id: id,
+          winner: team_id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'xp_tx',
+            obj_type: 'm8_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'credits',
+            obj_type: 'm8_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'cash',
+            obj_type: 'm8_' + obj.id
+          })
+        }));
+        return;
+      }
+
+      alert(action + ' ' + obj.id);
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {// todo
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container-fluid"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container-fluid"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Money 8 Matches", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        var team_1 = false;
+        var team_2 = false;
+
+        if (u.team_1) {
+          team_1 = u.team_1.split('|').map(function (a) {
+            return parseInt(a);
+          });
+        }
+
+        if (u.team_2) {
+          team_2 = u.team_2.split('|').map(function (a) {
+            return parseInt(a);
+          });
+        }
+
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.game.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
+          className: "badge badge-success"
+        }, "Complete") : u.status, u.status == 'pending' ? ' (' + u.players_joined + '/' + u.players_total + ')' : ''), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'dispute' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, "Disputed") : _react.default.createElement("span", {
+          className: "text-warning"
+        }, u.result) : _react.default.createElement("span", {
+          className: "text-warning"
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'cash' ? '' + u.match_fee + '/- OCG CASH' : u.match_type == 'credits' ? '' + u.match_fee + '/- Credits' : 'FREE'), _react.default.createElement("td", null, team_1 && team_1.length ? _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Team 1 Users ", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, team_1.map(function (id, i) {
+          return _react.default.createElement("li", {
+            key: id
+          }, _react.default.createElement("a", {
+            href: '/uid/' + id,
+            target: "_blank"
+          }, "@", id));
+        }))) : false), _react.default.createElement("td", null, team_2 && team_2.length ? _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Team 2 Users ", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, team_2.map(function (id, i) {
+          return _react.default.createElement("li", {
+            key: id
+          }, _react.default.createElement("a", {
+            href: '/uid/' + id,
+            target: "_blank"
+          }, "@", id));
+        }))) : false), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Actions", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/money8/' + u.id,
+          target: "_blank"
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.resolveDispute(u.id, 'team_1');
+          }
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.resolveDispute(u.id, 'team_2');
+          }
+        }, "Resolve dispute by giving win to team 2")) : false, u.tickets ? u.tickets.map(function (ticket, i) {
+          if (ticket.extra_3 != 'Mix-and-match') {
+            return false;
+          }
+
+          return _react.default.createElement("li", {
+            key: ticket.id
+          }, _react.default.createElement("a", {
+            href: "#",
+            onClick: function onClick(e) {
+              e.preventDefault();
+
+              _this4.viewTicket(ticket.id);
+            }
+          }, "Show Ticket ", i + 1, " #", ticket.id));
+        }) : false))), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return MatchFinder;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(MatchFinder);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/CashHistory":34,"../Modules/Modals/ViewTicket":43,"react":188,"react-paginate":136,"react-redux":147}],18:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _NewLadder = _interopRequireDefault(require("../Modules/Modals/NewLadder"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Posts =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Posts, _React$Component);
+
+  function Posts(props) {
+    var _this;
+
+    _classCallCheck(this, Posts);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Posts).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Posts, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/posts?related=user&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    } // updateItem(id, data, key) {
+    //   this.setState(
+    //     {
+    //       ['update_' + key + id]: true
+    //     },
+    //     () => {
+    //       Fetcher.post('/api/admin/update/users', {id: id, data: data})
+    //         .then(resp => {
+    //           this.setState({
+    //             ['update_' + key + id]: false
+    //           });
+    //           if (resp.ok) {
+    //             this.loadData();
+    //           } else {
+    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //           const msg = 'Failed to perform Action';
+    //           this.props.dispatch({
+    //             type: 'FAILURE',
+    //             messages: [{msg: msg}]
+    //           });
+    //         });
+    //     }
+    //   );
+    // }
+
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      var r = confirm('Are you sure you want to delete the user? ');
+
+      if (!r) {
+        return;
+      }
+
+      var key = 'del_';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/posts', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this3.props.dispatch({
+              type: 'SUCCESS',
+              messages: [resp]
+            });
+
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newladder',
+        zIndex: 534,
+        heading: 'New Ladder',
+        content: _react.default.createElement(_NewLadder.default, {
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    } // gamer_tags = {
+    //   tag_1: 'Xbox Live Gamertag',
+    //   tag_2: 'PSN',
+    //   tag_3: 'Epic Games Username',
+    //   tag_4: 'Steam Username',
+    //   tag_5: 'Battletag'
+    // };
+
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("div", {
+        className: "text-right pull-right push-right align-right"
+      }, _react.default.createElement("button", {
+        className: "btn btn-success btn-xs",
+        onClick: this.addItem.bind(this)
+      }, _react.default.createElement("i", {
+        className: "fa fa-plus"
+      }), " Add new Ladder")), _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Posts"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Post"), _react.default.createElement("th", null, "Is a repost?"), _react.default.createElement("th", null, "Type"), _react.default.createElement("th", null, "Post By"), _react.default.createElement("th", null, "reposts"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.post), _react.default.createElement("td", null, u.is_repost ? _react.default.createElement("span", {
+          className: "badge badge-success"
+        }, "Yes") : false), _react.default.createElement("td", null, u.video ? _react.default.createElement("span", {
+          className: "badge badge-primary"
+        }, "Video") : u.image ? _react.default.createElement("span", {
+          className: "badge badge-primary"
+        }, "Image") : _react.default.createElement("span", {
+          className: "badge badge-primary"
+        }, "Text")), _react.default.createElement("td", null, u.user ? '@' + u.user.username : ''), _react.default.createElement("td", null, u.repost_count), _react.default.createElement("td", null, _react.default.createElement("a", {
+          href: '/post/' + u.id,
+          target: "_blank",
+          className: "btn btn-primary btn-xs"
+        }, "View ", _react.default.createElement("span", {
+          className: "fa fa-comment"
+        })), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_del_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete ", _react.default.createElement("span", {
+          className: "fa fa-trash"
+        }))));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return Posts;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Posts);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/NewLadder":38,"react":188,"react-paginate":136,"react-redux":147}],19:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _MoreInfoGeneric = _interopRequireDefault(require("../Modules/Modals/MoreInfoGeneric"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Subscribers =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Subscribers, _React$Component);
+
+  function Subscribers(props) {
+    var _this;
+
+    _classCallCheck(this, Subscribers);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Subscribers).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Subscribers, [{
+    key: "doAction",
+    value: function doAction(obj) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'profile',
+        zIndex: 534,
+        heading: 'More Info - ' + obj.id,
+        content: _react.default.createElement(_MoreInfoGeneric.default, {
+          data: obj
+        })
+      }));
+      return;
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/subscribers?page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      // const k = '';
+      var r = confirm('Are you sure you want to delete the item? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'update_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/subscribers', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Subscribers"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.email), _react.default.createElement("td", null, _react.default.createElement("button", {
+          className: "btn btn-priamry btn-xs",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction(u);
+          }
+        }, "More Info"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return Subscribers;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Subscribers);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/MoreInfoGeneric":36,"react":188,"react-paginate":136,"react-redux":147}],20:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _modals = require("../../actions/modals");
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _MoreInfo = _interopRequireDefault(require("../Modules/Modals/MoreInfo"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _reactRouter = require("react-router");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Teams =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Teams, _React$Component);
+
+  function Teams(props) {
+    var _this;
+
+    _classCallCheck(this, Teams);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Teams).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadUsers();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      refresh: false,
+      pagination: {},
+      showing_for: props.params && props.params.uid ? props.params.uid : 'all'
+    };
+    return _this;
+  }
+
+  _createClass(Teams, [{
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(prevProps, prevState) {
+      if (this.state.refresh !== prevState.refresh) {
+        this.loadUsers();
+      }
+    }
+  }, {
+    key: "loadUsers",
+    value: function loadUsers() {
+      var _this2 = this;
+
+      var other_filter = '';
+      var url = '';
+
+      if (this.props.params && this.props.params.uid) {
+        other_filter = 'filter_user_id=' + this.props.params.uid;
+        url = '/api/admin/listPaged/team_u?' + other_filter + '&page=' + this.state.page + '&related=team_info,team_info.ladder,team_info.ladder.game_info,team_info.team_users,team_info.team_users.user_info';
+      } else {
+        url = '/api/admin/listPaged/teams?' + other_filter + '&page=' + this.state.page + '&related=ladder,ladder.game_info,team_users,team_users.user_info';
+      }
+
+      _Fetcher.default.get(url).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            refresh: false,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.setState({
+            refresh: false
+          });
+
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        _this2.setState({
+          refresh: false
+        });
+
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "updateItem",
+    value: function updateItem(id, data, key) {
+      var _this3 = this;
+
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/admin/update/users', {
+          id: id,
+          data: data
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this3.loadUsers();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadUsers();
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action == 'profile') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'profile',
+          zIndex: 534,
+          heading: 'User Details - @' + obj.username,
+          content: _react.default.createElement(_MoreInfo.default, {
+            data: obj
+          })
+        }));
+        return;
+      }
+
+      alert(action + ' ' + obj.id);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("div", {
+        className: "text-right pull-right push-right align-right"
+      }), _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, ' ', "Teams", ' ', this.props.params.uid ? ' of user #' + this.props.params.uid : ''))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Team"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Users"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (k, i) {
+        var u = k;
+
+        if (u.team_info) {
+          u = u.team_info;
+        }
+
+        return _react.default.createElement("tr", {
+          key: u.id,
+          className: u.removed ? ' table-danger ' : ''
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.ladder.game_info.title), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Users List ", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, u.team_users && u.team_users.map(function (tu, j) {
+          return _react.default.createElement("li", {
+            key: tu.id,
+            className: tu.removed ? ' table-danger  ' : ''
+          }, _react.default.createElement("a", {
+            href: "#",
+            onClick: function onClick(e) {
+              e.preventDefault();
+
+              _this4.doAction('profile', tu.user_info);
+            }
+          }, '#' + tu.user_info.id + ' - @' + tu.user_info.username, ' ', "( ", tu.user_info.first_name, ' ', tu.user_info.last_name, " )"));
+        })))), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Actions ", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+          to: '/matchfinder/' + u.id
+        }, "View Matches of Team")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          target: "_blank",
+          href: '/teams/view/' + u.id
+        }, "View Public Profile of Team"))))));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        forcePage: this.state.page - 1,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }], [{
+    key: "getDerivedStateFromProps",
+    value: function getDerivedStateFromProps(props, state) {
+      if (state.showing_for == 'all' && (!props || !props.params || !props.params.uid)) {
+        // console.log('here')
+        return null;
+      }
+
+      if (props.params && props.params.uid) {
+        if (props.params.uid != state.showing_for) {
+          return {
+            refresh: true,
+            page: 1
+          };
+        }
+
+        return null;
+      } else if (state.showing_for != 'all') {
+        return {
+          refresh: true,
+          page: 1
+        };
+      } // console.log('here2')
+
+
+      return null;
+    }
+  }]);
+
+  return Teams;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Teams);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/MoreInfo":35,"react":188,"react-paginate":136,"react-redux":147,"react-router":178}],21:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _ViewThread = _interopRequireDefault(require("../Modules/Modals/ViewThread"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Threads =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Threads, _React$Component);
+
+  function Threads(props) {
+    var _this;
+
+    _classCallCheck(this, Threads);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Threads).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Threads, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/threads?related=topic&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "viewItem",
+    value: function viewItem(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'viewthread',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Thread',
+        content: _react.default.createElement(_ViewThread.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      var r = confirm('Are you sure you want to delete the thread? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'update_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/threads', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Threads"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Topic"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.topic && u.topic.title), _react.default.createElement("td", null, _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.viewItem(u.id);
+          },
+          className: "btn btn-success btn-xs"
+        }, "View")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return Threads;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Threads);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/ViewThread":42,"react":188,"react-paginate":136,"react-redux":147}],22:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _ReplyTicket = _interopRequireDefault(require("../Modules/Modals/ReplyTicket"));
+
+var _ViewTicket = _interopRequireDefault(require("../Modules/Modals/ViewTicket"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Tickets =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Tickets, _React$Component);
+
+  function Tickets(props) {
+    var _this;
+
+    _classCallCheck(this, Tickets);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Tickets).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Tickets, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/tickets?filter_status=submitted&related=user&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      var r = confirm('Are you sure you want to delete the ticket? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'delete_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/tickets', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'delete_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          _this3.setState(_defineProperty({}, 'delete_' + id, false));
+
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "reply",
+    value: function reply(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'replyticket',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ReplyTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
+    key: "veiwItem",
+    value: function veiwItem(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ViewTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Support Tickets"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Type"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Created By"), _react.default.createElement("th", null, "Created On"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.type), _react.default.createElement("td", null, u.status), _react.default.createElement("td", null, u.user ? '@' + u.user.username : ' '), _react.default.createElement("td", null, (0, _moment.default)(u.created_at).format('lll')), _react.default.createElement("td", null, _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.reply(u.id);
+          },
+          className: "btn btn-success btn-xs"
+        }, _react.default.createElement("span", {
+          className: "fa fa-reply"
+        }), " Reply"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.veiwItem(u.id);
+          },
+          className: "btn btn-primary btn-xs"
+        }, _react.default.createElement("span", {
+          className: "fa fa-view"
+        }), " View"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['delete_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : _react.default.createElement("span", {
+          className: "fa fa-trash"
+        }), ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return Tickets;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Tickets);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/ReplyTicket":41,"../Modules/Modals/ViewTicket":43,"moment":118,"react":188,"react-paginate":136,"react-redux":147}],23:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _ReplyTicket = _interopRequireDefault(require("../Modules/Modals/ReplyTicket"));
+
+var _ViewTicket = _interopRequireDefault(require("../Modules/Modals/ViewTicket"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var TicketsClosed =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(TicketsClosed, _React$Component);
+
+  function TicketsClosed(props) {
+    var _this;
+
+    _classCallCheck(this, TicketsClosed);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TicketsClosed).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(TicketsClosed, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/tickets?filter_status=closed&related=user&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      var r = confirm('Are you sure you want to delete the ticket? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'delete_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/tickets', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'delete_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          _this3.setState(_defineProperty({}, 'delete_' + id, false));
+
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "reply",
+    value: function reply(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'replyticket',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ReplyTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
+    key: "veiwItem",
+    value: function veiwItem(id) {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'viewticket',
+        modal_class: '   modal-lg',
+        zIndex: 534,
+        heading: 'View Ticket',
+        content: _react.default.createElement(_ViewTicket.default, {
+          id: id
+        })
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Support Tickets"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Type"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Created By"), _react.default.createElement("th", null, "Created On"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.type), _react.default.createElement("td", null, u.status), _react.default.createElement("td", null, u.user ? '@' + u.user.username : ' '), _react.default.createElement("td", null, (0, _moment.default)(u.created_at).format('lll')), _react.default.createElement("td", null, _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.reply(u.id);
+          },
+          className: "btn btn-success btn-xs"
+        }, _react.default.createElement("span", {
+          className: "fa fa-reply"
+        }), " Reply"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.veiwItem(u.id);
+          },
+          className: "btn btn-primary btn-xs"
+        }, _react.default.createElement("span", {
+          className: "fa fa-view"
+        }), " View"), ' ', _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['delete_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : _react.default.createElement("span", {
+          className: "fa fa-trash"
+        }), ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return TicketsClosed;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(TicketsClosed);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/ReplyTicket":41,"../Modules/Modals/ViewTicket":43,"moment":118,"react":188,"react-paginate":136,"react-redux":147}],24:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _NewTopic = _interopRequireDefault(require("../Modules/Modals/NewTopic"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Topics =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Topics, _React$Component);
+
+  function Topics(props) {
+    var _this;
+
+    _classCallCheck(this, Topics);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Topics).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Topics, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/topics?page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    } // updateItem(id, data, key) {
+    //   this.setState(
+    //     {
+    //       ['update_' + key + id]: true
+    //     },
+    //     () => {
+    //       Fetcher.post('/api/admin/update/users', {id: id, data: data})
+    //         .then(resp => {
+    //           this.setState({
+    //             ['update_' + key + id]: false
+    //           });
+    //           if (resp.ok) {
+    //             this.loadData();
+    //           } else {
+    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //           const msg = 'Failed to perform Action';
+    //           this.props.dispatch({
+    //             type: 'FAILURE',
+    //             messages: [{msg: msg}]
+    //           });
+    //         });
+    //     }
+    //   );
+    // }
+
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(id) {
+      var _this3 = this;
+
+      var r = confirm('Are you sure you want to delete the topic? ');
+
+      if (r == true) {//
+      } else {
+        return;
+      }
+
+      this.setState(_defineProperty({}, 'update_' + id, true), function () {
+        _Fetcher.default.post('/api/admin/delete/topics', {
+          id: id
+        }).then(function (resp) {
+          _this3.setState(_defineProperty({}, 'update_' + id, false));
+
+          if (resp.ok) {
+            _this3.loadData();
+          } else {
+            _this3.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newtopic',
+        zIndex: 534,
+        heading: 'New Topic',
+        content: _react.default.createElement(_NewTopic.default, {
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("div", {
+        className: "text-right pull-right push-right align-right"
+      }, _react.default.createElement("button", {
+        className: "btn btn-success btn-xs",
+        onClick: this.addItem.bind(this)
+      }, _react.default.createElement("i", {
+        className: "fa fa-plus"
+      }), " Add new Topic")), _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Topics"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Title"), _react.default.createElement("th", null, "Sub Title"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.sub_title), _react.default.createElement("td", null, _react.default.createElement("button", {
+          onClick: function onClick() {
+            _this4.deleteItem(u.id);
+          },
+          className: "btn btn-danger btn-xs"
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Delete")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return Topics;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Topics);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/NewTopic":39,"react":188,"react-paginate":136,"react-redux":147}],25:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+var _NewTournament = _interopRequireDefault(require("../Modules/Modals/NewTournament"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Tournament =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Tournament, _React$Component);
+
+  function Tournament(props) {
+    var _this;
+
+    _classCallCheck(this, Tournament);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Tournament).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.handleMatchPageCount = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        match_page: selected
+      }, function () {
+        _this.loadTournamentMatches();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      match_page: 1,
+      items: [],
+      matches: [],
+      match_pagination: {},
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Tournament, [{
+    key: "resolveDispute",
+    value: function resolveDispute(id, team_id) {
+      var _this2 = this;
+
+      var key = 'dispute';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/tournament/resolveDispute', {
+          id: id,
+          winner: team_id
+        }).then(function (resp) {
+          _this2.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this2.loadData();
+          } else {
+            _this2.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "createTournament",
+    value: function createTournament() {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newtournament',
+        zIndex: 534,
+        heading: 'New Tournament',
+        content: _react.default.createElement(_NewTournament.default, {
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'xp_tx',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'credits',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'cash',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      }
+
+      alert(action + ' ' + obj.id);
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this3 = this;
+
+      var other = '';
+      other = 'related=ladder,game';
+
+      _Fetcher.default.get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this3.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "showMatchesOf",
+    value: function showMatchesOf(t_id) {
+      this.setState({
+        showing_matches_of: t_id,
+        match_page: 1,
+        match_pagination: {}
+      }, this.loadTournamentMatches);
+    }
+  }, {
+    key: "loadTournamentMatches",
+    value: function loadTournamentMatches() {
+      var _this4 = this;
+
+      var other = '';
+      other = 'related=team_1_info,team_2_info'; // if (this.props.params && this.props.params.team_id) {
+
+      other += '&filter_tournament_id=' + this.state.showing_matches_of; // }
+
+      console.log('doing');
+
+      _Fetcher.default.get('/api/admin/listPaged/tournamentmaches?' + other + '&page=' + this.state.match_page).then(function (resp) {
+        if (resp.ok) {
+          _this4.setState({
+            is_loaded: true,
+            matches: resp.items,
+            match_pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this4.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "resolveDispute",
+    value: function resolveDispute(id, team_id) {
+      var _this5 = this;
+
+      var key = 'dispute';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/money8/resolveDispute', {
+          id: id,
+          winner: team_id
+        }).then(function (resp) {
+          _this5.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this5.loadData();
+          } else {
+            _this5.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this5.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    } // deleteItem(id) {
+    //   const r = confirm('Are you sure you want to delete the user? ');
+    //   if (r == true) {
+    //   } else {
+    //   }
+    //   this.setState(
+    //     {
+    //       ['update_' + key + id]: true
+    //     },
+    //     () => {
+    //       Fetcher.post('/api/admin/delete/matches', {id: id})
+    //         .then(resp => {
+    //           this.setState({
+    //              ['update_' + key + id]: false
+    //           });
+    //           if (resp.ok) {
+    //             this.loadData();
+    //           } else {
+    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //           const msg = 'Failed to perform Action';
+    //           this.props.dispatch({
+    //             type: 'FAILURE',
+    //             messages: [{msg: msg}]
+    //           });
+    //         });
+    //     }
+    //   );
+    // }
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {// todo
+    }
+  }, {
+    key: "renderMatches",
+    value: function renderMatches() {
+      var _this6 = this;
+
+      if (!this.state.showing_matches_of) {
+        return false;
+      }
+
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Matches of Tournament #", this.state.showing_matches_of))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Round"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Starts At"))), _react.default.createElement("tbody", null, this.state.matches && this.state.matches.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.match_round), _react.default.createElement("td", null, u.result == 'team_2' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, u.team_1_info.title) : u.result == 'team_1' ? _react.default.createElement("span", {
+          className: "text-success"
+        }, u.team_1_info.title) : u.team_1_info.title), _react.default.createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, u.team_2_info.title) : u.result == 'team_2' ? _react.default.createElement("span", {
+          className: "text-success"
+        }, u.team_2_info.title) : u.team_2_info.title : _react.default.createElement("span", {
+          className: "text-danger"
+        }, "Yet to Join")), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
+          className: "badge badge-success"
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, "Disputed") : _react.default.createElement("span", {
+          className: "text-warning"
+        }, u.result) : _react.default.createElement("span", {
+          className: "text-warning"
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Actions", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/m/' + u.id,
+          target: "_blank"
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/teams/view/' + u.team_1_info.id,
+          target: "_blank"
+        }, "View Team 1 Public Page")), u.team_2_info ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/teams/view/' + u.team_2_info.id,
+          target: "_blank"
+        }, "View Team 2 Public Page")) : false, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.resolveDispute(u.id, 'team_1');
+          }
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.resolveDispute(u.id, 'team_2');
+          }
+        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.match_pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handleMatchPageCount,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container-fluid"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container-fluid"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Tournaments Matches", this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : '', this.props.params && this.props.params.status && this.props.params.status == 'disputed' ? ' - Disputed' : ''))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), this.renderMatches())));
+    }
+  }]);
+
+  return Tournament;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Tournament);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/CashHistory":34,"../Modules/Modals/NewTournament":40,"moment":118,"react":188,"react-paginate":136,"react-redux":147}],26:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _modals = require("../../actions/modals");
+
+var _CashHistory = _interopRequireDefault(require("../Modules/Modals/CashHistory"));
+
+var _NewTournament = _interopRequireDefault(require("../Modules/Modals/NewTournament"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Tournament =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Tournament, _React$Component);
+
+  function Tournament(props) {
+    var _this;
+
+    _classCallCheck(this, Tournament);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Tournament).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.handleMatchPageCount = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        match_page: selected
+      }, function () {
+        _this.loadTournamentMatches();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      match_page: 1,
+      items: [],
+      matches: [],
+      match_pagination: {},
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(Tournament, [{
+    key: "resolveDispute",
+    value: function resolveDispute(id, team_id) {
+      var _this2 = this;
+
+      var key = 'dispute';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/tournament/resolveDispute', {
+          id: id,
+          winner: team_id
+        }).then(function (resp) {
+          _this2.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this2.loadData();
+          } else {
+            _this2.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    }
+  }, {
+    key: "createTournament",
+    value: function createTournament() {
+      this.props.dispatch((0, _modals.openModal)({
+        type: 'custom',
+        id: 'newtournament',
+        zIndex: 534,
+        heading: 'New Tournament',
+        content: _react.default.createElement(_NewTournament.default, {
+          onComplete: this.loadData.bind(this)
+        })
+      }));
+    }
+  }, {
+    key: "doAction",
+    value: function doAction(action, obj) {
+      if (action === 'show_xp') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User XP Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'xp_tx',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_credit') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'credits',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      } else if (action === 'show_cash') {
+        this.props.dispatch((0, _modals.openModal)({
+          type: 'custom',
+          id: 'tx',
+          zIndex: 534,
+          heading: 'User Credit Transactions - @' + obj.username,
+          content: _react.default.createElement(_CashHistory.default, {
+            type: 'cash',
+            obj_type: 't_' + obj.id
+          })
+        }));
+        return;
+      }
+
+      alert(action + ' ' + obj.id);
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this3 = this;
+
+      var other = '';
+      other = 'related=ladder,game';
+
+      _Fetcher.default.get('/api/admin/listPaged/tournament?' + other + '&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this3.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "showMatchesOf",
+    value: function showMatchesOf(t_id) {
+      this.setState({
+        showing_matches_of: t_id,
+        match_page: 1,
+        match_pagination: {}
+      }, this.loadTournamentMatches);
+    }
+  }, {
+    key: "loadTournamentMatches",
+    value: function loadTournamentMatches() {
+      var _this4 = this;
+
+      var other = '';
+      other = 'related=team_1_info,team_2_info'; // if (this.props.params && this.props.params.team_id) {
+
+      other += '&filter_tournament_id=' + this.state.showing_matches_of; // }
+
+      console.log('doing');
+
+      _Fetcher.default.get('/api/admin/listPaged/tournamentmaches?' + other + '&page=' + this.state.match_page).then(function (resp) {
+        if (resp.ok) {
+          _this4.setState({
+            is_loaded: true,
+            matches: resp.items,
+            match_pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this4.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "resolveDispute",
+    value: function resolveDispute(id, team_id) {
+      var _this5 = this;
+
+      var key = 'dispute';
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/money8/resolveDispute', {
+          id: id,
+          winner: team_id
+        }).then(function (resp) {
+          _this5.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this5.loadData();
+          } else {
+            _this5.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this5.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+    } // deleteItem(id) {
+    //   const r = confirm('Are you sure you want to delete the user? ');
+    //   if (r == true) {
+    //   } else {
+    //   }
+    //   this.setState(
+    //     {
+    //       ['update_' + key + id]: true
+    //     },
+    //     () => {
+    //       Fetcher.post('/api/admin/delete/matches', {id: id})
+    //         .then(resp => {
+    //           this.setState({
+    //              ['update_' + key + id]: false
+    //           });
+    //           if (resp.ok) {
+    //             this.loadData();
+    //           } else {
+    //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
+    //           }
+    //         })
+    //         .catch(err => {
+    //           console.log(err);
+    //           const msg = 'Failed to perform Action';
+    //           this.props.dispatch({
+    //             type: 'FAILURE',
+    //             messages: [{msg: msg}]
+    //           });
+    //         });
+    //     }
+    //   );
+    // }
+
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "addItem",
+    value: function addItem() {// todo
+    }
+  }, {
+    key: "renderMatches",
+    value: function renderMatches() {
+      var _this6 = this;
+
+      if (!this.state.showing_matches_of) {
+        return false;
+      }
+
+      return _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Matches of Tournament #", this.state.showing_matches_of))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Round"), _react.default.createElement("th", null, "Team 1"), _react.default.createElement("th", null, "Team 2"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Result"), _react.default.createElement("th", null, "Match type"), _react.default.createElement("th", null, "Team 1 Result"), _react.default.createElement("th", null, "Team 2 Result"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Starts At"))), _react.default.createElement("tbody", null, this.state.matches && this.state.matches.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.match_round), _react.default.createElement("td", null, u.result == 'team_2' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, u.team_1_info.title) : u.result == 'team_1' ? _react.default.createElement("span", {
+          className: "text-success"
+        }, u.team_1_info.title) : u.team_1_info.title), _react.default.createElement("td", null, u.team_2_info ? u.result == 'team_1' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, u.team_2_info.title) : u.result == 'team_2' ? _react.default.createElement("span", {
+          className: "text-success"
+        }, u.team_2_info.title) : u.team_2_info.title : _react.default.createElement("span", {
+          className: "text-danger"
+        }, "Yet to Join")), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
+          className: "badge badge-success"
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.result ? u.result == 'team_2' ? 'Team 2 Wins' : u.result == 'team_1' ? 'Team 1 Wins' : u.result == 'disputed' ? _react.default.createElement("span", {
+          className: "text-danger"
+        }, "Disputed") : _react.default.createElement("span", {
+          className: "text-warning"
+        }, u.result) : _react.default.createElement("span", {
+          className: "text-warning"
+        }, "Yet to declare")), _react.default.createElement("td", null, u.match_type == 'paid' ? '' + u.match_fee + '/- OCG CASH' : 'FREE'), _react.default.createElement("td", null, u.team_1_result), _react.default.createElement("td", null, u.team_2_result), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Actions", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/m/' + u.id,
+          target: "_blank"
+        }, "View Match Public Page")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/teams/view/' + u.team_1_info.id,
+          target: "_blank"
+        }, "View Team 1 Public Page")), u.team_2_info ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/teams/view/' + u.team_2_info.id,
+          target: "_blank"
+        }, "View Team 2 Public Page")) : false, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_xp', u);
+          }
+        }, "Show XP Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_credit', u);
+          }
+        }, "Show Credit Transactions")), _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.doAction('show_cash', u);
+          }
+        }, "Show Cash Transactions")), u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.resolveDispute(u.id, 'team_1');
+          }
+        }, "Resolve dispute by giving win to team 1")) : false, u.result == 'disputed' ? _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: "#",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this6.resolveDispute(u.id, 'team_2');
+          }
+        }, "Resolve dispute by giving win to team 2")) : false))), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.match_pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handleMatchPageCount,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this7 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container-fluid"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container-fluid"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, _react.default.createElement("button", {
+        onClick: function onClick() {
+          _this7.createTournament();
+        },
+        className: "btn btn-success pull-right btn-xs"
+      }, "Create new Tournament"), "Tournaments", ' ', this.props.params && this.props.params.team_id ? ' of team #' + this.props.params.team_id : ''))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Game"), _react.default.createElement("th", null, "Ladder"), _react.default.createElement("th", null, "Total Teams"), _react.default.createElement("th", null, "Total Joined"), _react.default.createElement("th", null, "Status"), _react.default.createElement("th", null, "Entry Fees"), _react.default.createElement("th", null, "Max Players Per Team"), _react.default.createElement("th", null, "Actions"), _react.default.createElement("th", null, "Reg Period"), _react.default.createElement("th", null, "Starts at"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        var team_1 = false;
+        var team_2 = false;
+
+        if (u.team_1) {
+          team_1 = u.team_1.split('|').map(function (a) {
+            return parseInt(a);
+          });
+        }
+
+        if (u.team_2) {
+          team_2 = u.team_2.split('|').map(function (a) {
+            return parseInt(a);
+          });
+        }
+
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.game.title), _react.default.createElement("td", null, u.ladder.title), _react.default.createElement("td", null, u.total_teams), _react.default.createElement("td", null, u.teams_registered), _react.default.createElement("td", null, u.status == 'complete' ? _react.default.createElement("span", {
+          className: "badge badge-success"
+        }, "Complete") : u.status), _react.default.createElement("td", null, u.entry_fee), _react.default.createElement("td", null, u.max_players), _react.default.createElement("td", null, _react.default.createElement("div", {
+          className: "dropdown"
+        }, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs dropdown-toggle",
+          type: "button",
+          "data-toggle": "dropdown"
+        }, "Actions ", _react.default.createElement("span", {
+          className: "caret"
+        })), _react.default.createElement("ul", {
+          className: "dropdown-menu"
+        }, _react.default.createElement("li", null, _react.default.createElement("a", {
+          href: '/t/' + u.id,
+          target: "_blank"
+        }, "View Public Page"))))), _react.default.createElement("td", null, (0, _moment.default)(u.registration_start_at).format('lll'), ' ', _react.default.createElement("code", null, "to"), ' ', (0, _moment.default)(u.registration_end_at).format('lll')), _react.default.createElement("td", null, (0, _moment.default)(u.starts_at).format('lll')), _react.default.createElement("td", null, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs",
+          onClick: function onClick() {
+            _this7.showMatchesOf(u.id);
+          }
+        }, "Show matches")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))), this.renderMatches());
+    }
+  }]);
+
+  return Tournament;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Tournament);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../../actions/modals":3,"../Messages":32,"../Modules/Modals/CashHistory":34,"../Modules/Modals/NewTournament":40,"moment":118,"react":188,"react-paginate":136,"react-redux":147}],27:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+// import {openModal} from '../../actions/modals';
+// import {openModal} from '../../actions/modals';
+// import MoreInfoGeneric from '../Modules/Modals/MoreInfoGeneric';
+var WithdrawalCompleted =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(WithdrawalCompleted, _React$Component);
+
+  function WithdrawalCompleted(props) {
+    var _this;
+
+    _classCallCheck(this, WithdrawalCompleted);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(WithdrawalCompleted).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(WithdrawalCompleted, [{
+    key: "loadData",
+    value: function loadData() {
+      var _this2 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/withdrawal?related=user&filter_status=completed&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this2.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Completed withdrawal Requests"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Amount"), _react.default.createElement("th", null, "Method"), _react.default.createElement("th", null, "Path"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.user && u.user.first_name + ' ' + u.user.last_name), _react.default.createElement("td", null, u.user && u.user.email), _react.default.createElement("td", null, u.amount), _react.default.createElement("td", null, u.method), _react.default.createElement("td", null, u.path));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return WithdrawalCompleted;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(WithdrawalCompleted);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../Messages":32,"react":188,"react-paginate":136,"react-redux":147}],28:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../Messages"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+// import {openModal} from '../../actions/modals';
+// import {openModal} from '../../actions/modals';
+// import MoreInfoGeneric from '../Modules/Modals/MoreInfoGeneric';
+var WithdrawalPending =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(WithdrawalPending, _React$Component);
+
+  function WithdrawalPending(props) {
+    var _this;
+
+    _classCallCheck(this, WithdrawalPending);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(WithdrawalPending).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.loadData();
+      });
+    };
+
+    _this.state = {
+      is_loaded: false,
+      page: 1,
+      items: [],
+      pagination: {}
+    };
+    return _this;
+  }
+
+  _createClass(WithdrawalPending, [{
+    key: "doAction",
+    value: function doAction(obj) {
+      var _this2 = this;
+
+      var key = '';
+      var id = obj.id;
+      var data = {
+        status: 'completed'
+      };
+      this.setState(_defineProperty({}, 'update_' + key + id, true), function () {
+        _Fetcher.default.post('/api/admin/update/withdrawal', {
+          id: id,
+          data: data
+        }).then(function (resp) {
+          _this2.setState(_defineProperty({}, 'update_' + key + id, false));
+
+          if (resp.ok) {
+            _this2.loadData();
+          } else {
+            _this2.props.dispatch({
+              type: 'FAILURE',
+              messages: [resp]
+            });
+          }
+        }).catch(function (err) {
+          console.log(err);
+          var msg = 'Failed to perform Action';
+
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [{
+              msg: msg
+            }]
+          });
+        });
+      });
+      return;
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this3 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/withdrawal?related=user&filter_status=pending&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this3.setState({
+            is_loaded: true,
+            items: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      if (!this.state.is_loaded) {
+        return _react.default.createElement("div", {
+          className: "container"
+        }, _react.default.createElement("div", {
+          className: "panel"
+        }, _react.default.createElement("div", {
+          className: "panel-body"
+        }, _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin",
+          style: {
+            fontSize: 40
+          }
+        }))));
+      }
+
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement("h2", {
+        style: {
+          padding: 0,
+          margin: 0
+        }
+      }, "Pending withdrawal Requests"))), _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("table", {
+        className: "table  table-hover  table-responsive   table-striped table-bordered"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, _react.default.createElement("th", null, "ID"), _react.default.createElement("th", null, "Name"), _react.default.createElement("th", null, "Email"), _react.default.createElement("th", null, "Amount"), _react.default.createElement("th", null, "Method"), _react.default.createElement("th", null, "Path"), _react.default.createElement("th", null, "Actions"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (u, i) {
+        return _react.default.createElement("tr", {
+          key: u.id
+        }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.user && u.user.first_name + ' ' + u.user.last_name), _react.default.createElement("td", null, u.user && u.user.email), _react.default.createElement("td", null, u.amount), _react.default.createElement("td", null, u.method), _react.default.createElement("td", null, u.path), _react.default.createElement("td", null, _react.default.createElement("button", {
+          className: "btn btn-primary btn-xs",
+          onClick: function onClick(e) {
+            e.preventDefault();
+
+            _this4.doAction(u);
+          }
+        }, _this4.state['update_' + u.id] ? _react.default.createElement("i", {
+          className: "fa fa-spinner fa-spin"
+        }) : false, ' ', "Mark as paid")));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return WithdrawalPending;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(WithdrawalPending);
+
+exports.default = _default;
+
+},{"../../actions/Fetcher":1,"../Messages":32,"react":188,"react-paginate":136,"react-redux":147}],29:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Footer =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Footer, _React$Component);
+
+  function Footer() {
+    _classCallCheck(this, Footer);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Footer).apply(this, arguments));
+  }
+
+  _createClass(Footer, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("footer", null, _react.default.createElement("p", null, "\xA9 OCG - All Rights Reserved."));
+    }
+  }]);
+
+  return Footer;
+}(_react.default.Component);
+
+var _default = Footer;
+exports.default = _default;
+
+},{"react":188}],30:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouter = require("react-router");
+
+var _reactRedux = require("react-redux");
+
+var _auth = require("../actions/auth");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Header =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Header, _React$Component);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Header).apply(this, arguments));
+  }
+
+  _createClass(Header, [{
+    key: "handleLogout",
+    value: function handleLogout(event) {
+      event.preventDefault();
+      this.props.dispatch((0, _auth.logout)());
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var active = {
+        borderBottomColor: '#3f51b5'
+      };
+      var rightNav = this.props.token ? _react.default.createElement("ul", {
+        className: "nav navbar-nav navbar-right"
+      }, _react.default.createElement("li", {
+        className: "dropdown"
+      }, _react.default.createElement("a", {
+        href: "#",
+        "data-toggle": "dropdown",
+        className: "navbar-avatar dropdown-toggle"
+      }, _react.default.createElement("img", {
+        src: this.props.user.picture || this.props.user.gravatar
+      }), ' ', this.props.user.name || this.props.user.first_name || this.props.user.email || this.props.user.id, ' ', _react.default.createElement("i", {
+        className: "caret"
+      })), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/account"
+      }, "My Account")), _react.default.createElement("li", {
+        className: "divider"
+      }), _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "#",
+        onClick: this.handleLogout.bind(this)
+      }, "Logout"))))) : _react.default.createElement("ul", {
+        className: "nav navbar-nav navbar-right"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/login",
+        activeStyle: active
+      }, "Log in")), _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/signup"
+      }, "Sign up")));
+      return _react.default.createElement("nav", {
+        className: "navbar navbar-default navbar-static-top"
+      }, _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement("div", {
+        className: "navbar-header"
+      }, _react.default.createElement("button", {
+        type: "button",
+        "data-toggle": "collapse",
+        "data-target": "#navbar",
+        className: "navbar-toggle collapsed"
+      }, _react.default.createElement("span", {
+        className: "sr-only"
+      }, "Toggle navigation"), _react.default.createElement("span", {
+        className: "icon-bar"
+      }), _react.default.createElement("span", {
+        className: "icon-bar"
+      }), _react.default.createElement("span", {
+        className: "icon-bar"
+      })), _react.default.createElement(_reactRouter.IndexLink, {
+        to: "/",
+        className: "navbar-brand"
+      }, "OCG")), _react.default.createElement("div", {
+        id: "navbar",
+        className: "navbar-collapse collapse"
+      }, this.props.user ? _react.default.createElement("ul", {
+        className: "nav navbar-nav"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Users"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/admin_users"
+      }, "Admin Users")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/app_users"
+      }, "Web App User")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/teams",
+        activeStyle: active
+      }, "Teams")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Matches"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/matchfinder"
+      }, "MatchFinder")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/money8"
+      }, "Money 8")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/tournaments"
+      }, "Tournaments")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Games & Ladders"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/games"
+      }, "List Games")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/ladders"
+      }, "List Ladders")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Community"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/topics"
+      }, "Forum Topics")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/threads"
+      }, "Forum Threads")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/posts"
+      }, "Social")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Tickets"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/tickets"
+      }, "List Open Tickets")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/tickets_closed"
+      }, "List Closed Tickets")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Form Submissions"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/forms/apply_for_staff"
+      }, "Apply for staff")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/forms/advertise_with_us"
+      }, "Advertise with Us")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/forms/subscribers"
+      }, "Subscribers")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Withdrawals"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/withdrawal/pending"
+      }, "Pending Withdrawal Requests")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        to: "/withdrawal/completed"
+      }, "Completed Withdrawal Requests")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
+        className: "dropdown-toggle",
+        "data-toggle": "dropdown",
+        role: "button",
+        "aria-haspopup": "true",
+        "aria-expanded": "false"
+      }, "Disputes"), _react.default.createElement("ul", {
+        className: "dropdown-menu"
+      }, _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/admin/#/matchfinder/filter/disputed",
+        onClick: function onClick(e) {
+          window.location.href = '/admin/#/matchfinder/filter/disputed';
+          window.location.reload();
+        }
+      }, "matchfinder")), _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/admin/#/money8/filter/disputed",
+        onClick: function onClick(e) {
+          window.location.href = '/admin/#/money8/filter/disputed';
+          window.location.reload();
+        }
+      }, "money 8")), _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/admin/#/tournamentmatches/filter/disputed",
+        onClick: function onClick(e) {
+          window.location.href = '/admin/#/tournamentmatches/filter/disputed';
+          window.location.reload();
+        }
+      }, "tournament matches"))))) : false, rightNav)));
+    }
+  }]);
+
+  return Header;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    token: state.auth.token,
+    user: state.auth.user
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Header);
+
+exports.default = _default;
+
+},{"../actions/auth":2,"react":188,"react-redux":147,"react-router":178}],31:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _Messages = _interopRequireDefault(require("./Messages"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Home =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Home, _React$Component);
+
+  function Home() {
+    _classCallCheck(this, Home);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Home).apply(this, arguments));
+  }
+
+  _createClass(Home, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "container"
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-sm-12"
+      }, _react.default.createElement("div", {
+        className: "panel"
+      }, _react.default.createElement("div", {
+        className: "panel-body"
+      }, "Welcome to the admin panel of OCG")))));
+    }
+  }]);
+
+  return Home;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(Home);
+
+exports.default = _default;
+
+},{"./Messages":32,"react":188,"react-redux":147}],32:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Messages =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Messages, _React$Component);
+
+  function Messages() {
+    _classCallCheck(this, Messages);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Messages).apply(this, arguments));
+  }
+
+  _createClass(Messages, [{
+    key: "render",
+    value: function render() {
+      return this.props.messages.success ? _react.default.createElement("div", {
+        role: "alert",
+        className: "alert alert-success"
+      }, this.props.messages.success.map(function (message, index) {
+        return _react.default.createElement("div", {
+          key: index
+        }, message.msg);
+      })) : this.props.messages.error ? _react.default.createElement("div", {
+        role: "alert",
+        className: "alert alert-danger"
+      }, this.props.messages.error.map(function (message, index) {
+        return _react.default.createElement("div", {
+          key: index
+        }, message.msg);
+      })) : this.props.messages.info ? _react.default.createElement("div", {
+        role: "alert",
+        className: "alert alert-info"
+      }, this.props.messages.info.map(function (message, index) {
+        return _react.default.createElement("div", {
+          key: index
+        }, message.msg);
+      })) : null;
+    }
+  }]);
+
+  return Messages;
+}(_react.default.Component);
+
+var _default = Messages;
+exports.default = _default;
+
+},{"react":188}],33:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _reactRedux = require("react-redux");
+
+var _react = _interopRequireDefault(require("react"));
+
+var _modals = require("../actions/modals");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+// import Info from './Info';
+var Modal =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(Modal, _React$Component);
+
+  function Modal() {
+    _classCallCheck(this, Modal);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Modal).apply(this, arguments));
+  }
+
+  _createClass(Modal, [{
+    key: "onClose",
+    value: function onClose() {
+      if (this.props.item.onClose) {
+        this.props.item.onClose();
+        this.props.onClose(this.props.item);
+      } else {
+        this.props.onClose(this.props.item);
+      }
+    }
+  }, {
+    key: "onConfirm",
+    value: function onConfirm() {
+      if (this.props.item.onConfirm) {
+        this.props.item.onConfirm();
+        this.props.onClose(this.props.item);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      // const {zIndex, id} = this.props;
+      var type = this.props.item.type;
+
+      if (type === 'custom') {
+        var content = this.props.item.content;
+        return _react.default.createElement("div", {
+          className: 'modal must_show ',
+          id: 'modal_' + this.props.item.id,
+          tabIndex: "-1",
+          role: "dialog"
+        }, _react.default.createElement("div", {
+          className: 'modal-dialog modal-dialog-centered' + (this.props.item.modal_class ? this.props.item.modal_class : ' '),
+          style: {
+            zIndex: this.props.item.zIndex + 2
+          },
+          role: "document"
+        }, _react.default.createElement("div", {
+          className: "modal-content"
+        }, _react.default.createElement("div", {
+          className: "modal-header"
+        }, _react.default.createElement("button", {
+          type: "button",
+          className: "close",
+          "data-dismiss": "modal",
+          "aria-label": "Close",
+          onClick: function onClick() {
+            return _this.onClose();
+          }
+        }, _react.default.createElement("span", {
+          "aria-hidden": "true"
+        }, "\xD7")), _react.default.createElement("h5", {
+          className: "modal-title"
+        }, this.props.item.heading)), content)));
+      } else if (type == 'snackbar') {
+        return _react.default.createElement("div", {
+          id: 'snack_' + this.props.item.id,
+          className: "snackbar"
+        }, this.props.item.content, ' ', this.props.item.link ? _react.default.createElement("a", {
+          href: this.props.item.link,
+          target: "_blank"
+        }, this.props.item.link_label) : false);
+      }
+
+      return _react.default.createElement("div", null);
+    }
+  }]);
+
+  return Modal;
+}(_react.default.Component);
+
+var Modals =
+/*#__PURE__*/
+function (_React$Component2) {
+  _inherits(Modals, _React$Component2);
+
+  function Modals() {
+    _classCallCheck(this, Modals);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Modals).apply(this, arguments));
+  }
+
+  _createClass(Modals, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      var modals = this.props.modals.map(function (item, i) {
+        return _react.default.createElement(Modal, {
+          item: item,
+          key: item.id,
+          zIndex: i,
+          onClose: function onClose(item) {
+            return _this2.props.dispatch((0, _modals.closeModal)(item));
+          }
+        });
+      });
+      return _react.default.createElement("div", {
+        className: modals.length > 0 ? 'modals' : ''
+      }, modals);
+    }
+  }]);
+
+  return Modals;
+}(_react.default.Component);
+
+var ModalContainer = (0, _reactRedux.connect)(function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals
+  };
+}, function mapDispatchToProps(dispatch) {
+  return {
+    dispatch: dispatch
+  };
+})(Modals);
+var _default = ModalContainer;
+exports.default = _default;
+
+},{"../actions/modals":3,"react":188,"react-redux":147}],34:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _reactPaginate = _interopRequireDefault(require("react-paginate"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var CashHistory =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(CashHistory, _React$Component);
+
+  function CashHistory(props) {
+    var _this;
+
+    _classCallCheck(this, CashHistory);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CashHistory).call(this, props));
+
+    _this.handlePageClick = function (data) {
+      // console.log(data)
+      var selected = parseInt(data.selected) + 1;
+
+      _this.setState({
+        page: selected
+      }, function () {
+        _this.fetchData();
+      });
+    };
+
+    _this.state = {
+      loaded: false,
+      items: [],
+      pagination: {
+        pageCount: 1
+      },
+      page: 1
+    };
+    return _this;
+  }
+
+  _createClass(CashHistory, [{
+    key: "doClose",
+    value: function doClose() {
+      this.props.dispatch((0, _modals.closeModal)({
+        id: 'tx'
+      }));
+    }
+  }, {
+    key: "fetchData",
+    value: function fetchData() {
+      var _this2 = this;
+
+      var url = '/api/admin/listPaged/' + this.props.type + '?page=' + this.state.page;
+
+      if (this.props.id) {
+        url += '&filter_user_id=' + this.props.id;
+      }
+
+      if (this.props.obj_type) {
+        url += '&filter_obj_type=' + this.props.obj_type + '&related=user';
+      }
+
+      fetch(url).then(function (response) {
+        if (response.ok) {
+          return response.json().then(function (json) {
+            if (json.ok) {
+              _this2.setState({
+                items: json.items ? json.items : [],
+                loaded: true,
+                pagination: json.pagination ? json.pagination : {
+                  pageCount: 1
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.fetchData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("table", {
+        className: "table table-stripped table-bordered table-hovered table-hover"
+      }, _react.default.createElement("thead", null, _react.default.createElement("tr", null, this.props.obj_type ? _react.default.createElement("th", null, "User") : false, _react.default.createElement("th", null, "Details"), _react.default.createElement("th", null, "Amount"), _react.default.createElement("th", null, "Date/time"))), _react.default.createElement("tbody", null, this.state.items && this.state.items.map(function (order, i) {
+        return _react.default.createElement("tr", {
+          key: order.id
+        }, _this3.props.obj_type ? _react.default.createElement("td", null, order.user ? order.user.first_name + ' ' + order.user.last_name : ' ') : false, _react.default.createElement("td", null, order.details), _react.default.createElement("td", null, order.qty), _react.default.createElement("td", null, (0, _moment.default)(order.created_at).format('MMM DD, YYYY')));
+      }))), _react.default.createElement(_reactPaginate.default, {
+        previousLabel: 'previous',
+        nextLabel: 'next',
+        breakLabel: '...',
+        breakClassName: 'break-me',
+        pageCount: this.state.pagination.pageCount,
+        marginPagesDisplayed: 2,
+        pageRangeDisplayed: 5,
+        onPageChange: this.handlePageClick,
+        containerClassName: 'pagination',
+        subContainerClassName: 'pages pagination',
+        activeClassName: 'active'
+      }))));
+    }
+  }]);
+
+  return CashHistory;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(CashHistory);
+
+exports.default = _default;
+
+},{"../../../actions/modals":3,"moment":118,"react":188,"react-paginate":136,"react-redux":147}],35:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MoreInfo =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MoreInfo, _React$Component);
+
+  function MoreInfo(props) {
+    var _this;
+
+    _classCallCheck(this, MoreInfo);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MoreInfo).call(this, props));
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(MoreInfo, [{
+    key: "doClose",
+    value: function doClose() {
+      this.props.dispatch((0, _modals.closeModal)({
+        id: 'mode_info'
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var data = this.props.data; // console.log(data);
+
+      return _react.default.createElement("div", {
+        className: ""
+      }, _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("table", {
+        className: "table table-stripped"
+      }, _react.default.createElement("tbody", null, _react.default.createElement("tr", null, _react.default.createElement("td", null, "Id"), _react.default.createElement("td", null, data.id)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "First_name"), _react.default.createElement("td", null, data.first_name)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Last_name"), _react.default.createElement("td", null, data.last_name)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Email"), _react.default.createElement("td", null, data.email)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Profile_views"), _react.default.createElement("td", null, data.profile_views)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Username"), _react.default.createElement("td", null, data.username)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Email_verified"), _react.default.createElement("td", null, data.email_verified)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Created at"), _react.default.createElement("td", null, (0, _moment.default)(data.created_at).format('lll'))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gender"), _react.default.createElement("td", null, data.gender)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Cover Picture"), _react.default.createElement("td", null, _react.default.createElement("img", {
+        src: data.cover_picture,
+        width: "100px",
+        height: "100px"
+      }))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Picture"), _react.default.createElement("td", null, _react.default.createElement("img", {
+        src: data.picture,
+        width: "100px",
+        height: "100px"
+      }))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Profile_picture"), _react.default.createElement("td", null, _react.default.createElement("img", {
+        src: data.profile_picture,
+        width: "100px",
+        height: "100px"
+      }))), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Stripe_user_id"), _react.default.createElement("td", null, data.stripe_user_id)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Status"), _react.default.createElement("td", null, data.status)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Credit_balance"), _react.default.createElement("td", null, data.credit_balance)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Cash_balance"), _react.default.createElement("td", null, data.cash_balance)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Life_earning"), _react.default.createElement("td", null, data.life_earning)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Role"), _react.default.createElement("td", null, data.role)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Life_xp"), _react.default.createElement("td", null, data.life_xp)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Wins"), _react.default.createElement("td", null, data.wins)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Loss"), _react.default.createElement("td", null, data.loss)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Dob"), _react.default.createElement("td", null, data.dob)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Double_xp"), _react.default.createElement("td", null, data.double_xp)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Prime"), _react.default.createElement("td", null, data.prime)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Xp_rank"), _react.default.createElement("td", null, data.xp_rank)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Timezone"), _react.default.createElement("td", null, data.timezone)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_1"), _react.default.createElement("td", null, data.gamer_tag_1)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_2"), _react.default.createElement("td", null, data.gamer_tag_2)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_3"), _react.default.createElement("td", null, data.gamer_tag_3)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_4"), _react.default.createElement("td", null, data.gamer_tag_4)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_5"), _react.default.createElement("td", null, data.gamer_tag_5)), _react.default.createElement("tr", null, _react.default.createElement("td", null, "Gamer_tag_6"), _react.default.createElement("td", null, data.gamer_tag_6)))))));
+    }
+  }]);
+
+  return MoreInfo;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(MoreInfo);
+
+exports.default = _default;
+
+},{"../../../actions/modals":3,"moment":118,"react":188,"react-redux":147}],36:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MoreInfoGeneric =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MoreInfoGeneric, _React$Component);
+
+  function MoreInfoGeneric(props) {
+    var _this;
+
+    _classCallCheck(this, MoreInfoGeneric);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MoreInfoGeneric).call(this, props));
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(MoreInfoGeneric, [{
+    key: "doClose",
+    value: function doClose() {
+      this.props.dispatch((0, _modals.closeModal)({
+        id: 'mode_info'
+      }));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var data = this.props.data;
+      var keys = Object.keys(data);
+      return _react.default.createElement("div", {
+        className: ""
+      }, _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("table", {
+        className: "table table-stripped"
+      }, _react.default.createElement("tbody", null, keys.map(function (key, i) {
+        return _react.default.createElement("tr", {
+          key: key
+        }, _react.default.createElement("td", null, _react.default.createElement("strong", null, key)), _react.default.createElement("td", null, data[key]));
+      }))))));
+    }
+  }]);
+
+  return MoreInfoGeneric;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {};
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(MoreInfoGeneric);
+
+exports.default = _default;
+
+},{"../../../actions/modals":3,"react":188,"react-redux":147}],37:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var NewGame =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewGame, _React$Component);
+
+  function NewGame(props) {
+    var _this;
+
+    _classCallCheck(this, NewGame);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewGame).call(this, props));
+    _this.state = {
+      loaded: true,
+      title: '',
+      image_url: '',
+      banner_url: ''
+    };
+    _this.image_url_ref = _react.default.createRef();
+    _this.banner_url_ref = _react.default.createRef();
+    return _this;
+  }
+
+  _createClass(NewGame, [{
+    key: "doClose",
+    value: function doClose() {
+      var _this2 = this;
+
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
+      setTimeout(function () {
+        _this2.props.dispatch((0, _modals.closeModal)({
+          id: 'newgame'
+        }));
+      }, 500);
+    }
+  }, {
+    key: "finalSubmit",
+    value: function finalSubmit() {
+      var _this3 = this;
+
+      _Fetcher.default.post('/api/games/add', {
+        title: this.state.title,
+        image_url: this.state.image_url,
+        banner_url: this.state.banner_url
+      }).then(function (resp) {
+        if (resp.ok) {
+          _this3.props.onComplete && _this3.props.onComplete();
+
+          _this3.doClose();
+
+          _this3.setState({
+            loaded: true
+          });
+        } else {
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this3.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "uploadFile2",
+    value: function uploadFile2() {
+      var _this4 = this;
+
+      var data = new FormData();
+      var node = this.banner_url_ref.current;
+      var file_1 = node.files[0];
+      data.append('file', file_1, file_1.name);
+
+      _axios.default.post('/upload', data, {
+        onUploadProgress: function onUploadProgress(ProgressEvent) {// this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
+        }
+      }).then(function (res) {
+        _this4.setState({
+          banner_url: res.data.file
+        }, function () {
+          _this4.finalSubmit();
+        });
+      }).catch(function (err) {
+        alert('some error occoured.');
+
+        _this4.setState({
+          loaded: true
+        }); // console.log(err);
+
+      });
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this5 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+      var data = new FormData();
+      var node = this.image_url_ref.current;
+      var file_1 = node.files[0];
+      data.append('file', file_1, file_1.name);
+
+      _axios.default.post('/upload', data, {
+        onUploadProgress: function onUploadProgress(ProgressEvent) {
+          _this5.setState({// loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          });
+        }
+      }).then(function (res) {
+        _this5.setState({
+          image_url: res.data.file
+        }, function () {
+          _this5.uploadFile2();
+        });
+      }).catch(function (err) {
+        alert('some error occoured.');
+
+        _this5.setState({
+          loaded: true
+        }); // console.log(err);
+
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this6 = this;
+
+      // const {data} = this.props;
+      // console.log(data);
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this6.onSubmit(e);
+        }
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Game Name"), _react.default.createElement("input", {
+        type: "text",
+        required: true,
+        className: "form-control",
+        name: "title",
+        onChange: this.handleChange.bind(this),
+        id: "title",
+        value: this.state.title
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Game Image"), _react.default.createElement("input", {
+        type: "file",
+        className: "form-control",
+        name: "image_url",
+        ref: this.image_url_ref,
+        required: true // onChange={this.handleChange.bind(this)}
+        ,
+        id: "image_url" // value={this.state.title}
+
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Game Banner"), _react.default.createElement("input", {
+        type: "file",
+        className: "form-control",
+        name: "banner_url",
+        required: true,
+        ref: this.banner_url_ref // onChange={this.handleChange.bind(this)}
+        ,
+        id: "banner_url" // value={this.state.title}
+
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
+        value: "Create Game",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
+    }
+  }]);
+
+  return NewGame;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(NewGame);
+
+exports.default = _default;
+
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":32,"axios":58,"react":188,"react-redux":147}],38:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var NewLadder =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewLadder, _React$Component);
+
+  function NewLadder(props) {
+    var _this;
+
+    _classCallCheck(this, NewLadder);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewLadder).call(this, props));
+    _this.state = {
+      loaded: false,
+      title: '',
+      game_id: '',
+      min_players: '',
+      gamer_tag: '',
+      rules: '',
+      max_players: '',
+      games: []
+    };
+    return _this;
+  }
+
+  _createClass(NewLadder, [{
+    key: "doClose",
+    value: function doClose() {
+      var _this2 = this;
+
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
+      setTimeout(function () {
+        _this2.props.dispatch((0, _modals.closeModal)({
+          id: 'newladder'
+        }));
+      }, 500);
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this3 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/games?per_page=10000&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this3.setState({
+            loaded: true,
+            games: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher.default.post('/api/ladder/add', {
+        title: this.state.title,
+        game_id: this.state.game_id,
+        min_players: this.state.min_players,
+        max_players: this.state.max_players,
+        rules: this.state.rules,
+        gamer_tag: this.state.gamer_tag
+      }).then(function (resp) {
+        if (resp.ok) {
+          _this4.props.onComplete && _this4.props.onComplete();
+
+          _this4.doClose();
+
+          _this4.setState({
+            loaded: true
+          });
+        } else {
+          _this4.setState({
+            loaded: true
+          });
+
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this4.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this4.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      // const {data} = this.props;
+      // console.log(data);
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this5.onSubmit(e);
+        }
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Ladder Name"), _react.default.createElement("input", {
+        type: "text",
+        required: true,
+        className: "form-control",
+        name: "title",
+        onChange: this.handleChange.bind(this),
+        id: "title",
+        value: this.state.title
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Game"), _react.default.createElement("select", {
+        className: "form-control",
+        name: "game_id",
+        onChange: this.handleChange.bind(this),
+        id: "game_id",
+        value: this.state.game_id,
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), this.state.games.map(function (g, i) {
+        return _react.default.createElement("option", {
+          value: g.id,
+          key: g.id
+        }, g.title);
+      }))), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "User Gamer Tag"), _react.default.createElement("select", {
+        className: "form-control",
+        name: "gamer_tag",
+        onChange: this.handleChange.bind(this),
+        id: "gamer_tag",
+        value: this.state.gamer_tag,
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), _react.default.createElement("option", {
+        value: "1"
+      }, "Xbox Live Gamertag"), _react.default.createElement("option", {
+        value: "2"
+      }, "PSN"), _react.default.createElement("option", {
+        value: "3"
+      }, "Epic Games Username"), _react.default.createElement("option", {
+        value: "4"
+      }, "Steam Username"), _react.default.createElement("option", {
+        value: "5"
+      }, "Battletag"), _react.default.createElement("option", {
+        value: "6"
+      }, "Activision ID"))), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Ladder Min players"), _react.default.createElement("input", {
+        type: "number",
+        className: "form-control",
+        min: "1",
+        max: this.state.max_players ? this.state.max_players : 99999,
+        name: "min_players",
+        onChange: this.handleChange.bind(this),
+        id: "min_players",
+        value: this.state.min_players
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Ladder Max players"), _react.default.createElement("input", {
+        type: "number",
+        className: "form-control",
+        min: this.state.min_players ? this.state.min_players : 1,
+        name: "max_players",
+        onChange: this.handleChange.bind(this),
+        id: "max_players",
+        value: this.state.max_players
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Rules"), _react.default.createElement("textarea", {
+        className: "form-control",
+        name: "rules",
+        onChange: this.handleChange.bind(this),
+        id: "rules",
+        value: this.state.rules
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
+        value: "Create Ladder",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
+    }
+  }]);
+
+  return NewLadder;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(NewLadder);
+
+exports.default = _default;
+
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":32,"react":188,"react-redux":147}],39:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var NewTopic =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewTopic, _React$Component);
+
+  function NewTopic(props) {
+    var _this;
+
+    _classCallCheck(this, NewTopic);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewTopic).call(this, props));
+    _this.state = {
+      loaded: true,
+      title: '',
+      sub_title: ''
+    };
+    return _this;
+  }
+
+  _createClass(NewTopic, [{
+    key: "doClose",
+    value: function doClose() {
+      var _this2 = this;
+
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
+      setTimeout(function () {
+        _this2.props.dispatch((0, _modals.closeModal)({
+          id: 'newtopic'
+        }));
+      }, 500);
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher.default.post('/api/topic/add', {
+        title: this.state.title,
+        sub_title: this.state.sub_title
+      }).then(function (resp) {
+        if (resp.ok) {
+          _this3.props.onComplete && _this3.props.onComplete();
+
+          _this3.doClose();
+
+          _this3.setState({
+            loaded: true
+          });
+        } else {
+          _this3.setState({
+            loaded: true
+          });
+
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this3.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this4.onSubmit(e);
+        }
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Topic Title"), _react.default.createElement("input", {
+        type: "text",
+        required: true,
+        className: "form-control",
+        name: "title",
+        onChange: this.handleChange.bind(this),
+        id: "title",
+        value: this.state.title
+      })), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Topic Sub-Title"), _react.default.createElement("input", {
+        type: "text",
+        required: true,
+        className: "form-control",
+        name: "sub_title",
+        onChange: this.handleChange.bind(this),
+        id: "sub_title",
+        value: this.state.sub_title
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
+        value: "Create Topic",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
+    }
+  }]);
+
+  return NewTopic;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(NewTopic);
+
+exports.default = _default;
+
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":32,"react":188,"react-redux":147}],40:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var NewTournament =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(NewTournament, _React$Component);
+
+  function NewTournament(props) {
+    var _this;
+
+    _classCallCheck(this, NewTournament);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(NewTournament).call(this, props));
+    _this.state = {
+      loaded: false,
+      title: '',
+      game_id: '',
+      ladder_id: '',
+      min_players: '',
+      gamer_tag: '',
+      member_tournament: 'no',
+      rules: '',
+      max_players: '',
+      games: [],
+      ladders: []
+    };
+    return _this;
+  }
+
+  _createClass(NewTournament, [{
+    key: "doClose",
+    value: function doClose() {
+      var _this2 = this;
+
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
+      setTimeout(function () {
+        _this2.props.dispatch((0, _modals.closeModal)({
+          id: 'newtournament'
+        }));
+      }, 500);
+    }
+  }, {
+    key: "returnOptionForMaxPPT",
+    value: function returnOptionForMaxPPT() {
+      var _this3 = this;
+
+      if (!this.state.ladder_id) {
+        return false;
+      }
+
+      var ld = this.state.ladders.filter(function (a) {
+        if (_this3.state.ladder_id == a.id) {
+          return true;
+        }
+
+        return false;
+      }); // console.log(ld);
+
+      if (ld.length) {
+        ld = ld[0];
+        var a = [];
+
+        for (var i = ld.min_players; i <= ld.max_players; i++) {
+          a.push(i);
+        }
+
+        return a.map(function (b, i) {
+          return _react.default.createElement("option", {
+            value: b,
+            key: b
+          }, b, "v", b);
+        });
+      }
+
+      return false;
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.loadData();
+    }
+  }, {
+    key: "loadData",
+    value: function loadData() {
+      var _this4 = this;
+
+      _Fetcher.default.get('/api/admin/listPaged/games?per_page=10000&page=' + this.state.page).then(function (resp) {
+        if (resp.ok) {
+          _this4.setState({
+            loaded: true,
+            games: resp.items,
+            pagination: resp.pagination ? resp.pagination : {}
+          });
+        } else {
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this4.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "loadLadder",
+    value: function loadLadder(id) {
+      var _this5 = this;
+
+      this.setState({
+        loaded: false,
+        ladder_id: ''
+      });
+
+      _Fetcher.default.get('/api/admin/listPaged/ladders?filter_game_id=' + id + '&per_page=10000&page=1').then(function (resp) {
+        if (resp.ok) {
+          _this5.setState({
+            loaded: true,
+            ladders: resp.items // pagination: resp.pagination ? resp.pagination : {}
+
+          });
+        } else {
+          _this5.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        var msg = 'Failed to load users';
+
+        _this5.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this6 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher.default.post('/api/tournaments/add', {
+        title: this.state.title,
+        game_id: this.state.game_id,
+        ladder_id: this.state.ladder_id,
+        max_players: this.state.max_players,
+        total_teams: this.state.total_teams,
+        starts_at: this.state.starts_at,
+        registration_start_at: this.state.registration_start_at,
+        registration_end_at: this.state.registration_end_at,
+        entry_fee: this.state.entry_fee,
+        first_winner_price: this.state.first_winner_price,
+        second_winner_price: this.state.second_winner_price,
+        third_winner_price: this.state.third_winner_price
+      }).then(function (resp) {
+        if (resp.ok) {
+          _this6.props.onComplete && _this6.props.onComplete();
+
+          _this6.doClose();
+
+          _this6.setState({
+            loaded: true
+          });
+        } else {
+          _this6.setState({
+            loaded: true
+          });
+
+          _this6.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this6.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this6.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+
+      if (event.target.name == 'game_id') {
+        // alert(event.target.value);
+        this.loadLadder(event.target.value);
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this7 = this;
+
+      // const {data} = this.props;
+      // console.log(data);
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this7.onSubmit(e);
+        }
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Title"), _react.default.createElement("input", {
+        type: "text",
+        name: "title",
+        onChange: this.handleChange.bind(this),
+        id: "title",
+        value: this.state.title,
+        required: true,
+        placeholder: "Tournament Title",
+        className: "form-control"
+      })), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Game"), _react.default.createElement("select", {
+        className: "form-control",
+        name: "game_id",
+        onChange: this.handleChange.bind(this),
+        id: "game_id",
+        value: this.state.game_id,
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), this.state.games.map(function (g, i) {
+        return _react.default.createElement("option", {
+          value: g.id,
+          key: g.id
+        }, g.title);
+      }))), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Ladder"), _react.default.createElement("select", {
+        className: "form-control",
+        name: "ladder_id",
+        onChange: this.handleChange.bind(this),
+        id: "ladder_id",
+        value: this.state.ladder_id,
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), this.state.ladders && this.state.ladders.map(function (g, i) {
+        return _react.default.createElement("option", {
+          value: g.id,
+          key: g.id
+        }, g.title);
+      }))), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Total number of Teams"), _react.default.createElement("select", {
+        required: true,
+        placeholder: "Total Number of Teams",
+        className: "form-control",
+        name: "total_teams",
+        onChange: this.handleChange.bind(this),
+        id: "total_teams",
+        value: this.state.total_teams
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), _react.default.createElement("option", {
+        value: "4"
+      }, "4 Teams"), _react.default.createElement("option", {
+        value: "4"
+      }, "8 Teams"), _react.default.createElement("option", {
+        value: "4"
+      }, "16 Teams"))), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Members only Tournament"), _react.default.createElement("select", {
+        required: true,
+        placeholder: "Members only Tournament",
+        className: "form-control",
+        name: "member_tournament",
+        onChange: this.handleChange.bind(this),
+        id: "member_tournament",
+        value: this.state.member_tournament
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), _react.default.createElement("option", {
+        value: "yes"
+      }, "Yes"), _react.default.createElement("option", {
+        value: "no"
+      }, "No"))), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Users Per Team"), _react.default.createElement("select", {
+        required: true,
+        placeholder: "Users Per Team",
+        className: "form-control",
+        name: "max_players",
+        onChange: this.handleChange.bind(this),
+        id: "max_players",
+        value: this.state.max_players
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), this.returnOptionForMaxPPT())), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Tournament Starts On"), _react.default.createElement("input", {
+        type: "datetime-local",
+        name: "starts_at",
+        onChange: this.handleChange.bind(this),
+        id: "starts_at",
+        value: this.state.starts_at,
+        required: true,
+        placeholder: "Enter Tournament Start Date Time",
+        className: "form-control"
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Registration Starts On"), _react.default.createElement("input", {
+        type: "datetime-local",
+        name: "registration_start_at",
+        onChange: this.handleChange.bind(this),
+        id: "registration_start_at",
+        value: this.state.registration_start_at,
+        required: true,
+        placeholder: "Registration Start Date Time",
+        className: "form-control"
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Registration ends on"), _react.default.createElement("input", {
+        type: "datetime-local",
+        name: "registration_end_at",
+        onChange: this.handleChange.bind(this),
+        id: "registration_end_at",
+        value: this.state.registration_end_at,
+        required: true,
+        placeholder: "Registration End Date Time",
+        className: "form-control"
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Entry Fee (credits)"), _react.default.createElement("input", {
+        type: "number",
+        name: "entry_fee",
+        onChange: this.handleChange.bind(this),
+        id: "entry_fee",
+        value: this.state.entry_fee,
+        required: true,
+        placeholder: "Entry Fee",
+        className: "form-control"
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "First Price"), _react.default.createElement("input", {
+        type: "number",
+        name: "first_winner_price",
+        onChange: this.handleChange.bind(this),
+        id: "first_winner_price",
+        value: this.state.first_winner_price,
+        required: true,
+        placeholder: "First Winner - Price Amount",
+        className: "form-control"
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Second Price"), _react.default.createElement("input", {
+        type: "number",
+        name: "second_winner_price",
+        onChange: this.handleChange.bind(this),
+        id: "second_winner_price",
+        value: this.state.second_winner_price,
+        required: true,
+        placeholder: "Second Winner - Price Amount",
+        className: "form-control"
+      })), _react.default.createElement("div", {
+        className: "form-group"
+      }, _react.default.createElement("label", null, "Third Price"), _react.default.createElement("input", {
+        type: "number",
+        name: "third_winner_price",
+        onChange: this.handleChange.bind(this),
+        id: "third_winner_price",
+        value: this.state.third_winner_price,
+        required: true,
+        placeholder: "Third Winner - Price Amount",
+        className: "form-control"
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
+        value: "Create Tournament",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
+    }
+  }]);
+
+  return NewTournament;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(NewTournament);
+
+exports.default = _default;
+
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":32,"react":188,"react-redux":147}],41:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ReplyTicket =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ReplyTicket, _React$Component);
+
+  function ReplyTicket(props) {
+    var _this;
+
+    _classCallCheck(this, ReplyTicket);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ReplyTicket).call(this, props));
+    _this.state = {
+      loaded: true,
+      text: ''
+    };
+    return _this;
+  }
+
+  _createClass(ReplyTicket, [{
+    key: "doClose",
+    value: function doClose() {
+      var _this2 = this;
+
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
+      setTimeout(function () {
+        _this2.props.dispatch((0, _modals.closeModal)({
+          id: 'replyticket'
+        }));
+      }, 500);
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this3 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher.default.post('/api/ticket_replies/add', {
+        text: this.state.text,
+        ticket_id: this.props.id
+      }).then(function (resp) {
+        if (resp.ok) {
+          _this3.props.onComplete && _this3.props.onComplete();
+
+          _this3.doClose();
+
+          _this3.setState({
+            loaded: true
+          });
+        } else {
+          _this3.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this3.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this3.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      // const {data} = this.props;
+      // console.log(data);
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this4.onSubmit(e);
+        }
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Reply Text"), _react.default.createElement("textarea", {
+        type: "text",
+        required: true,
+        className: "form-control",
+        name: "text",
+        onChange: this.handleChange.bind(this),
+        id: "text",
+        value: this.state.text
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
+        value: "Create Reply",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
+    }
+  }]);
+
+  return ReplyTicket;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(ReplyTicket);
+
+exports.default = _default;
+
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":32,"react":188,"react-redux":147}],42:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ViewThread =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ViewThread, _React$Component);
+
+  function ViewThread(props) {
+    var _this;
+
+    _classCallCheck(this, ViewThread);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ViewThread).call(this, props));
+    _this.state = {
+      loaded: false,
+      items: [],
+      thread: {
+        user: {}
+      },
+      pageCount: 1
+    };
+    return _this;
+  }
+
+  _createClass(ViewThread, [{
+    key: "doClose",
+    value: function doClose() {
+      this.props.dispatch((0, _modals.closeModal)({
+        id: 'viewthread'
+      }));
+    }
+  }, {
+    key: "fetchData",
+    value: function fetchData() {
+      var _this2 = this;
+
+      fetch('/api/thread/single/' + this.props.id).then(function (res) {
+        return res.json();
+      }).then(function (json) {
+        if (json.ok) {
+          _this2.setState({
+            thread: json.item
+          }, function () {
+            _this2.fetchReplies();
+          });
+        } else {
+          _this2.setState({// is_page: false,
+            // is_loaded: true
+          });
+        }
+      });
+    }
+  }, {
+    key: "fetchReplies",
+    value: function fetchReplies() {
+      var _this3 = this;
+
+      // var item_id =
+      var paged = this.state.cur_page;
+      fetch('/api/thread_replies/listPaged?thread_id=' + this.props.id + '&paged=' + paged).then(function (res) {
+        return res.json();
+      }).then(function (json) {
+        if (json.ok) {
+          _this3.setState({
+            loaded: true,
+            items: json.items,
+            pageCount: json.pagination.pageCount
+          });
+        } else {
+          _this3.setState({
+            is_page: false,
+            loaded: true
+          });
+        }
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.fetchData();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      // const {data} = this.props;
+      // console.log(data);
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("div", {
+        className: "col-sm-12"
+      }, _react.default.createElement("div", {
+        className: "card post"
+      }, _react.default.createElement("span", {
+        className: "date"
+      }, (0, _moment.default)(this.state.thread.created_at).format('lll')), _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-sm-3 ticket_item_av"
+      }, _react.default.createElement("span", {
+        className: "profile_menu_item ticket_item"
+      }, _react.default.createElement("span", {
+        className: "profile_menu_item_inner"
+      }, _react.default.createElement("span", {
+        className: "menu_avatar"
+      }, _react.default.createElement("img", {
+        src: this.state.thread.user.profile_picture ? this.state.thread.user.profile_picture : this.state.thread.user.gravatar,
+        className: "img-fluid profile_pic_outline"
+      })), _react.default.createElement("span", {
+        className: "menu_prof_name_w"
+      }, _react.default.createElement("span", {
+        className: "menu_prof_name_top"
+      }, "By", ' ', this.state.thread.user.first_name + ' ' + this.state.thread.user.last_name), _react.default.createElement("span", {
+        className: "menu_prof_name_bot"
+      }, (0, _moment.default)(this.state.thread.created_at).format('lll')))))), _react.default.createElement("div", {
+        className: "col-sm-9 post-content"
+      }, _react.default.createElement("div", {
+        dangerouslySetInnerHTML: {
+          __html: this.state.thread.description
+        }
+      }))))), this.state.items.map(function (item, i) {
+        return _react.default.createElement("div", {
+          className: "col-sm-12",
+          key: item.id
+        }, _react.default.createElement("div", {
+          className: "card post"
+        }, _react.default.createElement("div", {
+          className: "row"
+        }, _react.default.createElement("div", {
+          className: "col-sm-3 ticket_item_av"
+        }, _react.default.createElement("span", {
+          className: "profile_menu_item ticket_item"
+        }, _react.default.createElement("span", {
+          className: "profile_menu_item_inner"
+        }, _react.default.createElement("span", {
+          className: "menu_avatar"
+        }, _react.default.createElement("img", {
+          src: item.user.profile_picture ? item.user.profile_picture : item.user.gravatar,
+          className: "img-fluid profile_pic_outline"
+        })), _react.default.createElement("span", {
+          className: "menu_prof_name_w"
+        }, _react.default.createElement("span", {
+          className: "menu_prof_name_top"
+        }, "By", ' ', item.user.first_name + ' ' + item.user.last_name), _react.default.createElement("span", {
+          className: "menu_prof_name_bot"
+        }, (0, _moment.default)(item.created_at).format('lll')))))), _react.default.createElement("div", {
+          className: "col-sm-9 post-content"
+        }, _react.default.createElement("div", {
+          dangerouslySetInnerHTML: {
+            __html: item.content
+          }
+        })))));
+      }))));
+    }
+  }]);
+
+  return ViewThread;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(ViewThread);
+
+exports.default = _default;
+
+},{"../../../actions/modals":3,"moment":118,"react":188,"react-redux":147}],43:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _modals = require("../../../actions/modals");
+
+var _reactRedux = require("react-redux");
+
+var _moment = _interopRequireDefault(require("moment"));
+
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ViewTicket =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ViewTicket, _React$Component);
+
+  function ViewTicket(props) {
+    var _this;
+
+    _classCallCheck(this, ViewTicket);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ViewTicket).call(this, props));
+    _this.state = {
+      loaded: false,
+      items: [],
+      cur_page: 1,
+      ticket: {
+        user: {
+          first_name: '',
+          last_name: ''
+        }
+      },
+      pageCount: 1,
+      text: ''
+    };
+    return _this;
+  }
+
+  _createClass(ViewTicket, [{
+    key: "doClose",
+    value: function doClose() {
+      this.props.dispatch((0, _modals.closeModal)({
+        id: 'viewticket'
+      }));
+    }
+  }, {
+    key: "fetchData",
+    value: function fetchData(skip_replies) {
+      var _this2 = this;
+
+      fetch('/api/tickets/single/' + this.props.id).then(function (res) {
+        return res.json();
+      }).then(function (json) {
+        if (json.ok) {
+          _this2.setState({
+            // page_loaded: true,
+            ticket: json.item
+          }, function () {
+            if (skip_replies) {//
+            } else {
+              _this2.fetchReplies();
+            }
+          });
+        } else {
+          if (json.msg) {
+            _this2.props.dispatch({
+              type: 'FAILURE',
+              messages: [json]
+            });
+          }
+
+          _this2.setState({
+            is_page: false,
+            page_loaded: false,
+            is_404: true
+          });
+        }
+      }).catch(function (a) {
+        console.log(a);
+      });
+    }
+  }, {
+    key: "fetchReplies",
+    value: function fetchReplies() {
+      var _this3 = this;
+
+      // var item_id =
+      var paged = this.state.cur_page;
+      fetch('/api/ticket_replies/listPaged?per_page=999999&ticket_id=' + this.props.id + '&paged=' + paged).then(function (res) {
+        return res.json();
+      }).then(function (json) {
+        if (json.ok) {
+          _this3.setState({
+            loaded: true,
+            items: json.items,
+            pageCount: json.pagination.pageCount
+          });
+        } else {
+          _this3.setState({
+            is_page: false,
+            loaded: true
+          });
+        }
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.fetchData();
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(event) {
+      this.setState(_defineProperty({}, event.target.name, event.target.value));
+    }
+  }, {
+    key: "onSubmit",
+    value: function onSubmit(e) {
+      var _this4 = this;
+
+      e.preventDefault();
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher.default.post('/api/ticket_replies/add', {
+        text: this.state.text,
+        ticket_id: this.state.ticket.id
+      }).then(function (resp) {
+        _this4.setState({
+          loaded: true
+        });
+
+        if (resp.ok) {
+          _this4.setState({
+            text: ''
+          });
+
+          _this4.fetchReplies();
+        } else {
+          _this4.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this4.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this4.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "renderDownloadAttachment",
+    value: function renderDownloadAttachment(a) {
+      if (!a) {
+        return false;
+      }
+
+      var split = a.split('.');
+      var split_le = split.length;
+      var ext = split[split_le - 1];
+
+      if (ext == 'jpg' || ext == 'png' || ext == 'jpeg' || ext == 'gif' || ext == 'bmp') {
+        return _react.default.createElement("a", {
+          download: true,
+          href: a
+        }, _react.default.createElement("img", {
+          style: {
+            width: '500px'
+          },
+          className: "img_fluid",
+          src: a
+        }));
+      }
+
+      return _react.default.createElement("a", {
+        download: true,
+        href: a
+      }, "Download attachment");
+    }
+  }, {
+    key: "closeTicketInner",
+    value: function closeTicketInner() {
+      var _this5 = this;
+
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher.default.post('/api/tickets/close', {
+        ticket_id: this.state.ticket.id
+      }).then(function (resp) {
+        _this5.setState({
+          loaded: true
+        });
+
+        if (resp.ok) {
+          _this5.props.dispatch({
+            type: 'SUCCESS',
+            messages: [resp]
+          });
+
+          _this5.fetchData(true);
+        } else {
+          _this5.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this5.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this5.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
+    }
+  }, {
+    key: "closeTicket",
+    value: function closeTicket() {
+      if (confirm('Are you sure you want to close this ticket')) {
+        this.closeTicketInner();
+      }
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this6 = this;
+
+      // const {data} = this.props;
+      // console.log(data);
+      return _react.default.createElement("div", {
+        className: ""
+      }, this.state.loaded ? false : _react.default.createElement("div", {
+        className: "show_loader"
+      }, _react.default.createElement("div", {
+        className: "is_loader"
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
+        className: "modal-body report_left_inner more_info_de"
+      }, _react.default.createElement("div", {
+        className: "col-sm-12"
+      }, _react.default.createElement("div", {
+        className: "card post"
+      }, _react.default.createElement("div", {
+        className: "row"
+      }, _react.default.createElement("div", {
+        className: "col-sm-3 ticket_item_av"
+      }, _react.default.createElement("span", {
+        className: "profile_menu_item ticket_item"
+      }, _react.default.createElement("span", {
+        className: "profile_menu_item_inner"
+      }, _react.default.createElement("span", {
+        className: "menu_avatar"
+      }, _react.default.createElement("img", {
+        src: this.state.ticket.user.profile_picture ? this.state.ticket.user.profile_picture : this.state.ticket.user.gravatar,
+        className: "img-fluid profile_pic_outline"
+      })), _react.default.createElement("span", {
+        className: "menu_prof_name_w"
+      }, _react.default.createElement("span", {
+        className: "menu_prof_name_top"
+      }, "By", ' ', this.state.ticket.user.first_name + ' ' + this.state.ticket.user.last_name), _react.default.createElement("span", {
+        className: "menu_prof_name_bot"
+      }, (0, _moment.default)(this.state.ticket.created_at).format('lll')))))), _react.default.createElement("div", {
+        className: "col-sm-9 post-content"
+      }, _react.default.createElement("div", {
+        dangerouslySetInnerHTML: {
+          __html: this.state.ticket.description
+        }
+      }), this.renderDownloadAttachment(this.state.ticket.attachment))))), this.state.items.map(function (item, i) {
+        return _react.default.createElement("div", {
+          className: "col-sm-12",
+          key: item.id
+        }, _react.default.createElement("div", {
+          className: "card post"
+        }, _react.default.createElement("div", {
+          className: "row"
+        }, _react.default.createElement("div", {
+          className: "col-sm-3 ticket_item_av"
+        }, _react.default.createElement("span", {
+          className: 'profile_menu_item ticket_item ' + (item.from_admin && _this6.state.ticket.user_id != item.user_id ? ' from_admin ' : ' ')
+        }, _react.default.createElement("span", {
+          className: "profile_menu_item_inner"
+        }, _react.default.createElement("span", {
+          className: "menu_avatar"
+        }, _react.default.createElement("img", {
+          src: item.user.profile_picture ? item.user.profile_picture : item.user.gravatar,
+          className: "img-fluid profile_pic_outline"
+        })), _react.default.createElement("span", {
+          className: "menu_prof_name_w"
+        }, _react.default.createElement("span", {
+          className: "menu_prof_name_top"
+        }, item.from_admin && _this6.state.ticket.user_id != item.user_id ? 'SUPPORT STAFF' : '' + item.user.first_name + ' ' + item.user.last_name), _react.default.createElement("span", {
+          className: "menu_prof_name_bot"
+        }, (0, _moment.default)(item.created_at).format('lll')))))), _react.default.createElement("div", {
+          className: "col-sm-9 post-content"
+        }, _react.default.createElement("div", {
+          dangerouslySetInnerHTML: {
+            __html: item.content
+          }
+        }), _this6.renderDownloadAttachment(item.attachment)))));
+      })), _react.default.createElement("div", {
+        className: "modal-footer"
+      }, this.state.ticket.status == 'closed' ? false : _react.default.createElement("form", {
+        onSubmit: function onSubmit(e) {
+          _this6.onSubmit(e);
+        }
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Reply Text"), _react.default.createElement("textarea", {
+        type: "text",
+        required: true,
+        className: "form-control",
+        name: "text",
+        onChange: this.handleChange.bind(this),
+        id: "text",
+        value: this.state.text
+      })), _react.default.createElement("br", null), _react.default.createElement("input", {
+        value: "Close Ticket",
+        type: "button",
+        className: "btn btn-danger",
+        onClick: function onClick() {
+          _this6.closeTicket();
+        }
+      }), _react.default.createElement("input", {
+        value: "Create reply",
+        type: "submit",
+        className: "btn btn-primary"
+      })))));
+    }
+  }]);
+
+  return ViewTicket;
+}(_react.default.Component);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    modals: state.modals.modals,
+    user: state.auth.user,
+    messages: state.messages
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(ViewTicket);
+
+exports.default = _default;
+
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":32,"moment":118,"react":188,"react-redux":147}],44:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NotFound = function NotFound(props) {
+  return _react.default.createElement("div", {
+    className: "container text-center"
+  }, _react.default.createElement("h1", null, "404"), _react.default.createElement("p", null, "Page Not Found"));
+};
+
+var _default = NotFound;
+exports.default = _default;
+
+},{"react":188}],45:[function(require,module,exports){
+"use strict";
+
+require("whatwg-fetch");
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactDom = _interopRequireDefault(require("react-dom"));
+
+var _reactRedux = require("react-redux");
+
+var _reactRouter = require("react-router");
+
+var _configureStore = _interopRequireDefault(require("./store/configureStore"));
+
+var _routes = _interopRequireDefault(require("./routes"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var store = (0, _configureStore.default)(window.INITIAL_STATE);
+
+_reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
+  store: store
+}, _react.default.createElement(_reactRouter.Router, {
+  history: _reactRouter.hashHistory,
+  basename: '/admin',
+  routes: (0, _routes.default)(store)
+})), document.getElementById('app'));
+
+},{"./routes":50,"./store/configureStore":51,"react":188,"react-dom":129,"react-redux":147,"react-router":178,"whatwg-fetch":201}],46:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = auth;
+var initialState = {
+  token: null,
+  user: {}
+};
+
+function auth() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  if (!state.hydrated) {
+    state = Object.assign({}, initialState, state, {
+      hydrated: true
+    });
+  }
+
+  switch (action.type) {
+    case 'LOGIN_SUCCESS':
+    case 'SIGNUP_SUCCESS':
+    case 'OAUTH_SUCCESS':
+      return Object.assign({}, state, {
+        token: action.token,
+        user: action.user
+      });
+
+    case 'UPDATE_USER':
+      return Object.assign({}, state, {
+        token: action.token,
+        user: action.user
+      });
+
+    case 'LOGOUT_SUCCESS':
+      return initialState;
+
+    default:
+      return state;
+  }
+}
+
+},{}],47:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _redux = require("redux");
+
+var _messages = _interopRequireDefault(require("./messages"));
+
+var _auth = _interopRequireDefault(require("./auth"));
+
+var _modals = _interopRequireDefault(require("./modals"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _default = (0, _redux.combineReducers)({
+  messages: _messages.default,
+  auth: _auth.default,
+  modals: _modals.default
+});
+
+exports.default = _default;
+
+},{"./auth":46,"./messages":48,"./modals":49,"redux":191}],48:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = messages;
+
+function messages() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case 'LOGIN_FAILURE':
+    case 'UPDATE_PROFILE_FAILURE':
+    case 'CHANGE_PASSWORD_FAILURE':
+    case 'FORGOT_PASSWORD_FAILURE':
+    case 'RESET_PASSWORD_FAILURE':
+    case 'FAILURE':
+      return {
+        error: action.messages
+      };
+
+    case 'UPDATE_PROFILE_SUCCESS':
+    case 'CHANGE_PASSWORD_SUCCESS':
+    case 'RESET_PASSWORD_SUCCESS':
+    case 'CONTACT_FORM_SUCCESS':
+      return {
+        success: action.messages
+      };
+
+    case 'FORGOT_PASSWORD_SUCCESS':
+    case 'DELETE_ACCOUNT_SUCCESS':
+    case 'UNLINK_SUCCESS':
+      return {
+        info: action.messages
+      };
+
+    case 'CLEAR_MESSAGES':
+      return {};
+
+    default:
+      return state;
+  }
+}
 
 },{}],49:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=getRoutes;var _react=_interopRequireDefault(require("react")),_reactRouter=require("react-router"),_App=_interopRequireDefault(require("./components/App")),_Home=_interopRequireDefault(require("./components/Home")),_NotFound=_interopRequireDefault(require("./components/NotFound")),_Login=_interopRequireDefault(require("./components/Account/Login")),_Signup=_interopRequireDefault(require("./components/Account/Signup")),_Profile=_interopRequireDefault(require("./components/Account/Profile")),_Forgot=_interopRequireDefault(require("./components/Account/Forgot")),_Reset=_interopRequireDefault(require("./components/Account/Reset")),_AdminUsers=_interopRequireDefault(require("./components/DataRows/AdminUsers")),_AppUsers=_interopRequireDefault(require("./components/DataRows/AppUsers")),_Teams=_interopRequireDefault(require("./components/DataRows/Teams")),_Matchfinder=_interopRequireDefault(require("./components/DataRows/Matchfinder")),_Money=_interopRequireDefault(require("./components/DataRows/Money8")),_Tournaments=_interopRequireDefault(require("./components/DataRows/Tournaments")),_Games=_interopRequireDefault(require("./components/DataRows/Games")),_Ladders=_interopRequireDefault(require("./components/DataRows/Ladders")),_Topics=_interopRequireDefault(require("./components/DataRows/Topics")),_Posts=_interopRequireDefault(require("./components/DataRows/Posts")),_Threads=_interopRequireDefault(require("./components/DataRows/Threads")),_Tickets=_interopRequireDefault(require("./components/DataRows/Tickets")),_Subscribers=_interopRequireDefault(require("./components/DataRows/Subscribers")),_ApplyStaff=_interopRequireDefault(require("./components/DataRows/ApplyStaff")),_AdvertiseWithUs=_interopRequireDefault(require("./components/DataRows/AdvertiseWithUs")),_TournamentMatches=_interopRequireDefault(require("./components/DataRows/TournamentMatches")),_WithdrawalCompleted=_interopRequireDefault(require("./components/DataRows/WithdrawalCompleted")),_WithdrawalPending=_interopRequireDefault(require("./components/DataRows/WithdrawalPending"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function getRoutes(e){var t=function(e,t){},a=function(t,a){e.getState().auth.token&&a("/")},o=function(){e.dispatch({type:"CLEAR_MESSAGES"})};return _react.default.createElement(_reactRouter.Route,{path:"/",component:_App.default},_react.default.createElement(_reactRouter.IndexRoute,{component:_Home.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/account",component:_Profile.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/forms/advertise_with_us",component:_AdvertiseWithUs.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/forms/apply_for_staff",component:_ApplyStaff.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/forms/subscribers",component:_Subscribers.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/withdrawal/pending",component:_WithdrawalPending.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/withdrawal/completed",component:_WithdrawalCompleted.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/admin_users",component:_AdminUsers.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/app_users",component:_AppUsers.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/teams/:uid",component:_Teams.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/teams",component:_Teams.default,onEnter:t,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/matchfinder/:team_id",component:_Matchfinder.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/matchfinder/filter/:status",component:_Matchfinder.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/matchfinder",component:_Matchfinder.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/money8/filter/:status",component:_Money.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/tournamentmatches/filter/:status",component:_TournamentMatches.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/money8",component:_Money.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/tournaments",component:_Tournaments.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/games",component:_Games.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/topics",component:_Topics.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/threads",component:_Threads.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/tickets",component:_Tickets.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/posts",component:_Posts.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/games/add",component:_Games.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/games/edit",component:_Games.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/ladders",component:_Ladders.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/ladders/add",component:_Ladders.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/ladders/edit",component:_Ladders.default,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/login",component:_Login.default,onEnter:a,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/signup",component:_Signup.default,onEnter:a,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/forgot",component:_Forgot.default,onEnter:a,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"/reset/:token",component:_Reset.default,onEnter:a,onLeave:o}),_react.default.createElement(_reactRouter.Route,{path:"*",component:_NotFound.default,onLeave:o}))}
+"use strict";
 
-},{"./components/Account/Forgot":4,"./components/Account/Login":5,"./components/Account/Profile":6,"./components/Account/Reset":7,"./components/Account/Signup":8,"./components/App":9,"./components/DataRows/AdminUsers":10,"./components/DataRows/AdvertiseWithUs":11,"./components/DataRows/AppUsers":12,"./components/DataRows/ApplyStaff":13,"./components/DataRows/Games":14,"./components/DataRows/Ladders":15,"./components/DataRows/Matchfinder":16,"./components/DataRows/Money8":17,"./components/DataRows/Posts":18,"./components/DataRows/Subscribers":19,"./components/DataRows/Teams":20,"./components/DataRows/Threads":21,"./components/DataRows/Tickets":22,"./components/DataRows/Topics":23,"./components/DataRows/TournamentMatches":24,"./components/DataRows/Tournaments":25,"./components/DataRows/WithdrawalCompleted":26,"./components/DataRows/WithdrawalPending":27,"./components/Home":30,"./components/NotFound":43,"react":187,"react-router":177}],50:[function(require,module,exports){
-"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default=configureStore;var _redux=require("redux"),_reduxThunk=_interopRequireDefault(require("redux-thunk")),_reduxPromise=_interopRequireDefault(require("redux-promise")),_reducers=_interopRequireDefault(require("../reducers"));function _interopRequireDefault(e){return e&&e.__esModule?e:{default:e}}function configureStore(e){return(0,_redux.createStore)(_reducers.default,e,(0,_redux.applyMiddleware)(_reduxThunk.default,_reduxPromise.default))}
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = modals;
 
-},{"../reducers":46,"redux":190,"redux-promise":188,"redux-thunk":189}],51:[function(require,module,exports){
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var initialState = {
+  modals: []
+};
+
+function modals() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  if (!state.hydrated) {
+    state = Object.assign({}, initialState, state, {
+      hydrated: true
+    });
+  }
+
+  switch (action.type) {
+    case 'OPEN_MODAL':
+      document && document.body.classList.add('no-scroll');
+      return _objectSpread({}, state, {
+        modals: state.modals.concat(action.obj)
+      });
+
+    case 'CLOSE_MODAL':
+      {
+        var obj = _objectSpread({}, state, {
+          modals: state.modals.filter(function (item) {
+            return item.id !== action.obj.id;
+          })
+        });
+
+        if (obj.modals.length == 0) {
+          document && document.body.classList.remove('no-scroll');
+        }
+
+        return obj;
+      }
+
+    default:
+      return state;
+  }
+}
+
+},{}],50:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = getRoutes;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouter = require("react-router");
+
+var _App = _interopRequireDefault(require("./components/App"));
+
+var _Home = _interopRequireDefault(require("./components/Home"));
+
+var _NotFound = _interopRequireDefault(require("./components/NotFound"));
+
+var _Login = _interopRequireDefault(require("./components/Account/Login"));
+
+var _Signup = _interopRequireDefault(require("./components/Account/Signup"));
+
+var _Profile = _interopRequireDefault(require("./components/Account/Profile"));
+
+var _Forgot = _interopRequireDefault(require("./components/Account/Forgot"));
+
+var _Reset = _interopRequireDefault(require("./components/Account/Reset"));
+
+var _AdminUsers = _interopRequireDefault(require("./components/DataRows/AdminUsers"));
+
+var _AppUsers = _interopRequireDefault(require("./components/DataRows/AppUsers"));
+
+var _Teams = _interopRequireDefault(require("./components/DataRows/Teams"));
+
+var _Matchfinder = _interopRequireDefault(require("./components/DataRows/Matchfinder"));
+
+var _Money = _interopRequireDefault(require("./components/DataRows/Money8"));
+
+var _Tournaments = _interopRequireDefault(require("./components/DataRows/Tournaments"));
+
+var _Games = _interopRequireDefault(require("./components/DataRows/Games"));
+
+var _Ladders = _interopRequireDefault(require("./components/DataRows/Ladders"));
+
+var _Topics = _interopRequireDefault(require("./components/DataRows/Topics"));
+
+var _Posts = _interopRequireDefault(require("./components/DataRows/Posts"));
+
+var _Threads = _interopRequireDefault(require("./components/DataRows/Threads"));
+
+var _Tickets = _interopRequireDefault(require("./components/DataRows/Tickets"));
+
+var _TicketsClosed = _interopRequireDefault(require("./components/DataRows/TicketsClosed"));
+
+var _Subscribers = _interopRequireDefault(require("./components/DataRows/Subscribers"));
+
+var _ApplyStaff = _interopRequireDefault(require("./components/DataRows/ApplyStaff"));
+
+var _AdvertiseWithUs = _interopRequireDefault(require("./components/DataRows/AdvertiseWithUs"));
+
+var _TournamentMatches = _interopRequireDefault(require("./components/DataRows/TournamentMatches"));
+
+var _WithdrawalCompleted = _interopRequireDefault(require("./components/DataRows/WithdrawalCompleted"));
+
+var _WithdrawalPending = _interopRequireDefault(require("./components/DataRows/WithdrawalPending"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function getRoutes(store) {
+  var ensureAuthenticated = function ensureAuthenticated(nextState, replace) {// if (!store.getState().auth.token) {
+    //   replace('/login');
+    // }
+  };
+
+  var skipIfAuthenticated = function skipIfAuthenticated(nextState, replace) {
+    if (store.getState().auth.token) {
+      replace('/');
+    }
+  };
+
+  var clearMessages = function clearMessages() {
+    store.dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+  };
+
+  return _react.default.createElement(_reactRouter.Route, {
+    path: "/",
+    component: _App.default
+  }, _react.default.createElement(_reactRouter.IndexRoute, {
+    component: _Home.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/account",
+    component: _Profile.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/forms/advertise_with_us",
+    component: _AdvertiseWithUs.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/forms/apply_for_staff",
+    component: _ApplyStaff.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/forms/subscribers",
+    component: _Subscribers.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/withdrawal/pending",
+    component: _WithdrawalPending.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/withdrawal/completed",
+    component: _WithdrawalCompleted.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/admin_users",
+    component: _AdminUsers.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/app_users",
+    component: _AppUsers.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/teams/:uid",
+    component: _Teams.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/teams",
+    component: _Teams.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/matchfinder/:team_id",
+    component: _Matchfinder.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/matchfinder/filter/:status",
+    component: _Matchfinder.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/matchfinder",
+    component: _Matchfinder.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/money8/filter/:status",
+    component: _Money.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/tournamentmatches/filter/:status",
+    component: _TournamentMatches.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/money8",
+    component: _Money.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/tournaments",
+    component: _Tournaments.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/games",
+    component: _Games.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/topics",
+    component: _Topics.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/threads",
+    component: _Threads.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/tickets",
+    component: _Tickets.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/tickets_closed",
+    component: _TicketsClosed.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/posts",
+    component: _Posts.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/games/add",
+    component: _Games.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/games/edit",
+    component: _Games.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/ladders",
+    component: _Ladders.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/ladders/add",
+    component: _Ladders.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/ladders/edit",
+    component: _Ladders.default,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/login",
+    component: _Login.default,
+    onEnter: skipIfAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/signup",
+    component: _Signup.default,
+    onEnter: skipIfAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/forgot",
+    component: _Forgot.default,
+    onEnter: skipIfAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/reset/:token",
+    component: _Reset.default,
+    onEnter: skipIfAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "*",
+    component: _NotFound.default,
+    onLeave: clearMessages
+  }));
+}
+
+},{"./components/Account/Forgot":4,"./components/Account/Login":5,"./components/Account/Profile":6,"./components/Account/Reset":7,"./components/Account/Signup":8,"./components/App":9,"./components/DataRows/AdminUsers":10,"./components/DataRows/AdvertiseWithUs":11,"./components/DataRows/AppUsers":12,"./components/DataRows/ApplyStaff":13,"./components/DataRows/Games":14,"./components/DataRows/Ladders":15,"./components/DataRows/Matchfinder":16,"./components/DataRows/Money8":17,"./components/DataRows/Posts":18,"./components/DataRows/Subscribers":19,"./components/DataRows/Teams":20,"./components/DataRows/Threads":21,"./components/DataRows/Tickets":22,"./components/DataRows/TicketsClosed":23,"./components/DataRows/Topics":24,"./components/DataRows/TournamentMatches":25,"./components/DataRows/Tournaments":26,"./components/DataRows/WithdrawalCompleted":27,"./components/DataRows/WithdrawalPending":28,"./components/Home":31,"./components/NotFound":44,"react":188,"react-router":178}],51:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = configureStore;
+
+var _redux = require("redux");
+
+var _reduxThunk = _interopRequireDefault(require("redux-thunk"));
+
+var _reduxPromise = _interopRequireDefault(require("redux-promise"));
+
+var _reducers = _interopRequireDefault(require("../reducers"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import createLogger from 'redux-logger';
+function configureStore(initialState) {
+  // const logger = createLogger();
+  var store = (0, _redux.createStore)(_reducers.default, initialState, (0, _redux.applyMiddleware)(_reduxThunk.default, _reduxPromise.default));
+  return store;
+}
+
+},{"../reducers":47,"redux":191,"redux-promise":189,"redux-thunk":190}],52:[function(require,module,exports){
 function _assertThisInitialized(self) {
   if (self === void 0) {
     throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
@@ -158,7 +10709,7 @@ function _assertThisInitialized(self) {
 }
 
 module.exports = _assertThisInitialized;
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 function _extends() {
   module.exports = _extends = Object.assign || function (target) {
     for (var i = 1; i < arguments.length; i++) {
@@ -178,7 +10729,7 @@ function _extends() {
 }
 
 module.exports = _extends;
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 function _inheritsLoose(subClass, superClass) {
   subClass.prototype = Object.create(superClass.prototype);
   subClass.prototype.constructor = subClass;
@@ -186,7 +10737,7 @@ function _inheritsLoose(subClass, superClass) {
 }
 
 module.exports = _inheritsLoose;
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
     default: obj
@@ -194,7 +10745,7 @@ function _interopRequireDefault(obj) {
 }
 
 module.exports = _interopRequireDefault;
-},{}],55:[function(require,module,exports){
+},{}],56:[function(require,module,exports){
 function _interopRequireWildcard(obj) {
   if (obj && obj.__esModule) {
     return obj;
@@ -221,7 +10772,7 @@ function _interopRequireWildcard(obj) {
 }
 
 module.exports = _interopRequireWildcard;
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 function _objectWithoutPropertiesLoose(source, excluded) {
   if (source == null) return {};
   var target = {};
@@ -238,9 +10789,9 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 
 module.exports = _objectWithoutPropertiesLoose;
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 module.exports = require('./lib/axios');
-},{"./lib/axios":59}],58:[function(require,module,exports){
+},{"./lib/axios":60}],59:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -424,7 +10975,7 @@ module.exports = function xhrAdapter(config) {
 };
 
 }).call(this,require('_process'))
-},{"../core/createError":65,"./../core/settle":68,"./../helpers/btoa":72,"./../helpers/buildURL":73,"./../helpers/cookies":75,"./../helpers/isURLSameOrigin":77,"./../helpers/parseHeaders":79,"./../utils":81,"_process":119}],59:[function(require,module,exports){
+},{"../core/createError":66,"./../core/settle":69,"./../helpers/btoa":73,"./../helpers/buildURL":74,"./../helpers/cookies":76,"./../helpers/isURLSameOrigin":78,"./../helpers/parseHeaders":80,"./../utils":82,"_process":120}],60:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -478,7 +11029,7 @@ module.exports = axios;
 // Allow use of default import syntax in TypeScript
 module.exports.default = axios;
 
-},{"./cancel/Cancel":60,"./cancel/CancelToken":61,"./cancel/isCancel":62,"./core/Axios":63,"./defaults":70,"./helpers/bind":71,"./helpers/spread":80,"./utils":81}],60:[function(require,module,exports){
+},{"./cancel/Cancel":61,"./cancel/CancelToken":62,"./cancel/isCancel":63,"./core/Axios":64,"./defaults":71,"./helpers/bind":72,"./helpers/spread":81,"./utils":82}],61:[function(require,module,exports){
 'use strict';
 
 /**
@@ -499,7 +11050,7 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 'use strict';
 
 var Cancel = require('./Cancel');
@@ -558,14 +11109,14 @@ CancelToken.source = function source() {
 
 module.exports = CancelToken;
 
-},{"./Cancel":60}],62:[function(require,module,exports){
+},{"./Cancel":61}],63:[function(require,module,exports){
 'use strict';
 
 module.exports = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-},{}],63:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 'use strict';
 
 var defaults = require('./../defaults');
@@ -646,7 +11197,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = Axios;
 
-},{"./../defaults":70,"./../utils":81,"./InterceptorManager":64,"./dispatchRequest":66}],64:[function(require,module,exports){
+},{"./../defaults":71,"./../utils":82,"./InterceptorManager":65,"./dispatchRequest":67}],65:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -700,7 +11251,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
-},{"./../utils":81}],65:[function(require,module,exports){
+},{"./../utils":82}],66:[function(require,module,exports){
 'use strict';
 
 var enhanceError = require('./enhanceError');
@@ -720,7 +11271,7 @@ module.exports = function createError(message, config, code, request, response) 
   return enhanceError(error, config, code, request, response);
 };
 
-},{"./enhanceError":67}],66:[function(require,module,exports){
+},{"./enhanceError":68}],67:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -808,7 +11359,7 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
-},{"../cancel/isCancel":62,"../defaults":70,"./../helpers/combineURLs":74,"./../helpers/isAbsoluteURL":76,"./../utils":81,"./transformData":69}],67:[function(require,module,exports){
+},{"../cancel/isCancel":63,"../defaults":71,"./../helpers/combineURLs":75,"./../helpers/isAbsoluteURL":77,"./../utils":82,"./transformData":70}],68:[function(require,module,exports){
 'use strict';
 
 /**
@@ -831,7 +11382,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   return error;
 };
 
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 'use strict';
 
 var createError = require('./createError');
@@ -859,7 +11410,7 @@ module.exports = function settle(resolve, reject, response) {
   }
 };
 
-},{"./createError":65}],69:[function(require,module,exports){
+},{"./createError":66}],70:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -881,7 +11432,7 @@ module.exports = function transformData(data, headers, fns) {
   return data;
 };
 
-},{"./../utils":81}],70:[function(require,module,exports){
+},{"./../utils":82}],71:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -981,7 +11532,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 }).call(this,require('_process'))
-},{"./adapters/http":58,"./adapters/xhr":58,"./helpers/normalizeHeaderName":78,"./utils":81,"_process":119}],71:[function(require,module,exports){
+},{"./adapters/http":59,"./adapters/xhr":59,"./helpers/normalizeHeaderName":79,"./utils":82,"_process":120}],72:[function(require,module,exports){
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -994,7 +11545,7 @@ module.exports = function bind(fn, thisArg) {
   };
 };
 
-},{}],72:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 'use strict';
 
 // btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
@@ -1032,7 +11583,7 @@ function btoa(input) {
 
 module.exports = btoa;
 
-},{}],73:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1100,7 +11651,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
-},{"./../utils":81}],74:[function(require,module,exports){
+},{"./../utils":82}],75:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1116,7 +11667,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
     : baseURL;
 };
 
-},{}],75:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1171,7 +11722,7 @@ module.exports = (
   })()
 );
 
-},{"./../utils":81}],76:[function(require,module,exports){
+},{"./../utils":82}],77:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1187,7 +11738,7 @@ module.exports = function isAbsoluteURL(url) {
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
 
-},{}],77:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1257,7 +11808,7 @@ module.exports = (
   })()
 );
 
-},{"./../utils":81}],78:[function(require,module,exports){
+},{"./../utils":82}],79:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -1271,7 +11822,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
   });
 };
 
-},{"../utils":81}],79:[function(require,module,exports){
+},{"../utils":82}],80:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -1326,7 +11877,7 @@ module.exports = function parseHeaders(headers) {
   return parsed;
 };
 
-},{"./../utils":81}],80:[function(require,module,exports){
+},{"./../utils":82}],81:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1355,7 +11906,7 @@ module.exports = function spread(callback) {
   };
 };
 
-},{}],81:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 'use strict';
 
 var bind = require('./helpers/bind');
@@ -1660,7 +12211,7 @@ module.exports = {
   trim: trim
 };
 
-},{"./helpers/bind":71,"is-buffer":112}],82:[function(require,module,exports){
+},{"./helpers/bind":72,"is-buffer":113}],83:[function(require,module,exports){
 /*!
  * cookie
  * Copyright(c) 2012-2014 Roman Shtylman
@@ -1857,7 +12408,7 @@ function tryDecode(str, decode) {
   }
 }
 
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2787,7 +13338,7 @@ function factory(ReactComponent, isValidElement, ReactNoopUpdateQueue) {
 module.exports = factory;
 
 }).call(this,require('_process'))
-},{"_process":119,"fbjs/lib/emptyObject":86,"fbjs/lib/invariant":87,"fbjs/lib/warning":88,"object-assign":118}],84:[function(require,module,exports){
+},{"_process":120,"fbjs/lib/emptyObject":87,"fbjs/lib/invariant":88,"fbjs/lib/warning":89,"object-assign":119}],85:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -2817,7 +13368,7 @@ module.exports = factory(
   ReactNoopUpdateQueue
 );
 
-},{"./factory":83,"react":187}],85:[function(require,module,exports){
+},{"./factory":84,"react":188}],86:[function(require,module,exports){
 "use strict";
 
 /**
@@ -2854,7 +13405,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2874,7 +13425,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":119}],87:[function(require,module,exports){
+},{"_process":120}],88:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -2930,7 +13481,7 @@ function invariant(condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":119}],88:[function(require,module,exports){
+},{"_process":120}],89:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -2995,7 +13546,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":85,"_process":119}],89:[function(require,module,exports){
+},{"./emptyFunction":86,"_process":120}],90:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3021,7 +13572,7 @@ function isFSA(action) {
 function isError(action) {
   return action.error === true;
 }
-},{"lodash.isplainobject":90}],90:[function(require,module,exports){
+},{"lodash.isplainobject":91}],91:[function(require,module,exports){
 /**
  * lodash 3.2.0 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -3126,7 +13677,7 @@ function isPlainObject(value) {
 
 module.exports = isPlainObject;
 
-},{"lodash._basefor":113,"lodash.isarguments":114,"lodash.keysin":116}],91:[function(require,module,exports){
+},{"lodash._basefor":114,"lodash.isarguments":115,"lodash.keysin":117}],92:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3149,7 +13700,7 @@ var REPLACE = exports.REPLACE = 'REPLACE';
  * for more information.
  */
 var POP = exports.POP = 'POP';
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -3206,7 +13757,7 @@ var loopAsync = exports.loopAsync = function loopAsync(turns, work, callback) {
 
   next();
 };
-},{}],93:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3306,7 +13857,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
 var go = exports.go = function go(n) {
   if (n) window.history.go(n);
 };
-},{"./DOMStateStorage":94,"./DOMUtils":95,"./ExecutionEnvironment":96,"./LocationUtils":98,"./PathUtils":99}],94:[function(require,module,exports){
+},{"./DOMStateStorage":95,"./DOMUtils":96,"./ExecutionEnvironment":97,"./LocationUtils":99,"./PathUtils":100}],95:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3394,7 +13945,7 @@ var readState = exports.readState = function readState(key) {
   return undefined;
 };
 }).call(this,require('_process'))
-},{"_process":119,"warning":199}],95:[function(require,module,exports){
+},{"_process":120,"warning":200}],96:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3444,12 +13995,12 @@ var supportsPopstateOnHashchange = exports.supportsPopstateOnHashchange = functi
 var isExtraneousPopstateEvent = exports.isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
   return event.state === undefined && navigator.userAgent.indexOf('CriOS') === -1;
 };
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = exports.canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3588,7 +14139,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
   });
 };
 }).call(this,require('_process'))
-},{"./BrowserProtocol":93,"./DOMStateStorage":94,"./DOMUtils":95,"./LocationUtils":98,"./PathUtils":99,"_process":119,"warning":199}],98:[function(require,module,exports){
+},{"./BrowserProtocol":94,"./DOMStateStorage":95,"./DOMUtils":96,"./LocationUtils":99,"./PathUtils":100,"_process":120,"warning":200}],99:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3683,7 +14234,7 @@ var locationsAreEqual = exports.locationsAreEqual = function locationsAreEqual(a
   a.pathname === b.pathname && a.search === b.search && a.hash === b.hash && statesAreEqual(a.state, b.state);
 };
 }).call(this,require('_process'))
-},{"./Actions":91,"./PathUtils":99,"_process":119,"invariant":111,"warning":199}],99:[function(require,module,exports){
+},{"./Actions":92,"./PathUtils":100,"_process":120,"invariant":112,"warning":200}],100:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3782,7 +14333,7 @@ var createPath = exports.createPath = function createPath(location) {
   return path;
 };
 }).call(this,require('_process'))
-},{"_process":119,"warning":199}],100:[function(require,module,exports){
+},{"_process":120,"warning":200}],101:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -3820,7 +14371,7 @@ var replaceLocation = exports.replaceLocation = function replaceLocation(locatio
   window.location.replace((0, _PathUtils.createPath)(location));
   return false; // Don't update location
 };
-},{"./BrowserProtocol":93,"./LocationUtils":98,"./PathUtils":99}],101:[function(require,module,exports){
+},{"./BrowserProtocol":94,"./LocationUtils":99,"./PathUtils":100}],102:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -3916,7 +14467,7 @@ var createBrowserHistory = function createBrowserHistory() {
 
 exports.default = createBrowserHistory;
 }).call(this,require('_process'))
-},{"./BrowserProtocol":93,"./DOMUtils":95,"./ExecutionEnvironment":96,"./RefreshProtocol":100,"./createHistory":103,"_process":119,"invariant":111}],102:[function(require,module,exports){
+},{"./BrowserProtocol":94,"./DOMUtils":96,"./ExecutionEnvironment":97,"./RefreshProtocol":101,"./createHistory":104,"_process":120,"invariant":112}],103:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4066,7 +14617,7 @@ var createHashHistory = function createHashHistory() {
 
 exports.default = createHashHistory;
 }).call(this,require('_process'))
-},{"./DOMUtils":95,"./ExecutionEnvironment":96,"./HashProtocol":97,"./createHistory":103,"_process":119,"invariant":111,"warning":199}],103:[function(require,module,exports){
+},{"./DOMUtils":96,"./ExecutionEnvironment":97,"./HashProtocol":98,"./createHistory":104,"_process":120,"invariant":112,"warning":200}],104:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4243,7 +14794,7 @@ var createHistory = function createHistory() {
 };
 
 exports.default = createHistory;
-},{"./Actions":91,"./AsyncUtils":92,"./LocationUtils":98,"./PathUtils":99,"./runTransitionHook":105}],104:[function(require,module,exports){
+},{"./Actions":92,"./AsyncUtils":93,"./LocationUtils":99,"./PathUtils":100,"./runTransitionHook":106}],105:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4386,7 +14937,7 @@ var createMemoryHistory = function createMemoryHistory() {
 
 exports.default = createMemoryHistory;
 }).call(this,require('_process'))
-},{"./Actions":91,"./LocationUtils":98,"./PathUtils":99,"./createHistory":103,"_process":119,"invariant":111,"warning":199}],105:[function(require,module,exports){
+},{"./Actions":92,"./LocationUtils":99,"./PathUtils":100,"./createHistory":104,"_process":120,"invariant":112,"warning":200}],106:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -4412,7 +14963,7 @@ var runTransitionHook = function runTransitionHook(hook, location, callback) {
 
 exports.default = runTransitionHook;
 }).call(this,require('_process'))
-},{"_process":119,"warning":199}],106:[function(require,module,exports){
+},{"_process":120,"warning":200}],107:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4522,7 +15073,7 @@ var useBasename = function useBasename(createHistory) {
 };
 
 exports.default = useBasename;
-},{"./PathUtils":99,"./runTransitionHook":105}],107:[function(require,module,exports){
+},{"./PathUtils":100,"./runTransitionHook":106}],108:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -4644,7 +15195,7 @@ var useQueries = function useQueries(createHistory) {
 };
 
 exports.default = useQueries;
-},{"./LocationUtils":98,"./PathUtils":99,"./runTransitionHook":105,"query-string":108}],108:[function(require,module,exports){
+},{"./LocationUtils":99,"./PathUtils":100,"./runTransitionHook":106,"query-string":109}],109:[function(require,module,exports){
 'use strict';
 var strictUriEncode = require('strict-uri-encode');
 var objectAssign = require('object-assign');
@@ -4851,7 +15402,7 @@ exports.stringify = function (obj, opts) {
 	}).join('&') : '';
 };
 
-},{"object-assign":118,"strict-uri-encode":109}],109:[function(require,module,exports){
+},{"object-assign":119,"strict-uri-encode":110}],110:[function(require,module,exports){
 'use strict';
 module.exports = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -4859,7 +15410,7 @@ module.exports = function (str) {
 	});
 };
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 'use strict';
 
 /**
@@ -4964,7 +15515,7 @@ function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
 
 module.exports = hoistNonReactStatics;
 
-},{"react-is":131}],111:[function(require,module,exports){
+},{"react-is":132}],112:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -5017,7 +15568,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":119}],112:[function(require,module,exports){
+},{"_process":120}],113:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -5040,7 +15591,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 /**
  * lodash 3.0.3 (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -5090,7 +15641,7 @@ function createBaseFor(fromRight) {
 
 module.exports = baseFor;
 
-},{}],114:[function(require,module,exports){
+},{}],115:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -5321,7 +15872,7 @@ function isObjectLike(value) {
 
 module.exports = isArguments;
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 /**
  * lodash 3.0.4 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -5503,7 +16054,7 @@ function isNative(value) {
 
 module.exports = isArray;
 
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 /**
  * lodash 3.0.8 (Custom Build) <https://lodash.com/>
  * Build: `lodash modern modularize exports="npm" -o ./`
@@ -5637,7 +16188,7 @@ function keysIn(object) {
 
 module.exports = keysIn;
 
-},{"lodash.isarguments":114,"lodash.isarray":115}],117:[function(require,module,exports){
+},{"lodash.isarguments":115,"lodash.isarray":116}],118:[function(require,module,exports){
 //! moment.js
 
 ;(function (global, factory) {
@@ -10241,7 +20792,7 @@ module.exports = keysIn;
 
 })));
 
-},{}],118:[function(require,module,exports){
+},{}],119:[function(require,module,exports){
 /*
 object-assign
 (c) Sindre Sorhus
@@ -10333,7 +20884,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 	return to;
 };
 
-},{}],119:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -10519,7 +21070,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -10614,7 +21165,7 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 module.exports = checkPropTypes;
 
 }).call(this,require('_process'))
-},{"./lib/ReactPropTypesSecret":124,"_process":119}],121:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":125,"_process":120}],122:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -10675,7 +21226,7 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-},{"./lib/ReactPropTypesSecret":124}],122:[function(require,module,exports){
+},{"./lib/ReactPropTypesSecret":125}],123:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -11234,7 +21785,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 };
 
 }).call(this,require('_process'))
-},{"./checkPropTypes":120,"./lib/ReactPropTypesSecret":124,"_process":119,"object-assign":118}],123:[function(require,module,exports){
+},{"./checkPropTypes":121,"./lib/ReactPropTypesSecret":125,"_process":120,"object-assign":119}],124:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -11266,7 +21817,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./factoryWithThrowingShims":121,"./factoryWithTypeCheckers":122,"_process":119}],124:[function(require,module,exports){
+},{"./factoryWithThrowingShims":122,"./factoryWithTypeCheckers":123,"_process":120}],125:[function(require,module,exports){
 /**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
@@ -11280,7 +21831,7 @@ var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
 
-},{}],125:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 var cookie = require('cookie');
 
 if (typeof Object.assign != 'function') {
@@ -11434,7 +21985,7 @@ if (typeof window !== 'undefined') {
 
 module.exports = reactCookie;
 
-},{"cookie":82}],126:[function(require,module,exports){
+},{"cookie":83}],127:[function(require,module,exports){
 (function (process){
 /** @license React v16.7.0
  * react-dom.development.js
@@ -31523,7 +42074,7 @@ module.exports = reactDom;
 }
 
 }).call(this,require('_process'))
-},{"_process":119,"object-assign":118,"prop-types/checkPropTypes":120,"react":187,"scheduler":195,"scheduler/tracing":196}],127:[function(require,module,exports){
+},{"_process":120,"object-assign":119,"prop-types/checkPropTypes":121,"react":188,"scheduler":196,"scheduler/tracing":197}],128:[function(require,module,exports){
 /** @license React v16.7.0
  * react-dom.production.min.js
  *
@@ -31774,7 +42325,7 @@ void 0:t("40");return a._reactRootContainer?(Uh(function(){fi(null,null,a,!1,fun
 Ka,La,Ca.injectEventPluginsByName,qa,Ra,function(a){za(a,Qa)},Ib,Jb,Jd,Ea]}};function hi(a,b){di(a)?void 0:t("299","unstable_createRoot");return new ci(a,!0,null!=b&&!0===b.hydrate)}(function(a){var b=a.findFiberByHostInstance;return We(n({},a,{overrideProps:null,findHostInstanceByFiber:function(a){a=nd(a);return null===a?null:a.stateNode},findFiberByHostInstance:function(a){return b?b(a):null}}))})({findFiberByHostInstance:Ia,bundleType:0,version:"16.7.0",rendererPackageName:"react-dom"});
 var li={default:ki},mi=li&&ki||li;module.exports=mi.default||mi;
 
-},{"object-assign":118,"react":187,"scheduler":195}],128:[function(require,module,exports){
+},{"object-assign":119,"react":188,"scheduler":196}],129:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -31816,7 +42367,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-dom.development.js":126,"./cjs/react-dom.production.min.js":127,"_process":119}],129:[function(require,module,exports){
+},{"./cjs/react-dom.development.js":127,"./cjs/react-dom.production.min.js":128,"_process":120}],130:[function(require,module,exports){
 (function (process){
 /** @license React v16.11.0
  * react-is.development.js
@@ -32056,7 +42607,7 @@ exports.isSuspense = isSuspense;
 }
 
 }).call(this,require('_process'))
-},{"_process":119}],130:[function(require,module,exports){
+},{"_process":120}],131:[function(require,module,exports){
 /** @license React v16.11.0
  * react-is.production.min.js
  *
@@ -32073,7 +42624,7 @@ exports.typeOf=y;exports.AsyncMode=l;exports.ConcurrentMode=m;exports.ContextCon
 exports.isValidElementType=function(a){return"string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||a===q||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n||a.$$typeof===v||a.$$typeof===w||a.$$typeof===x)};exports.isAsyncMode=function(a){return z(a)||y(a)===l};exports.isConcurrentMode=z;exports.isContextConsumer=function(a){return y(a)===k};exports.isContextProvider=function(a){return y(a)===h};
 exports.isElement=function(a){return"object"===typeof a&&null!==a&&a.$$typeof===c};exports.isForwardRef=function(a){return y(a)===n};exports.isFragment=function(a){return y(a)===e};exports.isLazy=function(a){return y(a)===t};exports.isMemo=function(a){return y(a)===r};exports.isPortal=function(a){return y(a)===d};exports.isProfiler=function(a){return y(a)===g};exports.isStrictMode=function(a){return y(a)===f};exports.isSuspense=function(a){return y(a)===p};
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -32084,7 +42635,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react-is.development.js":129,"./cjs/react-is.production.min.js":130,"_process":119}],132:[function(require,module,exports){
+},{"./cjs/react-is.development.js":130,"./cjs/react-is.production.min.js":131,"_process":120}],133:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32135,7 +42686,7 @@ BreakView.propTypes = {
 
 exports.default = BreakView;
 
-},{"prop-types":123,"react":187}],133:[function(require,module,exports){
+},{"prop-types":124,"react":188}],134:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32216,7 +42767,7 @@ PageView.propTypes = {
 
 exports.default = PageView;
 
-},{"prop-types":123,"react":187}],134:[function(require,module,exports){
+},{"prop-types":124,"react":188}],135:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32611,7 +43162,7 @@ PaginationBoxView.defaultProps = {
 };
 exports.default = PaginationBoxView;
 
-},{"./BreakView":132,"./PageView":133,"prop-types":123,"react":187}],135:[function(require,module,exports){
+},{"./BreakView":133,"./PageView":134,"prop-types":124,"react":188}],136:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32626,7 +43177,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = _PaginationBoxView2.default;
 
-},{"./PaginationBoxView":134}],136:[function(require,module,exports){
+},{"./PaginationBoxView":135}],137:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -32641,7 +43192,7 @@ var ReactReduxContext = _react.default.createContext(null);
 exports.ReactReduxContext = ReactReduxContext;
 var _default = ReactReduxContext;
 exports.default = _default;
-},{"@babel/runtime/helpers/interopRequireDefault":54,"react":187}],137:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":55,"react":188}],138:[function(require,module,exports){
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -32748,7 +43299,7 @@ Provider.propTypes = {
 };
 var _default = Provider;
 exports.default = _default;
-},{"./Context":136,"@babel/runtime/helpers/inheritsLoose":53,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/interopRequireWildcard":55,"prop-types":123,"react":187}],138:[function(require,module,exports){
+},{"./Context":137,"@babel/runtime/helpers/inheritsLoose":54,"@babel/runtime/helpers/interopRequireDefault":55,"@babel/runtime/helpers/interopRequireWildcard":56,"prop-types":124,"react":188}],139:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -32954,7 +43505,7 @@ _ref) {
   };
 }
 }).call(this,require('_process'))
-},{"./Context":136,"@babel/runtime/helpers/assertThisInitialized":51,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/inheritsLoose":53,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/interopRequireWildcard":55,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56,"_process":119,"hoist-non-react-statics":110,"invariant":111,"react":187,"react-is":131}],139:[function(require,module,exports){
+},{"./Context":137,"@babel/runtime/helpers/assertThisInitialized":52,"@babel/runtime/helpers/extends":53,"@babel/runtime/helpers/inheritsLoose":54,"@babel/runtime/helpers/interopRequireDefault":55,"@babel/runtime/helpers/interopRequireWildcard":56,"@babel/runtime/helpers/objectWithoutPropertiesLoose":57,"_process":120,"hoist-non-react-statics":111,"invariant":112,"react":188,"react-is":132}],140:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -33070,7 +43621,7 @@ function createConnect(_temp) {
 var _default = createConnect();
 
 exports.default = _default;
-},{"../components/connectAdvanced":138,"../utils/shallowEqual":148,"./mapDispatchToProps":140,"./mapStateToProps":141,"./mergeProps":142,"./selectorFactory":143,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56}],140:[function(require,module,exports){
+},{"../components/connectAdvanced":139,"../utils/shallowEqual":149,"./mapDispatchToProps":141,"./mapStateToProps":142,"./mergeProps":143,"./selectorFactory":144,"@babel/runtime/helpers/extends":53,"@babel/runtime/helpers/interopRequireDefault":55,"@babel/runtime/helpers/objectWithoutPropertiesLoose":57}],141:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -33103,7 +43654,7 @@ function whenMapDispatchToPropsIsObject(mapDispatchToProps) {
 
 var _default = [whenMapDispatchToPropsIsFunction, whenMapDispatchToPropsIsMissing, whenMapDispatchToPropsIsObject];
 exports.default = _default;
-},{"./wrapMapToProps":145,"redux":190}],141:[function(require,module,exports){
+},{"./wrapMapToProps":146,"redux":191}],142:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -33125,7 +43676,7 @@ function whenMapStateToPropsIsMissing(mapStateToProps) {
 
 var _default = [whenMapStateToPropsIsFunction, whenMapStateToPropsIsMissing];
 exports.default = _default;
-},{"./wrapMapToProps":145}],142:[function(require,module,exports){
+},{"./wrapMapToProps":146}],143:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -33182,7 +43733,7 @@ function whenMergePropsIsOmitted(mergeProps) {
 var _default = [whenMergePropsIsFunction, whenMergePropsIsOmitted];
 exports.default = _default;
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":149,"@babel/runtime/helpers/extends":52,"@babel/runtime/helpers/interopRequireDefault":54,"_process":119}],143:[function(require,module,exports){
+},{"../utils/verifyPlainObject":150,"@babel/runtime/helpers/extends":53,"@babel/runtime/helpers/interopRequireDefault":55,"_process":120}],144:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -33284,7 +43835,7 @@ function finalPropsSelectorFactory(dispatch, _ref2) {
   return selectorFactory(mapStateToProps, mapDispatchToProps, mergeProps, dispatch, options);
 }
 }).call(this,require('_process'))
-},{"./verifySubselectors":144,"@babel/runtime/helpers/interopRequireDefault":54,"@babel/runtime/helpers/objectWithoutPropertiesLoose":56,"_process":119}],144:[function(require,module,exports){
+},{"./verifySubselectors":145,"@babel/runtime/helpers/interopRequireDefault":55,"@babel/runtime/helpers/objectWithoutPropertiesLoose":57,"_process":120}],145:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -33309,7 +43860,7 @@ function verifySubselectors(mapStateToProps, mapDispatchToProps, mergeProps, dis
   verify(mapDispatchToProps, 'mapDispatchToProps', displayName);
   verify(mergeProps, 'mergeProps', displayName);
 }
-},{"../utils/warning":150,"@babel/runtime/helpers/interopRequireDefault":54}],145:[function(require,module,exports){
+},{"../utils/warning":151,"@babel/runtime/helpers/interopRequireDefault":55}],146:[function(require,module,exports){
 (function (process){
 "use strict";
 
@@ -33388,7 +43939,7 @@ function wrapMapToPropsFunc(mapToProps, methodName) {
   };
 }
 }).call(this,require('_process'))
-},{"../utils/verifyPlainObject":149,"@babel/runtime/helpers/interopRequireDefault":54,"_process":119}],146:[function(require,module,exports){
+},{"../utils/verifyPlainObject":150,"@babel/runtime/helpers/interopRequireDefault":55,"_process":120}],147:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -33410,7 +43961,7 @@ exports.ReactReduxContext = _Context.ReactReduxContext;
 var _connect = _interopRequireDefault(require("./connect/connect"));
 
 exports.connect = _connect.default;
-},{"./components/Context":136,"./components/Provider":137,"./components/connectAdvanced":138,"./connect/connect":139,"@babel/runtime/helpers/interopRequireDefault":54}],147:[function(require,module,exports){
+},{"./components/Context":137,"./components/Provider":138,"./components/connectAdvanced":139,"./connect/connect":140,"@babel/runtime/helpers/interopRequireDefault":55}],148:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -33432,7 +43983,7 @@ function isPlainObject(obj) {
 
   return proto === baseProto;
 }
-},{}],148:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -33466,7 +44017,7 @@ function shallowEqual(objA, objB) {
 
   return true;
 }
-},{}],149:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -33483,7 +44034,7 @@ function verifyPlainObject(value, displayName, methodName) {
     (0, _warning.default)(methodName + "() in " + displayName + " must return a plain object. Instead received " + value + ".");
   }
 }
-},{"./isPlainObject":147,"./warning":150,"@babel/runtime/helpers/interopRequireDefault":54}],150:[function(require,module,exports){
+},{"./isPlainObject":148,"./warning":151,"@babel/runtime/helpers/interopRequireDefault":55}],151:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -33513,7 +44064,7 @@ function warning(message) {
   /* eslint-enable no-empty */
 
 }
-},{}],151:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -33602,7 +44153,7 @@ function mapAsync(array, work, callback) {
     });
   });
 }
-},{}],152:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -33728,7 +44279,7 @@ function ContextSubscriber(name) {
     }
   }, _ref4;
 }
-},{"prop-types":123}],153:[function(require,module,exports){
+},{"prop-types":124}],154:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -33762,7 +44313,7 @@ var IndexLink = (0, _createReactClass2.default)({
 
 exports.default = IndexLink;
 module.exports = exports['default'];
-},{"./Link":157,"create-react-class":84,"react":187}],154:[function(require,module,exports){
+},{"./Link":158,"create-react-class":85,"react":188}],155:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -33825,7 +44376,7 @@ var IndexRedirect = (0, _createReactClass2.default)({
 exports.default = IndexRedirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":156,"./Redirect":161,"./routerWarning":181,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],155:[function(require,module,exports){
+},{"./InternalPropTypes":157,"./Redirect":162,"./routerWarning":182,"_process":120,"create-react-class":85,"invariant":112,"prop-types":124}],156:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -33887,7 +44438,7 @@ var IndexRoute = (0, _createReactClass2.default)({
 exports.default = IndexRoute;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":156,"./RouteUtils":163,"./routerWarning":181,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],156:[function(require,module,exports){
+},{"./InternalPropTypes":157,"./RouteUtils":164,"./routerWarning":182,"_process":120,"create-react-class":85,"invariant":112,"prop-types":124}],157:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -33913,7 +44464,7 @@ var component = exports.component = (0, _propTypes.oneOfType)([_propTypes.func, 
 var components = exports.components = (0, _propTypes.oneOfType)([component, _propTypes.object]);
 var route = exports.route = (0, _propTypes.oneOfType)([_propTypes.object, _propTypes.element]);
 var routes = exports.routes = (0, _propTypes.oneOfType)([route, (0, _propTypes.arrayOf)(route)]);
-},{"prop-types":123}],157:[function(require,module,exports){
+},{"prop-types":124}],158:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -34063,7 +44614,7 @@ var Link = (0, _createReactClass2.default)({
 exports.default = Link;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":152,"./PropTypes":160,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123,"react":187}],158:[function(require,module,exports){
+},{"./ContextUtils":153,"./PropTypes":161,"_process":120,"create-react-class":85,"invariant":112,"prop-types":124,"react":188}],159:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -34310,7 +44861,7 @@ function formatPattern(pattern, params) {
   return pathname.replace(/\/+/g, '/');
 }
 }).call(this,require('_process'))
-},{"_process":119,"invariant":111}],159:[function(require,module,exports){
+},{"_process":120,"invariant":112}],160:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -34318,7 +44869,7 @@ exports.isPromise = isPromise;
 function isPromise(obj) {
   return obj && typeof obj.then === 'function';
 }
-},{}],160:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -34343,7 +44894,7 @@ var locationShape = exports.locationShape = (0, _propTypes.shape)({
   action: _propTypes.string.isRequired,
   key: _propTypes.string
 });
-},{"prop-types":123}],161:[function(require,module,exports){
+},{"prop-types":124}],162:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -34445,7 +44996,7 @@ var Redirect = (0, _createReactClass2.default)({
 exports.default = Redirect;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":156,"./PatternUtils":158,"./RouteUtils":163,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],162:[function(require,module,exports){
+},{"./InternalPropTypes":157,"./PatternUtils":159,"./RouteUtils":164,"_process":120,"create-react-class":85,"invariant":112,"prop-types":124}],163:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -34502,7 +45053,7 @@ var Route = (0, _createReactClass2.default)({
 exports.default = Route;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":156,"./RouteUtils":163,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123}],163:[function(require,module,exports){
+},{"./InternalPropTypes":157,"./RouteUtils":164,"_process":120,"create-react-class":85,"invariant":112,"prop-types":124}],164:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -34596,7 +45147,7 @@ function createRoutes(routes) {
 
   return routes;
 }
-},{"react":187}],164:[function(require,module,exports){
+},{"react":188}],165:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -34775,7 +45326,7 @@ var propTypes = {
 exports.default = Router;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./InternalPropTypes":156,"./RouteUtils":163,"./RouterContext":165,"./RouterUtils":166,"./createTransitionManager":173,"./routerWarning":181,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123,"react":187}],165:[function(require,module,exports){
+},{"./InternalPropTypes":157,"./RouteUtils":164,"./RouterContext":166,"./RouterUtils":167,"./createTransitionManager":174,"./routerWarning":182,"_process":120,"create-react-class":85,"invariant":112,"prop-types":124,"react":188}],166:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -34910,7 +45461,7 @@ var RouterContext = (0, _createReactClass2.default)({
 exports.default = RouterContext;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":152,"./RouteUtils":163,"./getRouteParams":175,"_process":119,"create-react-class":84,"invariant":111,"prop-types":123,"react":187}],166:[function(require,module,exports){
+},{"./ContextUtils":153,"./RouteUtils":164,"./getRouteParams":176,"_process":120,"create-react-class":85,"invariant":112,"prop-types":124,"react":188}],167:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -34939,7 +45490,7 @@ function assignRouterState(router, _ref) {
 
   return router;
 }
-},{}],167:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35102,7 +45653,7 @@ function getTransitionUtils() {
   };
 }
 module.exports = exports['default'];
-},{"./AsyncUtils":151}],168:[function(require,module,exports){
+},{"./AsyncUtils":152}],169:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -35162,7 +45713,7 @@ exports.default = function () {
 
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouterContext":165,"./routerWarning":181,"_process":119,"react":187}],169:[function(require,module,exports){
+},{"./RouterContext":166,"./routerWarning":182,"_process":120,"react":188}],170:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35179,7 +45730,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createRouterHistory2.default)(_createBrowserHistory2.default);
 module.exports = exports['default'];
-},{"./createRouterHistory":172,"history/lib/createBrowserHistory":101}],170:[function(require,module,exports){
+},{"./createRouterHistory":173,"history/lib/createBrowserHistory":102}],171:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35255,7 +45806,7 @@ function computeChangedRoutes(prevState, nextState) {
 
 exports.default = computeChangedRoutes;
 module.exports = exports['default'];
-},{"./PatternUtils":158}],171:[function(require,module,exports){
+},{"./PatternUtils":159}],172:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35287,7 +45838,7 @@ function createMemoryHistory(options) {
   return history;
 }
 module.exports = exports['default'];
-},{"history/lib/createMemoryHistory":104,"history/lib/useBasename":106,"history/lib/useQueries":107}],172:[function(require,module,exports){
+},{"history/lib/createMemoryHistory":105,"history/lib/useBasename":107,"history/lib/useQueries":108}],173:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35307,7 +45858,7 @@ function createRouterHistory(createHistory) {
   return history;
 }
 module.exports = exports['default'];
-},{"./useRouterHistory":182}],173:[function(require,module,exports){
+},{"./useRouterHistory":183}],174:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -35594,7 +46145,7 @@ function createTransitionManager(history, routes) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./TransitionUtils":167,"./computeChangedRoutes":170,"./getComponents":174,"./isActive":178,"./matchRoutes":180,"./routerWarning":181,"_process":119}],174:[function(require,module,exports){
+},{"./TransitionUtils":168,"./computeChangedRoutes":171,"./getComponents":175,"./isActive":179,"./matchRoutes":181,"./routerWarning":182,"_process":120}],175:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35635,7 +46186,7 @@ function getComponents(nextState, callback) {
 
 exports.default = getComponents;
 module.exports = exports['default'];
-},{"./AsyncUtils":151,"./PromiseUtils":159}],175:[function(require,module,exports){
+},{"./AsyncUtils":152,"./PromiseUtils":160}],176:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35662,7 +46213,7 @@ function getRouteParams(route, params) {
 
 exports.default = getRouteParams;
 module.exports = exports['default'];
-},{"./PatternUtils":158}],176:[function(require,module,exports){
+},{"./PatternUtils":159}],177:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35679,7 +46230,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = (0, _createRouterHistory2.default)(_createHashHistory2.default);
 module.exports = exports['default'];
-},{"./createRouterHistory":172,"history/lib/createHashHistory":102}],177:[function(require,module,exports){
+},{"./createRouterHistory":173,"history/lib/createHashHistory":103}],178:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35805,7 +46356,7 @@ exports.applyRouterMiddleware = _applyRouterMiddleware3.default;
 exports.browserHistory = _browserHistory3.default;
 exports.hashHistory = _hashHistory3.default;
 exports.createMemoryHistory = _createMemoryHistory3.default;
-},{"./IndexLink":153,"./IndexRedirect":154,"./IndexRoute":155,"./Link":157,"./PatternUtils":158,"./PropTypes":160,"./Redirect":161,"./Route":162,"./RouteUtils":163,"./Router":164,"./RouterContext":165,"./applyRouterMiddleware":168,"./browserHistory":169,"./createMemoryHistory":171,"./hashHistory":176,"./match":179,"./useRouterHistory":182,"./withRouter":183}],178:[function(require,module,exports){
+},{"./IndexLink":154,"./IndexRedirect":155,"./IndexRoute":156,"./Link":158,"./PatternUtils":159,"./PropTypes":161,"./Redirect":162,"./Route":163,"./RouteUtils":164,"./Router":165,"./RouterContext":166,"./applyRouterMiddleware":169,"./browserHistory":170,"./createMemoryHistory":172,"./hashHistory":177,"./match":180,"./useRouterHistory":183,"./withRouter":184}],179:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -35958,7 +46509,7 @@ function isActive(_ref, indexOnly, currentLocation, routes, params) {
   return queryIsActive(query, currentLocation.query);
 }
 module.exports = exports['default'];
-},{"./PatternUtils":158}],179:[function(require,module,exports){
+},{"./PatternUtils":159}],180:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -36033,7 +46584,7 @@ function match(_ref, callback) {
 exports.default = match;
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./RouteUtils":163,"./RouterUtils":166,"./createMemoryHistory":171,"./createTransitionManager":173,"_process":119,"history/lib/Actions":91,"invariant":111}],180:[function(require,module,exports){
+},{"./RouteUtils":164,"./RouterUtils":167,"./createMemoryHistory":172,"./createTransitionManager":174,"_process":120,"history/lib/Actions":92,"invariant":112}],181:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -36291,7 +46842,7 @@ function matchRoutes(routes, location, callback, remainingPathname) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./AsyncUtils":151,"./PatternUtils":158,"./PromiseUtils":159,"./RouteUtils":163,"./routerWarning":181,"_process":119}],181:[function(require,module,exports){
+},{"./AsyncUtils":152,"./PatternUtils":159,"./PromiseUtils":160,"./RouteUtils":164,"./routerWarning":182,"_process":120}],182:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -36328,7 +46879,7 @@ function routerWarning(falseToWarn, message) {
 function _resetWarned() {
   warned = {};
 }
-},{"warning":199}],182:[function(require,module,exports){
+},{"warning":200}],183:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -36351,7 +46902,7 @@ function useRouterHistory(createHistory) {
   };
 }
 module.exports = exports['default'];
-},{"history/lib/useBasename":106,"history/lib/useQueries":107}],183:[function(require,module,exports){
+},{"history/lib/useBasename":107,"history/lib/useQueries":108}],184:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -36434,7 +46985,7 @@ function withRouter(WrappedComponent, options) {
 }
 module.exports = exports['default'];
 }).call(this,require('_process'))
-},{"./ContextUtils":152,"./PropTypes":160,"_process":119,"create-react-class":84,"hoist-non-react-statics":184,"invariant":111,"react":187}],184:[function(require,module,exports){
+},{"./ContextUtils":153,"./PropTypes":161,"_process":120,"create-react-class":85,"hoist-non-react-statics":185,"invariant":112,"react":188}],185:[function(require,module,exports){
 /**
  * Copyright 2015, Yahoo! Inc.
  * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
@@ -36486,7 +47037,7 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
     return targetComponent;
 };
 
-},{}],185:[function(require,module,exports){
+},{}],186:[function(require,module,exports){
 (function (process){
 /** @license React v16.7.0
  * react.development.js
@@ -38373,7 +48924,7 @@ module.exports = react;
 }
 
 }).call(this,require('_process'))
-},{"_process":119,"object-assign":118,"prop-types/checkPropTypes":120}],186:[function(require,module,exports){
+},{"_process":120,"object-assign":119,"prop-types/checkPropTypes":121}],187:[function(require,module,exports){
 /** @license React v16.7.0
  * react.production.min.js
  *
@@ -38399,7 +48950,7 @@ _currentValue:a,_currentValue2:a,_threadCount:0,Provider:null,Consumer:null};a.P
 if(null!=b){void 0!==b.ref&&(h=b.ref,f=K.current);void 0!==b.key&&(g=""+b.key);var l=void 0;a.type&&a.type.defaultProps&&(l=a.type.defaultProps);for(c in b)L.call(b,c)&&!M.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==l?l[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){l=Array(c);for(var m=0;m<c;m++)l[m]=arguments[m+2];d.children=l}return{$$typeof:p,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=N.bind(null,a);b.type=a;return b},isValidElement:O,version:"16.7.0",
 unstable_ConcurrentMode:x,unstable_Profiler:u,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:K,assign:k}},Y={default:X},Z=Y&&X||Y;module.exports=Z.default||Z;
 
-},{"object-assign":118}],187:[function(require,module,exports){
+},{"object-assign":119}],188:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -38410,7 +48961,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/react.development.js":185,"./cjs/react.production.min.js":186,"_process":119}],188:[function(require,module,exports){
+},{"./cjs/react.development.js":186,"./cjs/react.production.min.js":187,"_process":120}],189:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -38444,7 +48995,7 @@ function promiseMiddleware(_ref) {
 }
 
 module.exports = exports['default'];
-},{"flux-standard-action":89}],189:[function(require,module,exports){
+},{"flux-standard-action":90}],190:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -38468,7 +49019,7 @@ var thunk = createThunkMiddleware();
 thunk.withExtraArgument = createThunkMiddleware;
 
 exports['default'] = thunk;
-},{}],190:[function(require,module,exports){
+},{}],191:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -39119,7 +49670,7 @@ exports.compose = compose;
 exports.__DO_NOT_USE__ActionTypes = ActionTypes;
 
 }).call(this,require('_process'))
-},{"_process":119,"symbol-observable":197}],191:[function(require,module,exports){
+},{"_process":120,"symbol-observable":198}],192:[function(require,module,exports){
 (function (process){
 /** @license React v0.12.0
  * scheduler-tracing.development.js
@@ -39546,7 +50097,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 }
 
 }).call(this,require('_process'))
-},{"_process":119}],192:[function(require,module,exports){
+},{"_process":120}],193:[function(require,module,exports){
 /** @license React v0.12.0
  * scheduler-tracing.production.min.js
  *
@@ -39558,7 +50109,7 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 'use strict';Object.defineProperty(exports,"__esModule",{value:!0});var b=0;exports.__interactionsRef=null;exports.__subscriberRef=null;exports.unstable_clear=function(a){return a()};exports.unstable_getCurrent=function(){return null};exports.unstable_getThreadID=function(){return++b};exports.unstable_trace=function(a,d,c){return c()};exports.unstable_wrap=function(a){return a};exports.unstable_subscribe=function(){};exports.unstable_unsubscribe=function(){};
 
-},{}],193:[function(require,module,exports){
+},{}],194:[function(require,module,exports){
 (function (process,global){
 /** @license React v0.12.0
  * scheduler.development.js
@@ -40265,7 +50816,7 @@ exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":119}],194:[function(require,module,exports){
+},{"_process":120}],195:[function(require,module,exports){
 (function (global){
 /** @license React v0.12.0
  * scheduler.production.min.js
@@ -40290,7 +50841,7 @@ b=d.previous;b.next=d.previous=a;a.next=d;a.previous=b}return a};exports.unstabl
 exports.unstable_shouldYield=function(){return!f&&(null!==c&&c.expirationTime<l||w())};exports.unstable_continueExecution=function(){null!==c&&p()};exports.unstable_pauseExecution=function(){};exports.unstable_getFirstCallbackNode=function(){return c};
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],195:[function(require,module,exports){
+},{}],196:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40301,7 +50852,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler.development.js":193,"./cjs/scheduler.production.min.js":194,"_process":119}],196:[function(require,module,exports){
+},{"./cjs/scheduler.development.js":194,"./cjs/scheduler.production.min.js":195,"_process":120}],197:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -40312,7 +50863,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 }).call(this,require('_process'))
-},{"./cjs/scheduler-tracing.development.js":191,"./cjs/scheduler-tracing.production.min.js":192,"_process":119}],197:[function(require,module,exports){
+},{"./cjs/scheduler-tracing.development.js":192,"./cjs/scheduler-tracing.production.min.js":193,"_process":120}],198:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -40344,7 +50895,7 @@ if (typeof self !== 'undefined') {
 var result = (0, _ponyfill2['default'])(root);
 exports['default'] = result;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./ponyfill.js":198}],198:[function(require,module,exports){
+},{"./ponyfill.js":199}],199:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -40368,7 +50919,7 @@ function symbolObservablePonyfill(root) {
 
 	return result;
 };
-},{}],199:[function(require,module,exports){
+},{}],200:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -40432,7 +50983,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":119}],200:[function(require,module,exports){
+},{"_process":120}],201:[function(require,module,exports){
 (function(self) {
   'use strict';
 
@@ -40827,4 +51378,4 @@ module.exports = warning;
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
 
-},{}]},{},[44]);
+},{}]},{},[45]);
