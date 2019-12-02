@@ -3,7 +3,7 @@ const stripe = require('stripe')(process.env.STRIPE_KEY);
 const credit_cost = 1;
 const currency = 'usd';
 const moment = require('moment');
-
+const utils = require('../routes/utils');
 const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
 const WithdrawalRequest = require('../models/Withdrawal');
@@ -118,6 +118,47 @@ const withdraw = function(req, res, next) {
     })
     .catch(function(err) {
       console.log(11, err);
+    });
+};
+
+const transfer = function(req, res, next) {
+  if (!req.body.amount_to_transfer || !req.body.username_to_transfer) {
+    return res
+      .status(400)
+      .send({ok: false, msg: 'Not all values were provided.'});
+  }
+  new User()
+    .where('username', 'ILIKE', req.body.username_to_transfer)
+    .fetch()
+    .then(function(u) {
+      if (!u) {
+        res.status(400).send({
+          ok: false,
+          msg: 'No Such Username'
+        });
+        return;
+      }
+      //
+      utils.takeCreditsFromUser(
+        req.user.id,
+        req.body.amount_to_transfer,
+        'Transferred to @' + req.body.username_to_transfer,
+        ''
+      );
+      utils.giveCreditsToUser(
+        u.get('id'),
+        req.body.amount_to_transfer,
+        'Received from @' + req.user.username,
+        ''
+      );
+      res.status(200).send({ok: true, msg: 'Transferred Successfully.'});
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).status({
+        ok: false,
+        msg: 'Failed to transfer credits to another user.'
+      });
     });
 };
 
@@ -470,6 +511,7 @@ const newCredits = function(req, res, next) {
 };
 exports.new = newCredits;
 exports.withdraw = withdraw;
+exports.transfer = transfer;
 
 exports.stopRenewal = function(req, res, next) {
   req.assert('type', 'Type cannot be blank').notEmpty();

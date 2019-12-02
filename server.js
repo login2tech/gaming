@@ -258,6 +258,12 @@ app.post(
   creditsController.withdraw
 );
 
+app.post(
+  '/api/credits/transfer',
+  userController.ensureAuthenticated,
+  creditsController.transfer
+);
+
 app.get('/langController', langController.importLang);
 app.post('/signup', userController.signupPost);
 app.get('/resend', userController.resend);

@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {charge, withdraw} from '../../actions/stripe';
+import {charge, withdraw, transfer} from '../../actions/stripe';
 import Messages from '../Modules/Messages';
 import timezones from '../Modules/timezones';
 import {Link} from 'react-router';
@@ -13,6 +13,7 @@ import {
   changePassword,
   logout
 } from '../../actions/auth';
+
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -464,6 +465,33 @@ class Profile extends React.Component {
     );
   }
 
+  handleTransferSubmit(e) {
+    e.preventDefault();
+    e.preventDefault();
+
+    this.props.dispatch(
+      transfer(
+        {
+          amount_to_transfer: this.state.amount_to_transfer,
+          username_to_transfer: this.state.username_to_transfer
+        },
+
+        st => {
+          this.setState({
+            init_transaction_mode: false,
+            prev_success_type: 'withdraw'
+          });
+          // const obj = {saving_cover_photo: false};
+          // if (st) {
+          //   obj.new_cover_pic = '';
+          //   obj.new_cover_pic_saved = false;
+          // }
+          // this.setState(obj);
+        }
+      )
+    );
+  }
+
   renderWithDrawBox() {
     return (
       <div className="row">
@@ -548,6 +576,78 @@ class Profile extends React.Component {
                 value="Withdraw"
                 className="btn btn-primary"
               />
+            </form>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderTransferBox() {
+    return (
+      <div className="row">
+        <div className="col-md-12">
+          <hr />
+          <div className="contnet_box_border">
+            <form
+              onSubmit={this.handleTransferSubmit.bind(this)}
+              className="field_form"
+            >
+              <Messages messages={this.props.messages} />
+              <div className="form-group   m-t-2">
+                <label
+                  htmlFor="name_on_card"
+                  className=" form-control-label text-white"
+                >
+                  Username to transfer to
+                </label>
+                <br />
+                <div className="col-sm-12">
+                  <input
+                    type="text"
+                    required
+                    autoFocus
+                    name="username_to_transfer"
+                    placeholder="Enter name on card"
+                    id="username_to_transfer"
+                    className="form-control text-black"
+                    value={this.state.username_to_transfer}
+                    onChange={this.handleChange.bind(this)}
+                  />
+                </div>
+                <label
+                  htmlFor="name_on_card"
+                  className=" form-control-label text-white"
+                >
+                  Amount to transfer
+                </label>
+                <br />
+                <div className="col-sm-12">
+                  <input
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    required
+                    max={this.props.user.credit_balance}
+                    name="amount_to_transfer"
+                    placeholder="Enter name on card"
+                    id="amount_to_transfer"
+                    className="form-control text-black"
+                    value={this.state.amount_to_transfer}
+                    onChange={this.handleChange.bind(this)}
+                  />
+                </div>
+
+                <input
+                  type="submit"
+                  value="Transfer"
+                  disabled={
+                    !this.state.amount_to_transfer ||
+                    !this.state.username_to_transfer
+                  }
+                  className="btn btn-primary"
+                />
+              </div>
             </form>
           </div>
         </div>
@@ -650,19 +750,36 @@ class Profile extends React.Component {
               </div>
               {this.state.init_transaction_mode == 'credit' ? (
                 this.renderBuyBox('credit')
+              ) : this.state.init_transaction_mode == 'transfer' ? (
+                this.renderTransferBox('transfer')
               ) : (
-                <div className="col-md-6 offset-md-3 text-center">
-                  <input
-                    type="submit"
-                    value="Add Credits"
-                    onClick={() => {
-                      this.setState({init_transaction_mode: 'credit'});
-                      this.props.dispatch({
-                        type: 'CLEAR_MESSAGES'
-                      });
-                    }}
-                    className="btn btn-default bttn_submit"
-                  />
+                <div className="row">
+                  <div className="col-md-6 text-center">
+                    <input
+                      type="button"
+                      value="Add Credits"
+                      onClick={() => {
+                        this.setState({init_transaction_mode: 'credit'});
+                        this.props.dispatch({
+                          type: 'CLEAR_MESSAGES'
+                        });
+                      }}
+                      className="btn btn-default bttn_submit"
+                    />
+                  </div>
+                  <div className="col-md-6 text-center">
+                    <input
+                      type="button"
+                      value="Transfer"
+                      onClick={() => {
+                        this.setState({init_transaction_mode: 'transfer'});
+                        this.props.dispatch({
+                          type: 'CLEAR_MESSAGES'
+                        });
+                      }}
+                      className="btn btn-default bttn_submit"
+                    />
+                  </div>
                 </div>
               )}
             </div>
@@ -1101,14 +1218,6 @@ class Profile extends React.Component {
       </div>
     );
   }
-
-  // renderStep1() {
-  //   return (
-  //     <div className="tab-pane" data-tab="tab0">
-  //       <ul id="upcoming-tournament" className="tournament-list active" />
-  //     </div>
-  //   );
-  // }
 
   render() {
     const divStyle = this.state.new_cover_pic

@@ -89,6 +89,39 @@ export function withdraw(obj, cb) {
   };
 }
 
+export function transfer(obj, cb) {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/api/credits/transfer', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          cb(true);
+          dispatch({
+            type: 'SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        cb(false);
+        return response.json().then(json => {
+          dispatch({
+            type: 'FAILURE',
+            messages: [json]
+          });
+        });
+      }
+    });
+  };
+}
+
 export function chargeChange(id, token) {
   return dispatch => {
     dispatch({
