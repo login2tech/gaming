@@ -241,15 +241,38 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <a href="/admin/#/matchfinder/filter/disputed">
+                      <a
+                        href="/admin/#/matchfinder/filter/disputed"
+                        onClick={e => {
+                          window.location.href =
+                            '/admin/#/matchfinder/filter/disputed';
+                          window.location.reload();
+                        }}
+                      >
                         matchfinder
                       </a>
                     </li>
                     <li>
-                      <a href="/admin/#/money8/filter/disputed">money 8</a>
+                      <a
+                        href="/admin/#/money8/filter/disputed"
+                        onClick={e => {
+                          window.location.href =
+                            '/admin/#/money8/filter/disputed';
+                          window.location.reload();
+                        }}
+                      >
+                        money 8
+                      </a>
                     </li>
                     <li>
-                      <a href="/admin/#/tournamentmatches/filter/disputed">
+                      <a
+                        href="/admin/#/tournamentmatches/filter/disputed"
+                        onClick={e => {
+                          window.location.href =
+                            '/admin/#/tournamentmatches/filter/disputed';
+                          window.location.reload();
+                        }}
+                      >
                         tournament matches
                       </a>
                     </li>
