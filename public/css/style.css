@@ -5312,6 +5312,9 @@ img.hover_img {
 {
   margin: 0 auto;
 }
+.d-flex_i >button{
+  flex : 1
+}
 
 @media screen and (max-width: 690px) {
     .header_container {

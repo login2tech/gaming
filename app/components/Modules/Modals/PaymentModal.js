@@ -63,6 +63,10 @@ class PaymentModal extends React.Component {
     setTimeout(this.mountCard.bind(this), 1000);
   }
 
+  proceedWithOCG() {
+    alert('TO BE IMPLEMENTED!');
+  }
+
   mountCard() {
     if (document.getElementById('cardElement')) {
       this.cardObj.mount('#cardElement');
@@ -160,26 +164,40 @@ class PaymentModal extends React.Component {
               </div>
             </div>
           </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              onClick={() => this.doClose()}
-              className="btn text-white"
-              tabIndex="30"
-              data-dismiss="modal"
-            >
-              cancel
-            </button>
+          <div className="modal-footer" style={{display: 'block'}}>
+            <div>
+              <div className="d-flex d-flex_i">
+                <button
+                  type="button"
+                  onClick={() => this.doClose()}
+                  className="btn text-white"
+                  tabIndex="30"
+                  data-dismiss="modal"
+                >
+                  cancel
+                </button>
 
-            <button
-              type="submit"
-              disabled={!this.state.stripe_good}
-              className="btn btn-cta btn-outline btn-post btn-primary"
-            >
-              {this.props.button_title
-                ? this.props.button_title
-                : 'Pay and proceed'}
-            </button>
+                <button
+                  type="submit"
+                  disabled={!this.state.stripe_good}
+                  className="btn btn-cta btn-outline btn-post btn-primary"
+                >
+                  {this.props.button_title
+                    ? this.props.button_title
+                    : 'Pay and proceed'}
+                </button>
+              </div>
+              <div className="text-center mt-3">
+                <button
+                  onClick={this.proceedWithOCG.bind(this)}
+                  type="button"
+                  disabled={amount_pending > this.props.user.cash_balance}
+                  className="btn text-white"
+                >
+                  Or Proceed with OCG Cash
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -190,6 +208,7 @@ class PaymentModal extends React.Component {
 const mapStateToProps = state => {
   return {
     modals: state.modals.modals,
+    user: state.auth.user,
     messages: state.messages,
     settings: state.settings
   };

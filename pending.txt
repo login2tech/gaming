@@ -1,15 +1,9 @@
 1-  tournaments
-2- XP in tournaments - waiting
-3. xp for modules - waiting
-3- team xp - wating
-<!-- 4. team score show -->
-5. team xp meter - waiting
-<!-- 6. game settings -->
-7. tournamets dispute
+  2- XP in tournaments - waiting
+  7. tournamets dispute
+
+  
 8. recurring to non-recurring
-<!-- 9. user earnings -->
-<!-- 10. leaderboard in game -->
-<!-- 11. leaderboard based on earnings -->
+  - pending for membership
+9. refund in matchfinder cron
 12. trophies count
-<!-- 13. big pagination when no match in list(game page, profile, team profile) -->
-<!-- 14. rank -->
