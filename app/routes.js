@@ -78,6 +78,7 @@ export default function getRoutes(store) {
       <Route path="/contact" component={Contact} onLeave={clearMessages} />
 
       <Route
+        onEnter={ensureAuthenticated}
         path="/team_invites"
         component={TeamInvites}
         onLeave={clearMessages}
@@ -101,7 +102,6 @@ export default function getRoutes(store) {
         component={Notifications}
       />
       <Route
-        onEnter={ensureAuthenticated}
         onLeave={clearMessages}
         path="/records/:username/:duration"
         component={Records}

@@ -34,8 +34,20 @@ exports.team_pic = function(req, res, next) {
 exports.listMyInvites = function(req, res, next) {
   new ItemChild()
     .where({accepted: false, user_id: req.user.id})
-    .fetch({
-      with: ['team_info']
+    .fetchAll({
+      withRelated: [
+        'team_info',
+        {
+          'team_info.ladder': function(qb) {
+            return ['id', 'title'];
+          }
+        },
+        {
+          'team_info.ladder.game_info': function(qb) {
+            return ['id', 'title'];
+          }
+        }
+      ]
     })
     .then(function(invites) {
       if (!invites) {
@@ -46,9 +58,9 @@ exports.listMyInvites = function(req, res, next) {
         return;
       }
       invites = invites.toJSON();
-      invites = invites.map(function(item) {
-        return item.team_info;
-      });
+      // invites = invites.map(function(item) {
+      //   return item.team_info;
+      // });
       res.status(200).send({
         ok: true,
         items: invites
@@ -158,7 +170,6 @@ exports.approve = function(req, res, next) {
 };
 
 exports.invite = function(req, res, next) {
-  //
   if (!req.body.username || !req.body.team_id) {
     res.status(400).send({ok: false, msg: 'Please enter username'});
   }
@@ -205,7 +216,9 @@ exports.invite = function(req, res, next) {
               teams = teams.toJSON();
               for (let i = 0; i < teams.length; i++) {
                 if (
-                  teams[i].team_info.ladder_id == parseInt(req.body.ladder_id)
+                  teams[i].team_info.ladder_id ==
+                    parseInt(req.body.ladder_id) &&
+                  teams[i].team_info.team_type == req.body.team_type
                 ) {
                   // failed;
                   return res.status(400).send({
@@ -397,7 +410,8 @@ exports.addItem = function(req, res, next) {
       for (let i = 0; i < teams.length; i++) {
         if (
           teams[i].team_info.ladder_id == parseInt(req.body.ladder) &&
-          teams[i].team_info.team_type == req.body.team_type
+          teams[i].team_info.team_type == req.body.team_type &&
+          teams[i].team_info.removed == false
         ) {
           // failed;
           return res.status(400).send({

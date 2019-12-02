@@ -26,6 +26,7 @@ class TeamInfo extends React.Component {
       is_edit_mode: false
     };
   }
+
   showGamerTag() {
     if (!this.state.team_info || !this.state.team_info.ladder) {
       return '';
@@ -41,6 +42,7 @@ class TeamInfo extends React.Component {
       </>
     );
   }
+
   approveRequest(event, reject) {
     event.preventDefault();
     this.props.dispatch(
@@ -65,6 +67,7 @@ class TeamInfo extends React.Component {
         {
           username: this.state.new_invite_user_name,
           team_id: this.state.team_info.id,
+          team_type: this.state.team_info.team_type,
           ladder_id: this.state.team_info.ladder_id
         },
         st => {
@@ -553,6 +556,7 @@ class TeamInfo extends React.Component {
     }
     return 'elite';
   }
+
   renderXPMeter() {
     const {team_info} = this.state;
     return (
@@ -790,7 +794,8 @@ class TeamInfo extends React.Component {
               <div className="col-md-3 col-sm-3 col-xs-12 text-center mt-2">
                 {this.props.user &&
                 this.state.team_info.team_creator == this.props.user.id &&
-                !this.state.team_info.removed ? (
+                !this.state.team_info.removed &&
+                this.state.team_info.team_type == 'matchfinder' ? (
                   <Link
                     to={
                       '/matchfinder/new/' +
@@ -952,6 +957,7 @@ class TeamInfo extends React.Component {
                                   ? 'Leader'
                                   : 'Member'}
                               </td>
+
                               <td>
                                 {this.state.team_info &&
                                 this.state.team_info.ladder &&
@@ -962,6 +968,7 @@ class TeamInfo extends React.Component {
                                     ]
                                   : ''}
                               </td>
+
                               <td>
                                 {this.state.team_info &&
                                 this.state.team_info.ladder &&

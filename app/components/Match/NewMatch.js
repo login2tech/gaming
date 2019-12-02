@@ -279,6 +279,10 @@ class NewTeam extends React.Component {
                     <div className="alert alert-warning">
                       Team has already been deleted
                     </div>
+                  ) : this.state.team_info.match_type == 'tournaments' ? (
+                    <div className="alert alert-warning">
+                      Team is only for tournaments.
+                    </div>
                   ) : (
                     <form
                       onSubmit={this.handleCreation.bind(this)}

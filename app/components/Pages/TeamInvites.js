@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
+import {Link} from 'react-router';
+import moment from 'moment';
+import {approveRequest} from '../../actions/team';
 class TeamInvites extends React.Component {
   constructor(props) {
     super(props);
@@ -8,6 +10,23 @@ class TeamInvites extends React.Component {
       invites: [],
       loaded: false
     };
+  }
+
+  approveRequest(team_id, event, reject) {
+    event.preventDefault();
+    this.props.dispatch(
+      approveRequest(
+        {
+          team_id: team_id,
+          mode: reject == 'reject' ? 'reject' : 'accept'
+        },
+        st => {
+          if (st) {
+            this.fetchInvites();
+          }
+        }
+      )
+    );
   }
 
   componentDidMount() {
@@ -52,27 +71,59 @@ class TeamInvites extends React.Component {
                 <div className="content_box">
                   <div className=" ">
                     <div className="table_wrapper">
-                      <table className="table table-stripped">
+                      <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
                             <th style={{width: '10%'}}>Team Id</th>
                             <th>Team Name</th>
                             <th>Team Type</th>
-                            <th>Team Game</th>
                             <th>Invited on</th>
                             <th style={{width: '15%'}}>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          {this.state.invites.map((k, i) => {
+                          {this.state.invites.map((m, i) => {
+                            console.log(m);
+                            const k = m.team_info;
                             return (
                               <tr key={k.id}>
                                 <td>{k.id}</td>
-                                <td>{k.id}</td>
-                                <td>{k.id}</td>
-                                <td>{k.id}</td>
-                                <td>{k.id}</td>
-                                <td>Action</td>
+                                <td>
+                                  <h5>
+                                    <Link to={'/teams/view/' + k.id}>
+                                      {k.title}
+                                    </Link>
+                                  </h5>
+                                  <small>
+                                    {k.ladder.game_info.title} -{' '}
+                                    {k.ladder.title}
+                                  </small>
+                                </td>
+                                <td>{k.team_type}</td>
+                                <td>{moment(m.created_at).format('LLL')}</td>
+
+                                <td>
+                                  <button
+                                    className="btn btn-sm btn-success"
+                                    onClick={event => {
+                                      this.approveRequest(k.id, event);
+                                    }}
+                                  >
+                                    Accept
+                                  </button>
+                                  <button
+                                    className="btn btn-sm btn-danger"
+                                    onClick={event => {
+                                      this.approveRequest(
+                                        k.id,
+                                        event,
+                                        'reject'
+                                      );
+                                    }}
+                                  >
+                                    Reject
+                                  </button>
+                                </td>
                               </tr>
                             );
                           })}

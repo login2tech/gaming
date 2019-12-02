@@ -359,7 +359,9 @@ class NewMatchTeamSelect extends React.Component {
                               }
                               if (
                                 eligible_teams[i].team_info.ladder_id ==
-                                parseInt(e.target.value)
+                                  parseInt(e.target.value) &&
+                                eligible_teams[i].team_info.team_type ==
+                                  'matchfinder'
                               ) {
                                 // obj.team_selected = json.teams[0].team_info;
                                 this.setState({
@@ -421,11 +423,15 @@ class NewMatchTeamSelect extends React.Component {
                         <label htmlFor="title">Team Id for Match</label>
                         <div>
                           {this.state.selected_team &&
-                          this.state.selected_team.id
-                            ? this.state.selected_team.title
-                            : this.state.ladder
-                              ? 'No team exists for this ladder'
-                              : '-'}
+                          this.state.selected_team.id ? (
+                            this.state.selected_team.title
+                          ) : this.state.ladder ? (
+                            <span className="text-danger">
+                              No team exists for this ladder
+                            </span>
+                          ) : (
+                            '-'
+                          )}
                         </div>
                       </div>
                       <br />
