@@ -2473,7 +2473,7 @@ a.image_avar {
 
 .game_hover_effect {
 
-    background: #101010;transition:0.5s;cursor: pointer; 
+    background: #101010;transition:0.5s;cursor: pointer;
 }
 .game_hover_effect:hover {
     transform: scale(1.5);
@@ -5270,6 +5270,9 @@ span.t-bl {
     display: inline-block;
     height: 60px;
     background-size: 102%;
+}
+.dib{
+  display: inline-block;
 }
 
 figure.avatr {

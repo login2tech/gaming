@@ -180,7 +180,7 @@ class Records extends React.Component {
                     {rec.map((notif, i) => {
                       return (
                         <div
-                          className="single-trophy-container m-b-20"
+                          className="single-trophy-container dib m-b-20"
                           key={notif}
                           style={{width: 'calc(50% - 10px)'}}
                         >
