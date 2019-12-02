@@ -482,14 +482,22 @@ class ProfileHeader extends React.Component {
                 <div className="row">
                   <div className="col-md-1" />
                   <div className="col-md-11">
-                    <img
-                      className="  img-fluid"
-                      src={
-                        '/assets/rank/' +
-                        this.image_based_on_i(user_info.xp_obj) +
-                        '.png'
-                      }
-                    />
+                    <a
+                      title="<img class='hover_img' src='/images/xp_banner_profile.png' />"
+                      data-toggle="tooltip"
+                      onClick={e => {
+                        e.preventDefault();
+                      }}
+                    >
+                      <img
+                        className="  img-fluid"
+                        src={
+                          '/assets/rank/' +
+                          this.image_based_on_i(user_info.xp_obj) +
+                          '.png'
+                        }
+                      />
+                    </a>
                   </div>
                 </div>
               </div>
