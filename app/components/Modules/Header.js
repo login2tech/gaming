@@ -321,6 +321,14 @@ class Header extends React.Component {
                                   Transaction History
                                 </Link>
                               </li>
+                              <li>
+                                <Link
+                                  to="/team_invites"
+                                  className="profile_menu_item"
+                                >
+                                  My Team Invites
+                                </Link>
+                              </li>
                               {this.props.user.role == 'admin' ? (
                                 <li>
                                   <a href="/admin">Admin Panel</a>

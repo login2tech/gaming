@@ -53,7 +53,7 @@ import Money8Info from './components/Money8/Money8Info';
 
 import TournamentFinder from './components/Tournament/TournamentFinder';
 import TournamentInfo from './components/Tournament/TournamentInfo';
-
+import TeamInvites from './components/Pages/TeamInvites';
 import Shop from './components/Shop/Shop';
 
 export default function getRoutes(store) {
@@ -76,6 +76,12 @@ export default function getRoutes(store) {
     <Route path="/" component={App}>
       <IndexRoute component={Home} onLeave={clearMessages} />
       <Route path="/contact" component={Contact} onLeave={clearMessages} />
+
+      <Route
+        path="/team_invites"
+        component={TeamInvites}
+        onLeave={clearMessages}
+      />
       <Route
         path="/apply-for-staff"
         component={ApplyForStaff}

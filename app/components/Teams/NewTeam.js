@@ -67,7 +67,11 @@ class NewTeam extends React.Component {
     // ();
     this.props.dispatch(
       createTeam(
-        {title: this.state.title, ladder: this.state.ladder},
+        {
+          title: this.state.title,
+          ladder: this.state.ladder,
+          team_type: this.state.team_type
+        },
         this.props.user
       )
     );

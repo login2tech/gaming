@@ -12,6 +12,7 @@ routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
 routes.get('/user_info', ctrl.listItem);
 // routes.get('/listPaged', ctrl.listPaged);
 routes.get('/single/:id', ctrl.listSingleItem);
+routes.get('/my_invites', u_ctrl.ensureAuthenticated, ctrl.listMyInvites);
 
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
 // routes.get('/matchlist', u_ctrl.ensureAuthenticated, ctrl.matchlist);

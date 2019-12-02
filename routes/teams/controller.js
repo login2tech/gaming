@@ -30,8 +30,42 @@ exports.team_pic = function(req, res, next) {
       });
   });
 };
+
+exports.listMyInvites = function(req, res, next) {
+  new ItemChild()
+    .where({accepted: false, user_id: req.user.id})
+    .fetch({
+      with: ['team_info']
+    })
+    .then(function(invites) {
+      if (!invites) {
+        res.status(200).send({
+          ok: true,
+          items: []
+        });
+        return;
+      }
+      invites = invites.toJSON();
+      invites = invites.map(function(item) {
+        return item.team_info;
+      });
+      res.status(200).send({
+        ok: true,
+        items: invites
+      });
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed to fetch team invites',
+        items: []
+      });
+    });
+  return;
+};
+
 exports.approve = function(req, res, next) {
-  //
   if (!req.body.team_id) {
     res.status(400).send({ok: false, msg: 'Please enter Team ID'});
   }
@@ -482,6 +516,7 @@ exports.removeMembers = function(req, res, next) {
       res.status(200).send({ok: true, msg: 'Successfully removed users.'});
     });
 };
+
 exports.disband = function(req, res, next) {
   const team_id = req.body.team_id;
   if (!team_id) {
