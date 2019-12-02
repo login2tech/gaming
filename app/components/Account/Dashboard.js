@@ -747,7 +747,8 @@ class Profile extends React.Component {
                 />
                 <br /> {this.props.user.credit_balance}
               </div>
-              {this.state.prev_success_type == 'transfer' ? (
+              {this.state.prev_success_type == 'transfer' ||
+              this.state.prev_success_type == 'credit' ? (
                 <Messages messages={this.props.messages} />
               ) : (
                 false
@@ -822,7 +823,10 @@ class Profile extends React.Component {
                       type="submit"
                       value="Deposit"
                       onClick={() => {
-                        this.setState({init_transaction_mode: 'cash'});
+                        this.setState({
+                          buy_balance_init: false,
+                          init_transaction_mode: 'cash'
+                        });
                         this.props.dispatch({
                           type: 'CLEAR_MESSAGES'
                         });
@@ -836,7 +840,10 @@ class Profile extends React.Component {
                       value="Withdraw"
                       disabled={this.props.user.cash_balance < 0.1}
                       onClick={() => {
-                        this.setState({init_transaction_mode: 'Withdraw'});
+                        this.setState({
+                          buy_balance_init: false,
+                          init_transaction_mode: 'Withdraw'
+                        });
                       }}
                       className="btn btn-default bttn_submit"
                     />
