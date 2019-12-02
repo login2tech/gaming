@@ -2,6 +2,7 @@ const User = require('../models/User');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const credit_cost = 1;
 const currency = 'usd';
+const moment = require('moment');
 
 const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
@@ -218,11 +219,14 @@ const stripe_afterCustomerCreation = function(customer, req, res) {
             return res.status(400).send({ok: false, msg: 'Some Error #60'});
           }
           usr
-            .save({
-              [sub_type + '_obj']: subs_obj,
-              [sub_type]: true,
-              stripe_user_id: customer.id
-            })
+            .save(
+              {
+                [sub_type + '_obj']: subs_obj,
+                [sub_type]: true,
+                stripe_user_id: customer.id
+              },
+              {patch: true}
+            )
             .then(function() {
               res.status(200).send({
                 ok: true,
@@ -333,6 +337,54 @@ const getStripeCustomer = function(req, res) {
   }
 };
 
+const proceedWithDoubleXP = function(req, res) {
+  const stripeToken = req.body.stripe_token;
+
+  stripe.charges.create(
+    {
+      amount: 5,
+      currency: 'usd',
+      source: stripeToken,
+      description: 'Charge for jenny.rosen@example.com'
+    },
+    function(err, charge) {
+      if (err) {
+        res.status(400).send({ok: false, msg: 'failed to charge card'});
+      }
+
+      User.forge({id: req.user.id})
+        .fetch()
+        .then(function(usr) {
+          if (!usr) {
+            return res.status(400).send({ok: false, msg: 'Some Error #355'});
+          }
+          usr
+            .save(
+              {
+                double_xp_obj: {},
+                double_xp: true,
+                double_xp_exp: moment().add(1, 'month')
+              },
+              {patch: true}
+            )
+            .then(function() {
+              res.status(200).send({
+                ok: true,
+                msg:
+                  'Successfully charged card to activate double xp for 1 month'
+              });
+            })
+            .catch(function(err) {
+              return res.status(400).send({ok: false, msg: 'Some Error #355'});
+            });
+        })
+        .catch(function(err) {
+          return res.status(400).send({ok: false, msg: 'Some Error #355'});
+        });
+    }
+  );
+};
+
 const newCredits = function(req, res, next) {
   req.assert('stripe_token', 'Card Token cannot be blank').notEmpty();
 
@@ -342,8 +394,13 @@ const newCredits = function(req, res, next) {
 
   const cost_to_consume = req.body.points_to_add * credit_cost;
 
+  if (req.body.init_transaction_mode == 'double_xp') {
+    proceedWithDoubleXP(req, res);
+    return;
+  }
+
   if (
-    req.body.init_transaction_mode == 'double_xp' ||
+    // req.body.init_transaction_mode == 'double_xp' ||
     req.body.init_transaction_mode == 'prime'
   ) {
     // start subscription here
