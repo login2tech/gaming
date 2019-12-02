@@ -13,6 +13,14 @@ export function charge(obj, token, cb) {
     }).then(response => {
       if (response.ok) {
         return response.json().then(json => {
+          const element = document.getElementById('mainNav');
+          if (element) {
+            element.scrollIntoView({
+              behavior: 'smooth',
+              block: 'end',
+              inline: 'nearest'
+            });
+          }
           if (json.action && json.action == 'PAYMENT_DONE') {
             cb(true);
             dispatch({
@@ -28,6 +36,14 @@ export function charge(obj, token, cb) {
           }
         });
       } else {
+        const element = document.getElementById('mainNav');
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end',
+            inline: 'nearest'
+          });
+        }
         cb();
         return response.json().then(json => {
           dispatch({

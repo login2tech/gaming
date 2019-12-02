@@ -964,7 +964,7 @@ class Profile extends React.Component {
     if (this.props.user.double_xp) {
       tmp = JSON.parse(this.props.user.double_xp_obj);
       double_xp_obj = tmp;
-      if (!tmp.start) {
+      if (!tmp.starts_on) {
         double_xp_info = (
           <span>
             <strong className="text-white">Started Manually by admin</strong>
@@ -975,7 +975,7 @@ class Profile extends React.Component {
           <span>
             <strong className="text-white">Started On: </strong>
             <span className="text-success">
-              {moment.unix(tmp.start).format('lll')}
+              {moment(tmp.starts_on).format('lll')}
             </span>
           </span>
         );
@@ -1061,18 +1061,11 @@ class Profile extends React.Component {
                     <br />
                     {double_xp_info}
                     <br />
-                    {double_xp_obj.current_period_end ? (
+                    {this.props.user.double_xp_exp ? (
                       <span>
-                        <strong className="text-white">
-                          {double_xp_obj.ending_on_period_end
-                            ? 'Stops on: '
-                            : 'Renews On'}
-                          :{' '}
-                        </strong>
+                        <strong className="text-white">Ends on: </strong>
                         <span className="text-success">
-                          {moment
-                            .unix(double_xp_obj.current_period_end)
-                            .format('lll')}
+                          {moment(this.props.user.double_xp_exp).format('lll')}
                         </span>
                       </span>
                     ) : (

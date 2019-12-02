@@ -8,6 +8,10 @@ const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
 const WithdrawalRequest = require('../models/Withdrawal');
 
+const getDoubleXPAmount = function() {
+  return 5;
+};
+
 const __addNewCreditPointTransaction = function(
   user_id,
   payment_id,
@@ -342,14 +346,16 @@ const proceedWithDoubleXP = function(req, res) {
 
   stripe.charges.create(
     {
-      amount: 5,
+      amount: getDoubleXPAmount() * 100,
       currency: 'usd',
       source: stripeToken,
-      description: 'Charge for jenny.rosen@example.com'
+      description: 'Charge for double xp for ' + req.user.email
     },
     function(err, charge) {
       if (err) {
+        console.log(err);
         res.status(400).send({ok: false, msg: 'failed to charge card'});
+        return;
       }
 
       User.forge({id: req.user.id})
@@ -361,7 +367,7 @@ const proceedWithDoubleXP = function(req, res) {
           usr
             .save(
               {
-                double_xp_obj: {},
+                double_xp_obj: {starts_on: moment()},
                 double_xp: true,
                 double_xp_exp: moment().add(1, 'month')
               },
@@ -370,6 +376,7 @@ const proceedWithDoubleXP = function(req, res) {
             .then(function() {
               res.status(200).send({
                 ok: true,
+                action: 'PAYMENT_DONE',
                 msg:
                   'Successfully charged card to activate double xp for 1 month'
               });

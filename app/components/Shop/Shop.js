@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import Messages from '../Modules/Messages';
 // import {createTeam} from '../../actions/team';
 import {charge} from '../../actions/stripe';
-
+import moment from 'moment';
 class Shop extends React.Component {
   constructor(props) {
     super(props);
@@ -412,14 +412,29 @@ class Shop extends React.Component {
                 {this.state.init_transaction_mode == 'double_xp' ? (
                   this.renderBuyBox('double_xp')
                 ) : (
-                  <div className="row">
-                    <div className="col-md-6 offset-md-3 text-center">
-                      {this.props.user ? (
-                        this.props.user.double_xp ? (
-                          <p className="text-success">
-                            Double XP already enabled!
+                  <div className="row text-center">
+                    {this.props.user ? (
+                      this.props.user.double_xp ? (
+                        <div className="col-md-12 text-center">
+                          <p className="text-success">Double XP enabled!</p>
+                          <p>
+                            <strong>Started on: </strong>
+                            {moment(
+                              JSON.parse(this.props.user.double_xp_obj)
+                                .started_on
+                            ).format('LLL')}
                           </p>
-                        ) : (
+                          <p>
+                            <strong>
+                              Ends on:{' '}
+                              {moment(this.props.user.double_xp_exp).format(
+                                'LLL'
+                              )}
+                            </strong>
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="col-md-6 offset-md-3 text-center">
                           <input
                             type="submit"
                             value="Enable Double XP"
@@ -440,16 +455,18 @@ class Shop extends React.Component {
                             }}
                             className="btn btn-default bttn_submit"
                           />
-                        )
-                      ) : (
+                        </div>
+                      )
+                    ) : (
+                      <div className="col-md-6 offset-md-3 text-center">
                         <Link
                           to="/login"
                           className="btn btn-default bttn_submit"
                         >
                           Enable Double XP
                         </Link>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
