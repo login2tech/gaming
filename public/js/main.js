@@ -35,6 +35,13 @@ return txt;
 
   //mobile menu
   $(document).ready(function(){
+    $('body').tooltip({
+        animated: 'fade',
+        selector : 'a[data-toggle="tooltip"]',
+        // placement: 'bottom',
+        html: true,
+      });
+
     var ulNav= "#nav", openNav= "activeNav";
 
     $('.toggle-menu').on('click', function(e){

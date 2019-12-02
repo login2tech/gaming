@@ -5266,6 +5266,16 @@ span.t-bl {
 figure.avatr {
     margin: 0;
 }
+img.hover_img {
+    width: 300px;
+    max-width: none;
+}
+.tooltip.show{
+  opacity: 1;
+}
+.tooltip-inner {
+    max-width: 100% !important;
+}
 .square img{
   height: 100%;
   width: 100%;

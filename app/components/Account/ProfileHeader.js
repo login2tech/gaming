@@ -340,7 +340,14 @@ class ProfileHeader extends React.Component {
   renderXPMeter() {
     const {user_info} = this.props;
     return (
-      <div className="float-right rank_box_wrap">
+      <a
+        title="<img class='hover_img' src='/images/xp_banner_profile.png' />"
+        data-toggle="tooltip"
+        className="float-right rank_box_wrap"
+        onClick={e => {
+          e.preventDefault();
+        }}
+      >
         {/*rank : */}
         {this.rank_based_on_xp(user_info.xp_obj)}
         <div
@@ -374,7 +381,7 @@ class ProfileHeader extends React.Component {
           </span>
           <span>{this.rank_max_based_on_xp(user_info.xp_obj)}</span>
         </div>
-      </div>
+      </a>
     );
   }
 
