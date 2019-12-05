@@ -5316,6 +5316,15 @@ img.hover_img {
   flex : 1
 }
 
+img.img-fluid.team_avat {
+    width: 60px;
+    float: right;
+    border-radius: 60px;
+    border: 3px solid #fff;
+    height: 60px;
+    margin-bottom: 10px;
+}
+
 @media screen and (max-width: 690px) {
     .header_container {
         width: 100%;

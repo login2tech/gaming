@@ -8,7 +8,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      games: []
+      games: [],
+      recentMatches: []
     };
   }
   componentDidMount() {
@@ -20,6 +21,16 @@ class Home extends React.Component {
       if (res) {
         res.json().then(obj => {
           this.setState({games: obj.items});
+        });
+      }
+      this.runQuery2();
+    });
+  }
+  runQuery2() {
+    fetch('/api/matches/recent?limit=2').then(res => {
+      if (res) {
+        res.json().then(obj => {
+          this.setState({recentMatches: obj.items});
         });
       }
     });
@@ -151,7 +162,7 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-        <section className="featruedboxes">
+        {/*<section className="featruedboxes">
           <div className="container">
             <div className="row">
               <div className="col-md-6 col-sm-6 col-xs-6">
@@ -188,7 +199,7 @@ class Home extends React.Component {
           </div>
         </section>
 
-        {/*<section className="tournaments">
+        <section className="tournaments">
           <div className="container">
 
 
@@ -217,36 +228,49 @@ class Home extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-center">
-                  <h3>Monthly Leaderboards</h3>
+                  <h3>Recent Matches</h3>
                 </div>
               </div>
             </div>
 
             <div className="row">
-              <div className="col-md-6">
-                <div className="wind_heading">
-                  <i className="fa fa-gamepad" aria-hidden="true" /> MATCH WINS
-                </div>
-
-                <div className="win_player_info" />
-
-                <div className="outer_win_list">
-                  <ul />
-                </div>
-              </div>
-
-              <div className="col-md-6">
-                <div className="wind_heading">
-                  <i className="fa fa-trophy" aria-hidden="true" /> TOURNAMENT
-                  WINS
-                </div>
-
-                <div className="win_player_info" />
-
-                <div className="outer_win_list">
-                  <ul />
-                </div>
-              </div>
+              {this.state.recentMatches.map((match, i) => {
+                return (
+                  <div className="col-md-6" key={match.id}>
+                    <div className="row">
+                      <div className="col">
+                        <img
+                          className="img-fluid team_avat "
+                          src={
+                            match.team_1_info.profile_picture
+                              ? match.team_1_info.profile_picture
+                              : '/images/team_bg.png'
+                          }
+                        />{' '}
+                        {match.team_1_info.title}
+                      </div>
+                      <div className="col">
+                        {match.ladder.game_info.title}
+                        {match.ladder.title}
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <img
+                          className="img-fluid team_avat "
+                          src={
+                            match.team_2_info.profile_picture
+                              ? match.team_2_info.profile_picture
+                              : '/images/team_bg.png'
+                          }
+                        />{' '}
+                        {match.team_2_info.title}
+                      </div>
+                      <div className="col">TEAM_1 WINS</div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

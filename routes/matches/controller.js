@@ -564,6 +564,7 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
             loose_team_members = match.get('team_2_players');
           } else {
             win_team_members = match.get('team_2_players');
+            loose_team_members = match.get('team_1_players');
           }
           win_team_members = win_team_members.split('|');
           loose_team_members = loose_team_members.split('|');
@@ -1058,19 +1059,30 @@ exports.listrecent = function(req, res, next) {
       game_id: req.query.filter_id
     });
   }
-
-  a.fetchAll({withRelated: ['ladder', 'team_1_info', 'team_2_info']})
-    .then(function(items) {
-      if (!items) {
-        return res.status(200).send({ok: true, items: []});
-      }
-      items = items.toJSON();
-      return res.status(200).send({ok: true, items: items});
-    })
-    .catch(function(err) {
-      console.log(err);
-      return res.status(200).send({ok: true, items: []});
+  if (req.query.limit) {
+    a = a.fetchPage({
+      page: 0,
+      pageSize: req.query.limit,
+      withRelated: ['ladder', 'ladder.game_info', 'team_1_info', 'team_2_info']
     });
+  } else {
+    a = a.fetchPage({
+      page: 0,
+      pageSize: 20,
+      withRelated: ['ladder', 'team_1_info', 'team_2_info']
+    });
+  }
+
+  a.then(function(items) {
+    if (!items) {
+      return res.status(200).send({ok: true, items: []});
+    }
+    items = items.toJSON();
+    return res.status(200).send({ok: true, items: items});
+  }).catch(function(err) {
+    console.log(err);
+    return res.status(200).send({ok: true, items: []});
+  });
 };
 
 exports.listItem = function(req, res, next) {
