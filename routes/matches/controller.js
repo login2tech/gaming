@@ -491,14 +491,14 @@ const addScoreForTeam = function(
     });
 };
 
-exports.resolveDispute = function(req, res, next, m_id, win_to) {
+const resolveDispute = function(req, res, next, m_id, win_to) {
   let match_id;
   let winner;
   if (req) {
     match_id = req.body.id;
     winner = req.body.winner;
   } else {
-    match_id = match_id;
+    match_id = m_id;
     winner = win_to;
   }
   new Item({id: match_id})
@@ -628,7 +628,11 @@ exports.resolveDispute = function(req, res, next, m_id, win_to) {
       }
     });
 };
+exports.resolveDispute = resolveDispute;
 
+exports.resolveDisputeWrap = function(req, res, next) {
+  resolveDispute(req, res, next);
+};
 exports.saveScore = function(req, res, next) {
   new Item({id: req.body.id})
     .fetch()

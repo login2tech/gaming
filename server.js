@@ -543,6 +543,9 @@ app.get('/api/*', function(req, res, next) {
 app.get('/admin/*', function(req, res, next) {
   res.status(404).send({ok: false, route: '404', msg: 'Route not found'});
 });
+app.post('/admin/*', function(req, res, next) {
+  res.status(404).send({ok: false, route: '404', msg: 'Route not found'});
+});
 app.post('/api/*', function(req, res, next) {
   res.status(404).send({ok: false, route: '404', msg: 'Route not found'});
 });

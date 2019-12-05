@@ -16,7 +16,9 @@ export function createMatch(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/m/' + json.match.id;
+          setTimeout(function() {
+            window.location.href = '/m/' + json.match.id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {
@@ -46,7 +48,9 @@ export function leave_match(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/m/' + data.match_id;
+          setTimeout(function() {
+            window.location.href = '/m/' + data.match_id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {

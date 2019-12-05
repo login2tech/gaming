@@ -155,10 +155,13 @@ class PaymentModal extends React.Component {
               </div>
             </div>
             <div className="form-group row">
-              <div className="col-sm-3"> </div>
-              <div className="col-sm-7">
-                <div className="outcome_error text-danger" role="alert" />
-                <div className="outcome_success  text-success">
+              <div className="col-sm-2"> </div>
+              <div className="col-sm-8 text-center">
+                <div
+                  className="outcome_error text-center text-danger"
+                  role="alert"
+                />
+                <div className="outcome_success text-center  text-success">
                   <div className="token" />
                 </div>
               </div>

@@ -32,4 +32,8 @@ routes.get('/upcoming', ctrl.listupcoming);
 routes.get('/recent', ctrl.listrecent);
 
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
-routes.post('/resolveDispute', u_ctrl.ensureAuthenticated, ctrl.resolveDispute);
+routes.post(
+  '/resolveDispute',
+  u_ctrl.ensureAuthenticated,
+  ctrl.resolveDisputeWrap
+);

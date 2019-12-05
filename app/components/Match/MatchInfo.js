@@ -432,7 +432,6 @@ class MatchInfo extends React.Component {
     return (
       <div>
         <a
-          type="button"
           href={
             '/support/tickets/create/m/disputed/' +
             this.state.match.id +
@@ -508,7 +507,7 @@ class MatchInfo extends React.Component {
     if (!this.state.match.team_1_result || !this.state.match.team_2_result) {
       return 'Pending Results Confirmation';
     }
-    if (this.state.match.team_1_result != this.state.match.team_2_result) {
+    if (this.state.match.result == 'disputed') {
       return 'Disputed';
     }
 

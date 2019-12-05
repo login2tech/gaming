@@ -6,6 +6,7 @@ const ObjName = 'Team';
 const Notif = require('../../models/Notification');
 const Match = require('../matches/Match');
 const matches = require('../matches/controller');
+
 exports.team_pic = function(req, res, next) {
   if (!req.body.profile_picture && !req.body.cover_picture) {
     return res.status(400).send({ok: false, msg: 'Image missing'});
@@ -549,15 +550,16 @@ exports.disband = function(req, res, next) {
     )
     .then(function(data) {
       res.status(200).send({ok: true, msg: 'Successfully removed team.'});
-
+      console.log('step init');
       new Match()
         .where({
-          team_1: team_id,
+          team_1_id: team_id,
           result: 'disputed'
         })
         .fetchAll()
         .then(function(disputed_matches) {
           disputed_matches = disputed_matches.toJSON();
+          console.log(disputed_matches);
           for (let i = 0; i < disputed_matches.length; i++) {
             matches.resolveDispute(
               null,
@@ -569,16 +571,17 @@ exports.disband = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log(err);
+          console.log('#574', err);
         });
       new Match()
         .where({
-          team_2: team_id,
+          team_2_id: team_id,
           result: 'disputed'
         })
         .fetchAll()
         .then(function(disputed_matches) {
           disputed_matches = disputed_matches.toJSON();
+          console.log('set 2', disputed_matches);
           for (let i = 0; i < disputed_matches.length; i++) {
             matches.resolveDispute(
               null,
@@ -590,11 +593,11 @@ exports.disband = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log(err);
+          console.log('#596', err);
         });
       new Match()
         .where({
-          team_1: team_id,
+          team_1_id: team_id,
           status: 'pending'
         })
         .save(

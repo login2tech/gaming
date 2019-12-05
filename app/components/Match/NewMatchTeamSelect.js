@@ -395,6 +395,9 @@ class NewMatchTeamSelect extends React.Component {
                         >
                           <option value="">Select Ladder</option>
                           {this.state.games.map((game, i) => {
+                            if (!game.ladders || !game.ladders.length) {
+                              return false;
+                            }
                             return (
                               <optgroup label={game.title} key={game.id}>
                                 {game.ladders.map((ladder, j) => {
