@@ -491,30 +491,50 @@ const addScoreForTeam = function(
     });
 };
 
-exports.resolveDispute = function(req, res, next) {
-  // console.log(req.body);
-  new Item({id: req.body.id})
+exports.resolveDispute = function(req, res, next, m_id, win_to) {
+  let match_id;
+  let winner;
+  if (req) {
+    match_id = req.body.id;
+    winner = req.body.winner;
+  } else {
+    match_id = match_id;
+    winner = win_to;
+  }
+  new Item({id: match_id})
     .fetch()
     .then(function(match) {
       if (!match) {
-        return res.status(400).send({
-          ok: false,
-          msg: "Match doesn't exist"
-        });
+        if (res) {
+          return res.status(400).send({
+            ok: false,
+            msg: "Match doesn't exist"
+          });
+        } else {
+          return;
+        }
       }
       const tmp_match = match.toJSON();
       if (tmp_match.result != 'disputed') {
-        return res.status(400).send({
-          ok: false,
-          msg: 'Match not disputed'
-        });
+        if (res) {
+          return res.status(400).send({
+            ok: false,
+            msg: 'Match not disputed'
+          });
+        } else {
+          return;
+        }
       }
-      const final_result = req.body.winner;
+      const final_result = winner;
       if (final_result != 'team_1' && final_result != 'team_2') {
-        return res.status(400).send({
-          ok: false,
-          msg: 'Thats not a valid result'
-        });
+        if (res) {
+          return res.status(400).send({
+            ok: false,
+            msg: 'Thats not a valid result'
+          });
+        } else {
+          return;
+        }
       }
       const saved_info = {
         status: 'complete',
@@ -524,11 +544,13 @@ exports.resolveDispute = function(req, res, next) {
       match
         .save(saved_info, {method: 'update'})
         .then(function(match) {
-          res.status(200).send({
-            ok: true,
-            msg: 'Dispute resolved successfully',
-            match: match.toJSON()
-          });
+          if (res) {
+            res.status(200).send({
+              ok: true,
+              msg: 'Dispute resolved successfully',
+              match: match.toJSON()
+            });
+          }
 
           if (final_result != 'team_1' && final_result != 'team_2') {
             return;
@@ -587,19 +609,23 @@ exports.resolveDispute = function(req, res, next) {
         .catch(function(err) {
           console.log('1');
           console.log(err);
-          res.status(400).send({
-            ok: false,
-            msg: 'Failed to resolve the dispute'
-          });
+          if (res) {
+            res.status(400).send({
+              ok: false,
+              msg: 'Failed to resolve the dispute'
+            });
+          }
         });
     })
     .catch(function(err) {
       console.log('2');
       console.log(err);
-      res.status(400).send({
-        ok: false,
-        msg: 'Failed to resolve dispute'
-      });
+      if (res) {
+        res.status(400).send({
+          ok: false,
+          msg: 'Failed to resolve dispute'
+        });
+      }
     });
 };
 

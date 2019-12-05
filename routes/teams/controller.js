@@ -5,6 +5,7 @@ const User = require('../../models/User');
 const ObjName = 'Team';
 const Notif = require('../../models/Notification');
 const Match = require('../matches/Match');
+const matches = require('../matches/controller');
 exports.team_pic = function(req, res, next) {
   if (!req.body.profile_picture && !req.body.cover_picture) {
     return res.status(400).send({ok: false, msg: 'Image missing'});
@@ -558,7 +559,13 @@ exports.disband = function(req, res, next) {
         .then(function(disputed_matches) {
           disputed_matches = disputed_matches.toJSON();
           for (let i = 0; i < disputed_matches.length; i++) {
-            //
+            matches.resolveDispute(
+              null,
+              null,
+              null,
+              disputed_matches[i].id,
+              'team_2'
+            );
           }
         })
         .catch(function(err) {
@@ -573,7 +580,13 @@ exports.disband = function(req, res, next) {
         .then(function(disputed_matches) {
           disputed_matches = disputed_matches.toJSON();
           for (let i = 0; i < disputed_matches.length; i++) {
-            //
+            matches.resolveDispute(
+              null,
+              null,
+              null,
+              disputed_matches[i].id,
+              'team_1'
+            );
           }
         })
         .catch(function(err) {
