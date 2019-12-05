@@ -17,22 +17,97 @@ class Login extends React.Component {
 
   handleLogin(event) {
     event.preventDefault();
-    this.props.dispatch(login(this.state.email, this.state.password));
+    this.props.dispatch(
+      login(this.state.email, this.state.password, () => {
+        this.setState({is_banned: true});
+      })
+    );
   }
 
-  // handleFacebook() {
-  //   this.props.dispatch(facebookLogin(this.props.settings.facebook_public_key));
-  // }
-  //
-  // componentDidMount() {
-  //   document.body.classList.add('bg_login');
-  //   document.body.classList.add('align');
-  // }
-  //
-  // componentWillUnmount() {
-  //   document.body.classList.remove('bg_login');
-  //   document.body.classList.remove('align');
-  // }
+  renderBanned() {
+    return (
+      <>
+        <div className="title_default_dark title_border text-center">
+          <h4>BANNED</h4>
+        </div>
+        <div className="field_form authorize_form text-center">
+          <p className="text-center">
+            You have been banned from accessing the portal by admin
+          </p>
+          <a
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              this.setState({
+                is_banned: false,
+                email: '',
+                password: ''
+              });
+            }}
+          >
+            <span className="fa fa-arrow-left" /> back to login
+          </a>
+        </div>
+      </>
+    );
+  }
+
+  renderLogin() {
+    return (
+      <>
+        <div className="title_default_dark title_border text-center">
+          <h4>Login</h4>
+        </div>
+        <div className="field_form authorize_form">
+          <Messages messages={this.props.messages} />
+          <br />
+          <form onSubmit={this.handleLogin.bind(this)}>
+            <div className="form-group col-md-12">
+              <input
+                type="text"
+                id="email"
+                className="form-control"
+                required=""
+                placeholder="Enter Email / Username"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
+            <div className="form-group col-md-12">
+              <input
+                type="password"
+                className="form-control"
+                required=""
+                placeholder="Enter Password"
+                name="password"
+                id="password"
+                value={this.state.password}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
+            <div className="form-group col-md-12 text-center">
+              <button className="btn btn-default bttn_submit" type="submit">
+                Login
+              </button>
+            </div>
+            <div className="form-group col-md-12 text-center">
+              <Link to="/forgot" className="forgot_pass">
+                Forgot Password?
+              </Link>
+            </div>
+          </form>
+        </div>
+
+        <div className="create_account_link">
+          <Link to="/signup">
+            Create your Account{' '}
+            <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true" />
+          </Link>
+        </div>
+      </>
+    );
+  }
 
   render() {
     return (
@@ -41,62 +116,9 @@ class Login extends React.Component {
           <div className="row">
             <div className="col-md-12">
               <div className="authorize_box">
-                <div className="title_default_dark title_border text-center">
-                  <h4>Login</h4>
-                </div>
-                <div className="field_form authorize_form">
-                  <Messages messages={this.props.messages} />
-                  <br />
-                  <form onSubmit={this.handleLogin.bind(this)}>
-                    <div className="form-group col-md-12">
-                      <input
-                        type="text"
-                        id="email"
-                        className="form-control"
-                        required=""
-                        placeholder="Enter Email / Username"
-                        name="email"
-                        value={this.state.email}
-                        onChange={this.handleChange.bind(this)}
-                      />
-                    </div>
-                    <div className="form-group col-md-12">
-                      <input
-                        type="password"
-                        className="form-control"
-                        required=""
-                        placeholder="Enter Password"
-                        name="password"
-                        id="password"
-                        value={this.state.password}
-                        onChange={this.handleChange.bind(this)}
-                      />
-                    </div>
-                    <div className="form-group col-md-12 text-center">
-                      <button
-                        className="btn btn-default bttn_submit"
-                        type="submit"
-                      >
-                        Login
-                      </button>
-                    </div>
-                    <div className="form-group col-md-12 text-center">
-                      <Link to="/forgot" className="forgot_pass">
-                        Forgot Password?
-                      </Link>
-                    </div>
-                  </form>
-                </div>
-
-                <div className="create_account_link">
-                  <Link to="/signup">
-                    Create your Account{' '}
-                    <i
-                      className="fa fa-long-arrow-right m-l-5"
-                      aria-hidden="true"
-                    />
-                  </Link>
-                </div>
+                {this.state.is_banned
+                  ? this.renderBanned()
+                  : this.renderLogin()}
               </div>
             </div>
           </div>

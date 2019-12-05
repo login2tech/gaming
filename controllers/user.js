@@ -92,7 +92,7 @@ exports.loginPost = function(req, res, next) {
       if (user.get('status') == false) {
         return res
           .status(401)
-          .send({msg: 'Your Account is currently not active.'});
+          .send({banned: true, msg: 'Your Account is currently not active.'});
       }
       user.comparePassword(req.body.password, function(err, isMatch) {
         if (!isMatch) {

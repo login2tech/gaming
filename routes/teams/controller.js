@@ -548,15 +548,51 @@ exports.disband = function(req, res, next) {
     )
     .then(function(data) {
       res.status(200).send({ok: true, msg: 'Successfully removed team.'});
+
+      new Match()
+        .where({
+          team_1: team_id,
+          result: 'disputed'
+        })
+        .fetchAll()
+        .then(function(disputed_matches) {
+          disputed_matches = disputed_matches.toJSON();
+          for (let i = 0; i < disputed_matches.length; i++) {
+            //
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+      new Match()
+        .where({
+          team_2: team_id,
+          result: 'disputed'
+        })
+        .fetchAll()
+        .then(function(disputed_matches) {
+          disputed_matches = disputed_matches.toJSON();
+          for (let i = 0; i < disputed_matches.length; i++) {
+            //
+          }
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
       new Match()
         .where({
           team_1: team_id,
           status: 'pending'
         })
-        .destroy()
+        .save(
+          {
+            status: 'cancelled'
+          },
+          {method: 'update'}
+        )
         .then(function() {})
-        .catch(function() {
-          //
+        .catch(function(err) {
+          console.log(err);
         });
     });
 };

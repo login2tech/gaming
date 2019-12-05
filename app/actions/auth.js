@@ -2,7 +2,7 @@ import moment from 'moment';
 import cookie from 'react-cookie';
 import {browserHistory} from 'react-router';
 
-export function login(email, password) {
+export function login(email, password, cb) {
   return dispatch => {
     dispatch({
       type: 'CLEAR_MESSAGES'
@@ -34,6 +34,10 @@ export function login(email, password) {
         });
       } else {
         return response.json().then(json => {
+          if (json.banned) {
+            cb && cb('ban');
+            return;
+          }
           dispatch({
             type: 'LOGIN_FAILURE',
             messages: Array.isArray(json) ? json : [json]
