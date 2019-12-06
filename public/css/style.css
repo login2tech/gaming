@@ -5345,6 +5345,9 @@ img.img-fluid.team_avat {
   border-right: 1px solid #fff;
 }
 @media screen and (max-width: 690px) {
+  .br_1{
+    border:0;
+  }
     .header_container {
         width: 100%;
         max-width: 100%

@@ -791,7 +791,67 @@ exports.saveScore = function(req, res, next) {
       });
     });
 };
+const join_inner = function(match, req, res, next) {
+  match
+    .save({
+      team_2_id: req.body.team_2_id,
+      status: 'accepted',
+      team_2_players: req.body.using_users ? req.body.using_users.join('|') : ''
+    })
+    .then(function(match) {
+      res.status(200).send({
+        ok: true,
+        msg: 'Joined successfully.',
+        match: match.toJSON()
+      });
 
+      if (match.get('match_type') != 'free') {
+        takeMoneyFromTeam(
+          req.body.team_2_id,
+          match.get('match_fee'),
+          req.body.using_users,
+          match.id
+        );
+      }
+
+      for (let i = req.body.using_users.length - 1; i >= 0; i--) {
+        new Notif()
+          .save({
+            user_id: req.body.using_users[i],
+            description: 'You have a pending match',
+            type: 'match',
+            object_id: match.id
+          })
+          .then(function() {})
+          .catch(function(er) {
+            console.log(er);
+          });
+      }
+
+      let team_1_users = match.get('team_1_players');
+      team_1_users = team_1_users.split('|');
+      for (let i = team_1_users.length - 1; i >= 0; i--) {
+        new Notif()
+          .save({
+            user_id: parseInt(team_1_users[i]),
+            description: 'A team has joined the match',
+            type: 'match',
+            object_id: match.id
+          })
+          .then(function() {})
+          .catch(function(er) {
+            console.log(er);
+          });
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).send({
+        ok: false,
+        msg: 'Failed to Join the match'
+      });
+    });
+};
 exports.join = function(req, res, next) {
   if (!req.body.using_users) {
     res.status(400).send({ok: false, msg: 'Please select team players'});
@@ -813,65 +873,49 @@ exports.join = function(req, res, next) {
         });
         return;
       }
-      match
-        .save({
-          team_2_id: req.body.team_2_id,
-          status: 'accepted',
-          team_2_players: req.body.using_users
-            ? req.body.using_users.join('|')
-            : ''
+
+      // console.log(req.body);
+
+      new Item()
+        .where({
+          team_1_id: req.body.team_2_id,
+          team_2_id: match.get('team_1_id')
         })
-        .then(function(match) {
-          res.status(200).send({
-            ok: true,
-            msg: 'Joined successfully.',
-            match: match.toJSON()
-          });
+        .where('starts_at', '>', moment().subtract(60, 'minutes'))
+        .fetch()
+        .then(function(old_matches) {
+          //old_matches
 
-          if (match.get('match_type') != 'free') {
-            takeMoneyFromTeam(
-              req.body.team_2_id,
-              match.get('match_fee'),
-              req.body.using_users,
-              match.id
-            );
-          }
-
-          for (let i = req.body.using_users.length - 1; i >= 0; i--) {
-            new Notif()
-              .save({
-                user_id: req.body.using_users[i],
-                description: 'You have a pending match',
-                type: 'match',
-                object_id: match.id
+          if (old_matches) {
+            return res.status(400).send({
+              ok: false,
+              msg: 'You had a match with this team recently.'
+            });
+          } else {
+            new Item()
+              .where({
+                team_2_id: req.body.team_2_id,
+                team_1_id: match.get('team_1_id')
               })
-              .then(function() {})
-              .catch(function(er) {
-                console.log(er);
-              });
-          }
-
-          let team_1_users = match.get('team_1_players');
-          team_1_users = team_1_users.split('|');
-          for (let i = team_1_users.length - 1; i >= 0; i--) {
-            new Notif()
-              .save({
-                user_id: parseInt(team_1_users[i]),
-                description: 'A team has joined the match',
-                type: 'match',
-                object_id: match.id
-              })
-              .then(function() {})
-              .catch(function(er) {
-                console.log(er);
+              .where('starts_at', '>', moment().subtract(60, 'minutes'))
+              .fetch()
+              .then(function(old_matches) {
+                if (old_matches) {
+                  return res.status(400).send({
+                    ok: false,
+                    msg: 'You had a match with this team recently.'
+                  });
+                } else {
+                  return join_inner(match, req, res, next);
+                }
               });
           }
         })
         .catch(function(err) {
           console.log(err);
-          res.status(400).send({
+          return res.status(400).send({
             ok: false,
-            msg: 'Failed to Join the match'
+            msg: 'Failed to accept match'
           });
         });
     })
