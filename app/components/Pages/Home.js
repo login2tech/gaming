@@ -236,9 +236,9 @@ class Home extends React.Component {
             <div className="row">
               {this.state.recentMatches.map((match, i) => {
                 return (
-                  <div className="col-md-6" key={match.id}>
-                    <div className="row">
-                      <div className="col">
+                  <div className="col-md-6 br_1" key={match.id}>
+                    <div className="row has_m">
+                      <div className="col team_spn_m">
                         <img
                           className="img-fluid team_avat "
                           src={
@@ -247,15 +247,28 @@ class Home extends React.Component {
                               : '/images/team_bg.png'
                           }
                         />{' '}
-                        {match.team_1_info.title}
+                        <span>
+                          <span className="text-l">
+                            {match.team_1_info.title}
+                          </span>
+                          {match.result == 'team_1' ? (
+                            <span className="wtm text-success">WINNER</span>
+                          ) : (
+                            false
+                          )}
+                        </span>
                       </div>
-                      <div className="col">
-                        {match.ladder.game_info.title}
-                        {match.ladder.title}
+                      <div className="col team_spn_m">
+                        <span>
+                          <span className="text-l">
+                            {match.ladder.game_info.title}
+                          </span>
+                          <span className="text-m">{match.ladder.title}</span>
+                        </span>
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col">
+                      <div className="col team_spn_m">
                         <img
                           className="img-fluid team_avat "
                           src={
@@ -264,9 +277,26 @@ class Home extends React.Component {
                               : '/images/team_bg.png'
                           }
                         />{' '}
-                        {match.team_2_info.title}
+                        <span>
+                          <span className="text-l">
+                            {match.team_2_info.title}
+                          </span>
+                          {match.result == 'team_2' ? (
+                            <span className="wtm text-success">WINNER</span>
+                          ) : (
+                            false
+                          )}
+                        </span>
                       </div>
-                      <div className="col">TEAM_1 WINS</div>
+                      <div className="col team_spn_m">
+                        <span>
+                          <span className="text-l">
+                            {' '}
+                            ${match.match_fee ? match.match_fee : '0'}
+                          </span>
+                          <span className="text-m">price</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 );

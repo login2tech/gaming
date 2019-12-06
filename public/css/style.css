@@ -5318,13 +5318,32 @@ img.hover_img {
 
 img.img-fluid.team_avat {
     width: 60px;
-    float: right;
+    /* float: right; */
     border-radius: 60px;
     border: 3px solid #fff;
     height: 60px;
-    margin-bottom: 10px;
+    margin-right: 20px;
 }
+.team_spn_m{
 
+    display: flex;justify-content: center;
+    align-items: center;
+}
+.has_m .team_spn_m{
+  margin-bottom: 50px;
+}
+.col.team_spn_m span span {
+    display: block;
+}
+.text-m{
+  display: block;text-transform: uppercase;
+}
+.text-l{
+  font-size: 20px;text-transform: uppercase;
+}
+.br_1:not(:last-child){
+  border-right: 1px solid #fff;
+}
 @media screen and (max-width: 690px) {
     .header_container {
         width: 100%;
