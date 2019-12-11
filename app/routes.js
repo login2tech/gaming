@@ -12,6 +12,8 @@ import FAQ from './components/Pages/FAQ';
 import CMSPage from './components/CMSPage';
 import Notifications from './components/Notifications';
 import Records from './components/Account/Records';
+import MyTeams from './components/Account/MyTeams';
+import MyBank from './components/Account/MyBank';
 import Transactions from './components/Transactions';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
@@ -76,7 +78,6 @@ export default function getRoutes(store) {
     <Route path="/" component={App}>
       <IndexRoute component={Home} onLeave={clearMessages} />
       <Route path="/contact" component={Contact} onLeave={clearMessages} />
-
       <Route
         onEnter={ensureAuthenticated}
         path="/team_invites"
@@ -106,8 +107,20 @@ export default function getRoutes(store) {
         path="/records/:username/:duration"
         component={Records}
       />
-      <Route path="/leaderboards" component={Leaderboards} />
+      <Route
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        path="/my_teams"
+        component={MyTeams}
+      />
+      <Route
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        path="/my_bank"
+        component={MyBank}
+      />
 
+      <Route path="/leaderboards" component={Leaderboards} />
       <Route
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
@@ -171,26 +184,22 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
         component={props => <SingleThread key={props.params.page} {...props} />}
       />
-
       <Route
         onLeave={clearMessages}
         path="/forums/:id/:title"
         component={Threads}
       />
-
       <Route
         onLeave={clearMessages}
         path="/forums/:id/:title/new"
         component={NewThread}
       />
       <Route onLeave={clearMessages} path="/forums" component={Topics} />
-
       <Route
         onLeave={clearMessages}
         path="/matchfinder/:id/:title"
         component={MatchFinder}
       />
-
       <Route
         path="/matchfinder/new/:ladder/:id"
         component={NewMatch}
@@ -203,9 +212,7 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
-
       <Route onLeave={clearMessages} path="/game/:id/:title" component={Game} />
-
       <Route
         onLeave={clearMessages}
         path="/matchfinder"
@@ -226,7 +233,6 @@ export default function getRoutes(store) {
         path="/m/:match_id"
         component={MatchInfo}
       />
-
       <Route
         path="/mix-and-match/new/"
         component={NewMoney8}

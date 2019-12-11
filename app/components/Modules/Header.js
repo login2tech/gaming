@@ -342,6 +342,41 @@ class Header extends React.Component {
                                   My Team Invites
                                 </Link>
                               </li>
+                              <li>
+                                <Link
+                                  to="/support/tickets"
+                                  className="profile_menu_item"
+                                >
+                                  My Tickets
+                                </Link>
+                              </li>
+                              <li>
+                                <Link
+                                  to="/support/tickets"
+                                  className="profile_menu_item"
+                                >
+                                  My Matches
+                                </Link>
+                              </li>
+
+                              <li>
+                                <Link
+                                  to="/my_teams"
+                                  className="profile_menu_item"
+                                >
+                                  My Teams
+                                </Link>
+                              </li>
+
+                              <li>
+                                <Link
+                                  to="/my_bank"
+                                  className="profile_menu_item"
+                                >
+                                  My Bank
+                                </Link>
+                              </li>
+
                               {this.props.user.role == 'admin' ? (
                                 <li>
                                   <a href="/admin">Admin Panel</a>

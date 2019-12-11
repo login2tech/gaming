@@ -3965,7 +3965,7 @@ textarea.form-control {
 
 ul.team_list li {
     display: inline-block;
-    width: 20%;
+    width: calc(20% - 10px);
     margin-right: 10px;
     position: relative;
     margin-bottom: 10px

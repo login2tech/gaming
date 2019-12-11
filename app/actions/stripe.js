@@ -104,6 +104,9 @@ export function transfer(obj, cb) {
       if (response.ok) {
         return response.json().then(json => {
           cb(true);
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
           dispatch({
             type: 'SUCCESS',
             messages: [json]
