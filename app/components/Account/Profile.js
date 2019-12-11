@@ -62,7 +62,7 @@ class Profile extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        token_id: token.id,
+        token_id: token == 'USE_OCG' ? 'USE_OCG' : token.id,
         action: 'overallScore'
       })
     }).then(response => {
@@ -73,7 +73,7 @@ class Profile extends React.Component {
       );
       if (response.ok) {
         // this.props.refresh();
-        this.props.dispatch({type: 'CLEAR_MESSAGES'});
+        this.props.dispatch({type: 'CLR_MSG'});
         this.props.dispatch(
           openModal({
             id: 'trello_snack',

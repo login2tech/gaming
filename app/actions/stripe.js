@@ -1,7 +1,7 @@
 export function charge(obj, token, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/credits/new', {
       method: 'post',
@@ -59,7 +59,7 @@ export function charge(obj, token, cb) {
 export function withdraw(obj, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/credits/withdraw', {
       method: 'post',
@@ -92,9 +92,45 @@ export function withdraw(obj, cb) {
 export function transfer(obj, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/credits/transfer', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(obj)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          cb(true);
+          setTimeout(function() {
+            window.location.reload();
+          }, 1000);
+          dispatch({
+            type: 'SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        cb(false);
+        return response.json().then(json => {
+          dispatch({
+            type: 'FAILURE',
+            messages: [json]
+          });
+        });
+      }
+    });
+  };
+}
+
+export function deduct(obj, cb) {
+  return dispatch => {
+    dispatch({
+      type: 'CLR_MSG'
+    });
+    return fetch('/api/credits/deduct_ocg', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -128,7 +164,7 @@ export function transfer(obj, cb) {
 export function chargeChange(id, token) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/downgrade', {
       method: 'post',

@@ -1,7 +1,7 @@
 export function add_post(data, token, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/posts/add', {
       method: 'post',
@@ -36,7 +36,7 @@ export function add_post(data, token, cb) {
 export function add_friend(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/user/follower/add', {
       method: 'post',
@@ -70,7 +70,7 @@ export function add_friend(data, cb) {
 export function upVote(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/posts/upvote', {
       method: 'post',
@@ -104,7 +104,7 @@ export function upVote(data, cb) {
 export function downVote(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/posts/downvote', {
       method: 'post',
@@ -138,7 +138,7 @@ export function downVote(data, cb) {
 export function new_comment(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/posts/new_comment', {
       method: 'post',

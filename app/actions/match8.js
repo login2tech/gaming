@@ -3,7 +3,7 @@
 export function createMatch8(data, user) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/money8/add', {
       method: 'post',
@@ -35,7 +35,7 @@ export function createMatch8(data, user) {
 export function leave_match(data, user) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/money8/leave', {
       method: 'post',
@@ -65,7 +65,7 @@ export function leave_match(data, user) {
 export function join_match(data, user) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/money8/join', {
       method: 'post',
@@ -95,7 +95,7 @@ export function join_match(data, user) {
 export function saveScores(data, user) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/money8/saveScore', {
       method: 'post',

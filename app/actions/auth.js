@@ -5,7 +5,7 @@ import {browserHistory} from 'react-router';
 export function login(email, password, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/login', {
       method: 'post',
@@ -51,7 +51,7 @@ export function login(email, password, cb) {
 export function signup(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/signup', {
       method: 'post',
@@ -97,7 +97,7 @@ export function logout() {
 export function forgotPassword(email) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/forgot', {
       method: 'post',
@@ -126,7 +126,7 @@ export function forgotPassword(email) {
 export function resetPassword(password, confirm, pathToken) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch(`/reset/${pathToken}`, {
       method: 'post',
@@ -159,7 +159,7 @@ export function resetPassword(password, confirm, pathToken) {
 export function stopRenewal(data, token) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/stopRenewal', {
       method: 'post',
@@ -195,7 +195,7 @@ export function stopRenewal(data, token) {
 export function updateProfile(data, token) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/account', {
       method: 'put',
@@ -233,7 +233,7 @@ export function updateProfile(data, token) {
 export function team_pic(team_id, data) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/pics?' + team_id, {
       method: 'post',
@@ -266,7 +266,7 @@ export function team_pic(team_id, data) {
 export function accountPic(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/accountPics', {
       method: 'post',
@@ -301,7 +301,7 @@ export function accountPic(data, cb) {
 export function teamPic(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/pics', {
       method: 'post',
@@ -336,7 +336,7 @@ export function teamPic(data, cb) {
 export function changePassword(password, confirm, token) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/account', {
       method: 'put',
@@ -371,7 +371,7 @@ export function changePassword(password, confirm, token) {
 export function deleteAccount(token) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/account', {
       method: 'delete',

@@ -28,7 +28,7 @@ export default function messages(state = {}, action) {
       return {
         info: action.messages
       };
-    case 'CLEAR_MESSAGES':
+    case 'CLR_MSG':
       return {};
     default:
       return state;

@@ -7,6 +7,7 @@ const UserFollower = require('../models/UserFollower');
 const mailer = require('./mailer');
 const Notif = require('../models/Notification');
 const Score = require('../models/Score');
+const utils = require('../routes/utils');
 
 function generateToken(user) {
   const payload = {
@@ -830,6 +831,14 @@ exports.leaderboard_2 = function(req, res, next) {
       console.log(err);
       return res.status(400).send({ok: false, items: []});
     });
+};
+
+exports.deduct_money = function(req, res, next) {
+  next();
+};
+exports.deduct_ocg = function(req, res, next) {
+  next();
+  utils.takeCashFromUser(req.user.id, 5, 'For resetting score', '');
 };
 
 exports.resetScore = function(req, res, next) {

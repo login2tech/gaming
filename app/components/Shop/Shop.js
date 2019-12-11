@@ -365,7 +365,7 @@ class Shop extends React.Component {
                             value="Buy Official Comp Membership"
                             onClick={() => {
                               this.props.dispatch({
-                                type: 'CLEAR_MESSAGES'
+                                type: 'CLR_MSG'
                               });
                               this.setState(
                                 {
@@ -440,7 +440,7 @@ class Shop extends React.Component {
                             value="Enable Double XP"
                             onClick={() => {
                               this.props.dispatch({
-                                type: 'CLEAR_MESSAGES'
+                                type: 'CLR_MSG'
                               });
                               this.setState(
                                 {
@@ -502,7 +502,7 @@ class Shop extends React.Component {
                             clicked: false
                           });
                           this.props.dispatch({
-                            type: 'CLEAR_MESSAGES'
+                            type: 'CLR_MSG'
                           });
                         }}
                         className="btn btn-default bttn_submit"
@@ -541,7 +541,7 @@ class Shop extends React.Component {
                             clicked: false
                           });
                           this.props.dispatch({
-                            type: 'CLEAR_MESSAGES'
+                            type: 'CLR_MSG'
                           });
                         }}
                         className="btn btn-default bttn_submit"

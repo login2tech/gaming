@@ -1,5 +1,6 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
+import {deduct} from '../../../actions/stripe';
 // import Messages from '../Messages';
 
 import React from 'react';
@@ -64,7 +65,12 @@ class PaymentModal extends React.Component {
   }
 
   proceedWithOCG() {
-    alert('TO BE IMPLEMENTED!');
+    // alert('TO BE IMPLEMENTED!');
+    this.props.onGetToken &&
+      this.props.onGetToken(
+        'USE_OCG',
+        this.props.returnDataToEvent ? this.props.returnDataToEvent : {}
+      );
   }
 
   mountCard() {
@@ -191,21 +197,13 @@ class PaymentModal extends React.Component {
                 </button>
               </div>
               <div className="text-center mt-3">
-                <button
-                  onClick={this.proceedWithOCG.bind(this)}
-                  type="button"
-                  disabled={amount_pending > this.props.user.cash_balance}
-                  className="btn text-white"
-                >
-                  Or Proceed with OCG Cash
-                </button>
-                {this.ocg_proceed == 1 ? (
+                {this.state.ocg_proceed == 1 ? (
                   <div className="btn-group">
                     <button
                       onClick={this.proceedWithOCG.bind(this)}
                       type="button"
                       disabled={amount_pending > this.props.user.cash_balance}
-                      className="btn text-white btn-primary"
+                      className="btn text-white  btn-primary"
                     >
                       confirm
                     </button>
@@ -217,7 +215,7 @@ class PaymentModal extends React.Component {
                       }}
                       type="button"
                       disabled={amount_pending > this.props.user.cash_balance}
-                      className="btn text-white btn-secondary"
+                      className="btn text-white  btn-danger"
                     >
                       x
                     </button>

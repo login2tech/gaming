@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router';
 export function createTeam(data, user) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/add', {
       method: 'post',
@@ -34,7 +34,7 @@ export function createTeam(data, user) {
 export function inviteToTeam(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/invite', {
       method: 'post',
@@ -67,7 +67,7 @@ export function inviteToTeam(data, cb) {
 export function approveRequest(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/approve', {
       method: 'post',
@@ -100,7 +100,7 @@ export function approveRequest(data, cb) {
 export function removeMembers(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/removeMembers', {
       method: 'post',
@@ -133,7 +133,7 @@ export function removeMembers(data, cb) {
 export function disband(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/disband', {
       method: 'post',
@@ -166,7 +166,7 @@ export function disband(data, cb) {
 export function teamPic(data, team_id, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/pics?team_id=' + team_id, {
       method: 'post',

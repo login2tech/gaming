@@ -1,7 +1,7 @@
 export function submitContactForm(name, email, subject, message) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/contact', {
       method: 'post',
@@ -35,7 +35,7 @@ export function submitContactForm(name, email, subject, message) {
 export function applySubscribe(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/applySubscribe', {
       method: 'post',
@@ -66,7 +66,7 @@ export function applySubscribe(data, cb) {
 export function applyForStaff(data) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/contact_apply', {
       method: 'post',
@@ -95,7 +95,7 @@ export function applyForStaff(data) {
 export function advertiseWithUs(data) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/contact_advertiseWithUs', {
       method: 'post',

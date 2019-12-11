@@ -1,7 +1,7 @@
 export function sendMsg(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/messaging/newMsg', {
       method: 'post',

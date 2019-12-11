@@ -567,7 +567,7 @@ class MyBankModule extends React.Component {
                       onClick={() => {
                         this.setState({init_transaction_mode: 'credit'});
                         this.props.dispatch({
-                          type: 'CLEAR_MESSAGES'
+                          type: 'CLR_MSG'
                         });
                       }}
                       className="btn btn-default bttn_submit"
@@ -580,7 +580,7 @@ class MyBankModule extends React.Component {
                       onClick={() => {
                         this.setState({init_transaction_mode: 'transfer'});
                         this.props.dispatch({
-                          type: 'CLEAR_MESSAGES'
+                          type: 'CLR_MSG'
                         });
                       }}
                       className="btn btn-default bttn_submit"
@@ -629,7 +629,7 @@ class MyBankModule extends React.Component {
                           init_transaction_mode: 'cash'
                         });
                         this.props.dispatch({
-                          type: 'CLEAR_MESSAGES'
+                          type: 'CLR_MSG'
                         });
                       }}
                       className="btn btn-default bttn_submit"

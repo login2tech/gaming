@@ -3,7 +3,7 @@
 export function createMatch(data, user) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/matches/add', {
       method: 'post',
@@ -33,7 +33,7 @@ export function createMatch(data, user) {
 export function join_tournament(data, user) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/tournaments/join', {
       method: 'post',
@@ -63,7 +63,7 @@ export function join_tournament(data, user) {
 export function saveScores(data, user, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/tournaments/saveScore', {
       method: 'post',
@@ -93,7 +93,7 @@ export function saveScores(data, user, cb) {
 export function inviteToTeam(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/teams/invite', {
       method: 'post',
@@ -126,7 +126,7 @@ export function inviteToTeam(data, cb) {
 export function approveMatch(data, cb) {
   return dispatch => {
     dispatch({
-      type: 'CLEAR_MESSAGES'
+      type: 'CLR_MSG'
     });
     return fetch('/api/matches/approve', {
       method: 'post',

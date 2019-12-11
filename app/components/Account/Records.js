@@ -35,7 +35,7 @@ class Records extends React.Component {
       );
       if (response.ok) {
         // this.props.refresh();
-        this.props.dispatch({type: 'CLEAR_MESSAGES'});
+        this.props.dispatch({type: 'CLR_MSG'});
         this.props.dispatch(
           openModal({
             id: 'trello_snack',

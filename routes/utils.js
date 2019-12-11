@@ -100,3 +100,8 @@ exports.takeCreditsFromUser = function(user_id, amount, descr, obj) {
   const typ = 'credit_balance';
   takeCashOrCreditsFromUser(typ, user_id, amount, descr, obj);
 };
+
+exports.takeCashFromUser = function(user_id, amount, descr, obj) {
+  const typ = 'cash_balance';
+  takeCashOrCreditsFromUser(typ, user_id, amount, descr, obj);
+};
