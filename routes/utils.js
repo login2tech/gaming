@@ -51,7 +51,6 @@ const takeCashOrCreditsFromUser = function(typ, user_id, amount, descr, obj) {
     .then(function(usr) {
       if (usr) {
         let typ_balance = usr.get(typ);
-
         typ_balance = parseFloat(typ_balance) - parseFloat(amount);
         typ_balance = typ_balance.toFixed(2);
 

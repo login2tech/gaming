@@ -169,7 +169,9 @@ class TournamentFinder extends React.Component {
                                   to={this.matchLink('/t/' + match.id)}
                                   className="btn-default"
                                 >
-                                  Join Tournament
+                                  {match.status == 'started'
+                                    ? 'View Tournament'
+                                    : 'Join Tournament'}
                                 </Link>
                               </div>
                             </div>
