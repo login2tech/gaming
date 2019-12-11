@@ -211,6 +211,8 @@ app.post(
 app.post(
   '/api/user/reset/score',
   userController.ensureAuthenticated,
+  userController.deduct_money,
+  userController.deduct_ocg,
   userController.resetScore
 );
 
