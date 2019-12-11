@@ -5352,6 +5352,11 @@ img.img-fluid.team_avat {
 .dib{
   display: inline-block;
 }
+
+span.text-l a.mw100 {
+    min-width: 150px;
+    display: inline-block;
+}
 @media screen and (max-width: 690px) {
   .br_1{
     border:0;

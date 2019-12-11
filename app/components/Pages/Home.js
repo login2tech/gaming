@@ -241,17 +241,27 @@ class Home extends React.Component {
                       <div className="col team_spn_m">
                         {match.team_1_info ? (
                           <>
-                            <img
-                              className="img-fluid team_avat "
-                              src={
-                                match.team_1_info.profile_picture
-                                  ? match.team_1_info.profile_picture
-                                  : '/images/team_bg.png'
-                              }
-                            />{' '}
+                            <Link
+                              class="mw100"
+                              to={'/teams/view/' + match.team_1_id}
+                            >
+                              <img
+                                className="img-fluid team_avat "
+                                src={
+                                  match.team_1_info.profile_picture
+                                    ? match.team_1_info.profile_picture
+                                    : '/images/team_bg.png'
+                                }
+                              />
+                            </Link>{' '}
                             <span>
                               <span className="text-l">
-                                {match.team_1_info.title}
+                                <Link
+                                  class="mw100"
+                                  to={'/teams/view/' + match.team_1_id}
+                                >
+                                  {match.team_1_info.title}
+                                </Link>
                               </span>
                               {match.result == 'team_1' ? (
                                 <span className="wtm text-success">WINNER</span>
@@ -277,17 +287,27 @@ class Home extends React.Component {
                       <div className="col team_spn_m">
                         {match.team_1_info ? (
                           <>
-                            <img
-                              className="img-fluid team_avat "
-                              src={
-                                match.team_2_info.profile_picture
-                                  ? match.team_2_info.profile_picture
-                                  : '/images/team_bg.png'
-                              }
-                            />{' '}
+                            <Link
+                              class="mw100"
+                              to={'/teams/view/' + match.team_2_id}
+                            >
+                              <img
+                                className="img-fluid team_avat "
+                                src={
+                                  match.team_2_info.profile_picture
+                                    ? match.team_2_info.profile_picture
+                                    : '/images/team_bg.png'
+                                }
+                              />
+                            </Link>{' '}
                             <span>
                               <span className="text-l">
-                                {match.team_2_info.title}
+                                <Link
+                                  class="mw100"
+                                  to={'/teams/view/' + match.team_2_id}
+                                >
+                                  {match.team_2_info.title}
+                                </Link>
                               </span>
                               {match.result == 'team_2' ? (
                                 <span className="wtm text-success">WINNER</span>
@@ -308,6 +328,14 @@ class Home extends React.Component {
                           </span>
                           <span className="text-m">price</span>
                         </span>
+                      </div>
+                    </div>
+                    <br />
+                    <div className="row">
+                      <div className="col text-center">
+                        <Link to={'/m/' + match.id}>
+                          match info <span className="fa fa-arrow-right" />
+                        </Link>
                       </div>
                     </div>
                   </div>
