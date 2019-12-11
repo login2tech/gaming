@@ -407,7 +407,7 @@ class Shop extends React.Component {
                       marginBottom: '20px'
                     }}
                   />
-                  <br /> $5 / month
+                  <br /> $5 / day
                 </div>
                 {this.state.init_transaction_mode == 'double_xp' ? (
                   this.renderBuyBox('double_xp')

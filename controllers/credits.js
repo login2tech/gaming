@@ -410,7 +410,7 @@ const proceedWithDoubleXP = function(req, res) {
               {
                 double_xp_obj: {starts_on: moment()},
                 double_xp: true,
-                double_xp_exp: moment().add(1, 'month')
+                double_xp_exp: moment().add(1, 'day')
               },
               {patch: true}
             )
@@ -418,8 +418,7 @@ const proceedWithDoubleXP = function(req, res) {
               res.status(200).send({
                 ok: true,
                 action: 'PAYMENT_DONE',
-                msg:
-                  'Successfully charged card to activate double xp for 1 month'
+                msg: 'Successfully charged card to activate double xp for 1 day'
               });
             })
             .catch(function(err) {
