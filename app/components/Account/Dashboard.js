@@ -618,7 +618,7 @@ class Profile extends React.Component {
                   htmlFor="name_on_card"
                   className=" form-control-label text-white"
                 >
-                  Amount to transfer
+                  Credits to transfer
                 </label>
                 <br />
                 <div className="col-sm-12">
@@ -629,7 +629,7 @@ class Profile extends React.Component {
                     required
                     max={this.props.user.credit_balance}
                     name="amount_to_transfer"
-                    placeholder="Enter name on card"
+                    placeholder="Credits to transfer"
                     id="amount_to_transfer"
                     className="form-control text-black"
                     value={this.state.amount_to_transfer}

@@ -207,6 +207,19 @@ class Header extends React.Component {
                               )}
                             </Link>
                             <ul className="submenu notification_list">
+                              {this.state.notifications &&
+                              this.state.notifications.length ? (
+                                <li className="bottom_line">
+                                  <a
+                                    className=" text-right text-danger pr-10 tc"
+                                    href={'/notifs/delete'}
+                                  >
+                                    Clear all
+                                  </a>
+                                </li>
+                              ) : (
+                                false
+                              )}
                               {this.state.notifications.map((notif, i) => {
                                 if (i > 10) {
                                   return false;
@@ -251,7 +264,7 @@ class Header extends React.Component {
                                   </li>
                                 );
                               })}
-                              <li>
+                              <li className="top_line">
                                 <Link
                                   style={{fontWeight: 'bold'}}
                                   to={'/notifications'}

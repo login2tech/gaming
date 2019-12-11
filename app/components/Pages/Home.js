@@ -239,24 +239,30 @@ class Home extends React.Component {
                   <div className="col-md-6 br_1" key={match.id}>
                     <div className="row has_m">
                       <div className="col team_spn_m">
-                        <img
-                          className="img-fluid team_avat "
-                          src={
-                            match.team_1_info.profile_picture
-                              ? match.team_1_info.profile_picture
-                              : '/images/team_bg.png'
-                          }
-                        />{' '}
-                        <span>
-                          <span className="text-l">
-                            {match.team_1_info.title}
-                          </span>
-                          {match.result == 'team_1' ? (
-                            <span className="wtm text-success">WINNER</span>
-                          ) : (
-                            false
-                          )}
-                        </span>
+                        {match.team_1_info ? (
+                          <>
+                            <img
+                              className="img-fluid team_avat "
+                              src={
+                                match.team_1_info.profile_picture
+                                  ? match.team_1_info.profile_picture
+                                  : '/images/team_bg.png'
+                              }
+                            />{' '}
+                            <span>
+                              <span className="text-l">
+                                {match.team_1_info.title}
+                              </span>
+                              {match.result == 'team_1' ? (
+                                <span className="wtm text-success">WINNER</span>
+                              ) : (
+                                false
+                              )}
+                            </span>
+                          </>
+                        ) : (
+                          false
+                        )}
                       </div>
                       <div className="col team_spn_m">
                         <span>
@@ -269,24 +275,30 @@ class Home extends React.Component {
                     </div>
                     <div className="row">
                       <div className="col team_spn_m">
-                        <img
-                          className="img-fluid team_avat "
-                          src={
-                            match.team_2_info.profile_picture
-                              ? match.team_2_info.profile_picture
-                              : '/images/team_bg.png'
-                          }
-                        />{' '}
-                        <span>
-                          <span className="text-l">
-                            {match.team_2_info.title}
-                          </span>
-                          {match.result == 'team_2' ? (
-                            <span className="wtm text-success">WINNER</span>
-                          ) : (
-                            false
-                          )}
-                        </span>
+                        {match.team_1_info ? (
+                          <>
+                            <img
+                              className="img-fluid team_avat "
+                              src={
+                                match.team_2_info.profile_picture
+                                  ? match.team_2_info.profile_picture
+                                  : '/images/team_bg.png'
+                              }
+                            />{' '}
+                            <span>
+                              <span className="text-l">
+                                {match.team_2_info.title}
+                              </span>
+                              {match.result == 'team_2' ? (
+                                <span className="wtm text-success">WINNER</span>
+                              ) : (
+                                false
+                              )}
+                            </span>
+                          </>
+                        ) : (
+                          false
+                        )}
                       </div>
                       <div className="col team_spn_m">
                         <span>

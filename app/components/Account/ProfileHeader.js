@@ -485,6 +485,7 @@ class ProfileHeader extends React.Component {
                     <a
                       title="<img class='hover_img' src='/images/xp_banner_profile.png' />"
                       data-toggle="tooltip"
+                      className="dib"
                       onClick={e => {
                         e.preventDefault();
                       }}

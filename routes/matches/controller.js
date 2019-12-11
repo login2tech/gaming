@@ -634,6 +634,7 @@ exports.resolveDispute = resolveDispute;
 exports.resolveDisputeWrap = function(req, res, next) {
   resolveDispute(req, res, next);
 };
+
 exports.saveScore = function(req, res, next) {
   new Item({id: req.body.id})
     .fetch()
@@ -791,6 +792,7 @@ exports.saveScore = function(req, res, next) {
       });
     });
 };
+
 const join_inner = function(match, req, res, next) {
   match
     .save({
@@ -852,6 +854,7 @@ const join_inner = function(match, req, res, next) {
       });
     });
 };
+
 exports.join = function(req, res, next) {
   if (!req.body.using_users) {
     res.status(400).send({ok: false, msg: 'Please select team players'});
@@ -881,7 +884,7 @@ exports.join = function(req, res, next) {
           team_1_id: req.body.team_2_id,
           team_2_id: match.get('team_1_id')
         })
-        .where('starts_at', '>', moment().subtract(60, 'minutes'))
+        .where('starts_at', '>', moment().subtract(3, 'hours'))
         .fetch()
         .then(function(old_matches) {
           //old_matches
@@ -897,7 +900,7 @@ exports.join = function(req, res, next) {
                 team_2_id: req.body.team_2_id,
                 team_1_id: match.get('team_1_id')
               })
-              .where('starts_at', '>', moment().subtract(60, 'minutes'))
+              .where('starts_at', '>', moment().subtract(3, 'hours'))
               .fetch()
               .then(function(old_matches) {
                 if (old_matches) {
@@ -1097,6 +1100,7 @@ exports.listrecent = function(req, res, next) {
   let a = new Item();
   a = a.orderBy('id', 'DESC');
   a = a.where('starts_at', '<', moment());
+  a = a.where('status', 'complete');
 
   if (req.query.filter_id) {
     a = a.where({

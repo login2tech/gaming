@@ -4394,7 +4394,7 @@ ul.submenu {
     position: absolute;
     background: #171716;
     right: 0;
-    padding-top: 31px;
+    /* padding-top: 31px; */
     top: 99%;
     display: none;
 }
@@ -4542,7 +4542,7 @@ ul.submenu li a {
     border-radius: 5px;
 }
 
-.notification_list:not(.user_sugggestions) li a {
+.notification_list:not(.user_sugggestions) li a:not(.text-danger) {
     padding: 10px 30px 10px 10px !important;
     font-size: 10px !important;
     /* background: white; */
@@ -4550,7 +4550,12 @@ ul.submenu li a {
     color: #fff !important;
     min-width: 250px !important;
 }
-
+.pr-10{
+  padding-right: 10px !important
+}
+.tc{
+  text-transform: capitalize !important;
+}
 .btn-outline {
     background: none;
     border: 2px solid #ffffff;
@@ -5343,6 +5348,9 @@ img.img-fluid.team_avat {
 }
 .br_1:not(:last-child){
   border-right: 1px solid #fff;
+}
+.dib{
+  display: inline-block;
 }
 @media screen and (max-width: 690px) {
   .br_1{

@@ -26,6 +26,31 @@ class Signup extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  handleChangeUsername(event) {
+    let val = event.target.value ? event.target.value : '';
+    val = val.trim();
+
+    val = val.replace(/[^a-zA-Z0-9 ]/g, '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    if (
+      val[0] == '-' ||
+      val[0] == '_' ||
+      val[0] == '1' ||
+      val[0] == '2' ||
+      val[0] == '3' ||
+      val[0] == '4' ||
+      val[0] == '5' ||
+      val[0] == '6' ||
+      val[0] == '7' ||
+      val[0] == '8' ||
+      val[0] == '9' ||
+      val[0] == '0'
+    ) {
+      val = val.replace(val[0], '');
+    }
+    this.setState({[event.target.name]: val});
+  }
+
   handleSignup(event) {
     event.preventDefault();
 
@@ -150,7 +175,7 @@ class Signup extends React.Component {
                           id="username"
                           name="username"
                           value={this.state.username}
-                          onChange={this.handleChange.bind(this)}
+                          onChange={this.handleChangeUsername.bind(this)}
                         />
                       </div>
                       <div className="form-group col-md-12">
