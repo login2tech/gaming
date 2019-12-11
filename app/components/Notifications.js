@@ -81,12 +81,12 @@ class Notifications extends React.Component {
                     } else if (notif.type == 'post') {
                       lnk = '/post/' + notif.object_id;
                       // post
-                    } else if (notif.type == 'follower') {
-                      //follower
                     } else if ('tournament' == notif.type) {
                       lnk = '/t/' + notif.object_id;
                     } else if ('ticket' == notif.type) {
                       lnk = '/support/tickets/ticket/' + notif.object_id;
+                    } else if ('follower' == notif.type) {
+                      lnk = '/gotouser/' + notif.object_id;
                     }
 
                     return (

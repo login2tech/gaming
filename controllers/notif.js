@@ -44,12 +44,14 @@ exports.delete = function(req, res, next) {
     .then(function(user) {
       if (req.query.id) {
         res.status(200).send({ok: true});
+        return;
       }
       res.redirect('/notifications');
     })
     .catch(function(err) {
       if (req.query.id) {
         res.status(200).send({ok: true});
+        return;
       }
       res.redirect('/notifications');
     });

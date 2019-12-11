@@ -199,6 +199,43 @@ class PaymentModal extends React.Component {
                 >
                   Or Proceed with OCG Cash
                 </button>
+                {this.ocg_proceed == 1 ? (
+                  <div className="btn-group">
+                    <button
+                      onClick={this.proceedWithOCG.bind(this)}
+                      type="button"
+                      disabled={amount_pending > this.props.user.cash_balance}
+                      className="btn text-white btn-primary"
+                    >
+                      confirm
+                    </button>
+                    <button
+                      onClick={() => {
+                        this.setState({
+                          ocg_proceed: 0
+                        });
+                      }}
+                      type="button"
+                      disabled={amount_pending > this.props.user.cash_balance}
+                      className="btn text-white btn-secondary"
+                    >
+                      x
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      this.setState({
+                        ocg_proceed: 1
+                      });
+                    }}
+                    type="button"
+                    disabled={amount_pending > this.props.user.cash_balance}
+                    className="btn text-white"
+                  >
+                    Or Proceed with OCG Cash
+                  </button>
+                )}
               </div>
             </div>
           </div>

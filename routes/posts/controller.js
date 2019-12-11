@@ -785,6 +785,8 @@ exports.addItem = function(req, res, next) {
           const uname = content[i]
             .replace('@', '')
             .replace('?', '')
+            .replace('(', '')
+            .replace(')', '')
             .replace(',', '');
           if (uname != req.user.username) {
             mentions.push(uname);

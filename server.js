@@ -447,6 +447,23 @@ app.get(
   userController.isAdmin,
   langController.listSingleLang
 );
+app.get('/gotouser/:uid', function(req, res, next) {
+  new User()
+    .where({
+      id: req.params.uid
+    })
+    .fetch()
+    .then(function(y) {
+      if (y) {
+        res.redirect('/u/' + y.get('username'));
+      } else {
+        res.status(200).send('no such user');
+      }
+    })
+    .catch(function(err) {
+      res.status(200).send('failed');
+    });
+});
 app.post(
   '/api/lang/edit',
   userController.ensureAuthenticated,

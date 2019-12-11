@@ -33,7 +33,7 @@ class SinlgePost extends React.Component {
   }
 
   renderGoBack() {
-    console.log(history.length);
+    // console.log(history.length);
     return (
       <a
         href="/feed"

@@ -415,6 +415,20 @@ class Profile extends React.Component {
                                 style={{color: '#dadcdd'}}
                               >
                                 Silver Trophies
+                                {this.props.user &&
+                                this.props.user.id == this.state.user_info.id &&
+                                (this.state.user_info.wins ||
+                                  this.state.user_info.loss) ? (
+                                  <a
+                                    style={{float: 'right'}}
+                                    href="#"
+                                    onClick={this.resetOverall.bind(this)}
+                                  >
+                                    <span className="fa fa-repeat" /> reset ($5)
+                                  </a>
+                                ) : (
+                                  false
+                                )}
                               </div>
                               <div className="trophy-count">0</div>
                             </div>
@@ -438,6 +452,20 @@ class Profile extends React.Component {
                                 style={{color: '#a26631'}}
                               >
                                 Bronze Trophies
+                                {this.props.user &&
+                                this.props.user.id == this.state.user_info.id &&
+                                (this.state.user_info.wins ||
+                                  this.state.user_info.loss) ? (
+                                  <a
+                                    style={{float: 'right'}}
+                                    href="#"
+                                    onClick={this.resetOverall.bind(this)}
+                                  >
+                                    <span className="fa fa-repeat" /> reset ($5)
+                                  </a>
+                                ) : (
+                                  false
+                                )}
                               </div>
                               <div className="trophy-count">0</div>
                             </div>
