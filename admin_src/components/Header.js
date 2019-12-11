@@ -15,6 +15,15 @@ class Header extends React.Component {
       <ul className="nav navbar-nav navbar-right">
         <li className="dropdown">
           <a
+            href="/"
+            // data-toggle="dropdown"
+            // className=" "
+          >
+            back to site
+          </a>
+        </li>
+        <li className="dropdown">
+          <a
             href="#"
             data-toggle="dropdown"
             className="navbar-avatar dropdown-toggle"

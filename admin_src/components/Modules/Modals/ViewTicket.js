@@ -149,7 +149,11 @@ class ViewTicket extends React.Component {
     ) {
       return (
         <a download href={a}>
-          <img style={{width: '500px'}} className="img_fluid" src={a} />
+          <img
+            style={{width: '500px'}}
+            className="img_fluid thumbnail"
+            src={a}
+          />
         </a>
       );
     }

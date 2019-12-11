@@ -69,11 +69,13 @@ class Tickets extends React.Component {
                 style={{float: 'left'}}
                 className=" text-right"
               >
-                <input
-                  type="checkbox"
-                  onChange={this.checkboxChange.bind(this)}
-                />{' '}
-                Show closed tickets too ?
+                <label>
+                  <input
+                    type="checkbox"
+                    onChange={this.checkboxChange.bind(this)}
+                  />{' '}
+                  Show closed tickets too ?
+                </label>
               </li>
               <li role="presentation" className="pull-right text-right">
                 <Link to="/support/tickets/create" role="tab">
