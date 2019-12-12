@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Messages from '../Modules/Messages';
 import {createMatch} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
+import game_settings from '../Modules/game_settings.json';
 
 import {Link} from 'react-router';
 // import moment from 'moment';
@@ -14,6 +15,7 @@ class NewMatchTeamSelect extends React.Component {
       title: '',
       ladder: '',
       games: [],
+      game_settings: {},
       ladder_obj: {
         title: ''
       },
@@ -240,6 +242,77 @@ class NewMatchTeamSelect extends React.Component {
     }
     return true;
   }
+  handleSettingsChange(event) {
+    const game_settings = this.state.game_settings;
+    game_settings[event.target.name] = event.target.value;
+    this.setState({
+      game_settings: game_settings
+    });
+  }
+
+  renderGameSettings() {
+    if (!this.state.ladder_obj || !this.state.ladder_obj.id) {
+      return false;
+    }
+    // console.log(this.state.ladder_obj);
+    const game_id = this.state.ladder_obj.game_id;
+    // console.log(game_id, this.state.games);
+    let ttl = '';
+    for (let i = 0; i < this.state.games.length; i++) {
+      if (this.state.games[i].id == game_id) {
+        ttl = this.state.games[i].title;
+        break;
+      }
+    }
+    // console.log(ttl);
+    if (!ttl) {
+      return false;
+    }
+    // ttl = this.state.game_info.title;
+    ttl = ttl.toLowerCase();
+    ttl = ttl.replace(new RegExp(' ', 'g'), '');
+    ttl = ttl.replace(new RegExp('-', 'g'), '');
+    ttl = ttl.replace(new RegExp('_', 'g'), '');
+    if (!game_settings[ttl]) {
+      return false;
+    }
+    const settings = game_settings[ttl];
+    return (
+      <div>
+        {settings.map((setting, i) => {
+          if (setting.type != 'select') {
+            return false;
+          }
+          // console.log('is a setting');
+          const id = setting.label
+            .replace(new RegExp(' ', 'g'), '')
+            .toLowerCase();
+          return (
+            <div className="form-group col-md-12" key={setting.label}>
+              <label htmlFor={id}>{setting.label}</label>
+              <select
+                id={id}
+                className="form-control"
+                value={this.state.game_settings[id]}
+                onChange={this.handleSettingsChange.bind(this)}
+                required
+                name={id}
+              >
+                <option value="">Select</option>
+                {setting.options.map((opt, i) => {
+                  return (
+                    <option value={opt} key={opt}>
+                      {opt}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   amIEligible(team_u) {
     const gamer_tag = this.state.ladder_obj.gamer_tag;
@@ -299,7 +372,7 @@ class NewMatchTeamSelect extends React.Component {
       max = min;
       min = tmp;
     }
-    console.log(min, max);
+    // console.log(min, max);
     const player_selection = [];
     for (let i = min; i <= max; i++) {
       player_selection.push(i);
@@ -551,6 +624,7 @@ class NewMatchTeamSelect extends React.Component {
                       ) : (
                         false
                       )}
+                      {this.renderGameSettings()}
                       <div className="form-group col-md-12 text-center">
                         <button
                           disabled={!this.isEligible()}

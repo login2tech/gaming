@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Messages from '../Modules/Messages';
 import {createMatch} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
-
+import game_settings from '../Modules/game_settings.json';
 import {Link} from 'react-router';
 // import moment from 'moment';
 class NewTeam extends React.Component {
@@ -14,6 +14,7 @@ class NewTeam extends React.Component {
       title: '',
       ladder: '',
       games: [],
+      game_settings: {},
       match_players: '',
       team_info: {ladder: {title: ''}, team_users: [], title: ''},
       game_info: {title: ''},
@@ -28,6 +29,14 @@ class NewTeam extends React.Component {
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
+  }
+
+  handleSettingsChange(event) {
+    const game_settings = this.state.game_settings;
+    game_settings[event.target.name] = event.target.value;
+    this.setState({
+      game_settings: game_settings
+    });
   }
 
   fetchGame() {
@@ -117,7 +126,8 @@ class NewTeam extends React.Component {
           match_players: this.state.match_players,
           match_fee:
             this.state.match_type == 'paid' ? this.state.match_fee : '',
-          using_users: this.state.using_users
+          using_users: this.state.using_users,
+          game_settings: this.state.game_settings
         },
         this.props.user
       )
@@ -242,6 +252,57 @@ class NewTeam extends React.Component {
       </span>
     );
   }
+
+  renderGameSettings() {
+    if (!this.state.game_info) {
+      return false;
+    }
+    let ttl = this.state.game_info.title;
+    ttl = ttl.toLowerCase();
+    ttl = ttl.replace(new RegExp(' ', 'g'), '');
+    ttl = ttl.replace(new RegExp('-', 'g'), '');
+    ttl = ttl.replace(new RegExp('_', 'g'), '');
+    if (!game_settings[ttl]) {
+      return false;
+    }
+    const settings = game_settings[ttl];
+    return (
+      <div>
+        {settings.map((setting, i) => {
+          if (setting.type != 'select') {
+            return false;
+          }
+          // console.log('is a setting');
+          const id = setting.label
+            .replace(new RegExp(' ', 'g'), '')
+            .toLowerCase();
+          return (
+            <div className="form-group col-md-12" key={setting.label}>
+              <label htmlFor={id}>{setting.label}</label>
+              <select
+                id={id}
+                className="form-control"
+                onChange={this.handleSettingsChange.bind(this)}
+                required
+                value={this.state.game_settings[id]}
+                name={id}
+              >
+                <option value="">Select</option>
+                {setting.options.map((opt, i) => {
+                  return (
+                    <option value={opt} key={opt}>
+                      {opt}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
   tag_names = [
     '',
     'Xbox Live Gamertag',
@@ -437,6 +498,8 @@ class NewTeam extends React.Component {
                       ) : (
                         false
                       )}
+
+                      {this.renderGameSettings()}
                       <div className="form-group col-md-12 text-center">
                         <button
                           disabled={!this.isEligible()}

@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import Messages from '../Modules/Messages';
 import {createMatch8} from '../../actions/match8';
 import game_user_ids from '../../../config/game_user_ids';
+import game_settings from '../Modules/game_settings.json';
 
 import {Link} from 'react-router';
 
@@ -15,11 +16,86 @@ class NewMoney8 extends React.Component {
       ladder: false,
       games: [],
       players_total: '',
+      game_settings: {},
       players: [props.user],
       expires_in: '',
       match_type: '',
       match_fee: 0
     };
+  }
+
+  handleSettingsChange(event) {
+    const game_settings = this.state.game_settings;
+    game_settings[event.target.name] = event.target.value;
+    this.setState({
+      game_settings: game_settings
+    });
+  }
+
+  renderGameSettings() {
+    console.log(this.state);
+    if (!this.state.ladder) {
+      return false;
+    }
+    const ladder = this.state.ladder.split('_');
+    // console.log(this.state.ladder);
+    const game_id = ladder[0];
+    // console.log(game_id, this.state.games);
+    let ttl = '';
+    for (let i = 0; i < this.state.games.length; i++) {
+      if (this.state.games[i].id == game_id) {
+        ttl = this.state.games[i].title;
+        break;
+      }
+    }
+    // console.log(ttl);
+    if (!ttl) {
+      return false;
+    }
+    // ttl = this.state.game_info.title;
+    ttl = ttl.toLowerCase();
+    ttl = ttl.replace(new RegExp(' ', 'g'), '');
+    ttl = ttl.replace(new RegExp('-', 'g'), '');
+    ttl = ttl.replace(new RegExp('_', 'g'), '');
+    if (!game_settings[ttl]) {
+      return false;
+    }
+    const settings = game_settings[ttl];
+    return (
+      <div>
+        {settings.map((setting, i) => {
+          if (setting.type != 'select') {
+            return false;
+          }
+          // console.log('is a setting');
+          const id = setting.label
+            .replace(new RegExp(' ', 'g'), '')
+            .toLowerCase();
+          return (
+            <div className="form-group col-md-12" key={setting.label}>
+              <label htmlFor={id}>{setting.label}</label>
+              <select
+                id={id}
+                className="form-control"
+                value={this.state.game_settings[id]}
+                onChange={this.handleSettingsChange.bind(this)}
+                required
+                name={id}
+              >
+                <option value="">Select</option>
+                {setting.options.map((opt, i) => {
+                  return (
+                    <option value={opt} key={opt}>
+                      {opt}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          );
+        })}
+      </div>
+    );
   }
 
   showGamerTag(ladder) {
@@ -284,7 +360,7 @@ class NewMoney8 extends React.Component {
                     ) : (
                       false
                     )}
-
+                    {this.renderGameSettings()}
                     <div className="form-group col-md-12 text-center">
                       <button
                         disabled={

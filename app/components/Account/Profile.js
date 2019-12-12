@@ -416,9 +416,8 @@ class Profile extends React.Component {
                               >
                                 Silver Trophies
                                 {this.props.user &&
-                                this.props.user.id == this.state.user_info.id &&
-                                (this.state.user_info.wins ||
-                                  this.state.user_info.loss) ? (
+                                this.props.user.id ==
+                                  this.state.user_info.id ? (
                                   <a
                                     style={{float: 'right'}}
                                     href="#"
@@ -453,9 +452,8 @@ class Profile extends React.Component {
                               >
                                 Bronze Trophies
                                 {this.props.user &&
-                                this.props.user.id == this.state.user_info.id &&
-                                (this.state.user_info.wins ||
-                                  this.state.user_info.loss) ? (
+                                this.props.user.id ==
+                                  this.state.user_info.id ? (
                                   <a
                                     style={{float: 'right'}}
                                     href="#"
