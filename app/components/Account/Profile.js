@@ -55,7 +55,7 @@ class Profile extends React.Component {
     //
   }
 
-  onGetToken(token) {
+  onGetToken(token, type) {
     fetch('/api/user/reset/score', {
       method: 'POST',
       headers: {
@@ -63,7 +63,7 @@ class Profile extends React.Component {
       },
       body: JSON.stringify({
         token_id: token == 'USE_OCG' ? 'USE_OCG' : token.id,
-        action: 'overallScore'
+        action: type
       })
     }).then(response => {
       this.props.dispatch(
@@ -99,14 +99,13 @@ class Profile extends React.Component {
     });
   }
 
-  resetOverall(e) {
-    e.preventDefault();
+  resetPop(heading, type) {
     this.props.dispatch(
       openModal({
         type: 'custom',
         id: 'payment',
         zIndex: 534,
-        heading: 'Reset Score',
+        heading: heading,
         content: (
           <PaymentModal
             msg={
@@ -115,12 +114,27 @@ class Profile extends React.Component {
             amount={5}
             // refresh={props.refresh}
             onGetToken={token => {
-              this.onGetToken(token);
+              this.onGetToken(token, type);
             }}
           />
         )
       })
     );
+  }
+
+  resetOverallTrSilver(e) {
+    e.preventDefault();
+    this.resetPop('Reset Silver Trophies', 'SILVER_TROPHIES');
+  }
+
+  resetOverallTrBronze(e) {
+    e.preventDefault();
+    this.resetPop('Reset Bronze Trophies', 'SILVER_TROPHIES');
+  }
+
+  resetOverall(e) {
+    e.preventDefault();
+    this.resetPop('Reset Score', 'overallScore');
   }
 
   getTeams(match) {
@@ -421,7 +435,9 @@ class Profile extends React.Component {
                                   <a
                                     style={{float: 'right'}}
                                     href="#"
-                                    onClick={this.resetOverall.bind(this)}
+                                    onClick={this.resetOverallTrSilver.bind(
+                                      this
+                                    )}
                                   >
                                     <span className="fa fa-repeat" /> reset ($5)
                                   </a>
@@ -457,7 +473,9 @@ class Profile extends React.Component {
                                   <a
                                     style={{float: 'right'}}
                                     href="#"
-                                    onClick={this.resetOverall.bind(this)}
+                                    onClick={this.resetOverallTrBronze.bind(
+                                      this
+                                    )}
                                   >
                                     <span className="fa fa-repeat" /> reset ($5)
                                   </a>
