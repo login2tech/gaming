@@ -1024,7 +1024,12 @@ exports.matches_of_team = function(req, res, next) {
 
 exports.matches_of_user = function(req, res, next) {
   // console.log(req.query);
-  const teams = req.query.teams.split(',');
+  let teams = req.query.teams;
+  if (!teams || teams == '') {
+    teams = [];
+  } else {
+    teams = teams.split(',');
+  }
   let mdl = new Item();
   mdl = mdl.orderBy('created_at', 'DESC');
 
@@ -1047,7 +1052,7 @@ exports.matches_of_user = function(req, res, next) {
 
     .then(function(item) {
       if (!item) {
-        return res.status(200).send({ok: true, items: []});
+        return res.status(200).send({ok: true, items: [], r: 'EMPTy'});
       }
       return res
         .status(200)
