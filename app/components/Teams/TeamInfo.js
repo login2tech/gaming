@@ -499,25 +499,25 @@ class TeamInfo extends React.Component {
       return ((xp - 50) / 150) * 100;
     }
     if (xp < 500) {
-      return ((xp - 50) / 300) * 100;
+      return ((xp - 200) / 300) * 100;
     }
     if (xp < 1000) {
-      return ((xp - 200) / 500) * 100;
-    }
-    if (xp < 1500) {
       return ((xp - 500) / 500) * 100;
     }
-    if (xp < 2000) {
+    if (xp < 1500) {
       return ((xp - 1000) / 500) * 100;
     }
+    if (xp < 2000) {
+      return ((xp - 1500) / 500) * 100;
+    }
     if (xp < 3000) {
-      return ((xp - 1500) / 1000) * 100;
+      return ((xp - 2000) / 1000) * 100;
     }
     if (xp < 3500) {
-      return ((xp - 2000) / 500) * 100;
+      return ((xp - 3000) / 500) * 100;
     }
     if (xp < 4000) {
-      return ((xp - 3000) / 500) * 100;
+      return ((xp - 3500) / 500) * 100;
     }
     // if(xp)
     // if (xp >  5000) {
