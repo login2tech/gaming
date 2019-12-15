@@ -64,14 +64,14 @@ class MatchFinder extends React.Component {
                 <div className="t_big_heading">Play. Win. Collect.</div>
                 <Link
                   to={'/match/new'}
-                  className="btn btn-default bttn_submit max-width-300"
+                  className="btn btn-default bttn_submit max-width-200 dib"
                 >
                   Create a match
                 </Link>{' '}
                 {this.props.user ? (
                   <Link
                     to={'/u/' + this.props.user.username + '/teams/new'}
-                    className="btn btn-default bttn_submit max-width-300"
+                    className="btn btn-default bttn_submit max-width-200 dib"
                   >
                     Create a team
                   </Link>

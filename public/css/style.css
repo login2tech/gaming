@@ -4220,6 +4220,10 @@ a.bttn_submit:hover {
     max-width: 300px;
 }
 
+.max-width-200 {
+    max-width: 200px;
+}
+
 .list_pad i.fa {
     margin-right: 5px;
 }
