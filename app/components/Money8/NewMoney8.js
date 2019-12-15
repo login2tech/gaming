@@ -311,8 +311,6 @@ class NewMoney8 extends React.Component {
                         <option value="4">4</option>
                         <option value="6">6</option>
                         <option value="8">8</option>
-                        <option value="12">12</option>
-                        <option value="16">16</option>
                       </select>
                     </div>
 

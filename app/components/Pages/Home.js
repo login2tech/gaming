@@ -57,7 +57,7 @@ class Home extends React.Component {
           </div>
         </div>
 
-        <section className="games" style={{marginBottom: 30}}>
+        <section className="games" style={{marginBottom: 30, paddingTop: 5}}>
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 ">

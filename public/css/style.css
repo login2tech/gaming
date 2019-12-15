@@ -5357,6 +5357,15 @@ span.text-l a.mw100 {
     min-width: 150px;
     display: inline-block;
 }
+
+div#modal_following .modal-body,
+div#modal_followers .modal-body{
+    max-height: 80vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
 @media screen and (max-width: 690px) {
   .br_1{
     border:0;

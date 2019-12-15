@@ -287,13 +287,13 @@ class Shop extends React.Component {
                   onChange={this.handleChange.bind(this)}
                 >
                   <option value="">Add Credit</option>
-                  <option value="5">5 credits</option>
-                  <option value="10">10 credits</option>
-                  <option value="15">15 credits</option>
-                  <option value="25">25 credits</option>
-                  <option value="50">50 credits</option>
-                  <option value="75">75 credits</option>
-                  <option value="100">100 credits</option>
+                  <option value="5">5 credits for $5</option>
+                  <option value="10">10 credits for $10</option>
+                  <option value="15">15 credits for $15</option>
+                  <option value="25">25 credits for $25</option>
+                  <option value="50">50 credits for $50</option>
+                  <option value="75">75 credits for $75</option>
+                  <option value="100">100 credits for $100</option>
                 </select>
               ) : (
                 <input

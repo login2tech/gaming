@@ -62,13 +62,27 @@ class MatchFinder extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="all_t_heading">Upcoming Matches</div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
-
                 <Link
                   to={'/match/new'}
                   className="btn btn-default bttn_submit max-width-300"
                 >
                   Create a match
-                </Link>
+                </Link>{' '}
+                {this.props.user ? (
+                  <Link
+                    to={'/u/' + this.props.user.username + '/teams/new'}
+                    className="btn btn-default bttn_submit max-width-300"
+                  >
+                    Create a team
+                  </Link>
+                ) : (
+                  <Link
+                    to={'/login'}
+                    className="btn btn-default bttn_submit max-width-300"
+                  >
+                    Create a team
+                  </Link>
+                )}
               </div>
             </div>
           </div>

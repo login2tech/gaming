@@ -510,7 +510,7 @@ exports.addFollower = function(req, res, next) {
                 user_id: follow_to,
                 description: 'You have a new follower',
                 type: 'follower',
-                object_id: 1
+                object_id: me
               })
               .then(function() {})
               .catch(function(er) {
