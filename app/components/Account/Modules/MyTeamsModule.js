@@ -53,6 +53,9 @@ class MyTeamsModule extends React.Component {
             <li className="item" key={team.id}>
               <Link
                 to={'/u/' + this.props.user_info.username + '/teams/' + team.id}
+                title={team.team_type + ' team'}
+                data-toggle="tooltip"
+                style={{display: 'inline-block'}}
               >
                 <figure className="avatr">
                   {team.profile_picture ? (

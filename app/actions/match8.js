@@ -48,7 +48,9 @@ export function leave_match(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/mix-and-match/' + json.match.id;
+          setTimeout(function() {
+            window.location.href = '/mix-and-match/' + json.match.id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {
@@ -78,7 +80,9 @@ export function join_match(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/mix-and-match/' + json.match.id;
+          setTimeout(function() {
+            window.location.href = '/mix-and-match/' + data.match_id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {
@@ -108,7 +112,9 @@ export function saveScores(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/mix-and-match/' + json.match.id;
+          setTimeout(function() {
+            window.location.href = '/mix-and-match/' + json.match.id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {

@@ -262,7 +262,7 @@ const giveMoneyToMember = function(uid, input_val, match_id) {
         } else {
           val =
             parseFloat((4 / 5) * parseFloat(input_val)) + parseFloat(input_val);
-          life_earning += parseFloat((4 / 5) * parseFloat(input_val));
+          life_earning += parseFloat(input_val);
         }
 
         cash_balance += val;

@@ -1,6 +1,7 @@
 const initialState = {
   token: null,
-  user: {}
+  user: {},
+  userHash: Math.random()
 };
 
 export default function auth(state = initialState, action) {
@@ -17,7 +18,8 @@ export default function auth(state = initialState, action) {
       });
     case 'UPDATE_USER':
       return Object.assign({}, state, {
-        user: action.user
+        user: action.user,
+        userHash: Math.random()
       });
 
     case 'LOGOUT_SUCCESS':

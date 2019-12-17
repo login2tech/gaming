@@ -151,7 +151,7 @@ new User()
       if (usrs[i].xp_rank == i + 1) {
         continue;
       }
-      console.log(usrs[i].xp_rank, i + 1);
+      // console.log(usrs[i].xp_rank, i + 1);
       updateUserRank(usrs[i].id, i + 1);
     }
     // return res.status(200).send({ok: true, items: usrs.toJSON()});

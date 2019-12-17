@@ -300,7 +300,10 @@ class Header extends React.Component {
                                   <span className="menu_prof_name_top">
                                     Hello, {props.user.first_name}
                                   </span>
-                                  <span className="menu_prof_name_bot">
+                                  <span
+                                    className="menu_prof_name_bot"
+                                    data-s={props.userHash}
+                                  >
                                     ${props.user.cash_balance} |{' '}
                                     {props.user.credit_balance} credits |{' '}
                                     {props.user.life_xp} life XP
@@ -419,7 +422,8 @@ class Header extends React.Component {
 const mapStateToProps = state => {
   return {
     token: state.auth.token,
-    user: state.auth.user
+    user: state.auth.user,
+    userHash: state.auth.userHash
   };
 };
 

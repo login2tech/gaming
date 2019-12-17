@@ -256,15 +256,22 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
     .then(function(usr) {
       if (usr) {
         let cash_balance = usr.get(typ);
+        let life_earning = usr.get('life_earning');
 
         const prime = usr.get('prime');
         let val;
 
         if (prime) {
           val = parseFloat(input_val) + parseFloat(input_val);
+          if (typ == 'cash_balance') {
+            life_earning += parseFloat(input_val);
+          }
         } else {
           val =
             parseFloat((4 / 5) * parseFloat(input_val)) + parseFloat(input_val);
+          if (typ == 'cash_balance') {
+            life_earning += parseFloat(input_val);
+          }
         }
         console.log('cah_bl ', cash_balance);
         console.log('val ', val);
@@ -272,7 +279,10 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
         cash_balance += val;
         console.log('cah_bl_new ', cash_balance);
         usr
-          .save({[typ]: cash_balance}, {patch: true})
+          .save(
+            {[typ]: cash_balance, life_earning: life_earning},
+            {patch: true}
+          )
           .then(function(usr) {
             let ct;
             if (typ == 'cash_balance') {

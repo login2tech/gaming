@@ -80,7 +80,9 @@ export function join_match(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/m/' + json.match.id;
+          setTimeout(function() {
+            window.location.href = '/m/' + json.match.id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {
@@ -110,7 +112,10 @@ export function saveScores(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
-          window.location.href = '/m/' + json.match.id;
+          // window.location.href = '/m/' + json.match.id;
+          setTimeout(function() {
+            window.location.href = '/m/' + json.match.id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {
@@ -157,35 +162,35 @@ export function inviteToTeam(data, cb) {
   };
 }
 
-export function approveMatch(data, cb) {
-  return dispatch => {
-    dispatch({
-      type: 'CLR_MSG'
-    });
-    return fetch('/api/matches/approve', {
-      method: 'post',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(data)
-    }).then(response => {
-      if (response.ok) {
-        return response.json().then(json => {
-          dispatch({
-            type: 'SUCCESS',
-            messages: Array.isArray(json) ? json : [json]
-          });
-
-          cb(true);
-          // browserHistory.push('/u/' + user.username + '/teams/' + json.team.id);
-        });
-      } else {
-        return response.json().then(json => {
-          dispatch({
-            type: 'FAILURE',
-            messages: Array.isArray(json) ? json : [json]
-          });
-          cb(false);
-        });
-      }
-    });
-  };
-}
+// export function approveMatch(data, cb) {
+//   return dispatch => {
+//     dispatch({
+//       type: 'CLR_MSG'
+//     });
+//     return fetch('/api/matches/approve', {
+//       method: 'post',
+//       headers: {'Content-Type': 'application/json'},
+//       body: JSON.stringify(data)
+//     }).then(response => {
+//       if (response.ok) {
+//         return response.json().then(json => {
+//           dispatch({
+//             type: 'SUCCESS',
+//             messages: Array.isArray(json) ? json : [json]
+//           });
+//
+//           cb(true);
+//           // browserHistory.push('/u/' + user.username + '/teams/' + json.team.id);
+//         });
+//       } else {
+//         return response.json().then(json => {
+//           dispatch({
+//             type: 'FAILURE',
+//             messages: Array.isArray(json) ? json : [json]
+//           });
+//           cb(false);
+//         });
+//       }
+//     });
+//   };
+// }
