@@ -427,7 +427,7 @@ class Shop extends React.Component {
                       {this.props.user ? (
                         this.props.user.prime ? (
                           <p className="text-success">
-                            You are already a Official Comp Member - Silver
+                            You are already a Official Comp Member
                           </p>
                         ) : (
                           <input
