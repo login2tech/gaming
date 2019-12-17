@@ -345,10 +345,10 @@ class Shop extends React.Component {
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
-                  Official Comp Membership
+                  Official Comp Membership - Gold
                   <br />
                   <img
-                    src="/assets/icons/ocg_member.png"
+                    src="/assets/icons/ocg_member_gold.png"
                     style={{
                       height: '150px',
                       marginTop: '20px',
@@ -370,7 +370,7 @@ class Shop extends React.Component {
                         ) : (
                           <input
                             type="submit"
-                            value="Buy Official Comp Membership"
+                            value="Buy Official Comp Gold Membership"
                             onClick={() => {
                               this.props.dispatch({
                                 type: 'CLR_MSG'
@@ -379,7 +379,8 @@ class Shop extends React.Component {
                                 {
                                   buy_balance_init: true,
                                   clicked: false,
-                                  init_transaction_mode: 'prime'
+                                  init_transaction_mode: 'prime',
+                                  prime_type: 'gold'
                                 },
                                 () => {
                                   this.handleStripeCreation();
@@ -394,7 +395,7 @@ class Shop extends React.Component {
                           to="/login"
                           className="btn btn-default bttn_submit"
                         >
-                          Get Official Comp Membership
+                          Get Official Comp Gold Membership
                         </Link>
                       )}
                     </div>
@@ -404,6 +405,69 @@ class Shop extends React.Component {
             </div>
 
             <div className="col-md-6">
+              <div className="authorize_box shop text-center">
+                <div className="credit_summary ">
+                  Official Comp Membership - Silver
+                  <br />
+                  <img
+                    src="/assets/icons/ocg_member_silver.png"
+                    style={{
+                      height: '150px',
+                      marginTop: '20px',
+                      marginBottom: '20px'
+                    }}
+                  />
+                  <br /> $5 / month
+                </div>
+                {this.state.init_transaction_mode == 'prime' ? (
+                  this.renderBuyBox('prime')
+                ) : (
+                  <div className="row">
+                    <div className="col-md-8 offset-md-2 text-center">
+                      {this.props.user ? (
+                        this.props.user.prime ? (
+                          <p className="text-success">
+                            You are already a Official Comp Member - Silver
+                          </p>
+                        ) : (
+                          <input
+                            type="submit"
+                            value="Buy Official Comp Silver Membership"
+                            onClick={() => {
+                              this.props.dispatch({
+                                type: 'CLR_MSG'
+                              });
+                              this.setState(
+                                {
+                                  buy_balance_init: true,
+                                  clicked: false,
+                                  init_transaction_mode: 'prime',
+                                  prime_type: 'silver'
+                                },
+                                () => {
+                                  this.handleStripeCreation();
+                                }
+                              );
+                            }}
+                            className="btn btn-default bttn_submit"
+                          />
+                        )
+                      ) : (
+                        <Link
+                          to="/login"
+                          className="btn btn-default bttn_submit"
+                        >
+                          Get Official Comp Silver Membership
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="row shop_row" style={{marginBottom: '20px'}}>
+            <div className="col-md-6 offset-md-3">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
                   Double XP <br />
