@@ -414,10 +414,11 @@ const proceedWithDoubleXP = function(req, res) {
               },
               {patch: true}
             )
-            .then(function() {
+            .then(function(usr) {
               res.status(200).send({
                 ok: true,
                 action: 'PAYMENT_DONE',
+                user: usr.toJSON(),
                 msg: 'Successfully charged card to activate double xp for 1 day'
               });
             })

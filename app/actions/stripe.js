@@ -22,7 +22,7 @@ export function charge(obj, token, cb) {
             });
           }
           if (json.action && json.action == 'PAYMENT_DONE') {
-            cb(true);
+            cb(true, json);
             dispatch({
               type: 'SUCCESS',
               messages: [json]

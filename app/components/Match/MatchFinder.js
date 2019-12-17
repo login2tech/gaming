@@ -122,6 +122,20 @@ class MatchFinder extends React.Component {
                             className="tournament-list active"
                           >
                             {this.state.matches[game_id].map((match, i) => {
+                              let txt = '';
+                              let txt2 = '';
+                              txt = 'Accept Match';
+                              let t1p = match.team_1_players;
+                              if (!t1p) {
+                                t1p = '';
+                              }
+                              t1p = t1p.split('|');
+                              // console.log(t1p);
+                              if (t1p.indexOf('' + this.props.user.id) > -1) {
+                                txt = 'View Match';
+                              }
+                              txt2 = 'Already accepted';
+
                               return (
                                 <li
                                   key={match.id}
@@ -181,13 +195,20 @@ class MatchFinder extends React.Component {
                                       </div>
                                     </div>
 
-                                    <div className="col align-right">
+                                    <div
+                                      className="col align-right"
+                                      style={{
+                                        flexDirection: 'column',
+                                        alignItems: 'flex-end'
+                                      }}
+                                    >
                                       <Link
                                         to={this.matchLink('/m/' + match.id)}
                                         className="btn-default"
                                       >
-                                        Accept Match
+                                        {txt}
                                       </Link>
+                                      <small>{txt2}</small>
                                     </div>
                                   </div>
                                 </li>

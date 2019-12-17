@@ -49,7 +49,7 @@ class Shop extends React.Component {
           init_transaction_mode: this.state.init_transaction_mode
         },
         this.props.token,
-        res => {
+        (res, json) => {
           if (res) {
             const init_transaction_mode = this.state.init_transaction_mode;
 
@@ -62,16 +62,24 @@ class Shop extends React.Component {
                 init_transaction_mode: ''
               },
               () => {
-                const usr = this.props.user;
-                if (init_transaction_mode == 'credit') {
-                  usr.credit_balance =
-                    parseInt(usr.credit_balance) + parseInt(add_new_bal_number);
-                } else if (init_transaction_mode == 'cash') {
-                  usr.cash_balance =
-                    parseInt(usr.cash_balance) + parseInt(add_new_bal_number);
+                console.log(json);
+                let usr;
+                if (json && json.user) {
+                  usr = json.user;
                 } else {
-                  usr[init_transaction_mode] = true;
+                  usr = this.props.user;
+                  if (init_transaction_mode == 'credit') {
+                    usr.credit_balance =
+                      parseInt(usr.credit_balance) +
+                      parseInt(add_new_bal_number);
+                  } else if (init_transaction_mode == 'cash') {
+                    usr.cash_balance =
+                      parseInt(usr.cash_balance) + parseInt(add_new_bal_number);
+                  } else {
+                    usr[init_transaction_mode] = true;
+                  }
                 }
+                // console.log('setting user', usr);
                 this.props.dispatch({
                   type: 'UPDATE_USER',
                   user: usr
@@ -419,17 +427,26 @@ class Shop extends React.Component {
                           <p className="text-success">Double XP enabled!</p>
                           <p>
                             <strong>Started on: </strong>
-                            {moment(
-                              JSON.parse(this.props.user.double_xp_obj)
-                                .started_on
-                            ).format('LLL')}
+                            {this.props.user.double_xp_obj
+                              ? typeof this.props.user.double_xp_obj ===
+                                'object'
+                                ? moment(
+                                    this.props.user.double_xp_obj.started_on
+                                  ).format('LLL')
+                                : moment(
+                                    JSON.parse(this.props.user.double_xp_obj)
+                                      .started_on
+                                  ).format('LLL')
+                              : false}
                           </p>
                           <p>
                             <strong>
                               Ends on:{' '}
-                              {moment(this.props.user.double_xp_exp).format(
-                                'LLL'
-                              )}
+                              {this.props.user.double_xp_exp
+                                ? moment(this.props.user.double_xp_exp).format(
+                                    'LLL'
+                                  )
+                                : false}
                             </strong>
                           </p>
                         </div>
