@@ -636,8 +636,8 @@ class Profile extends React.Component {
             false
           )}
           <div className="update_btn cover">
-            <label htmlFor="cover_image_select">
-              <i className="fa fa-edit" /> upload cover
+            <label htmlFor="cover_image_select" className=" expand_on_hover">
+              <i className="fa fa-edit" /> <span>upload banner</span>
             </label>
 
             {this.state.new_cover_pic && !this.state.new_cover_pic_saved ? (
@@ -646,8 +646,9 @@ class Profile extends React.Component {
                   this.doSaveCoverPic(event);
                 }}
                 type="button"
+                className="expand_on_hover"
               >
-                <i className="fa fa-save" /> save new cover
+                <i className="fa fa-save" /> <span>save new banner</span>
               </button>
             ) : (
               false
@@ -669,8 +670,11 @@ class Profile extends React.Component {
                 <div className="game_pic_tournament profile_pic_outline square">
                   <div className="content">
                     <div className="update_btn">
-                      <label htmlFor="profile_image_select">
-                        <i className="fa fa-edit" />
+                      <label
+                        htmlFor="profile_image_select"
+                        className="expand_on_hover"
+                      >
+                        <i className="fa fa-edit" /> <span>edit picture</span>
                       </label>
 
                       {this.state.new_profile_pic &&
@@ -680,8 +684,9 @@ class Profile extends React.Component {
                             this.doSaveProfilePic(event);
                           }}
                           type="button"
+                          className="expand_on_hover"
                         >
-                          <i className="fa fa-save" />
+                          <i className="fa fa-save" /> <span>save</span>
                         </button>
                       ) : (
                         false

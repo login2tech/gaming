@@ -387,7 +387,7 @@ class MyBankModule extends React.Component {
                     required
                     autoFocus
                     name="username_to_transfer"
-                    placeholder="Enter name on card"
+                    placeholder="Username to transfer to"
                     id="username_to_transfer"
                     className="form-control text-black"
                     value={this.state.username_to_transfer}

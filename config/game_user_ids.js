@@ -12,7 +12,7 @@ const tag_icons = [
   '',
   'pf_icon fab fa-xbox',
   'pf_icon fab fa-playstation',
-  'pf_icon fa fa-laptop',
+  'pf_icon actision_logo epic',
   'pf_icon fab fa-steam',
   'pf_icon fab fa-battle-net',
   'pf_icon actision_logo'

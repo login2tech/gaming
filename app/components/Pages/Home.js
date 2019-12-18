@@ -57,13 +57,16 @@ class Home extends React.Component {
           </div>
         </div>
 
-        <section className="games" style={{marginBottom: 30, paddingTop: 5}}>
+        <section
+          className="games bg-black"
+          style={{marginBottom: 30, paddingTop: 20}}
+        >
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 ">
                 <div className="section-headline white-headline text-center">
                   <h3>Find Your Game</h3>
-                  <p>Play Your Favourite Games</p>
+                  <p>Play Your Favorite Games</p>
                 </div>
               </div>
             </div>
@@ -153,7 +156,7 @@ class Home extends React.Component {
           </div>
         </div>
 
-        <div className="main_slider_home">
+        <div className="main_slider_home  bg-black">
           <div id="demo2" className="carousel slide" data-ride="carousel">
             <div className="carousel-inner">
               <div className="carousel-item active">

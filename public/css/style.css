@@ -6,7 +6,9 @@
 label, legend {
     color: #fff;
 }
-
+.form-control:focus{
+  #114afb
+}
 html, body {
     color: #fff;
     line-height: 26px;
@@ -4442,7 +4444,7 @@ ul.submenu li a {
 }
 
 .has_children_m li a:hover {
-    background: #3251e2;
+    background: #000;
 }
 
 .has_children_m {
@@ -4599,7 +4601,7 @@ ul.submenu li a {
 }
 
 .user_sugggestions li:not(:first-child) {
-    background: #333333;
+    background: #fff;
     padding: 0;
 }
 
@@ -4981,10 +4983,13 @@ p.score_obj_scr {
     color: #5cc5e6;
 }
 
-div.trophy-info .trophy-name.gold {
+div.trophy-info .trophy-name.gold, .text-gold {
     color: #d8b862;
 }
 
+.text-silver{
+  color :#c0c0c0;
+}
 .container-brackets {
     min-height: 500px;
 }
@@ -5283,6 +5288,10 @@ span.t-bl {
     height: 60px;
     background-size: 102%;
 }
+.actision_logo.epic {
+    background: url(../images/epic_games.png) center no-repeat;
+    background-size: contain;
+}
 .dib{
   display: inline-block;
 }
@@ -5393,8 +5402,35 @@ div#modal_followers .modal-body{
     font-weight: 900;
     padding-right: 5px;
 }
+.expand_on_hover span {
+    width: 1px;
+    display: inline-block;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    transition: all .5s ease;
+    float: right;
+    text-align: right;
+    padding-left: 5px;
+    /*     text-indent: -9999px; */
+    overflow: hidden;
+    max-height: 20px
+}
 
+.expand_on_hover:hover span {
+    width: 150px;
+    text-indent: 0;
+}
 
+.expand_on_hover:nth-child(2) {
+    border-left: 1px solid #000;
+}
+
+.bg-black{
+  background: #000;
+}
+.text-lg{
+  font-size: 20px;line-height: 25px;
+}
 @media screen and (max-width: 690px) {
   .br_1{
     border:0;

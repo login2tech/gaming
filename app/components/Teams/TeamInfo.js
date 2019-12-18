@@ -670,8 +670,8 @@ class TeamInfo extends React.Component {
           this.currentUserInTeam() &&
           !this.state.team_info.removed ? (
             <div className="update_btn cover">
-              <label htmlFor="cover_image_select">
-                <i className="fa fa-edit" /> upload cover
+              <label htmlFor="cover_image_select" className=" expand_on_hover">
+                <i className="fa fa-edit" /> <span>upload banner</span>
               </label>
 
               {this.state.new_cover_pic && !this.state.new_cover_pic_saved ? (
@@ -680,8 +680,9 @@ class TeamInfo extends React.Component {
                     this.doSaveCoverPic(event);
                   }}
                   type="button"
+                  className="expand_on_hover"
                 >
-                  <i className="fa fa-save" /> save new cover
+                  <i className="fa fa-save" /> <span>save new banner</span>
                 </button>
               ) : (
                 false
@@ -711,8 +712,11 @@ class TeamInfo extends React.Component {
                 >
                   <div className="content">
                     <div className="update_btn">
-                      <label htmlFor="profile_image_select">
-                        <i className="fa fa-edit" />
+                      <label
+                        htmlFor="profile_image_select"
+                        className=" expand_on_hover"
+                      >
+                        <i className="fa fa-edit" /> <span>edit picture</span>
                       </label>
 
                       {this.state.new_profile_pic &&
@@ -722,8 +726,9 @@ class TeamInfo extends React.Component {
                             this.doSaveProfilePic(event);
                           }}
                           type="button"
+                          className="expand_on_hover"
                         >
-                          <i className="fa fa-save" />
+                          <i className="fa fa-save" /> <span>Save</span>
                         </button>
                       ) : (
                         false
@@ -902,7 +907,7 @@ class TeamInfo extends React.Component {
                               });
                             }}
                           >
-                            <i className="fa fa-edit" /> edit
+                            <i className="fa fa-edit" /> edit team{' '}
                           </button>
                         )}
                     </span>

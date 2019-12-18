@@ -345,7 +345,9 @@ class Shop extends React.Component {
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
-                  Official Comp Membership - Gold
+                  Official Comp Membership
+                  <br />
+                  <span className="text-lg text-gold">Gold</span>
                   <br />
                   <img
                     src="/assets/icons/ocg_member_gold.png"
@@ -423,7 +425,9 @@ class Shop extends React.Component {
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
-                  Official Comp Membership - Silver
+                  Official Comp Membership
+                  <br />
+                  <span className="text-lg text-silver">Silver</span>
                   <br />
                   <img
                     src="/assets/icons/ocg_member_silver.png"
