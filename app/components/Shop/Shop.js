@@ -355,7 +355,23 @@ class Shop extends React.Component {
                       marginBottom: '20px'
                     }}
                   />
-                  <br /> $5 / month
+                  <br /> $6.99 / month
+                  <br />
+                  <div className="lstitm">
+                    <span className="text-primary">
+                      ONLY COMP OFICIAL PREMIUM RANK SYSTEM (FREE-REWARDS!!)
+                    </span>
+                    <span>Premium ticket support</span>
+                    <span>
+                      Compete in “official Comp Member tournaments” for free!
+                    </span>
+                    <span>High priority Cash Withdrawals </span>
+                    <span>Free Cash Out Matches non charge 10 cents </span>
+                    {/*<span>1 Free @username change!</span>*/}
+                    <span>Match Escalations </span>
+                    <span>4 Free 24 Hour Double (XP) Token!</span>
+                    <span>10 Free Credits!</span>
+                  </div>
                 </div>
                 {this.state.init_transaction_mode == 'prime' ? (
                   this.renderBuyBox('prime')
@@ -417,7 +433,20 @@ class Shop extends React.Component {
                       marginBottom: '20px'
                     }}
                   />
-                  <br /> $5 / month
+                  <br /> $4.99 / month
+                  <div className="lstitm">
+                    <span className="no-ico" />
+                    <span>Premium ticket support</span>
+                    <span>
+                      Compete in “official Comp Member tournaments” for free!
+                    </span>
+                    <span>High priority Cash Withdrawals </span>
+                    <span>Free Cash Out Matches </span>
+                    {/*<span>1 Free @username change!</span>*/}
+                    <span>Match Escalations </span>
+                    <span>1 Free 24 Hour Double (XP) Token!</span>
+                    <span className="no-ico" />
+                  </div>
                 </div>
                 {this.state.init_transaction_mode == 'prime' ? (
                   this.renderBuyBox('prime')

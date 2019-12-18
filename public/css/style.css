@@ -5371,6 +5371,28 @@ div#modal_followers .modal-body{
     overflow-y: auto;
     overflow-x: hidden;
 }
+.lstitm {
+    font-size: 12px;padding-top:20px
+}
+
+.lstitm span {
+    display: block;
+}
+.lstitm span:before {
+    content: ' ';
+    /* content: "\f00c"; */
+    /* font-family: "Font Awesome 5 Free"; */
+    /* font-weight: 900; */
+    padding-right: 5px;
+}
+
+.lstitm span:not(.no-ico):before {
+    /* content: ' '; */
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    padding-right: 5px;
+}
 
 
 @media screen and (max-width: 690px) {
