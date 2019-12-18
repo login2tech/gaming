@@ -102,10 +102,7 @@ class ViewThread extends React.Component {
                         </span>
                         <span className="menu_prof_name_w">
                           <span className="menu_prof_name_top">
-                            By{' '}
-                            {this.state.thread.user.first_name +
-                              ' ' +
-                              this.state.thread.user.last_name}
+                            By @{this.state.thread.user.username}
                           </span>
                           <span className="menu_prof_name_bot">
                             {moment(this.state.thread.created_at).format('lll')}
@@ -145,10 +142,7 @@ class ViewThread extends React.Component {
                             </span>
                             <span className="menu_prof_name_w">
                               <span className="menu_prof_name_top">
-                                By{' '}
-                                {item.user.first_name +
-                                  ' ' +
-                                  item.user.last_name}
+                                By @{item.user.username}
                               </span>
                               <span className="menu_prof_name_bot">
                                 {moment(item.created_at).format('lll')}

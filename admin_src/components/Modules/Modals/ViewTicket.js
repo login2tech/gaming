@@ -233,10 +233,7 @@ class ViewTicket extends React.Component {
                         </span>
                         <span className="menu_prof_name_w">
                           <span className="menu_prof_name_top">
-                            By{' '}
-                            {this.state.ticket.user.first_name +
-                              ' ' +
-                              this.state.ticket.user.last_name}
+                            By @{this.state.ticket.user.username}
                           </span>
                           <span className="menu_prof_name_bot">
                             {moment(this.state.ticket.created_at).format('lll')}
@@ -290,10 +287,7 @@ class ViewTicket extends React.Component {
                                 {item.from_admin &&
                                 this.state.ticket.user_id != item.user_id
                                   ? 'SUPPORT STAFF'
-                                  : '' +
-                                    item.user.first_name +
-                                    ' ' +
-                                    item.user.last_name}
+                                  : '@' + item.user.username}
                               </span>
                               <span className="menu_prof_name_bot">
                                 {moment(item.created_at).format('lll')}

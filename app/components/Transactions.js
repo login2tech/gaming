@@ -115,7 +115,15 @@ class Transaction extends React.Component {
                               <tr key={k.id}>
                                 <td>{i + 1}</td>
                                 <td>{k.details}</td>
-                                <td>{k.qty}</td>
+                                <td
+                                  className={
+                                    parseFloat(k.qty) > 0
+                                      ? 'text-success'
+                                      : 'text-danger'
+                                  }
+                                >
+                                  $ {k.qty}
+                                </td>
                               </tr>
                             );
                           })}
@@ -146,7 +154,15 @@ class Transaction extends React.Component {
                               <tr key={k.id}>
                                 <td>{i + 1}</td>
                                 <td>{k.details}</td>
-                                <td>{k.qty}</td>
+                                <td
+                                  className={
+                                    parseFloat(k.qty) > 0
+                                      ? 'text-success'
+                                      : 'text-danger'
+                                  }
+                                >
+                                  {k.qty} credits
+                                </td>
                               </tr>
                             );
                           })}
