@@ -7,6 +7,7 @@ const Notif = require('../../models/Notification');
 const XP = require('../../models/XP');
 const TeamXP = require('../../models/TeamXP');
 const CashTransactions = require('../../models/CashTransactions');
+const CreditTransactions = require('../../models/CreditTransactions');
 const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
@@ -243,14 +244,24 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
     });
 };
 
-const giveMoneyToMember = function(uid, input_val, match_id) {
-  // console.log('match_fee is: ', input_val);
+const giveMoneyToMember = function(uid, input_val, match_id, type) {
+  let typ = '';
+  if (type == 'cash' || type == 'cash_balance') {
+    typ = 'cash_balance';
+  } else if (
+    type == 'credit' ||
+    type == 'credit_balance' ||
+    type == 'credits'
+  ) {
+    typ = 'credit_balance';
+  }
+
   new User()
     .where({id: uid})
     .fetch()
     .then(function(usr) {
       if (usr) {
-        let cash_balance = usr.get('cash_balance');
+        let cash_balance = usr.get(typ);
         let life_earning = usr.get('life_earning');
 
         const prime = usr.get('prime');
@@ -258,28 +269,37 @@ const giveMoneyToMember = function(uid, input_val, match_id) {
 
         if (prime) {
           val = parseFloat(input_val) + parseFloat(input_val);
-          life_earning += parseFloat(input_val);
+          if (typ == 'cash_balance') {
+            life_earning += parseFloat(input_val);
+          }
         } else {
           val =
             parseFloat((4 / 5) * parseFloat(input_val)) + parseFloat(input_val);
-          life_earning += parseFloat(input_val);
+          if (typ == 'cash_balance') {
+            life_earning += parseFloat(input_val);
+          }
         }
 
         cash_balance += val;
 
         usr
           .save(
-            {cash_balance: cash_balance, life_earning: life_earning},
+            {[typ]: cash_balance, life_earning: life_earning},
             {patch: true}
           )
           .then(function(usr) {
-            new CashTransactions()
-              .save({
-                user_id: uid,
-                obj_type: 'm_' + match_id,
-                details: 'Cash Credit for winning match #' + match_id,
-                qty: val
-              })
+            let ct;
+            if (typ == 'cash_balance') {
+              ct = new CashTransactions();
+            } else {
+              ct = new CreditTransactions();
+            }
+            ct.save({
+              user_id: uid,
+              obj_type: 'm_' + match_id,
+              details: 'Credit for winning match #' + match_id,
+              qty: val
+            })
               .then(function(o) {})
               .catch(function(err) {
                 console.log(8, err);
@@ -295,28 +315,43 @@ const giveMoneyToMember = function(uid, input_val, match_id) {
     });
 };
 
-const takeMoneyFromMember = function(uid, input_val, match_id) {
+const takeMoneyFromMember = function(uid, input_val, match_id, type) {
   // console.log(input_val);
   new User()
     .where({id: uid})
     .fetch()
     .then(function(usr) {
       if (usr) {
-        let cash_balance = usr.get('cash_balance');
+        // const cash_balance = usr.get('cash_balance');
 
-        // console.log(cash_balance);
-        cash_balance -= parseFloat(input_val);
+        let obj;
+        // cash_balance -= parseFloat(input_val);
+
+        if (type == 'cash') {
+          let cash_balance = usr.get('cash_balance');
+          cash_balance -= parseFloat(input_val);
+          obj = {cash_balance: cash_balance};
+        } else if (type == 'credits') {
+          let credit_balance = usr.get('credit_balance');
+          credit_balance -= parseFloat(input_val);
+          obj = {credit_balance: credit_balance};
+        }
 
         // console.log(cash_balance);
         usr
-          .save({cash_balance: cash_balance}, {patch: true})
+          .save(obj, {patch: true})
           .then(function(usr) {
-            new CashTransactions()
-              .save({
-                user_id: uid,
-                details: 'Cash Debit for joining match #' + match_id,
-                qty: -parseFloat(input_val)
-              })
+            let ct;
+            if (type == 'cash') {
+              ct = new CashTransactions();
+            } else {
+              ct = new CreditTransactions();
+            }
+            ct.save({
+              user_id: uid,
+              details: type + ' debit for joining match #' + match_id,
+              qty: -parseFloat(input_val)
+            })
               .then(function(o) {})
               .catch(function(err) {
                 console.log(4, err);
@@ -425,16 +460,23 @@ const giveMoneyBackToTeam = function(
   team_id,
   input_val,
   team_members,
-  match_id
+  match_id,
+  type
 ) {
   for (let i = team_members.length - 1; i >= 0; i--) {
-    giveMoneyToMember(parseInt(team_members[i]), input_val, match_id);
+    giveMoneyToMember(parseInt(team_members[i]), input_val, match_id, type);
   }
 };
 
-const takeMoneyFromTeam = function(team_id, input_val, team_members, match_id) {
+const takeMoneyFromTeam = function(
+  team_id,
+  input_val,
+  team_members,
+  match_id,
+  type
+) {
   for (let i = team_members.length - 1; i >= 0; i--) {
-    takeMoneyFromMember(parseInt(team_members[i]), input_val, match_id);
+    takeMoneyFromMember(parseInt(team_members[i]), input_val, match_id, type);
   }
 };
 
@@ -583,12 +625,16 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
           giveXPtoTeam(award_team_id, win_team_members, tmp_match.id);
           takeXPfromTeam(loose_team_id, loose_team_members, tmp_match.id);
 
-          if (tmp_match.match_type == 'paid') {
+          if (
+            tmp_match.match_type == 'credits' ||
+            tmp_match.match_type == 'cash'
+          ) {
             giveMoneyBackToTeam(
               award_team_id,
               tmp_match.match_fee,
               win_team_members,
-              tmp_match.id
+              tmp_match.id,
+              tmp_match.match_type
             );
           }
           // console.log('score resotlo');
@@ -747,13 +793,16 @@ exports.saveScore = function(req, res, next) {
             giveXPtoTeam(award_team_id, win_team_members, tmp_match.id);
             takeXPfromTeam(loose_team_id, loose_team_members, tmp_match.id);
 
-            if (tmp_match.match_type == 'paid') {
-              // console.log('paid match giving xp');
+            if (
+              tmp_match.match_type == 'credits' ||
+              tmp_match.match_type == 'cash'
+            ) {
               giveMoneyBackToTeam(
                 award_team_id,
                 tmp_match.match_fee,
                 win_team_members,
-                tmp_match.id
+                tmp_match.id,
+                tmp_match.match_type
               );
             }
             console.log('score resotlo');
@@ -812,7 +861,8 @@ const join_inner = function(match, req, res, next) {
           req.body.team_2_id,
           match.get('match_fee'),
           req.body.using_users,
-          match.id
+          match.id,
+          match.get('match_type')
         );
       }
 
@@ -965,12 +1015,13 @@ exports.addItem = function(req, res, next) {
         msg: 'New Match has been created successfully.',
         match: item.toJSON()
       });
-      if (req.body.match_type == 'paid') {
+      if (req.body.match_type == 'credits' || req.body.match_type == 'cash') {
         takeMoneyFromTeam(
           req.body.team_1_id,
           req.body.match_fee,
           req.body.using_users,
-          item.id
+          item.id,
+          req.body.match_type
         );
       }
       for (let i = req.body.using_users.length - 1; i >= 0; i--) {

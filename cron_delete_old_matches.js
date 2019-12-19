@@ -20,7 +20,57 @@ function reset_ticker() {
   // console.log('reseting..')
   TICKER = 0;
 }
-const delete_match = function(ta) {
+
+const delete_match = function(ta, match) {
+  let team_1 = match.team_1_players;
+  let team_2 = match.team_2_players;
+  if (team_1) {
+    team_1 = team_1.split('|');
+  } else {
+    team_1 = [];
+  }
+  if (team_2) {
+    team_2 = team_2.split('|');
+  } else {
+    team_2 = [];
+  }
+  if (match.match_type == 'cash' || match.match_type == 'credits') {
+    for (let i = 0; i < team_1.length; i++) {
+      if (match.match_type == 'cash') {
+        utils.giveCashToUser(
+          team_1[i],
+          match.match_fee,
+          'Refund for cancelled mix & match #' + match.id,
+          'm8_' + match.id
+        );
+      } else if (match.match_type == 'credits') {
+        utils.giveCreditsToUser(
+          team_1[i],
+          match.match_fee,
+          'Refund for cancelled mix & match #' + match.id,
+          'm8_' + match.id
+        );
+      }
+    }
+    for (let i = 0; i < team_2.length; i++) {
+      if (match.match_type == 'cash') {
+        utils.giveCashToUser(
+          team_2[i],
+          match.match_fee,
+          'Refund for cancelled mix & match #' + match.id,
+          'm8_' + match.id
+        );
+      } else if (match.match_type == 'credits') {
+        utils.giveCreditsToUser(
+          team_2[i],
+          match.match_fee,
+          'Refund for cancelled mix & match #' + match.id,
+          'm8_' + match.id
+        );
+      }
+    }
+  }
+
   new Match()
     .where({id: ta})
     .destroy()
@@ -98,7 +148,7 @@ new Match()
       // `
       // tournaments`
       //
-      delete_match(matches[i].id);
+      delete_match(matches[i].id, matches[i]);
     }
     //
   })

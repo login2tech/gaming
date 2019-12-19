@@ -294,7 +294,7 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
             ct.save({
               user_id: uid,
               obj_type: 'm8_' + match_id,
-              details: 'Cash Credit for winning money-8 match #' + match_id,
+              details: 'Credit for winning money-8 match #' + match_id,
               qty: val
             })
               .then(function(o) {})

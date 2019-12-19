@@ -354,6 +354,7 @@ class Profile extends React.Component {
                             this.state.user_info.loss) ? (
                             <a
                               style={{float: 'right'}}
+                              className="reset_rep"
                               href="#"
                               onClick={this.resetOverall.bind(this)}
                             >
@@ -434,6 +435,7 @@ class Profile extends React.Component {
                                   this.state.user_info.id ? (
                                   <a
                                     style={{float: 'right'}}
+                                    className="reset_rep"
                                     href="#"
                                     onClick={this.resetOverallTrSilver.bind(
                                       this
@@ -472,6 +474,7 @@ class Profile extends React.Component {
                                   this.state.user_info.id ? (
                                   <a
                                     style={{float: 'right'}}
+                                    className="reset_rep"
                                     href="#"
                                     onClick={this.resetOverallTrBronze.bind(
                                       this

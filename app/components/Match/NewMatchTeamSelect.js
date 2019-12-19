@@ -153,7 +153,10 @@ class NewMatchTeamSelect extends React.Component {
           match_type: this.state.match_type,
           match_players: this.state.match_players,
           match_fee:
-            this.state.match_type == 'paid' ? this.state.match_fee : '',
+            this.state.match_type == 'credits' ||
+            this.state.match_type == 'cash'
+              ? this.state.match_fee
+              : '',
           using_users: this.state.using_users
         },
         this.props.user
@@ -173,7 +176,7 @@ class NewMatchTeamSelect extends React.Component {
     }
 
     if (
-      this.state.match_type == 'paid' &&
+      (this.state.match_type == 'credits' || this.state.match_type == 'cash') &&
       (this.state.match_fee == '' || parseFloat(this.state.match_fee) <= 0)
     ) {
       return false;
@@ -202,14 +205,26 @@ class NewMatchTeamSelect extends React.Component {
         } else {
           const amount = parseFloat(this.state.match_fee);
           for (let i = 0; i < this.state.selected_team.team_users.length; i++) {
-            if (
-              parseFloat(
-                this.state.selected_team.team_users[i].user_info.cash_balance
-              ) < amount
-            ) {
-              // return false;
-            } else {
-              user_done++;
+            if (this.state.match_type == 'credits') {
+              if (
+                parseFloat(
+                  this.state.team_info.team_users[i].user_info.credit_balance
+                ) < amount
+              ) {
+                // return false;
+              } else {
+                user_done++;
+              }
+            } else if (this.state.match_type == 'cash') {
+              if (
+                parseFloat(
+                  this.state.team_info.team_users[i].user_info.cash_balance
+                ) < amount
+              ) {
+                // return false;
+              } else {
+                user_done++;
+              }
             }
           }
         }
@@ -237,7 +252,16 @@ class NewMatchTeamSelect extends React.Component {
       return true;
     }
 
-    if (parseFloat(team_u.user_info.cash_balance) < amount) {
+    if (
+      this.state.match_type == 'cash' &&
+      parseFloat(team_u.user_info.cash_balance) < amount
+    ) {
+      return false;
+    }
+    if (
+      this.state.match_type == 'credits' &&
+      parseFloat(team_u.user_info.credit_balance) < amount
+    ) {
       return false;
     }
     return true;
@@ -340,7 +364,21 @@ class NewMatchTeamSelect extends React.Component {
       );
     }
 
-    if (parseFloat(team_u.user_info.cash_balance) < amount) {
+    if (
+      this.state.match_type == 'cash' &&
+      parseFloat(team_u.user_info.cash_balance) < amount
+    ) {
+      return (
+        <span className="text-danger">
+          <img className="icon_size" src="/images/controller-red.svg" /> Not
+          Eligible
+        </span>
+      );
+    }
+    if (
+      this.state.match_type == 'credits' &&
+      parseFloat(team_u.user_info.credit_balance) < amount
+    ) {
       return (
         <span className="text-danger">
           <img className="icon_size" src="/images/controller-red.svg" /> Not
@@ -604,11 +642,13 @@ class NewMatchTeamSelect extends React.Component {
                         >
                           <option value="">Select</option>
                           <option value="free">Free</option>
-                          <option value="paid">Paid</option>
+                          <option value="credits">Paid using Credits</option>
+                          <option value="cash">Paid using OCG Cash</option>
                         </select>
                       </div>
 
-                      {this.state.match_type == 'paid' ? (
+                      {this.state.match_type == 'credits' ||
+                      this.state.match_type == 'cash' ? (
                         <div className="form-group col-md-12">
                           <label htmlFor="match_fee">Match Entry Fee</label>
                           <input

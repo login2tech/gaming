@@ -230,11 +230,14 @@ exports.listSingleItem = function(req, res, next) {
 
 exports.listItemMyFeed = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
+  const a = req.users_my_following;
+  a.push(req.user.id);
+
   const n = new Item()
 
     .orderBy('id', 'DESC')
     // .orderBy('is_pinned', 'ASC')
-    .where('user_id', 'in', req.users_my_following);
+    .where('user_id', 'in', a);
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
     p = parseInt(req.query.paged);

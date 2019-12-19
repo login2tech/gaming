@@ -4932,6 +4932,7 @@ p.score_obj_scr {
     align-items: center;
     margin-bottom : 10px;
     border-radius: 4px;
+    padding-left: 0;
 }
 
 .user-profile-trophies-container>div > a, .user-profile-trophies-container>div > .link_alt {
@@ -4950,6 +4951,7 @@ p.score_obj_scr {
     position: relative;
     border: 0;
     padding: 5px;
+    padding-right: 20px;
 }
 
 .user-profile-trophies-container>div div.trophy-info {
@@ -4967,7 +4969,7 @@ p.score_obj_scr {
     text-transform: uppercase;
     font-family: Saira,sans-serif;
     font-weight: bolder;
-    line-height: 47px;
+    line-height: 30px;
 }
 
 .user-profile-trophies-container>div div.trophy-info .trophy-count {
@@ -5430,6 +5432,17 @@ div#modal_followers .modal-body{
 }
 .text-lg{
   font-size: 30px;line-height: 40px;padding-top:10px;
+}
+a.reset_rep {
+  display: inline-block;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  padding: 2px;
+  font-weight: normal;
 }
 @media screen and (max-width: 690px) {
   .br_1{
