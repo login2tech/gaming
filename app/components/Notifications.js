@@ -87,6 +87,8 @@ class Notifications extends React.Component {
                       lnk = '/support/tickets/ticket/' + notif.object_id;
                     } else if ('follower' == notif.type) {
                       lnk = '/gotouser/' + notif.object_id;
+                    } else if ('credits' == notif.type) {
+                      lnk = '/my_bank';
                     }
 
                     return (

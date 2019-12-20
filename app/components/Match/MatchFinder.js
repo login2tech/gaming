@@ -123,7 +123,7 @@ class MatchFinder extends React.Component {
                           >
                             {this.state.matches[game_id].map((match, i) => {
                               let txt = '';
-                              let txt2 = '';
+                              const txt2 = '';
                               txt = 'Accept Match';
                               let t1p = match.team_1_players;
                               if (!t1p) {
@@ -134,7 +134,6 @@ class MatchFinder extends React.Component {
                               if (t1p.indexOf('' + this.props.user.id) > -1) {
                                 txt = 'View Match';
                               }
-                              txt2 = 'Already accepted';
 
                               return (
                                 <li

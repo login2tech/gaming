@@ -161,8 +161,8 @@ const transfer = function(req, res, next) {
             ' has transferred you ' +
             req.body.amount_to_transfer +
             'credits',
-          type: 'post',
-          object_id: 'credits'
+          type: 'credits',
+          object_id: 1
         })
         .then(function() {})
         .catch(function(er) {

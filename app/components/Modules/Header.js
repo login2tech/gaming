@@ -242,6 +242,8 @@ class Header extends React.Component {
                                   lnk =
                                     '/support/tickets/ticket/' +
                                     notif.object_id;
+                                } else if ('credits' == notif.type) {
+                                  lnk = '/my_bank';
                                 }
                                 return (
                                   <li key={notif.id}>
