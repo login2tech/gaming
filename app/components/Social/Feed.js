@@ -42,7 +42,7 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
-    this.inrvl = setInterval(this.checkNewPosts, 60000);
+    this.inrvl = setInterval(this.checkNewPosts.bind(this), 60000);
     setTimeout(function() {
       const element = document.getElementById('is_top');
       if (element) {
@@ -142,7 +142,10 @@ class Feed extends React.Component {
                     )}
 
                     {this.state.has_new_posts ? (
-                      <a className="alert alert-primary" href="/feed">
+                      <a
+                        className="alert alert-primary new_postmsg"
+                        href="/feed"
+                      >
                         New posts available. Click to refresh feed
                       </a>
                     ) : (

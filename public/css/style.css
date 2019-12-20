@@ -5444,6 +5444,19 @@ a.reset_rep {
   padding: 2px;
   font-weight: normal;
 }
+
+.new_postmsg {
+    width: 91%;
+    max-width: 100%;
+    border: 1px solid #2848f3;
+    color: #2848f3;
+    background: #000000;
+    margin-top: 20px;
+    display: inline-block;
+    margin-left: 9%;
+}
+
+
 @media screen and (max-width: 690px) {
   .br_1{
     border:0;

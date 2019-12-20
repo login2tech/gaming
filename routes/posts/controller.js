@@ -189,7 +189,10 @@ exports.getMyFollowingIfRequired = function(req, res, next) {
 };
 
 exports.hasNewPosts = function(req, res, next) {
-  const a = req.users_my_following;
+  let a = req.users_my_following;
+  if (!a) {
+    a = [];
+  }
   a.push(req.user.id);
   let n = new Item();
 
