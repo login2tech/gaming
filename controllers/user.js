@@ -205,6 +205,7 @@ exports.accountPut = function(req, res, next) {
       .assert('password', 'Password must be at least 4 characters long')
       .len(4);
     req.assert('confirm', 'Passwords must match').equals(req.body.password);
+    req.assert('old_password', 'Please enter old password').notEmpty();
   } else {
     // req.assert('email', 'Email is not valid').isEmail();
     req.assert('first_name', 'First Name cannot be blank').notEmpty();
@@ -222,7 +223,26 @@ exports.accountPut = function(req, res, next) {
 
   const user = new User({id: req.user.id});
   if ('password' in req.body) {
-    user.save({password: req.body.password}, {patch: true});
+    console.log(req.body.old_password);
+    user.comparePassword(req.body.old_password, function(err, isMatch) {
+      if (!isMatch) {
+        return res.status(401).send({msg: 'Invalid old password'});
+      }
+      user
+        .save({password: req.body.password}, {patch: true})
+        .then(function(user) {
+          return res.send({
+            msg: 'Your password has been changed.',
+            user: user.toJSON()
+          });
+        })
+        .catch(function() {
+          return res.status(400).send({
+            msg: 'Failed to update password.',
+            user: user.toJSON()
+          });
+        });
+    });
   } else {
     user.save(
       {
@@ -247,17 +267,14 @@ exports.accountPut = function(req, res, next) {
       .fetch()
       .then(function(user) {
         if ('password' in req.body) {
-          res.send({
-            msg: 'Your password has been changed.',
-            user: user.toJSON()
-          });
+          //
         } else {
-          res.send({
+          return res.send({
             user: user,
             msg: 'Your profile information has been updated.'
           });
         }
-        res.redirect('/account');
+        // res.redirect('/account');
       })
       .catch(function(err) {
         // console.log(err);

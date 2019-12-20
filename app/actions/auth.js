@@ -333,7 +333,7 @@ export function teamPic(data, cb) {
   };
 }
 
-export function changePassword(password, confirm, token) {
+export function changePassword(password, confirm, old, token) {
   return dispatch => {
     dispatch({
       type: 'CLR_MSG'
@@ -346,7 +346,8 @@ export function changePassword(password, confirm, token) {
       },
       body: JSON.stringify({
         password: password,
-        confirm: confirm
+        confirm: confirm,
+        old_password: old
       })
     }).then(response => {
       if (response.ok) {

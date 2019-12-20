@@ -11,11 +11,30 @@ class FeedMy extends React.Component {
       pagination: {},
       loading: false,
       loaded: false,
-      posts_page: 1
+      posts_page: 1,
+      has_new_posts: false
     };
+  }
+  checkNewPosts() {
+    $.get('/api/posts/latestTimestamp?type=my', result => {
+      if (result == 'yes') {
+        this.setState({
+          has_new_posts: true
+        });
+      } else {
+        this.setState({
+          has_new_posts: false
+        });
+      }
+    });
+  }
+
+  componentWillUnMount() {
+    clearInterval(this.inrvl);
   }
 
   componentDidMount() {
+    this.inrvl = setInterval(this.checkNewPosts, 60000);
     setTimeout(function() {
       const element = document.getElementById('is_top');
       if (element) {
@@ -95,6 +114,13 @@ class FeedMy extends React.Component {
                     ) : (
                       false
                     )}
+                    {this.state.has_new_posts ? (
+                      <a className="alert alert-primary" href="/feed">
+                        New posts available. Click to refresh feed
+                      </a>
+                    ) : (
+                      false
+                    )}
                     <ul className="timeline">
                       {this.state.posts &&
                         this.state.posts.map((post, i) => {
@@ -106,7 +132,7 @@ class FeedMy extends React.Component {
                       {this.state.loading ? (
                         <span className="fa fa-spin fa-spinner text-white" />
                       ) : this.state.pagination.pageCount >
-                        this.state.posts_page ? (
+                      this.state.posts_page ? (
                         <button
                           onClick={() => {
                             this.setState(

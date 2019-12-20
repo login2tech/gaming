@@ -541,7 +541,17 @@ class NewMatchTeamSelect extends React.Component {
                             this.state.selected_team.title
                           ) : this.state.ladder ? (
                             <span className="text-danger">
-                              No team exists for this ladder
+                              No team exists for this ladder -{' '}
+                              <Link
+                                to={
+                                  '/u/' +
+                                  this.props.user.username +
+                                  '/teams/new'
+                                }
+                                className="text-primary"
+                              >
+                                Create team
+                              </Link>
                             </span>
                           ) : (
                             '-'

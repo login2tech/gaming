@@ -12,6 +12,12 @@ routes.get(
   ctrl.getMyFollowing,
   ctrl.listItemMyFeed
 );
+routes.get(
+  '/latestTimestamp',
+  u_ctrl.ensureAuthenticated,
+  ctrl.getMyFollowingIfRequired,
+  ctrl.hasNewPosts
+);
 
 routes.get('/list/all', ctrl.listItemAll);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);

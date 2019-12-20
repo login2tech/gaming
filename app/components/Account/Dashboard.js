@@ -29,6 +29,7 @@ class Profile extends React.Component {
       add_new_bal_number: '',
       password: '',
       confirm: '',
+      old_password: '',
       currentStep: 2,
       init_transaction_mode: '',
       clicked: false,
@@ -90,7 +91,12 @@ class Profile extends React.Component {
   handleChangePassword(event) {
     event.preventDefault();
     this.props.dispatch(
-      changePassword(this.state.password, this.state.confirm, this.props.token)
+      changePassword(
+        this.state.password,
+        this.state.confirm,
+        this.state.old_password,
+        this.props.token
+      )
     );
     setTimeout(() => {
       // const element = document.body;
@@ -175,7 +181,7 @@ class Profile extends React.Component {
             obj.new_profile_pic = '';
             obj.new_profile_pic_saved = false;
           }
-          this.setState(obj);
+          this.setState(obj, () => {});
         }
       )
     );
@@ -391,30 +397,45 @@ class Profile extends React.Component {
         <br />
         <form
           onSubmit={this.handleChangePassword.bind(this)}
-          className="form-horizontal  user_details_list row"
+          className="form-horizontal  user_details_list "
         >
           <legend>Change Password</legend>
-          <div className="form-group col-md-6">
-            <label htmlFor="password">New Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="form-control"
-              value={this.state.password}
-              onChange={this.handleChange.bind(this)}
-            />
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label htmlFor="old_password">Old Password</label>
+              <input
+                type="password"
+                name="old_password"
+                id="old_password"
+                className="form-control"
+                value={this.state.old_password}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
           </div>
-          <div className="form-group col-md-6">
-            <label htmlFor="confirm">Confirm Password</label>
-            <input
-              type="password"
-              name="confirm"
-              id="confirm"
-              className="form-control"
-              value={this.state.confirm}
-              onChange={this.handleChange.bind(this)}
-            />
+          <div className="row">
+            <div className="form-group col-md-6">
+              <label htmlFor="password">New Password</label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="form-control"
+                value={this.state.password}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
+            <div className="form-group col-md-6">
+              <label htmlFor="confirm">Confirm Password</label>
+              <input
+                type="password"
+                name="confirm"
+                id="confirm"
+                className="form-control"
+                value={this.state.confirm}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
           </div>
 
           <button type="submit" className="btn btn-primary max-width-300">

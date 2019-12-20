@@ -162,6 +162,59 @@ exports.getMyFollowing = function(req, res, next) {
       });
     });
 };
+
+exports.getMyFollowingIfRequired = function(req, res, next) {
+  if (req.query.type == 'global') {
+    next();
+    return;
+  }
+  new UsereFollower()
+    .where({
+      follower_id: req.user.id
+    })
+    .fetchAll()
+    .then(function(tasks) {
+      tasks = tasks.toJSON();
+      const feed_players = [];
+      for (let i = 0; i < tasks.length; i++) {
+        feed_players.push(tasks[i].user_id);
+      }
+      req.users_my_following = feed_players;
+      next();
+    })
+    .catch(function(err) {
+      // console.log(err);
+      res.status(400).send('no');
+    });
+};
+
+exports.hasNewPosts = function(req, res, next) {
+  const a = req.users_my_following;
+  a.push(req.user.id);
+  let n = new Item();
+
+  if (req.query.hastag) {
+    n = n.where('post', 'LIKE', '%' + req.query.hastag + '%');
+  }
+  if (req.query.type == 'global') {
+    //
+  } else {
+    n = n.where('user_id', 'in', a);
+  }
+
+  n = n.where({is_private: false});
+  n = n.where('created_at', '>', moment().subtract(1, 'minute'));
+  n.fetch()
+    .then(function(ite) {
+      if (ite) {
+        res.status(200).send('yes');
+      }
+    })
+    .catch(function(err) {
+      res.status(200).send('no');
+    });
+};
+
 exports.listSingleItem = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
   new Item()

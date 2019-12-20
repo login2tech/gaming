@@ -7,6 +7,7 @@ const utils = require('../routes/utils');
 const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
 const WithdrawalRequest = require('../models/Withdrawal');
+const Notif = require('../models/Notification');
 
 const getDoubleXPAmount = function() {
   return 5;
@@ -151,6 +152,22 @@ const transfer = function(req, res, next) {
         'Received from @' + req.user.username,
         ''
       );
+      new Notif()
+        .save({
+          user_id: u.get('id'),
+          description:
+            '@' +
+            req.user.username +
+            ' has transferred you ' +
+            req.body.amount_to_transfer +
+            'credits',
+          type: 'post',
+          object_id: 'credits'
+        })
+        .then(function() {})
+        .catch(function(er) {
+          console.log(er);
+        });
       res.status(200).send({ok: true, msg: 'Transferred Successfully.'});
     })
     .catch(function(err) {
