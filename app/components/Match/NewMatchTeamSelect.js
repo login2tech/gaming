@@ -208,7 +208,8 @@ class NewMatchTeamSelect extends React.Component {
             if (this.state.match_type == 'credits') {
               if (
                 parseFloat(
-                  this.state.team_info.team_users[i].user_info.credit_balance
+                  this.state.selected_team.team_users[i].user_info
+                    .credit_balance
                 ) < amount
               ) {
                 // return false;
@@ -218,7 +219,7 @@ class NewMatchTeamSelect extends React.Component {
             } else if (this.state.match_type == 'cash') {
               if (
                 parseFloat(
-                  this.state.team_info.team_users[i].user_info.cash_balance
+                  this.state.selected_team.team_users[i].user_info.cash_balance
                 ) < amount
               ) {
                 // return false;
