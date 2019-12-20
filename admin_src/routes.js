@@ -113,6 +113,13 @@ export default function getRoutes(store) {
       />
 
       <Route
+        path="/teams/filter/:lid/:ltitle"
+        component={Teams}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+
+      <Route
         path="/matchfinder/:team_id"
         component={Matchfinder}
         onLeave={clearMessages}

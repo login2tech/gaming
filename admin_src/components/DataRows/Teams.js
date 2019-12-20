@@ -18,7 +18,9 @@ class Teams extends React.Component {
       items: [],
       refresh: false,
       pagination: {},
-      showing_for: props.params && props.params.uid ? props.params.uid : 'all'
+      showing_for: props.params && props.params.uid ? props.params.uid : 'all',
+      showing_for_ladder:
+        props.params && props.params.lid ? props.params.lid : 'all'
     };
   }
 
@@ -38,8 +40,23 @@ class Teams extends React.Component {
       // console.log('here')
       return null;
     }
+    if (
+      state.showing_for_ladder == 'all' &&
+      (!props || !props.params || !props.params.lid)
+    ) {
+      // console.log('here')
+      return null;
+    }
     if (props.params && props.params.uid) {
       if (props.params.uid != state.showing_for) {
+        return {
+          refresh: true,
+          page: 1
+        };
+      }
+      return null;
+    } else if (props.params && props.params.lid) {
+      if (props.params.uid != state.showing_for_ladder) {
         return {
           refresh: true,
           page: 1
@@ -75,12 +92,22 @@ class Teams extends React.Component {
         this.state.page +
         '&related=team_info,team_info.ladder,team_info.ladder.game_info,team_info.team_users,team_info.team_users.user_info';
     } else {
-      url =
-        '/api/admin/listPaged/teams?' +
-        other_filter +
-        '&page=' +
-        this.state.page +
-        '&related=ladder,ladder.game_info,team_users,team_users.user_info';
+      if (this.props.params && this.props.params.lid) {
+        other_filter = 'filter_ladder_id=' + this.props.params.lid;
+        url =
+          '/api/admin/listPaged/teams?' +
+          other_filter +
+          '&page=' +
+          this.state.page +
+          '&related=ladder,ladder.game_info,team_users,team_users.user_info';
+      } else {
+        url =
+          '/api/admin/listPaged/teams?' +
+          other_filter +
+          '&page=' +
+          this.state.page +
+          '&related=ladder,ladder.game_info,team_users,team_users.user_info';
+      }
     }
 
     Fetcher.get(url)

@@ -2916,7 +2916,7 @@ function (_React$Component) {
         return _react.default.createElement("tr", {
           key: u.id
         }, _react.default.createElement("td", null, u.id), _react.default.createElement("td", null, u.title), _react.default.createElement("td", null, u.game_info && u.game_info.title), _react.default.createElement("td", null, u.min_players), _react.default.createElement("td", null, u.max_players), _react.default.createElement("td", null, _this4.gamer_tags['tag_' + u.gamer_tag]), _react.default.createElement("td", null, _react.default.createElement("a", {
-          href: "/admin/#/teams",
+          href: '/admin/#/teams/filter/' + u.id + '/' + u.title,
           className: "btn btn-primary btn-xs"
         }, "View Teams"), ' ', _react.default.createElement("button", {
           onClick: function onClick() {
@@ -4446,7 +4446,8 @@ function (_React$Component) {
       items: [],
       refresh: false,
       pagination: {},
-      showing_for: props.params && props.params.uid ? props.params.uid : 'all'
+      showing_for: props.params && props.params.uid ? props.params.uid : 'all',
+      showing_for_ladder: props.params && props.params.lid ? props.params.lid : 'all'
     };
     return _this;
   }
@@ -4470,7 +4471,12 @@ function (_React$Component) {
         other_filter = 'filter_user_id=' + this.props.params.uid;
         url = '/api/admin/listPaged/team_u?' + other_filter + '&page=' + this.state.page + '&related=team_info,team_info.ladder,team_info.ladder.game_info,team_info.team_users,team_info.team_users.user_info';
       } else {
-        url = '/api/admin/listPaged/teams?' + other_filter + '&page=' + this.state.page + '&related=ladder,ladder.game_info,team_users,team_users.user_info';
+        if (this.props.params && this.props.params.lid) {
+          other_filter = 'filter_ladder_id=' + this.props.params.lid;
+          url = '/api/admin/listPaged/teams?' + other_filter + '&page=' + this.state.page + '&related=ladder,ladder.game_info,team_users,team_users.user_info';
+        } else {
+          url = '/api/admin/listPaged/teams?' + other_filter + '&page=' + this.state.page + '&related=ladder,ladder.game_info,team_users,team_users.user_info';
+        }
       }
 
       _Fetcher.default.get(url).then(function (resp) {
@@ -4674,8 +4680,22 @@ function (_React$Component) {
         return null;
       }
 
+      if (state.showing_for_ladder == 'all' && (!props || !props.params || !props.params.lid)) {
+        // console.log('here')
+        return null;
+      }
+
       if (props.params && props.params.uid) {
         if (props.params.uid != state.showing_for) {
+          return {
+            refresh: true,
+            page: 1
+          };
+        }
+
+        return null;
+      } else if (props.params && props.params.lid) {
+        if (props.params.uid != state.showing_for_ladder) {
           return {
             refresh: true,
             page: 1
@@ -7468,8 +7488,12 @@ function (_React$Component) {
         to: "/admin_users"
       }, "Admin Users")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         to: "/app_users"
-      }, "Web App User")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
-        to: "/teams",
+      }, "Web App User")), _react.default.createElement("li", null, _react.default.createElement("a", {
+        onClick: function onClick(e) {
+          window.location.href = '/admin/#/teams';
+          window.location.reload();
+        },
+        href: "/admin/#/teams",
         activeStyle: active
       }, "Teams")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
@@ -7479,12 +7503,24 @@ function (_React$Component) {
         "aria-expanded": "false"
       }, "Matches"), _react.default.createElement("ul", {
         className: "dropdown-menu"
-      }, _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
-        to: "/matchfinder"
-      }, "MatchFinder")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
-        to: "/money8"
-      }, "Money 8")), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
-        to: "/tournaments"
+      }, _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/admin/#/matchfinder",
+        onClick: function onClick(e) {
+          window.location.href = '/admin/#/matchfinder';
+          window.location.reload();
+        }
+      }, "MatchFinder")), _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/admin/#/money8",
+        onClick: function onClick(e) {
+          window.location.href = '/admin/#/money8';
+          window.location.reload();
+        }
+      }, "Money 8")), _react.default.createElement("li", null, _react.default.createElement("a", {
+        href: "/admin/#/tournaments",
+        onClick: function onClick(e) {
+          window.location.href = '/admin/#/tournaments';
+          window.location.reload();
+        }
       }, "Tournaments")))), _react.default.createElement("li", null, _react.default.createElement(_reactRouter.Link, {
         className: "dropdown-toggle",
         "data-toggle": "dropdown",
@@ -8153,6 +8189,7 @@ function (_React$Component) {
       if (this.props.data) {
         this.setState({
           title: dt.title,
+          id: dt.id,
           image_url: dt.image_url,
           banner_url: dt.banner_url
         });
@@ -8179,6 +8216,7 @@ function (_React$Component) {
 
       _Fetcher.default.post('/api/games/edit', {
         title: this.state.title,
+        id: this.state.id,
         image_url: this.state.image_url,
         banner_url: this.state.banner_url
       }).then(function (resp) {
@@ -8430,6 +8468,7 @@ function (_React$Component) {
       game_id: '',
       min_players: '',
       gamer_tag: '',
+      platform: '',
       rules: '',
       max_players: '',
       games: []
@@ -8446,6 +8485,7 @@ function (_React$Component) {
         this.setState({
           title: dt.title,
           game_id: dt.game_id,
+          id: dt.id,
           min_players: dt.min_players,
           gamer_tag: dt.gamer_tag,
           rules: dt.rules,
@@ -8513,9 +8553,11 @@ function (_React$Component) {
         loaded: false
       });
 
-      _Fetcher.default.post('/api/ladder/add', {
+      _Fetcher.default.post('/api/ladder/edit', {
         title: this.state.title,
         game_id: this.state.game_id,
+        platform: this.state.platform,
+        id: this.state.id,
         min_players: this.state.min_players,
         max_players: this.state.max_players,
         rules: this.state.rules,
@@ -8594,6 +8636,8 @@ function (_React$Component) {
       })), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
       }, _react.default.createElement("label", null, "Game"), _react.default.createElement("select", {
+        readOnly: true,
+        disbled: true,
         className: "form-control",
         name: "game_id",
         onChange: this.handleChange.bind(this),
@@ -8607,7 +8651,26 @@ function (_React$Component) {
           value: g.id,
           key: g.id
         }, g.title);
-      }))), _react.default.createElement("br", null), _react.default.createElement("div", {
+      })), _react.default.createElement("small", null, "Game can not be changed for a ladder")), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Platform"), _react.default.createElement("select", {
+        className: "form-control",
+        name: "platform",
+        onChange: this.handleChange.bind(this),
+        id: "platform",
+        value: this.state.platform,
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), _react.default.createElement("option", {
+        value: "1"
+      }, "Xbox"), _react.default.createElement("option", {
+        value: "2"
+      }, "PSN"), _react.default.createElement("option", {
+        value: "3"
+      }, "PC"), _react.default.createElement("option", {
+        value: "4"
+      }, "Mobile"))), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
       }, _react.default.createElement("label", null, "User Gamer Tag"), _react.default.createElement("select", {
         className: "form-control",
@@ -9186,6 +9249,7 @@ function (_React$Component) {
       loaded: false,
       title: '',
       game_id: '',
+      platform: '',
       min_players: '',
       gamer_tag: '',
       rules: '',
@@ -9260,6 +9324,7 @@ function (_React$Component) {
         min_players: this.state.min_players,
         max_players: this.state.max_players,
         rules: this.state.rules,
+        platform: this.state.platform,
         gamer_tag: this.state.gamer_tag
       }).then(function (resp) {
         if (resp.ok) {
@@ -9349,6 +9414,25 @@ function (_React$Component) {
           key: g.id
         }, g.title);
       }))), _react.default.createElement("br", null), _react.default.createElement("div", {
+        className: "input-control"
+      }, _react.default.createElement("label", null, "Platform"), _react.default.createElement("select", {
+        className: "form-control",
+        name: "platform",
+        onChange: this.handleChange.bind(this),
+        id: "platform",
+        value: this.state.platform,
+        required: true
+      }, _react.default.createElement("option", {
+        value: ""
+      }, "Select"), _react.default.createElement("option", {
+        value: "1"
+      }, "Xbox"), _react.default.createElement("option", {
+        value: "2"
+      }, "PSN"), _react.default.createElement("option", {
+        value: "3"
+      }, "PC"), _react.default.createElement("option", {
+        value: "4"
+      }, "Mobile"))), _react.default.createElement("br", null), _react.default.createElement("div", {
         className: "input-control"
       }, _react.default.createElement("label", null, "User Gamer Tag"), _react.default.createElement("select", {
         className: "form-control",
@@ -11216,6 +11300,11 @@ function getRoutes(store) {
     onLeave: clearMessages
   }), _react.default.createElement(_reactRouter.Route, {
     path: "/teams",
+    component: _Teams.default,
+    onEnter: ensureAuthenticated,
+    onLeave: clearMessages
+  }), _react.default.createElement(_reactRouter.Route, {
+    path: "/teams/filter/:lid/:ltitle",
     component: _Teams.default,
     onEnter: ensureAuthenticated,
     onLeave: clearMessages

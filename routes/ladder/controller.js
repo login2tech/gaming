@@ -120,12 +120,15 @@ exports.updateGame = function(req, res, next) {
   };
 
   game
-    .save(obj)
+    .save(obj, {
+      method: 'update'
+    })
     .then(function(blg) {
       blg
         .fetch()
         .then(function(bll) {
           res.send({
+            ok: true,
             game: bll.toJSON(),
             msg: 'Ladder has been updated.'
           });

@@ -220,7 +220,9 @@ class Ladders extends React.Component {
                         <td>{this.gamer_tags['tag_' + u.gamer_tag]}</td>
                         <td>
                           <a
-                            href="/admin/#/teams"
+                            href={
+                              '/admin/#/teams/filter/' + u.id + '/' + u.title
+                            }
                             className="btn btn-primary btn-xs"
                           >
                             View Teams

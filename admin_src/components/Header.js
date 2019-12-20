@@ -100,9 +100,16 @@ class Header extends React.Component {
                       <Link to="/app_users">Web App User</Link>
                     </li>
                     <li>
-                      <Link to="/teams" activeStyle={active}>
+                      <a
+                        onClick={e => {
+                          window.location.href = '/admin/#/teams';
+                          window.location.reload();
+                        }}
+                        href="/admin/#/teams"
+                        activeStyle={active}
+                      >
                         Teams
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </li>
@@ -119,13 +126,37 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/matchfinder">MatchFinder</Link>
+                      <a
+                        href="/admin/#/matchfinder"
+                        onClick={e => {
+                          window.location.href = '/admin/#/matchfinder';
+                          window.location.reload();
+                        }}
+                      >
+                        MatchFinder
+                      </a>
                     </li>
                     <li>
-                      <Link to="/money8">Money 8</Link>
+                      <a
+                        href="/admin/#/money8"
+                        onClick={e => {
+                          window.location.href = '/admin/#/money8';
+                          window.location.reload();
+                        }}
+                      >
+                        Money 8
+                      </a>
                     </li>
                     <li>
-                      <Link to="/tournaments">Tournaments</Link>
+                      <a
+                        href="/admin/#/tournaments"
+                        onClick={e => {
+                          window.location.href = '/admin/#/tournaments';
+                          window.location.reload();
+                        }}
+                      >
+                        Tournaments
+                      </a>
                     </li>
                   </ul>
                 </li>

@@ -155,7 +155,9 @@ exports.updateGame = function(req, res, next) {
     obj.image_url = '';
   }
   game
-    .save(obj)
+    .save(obj, {
+      method: 'update'
+    })
     .then(function(blg) {
       blg
         .fetch()

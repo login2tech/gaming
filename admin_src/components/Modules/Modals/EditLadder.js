@@ -13,6 +13,7 @@ class EditLadder extends React.Component {
       game_id: '',
       min_players: '',
       gamer_tag: '',
+      platform: '',
       rules: '',
       max_players: '',
       games: []
@@ -25,6 +26,7 @@ class EditLadder extends React.Component {
       this.setState({
         title: dt.title,
         game_id: dt.game_id,
+        id: dt.id,
         min_players: dt.min_players,
         gamer_tag: dt.gamer_tag,
         rules: dt.rules,
@@ -84,9 +86,11 @@ class EditLadder extends React.Component {
       loaded: false
     });
 
-    Fetcher.post('/api/ladder/add', {
+    Fetcher.post('/api/ladder/edit', {
       title: this.state.title,
       game_id: this.state.game_id,
+      platform: this.state.platform,
+      id: this.state.id,
       min_players: this.state.min_players,
       max_players: this.state.max_players,
       rules: this.state.rules,
@@ -160,6 +164,8 @@ class EditLadder extends React.Component {
               <div className="input-control">
                 <label>Game</label>
                 <select
+                  readOnly
+                  disbled
                   className="form-control"
                   name="game_id"
                   onChange={this.handleChange.bind(this)}
@@ -175,6 +181,26 @@ class EditLadder extends React.Component {
                       </option>
                     );
                   })}
+                </select>
+                <small>Game can not be changed for a ladder</small>
+              </div>
+              <br />
+
+              <div className="input-control">
+                <label>Platform</label>
+                <select
+                  className="form-control"
+                  name="platform"
+                  onChange={this.handleChange.bind(this)}
+                  id="platform"
+                  value={this.state.platform}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="1">Xbox</option>
+                  <option value="2">PSN</option>
+                  <option value="3">PC</option>
+                  <option value="4">Mobile</option>
                 </select>
               </div>
               <br />

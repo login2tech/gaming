@@ -22,6 +22,7 @@ class EditGame extends React.Component {
     if (this.props.data) {
       this.setState({
         title: dt.title,
+        id: dt.id,
         image_url: dt.image_url,
         banner_url: dt.banner_url
       });
@@ -44,6 +45,7 @@ class EditGame extends React.Component {
   finalSubmit() {
     Fetcher.post('/api/games/edit', {
       title: this.state.title,
+      id: this.state.id,
       image_url: this.state.image_url,
       banner_url: this.state.banner_url
     })

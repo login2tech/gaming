@@ -11,6 +11,7 @@ class NewLadder extends React.Component {
       loaded: false,
       title: '',
       game_id: '',
+      platform: '',
       min_players: '',
       gamer_tag: '',
       rules: '',
@@ -76,6 +77,7 @@ class NewLadder extends React.Component {
       min_players: this.state.min_players,
       max_players: this.state.max_players,
       rules: this.state.rules,
+      platform: this.state.platform,
       gamer_tag: this.state.gamer_tag
     })
       .then(resp => {
@@ -161,6 +163,24 @@ class NewLadder extends React.Component {
                       </option>
                     );
                   })}
+                </select>
+              </div>
+              <br />
+              <div className="input-control">
+                <label>Platform</label>
+                <select
+                  className="form-control"
+                  name="platform"
+                  onChange={this.handleChange.bind(this)}
+                  id="platform"
+                  value={this.state.platform}
+                  required
+                >
+                  <option value="">Select</option>
+                  <option value="1">Xbox</option>
+                  <option value="2">PSN</option>
+                  <option value="3">PC</option>
+                  <option value="4">Mobile</option>
                 </select>
               </div>
               <br />
