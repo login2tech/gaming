@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
 
 import NewLadder from '../Modules/Modals/NewLadder';
+import EditLadder from '../Modules/Modals/EditLadder';
 
 class Ladders extends React.Component {
   constructor(props) {
@@ -85,10 +86,11 @@ class Ladders extends React.Component {
   // }
 
   deleteItem(id) {
-    const k = '';
+    // const k = '';
     const r = confirm('Are you sure you want to delete the ladder? ');
     // console.log(r)
     if (r == true) {
+      //
     } else {
       return;
     }
@@ -123,6 +125,24 @@ class Ladders extends React.Component {
   componentDidMount() {
     this.loadData();
   }
+  editItem(id, data) {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'newgame',
+        zIndex: 534,
+        heading: 'Edit Ladder',
+        content: (
+          <EditLadder
+            mode={'edit'}
+            id={id}
+            data={data}
+            onComplete={this.loadData.bind(this)}
+          />
+        )
+      })
+    );
+  }
 
   addItem() {
     this.props.dispatch(
@@ -141,7 +161,8 @@ class Ladders extends React.Component {
     tag_2: 'PSN',
     tag_3: 'Epic Games Username',
     tag_4: 'Steam Username',
-    tag_5: 'Battletag'
+    tag_5: 'Battletag',
+    tag_6: 'Activision ID'
   };
   render() {
     if (!this.state.is_loaded) {
@@ -198,6 +219,25 @@ class Ladders extends React.Component {
                         <td>{u.max_players}</td>
                         <td>{this.gamer_tags['tag_' + u.gamer_tag]}</td>
                         <td>
+                          <a
+                            href="/admin/#/teams"
+                            className="btn btn-primary btn-xs"
+                          >
+                            View Teams
+                          </a>{' '}
+                          <button
+                            onClick={() => {
+                              this.editItem(u.id, u);
+                            }}
+                            className="btn btn-warning btn-xs"
+                          >
+                            {this.state['update_' + u.id] ? (
+                              <i className="fa fa-spinner fa-spin" />
+                            ) : (
+                              false
+                            )}{' '}
+                            Edit
+                          </button>{' '}
                           <button
                             onClick={() => {
                               this.deleteItem(u.id);

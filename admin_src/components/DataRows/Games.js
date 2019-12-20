@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Fetcher from '../../actions/Fetcher';
 import NewGame from '../Modules/Modals/NewGame';
+import EditGame from '../Modules/Modals/EditGame';
 import Messages from '../Messages';
 import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
@@ -137,9 +138,9 @@ class Games extends React.Component {
         type: 'custom',
         id: 'newgame',
         zIndex: 534,
-        heading: 'New Game',
+        heading: 'Edit Game',
         content: (
-          <NewGame
+          <EditGame
             mode={'edit'}
             id={id}
             data={data}

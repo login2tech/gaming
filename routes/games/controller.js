@@ -162,6 +162,7 @@ exports.updateGame = function(req, res, next) {
         .then(function(bll) {
           res.send({
             game: bll.toJSON(),
+            ok: true,
             msg: 'Game has been updated.'
           });
         })

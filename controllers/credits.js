@@ -128,6 +128,14 @@ const transfer = function(req, res, next) {
       .status(400)
       .send({ok: false, msg: 'Not all values were provided.'});
   }
+  if (
+    req.user.username.toLowerCase() ==
+    req.body.username_to_transfer.toLowerCase()
+  ) {
+    return res
+      .status(400)
+      .send({ok: false, msg: 'Self transfer is not allowed.'});
+  }
   new User()
     .where('username', 'ILIKE', req.body.username_to_transfer)
     .fetch()
@@ -160,7 +168,7 @@ const transfer = function(req, res, next) {
             req.user.username +
             ' has transferred you ' +
             req.body.amount_to_transfer +
-            'credits',
+            ' credits',
           type: 'credits',
           object_id: 1
         })

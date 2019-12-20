@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import Fetcher from '../../../actions/Fetcher';
 import Messages from '../../Messages';
 import React from 'react';
-class NewLadder extends React.Component {
+class EditLadder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +17,20 @@ class NewLadder extends React.Component {
       max_players: '',
       games: []
     };
+  }
+
+  process() {
+    const dt = this.props.data;
+    if (this.props.data) {
+      this.setState({
+        title: dt.title,
+        game_id: dt.game_id,
+        min_players: dt.min_players,
+        gamer_tag: dt.gamer_tag,
+        rules: dt.rules,
+        max_players: dt.max_players
+      });
+    }
   }
 
   doClose() {
@@ -34,7 +48,7 @@ class NewLadder extends React.Component {
 
   componentDidMount() {
     this.loadData();
-    // this.process();
+    this.process();
   }
   loadData() {
     Fetcher.get(
@@ -227,7 +241,7 @@ class NewLadder extends React.Component {
               </div>
               <br />
               <input
-                value="Create Ladder"
+                value="Edit Ladder"
                 type="submit"
                 className="btn btn-primary"
               />
@@ -247,4 +261,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(NewLadder);
+export default connect(mapStateToProps)(EditLadder);
