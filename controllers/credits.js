@@ -9,6 +9,15 @@ const CreditTransactions = require('../models/CreditTransactions');
 const WithdrawalRequest = require('../models/Withdrawal');
 const Notif = require('../models/Notification');
 
+const plan_costs = {
+  gold: 6.99,
+  silver: 4.99
+};
+// TODO: Change plan ids for production. not using env vars here.
+const stripe_plans = {
+  gold: 'prime-monthly',
+  silver: 'prime-monthly'
+};
 const getDoubleXPAmount = function() {
   return 5;
 };
@@ -222,191 +231,6 @@ const __addNewCredit_points = function(
   });
 };
 
-// const __removeCredit_points = function(points, user_id, descr, cb) {
-//   new User({id: user_id}).fetch().then(function(user) {
-//     const prev_points = user.get('credit_balance');
-//     const new_points = prev_points - points;
-//     user
-//       .save({
-//         credit_balance: new_points
-//       })
-//       .then(function(new_user) {
-//         cb(true);
-//         // __addNewCreditPointTransaction(user_id, descr, points);
-//       })
-//       .catch(function(err) {
-//         cb(false);
-//       });
-//   });
-// };
-
-const stripe_afterCustomerCreation = function(customer, req, res) {
-  let plan;
-  const sub_type = req.body.init_transaction_mode;
-  let bill_type;
-  if (req.body.init_transaction_mode == 'prime') {
-    plan = 'prime-monthly';
-    bill_type = 'Prime Membership';
-  } else {
-    plan = 'double-xp-monthly';
-    bill_type = 'Double XP';
-  }
-
-  stripe.subscriptions.create(
-    {
-      customer: customer.id,
-      plan: plan,
-      quantity: 1
-    },
-    function(err, subscription) {
-      if (err) {
-        console.log(err);
-        return res
-          .status(200)
-          .send({ok: false, msg: 'Failed to start subscription.'});
-      }
-      // console.log('---------');
-      // console.log(subscription);
-      // console.log('---------');
-      // console.log(subscription.items.data);
-      // console.log('---------');
-      const subs_obj = {
-        subscription_id: subscription.id,
-        current_period_end: subscription.current_period_end,
-        current_period_start: subscription.current_period_start,
-        start: subscription.start,
-        status: subscription.status,
-        customer: subscription.customer,
-        quantity: subscription.quantity,
-        plan_id: subscription.plan.id,
-        trial_end: subscription.trial_end
-      };
-      // console.log(subs_obj);
-      User.forge({id: req.user.id})
-        .fetch()
-        .then(function(usr) {
-          if (!usr) {
-            return res.status(400).send({ok: false, msg: 'Some Error #60'});
-          }
-          usr
-            .save(
-              {
-                [sub_type + '_obj']: subs_obj,
-                [sub_type]: true,
-                stripe_user_id: customer.id
-              },
-              {patch: true}
-            )
-            .then(function() {
-              res.status(200).send({
-                ok: true,
-                action: 'PAYMENT_DONE',
-                msg:
-                  'Your subscription was successful. You are being billed for ' +
-                  bill_type +
-                  '.'
-              });
-              // const group_obj = {
-              //   // group_name: grp.get('name'),
-              //   // user_name: user_first_name,
-              //   plan_name: 'Standard - ' + req.body.billing_type,
-              //   group_cname: grp.get('cname'),
-              //   email: req.user.email,
-              //   billed_amount: '000',
-              //   link_to_invoice: ''
-              // };
-              // Emails.upgradeGroup(group_obj);
-            })
-            .catch(function(err) {
-              // Raven.captureException(err);
-              res.status(400).send({
-                ok: false,
-                msg:
-                  'Subscription Created! ERROR fetching data, please contact support. ERR#54'
-              });
-            });
-        })
-        .catch(function(err) {
-          // Raven.captureException(err);
-          res.status(400).send({
-            ok: false,
-            msg:
-              'Subscription Created! ERROR fetching data, please contact support. ERR#148'
-          });
-        });
-    }
-  );
-};
-
-const getStripeCustomer = function(req, res) {
-  // const stripeTokenObj = req.body.stripe_token;
-  const stripeToken = req.body.stripe_token;
-
-  if (req.user.stripe_user_id) {
-    const stripe_customer_id = req.user.stripe_user_id;
-    stripe.customers.retrieve(stripe_customer_id, function(err, customer) {
-      if (err) {
-        res.status(400).send({ok: false, msg: 'Some error #127'});
-        return;
-      }
-      stripe.customers.createSource(
-        customer.id,
-        {
-          source: stripeToken
-        },
-        function(err, card) {
-          if (err) {
-            res.status(400).send({
-              ok: false,
-              msg:
-                'Unable to use this card for payment, please use another card.'
-            });
-            return;
-          }
-          // card attached, lets make it default one.
-          stripe.customers.update(
-            customer.id,
-            {
-              default_source: card.id
-            },
-            function(err, customer) {
-              if (err) {
-                res.status(400).send({
-                  ok: false,
-                  msg:
-                    'Unable to use this card as a default payment method, please use another card.'
-                });
-                return;
-              }
-              // all done, proceed with subscription.
-              return stripe_afterCustomerCreation(customer, req, res);
-            }
-          );
-        }
-      );
-    });
-  } else {
-    // create a customer
-    stripe.customers.create(
-      {
-        description: 'Created for OCG',
-        email: req.user.email,
-        source: stripeToken
-      },
-      function(err, customer) {
-        if (err) {
-          return res.status(400).send({
-            ok: false,
-            msg: 'We were unable to create a subscription for you. ERR #143'
-          });
-        }
-
-        return stripe_afterCustomerCreation(customer, req, res);
-      }
-    );
-  }
-};
-
 const proceedWithDoubleXP = function(req, res) {
   const stripeToken = req.body.stripe_token;
 
@@ -472,24 +296,14 @@ const newCredits = function(req, res, next) {
     return;
   }
 
-  if (
-    // req.body.init_transaction_mode == 'double_xp' ||
-    req.body.init_transaction_mode == 'prime'
-  ) {
-    // start subscription here
-    getStripeCustomer(req, res);
-
-    // .then(function(customer_id){
-    //
-    // })
-    //
-    return;
-  }
+  const term_to_use =
+    req.body.init_transaction_mode == 'credit' ? 'credits' : 'OCG Cash';
   stripe.charges
     .create({
       amount: cost_to_consume * 100,
       currency: currency,
-      description: 'Charge for adding ' + req.body.points_to_add + ' points',
+      description:
+        'Charge for adding ' + req.body.points_to_add + ' ' + term_to_use,
       source: req.body.stripe_token
     })
     .then(function(stripe_data) {
@@ -534,9 +348,6 @@ const newCredits = function(req, res, next) {
       });
     });
 };
-exports.new = newCredits;
-exports.withdraw = withdraw;
-exports.transfer = transfer;
 
 exports.stopRenewal = function(req, res, next) {
   req.assert('type', 'Type cannot be blank').notEmpty();
@@ -592,3 +403,241 @@ exports.stopRenewal = function(req, res, next) {
     }
   });
 };
+
+const create_new_user_for_token = function(req, res, next) {
+  const stripeToken = req.body.token;
+  stripe.customers.create(
+    {
+      description: 'Created for OnlyCompGaming',
+      email: req.user.email,
+      source: stripeToken
+    },
+    function(err, customer) {
+      if (err || !customer.id) {
+        return res.status(400).send({
+          ok: false,
+          msg: 'We were unable to create a subscription for you. ERR #550'
+        });
+      }
+      console.log(customer);
+      // use the customer id created
+      req.use_customer_id = customer.id;
+      req.next();
+    }
+  );
+};
+
+const link_token_to_user = function(req, res, next) {
+  const stripeToken = req.body.token;
+  const stripe_customer_id = req.user.stripe_user_id;
+  stripe.customers.retrieve(stripe_customer_id, function(err, customer) {
+    if (err) {
+      console.log(err);
+      // failed to retreive customer, lets create a new one.
+      return create_new_user_for_token(req, res, next);
+    }
+    stripe.customers.createSource(
+      customer.id,
+      {
+        source: stripeToken
+      },
+      function(err, card) {
+        if (err) {
+          console.log(err);
+          return res.status(400).send({
+            ok: false,
+            msg: 'Unable to use this card for payment, please use another card.'
+          });
+        }
+        // card attached, lets make it default one.
+        stripe.customers.update(
+          customer.id,
+          {
+            default_source: card.id
+          },
+          function(err, customer) {
+            if (err || !customer.id) {
+              console.log(err);
+              return res.status(400).send({
+                ok: false,
+                msg:
+                  'Unable to use this card as a default payment method, please use another card.'
+              });
+            }
+            // use the customer id retreived
+            req.use_customer_id = customer.id;
+            // all done, proceed with subscription.
+            next();
+          }
+        );
+      }
+    );
+  });
+};
+
+exports.resolveCustomerId = function(req, res, next) {
+  //
+  const token = req.body.token;
+  if (token == 'USE_OCG') {
+    // no need to resolve customer id as not using stripe
+    next();
+  } else if (req.user.stripe_user_id) {
+    // customer id already linked, shall i attach a new credit card source?
+    link_token_to_user(req, res, next, token);
+  } else {
+    // no customer id, create 1 and link it and proceed
+    create_new_user_for_token(req, res, next);
+  }
+  //
+};
+const addMembershipLog = function(plan, action) {
+  //
+  // TODO: do this
+};
+exports.buyMembership = function(req, res, next) {
+  const token = req.body.token;
+  const plan = req.body.plan;
+  if (token == 'USE_OCG') {
+    // add membership but with manual details for cron.
+    const cash_to_consume = plan_costs[plan];
+    if (parseFloat(req.user.cash_balance) < cash_to_consume) {
+      return res.status(500).send({
+        ok: false,
+        msg: 'You do not have sufficient OCG Cash to perform this action.'
+      });
+    }
+    utils.takeCashFromUser(
+      req.user.id,
+      cash_to_consume,
+      'Buying OCG ' + plan + ' Membership',
+      ''
+    );
+    const user_obj_to_save = {
+      prime: true,
+      prime_obj: JSON.stringify({
+        cancel_requested: false,
+        bought_type: 'OCG',
+        check_for_cron: true,
+        check_for_hook: false,
+        prime_type: plan,
+        starts_on: moment()
+      }),
+      prime_type: plan,
+      prime_exp: moment().add(1, 'month')
+    };
+    new User()
+      .where({id: req.user.id})
+      .save(user_obj_to_save, {
+        method: 'update'
+      })
+      .then(function(user) {
+        addMembershipLog(plan, 'add');
+        console.log(user.toJSON());
+        return res.status(200).send({
+          ok: true,
+          msg: 'Membership successfully Started',
+          user: user.toJSON()
+        });
+      })
+      .catch(function(err) {
+        console.log(err);
+        return res.status(400).send({
+          ok: false,
+          msg:
+            'Failed to Charge account with OCG Cash for new membership. Please try again later or contact site admin.'
+        });
+      });
+  } else {
+    const use_customer_id = req.use_customer_id;
+    const user_obj_to_save = {
+      stripe_user_id: use_customer_id,
+      prime: true,
+      prime_obj: {
+        cancel_requested: false,
+        bought_type: 'Stripe',
+        check_for_cron: false,
+        check_for_hook: true,
+        prime_type: plan,
+        starts_on: moment()
+      },
+      prime_type: plan,
+      prime_exp: moment().add(1, 'month')
+    };
+    const stripe_plan = stripe_plans[plan];
+    // bill_type = 'Prime Membership';
+
+    stripe.subscriptions.create(
+      {
+        customer: use_customer_id,
+        plan: stripe_plan,
+        quantity: 1
+      },
+      function(err, subscription) {
+        if (err) {
+          console.log(err);
+          return res.status(200).send({
+            ok: false,
+            msg: 'Failed to start subscription. Please contact site admin'
+          });
+        }
+
+        user_obj_to_save.prime_obj.subscription_id = subscription.id;
+
+        User.forge({id: req.user.id})
+          .fetch()
+          .then(function(usr) {
+            if (!usr) {
+              return res.status(400).send({ok: false, msg: 'Some Error #60'});
+            }
+            usr
+              .save(user_obj_to_save, {patch: true})
+              .then(function(user) {
+                res.status(200).send({
+                  ok: true,
+                  action: 'PAYMENT_DONE',
+                  user: user.toJSON(),
+                  msg:
+                    'Your subscription was successful. You are being billed for ' +
+                    plan +
+                    'membership.'
+                });
+                // const group_obj = {
+                //   // group_name: grp.get('name'),
+                //   // user_name: user_first_name,
+                //   plan_name: 'Standard - ' + req.body.billing_type,
+                //   group_cname: grp.get('cname'),
+                //   email: req.user.email,
+                //   billed_amount: '000',
+                //   link_to_invoice: ''
+                // };
+                // Emails.upgradeGroup(group_obj);
+              })
+              .catch(function(err) {
+                // Raven.captureException(err);
+                res.status(400).send({
+                  ok: false,
+                  msg:
+                    'Subscription Created! ERROR fetching data, please contact support. ERR#54'
+                });
+              });
+          })
+          .catch(function(err) {
+            // Raven.captureException(err);
+            res.status(400).send({
+              ok: false,
+              msg:
+                'Subscription Created! ERROR fetching data, please contact support. ERR#148'
+            });
+          });
+      }
+    );
+
+    // start subscription
+  }
+
+  //
+};
+
+exports.new = newCredits;
+exports.withdraw = withdraw;
+exports.transfer = transfer;

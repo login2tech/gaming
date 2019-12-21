@@ -265,6 +265,12 @@ app.post(
   userController.ensureAuthenticated,
   creditsController.transfer
 );
+app.post(
+  '/api/credits/buy_membership',
+  userController.ensureAuthenticated,
+  creditsController.resolveCustomerId,
+  creditsController.buyMembership
+);
 
 app.get('/langController', langController.importLang);
 app.post('/signup', userController.signupPost);

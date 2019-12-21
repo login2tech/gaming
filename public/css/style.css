@@ -5462,7 +5462,24 @@ a.reset_rep {
 .alert-warning a {
     color: #2848f3;
 }
+.notices li {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-top: 1px solid #6f6f6f;
+    letter-spacing: 1px;
+}
 
+ul.notices {
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #000;margin-top:10px;
+    padding-bottom: 5px;border-radius:5px;
+    padding-top: 5px;
+}
+
+ul.notices li:first-child {
+    border: 0;
+}
 @media screen and (max-width: 690px) {
   .br_1{
     border:0;

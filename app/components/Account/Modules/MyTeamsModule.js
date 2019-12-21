@@ -51,10 +51,15 @@ class MyTeamsModule extends React.Component {
           }
           return (
             <li className="item" key={team.id}>
-              <Link
-                to={'/u/' + this.props.user_info.username + '/teams/' + team.id}
+              <a
+                href={
+                  '/u/' + this.props.user_info.username + '/teams/' + team.id
+                }
                 title={team.team_type + ' team'}
                 data-toggle="tooltip"
+                // onClick={event => {
+                //   $(event.target).tooltip('hide');
+                // }}
                 style={{display: 'inline-block'}}
               >
                 <figure className="avatr">
@@ -81,7 +86,7 @@ class MyTeamsModule extends React.Component {
                     )}
                   </div>
                 </div>
-              </Link>
+              </a>
             </li>
           );
         })}

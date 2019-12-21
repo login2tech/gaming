@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 // import {Link} from 'react-router';
 import MyBankModule from './Modules/MyBankModule';
+import MyMembershipModule from './Modules/MyMembershipModule';
 class MyBank extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +29,10 @@ class MyBank extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
+                <MyMembershipModule
+                  id={this.props.user.id}
+                  user_info={this.props.user}
+                />
                 <MyBankModule
                   id={this.props.user.id}
                   user_info={this.props.user}

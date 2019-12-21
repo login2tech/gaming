@@ -27,7 +27,16 @@ return txt;
 //     }
 //   }
 // }
-
+function scrollToTop()
+{
+  const element = document.getElementById('mainNav');
+  if (element) {
+    element.scrollIntoView({
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest'
+    });
+}
 
 (function ($) {
     "use strict";

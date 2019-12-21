@@ -13,14 +13,7 @@ export function charge(obj, token, cb) {
     }).then(response => {
       if (response.ok) {
         return response.json().then(json => {
-          const element = document.getElementById('mainNav');
-          if (element) {
-            element.scrollIntoView({
-              behavior: 'smooth',
-              block: 'end',
-              inline: 'nearest'
-            });
-          }
+          scrollToTop();
           if (json.action && json.action == 'PAYMENT_DONE') {
             cb(true, json);
             dispatch({
@@ -36,14 +29,7 @@ export function charge(obj, token, cb) {
           }
         });
       } else {
-        const element = document.getElementById('mainNav');
-        if (element) {
-          element.scrollIntoView({
-            behavior: 'smooth',
-            block: 'end',
-            inline: 'nearest'
-          });
-        }
+        scrollToTop();
         cb();
         return response.json().then(json => {
           dispatch({
@@ -125,82 +111,42 @@ export function transfer(obj, cb) {
   };
 }
 
-export function deduct(obj, cb) {
+export function buy_membership(data, cb) {
   return dispatch => {
     dispatch({
       type: 'CLR_MSG'
     });
-    return fetch('/api/credits/deduct_ocg', {
+    return fetch('/api/credits/buy_membership', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(obj)
+      body: JSON.stringify(data)
     }).then(response => {
       if (response.ok) {
         return response.json().then(json => {
-          cb(true);
-          setTimeout(function() {
-            window.location.reload();
-          }, 1000);
-          dispatch({
-            type: 'SUCCESS',
-            messages: [json]
-          });
-        });
-      } else {
-        cb(false);
-        return response.json().then(json => {
-          dispatch({
-            type: 'FAILURE',
-            messages: [json]
-          });
-        });
-      }
-    });
-  };
-}
-
-export function chargeChange(id, token) {
-  return dispatch => {
-    dispatch({
-      type: 'CLR_MSG'
-    });
-    return fetch('/downgrade', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        plan_id: id
-      })
-    }).then(response => {
-      if (response.ok) {
-        return response.json().then(json => {
-          if (json.action && json.action == 'DOWNGRADED') {
+          scrollToTop();
+          if (json.ok) {
+            cb(true, json);
             dispatch({
-              type: 'DOWNGRADE_SUCCESS',
-              messages: [json],
-              status: 'DOWNGRADED'
+              type: 'SUCCESS',
+              messages: [json]
             });
-            setTimeout(function() {
-              window.location.reload();
-            }, 300);
           } else {
+            cb(false);
             dispatch({
-              type: 'DOWNGRADE_FAILURE',
-              messages: [json],
-              status: 'NO'
+              type: 'FAILURE',
+              messages: [json]
             });
           }
         });
       } else {
+        scrollToTop();
+        cb();
         return response.json().then(json => {
           dispatch({
-            type: 'DOWNGRADE_FAILURE',
-            messages: Array.isArray(json) ? json : [json],
-            status: 'NO'
+            type: 'FAILURE',
+            messages: [json]
           });
         });
       }

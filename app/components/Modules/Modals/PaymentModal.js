@@ -1,6 +1,5 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
-// import {deduct} from '../../../actions/stripe';
 // import Messages from '../Messages';
 
 import React from 'react';
@@ -236,6 +235,7 @@ class PaymentModal extends React.Component {
                 )}
               </div>
             </div>
+            {this.props.msg_footer ? this.props.msg_footer : false}
           </div>
         </form>
       </div>
