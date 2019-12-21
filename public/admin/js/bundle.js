@@ -9897,9 +9897,9 @@ function (_React$Component) {
         ladder_id: this.state.ladder_id,
         max_players: this.state.max_players,
         total_teams: this.state.total_teams,
-        starts_at: this.state.starts_at,
-        registration_start_at: this.state.registration_start_at,
-        registration_end_at: this.state.registration_end_at,
+        starts_at: this.state.starts_at.toUTCString(),
+        registration_start_at: this.state.registration_start_at.toUTCString(),
+        registration_end_at: this.state.registration_end_at.toUTCString(),
         entry_fee: this.state.entry_fee,
         first_winner_price: this.state.first_winner_price,
         second_winner_price: this.state.second_winner_price,
@@ -9962,7 +9962,7 @@ function (_React$Component) {
         className: "show_loader"
       }, _react.default.createElement("div", {
         className: "is_loader"
-      }), "sdf"), _react.default.createElement("div", null, _react.default.createElement("div", {
+      })), _react.default.createElement("div", null, _react.default.createElement("div", {
         className: "modal-body report_left_inner more_info_de"
       }, _react.default.createElement("form", {
         onSubmit: function onSubmit(e) {
