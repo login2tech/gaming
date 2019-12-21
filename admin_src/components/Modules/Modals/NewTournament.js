@@ -180,14 +180,14 @@ class NewTournament extends React.Component {
   }
 
   handleChange(event) {
-    if (
-      event.target.name == 'starts_at' ||
-      event.target.name == 'registration_start_at' ||
-      event.target.name == 'registration_end_at'
-    ) {
-      console.log(event.target.value);
-      return;
-    }
+    // if (
+    //   event.target.name == 'starts_at' ||
+    //   event.target.name == 'registration_start_at' ||
+    //   event.target.name == 'registration_end_at'
+    // ) {
+    //   console.log(event.target.value);
+    //   return;
+    // }
     this.setState({[event.target.name]: event.target.value});
     if (event.target.name == 'game_id') {
       // alert(event.target.value);
