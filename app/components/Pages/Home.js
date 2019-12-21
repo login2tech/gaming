@@ -253,7 +253,7 @@ class Home extends React.Component {
                         {match.team_1_info ? (
                           <>
                             <Link
-                              class="mw100"
+                              className="mw100"
                               to={'/teams/view/' + match.team_1_id}
                             >
                               <img
@@ -268,7 +268,7 @@ class Home extends React.Component {
                             <span>
                               <span className="text-l">
                                 <Link
-                                  class="mw100"
+                                  className="mw100"
                                   to={'/teams/view/' + match.team_1_id}
                                 >
                                   {match.team_1_info.title}
@@ -299,7 +299,7 @@ class Home extends React.Component {
                         {match.team_1_info ? (
                           <>
                             <Link
-                              class="mw100"
+                              className="mw100"
                               to={'/teams/view/' + match.team_2_id}
                             >
                               <img
@@ -314,7 +314,7 @@ class Home extends React.Component {
                             <span>
                               <span className="text-l">
                                 <Link
-                                  class="mw100"
+                                  className="mw100"
                                   to={'/teams/view/' + match.team_2_id}
                                 >
                                   {match.team_2_info.title}

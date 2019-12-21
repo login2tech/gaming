@@ -9897,9 +9897,9 @@ function (_React$Component) {
         ladder_id: this.state.ladder_id,
         max_players: this.state.max_players,
         total_teams: this.state.total_teams,
-        starts_at: this.state.starts_at.toUTCString(),
-        registration_start_at: this.state.registration_start_at.toUTCString(),
-        registration_end_at: this.state.registration_end_at.toUTCString(),
+        starts_at: new Date(this.state.starts_at).toUTCString(),
+        registration_start_at: new Date(this.state.registration_start_at).toUTCString(),
+        registration_end_at: new Date(this.state.registration_end_at).toUTCString(),
         entry_fee: this.state.entry_fee,
         first_winner_price: this.state.first_winner_price,
         second_winner_price: this.state.second_winner_price,
@@ -9942,6 +9942,11 @@ function (_React$Component) {
   }, {
     key: "handleChange",
     value: function handleChange(event) {
+      if (event.target.name == 'starts_at' || event.target.name == 'registration_start_at' || event.target.name == 'registration_end_at') {
+        console.log(event.target.value);
+        return;
+      }
+
       this.setState(_defineProperty({}, event.target.name, event.target.value));
 
       if (event.target.name == 'game_id') {

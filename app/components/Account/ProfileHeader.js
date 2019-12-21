@@ -341,7 +341,7 @@ class ProfileHeader extends React.Component {
     const {user_info} = this.props;
     return (
       <a
-        title="<img class='hover_img' src='/images/xp_banner_profile.png' />"
+        title="<img className='hover_img' src='/images/xp_banner_profile.png' />"
         data-toggle="tooltip"
         className="float-right rank_box_wrap"
         onClick={e => {
@@ -483,7 +483,7 @@ class ProfileHeader extends React.Component {
                   <div className="col-md-1" />
                   <div className="col-md-11">
                     <a
-                      title="<img class='hover_img' src='/images/xp_banner_profile.png' />"
+                      title="<img className='hover_img' src='/images/xp_banner_profile.png' />"
                       data-toggle="tooltip"
                       className="dib"
                       onClick={e => {
