@@ -9942,11 +9942,14 @@ function (_React$Component) {
   }, {
     key: "handleChange",
     value: function handleChange(event) {
-      if (event.target.name == 'starts_at' || event.target.name == 'registration_start_at' || event.target.name == 'registration_end_at') {
-        console.log(event.target.value);
-        return;
-      }
-
+      // if (
+      //   event.target.name == 'starts_at' ||
+      //   event.target.name == 'registration_start_at' ||
+      //   event.target.name == 'registration_end_at'
+      // ) {
+      //   console.log(event.target.value);
+      //   return;
+      // }
       this.setState(_defineProperty({}, event.target.name, event.target.value));
 
       if (event.target.name == 'game_id') {
