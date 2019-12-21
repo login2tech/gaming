@@ -53,13 +53,13 @@ class Home extends React.Component {
                 className="carousel-item active"
                 style={{background: '#fff'}}
               >
-                <img src="images/banner_2.png" alt="" />
+                <img src="images/banner_1.png" alt="" />
               </div>
               <div className="carousel-item" style={{background: '#fff'}}>
                 <img src="images/banner_3.png" alt="" />
               </div>
               <div className="carousel-item" style={{background: '#fff'}}>
-                <img src="images/banner_1.png" alt="" />
+                <img src="images/banner_2.png" alt="" />
               </div>
             </div>
           </div>

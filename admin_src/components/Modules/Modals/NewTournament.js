@@ -140,9 +140,9 @@ class NewTournament extends React.Component {
       ladder_id: this.state.ladder_id,
       max_players: this.state.max_players,
       total_teams: this.state.total_teams,
-      starts_at: this.state.starts_at,
-      registration_start_at: this.state.registration_start_at,
-      registration_end_at: this.state.registration_end_at,
+      starts_at: this.state.starts_at.toUTCString(),
+      registration_start_at: this.state.registration_start_at.toUTCString(),
+      registration_end_at: this.state.registration_end_at.toUTCString(),
       entry_fee: this.state.entry_fee,
       first_winner_price: this.state.first_winner_price,
       second_winner_price: this.state.second_winner_price,
@@ -193,7 +193,6 @@ class NewTournament extends React.Component {
         ) : (
           <div className="show_loader">
             <div className="is_loader" />
-            sdf
           </div>
         )}
         <div>
