@@ -129,7 +129,7 @@ class Profile extends React.Component {
 
   resetOverallTrBronze(e) {
     e.preventDefault();
-    this.resetPop('Reset Bronze Trophies', 'SILVER_TROPHIES');
+    this.resetPop('Reset Bronze Trophies', 'BRONZE_TROPHIES');
   }
 
   resetOverall(e) {
@@ -332,7 +332,7 @@ class Profile extends React.Component {
                       </div>
                       <div className="col-6 col-md-3 usr_obj">
                         <div className="career-data">
-                          <div>CAREER RECORD</div>{' '}
+                          <div>PROFILE RECORD</div>{' '}
                           <div>
                             <span className="text-success">
                               {this.state.user_info.wins

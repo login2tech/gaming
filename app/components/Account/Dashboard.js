@@ -780,24 +780,9 @@ class Profile extends React.Component {
                             : '-'}
                         </p>
                       </div>
-                      {/*}
-                      <div className="col-md-4">
-                        <span>LIFETIME EARNINGS</span>
-                        <p>12/30/18 2:00PM</p>
-                      </div>*/}
                     </div>
 
                     <div className="row">
-                      {/*}<div className="col-md-4">
-                        <span> PROFILE VIEWS</span>
-                        <p>436</p>
-                      </div>
-
-                      <div className="col-md-4">
-                        <span>Rank</span>
-                        <p>4541</p>
-                      </div>
-*/}
                       <div className="col-md-4" />
                     </div>
                   </div>
@@ -835,15 +820,7 @@ class Profile extends React.Component {
                     >
                       Edit Profile
                     </li>
-                    {/*}<li
-                      className={this.state.currentStep == 1 ? 'active' : ''}
-                      onClick={() => {
-                        this.setState({currentStep: 1});
-                      }}
-                      data-tab="tab0"
-                    >
-                      Previous Tournamentes
-                    </li>*/}
+
                     <li
                       className={this.state.currentStep == 2 ? 'active' : ''}
                       onClick={() => {
@@ -851,7 +828,7 @@ class Profile extends React.Component {
                       }}
                       data-tab="tab1"
                     >
-                      Billing Details
+                      Memberships
                     </li>
                     <li
                       className={this.state.currentStep == 4 ? 'active' : ''}
@@ -860,7 +837,7 @@ class Profile extends React.Component {
                       }}
                       data-tab="tab3"
                     >
-                      Credit Summary
+                      My Bank
                     </li>
                   </ul>
 

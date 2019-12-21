@@ -23,7 +23,7 @@ class Records extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        token_id: token.id,
+        token_id: token == 'USE_OCG' ? 'USE_OCG' : token.id,
         action: 'score_' + this.props.params.duration,
         duration: this.props.params.duration
       })

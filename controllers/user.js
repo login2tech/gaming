@@ -8,6 +8,7 @@ const mailer = require('./mailer');
 const Notif = require('../models/Notification');
 const Score = require('../models/Score');
 const utils = require('../routes/utils');
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 function generateToken(user) {
   const payload = {
@@ -851,11 +852,34 @@ exports.leaderboard_2 = function(req, res, next) {
 };
 
 exports.deduct_money = function(req, res, next) {
-  next();
+  console.log(req.body);
+  if (req.body.token == 'USE_OCG') {
+    next();
+  } else {
+    stripe.charges.create(
+      {
+        amount: 5 * 100,
+        currency: 'usd',
+        source: req.body.token,
+        description: 'Charge for Reset of  ' + req.body.duration
+      },
+      function(err, charge) {
+        if (err) {
+          console.log(err);
+          res.status(400).send({ok: false, msg: 'Failed to charge card'});
+          return;
+        }
+        next();
+      }
+    );
+  }
+  // next();
 };
 exports.deduct_ocg = function(req, res, next) {
+  if (req.body.token == 'USE_OCG') {
+    utils.takeCashFromUser(req.user.id, 5, 'For resetting score', '');
+  }
   next();
-  utils.takeCashFromUser(req.user.id, 5, 'For resetting score', '');
 };
 
 exports.resetScore = function(req, res, next) {

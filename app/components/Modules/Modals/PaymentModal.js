@@ -1,6 +1,6 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
-import {deduct} from '../../../actions/stripe';
+// import {deduct} from '../../../actions/stripe';
 // import Messages from '../Messages';
 
 import React from 'react';
