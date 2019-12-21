@@ -180,7 +180,7 @@ class Header extends React.Component {
                         {this.state.userSuggestions.map((u, i) => {
                           return (
                             <li key={u.id}>
-                              <Link to={'/u/' + u.username}>
+                              <Link href={'/u/' + u.username}>
                                 <span className="text-sm">@{u.username}</span>
                               </Link>
                             </li>

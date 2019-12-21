@@ -46,16 +46,20 @@ class Home extends React.Component {
             <ul className="carousel-indicators">
               <li data-target="#demo" data-slide-to="0" className="active" />
               <li data-target="#demo" data-slide-to="1" className="" />
+              <li data-target="#demo" data-slide-to="2" className="" />
             </ul>
             <div className="carousel-inner">
               <div
                 className="carousel-item active"
                 style={{background: '#fff'}}
               >
-                <img src="images/banner_1.png" alt="" />
+                <img src="images/banner_2.png" alt="" />
               </div>
               <div className="carousel-item" style={{background: '#fff'}}>
-                <img src="images/banner_2.png" alt="" />
+                <img src="images/banner_3.png" alt="" />
+              </div>
+              <div className="carousel-item" style={{background: '#fff'}}>
+                <img src="images/banner_1.png" alt="" />
               </div>
             </div>
           </div>
@@ -63,7 +67,7 @@ class Home extends React.Component {
 
         <section
           className="games bg-black"
-          style={{marginBottom: 30, paddingTop: 20}}
+          style={{marginBottom: 0, paddingTop: 20, paddingBottom: 50}}
         >
           <div className="container-fluid">
             <div className="row">
