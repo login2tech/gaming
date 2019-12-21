@@ -311,8 +311,30 @@ exports.team_of_user = function(req, res, next) {
     ]
   })
     .then(function(team_info) {
+      team_info = team_info.toJSON();
+
+      if (req.query.filter_type) {
+        team_info = team_info.filter(function(item) {
+          if (item.team_info.team_type == req.query.filter_type) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
+      if (req.query.filter_ladder) {
+        team_info = team_info.filter(function(item) {
+          if (item.team_info.ladder_id == req.query.filter_ladder) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
       res.send({
-        teams: team_info.toJSON(),
+        teams: team_info,
         ok: true
       });
     })

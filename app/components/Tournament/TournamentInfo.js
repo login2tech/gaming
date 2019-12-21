@@ -338,7 +338,7 @@ class TournamentInfo extends React.Component {
       return;
     }
     fetch(
-      '/api/teams/team_of_user/?uid=' +
+      '/api/teams/team_of_user/?filter_type=tournaments&uid=' +
         this.props.user.id +
         '&filter_ladder=' +
         this.state.tournament.ladder_id
@@ -347,7 +347,9 @@ class TournamentInfo extends React.Component {
       .then(json => {
         if (json.ok) {
           this.setState({
-            eligible_teams: json.teams
+            eligible_teams: json.teams,
+            team_selected:
+              json.teams && json.teams.length ? json.teams[0].team_info : false
           });
         }
       });
@@ -667,7 +669,7 @@ class TournamentInfo extends React.Component {
           <div className="col-sm-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Ladder</div>
-              <div className="tourn-info-box tourn-info-game">
+              <div className="tourn-info-box tourn-info-game ico_no_fl">
                 {this.state.tournament.ladder.title}{' '}
                 <span
                   className={
@@ -1069,6 +1071,9 @@ class TournamentInfo extends React.Component {
   }
   renderMatch() {
     let rounds = this.state.tournament.brackets;
+    if (!rounds) {
+      rounds = '[]';
+    }
     rounds = JSON.parse(rounds);
     rounds = rounds.rounds_calculated;
     const rnds = [];
@@ -1277,18 +1282,21 @@ class TournamentInfo extends React.Component {
                 </li>
               );
             })}
-          {this.state.eligible_teams_loaded &&
-            !this.state.team_selected && (
-              <li>
-                <a
-                  target="_blank"
-                  href={'/u/' + this.props.user.username + '/teams/new'}
-                >
-                  <img src="/images/team_new.png" />
-                </a>
-              </li>
-            )}
         </ul>
+        {this.state.eligible_teams_loaded &&
+          !this.state.team_selected &&
+          this.state.eligible_teams.length < 1 && (
+            <div className="alert alert-warning">
+              You do not have a tournament team for this ladder. Click{' '}
+              <a
+                target="_blank"
+                href={'/u/' + this.props.user.username + '/teams/new'}
+              >
+                here
+              </a>{' '}
+              to create one.
+            </div>
+          )}
       </div>
     );
   }

@@ -5455,7 +5455,13 @@ a.reset_rep {
     display: inline-block;
     margin-left: 9%;
 }
+.ico_no_fl .pf_icon{
+  float: none;
+}
 
+.alert-warning a {
+    color: #2848f3;
+}
 
 @media screen and (max-width: 690px) {
   .br_1{
