@@ -139,7 +139,8 @@ class ViewTicket extends React.Component {
 
     const split = a.split('.');
     const split_le = split.length;
-    const ext = split[split_le - 1];
+    let ext = split[split_le - 1];
+    ext = ext.toLowerCase();
     if (
       ext == 'jpg' ||
       ext == 'png' ||
@@ -155,6 +156,28 @@ class ViewTicket extends React.Component {
             src={a}
           />
         </a>
+      );
+    }
+    if (
+      ext == 'mp4' ||
+      ext == 'webm' ||
+      ext == 'mov' ||
+      ext == 'ogv' ||
+      ext == 'webp' ||
+      ext == 'mpeg' ||
+      ext == 'ogg'
+    ) {
+      return (
+        <>
+          <video src={a} controls>
+            This is fallback content to display for user agents that do not
+            support the video tag.
+          </video>
+          <br />
+          <a download href={a}>
+            <small className="text-center">Click to download</small>
+          </a>
+        </>
       );
     }
     return (

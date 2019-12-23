@@ -186,6 +186,63 @@ class SingleTicket extends React.Component {
     );
   };
 
+  renderDownloadAttachment(a) {
+    if (!a) {
+      return false;
+    }
+
+    const split = a.split('.');
+    const split_le = split.length;
+    let ext = split[split_le - 1];
+    ext = ext.toLowerCase();
+    if (
+      ext == 'jpg' ||
+      ext == 'png' ||
+      ext == 'jpeg' ||
+      ext == 'gif' ||
+      ext == 'bmp'
+    ) {
+      return (
+        <a download href={a} className="text-center dib">
+          <img
+            style={{width: '500px'}}
+            className="img_fluid thumbnail"
+            src={a}
+          />
+          <br />
+          <small>Click to download</small>
+        </a>
+      );
+    }
+    if (
+      ext == 'mp4' ||
+      ext == 'webm' ||
+      ext == 'mov' ||
+      ext == 'ogv' ||
+      ext == 'webp' ||
+      ext == 'mpeg' ||
+      ext == 'ogg'
+    ) {
+      return (
+        <>
+          <video src={a} controls>
+            This is fallback content to display for user agents that do not
+            support the video tag.
+          </video>
+          <br />
+          <a download href={a}>
+            <small className="text-center">Click to download</small>
+          </a>
+        </>
+      );
+    }
+    return (
+      <a download href={a}>
+        Download attachment
+      </a>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -255,12 +312,8 @@ class SingleTicket extends React.Component {
                           __html: this.state.ticket.description
                         }}
                       />
-                      {this.state.ticket.attachment ? (
-                        <a download href={this.state.ticket.attachment}>
-                          Download attachment
-                        </a>
-                      ) : (
-                        false
+                      {this.renderDownloadAttachment(
+                        this.state.ticket.attachment
                       )}
                     </div>
                   </div>
@@ -312,13 +365,7 @@ class SingleTicket extends React.Component {
                       </div>
                       <div className="col-sm-9 post-content">
                         <div dangerouslySetInnerHTML={{__html: item.content}} />
-                        {item.attachment ? (
-                          <a download href={item.attachment}>
-                            Download attachment
-                          </a>
-                        ) : (
-                          false
-                        )}
+                        {this.renderDownloadAttachment(item.attachment)}
                       </div>
                     </div>
                   </div>
