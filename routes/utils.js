@@ -23,13 +23,16 @@ const giveCashOrCreditsToUser = function(typ, user_id, amount, descr, obj) {
               ct = new CreditTransactions();
             }
 
-            ct.save({
-              user_id: user_id,
-              obj_type: obj,
-              details: descr,
-              qty: amount
-            })
-              .then(function(o) {})
+            return ct
+              .save({
+                user_id: user_id,
+                obj_type: obj,
+                details: descr,
+                qty: amount
+              })
+              .then(function(o) {
+                //
+              })
               .catch(function(err) {
                 console.log(8, err);
               });

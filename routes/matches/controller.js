@@ -1061,7 +1061,7 @@ exports.join = function(req, res, next) {
                   return res.status(400).send({
                     ok: false,
                     msg:
-                      'You had a Tatch with this team already Wait 3 hours to play this team again.'
+                      'You had a Match with this team already Wait 3 hours to play this team again.'
                   });
                 } else {
                   return join_inner(match, req, res, next);

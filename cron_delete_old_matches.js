@@ -177,16 +177,16 @@ new Money8()
   });
 
 //
-new Match()
-  .where('status', 'cancelled')
-  // .destroy()
-  .then(function() {
-    reset_ticker();
-    console.log('deleted');
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
+// new Match()
+//   .where('status', 'cancelled')
+//   // .destroy()
+//   .then(function() {
+//     reset_ticker();
+//     console.log('deleted');
+//   })
+//   .catch(function(err) {
+//     console.log(err);
+//   });
 
 new Match()
   .where('status', 'cancelled')
