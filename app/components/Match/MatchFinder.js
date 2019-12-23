@@ -172,19 +172,17 @@ class MatchFinder extends React.Component {
                                       <div className="col-6 col-md-3 t-col">
                                         <h5>TYPE</h5>
                                         <p>
-                                          {this.state.match.match_type ==
-                                          'free' ? (
+                                          {match.match_type == 'free' ? (
                                             'FREE'
                                           ) : (
                                             <span>
                                               {'PAID (' +
-                                                (this.state.match.match_type ==
-                                                'cash'
+                                                (match.match_type == 'cash'
                                                   ? '' +
-                                                    this.state.match.match_fee +
+                                                    match.match_fee +
                                                     ' OCG Cash'
                                                   : '' +
-                                                    this.state.match.match_fee +
+                                                    match.match_fee +
                                                     ' credits') +
                                                 ')'}
                                             </span>
