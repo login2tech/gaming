@@ -293,11 +293,14 @@ class Game extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar"
+          className="page_title_bar gm"
           style={
             this.state.game
-              ? {backgroundImage: "url('" + this.state.game.banner_url + "')"}
-              : {}
+              ? {
+                  minHeight: 250,
+                  backgroundImage: "url('" + this.state.game.banner_url + "')"
+                }
+              : {minHeight: 250}
           }
         >
           <div className="container">
@@ -311,7 +314,7 @@ class Game extends React.Component {
           </div>
         </section>
 
-        <section className="contet_part">
+        <section className="contet_part" style={{paddingTop: 30}}>
           <div className="container">
             <div className="row">
               <div className="col-md-6 col-sm-12 col-xs-12">
