@@ -47,7 +47,7 @@ const delete_match = function(ta, match) {
         utils.giveCreditsToUser(
           team_1[i],
           match.match_fee,
-          'Refund for cancelled mix & match #' + match.id,
+          'Refund for cancelled matchfinder match #' + match.id,
           'm8_' + match.id
         );
       }
@@ -64,7 +64,7 @@ const delete_match = function(ta, match) {
         utils.giveCreditsToUser(
           team_2[i],
           match.match_fee,
-          'Refund for cancelled mix & match #' + match.id,
+          'Refund for cancelled matchfinder match #' + match.id,
           'm8_' + match.id
         );
       }
