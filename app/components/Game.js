@@ -363,7 +363,7 @@ class Game extends React.Component {
                           value={this.state.new_chat_msg}
                           onChange={this.handleChange.bind(this)}
                         />
-                        <button style={{display: 'none'}} type="submit">
+                        <button type="submit" className="cht_send_btn">
                           Submit
                         </button>
                       </form>
