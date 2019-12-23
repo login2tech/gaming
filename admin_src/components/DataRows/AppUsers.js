@@ -13,6 +13,7 @@ class AppUsers extends React.Component {
     this.state = {
       is_loaded: false,
       page: 1,
+      search: '',
       items: [],
       pagination: {}
     };
@@ -28,7 +29,8 @@ class AppUsers extends React.Component {
 
   loadUsers() {
     Fetcher.get(
-      '/api/admin/listPaged/users?filter_role=user&page=' + this.state.page
+      '/api/admin/listPaged/users?per_page=50&filter_role=user&page=' +
+        this.state.page
     )
       .then(resp => {
         if (resp.ok) {
@@ -136,9 +138,12 @@ class AppUsers extends React.Component {
       return;
     }
 
-    alert(action + ' ' + obj.id);
+    // alert(action + ' ' + obj.id);
   }
 
+  handleChange(event) {
+    this.setState({[event.target.name]: event.target.value});
+  }
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -162,6 +167,19 @@ class AppUsers extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <Messages messages={this.props.messages} />
+
+            <div className="form-group col-md-12">
+              <input
+                type="text"
+                required
+                className="form-control"
+                placeholder="type to search users"
+                id="search"
+                name="search"
+                value={this.state.search}
+                onChange={this.handleChange.bind(this)}
+              />
+            </div>
             <table className="table  table-hover  table-responsive   table-striped table-bordered">
               <thead>
                 <tr>
@@ -180,6 +198,23 @@ class AppUsers extends React.Component {
                 {this.state.items &&
                   this.state.items.map((u, i) => {
                     // return JSON.stringify(u);
+                    if (this.state.search) {
+                      let f_name =
+                        u.first_name +
+                        ' ' +
+                        u.last_name +
+                        ' ' +
+                        u.email +
+                        ' ' +
+                        u.username;
+                      f_name = f_name.toLowerCase();
+                      const s = this.state.search.toLowerCase();
+                      if (f_name.indexOf(s) > -1) {
+                        //
+                      } else {
+                        return false;
+                      }
+                    }
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
