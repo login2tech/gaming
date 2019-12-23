@@ -63,9 +63,12 @@ export default function getRoutes(store) {
     if (!store.getState().auth.token) {
       replace('/login');
     }
+    if (!store.getState().auth.user) {
+      replace('/login');
+    }
   };
   const skipIfAuthenticated = (nextState, replace) => {
-    if (store.getState().auth.token) {
+    if (store.getState().auth.token && store.getState().auth.user) {
       replace('/');
     }
   };

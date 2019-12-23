@@ -105,6 +105,10 @@ app.use(function(req, res, next) {
     const payload = req.isAuthenticated();
     new User({id: payload.sub}).fetch().then(function(user) {
       if (user) {
+        if (user.get('status') == false) {
+          next();
+          return;
+        }
         req.user = user.toJSON();
       }
 
