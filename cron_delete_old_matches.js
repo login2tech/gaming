@@ -179,7 +179,7 @@ new Money8()
 //
 new Match()
   .where('status', 'cancelled')
-  .destroy()
+  // .destroy()
   .then(function() {
     reset_ticker();
     console.log('deleted');
@@ -188,7 +188,28 @@ new Match()
     console.log(err);
   });
 
-//
+new Match()
+  .where('status', 'cancelled')
+  .fetchAll({withRelated: []})
+  .then(function(matches) {
+    reset_ticker();
+    if (!matches) {
+      return;
+    }
+    matches = matches.toJSON();
+    // console.log(matches.length);
+    for (let i = 0; i < matches.length; i++) {
+      // `
+      // tournaments`
+      //
+      delete_match(matches[i].id, matches[i]);
+    }
+    //
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+
 new User()
   .orderBy('life_xp', 'DESC')
   .orderBy('life_earning', 'DESC')

@@ -632,5 +632,39 @@ exports.disband = function(req, res, next) {
         .catch(function(err) {
           console.log(err);
         });
+
+      new Match()
+        .where({
+          team_1_id: team_id,
+          status: 'accepted'
+        })
+        .fetchAll()
+        .then(function(disputed_matches) {
+          disputed_matches = disputed_matches.toJSON();
+          console.log('set 3', disputed_matches);
+          for (let i = 0; i < disputed_matches.length; i++) {
+            matches.giveWin(null, null, null, disputed_matches[i].id, 'team_2');
+          }
+        })
+        .catch(function(err) {
+          console.log('#596', err);
+        });
+
+      new Match()
+        .where({
+          team_2_id: team_id,
+          status: 'accepted'
+        })
+        .fetchAll()
+        .then(function(disputed_matches) {
+          disputed_matches = disputed_matches.toJSON();
+          console.log('set 4', disputed_matches);
+          for (let i = 0; i < disputed_matches.length; i++) {
+            matches.giveWin(null, null, null, disputed_matches[i].id, 'team_1');
+          }
+        })
+        .catch(function(err) {
+          console.log('#596', err);
+        });
     });
 };

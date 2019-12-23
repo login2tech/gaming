@@ -5499,6 +5499,15 @@ ul.notices li:first-child {
     border-radius: 5px;
     text-transform: uppercase;
 }
+
+.cnclMt {
+    margin-top: 5px;
+    min-width: 165px;
+    border: 0;
+    border-radius: 0;
+    padding: 13px 0;
+    font: 900 0.75em/1 "Raleway",sans-serif;
+}
 @media screen and (max-width: 690px) {
   .br_1{
     border:0;

@@ -681,6 +681,109 @@ exports.resolveDisputeWrap = function(req, res, next) {
   resolveDispute(req, res, next);
 };
 
+const giveWin = function(req, res, next, match_id, team_to_win) {
+  new Item({id: match_id})
+    .fetch()
+    .then(function(match) {
+      const tmp_match = match.toJSON();
+      if (tmp_match.team_1_result && tmp_match.team_2_result) {
+        return;
+      }
+      const obj_to_save = {};
+
+      if (team_to_win == 'team_2') {
+        obj_to_save.team_1_result = '0-1';
+        obj_to_save.team_2_result = '1-0';
+      } else {
+        obj_to_save.team_2_result = '0-1';
+        obj_to_save.team_1_result = '1-0';
+      }
+      obj_to_save.result = team_to_win;
+      obj_to_save.status = 'complete';
+
+      match
+        .save(obj_to_save)
+        .then(function(match) {
+          if (
+            obj_to_save.result == 'team_1' ||
+            obj_to_save.result == 'team_2'
+          ) {
+            let win_team_members;
+            let loose_team_members;
+            if (obj_to_save.result == 'team_1') {
+              win_team_members = match.get('team_1_players');
+              loose_team_members = match.get('team_2_players');
+            } else {
+              win_team_members = match.get('team_2_players');
+              loose_team_members = match.get('team_1_players');
+            }
+
+            win_team_members = win_team_members.split('|');
+            loose_team_members = loose_team_members.split('|');
+
+            const award_team_id =
+              obj_to_save.result == 'team_1'
+                ? tmp_match.team_1_id
+                : tmp_match.team_2_id;
+            const loose_team_id =
+              obj_to_save.result == 'team_1'
+                ? tmp_match.team_2_id
+                : tmp_match.team_1_id;
+
+            // giveWinToTeam(award_team_id,win_team_members,  tmp_match.id);
+            giveXPtoTeam(award_team_id, win_team_members, tmp_match.id);
+            takeXPfromTeam(loose_team_id, loose_team_members, tmp_match.id);
+
+            if (
+              tmp_match.match_type == 'credits' ||
+              tmp_match.match_type == 'cash'
+            ) {
+              giveMoneyBackToTeam(
+                award_team_id,
+                tmp_match.match_fee,
+                win_team_members,
+                tmp_match.id,
+                tmp_match.match_type
+              );
+            }
+            console.log('score resotlo');
+            console.log(award_team_id, loose_team_id);
+            addScoreForTeam(
+              tmp_match.game_id,
+              tmp_match.ladder_id,
+              'wins',
+              win_team_members,
+              award_team_id
+            );
+            addScoreForTeam(
+              tmp_match.game_id,
+              tmp_match.ladder_id,
+              'loss',
+              loose_team_members,
+              loose_team_id
+            );
+          }
+        })
+        .catch(function(err) {
+          console.log('1');
+          console.log(err);
+        });
+
+      // obj_to_save;
+
+      // if (val.team_1_result && tmp_match.team_2_result) {
+      //   val.team_2_result = tmp_match.team_2_result;
+      // } else if (val.team_2_result && tmp_match.team_1_result) {
+      //   val.team_1_result = tmp_match.team_1_result;
+      // }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
+};
+
+exports.giveWin = giveWin;
+
 exports.saveScore = function(req, res, next) {
   new Item({id: req.body.id})
     .fetch()

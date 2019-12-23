@@ -123,16 +123,20 @@ class MatchFinder extends React.Component {
                           >
                             {this.state.matches[game_id].map((match, i) => {
                               let txt = '';
-                              const txt2 = '';
+                              // const txt2 = '';
                               txt = 'Accept Match';
                               let t1p = match.team_1_players;
                               if (!t1p) {
                                 t1p = '';
                               }
+                              let show_cancel = false;
                               t1p = t1p.split('|');
                               // console.log(t1p);
                               if (t1p.indexOf('' + this.props.user.id) > -1) {
                                 txt = 'View Match';
+                                if (match.status == 'pending') {
+                                  show_cancel = true;
+                                }
                               }
 
                               return (
@@ -219,7 +223,16 @@ class MatchFinder extends React.Component {
                                       >
                                         {txt}
                                       </Link>
-                                      <small>{txt2}</small>
+                                      {show_cancel ? (
+                                        <Link
+                                          to={this.matchLink('/m/' + match.id)}
+                                          className="btn-danger btn cnclMt"
+                                        >
+                                          Cancel Match
+                                        </Link>
+                                      ) : (
+                                        false
+                                      )}
                                     </div>
                                   </div>
                                 </li>
