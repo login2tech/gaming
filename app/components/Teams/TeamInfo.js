@@ -561,7 +561,7 @@ class TeamInfo extends React.Component {
     const {team_info} = this.state;
     return (
       <a
-        title="<img className='hover_img' src='/images/xp_banner_team.jpg' />"
+        title="<img class='hover_img' src='/images/xp_banner_team.jpg' />"
         data-toggle="tooltip"
         className="float-right rank_box_wrap"
         onClick={e => {
@@ -789,7 +789,7 @@ class TeamInfo extends React.Component {
                     <div className="col-md-1" />
                     <div className="col-md-11">
                       <a
-                        title="<img className='hover_img' src='/images/xp_banner_team.jpg' />"
+                        title="<img class='hover_img' src='/images/xp_banner_team.jpg' />"
                         data-toggle="tooltip"
                         className="dib"
                         onClick={e => {
