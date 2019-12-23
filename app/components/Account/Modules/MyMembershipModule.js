@@ -58,7 +58,7 @@ class MyMembershipModule extends React.Component {
   }
 
   token_received(token, plan_name) {
-    if ((token = 'USE_OCG')) {
+    if (token != 'USE_OCG') {
       token = token.id;
     }
     this.props.dispatch(

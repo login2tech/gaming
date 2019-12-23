@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import Messages from '../Modules/Messages';
 // import {createTeam} from '../../actions/team';
+import MyMembershipModule from '../Account/Modules/MyMembershipModule';
+
 import {charge} from '../../actions/stripe';
 import moment from 'moment';
 class Shop extends React.Component {
@@ -341,6 +343,11 @@ class Shop extends React.Component {
       <section className="middle_part_login">
         <div className="container text-center">
           <Messages messages={this.props.messages} />
+
+          <MyMembershipModule
+            id={this.props.user.id}
+            user_info={this.props.user}
+          />
 
           <div className="row shop_row" style={{marginBottom: '20px'}}>
             <div className="col-md-6 offset-md-3">

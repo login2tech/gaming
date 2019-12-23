@@ -482,9 +482,11 @@ exports.resolveCustomerId = function(req, res, next) {
     // no need to resolve customer id as not using stripe
     next();
   } else if (req.user.stripe_user_id) {
+    console.log('stripe id exists');
     // customer id already linked, shall i attach a new credit card source?
     link_token_to_user(req, res, next, token);
   } else {
+    console.log('stripe id is being created');
     // no customer id, create 1 and link it and proceed
     create_new_user_for_token(req, res, next);
   }
@@ -565,6 +567,7 @@ exports.buyMembership = function(req, res, next) {
     };
     const stripe_plan = stripe_plans[plan];
     // bill_type = 'Prime Membership';
+    console.log(use_customer_id);
 
     stripe.subscriptions.create(
       {

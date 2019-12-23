@@ -128,6 +128,12 @@ export function buy_membership(data, cb) {
           scrollToTop();
           if (json.ok) {
             cb(true, json);
+            if (json.user) {
+              dispatch({
+                type: 'UPDATE_USER',
+                user: json.user
+              });
+            }
             dispatch({
               type: 'SUCCESS',
               messages: [json]

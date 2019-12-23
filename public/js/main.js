@@ -36,6 +36,7 @@ function scrollToTop()
       block: 'end',
       inline: 'nearest'
     });
+  }
 }
 
 (function ($) {
