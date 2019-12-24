@@ -648,9 +648,9 @@ class MatchInfo extends React.Component {
   }
 
   reverseResult(score) {
-    return score;
-    // score = score.split('-');
-    // return score[1] + '-' + score[0];
+    // return score;
+    score = score.split('-');
+    return score[1] + '-' + score[0];
   }
 
   render() {
