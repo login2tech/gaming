@@ -1,12 +1,10 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.table('users', function(table) {
-      // table.increments();
-      // table.integer('team_id').references('teams.id');
-      // table.integer('season');
-      // table.integer('year');
+      table.datetime('double_xp_exp');
       table.string('prime_type');
       table.datetime('prime_exp');
+      table.integer('double_xp_tokens').defaultTo(0);
     })
   ]);
 };
