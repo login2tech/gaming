@@ -254,7 +254,7 @@ class Money8Info extends React.Component {
         disabled = true;
         disabled_reason =
           'you do not have enough ' +
-          (this.state.match.match_type == 'cash' ? 'OCG Cash' : 'credits') +
+          (this.state.match.match_type == 'cash' ? '$' : 'credits') +
           ' to join this pool';
       }
     }

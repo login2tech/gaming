@@ -6,7 +6,6 @@ import MyMembershipModule from './Modules/MyMembershipModule';
 class MyBank extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {records: {}, loaded: false, ladders: {}};
   }
 
   render() {
@@ -17,7 +16,7 @@ class MyBank extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3 className="no-case-change">My Bank</h3>
+                  <h3 className="no-case-change">My Bank & Memberships</h3>
                   <br />
                 </div>
               </div>

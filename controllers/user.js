@@ -852,15 +852,15 @@ exports.leaderboard_2 = function(req, res, next) {
 };
 
 exports.deduct_money = function(req, res, next) {
-  console.log(req.body);
-  if (req.body.token == 'USE_OCG') {
+  // console.log(req.body);
+  if (req.body.stripe_token == 'USE_OCG') {
     next();
   } else {
     stripe.charges.create(
       {
         amount: 5 * 100,
         currency: 'usd',
-        source: req.body.token,
+        source: req.body.stripe_token,
         description: 'Charge for Reset of  ' + req.body.duration
       },
       function(err, charge) {
@@ -876,7 +876,7 @@ exports.deduct_money = function(req, res, next) {
   // next();
 };
 exports.deduct_ocg = function(req, res, next) {
-  if (req.body.token == 'USE_OCG') {
+  if (req.body.stripe_token == 'USE_OCG') {
     utils.takeCashFromUser(req.user.id, 5, 'For resetting score', '');
   }
   next();

@@ -18,6 +18,11 @@ class WithdrawalPending extends React.Component {
       pagination: {}
     };
   }
+
+  checkboxChange() {
+    this.setState({showing_only_paid: !this.state.showing_only_paid});
+  }
+
   doAction(obj) {
     const key = '';
     const id = obj.id;
@@ -111,6 +116,15 @@ class WithdrawalPending extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <h2 style={{padding: 0, margin: 0}}>Pending withdrawal Requests</h2>
+            <div style={{float: 'right'}}>
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={this.checkboxChange.bind(this)}
+                />{' '}
+                Filter tickets only from OCG Members
+              </label>
+            </div>
           </div>
         </div>
         <div className="panel">
@@ -131,6 +145,13 @@ class WithdrawalPending extends React.Component {
               <tbody>
                 {this.state.items &&
                   this.state.items.map((u, i) => {
+                    if (
+                      this.state.showing_only_paid == true &&
+                      u.user.prime == false
+                    ) {
+                      return false;
+                    }
+
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>

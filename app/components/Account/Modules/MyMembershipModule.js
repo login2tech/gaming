@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {buy_membership} from '../../../actions/stripe';
-import {openModal} from '../../../actions/modals';
+import {openModal, closeModal} from '../../../actions/modals';
 import PaymentModal from '../../Modules/Modals/PaymentModal';
 const plan_prices = {
   gold: 6.99,
@@ -26,7 +26,7 @@ class MyMembershipModule extends React.Component {
     this.props.dispatch(
       openModal({
         type: 'custom',
-        id: 'payment',
+        id: 'membership_popup',
         zIndex: 534,
         heading: 'Buy OCG ' + plan + ' Membership',
         content: (
@@ -64,10 +64,15 @@ class MyMembershipModule extends React.Component {
     this.props.dispatch(
       buy_membership(
         {
-          token: token,
+          stripe_token: token,
           plan: plan_name
         },
         cb => {
+          this.props.dispatch(
+            closeModal({
+              id: 'membership_popup'
+            })
+          );
           if (cb) {
             // do on success
           }
@@ -107,10 +112,10 @@ class MyMembershipModule extends React.Component {
                     Compete in “official Comp Member tournaments” for free!
                   </span>
                   <span>High priority Cash Withdrawals </span>
-                  <span>Free Cash Out Matches non charge 10 cents </span>
-                  {/*<span>1 Free @username change!</span>*/}
+                  <span>Free Cash Out Matches non charge 10% for each 1$</span>
+                  <span>1 Free @username change!</span>
                   <span>Match Escalations </span>
-                  <span>4 Free 24 Hour Double (XP) Token!</span>
+                  <span>3 Free 24 Hour Double (XP) Token!</span>
                   <span>10 Free Credits!</span>
                 </div>
               </div>
@@ -166,7 +171,9 @@ class MyMembershipModule extends React.Component {
                     Compete in “official Comp Member tournaments” for free!
                   </span>
                   <span>High priority Cash Withdrawals </span>
-                  <span>Free Cash Out Matches </span>
+                  <span>
+                    Free Cash Out Matches non charge 10% for each $1 earned{' '}
+                  </span>
                   {/*<span>1 Free @username change!</span>*/}
                   <span>Match Escalations </span>
                   <span>1 Free 24 Hour Double (XP) Token!</span>

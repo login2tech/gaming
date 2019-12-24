@@ -182,9 +182,7 @@ class MatchFinder extends React.Component {
                                             <span>
                                               {'PAID (' +
                                                 (match.match_type == 'cash'
-                                                  ? '' +
-                                                    match.match_fee +
-                                                    ' OCG Cash'
+                                                  ? '' + match.match_fee + '$'
                                                   : '' +
                                                     match.match_fee +
                                                     ' credits') +
@@ -193,14 +191,14 @@ class MatchFinder extends React.Component {
                                           )}
                                         </p>
                                       </div>
-                                      <div className="col-6 col-md-3 t-col">
+                                      {/*}  <div className="col-6 col-md-3 t-col">
                                         <h5>Prize pool</h5>
                                         <p>
                                           {match.match_type == 'paid'
                                             ? '$ ' + match.match_fee
                                             : '--'}
                                         </p>
-                                      </div>
+                                      </div>*/}
                                       <div className="col-6 col-md-3 t-col">
                                         <h5>Players</h5>
                                         <p>

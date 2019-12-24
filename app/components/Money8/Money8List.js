@@ -152,7 +152,7 @@ class Money8List extends React.Component {
                                         match.match_fee +
                                         ' ' +
                                         (match.match_type == 'cash'
-                                          ? 'OCG Cash'
+                                          ? '$'
                                           : 'Credits')
                                       : '--'}
                                   </p>

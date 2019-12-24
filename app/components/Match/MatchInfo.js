@@ -740,9 +740,7 @@ class MatchInfo extends React.Component {
                             <span>
                               {'PAID (' +
                                 (this.state.match.match_type == 'cash'
-                                  ? '' +
-                                    this.state.match.match_fee +
-                                    ' OCG Cash'
+                                  ? '' + this.state.match.match_fee + '$'
                                   : '' +
                                     this.state.match.match_fee +
                                     ' credits') +

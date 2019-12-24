@@ -15,6 +15,7 @@ class Tickets extends React.Component {
       items: []
     };
   }
+
   checkboxChange() {
     this.setState({showing_closed: !this.state.showing_closed});
   }

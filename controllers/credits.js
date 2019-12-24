@@ -405,7 +405,7 @@ exports.stopRenewal = function(req, res, next) {
 };
 
 const create_new_user_for_token = function(req, res, next) {
-  const stripeToken = req.body.token;
+  const stripeToken = req.body.stripe_token;
   stripe.customers.create(
     {
       description: 'Created for OnlyCompGaming',
@@ -428,7 +428,7 @@ const create_new_user_for_token = function(req, res, next) {
 };
 
 const link_token_to_user = function(req, res, next) {
-  const stripeToken = req.body.token;
+  const stripeToken = req.body.stripe_token;
   const stripe_customer_id = req.user.stripe_user_id;
   stripe.customers.retrieve(stripe_customer_id, function(err, customer) {
     if (err) {
@@ -477,14 +477,14 @@ const link_token_to_user = function(req, res, next) {
 
 exports.resolveCustomerId = function(req, res, next) {
   //
-  const token = req.body.token;
-  if (token == 'USE_OCG') {
+  const stripe_token = req.body.stripe_token;
+  if (stripe_token == 'USE_OCG') {
     // no need to resolve customer id as not using stripe
     next();
   } else if (req.user.stripe_user_id) {
     console.log('stripe id exists');
     // customer id already linked, shall i attach a new credit card source?
-    link_token_to_user(req, res, next, token);
+    link_token_to_user(req, res, next, stripe_token);
   } else {
     console.log('stripe id is being created');
     // no customer id, create 1 and link it and proceed
@@ -497,9 +497,9 @@ const addMembershipLog = function(plan, action) {
   // TODO: do this
 };
 exports.buyMembership = function(req, res, next) {
-  const token = req.body.token;
+  const stripe_token = req.body.stripe_token;
   const plan = req.body.plan;
-  if (token == 'USE_OCG') {
+  if (stripe_token == 'USE_OCG') {
     // add membership but with manual details for cron.
     const cash_to_consume = plan_costs[plan];
     if (parseFloat(req.user.cash_balance) < cash_to_consume) {
@@ -514,6 +514,14 @@ exports.buyMembership = function(req, res, next) {
       'Buying OCG ' + plan + ' Membership',
       ''
     );
+    if (plan.toLowerCase() == 'gold') {
+      utils.giveCreditsToUser(
+        req.user.id,
+        10,
+        'Free Credit on purchase of  ' + plan + ' Membership',
+        ''
+      );
+    }
     const user_obj_to_save = {
       prime: true,
       prime_obj: JSON.stringify({
@@ -582,6 +590,15 @@ exports.buyMembership = function(req, res, next) {
             ok: false,
             msg: 'Failed to start subscription. Please contact site admin'
           });
+        }
+
+        if (plan.toLowerCase() == 'gold') {
+          utils.giveCreditsToUser(
+            req.user.id,
+            10,
+            'Free Credit on purchase of  ' + plan + ' Membership',
+            ''
+          );
         }
 
         user_obj_to_save.prime_obj.subscription_id = subscription.id;

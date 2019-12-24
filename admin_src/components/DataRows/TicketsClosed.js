@@ -122,6 +122,10 @@ class TicketsClosed extends React.Component {
     );
   }
 
+  checkboxChange() {
+    this.setState({showing_only_paid: !this.state.showing_only_paid});
+  }
+
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -139,6 +143,15 @@ class TicketsClosed extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <h2 style={{padding: 0, margin: 0}}>Support Tickets</h2>
+            <div style={{float: 'right'}}>
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={this.checkboxChange.bind(this)}
+                />{' '}
+                Filter tickets only from OCG Members
+              </label>
+            </div>
           </div>
         </div>
         <div className="panel">
@@ -159,6 +172,12 @@ class TicketsClosed extends React.Component {
               <tbody>
                 {this.state.items &&
                   this.state.items.map((u, i) => {
+                    if (
+                      this.state.showing_only_paid == true &&
+                      u.user.prime == false
+                    ) {
+                      return false;
+                    }
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>

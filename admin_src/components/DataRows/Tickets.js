@@ -30,7 +30,7 @@ class Tickets extends React.Component {
 
   loadData() {
     Fetcher.get(
-      '/api/admin/listPaged/tickets?filter_status=submitted&related=user&page=' +
+      '/api/admin/listPaged/tickets?per_page=100&filter_status=submitted&related=user&page=' +
         this.state.page
     )
       .then(resp => {
@@ -122,6 +122,10 @@ class Tickets extends React.Component {
     );
   }
 
+  checkboxChange() {
+    this.setState({showing_only_paid: !this.state.showing_only_paid});
+  }
+
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -134,11 +138,21 @@ class Tickets extends React.Component {
         </div>
       );
     }
+
     return (
       <div className="container">
         <div className="panel">
           <div className="panel-body">
             <h2 style={{padding: 0, margin: 0}}>Support Tickets</h2>
+            <div style={{float: 'right'}}>
+              <label>
+                <input
+                  type="checkbox"
+                  onChange={this.checkboxChange.bind(this)}
+                />{' '}
+                Filter tickets only from OCG Members
+              </label>
+            </div>
           </div>
         </div>
         <div className="panel">
@@ -159,6 +173,13 @@ class Tickets extends React.Component {
               <tbody>
                 {this.state.items &&
                   this.state.items.map((u, i) => {
+                    if (
+                      this.state.showing_only_paid == true &&
+                      u.user.prime == false
+                    ) {
+                      return false;
+                    }
+
                     return (
                       <tr key={u.id}>
                         <td>{u.id}</td>
