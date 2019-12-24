@@ -459,6 +459,17 @@ class ProfileHeader extends React.Component {
         }
       : {};
 
+    let prime_obj;
+    let prime_type = '';
+    if (user_info.prime) {
+      prime_obj = user_info.prime_obj;
+      if (!prime_obj) {
+        prime_obj = '{}';
+      }
+      prime_obj = JSON.parse(prime_obj);
+      prime_type = prime_obj.prime_type;
+    }
+
     return (
       <section
         className="page_title_bar less_padding bigger_bg"
@@ -471,11 +482,18 @@ class ProfileHeader extends React.Component {
               {this.renderProfilePicture()}
               {this.renderNameAndFollow('mobile')}
             </div>
-            <div className="col-md-5 text-center">
-              {user_info.prime && (
-                <img src="/assets/icons/ocg_member.png" className="img-fluid" />
+            <div className="col-md-1 text-center" />
+            <div className="col-md-3 text-center">
+              {prime_type ? (
+                <img
+                  src={'/assets/icons/ocg_member_' + prime_type + '.png'}
+                  className="img-fluid"
+                />
+              ) : (
+                false
               )}
             </div>
+            <div className="col-md-1 text-center" />
             <div className="col-md-4 justify-content-end d-flex flex-column">
               <div> </div>
               <div>

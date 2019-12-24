@@ -62,7 +62,7 @@ class Profile extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        token_id: token == 'USE_OCG' ? 'USE_OCG' : token.id,
+        stripe_token: token == 'USE_OCG' ? 'USE_OCG' : token.id,
         action: type
       })
     }).then(response => {
