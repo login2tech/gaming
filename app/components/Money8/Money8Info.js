@@ -581,12 +581,14 @@ class Money8Info extends React.Component {
             backgroundImage: 'url(' + this.state.match.game.banner_url + ')'
           }
         : {};
-        let game_settings =
-          this.state.match && this.state.match.game_settings
-            ? JSON.parse(this.state.match.game_settings)
-            : {};
-        if (!game_settings) {
-          game_settings = {};
+    let game_settings =
+      this.state.match && this.state.match.game_settings
+        ? JSON.parse(this.state.match.game_settings)
+        : {};
+    if (!game_settings) {
+      game_settings = {};
+    }
+    const game_settings_keys = Object.keys(game_settings);
     return (
       <div>
         <section className="page_title_bar" style={divStyle}>
@@ -600,13 +602,13 @@ class Money8Info extends React.Component {
                         className={
                           game_user_ids.tag_icons[
                             this.state.match.ladder.gamer_tag
-                          ]
+                          ] + ' pf_icon_big '
                         }
                       />
                     </div>
-                    <div className="col-12 col-md-3">
+                    <div className="col-12 col-md-4">
                       <div className="match_heading">
-                        <h4>Match</h4>
+                        <h4>Mix & Match</h4>
                       </div>
                       <div className="twovstwo">
                         {this.state.match.players_total / 2} VS{' '}
@@ -614,7 +616,7 @@ class Money8Info extends React.Component {
                       </div>
                     </div>
 
-                    <div className="col-10 col-md-7 pt-3">
+                    <div className="col-10 col-md-6 pt-3">
                       <span className="game_station">
                         {this.state.match.game.title} @{' '}
                         {this.state.match.ladder.title}
@@ -625,7 +627,6 @@ class Money8Info extends React.Component {
                       : 'Match Starts'}{' '}
                     {moment(this.state.match.starts_at).format('lll')} ({' '}
                     {moment(this.state.match.starts_at).fromNow()} ) */}
-                        <br />
                         <strong>
                           {this.state.match.players_joined}/
                           {this.state.match.players_total}
@@ -668,9 +669,10 @@ class Money8Info extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
+                        const m = k.replace(new RegExp('_', 'g'), ' ');
                         return (
-                          <div className="col-md-4 col-6" key={k}>
-                            <span>{k}</span>
+                          <div className="col-md-4 col-6 textcap" key={k}>
+                            <span>{m}</span>
                             <p>{game_settings[k]}</p>
                           </div>
                         );

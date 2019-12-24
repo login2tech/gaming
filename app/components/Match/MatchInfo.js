@@ -776,9 +776,10 @@ class MatchInfo extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
+                        const m = k.replace(new RegExp('_', 'g'), ' ');
                         return (
-                          <div className="col-md-4 col-6" key={k}>
-                            <span>{k}</span>
+                          <div className="col-md-4 col-6 textcap" key={k}>
+                            <span>{m}</span>
                             <p>{game_settings[k]}</p>
                           </div>
                         );

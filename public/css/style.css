@@ -5184,9 +5184,11 @@ ul.pagination .disabled a {
 .pf_icon {
     font-size: 40px !important;
     float: left;
-    margin-right: 5px; 
+    margin-right: 5px;
 }
-
+.textcap span {
+    text-transform: capitalize;
+}
 .pf_icon_big {
     font-size: 70px !important;
     float: left;

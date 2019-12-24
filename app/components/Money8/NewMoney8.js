@@ -69,7 +69,7 @@ class NewMoney8 extends React.Component {
           }
           // console.log('is a setting');
           const id = setting.label
-            .replace(new RegExp(' ', 'g'), '')
+            .replace(new RegExp(' ', 'g'), '_')
             .toLowerCase();
           return (
             <div className="form-group col-md-12" key={setting.label}>
