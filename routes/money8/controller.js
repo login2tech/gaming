@@ -898,6 +898,9 @@ exports.addItem = function(req, res, next) {
     match_type: req.body.match_type,
     players_total: req.body.players_total,
     game_id: req.body.game_id,
+    game_settings: req.body.game_settings
+      ? JSON.stringify(req.body.game_settings)
+      : '{}',
     ladder_id: req.body.ladder_id,
     expires_in: moment().add(expires_in[0], expires_in[1]),
     players: JSON.stringify([req.user.id]),

@@ -581,6 +581,12 @@ class Money8Info extends React.Component {
             backgroundImage: 'url(' + this.state.match.game.banner_url + ')'
           }
         : {};
+        let game_settings =
+          this.state.match && this.state.match.game_settings
+            ? JSON.parse(this.state.match.game_settings)
+            : {};
+        if (!game_settings) {
+          game_settings = {};
     return (
       <div>
         <section className="page_title_bar" style={divStyle}>
@@ -588,54 +594,47 @@ class Money8Info extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <div className="match_heading">
-                    <h4>Match</h4>
-                  </div>
-                  {/* <span className="vs_match">
-                    <Link to={'/teams/view/' + this.state.match.team_1_info.id}>
-                      {this.state.match.team_1_info.title}
-                    </Link>{' '}
-                    VS{' '}
-                    {this.state.match.team_2_id ? (
-                      <Link
-                        to={'/teams/view/' + this.state.match.team_2_info.id}
-                      >
-                        {this.state.match.team_2_info.title}
-                      </Link>
-                    ) : (
-                      false
-                    )}
-                  </span> */}
-                  <span className="game_station">
-                    <br />
-                    <span
-                      className={
-                        game_user_ids.tag_icons[
-                          this.state.match.ladder.gamer_tag
-                        ]
-                      }
-                    />
-                    {this.state.match.game.title} @{' '}
-                    {this.state.match.ladder.title}
-                  </span>
-                  <div className="match_start_date">
-                    {/* {moment().isAfter(moment(this.state.match.starts_at))
+                  <div className="row bbt">
+                    <div className="col-2 col-md-1">
+                      <span
+                        className={
+                          game_user_ids.tag_icons[
+                            this.state.match.ladder.gamer_tag
+                          ]
+                        }
+                      />
+                    </div>
+                    <div className="col-12 col-md-3">
+                      <div className="match_heading">
+                        <h4>Match</h4>
+                      </div>
+                      <div className="twovstwo">
+                        {this.state.match.players_total / 2} VS{' '}
+                        {this.state.match.players_total / 2} MATCH
+                      </div>
+                    </div>
+
+                    <div className="col-10 col-md-7 pt-3">
+                      <span className="game_station">
+                        {this.state.match.game.title} @{' '}
+                        {this.state.match.ladder.title}
+                      </span>
+                      <div className="match_start_date">
+                        {/* {moment().isAfter(moment(this.state.match.starts_at))
                       ? 'Match Started:'
                       : 'Match Starts'}{' '}
                     {moment(this.state.match.starts_at).format('lll')} ({' '}
                     {moment(this.state.match.starts_at).fromNow()} ) */}
-                    <br />
-                    <strong>
-                      {this.state.match.players_joined}/
-                      {this.state.match.players_total}
-                    </strong>{' '}
-                    joined the mix-and-match pool
+                        <br />
+                        <strong>
+                          {this.state.match.players_joined}/
+                          {this.state.match.players_total}
+                        </strong>{' '}
+                        joined the mix-and-match pool
+                      </div>
+                    </div>
                   </div>
-                  <div className="twovstwo">
-                    {this.state.match.players_total / 2} VS{' '}
-                    {this.state.match.players_total / 2} MATCH
-                  </div>
-                  <br />
+
                   <div className="list_pad">
                     <div className="row">
                       <div className="col-md-4">
@@ -668,6 +667,14 @@ class Money8Info extends React.Component {
                           )}
                         </p>
                       </div>
+                      {game_settings_keys.map((k, i) => {
+                        return (
+                          <div className="col-md-4 col-6" key={k}>
+                            <span>{k}</span>
+                            <p>{game_settings[k]}</p>
+                          </div>
+                        );
+                      })}
                     </div>
                     {this.renderJoin()}
                     {this.renderLeave()}

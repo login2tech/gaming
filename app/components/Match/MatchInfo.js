@@ -665,6 +665,14 @@ class MatchInfo extends React.Component {
       this.state.match && this.state.match.team_2_players
         ? this.state.match.team_2_players.split('|')
         : [];
+    let game_settings =
+      this.state.match && this.state.match.game_settings
+        ? JSON.parse(this.state.match.game_settings)
+        : {};
+    if (!game_settings) {
+      game_settings = {};
+    }
+    const game_settings_keys = Object.keys(game_settings);
     return (
       <div>
         <section className="page_title_bar" style={divStyle}>
@@ -672,46 +680,60 @@ class MatchInfo extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <div className="match_heading">
-                    <h4>Match</h4>
+                  <div className="row bbt">
+                    <div className="col-2 col-md-1">
+                      <span
+                        className={
+                          game_user_ids.tag_icons[
+                            this.state.match.ladder.gamer_tag
+                          ] + ' pf_icon_big'
+                        }
+                      />
+                    </div>
+                    <div className="col-12 col-md-3">
+                      <div className="match_heading">
+                        <h4>Match</h4>
+                      </div>
+                      <div className="twovstwo">
+                        {this.state.match.match_players} VS{' '}
+                        {this.state.match.match_players} MATCH
+                      </div>
+                    </div>
+
+                    <div className="col-10 col-md-7 pt-3">
+                      <span className="vs_match">
+                        <Link
+                          to={'/teams/view/' + this.state.match.team_1_info.id}
+                        >
+                          {this.state.match.team_1_info.title}
+                        </Link>{' '}
+                        VS{' '}
+                        {this.state.match.team_2_id ? (
+                          <Link
+                            to={
+                              '/teams/view/' + this.state.match.team_2_info.id
+                            }
+                          >
+                            {this.state.match.team_2_info.title}
+                          </Link>
+                        ) : (
+                          <span className="text-grey">Pending Team</span>
+                        )}
+                      </span>
+                      <span className="game_station">
+                        {this.state.match.game.title} @{' '}
+                        {this.state.match.ladder.title}
+                      </span>
+                      <div className="match_start_date">
+                        {moment().isAfter(moment(this.state.match.starts_at))
+                          ? 'Match Started:'
+                          : 'Match Starts'}{' '}
+                        {moment(this.state.match.starts_at).format('lll')} ({' '}
+                        {moment(this.state.match.starts_at).fromNow()} )
+                      </div>
+                    </div>
                   </div>
-                  <span className="vs_match">
-                    <Link to={'/teams/view/' + this.state.match.team_1_info.id}>
-                      {this.state.match.team_1_info.title}
-                    </Link>{' '}
-                    VS{' '}
-                    {this.state.match.team_2_id ? (
-                      <Link
-                        to={'/teams/view/' + this.state.match.team_2_info.id}
-                      >
-                        {this.state.match.team_2_info.title}
-                      </Link>
-                    ) : (
-                      <span className="text-grey">Pending Team</span>
-                    )}
-                  </span>
-                  <span className="game_station">
-                    <span
-                      className={
-                        game_user_ids.tag_icons[
-                          this.state.match.ladder.gamer_tag
-                        ] + ' float-none'
-                      }
-                    />{' '}
-                    {this.state.match.game.title} @{' '}
-                    {this.state.match.ladder.title}
-                  </span>
-                  <div className="match_start_date">
-                    {moment().isAfter(moment(this.state.match.starts_at))
-                      ? 'Match Started:'
-                      : 'Match Starts'}{' '}
-                    {moment(this.state.match.starts_at).format('lll')} ({' '}
-                    {moment(this.state.match.starts_at).fromNow()} )
-                  </div>
-                  <div className="twovstwo">
-                    {this.state.match.match_players} VS{' '}
-                    {this.state.match.match_players} MATCH
-                  </div>
+
                   {/* <div className="rules_point">
                     <ul>
                       <li>
@@ -753,6 +775,14 @@ class MatchInfo extends React.Component {
                           )}
                         </p>
                       </div>
+                      {game_settings_keys.map((k, i) => {
+                        return (
+                          <div className="col-md-4 col-6" key={k}>
+                            <span>{k}</span>
+                            <p>{game_settings[k]}</p>
+                          </div>
+                        );
+                      })}
                     </div>
                     {this.renderRequestCancel()}
                     {this.renderTicketCreate()}

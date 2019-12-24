@@ -306,7 +306,7 @@ class Header extends React.Component {
                                     className="menu_prof_name_bot"
                                     data-s={props.userHash}
                                   >
-                                    ${props.user.cash_balance} |{' '}
+                                    ${props.user.cash_balance.toFixed(2)} |{' '}
                                     {props.user.credit_balance} credits |{' '}
                                     {props.user.life_xp} life XP
                                   </span>

@@ -533,7 +533,7 @@ class MyBankModule extends React.Component {
   render() {
     return (
       <div className="tab-pane  text-center" data-tab="tab3">
-        <div className="row">
+        <div className="row mb-3">
           <div className="col-md-6 ">
             <div className="authorize_box">
               <div className="credit_summary ">
@@ -605,7 +605,7 @@ class MyBankModule extends React.Component {
                     marginBottom: '20px'
                   }}
                 />
-                <br /> ${this.props.user.cash_balance}
+                <br /> ${this.props.user.cash_balance.toFixed(2)}
               </div>
 
               {this.state.prev_success_type == 'withdraw' ? (
@@ -655,77 +655,80 @@ class MyBankModule extends React.Component {
             </div>
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-6 ">
+            <div className="authorize_box">
+              <div className="credit_summary ">
+                Double XP Tokens
+                <br />
+                <img
+                  src="/assets/icons/coin-02.png"
+                  style={{
+                    height: '150px',
+                    marginTop: '20px',
+                    marginBottom: '20px'
+                  }}
+                />
+                <br /> {this.props.user.double_xp_tokens} tokens
+              </div>
 
-        <div className="col-md-6 ">
-          <div className="authorize_box">
-            <div className="credit_summary ">
-              Double XP Tokens
-              <br />
-              <img
-                src="/assets/icons/coin-02.png"
-                style={{
-                  height: '150px',
-                  marginTop: '20px',
-                  marginBottom: '20px'
-                }}
-              />
-              <br /> {this.props.user.double_xp_tokens} tokens
-            </div>
+              {this.state.prev_success_type == 'activate' ? (
+                <Messages messages={this.props.messages} />
+              ) : (
+                false
+              )}
 
-            {this.state.prev_success_type == 'activate' ? (
-              <Messages messages={this.props.messages} />
-            ) : (
-              false
-            )}
-
-            <div className="row">
-              <div className="col">
-                {this.state.double_xp ? (
-                  <input
-                    type="submit"
-                    value="Activate Token"
-                    disabled
-                    title="Under Development"
-                    data-toggle="tooltip"
-                    onClick={() => {
-                      this.setState({
-                        // buy_balance_init: false,
-                        init_transaction_mode: 'activate'
-                      });
-                      this.props.dispatch({
-                        type: 'CLR_MSG'
-                      });
-                    }}
-                    className="btn btn-default bttn_submit"
-                  />
-                ) : this.props.user.double_xp ? (
-                  <div className="col-md-12 text-center">
-                    <p className="text-success">Double XP enabled!</p>
-                    <p>
-                      <strong>Started on: </strong>
-                      {this.props.user.double_xp_obj
-                        ? typeof this.props.user.double_xp_obj === 'object'
-                          ? moment(
-                              this.props.user.double_xp_obj.started_on
-                            ).format('LLL')
-                          : moment(
-                              JSON.parse(this.props.user.double_xp_obj)
-                                .started_on
-                            ).format('LLL')
-                        : false}
-                    </p>
-                    <p>
-                      <strong>
-                        Ends on:{' '}
-                        {this.props.user.double_xp_exp
-                          ? moment(this.props.user.double_xp_exp).format('LLL')
+              <div className="row">
+                <div className="col">
+                  {this.state.double_xp ? (
+                    <input
+                      type="submit"
+                      value="Activate Token"
+                      disabled
+                      title="Under Development"
+                      data-toggle="tooltip"
+                      onClick={() => {
+                        this.setState({
+                          // buy_balance_init: false,
+                          init_transaction_mode: 'activate'
+                        });
+                        this.props.dispatch({
+                          type: 'CLR_MSG'
+                        });
+                      }}
+                      className="btn btn-default bttn_submit"
+                    />
+                  ) : this.props.user.double_xp ? (
+                    <div className="col-md-12 text-center">
+                      <p className="text-success">Double XP enabled!</p>
+                      <p>
+                        <strong>Started on: </strong>
+                        {this.props.user.double_xp_obj
+                          ? typeof this.props.user.double_xp_obj === 'object'
+                            ? moment(
+                                this.props.user.double_xp_obj.started_on
+                              ).format('LLL')
+                            : moment(
+                                JSON.parse(this.props.user.double_xp_obj)
+                                  .started_on
+                              ).format('LLL')
                           : false}
-                      </strong>
-                    </p>
-                  </div>
-                ) : (
-                  false
-                )}
+                      </p>
+                      <p>
+                        <strong>
+                          Ends on:{' '}
+                          {this.props.user.double_xp_exp
+                            ? moment(this.props.user.double_xp_exp).format(
+                                'LLL'
+                              )
+                            : false}
+                        </strong>
+                      </p>
+                    </div>
+                  ) : (
+                    false
+                  )}
+                </div>
               </div>
             </div>
           </div>

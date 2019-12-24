@@ -157,6 +157,7 @@ class NewMatchTeamSelect extends React.Component {
             this.state.match_type == 'cash'
               ? this.state.match_fee
               : '',
+          game_settings: this.state.game_settings,
           using_users: this.state.using_users
         },
         this.props.user

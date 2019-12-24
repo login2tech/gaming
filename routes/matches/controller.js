@@ -1098,7 +1098,7 @@ exports.addItem = function(req, res, next) {
   req.assert('match_players', 'Match Players cannot be blank').notEmpty();
   req.assert('using_users', 'Match Players cannot be blank').notEmpty();
 
-  console.log(req.body.using_users);
+  // console.log(req.body.game_settings);
 
   const errors = req.validationErrors();
   if (errors) {
@@ -1112,6 +1112,9 @@ exports.addItem = function(req, res, next) {
     ladder_id: req.body.ladder_id,
     starts_at: moment().add(starts_at[0], starts_at[1]),
     match_type: req.body.match_type,
+    game_settings: req.body.game_settings
+      ? JSON.stringify(req.body.game_settings)
+      : '{}',
     match_players: req.body.match_players,
     match_fee: req.body.match_fee,
     team_1_players: req.body.using_users.join('|')
@@ -1193,7 +1196,7 @@ exports.matches_of_user = function(req, res, next) {
   mdl = mdl.orderBy('created_at', 'DESC');
 
   if (req.query.exclude_pending == 'yes') {
-    console.log('yesysey');
+    // console.log('yesysey');
     mdl = mdl.where('status', 'NOT LIKE', 'pending');
     // mdl = mdl.where('status', '!=', 'pending');
   }

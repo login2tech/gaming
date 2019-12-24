@@ -402,7 +402,8 @@ class Shop extends React.Component {
                       marginBottom: '20px'
                     }}
                   />
-                  <br /> ${this.props.user && this.props.user.cash_balance}
+                  <br /> $
+                  {this.props.user && this.props.user.cash_balance.toFixed(2)}
                 </div>
                 {this.state.init_transaction_mode == 'cash' ? (
                   this.renderBuyBox('cash')

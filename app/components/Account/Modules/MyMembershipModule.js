@@ -178,6 +178,7 @@ class MyMembershipModule extends React.Component {
                   <span>Match Escalations </span>
                   <span>1 Free 24 Hour Double (XP) Token!</span>
                   <span className="no-ico" />
+                  <span className="no-ico" />
                 </div>
               </div>
 
