@@ -407,6 +407,9 @@ class MatchInfo extends React.Component {
   }
 
   myTeamName() {
+    if (!this.props.user) {
+      return false;
+    }
     const team_1_players =
       this.state.match && this.state.match.team_1_players
         ? this.state.match.team_1_players.split('|')
@@ -415,6 +418,7 @@ class MatchInfo extends React.Component {
       this.state.match && this.state.match.team_2_players
         ? this.state.match.team_2_players.split('|')
         : [];
+
     const me = '' + this.props.user.id;
     if (team_1_players.indexOf(me) > -1) {
       return this.state.match.team_1_info.title;
@@ -641,6 +645,12 @@ class MatchInfo extends React.Component {
         <br />
       </div>
     );
+  }
+
+  reverseResult(score) {
+    return score;
+    // score = score.split('-');
+    // return score[1] + '-' + score[0];
   }
 
   render() {
@@ -927,7 +937,9 @@ class MatchInfo extends React.Component {
                               {this.state.match.team_2_info.title}
                             </Link>{' '}
                             <span className="text-primary">
-                              {this.state.match.team_2_result}
+                              {this.reverseResult(
+                                this.state.match.team_2_result
+                              )}
                             </span>{' '}
                             {(this.state.match.status == 'complete' ||
                               this.state.match.status == 'Complete') &&
