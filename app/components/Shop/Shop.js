@@ -6,7 +6,7 @@ import Messages from '../Modules/Messages';
 import MyMembershipModule from '../Account/Modules/MyMembershipModule';
 
 import {charge} from '../../actions/stripe';
-import moment from 'moment';
+// import moment from 'moment';
 class Shop extends React.Component {
   constructor(props) {
     super(props);
@@ -349,93 +349,6 @@ class Shop extends React.Component {
             user_info={this.props.user}
           />
 
-          <div className="row shop_row" style={{marginBottom: '20px'}}>
-            <div className="col-md-6 offset-md-3">
-              <div className="authorize_box shop text-center">
-                <div className="credit_summary ">
-                  Double XP <br />
-                  <img
-                    src="/assets/icons/coin-02.png"
-                    style={{
-                      height: '150px',
-                      marginTop: '20px',
-                      marginBottom: '20px'
-                    }}
-                  />
-                  <br /> $5 / day
-                </div>
-                {this.state.init_transaction_mode == 'double_xp' ? (
-                  this.renderBuyBox('double_xp')
-                ) : (
-                  <div className="row text-center">
-                    {this.props.user ? (
-                      this.props.user.double_xp ? (
-                        <div className="col-md-12 text-center">
-                          <p className="text-success">Double XP enabled!</p>
-                          <p>
-                            <strong>Started on: </strong>
-                            {this.props.user.double_xp_obj
-                              ? typeof this.props.user.double_xp_obj ===
-                                'object'
-                                ? moment(
-                                    this.props.user.double_xp_obj.started_on
-                                  ).format('LLL')
-                                : moment(
-                                    JSON.parse(this.props.user.double_xp_obj)
-                                      .started_on
-                                  ).format('LLL')
-                              : false}
-                          </p>
-                          <p>
-                            <strong>
-                              Ends on:{' '}
-                              {this.props.user.double_xp_exp
-                                ? moment(this.props.user.double_xp_exp).format(
-                                    'LLL'
-                                  )
-                                : false}
-                            </strong>
-                          </p>
-                        </div>
-                      ) : (
-                        <div className="col-md-6 offset-md-3 text-center">
-                          <input
-                            type="submit"
-                            value="Enable Double XP"
-                            onClick={() => {
-                              this.props.dispatch({
-                                type: 'CLR_MSG'
-                              });
-                              this.setState(
-                                {
-                                  buy_balance_init: true,
-                                  clicked: false,
-                                  init_transaction_mode: 'double_xp'
-                                },
-                                () => {
-                                  this.handleStripeCreation();
-                                }
-                              );
-                            }}
-                            className="btn btn-default bttn_submit"
-                          />
-                        </div>
-                      )
-                    ) : (
-                      <div className="col-md-6 offset-md-3 text-center">
-                        <Link
-                          to="/login"
-                          className="btn btn-default bttn_submit"
-                        >
-                          Enable Double XP
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
           <div className="row shop_row">
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
@@ -511,6 +424,64 @@ class Shop extends React.Component {
                         className="btn btn-default bttn_submit"
                       />
                     </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="row shop_row" style={{marginBottom: '20px'}}>
+            <div className="col-md-6 offset-md-3">
+              <div className="authorize_box shop text-center">
+                <div className="credit_summary ">
+                  Double XP <br />
+                  <img
+                    src="/assets/icons/coin-02.png"
+                    style={{
+                      height: '150px',
+                      marginTop: '20px',
+                      marginBottom: '20px'
+                    }}
+                  />
+                  <br /> $5 / day
+                </div>
+                {this.state.init_transaction_mode == 'double_xp' ? (
+                  this.renderBuyBox('double_xp')
+                ) : (
+                  <div className="row text-center">
+                    {this.props.user ? (
+                      <div className="col-md-6 offset-md-3 text-center">
+                        <input
+                          type="submit"
+                          value="Buy DoubleXP Tokens"
+                          onClick={() => {
+                            this.props.dispatch({
+                              type: 'CLR_MSG'
+                            });
+                            this.setState(
+                              {
+                                buy_balance_init: true,
+                                clicked: false,
+                                init_transaction_mode: 'double_xp'
+                              },
+                              () => {
+                                this.handleStripeCreation();
+                              }
+                            );
+                          }}
+                          className="btn btn-default bttn_submit"
+                        />
+                      </div>
+                    ) : (
+                      <div className="col-md-6 offset-md-3 text-center">
+                        <Link
+                          to="/login"
+                          className="btn btn-default bttn_submit"
+                        >
+                          Buy DoubleXP Tokens
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

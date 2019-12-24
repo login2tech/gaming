@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {charge, withdraw, transfer} from '../../../actions/stripe';
 import Messages from '../../Modules/Messages';
+import moment from 'moment';
 class MyBankModule extends React.Component {
   constructor(props) {
     super(props);
@@ -651,6 +652,81 @@ class MyBankModule extends React.Component {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-6 ">
+          <div className="authorize_box">
+            <div className="credit_summary ">
+              Double XP Tokens
+              <br />
+              <img
+                src="/assets/icons/coin-02.png"
+                style={{
+                  height: '150px',
+                  marginTop: '20px',
+                  marginBottom: '20px'
+                }}
+              />
+              <br /> {this.props.user.double_xp_tokens} tokens
+            </div>
+
+            {this.state.prev_success_type == 'activate' ? (
+              <Messages messages={this.props.messages} />
+            ) : (
+              false
+            )}
+
+            <div className="row">
+              <div className="col">
+                {this.state.double_xp ? (
+                  <input
+                    type="submit"
+                    value="Activate Token"
+                    disabled
+                    title="Under Development"
+                    data-toggle="tooltip"
+                    onClick={() => {
+                      this.setState({
+                        // buy_balance_init: false,
+                        init_transaction_mode: 'activate'
+                      });
+                      this.props.dispatch({
+                        type: 'CLR_MSG'
+                      });
+                    }}
+                    className="btn btn-default bttn_submit"
+                  />
+                ) : this.props.user.double_xp ? (
+                  <div className="col-md-12 text-center">
+                    <p className="text-success">Double XP enabled!</p>
+                    <p>
+                      <strong>Started on: </strong>
+                      {this.props.user.double_xp_obj
+                        ? typeof this.props.user.double_xp_obj === 'object'
+                          ? moment(
+                              this.props.user.double_xp_obj.started_on
+                            ).format('LLL')
+                          : moment(
+                              JSON.parse(this.props.user.double_xp_obj)
+                                .started_on
+                            ).format('LLL')
+                        : false}
+                    </p>
+                    <p>
+                      <strong>
+                        Ends on:{' '}
+                        {this.props.user.double_xp_exp
+                          ? moment(this.props.user.double_xp_exp).format('LLL')
+                          : false}
+                      </strong>
+                    </p>
+                  </div>
+                ) : (
+                  false
+                )}
+              </div>
             </div>
           </div>
         </div>

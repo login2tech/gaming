@@ -42,7 +42,12 @@ class Home extends React.Component {
     return (
       <div>
         <div className="main_slider_home">
-          <div id="demo" className="carousel slide" data-ride="carousel">
+          <div
+            id="demo"
+            className="carousel slide"
+            data-ride="carousel"
+            data-pause="false"
+          >
             <ul className="carousel-indicators">
               <li data-target="#demo" data-slide-to="0" className="active" />
               <li data-target="#demo" data-slide-to="1" className="" />
@@ -60,6 +65,11 @@ class Home extends React.Component {
               </div>
               <div className="carousel-item" style={{background: '#fff'}}>
                 <img src="images/banner_2.png" alt="" />
+                <div className="carousel-caption d-none d-md-block">
+                  <a href="/shop" className="btn btn-primary">
+                    View Plans
+                  </a>
+                </div>
               </div>
             </div>
           </div>

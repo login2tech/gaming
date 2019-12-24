@@ -79,7 +79,7 @@ const giveXpToMember = function(uid, match_id) {
               .save({
                 user_id: uid,
                 obj_type: 'm8_' + match_id,
-                details: 'XP Credit for winning money-8 match #' + match_id,
+                details: 'XP Credit for winning mix & match #' + match_id,
                 qty: xP_to_add
               })
               .then(function(o) {})
@@ -151,7 +151,7 @@ const takeXpFromMember = function(uid, match_id) {
               .save({
                 user_id: uid,
                 obj_type: 'm8_' + match_id,
-                details: 'XP Debit for losing money-8 match #' + match_id,
+                details: 'XP Debit for losing mix & match #' + match_id,
                 qty: -xP_to_add
               })
               .then(function(o) {})
@@ -294,7 +294,7 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
             ct.save({
               user_id: uid,
               obj_type: 'm8_' + match_id,
-              details: 'Credit for winning money-8 match #' + match_id,
+              details: 'Credit for winning mix & match #' + match_id,
               qty: val
             })
               .then(function(o) {})
@@ -347,7 +347,7 @@ const takeMoneyFromMember = function(uid, input_val, type, match_id) {
               ct.save({
                 user_id: uid,
                 obj_type: 'm8_' + match_id,
-                details: type + ' Debit for joining money-8 match #' + match_id,
+                details: type + ' Debit for joining mix & match #' + match_id,
                 qty: -parseFloat(input_val)
               })
                 .then(function(o) {})
@@ -848,7 +848,7 @@ exports.join = function(req, res, next) {
           new Notif()
             .save({
               user_id: req.user.id,
-              description: 'You have a pending money-8 match',
+              description: 'You have a pending mix & match',
               type: 'money-8',
               object_id: match.id
             })
@@ -916,7 +916,7 @@ exports.addItem = function(req, res, next) {
       new Notif()
         .save({
           user_id: req.user.id,
-          description: 'You have a pending money-8 match',
+          description: 'You have a pending mix & match',
           type: 'money-8',
           object_id: item.id
         })
