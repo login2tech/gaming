@@ -108,7 +108,7 @@ class Money8Info extends React.Component {
       !this.state.match.team_2_result
     ) {
       val.team_2_result =
-        '' + this.state.their_score + '-' + this.state.my_score;
+        '' + this.state.my_score + '-' + this.state.their_score;
     }
     val.id = this.state.match.id;
     this.props.dispatch(saveScores(val, this.props.user));

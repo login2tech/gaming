@@ -462,7 +462,7 @@ class Game extends React.Component {
             <div className="row">
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
-                  <h4>Recent Matches</h4>
+                  <h4 style={{lineHeight: 45}}>Recent Matches</h4>
 
                   <div className="table_wrapper">
                     <table className="table table-striped table-ongray table-hover">
@@ -538,8 +538,8 @@ class Game extends React.Component {
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
-                  <h4>Leaderboard</h4>
-                  <div className="btn-group">
+                  <h4 style={{float: 'left', lineHeight: 45}}>Leaderboard</h4>
+                  <div className="btn-group" style={{float: 'right'}}>
                     {Object.keys(leaderboards).map((ladder, idx) => {
                       return (
                         <button

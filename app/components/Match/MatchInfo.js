@@ -213,7 +213,7 @@ class MatchInfo extends React.Component {
       !this.state.match.team_2_result
     ) {
       val.team_2_result =
-        '' + this.state.their_score + '-' + this.state.my_score;
+        '' + this.state.my_score + '-' + this.state.their_score;
     }
     val.id = this.state.match.id;
     //console.log(val);
@@ -647,12 +647,6 @@ class MatchInfo extends React.Component {
     );
   }
 
-  reverseResult(score) {
-    // return score;
-    score = score.split('-');
-    return score[1] + '-' + score[0];
-  }
-
   render() {
     const divStyle =
       this.state.match &&
@@ -871,9 +865,11 @@ class MatchInfo extends React.Component {
                         <table className="table table-striped table-ongray table-hover">
                           <thead>
                             <tr>
-                              <th>Username</th>
-                              <th>{this.showGamerTag()}</th>
-                              <th>Role</th>
+                              <th style={{width: '33%'}}>Username</th>
+                              <th style={{width: '33%'}}>
+                                {this.showGamerTag()}
+                              </th>
+                              <th style={{width: '33%'}}>Role</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -937,9 +933,7 @@ class MatchInfo extends React.Component {
                               {this.state.match.team_2_info.title}
                             </Link>{' '}
                             <span className="text-primary">
-                              {this.reverseResult(
-                                this.state.match.team_2_result
-                              )}
+                              {this.state.match.team_2_result}
                             </span>{' '}
                             {(this.state.match.status == 'complete' ||
                               this.state.match.status == 'Complete') &&
@@ -965,9 +959,11 @@ class MatchInfo extends React.Component {
                             <table className="table table-striped table-ongray table-hover">
                               <thead>
                                 <tr>
-                                  <th>Username</th>
-                                  <th>{this.showGamerTag()}</th>
-                                  <th>Role</th>
+                                  <th style={{width: '33%'}}>Username</th>
+                                  <th style={{width: '33%'}}>
+                                    {this.showGamerTag()}
+                                  </th>
+                                  <th style={{width: '33%'}}>Role</th>
                                 </tr>
                               </thead>
                               <tbody>

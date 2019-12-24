@@ -814,7 +814,10 @@ exports.saveScore = function(req, res, next) {
       }
 
       if (val.team_1_result && val.team_2_result) {
-        if (val.team_1_result != val.team_2_result) {
+        // const team_1_score = val.team_1_result.split('-');
+        const team_2_score = val.team_2_result.split('-');
+        const team_2_score_reverse = team_2_score[1] + '-' + team_2_score[0];
+        if (val.team_1_result != team_2_score_reverse) {
           val.status = 'disputed';
           val.result = 'disputed';
         } else {
@@ -839,16 +842,18 @@ exports.saveScore = function(req, res, next) {
         // console.log(val);
         if (val.team_1_result) {
           const tmp = val.team_1_result.split('-');
+          const team_1_score_reverse = tmp[1] + '-' + tmp[0];
           if (parseInt(tmp[0]) < parseInt(tmp[1])) {
             val.result = 'team_2';
-            val.team_2_result = val.team_1_result;
+            val.team_2_result = team_1_score_reverse;
             val.status = 'complete';
           }
         } else if (val.team_2_result) {
           const tmp = val.team_2_result.split('-');
-          if (parseInt(tmp[0]) > parseInt(tmp[1])) {
+          const team_2_score_reverse = tmp[1] + '-' + tmp[0];
+          if (parseInt(tmp[1]) > parseInt(tmp[0])) {
             val.result = 'team_1';
-            val.team_1_result = val.team_2_result;
+            val.team_1_result = team_2_score_reverse;
             val.status = 'complete';
           }
         }

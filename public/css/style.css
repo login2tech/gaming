@@ -4325,6 +4325,7 @@ ul.timeline > li:before {
 } */
 .card.gedf-card {
     background: #000;
+    box-shadow: 0 0 5px 2px #2847f3;margin-top:10px;
 }
 
 .gedf-card .nav-item .active, .gedf-card .nav-item a:hover {

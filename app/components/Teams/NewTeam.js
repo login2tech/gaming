@@ -12,6 +12,7 @@ class NewTeam extends React.Component {
       title: '',
       ladder: '',
       games: [],
+      submit_started: false,
       team_type: ''
     };
   }
@@ -64,7 +65,17 @@ class NewTeam extends React.Component {
 
   handleCreation(event) {
     event.preventDefault();
-    // ();
+    if (this.state.submit_started) {
+      return;
+    }
+    this.setState({
+      submit_started: true
+    });
+    setTimeout(() => {
+      this.setState({
+        submit_started: false
+      });
+    }, 2000);
     this.props.dispatch(
       createTeam(
         {
