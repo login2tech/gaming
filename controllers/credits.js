@@ -514,6 +514,8 @@ exports.buyMembership = function(req, res, next) {
       'Buying OCG ' + plan + ' Membership',
       ''
     );
+    let double_xp_tokens_to_buy = 0;
+    let pndng_uname_changes = req.user.pndng_uname_changes;
     if (plan.toLowerCase() == 'gold') {
       utils.giveCreditsToUser(
         req.user.id,
@@ -521,16 +523,23 @@ exports.buyMembership = function(req, res, next) {
         'Free Credit on purchase of  ' + plan + ' Membership',
         ''
       );
+      double_xp_tokens_to_buy = req.user.double_xp_tokens + 3;
+      pndng_uname_changes++;
+    } else {
+      double_xp_tokens_to_buy = req.user.double_xp_tokens + 1;
     }
     const user_obj_to_save = {
       prime: true,
       prime_obj: JSON.stringify({
         cancel_requested: false,
         bought_type: 'OCG',
+        double_xp_tokens: double_xp_tokens_to_buy,
+        pndng_uname_changes: pndng_uname_changes,
         check_for_cron: true,
         check_for_hook: false,
         prime_type: plan,
-        starts_on: moment()
+        starts_on: moment(),
+        next_renew: moment().add(1, 'month')
       }),
       prime_type: plan,
       prime_exp: moment().add(1, 'month')
@@ -568,14 +577,15 @@ exports.buyMembership = function(req, res, next) {
         check_for_cron: false,
         check_for_hook: true,
         prime_type: plan,
-        starts_on: moment()
+        starts_on: moment(),
+        next_renew: moment().add(1, 'month')
       },
       prime_type: plan,
       prime_exp: moment().add(1, 'month')
     };
     const stripe_plan = stripe_plans[plan];
     // bill_type = 'Prime Membership';
-    console.log(use_customer_id);
+    // console.log(use_customer_id);
 
     stripe.subscriptions.create(
       {
@@ -599,6 +609,11 @@ exports.buyMembership = function(req, res, next) {
             'Free Credit on purchase of  ' + plan + ' Membership',
             ''
           );
+          user_obj_to_save.pndng_uname_changes =
+            req.user.pndng_uname_changes + 1;
+          user_obj_to_save.double_xp_tokens = req.user.double_xp_tokens + 3;
+        } else {
+          user_obj_to_save.double_xp_tokens = req.user.double_xp_tokens + 1;
         }
 
         user_obj_to_save.prime_obj.subscription_id = subscription.id;

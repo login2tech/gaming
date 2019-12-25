@@ -248,7 +248,7 @@ class MyMatches extends React.Component {
                                 )}
                               </td>
                               {/* <td>{''}</td> */}
-                              <td>{moment(match.created_at).format('lll')}</td>
+                              <td>{moment(match.starts_at).fromNow()}</td>
                               <td>
                                 {' '}
                                 <Link to={'/m/' + match.id}>View Match</Link>

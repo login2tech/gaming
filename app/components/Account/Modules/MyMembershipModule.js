@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {buy_membership} from '../../../actions/stripe';
 import {openModal, closeModal} from '../../../actions/modals';
 import PaymentModal from '../../Modules/Modals/PaymentModal';
+import moment from 'moment';
 const plan_prices = {
   gold: 6.99,
   silver: 4.99
@@ -82,6 +83,14 @@ class MyMembershipModule extends React.Component {
   }
 
   render() {
+    let prime_obj = this.props.user.prime_obj;
+    if (this.props.user.prime) {
+      if (!prime_obj) {
+        prime_obj = '{}';
+      }
+      prime_obj = JSON.parse(prime_obj);
+    }
+
     return (
       <div className="tab-pane  text-center" data-tab="tab3">
         <Messages messages={this.props.messages} />
@@ -123,9 +132,18 @@ class MyMembershipModule extends React.Component {
                 <div className="col-md-8 offset-md-2 text-center">
                   {this.props.user ? (
                     this.props.user.prime ? (
-                      <p className="text-success">
-                        You are already a Official Comp Member
-                      </p>
+                      <>
+                        <p className="text-success">
+                          You are already a Official Comp {prime_obj.prime_type}{' '}
+                          Member
+                        </p>
+                        <strong>Started on: </strong>
+                        {moment(prime_obj.starts_on).format('LLL')}
+                        <br />
+
+                        <strong>Next Renewal on: </strong>
+                        {moment(prime_obj.next_renew).format('LLL')}
+                      </>
                     ) : (
                       <input
                         type="submit"
