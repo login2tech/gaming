@@ -5569,6 +5569,21 @@ ul.notices li:first-child {
     font: 900 0.75em/1 "Raleway",sans-serif;
 }
 
+.btn.btn-primary.btn-sm {
+    max-width: none;
+    padding: 6px 16px !important;
+    font-size: 11px;
+    font-weight: normal;
+    width: auto;
+    border: 1px solid #114afb !important;
+}
+
+.btn.btn-primary.btn-sm:hover {
+    background: #000 !important;
+    border: 1px solid #114afb !important;
+}
+
+
 @media screen and (max-width: 690px) {
     .br_1 {
         border:0;

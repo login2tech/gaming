@@ -2,19 +2,24 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {buy_membership} from '../../../actions/stripe';
 import {openModal, closeModal} from '../../../actions/modals';
+
+import {stopRenewal} from '../../../actions/auth';
 import PaymentModal from '../../Modules/Modals/PaymentModal';
 import moment from 'moment';
 const plan_prices = {
   gold: 6.99,
   silver: 4.99
 };
-import Messages from '../../Modules/Messages';
 import {Link} from 'react-router';
 
 class MyMembershipModule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {user_teams: []};
+  }
+  handleStopRenewal(event, item) {
+    event.preventDefault();
+    this.props.dispatch(stopRenewal(item, this.props.token));
   }
 
   handleChange(event) {
@@ -88,12 +93,13 @@ class MyMembershipModule extends React.Component {
       if (!prime_obj) {
         prime_obj = '{}';
       }
-      prime_obj = JSON.parse(prime_obj);
+      if (typeof prime_obj == 'string') {
+        prime_obj = JSON.parse(prime_obj);
+      }
     }
 
     return (
       <div className="tab-pane  text-center" data-tab="tab3">
-        <Messages messages={this.props.messages} />
         <div className="row shop_row" style={{marginBottom: '20px'}}>
           <div className="col-md-6">
             <div className="authorize_box shop text-center">
@@ -129,22 +135,45 @@ class MyMembershipModule extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-8 offset-md-2 text-center">
-                  {this.props.user ? (
-                    this.props.user.prime ? (
-                      <>
-                        <p className="text-success">
-                          You are already a Official Comp {prime_obj.prime_type}{' '}
-                          Member
-                        </p>
-                        <strong>Started on: </strong>
-                        {moment(prime_obj.starts_on).format('LLL')}
-                        <br />
+                {this.props.user ? (
+                  this.props.user.prime ? (
+                    <div className="col-md-10 offset-md-1 text-center">
+                      <p className="text-success">
+                        You are already a Official Comp {prime_obj.prime_type}{' '}
+                        Member
+                      </p>
+                      <strong>Started on: </strong>
+                      {moment(prime_obj.starts_on).format('LLL')}
+                      <br />
+                      {prime_obj.cancel_requested ? (
+                        <>
+                          <strong>Membership Stops on: </strong>
+                          {moment(prime_obj.stops_on).format('LLL')}
+                        </>
+                      ) : (
+                        <>
+                          <strong>Next Renewal on: </strong>
+                          {moment(prime_obj.next_renew).format('LLL')}
+                        </>
+                      )}
 
-                        <strong>Next Renewal on: </strong>
-                        {moment(prime_obj.next_renew).format('LLL')}
-                      </>
-                    ) : (
+                      {prime_obj.cancel_requested == false ? (
+                        <div className="mt-2">
+                          <button
+                            className="btn btn-primary btn-sm"
+                            onClick={e => {
+                              this.handleStopRenewal(e, 'prime');
+                            }}
+                          >
+                            Stop Renewal / Cancel at period end
+                          </button>
+                        </div>
+                      ) : (
+                        false
+                      )}
+                    </div>
+                  ) : (
+                    <div className="col-md-8 offset-md-2 text-center">
                       <input
                         type="submit"
                         value="Buy Official Comp Gold Membership"
@@ -153,13 +182,15 @@ class MyMembershipModule extends React.Component {
                         }}
                         className="btn btn-default bttn_submit"
                       />
-                    )
-                  ) : (
+                    </div>
+                  )
+                ) : (
+                  <div className="col-md-8 offset-md-2 text-center">
                     <Link to="/login" className="btn btn-default bttn_submit">
                       Get Official Comp Gold Membership
                     </Link>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

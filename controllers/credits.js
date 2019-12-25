@@ -357,40 +357,46 @@ exports.stopRenewal = function(req, res, next) {
   new User({id: req.user.id}).fetch().then(function(usr) {
     if (usr.get(type)) {
       let obj = usr.get(type + '_obj');
-      console.log(obj);
       if (obj && obj != '{}') {
         obj = JSON.parse(obj);
-        const id = obj.subscription_id;
-        stripe.subscriptions.update(id, {cancel_at_period_end: true}, function(
-          err,
-          subscription
-        ) {
-          if (err) {
-            return res
-              .status(400)
-              .send({ok: false, msg: 'failed to cancel subscription.'});
-          }
-          obj.ending_on_period_end = true;
-          usr
-            .save(
-              {
-                [type + '_obj']: JSON.stringify(obj)
-              },
-              {patch: true}
-            )
-            .then(function(u) {
-              return res.status(200).send({
-                ok: true,
-                msg: 'Subscription will stop at period end',
-                user: u.toJSON()
-              });
-            })
-            .catch(function(err) {
-              return res
-                .status(400)
-                .send({ok: false, msg: 'Failed to cancel subscription.'});
-            });
-        });
+        if (obj.bought_type == 'Stripe') {
+          const id = obj.subscription_id;
+          stripe.subscriptions.update(
+            id,
+            {cancel_at_period_end: true},
+            function(err, subscription) {
+              if (err) {
+                return res
+                  .status(400)
+                  .send({ok: false, msg: 'failed to cancel subscription.'});
+              }
+              obj.ending_on_period_end = true;
+              obj.cancel_requested = true;
+              obj.stops_on = obj.next_renew;
+              usr
+                .save(
+                  {
+                    [type + '_obj']: JSON.stringify(obj)
+                  },
+                  {patch: true}
+                )
+                .then(function(u) {
+                  return res.status(200).send({
+                    ok: true,
+                    msg: 'Subscription will stop at period end',
+                    user: u.toJSON()
+                  });
+                })
+                .catch(function(err) {
+                  return res
+                    .status(400)
+                    .send({ok: false, msg: 'Failed to cancel subscription.'});
+                });
+            }
+          );
+        } else {
+          // OCG WALA HAI YE!
+        }
       } else {
         return res
           .status(400)
@@ -634,7 +640,7 @@ exports.buyMembership = function(req, res, next) {
                   msg:
                     'Your subscription was successful. You are being billed for ' +
                     plan +
-                    'membership.'
+                    ' membership.'
                 });
                 // const group_obj = {
                 //   // group_name: grp.get('name'),

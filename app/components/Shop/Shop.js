@@ -349,7 +349,7 @@ class Shop extends React.Component {
             user_info={this.props.user}
           />
 
-          <div className="row shop_row">
+          <div className="row shop_row" style={{marginBottom: '20px'}}>
             <div className="col-md-6">
               <div className="authorize_box shop text-center">
                 <div className="credit_summary ">
