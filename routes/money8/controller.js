@@ -1042,15 +1042,33 @@ exports.listupcoming = function(req, res, next) {
 };
 
 exports.matchesForUser = function(req, res, next) {
+  // return res.status(200).send(req.query);
   const uid = req.user.id;
-  new Item()
-    .orderBy('created_at', 'DESC')
-    .query(function(qb) {
+  let a = new Item().orderBy('created_at', 'DESC');
+
+  a = a.query(function(qb) {
+    // let m = qb;
+    if (req.query.only_pending == 'yes') {
+      qb.andWhere(qB =>
+        qB
+          .where('players', 'LIKE', '[' + uid + '%')
+          .orWhere('players', 'LIKE', '%,' + uid + ',%')
+          .orWhere('players', 'LIKE', '%' + uid + ']')
+      ).andWhere(qB =>
+        qB
+          .where('status', 'LIKE', 'pending')
+          .orWhere('status', 'LIKE', 'started')
+      );
+    } else {
       qb.where('players', 'LIKE', '[' + uid + '%')
         .orWhere('players', 'LIKE', '%,' + uid + ',%')
         .orWhere('players', 'LIKE', '%' + uid + ']');
-    })
-    .fetchPage({page: req.query.page ? req.query.page : 1, pageSize: 5})
+    }
+    // m
+    // qb = m;// what the hell i am doing.
+  });
+
+  a.fetchPage({page: req.query.page ? req.query.page : 1, pageSize: 5})
     .then(function(item) {
       if (!item) {
         return res.status(200).send({ok: true, items: []});

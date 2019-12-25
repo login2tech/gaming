@@ -1201,6 +1201,16 @@ exports.matches_of_user = function(req, res, next) {
     // mdl = mdl.where('status', '!=', 'pending');
   }
 
+  if (req.query.only_pending == 'yes') {
+    mdl = mdl.query(function(qb) {
+      qb.where('status', 'LIKE', 'pending').orWhere(
+        'status',
+        'LIKE',
+        'accepted'
+      );
+    });
+  }
+
   mdl = mdl.query(function(qb) {
     qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
   });

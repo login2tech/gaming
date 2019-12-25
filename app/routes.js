@@ -14,6 +14,7 @@ import Notifications from './components/Notifications';
 import Records from './components/Account/Records';
 import MyTeams from './components/Account/MyTeams';
 import MyBank from './components/Account/MyBank';
+import MyMatches from './components/Account/MyMatches';
 import Transactions from './components/Transactions';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
@@ -122,7 +123,12 @@ export default function getRoutes(store) {
         path="/my_bank"
         component={MyBank}
       />
-
+      <Route
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        path="/my_matches"
+        component={MyMatches}
+      />
       <Route path="/leaderboards" component={Leaderboards} />
       <Route
         onEnter={ensureAuthenticated}

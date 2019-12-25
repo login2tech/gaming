@@ -356,7 +356,7 @@ class Header extends React.Component {
                               </li>
                               <li>
                                 <Link
-                                  to="/support/tickets"
+                                  to="/my_matches"
                                   className="profile_menu_item"
                                 >
                                   My Matches

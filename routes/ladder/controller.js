@@ -83,6 +83,7 @@ exports.addGame = function(req, res, next) {
     gamer_tag: req.body.gamer_tag,
     min_players: req.body.min_players,
     game_id: parseInt(req.body.game_id),
+    platform: req.body.platform,
     rules: req.body.rules
   })
     .save()
@@ -116,7 +117,8 @@ exports.updateGame = function(req, res, next) {
     game_id: parseInt(req.body.game_id),
     min_players: req.body.min_players,
     gamer_tag: req.body.gamer_tag,
-    rules: req.body.rules
+    rules: req.body.rules,
+    platform: req.body.platform
   };
 
   game
