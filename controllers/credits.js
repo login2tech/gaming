@@ -396,6 +396,29 @@ exports.stopRenewal = function(req, res, next) {
           );
         } else {
           // OCG WALA HAI YE!
+
+          obj.ending_on_period_end = true;
+          obj.cancel_requested = true;
+          obj.stops_on = obj.next_renew;
+          usr
+            .save(
+              {
+                [type + '_obj']: JSON.stringify(obj)
+              },
+              {patch: true}
+            )
+            .then(function(u) {
+              return res.status(200).send({
+                ok: true,
+                msg: 'Subscription will stop at period end',
+                user: u.toJSON()
+              });
+            })
+            .catch(function(err) {
+              return res
+                .status(400)
+                .send({ok: false, msg: 'Failed to cancel subscription.'});
+            });
         }
       } else {
         return res
@@ -502,6 +525,79 @@ const addMembershipLog = function(plan, action) {
   //
   // TODO: do this
 };
+
+exports.stripe_hook = function(req, res, next) {
+  res.status(200).send('ok!');
+  const body = req.body;
+  console.log(body.type);
+  if (body.type == 'customer.subscription.updated') {
+    console.log('updaing');
+    const sub_id = body.data.object.id;
+    const customer = body.data.object.customer;
+    new User()
+      .where({
+        stripe_user_id: customer,
+        prime: true
+      })
+      .fetch()
+      .then(function(usr) {
+        if (!usr) {
+          return;
+        }
+        let prime_obj = usr.get('prime_obj');
+        prime_obj = JSON.parse(prime_obj);
+        prime_obj.next_renew = moment(
+          body.data.object.current_period_end * 1000
+        );
+        prime_obj.cancel_requested = body.data.object.cancel_at_period_end
+          ? body.data.object.cancel_at_period_end
+          : false;
+        if (prime_obj.subscription_id == sub_id) {
+          usr
+            .save({
+              prime_obj: prime_obj
+            })
+            .then(function() {})
+            .catch(function() {});
+        }
+      });
+  } else if (body.type == 'customer.subscription.deleted') {
+    console.log('deleting');
+    const sub_id = body.data.object.id;
+    const customer = body.data.object.customer;
+    new User()
+      .where({
+        stripe_user_id: customer,
+        prime: true
+      })
+      .fetch()
+      .then(function(usr) {
+        if (!usr) {
+          return;
+        }
+        console.log('here');
+        let prime_obj = usr.get('prime_obj');
+        prime_obj = JSON.parse(prime_obj);
+        console.log(prime_obj);
+        console.log(
+          prime_obj.subscription_id,
+          sub_id,
+          prime_obj.subscription_id == sub_id
+        );
+        if (prime_obj.subscription_id == sub_id) {
+          usr
+            .save({
+              prime: false,
+              prime_obj: {},
+              prime_type: ''
+            })
+            .then(function() {})
+            .catch(function() {});
+        }
+      });
+  }
+};
+
 exports.buyMembership = function(req, res, next) {
   const stripe_token = req.body.stripe_token;
   const plan = req.body.plan;

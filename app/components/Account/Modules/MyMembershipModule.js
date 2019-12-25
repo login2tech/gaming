@@ -19,6 +19,27 @@ class MyMembershipModule extends React.Component {
   }
   handleStopRenewal(event, item) {
     event.preventDefault();
+    if (!confirm('Are you sure you want to perform this action?')) {
+      return;
+    }
+    jQuery(event.target).attr('disabled', 'disabled');
+    this.props.dispatch(
+      openModal({
+        id: 'trello_snack',
+        type: 'snackbar',
+        zIndex: 1076,
+        content: 'Stoping renewal... please wait...'
+      })
+    );
+    setTimeout(() => {
+      this.props.dispatch(
+        closeModal({
+          id: 'trello_snack'
+        })
+      );
+      window.location.reload();
+    }, 5000);
+
     this.props.dispatch(stopRenewal(item, this.props.token));
   }
 

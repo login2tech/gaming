@@ -211,6 +211,7 @@ app.post(
   userController.ensureAuthenticated,
   creditsController.stopRenewal
 );
+app.post('/stripe_hook', creditsController.stripe_hook);
 
 app.post(
   '/api/user/reset/score',
