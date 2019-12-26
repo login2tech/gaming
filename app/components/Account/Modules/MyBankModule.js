@@ -656,7 +656,7 @@ class MyBankModule extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6 ">
+          <div className="col-md-6 offset-md-3">
             <div className="authorize_box">
               <div className="credit_summary ">
                 Double XP Tokens

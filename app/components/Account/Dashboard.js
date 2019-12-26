@@ -7,6 +7,7 @@ import {Link} from 'react-router';
 import moment from 'moment';
 import axios from 'axios';
 import MyBankModule from './Modules/MyBankModule';
+import MyMembershipModule2 from './Modules/MyMembershipModule2';
 
 import {accountPic} from '../../actions/auth';
 import {
@@ -240,7 +241,15 @@ class Profile extends React.Component {
   }
 
   renderStep4() {
-    return <MyBankModule />;
+    return (
+      <div>
+        <MyMembershipModule2
+          id={this.props.user.id}
+          user_info={this.props.user}
+        />
+        <MyBankModule id={this.props.user.id} user_info={this.props.user} />
+      </div>
+    );
   }
   tags = [1, 2, 3, 4, 5, 6];
   tag_names = [
