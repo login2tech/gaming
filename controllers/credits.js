@@ -268,7 +268,7 @@ const proceedWithDoubleXP = function(req, res) {
                 ok: true,
                 action: 'PAYMENT_DONE',
                 user: usr.toJSON(),
-                msg: 'Successfully charged card to activate double xp for 1 day'
+                msg: 'Successfully charged card to buy double xp token'
               });
             })
             .catch(function(err) {
