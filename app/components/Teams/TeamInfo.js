@@ -814,7 +814,15 @@ class TeamInfo extends React.Component {
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12 text-center mt-2">
                 <span className="textcap text-center">
-                  {this.state.team_info.team_type} team
+                  {this.state.team_info.team_type == 'tournaments' ? (
+                    <span className="trofy">
+                      <span className="fa fa-trophy" />{' '}
+                      {this.state.team_info.team_type}
+                    </span>
+                  ) : (
+                    this.state.team_info.team_type
+                  )}{' '}
+                  team
                 </span>
                 {this.props.user &&
                 this.state.team_info.team_creator == this.props.user.id &&

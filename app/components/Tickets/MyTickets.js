@@ -1,10 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-
 import moment from 'moment';
-// import { resetPassword } from '../../actions/auth';
-// import Messages from 'Messages';
 
 class Tickets extends React.Component {
   constructor(props) {
@@ -25,15 +22,10 @@ class Tickets extends React.Component {
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          this.setState(
-            {
-              is_loaded: true,
-              items: json.items
-            },
-            () => {
-              // this.fetchReplies();
-            }
-          );
+          this.setState({
+            is_loaded: true,
+            items: json.items
+          });
         } else {
           this.setState({
             is_page: false,

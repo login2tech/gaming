@@ -92,9 +92,14 @@ exports.loginPost = function(req, res, next) {
         return;
       }
       if (user.get('status') == false) {
-        return res
-          .status(401)
-          .send({banned: true, msg: 'Your Account is currently not active.'});
+        return res.status(401).send({
+          banned: true,
+          msg: 'Your Account is currently not active.',
+          ban_reason: user.get('ban_reason'),
+          ban_date: user.get('ban_date'),
+          uname: user.get('username'),
+          uid: user.get('id')
+        });
       }
       user.comparePassword(req.body.password, function(err, isMatch) {
         if (!isMatch) {

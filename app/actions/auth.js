@@ -35,7 +35,7 @@ export function login(email, password, cb) {
       } else {
         return response.json().then(json => {
           if (json.banned) {
-            cb && cb('ban');
+            cb && cb(json.ban_reason, json.ban_date, json.uname, json.uid);
             return;
           }
           dispatch({

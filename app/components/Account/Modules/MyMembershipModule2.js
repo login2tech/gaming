@@ -1,15 +1,12 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {buy_membership} from '../../../actions/stripe';
+// import {buy_membership} from '../../../actions/stripe';
 import {openModal, closeModal} from '../../../actions/modals';
 
 import {stopRenewal} from '../../../actions/auth';
-import PaymentModal from '../../Modules/Modals/PaymentModal';
+// import PaymentModal from '../../Modules/Modals/PaymentModal';
 import moment from 'moment';
-const plan_prices = {
-  gold: 6.99,
-  silver: 4.99
-};
+
 import {Link} from 'react-router';
 
 class MyMembershipModule extends React.Component {
@@ -41,71 +38,6 @@ class MyMembershipModule extends React.Component {
     }, 5000);
 
     this.props.dispatch(stopRenewal(item, this.props.token));
-  }
-
-  handleChange(event) {
-    event.preventDefault();
-    this.setState({[event.target.name]: event.target.value});
-  }
-
-  processMembership(plan) {
-    const price = plan_prices[plan];
-    this.props.dispatch(
-      openModal({
-        type: 'custom',
-        id: 'membership_popup',
-        zIndex: 534,
-        heading: 'Buy OCG ' + plan + ' Membership',
-        content: (
-          <PaymentModal
-            msg=""
-            msg_footer={
-              <ul className="notices">
-                <li>
-                  - OCG Memberships are automatically renewed each month at the
-                  end of your subscription cycle.
-                </li>
-                <li>- You can stop renewal from "My Bank" page.</li>
-                <li>
-                  - Membership bought via OCG cash will be renewed only if you
-                  have sufficient OCG cash in your bank.
-                </li>
-              </ul>
-            }
-            amount={price}
-            returnDataToEvent={plan}
-            // refresh={props.refresh}
-            onGetToken={(token, plan_name) => {
-              this.token_received(token, plan_name);
-            }}
-          />
-        )
-      })
-    );
-  }
-
-  token_received(token, plan_name) {
-    if (token != 'USE_OCG') {
-      token = token.id;
-    }
-    this.props.dispatch(
-      buy_membership(
-        {
-          stripe_token: token,
-          plan: plan_name
-        },
-        cb => {
-          this.props.dispatch(
-            closeModal({
-              id: 'membership_popup'
-            })
-          );
-          if (cb) {
-            // do on success
-          }
-        }
-      )
-    );
   }
 
   render() {
@@ -159,10 +91,12 @@ class MyMembershipModule extends React.Component {
                   </span>
                   <span>High priority Cash Withdrawals </span>
                   <span>Free Cash Out Matches non charge 10% for each 1$</span>
-                  <span>1 Free @username change!</span>
+                  <span className="text-gold">1 Free @username change!</span>
                   <span>Match Escalations </span>
-                  <span>3 Free 24 Hour Double (XP) Token!</span>
-                  <span>10 Free Credits!</span>
+                  <span className="text-gold">
+                    3 Free 24 Hour Double (XP) Token!
+                  </span>
+                  <span className="text-gold">10 Free Credits!</span>
                 </div>
               </div>
               <div className="row">
@@ -173,17 +107,21 @@ class MyMembershipModule extends React.Component {
                         You are already a Official Comp {prime_obj.prime_type}{' '}
                         Member
                       </p>
-                      <strong>Started on: </strong>
+                      <strong className="text-blue">Started on: </strong>
                       {moment(prime_obj.starts_on).format('LLL')}
                       <br />
                       {prime_obj.cancel_requested ? (
                         <>
-                          <strong>Membership Stops on: </strong>
+                          <strong className="text-blue">
+                            Membership Stops on:{' '}
+                          </strong>
                           {moment(prime_obj.stops_on).format('LLL')}
                         </>
                       ) : (
                         <>
-                          <strong>Next Renewal on: </strong>
+                          <strong className="text-blue">
+                            Next Renewal on:{' '}
+                          </strong>
                           {moment(prime_obj.next_renew).format('LLL')}
                         </>
                       )}
@@ -196,7 +134,7 @@ class MyMembershipModule extends React.Component {
                               this.handleStopRenewal(e, 'prime');
                             }}
                           >
-                            Stop Renewal / Cancel at period end
+                            STOP RENEWAL
                           </button>
                         </div>
                       ) : (

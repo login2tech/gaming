@@ -156,6 +156,12 @@ class Footer extends React.Component {
                 <div className="copyright">
                   <p>
                     <Translate id="footer_text_copyright" />
+                    <br />
+                    <small>
+                      All content, games titles, trade names and/or trade dress,
+                      trademarks, artwork and associated imagery are trademarks
+                      and/or copyright material of their respective owners.
+                    </small>
                   </p>
                 </div>
               </div>

@@ -979,7 +979,7 @@ exports.listPaged = function(req, res, next) {
     })
     .catch(function(err) {
       // console.log(err)
-      return res.status(200).send([]);
+      return res.status(200).send({ok: false, items: []});
     });
 };
 

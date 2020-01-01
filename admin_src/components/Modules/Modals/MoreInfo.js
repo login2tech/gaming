@@ -112,10 +112,7 @@ class MoreInfo extends React.Component {
                   <td>Role</td>
                   <td>{data.role}</td>
                 </tr>
-                <tr>
-                  <td>Life_xp</td>
-                  <td>{data.life_xp}</td>
-                </tr>
+
                 <tr>
                   <td>Wins</td>
                   <td>{data.wins}</td>
@@ -170,6 +167,18 @@ class MoreInfo extends React.Component {
                   <td>Gamer_tag_6</td>
                   <td>{data.gamer_tag_6}</td>
                 </tr>
+                <tr>
+                  <td>Banned ? </td>
+                  <td>{data.status ? 'NO' : 'YES'}</td>
+                </tr>
+                {data.status ? (
+                  false
+                ) : (
+                  <tr>
+                    <td>Banned Reason </td>
+                    <td>{data.ban_reason}</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

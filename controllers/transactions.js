@@ -3,53 +3,31 @@ const CreditTransactions = require('../models/CreditTransactions');
 const XPTransactions = require('../models/XPTransactions');
 
 exports.list = function(req, res, next) {
-  new CashTransactions()
+  const pg = req.query.page ? req.query.page : 1;
+  let mdl;
+  if (req.query.type == 'cash') {
+    mdl = new CashTransactions();
+  } else if (req.query.type == 'credit') {
+    mdl = new CreditTransactions();
+  } else {
+    mdl = new XPTransactions();
+  }
+  mdl
     .where({user_id: req.user.id})
     .orderBy('id', 'DESC')
-    .fetchAll()
-    .then(function(cash_transactions) {
-      new CreditTransactions()
-        .where({user_id: req.user.id})
-        .orderBy('id', 'DESC')
-        .fetchAll()
-        .then(function(credit_transactions) {
-          new XPTransactions()
-            .where({user_id: req.user.id})
-            .orderBy('id', 'DESC')
-            .fetchAll()
-            .then(function(xp_transactions) {
-              return res.status(200).send({
-                ok: true,
-                cash_transactions: cash_transactions.toJSON(),
-                xp_transactions: xp_transactions.toJSON(),
-                credit_transactions: credit_transactions.toJSON()
-              });
-            })
-            .catch(function(err) {
-              return res.status(200).send({
-                ok: true,
-                cash_transactions: cash_transactions.toJSON(),
-                xp_transactions: [],
-                credit_transactions: credit_transactions.toJSON()
-              });
-            });
-        })
-        .catch(function(err) {
-          return res.status(200).send({
-            ok: true,
-            cash_transactions: cash_transactions.toJSON(),
-            xp_transactions: [],
-            credit_transactions: []
-          });
-        });
-      // return res.status(200).send({ok: true, notifs: notifs.toJSON()});
+    .fetchPage({page: pg, pageSize: 5})
+    .then(function(items) {
+      //
+      return res.status(200).send({
+        ok: true,
+        items: items.toJSON(),
+        pagination: items.pagination
+      });
     })
     .catch(function(err) {
       return res.status(200).send({
-        ok: false,
-        cash_transactions: [],
-        xp_transactions: [],
-        credit_transactions: []
+        ok: true,
+        items: []
       });
     });
 };

@@ -2435,7 +2435,7 @@ a.image_avar {
     background-size: cover;
 }
 
-.no_bg.call_action .play_match_btn {
+ .play_match_btn {
     position: static;
     margin-top: 410px;
     font-weight: normal;
@@ -2443,7 +2443,7 @@ a.image_avar {
     left: 44%;
 }
 
-.no_bg.call_action .play_match_btn:hover {
+ .play_match_btn:hover {
     background: #0040ff;
     font-weight: normal;
 }
@@ -4654,10 +4654,14 @@ ul.submenu.notification_list {
     text-align: center;
     font-weight: bold;
     border: 1px solid #114afb;
-    box-shadow: 0px 0px 8px 3px #114afb;
+    box-shadow: 0px 0px 5px 3px #114afb;
     background: #000;
     width: 100%;
     /* margin-left:10% */
+}
+.tooltip.show .tooltip-inner{
+  border: 1px solid #114afb;
+  box-shadow: 0px 0px 5px 3px #114afb;
 }
 
 span.rank_prog_done {
@@ -5686,4 +5690,8 @@ ul.notices li:first-child {
     .tournament-list .tournament-box {
         flex-direction: column;
     }
+}
+
+.text-blue {
+    color: #114afb;
 }

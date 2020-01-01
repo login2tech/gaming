@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {login} from '../../actions/auth';
+import moment from 'moment';
 // import {facebookLogin} from '../../actions/oauth';
 import Messages from '../Modules/Messages';
 
@@ -18,8 +19,14 @@ class Login extends React.Component {
   handleLogin(event) {
     event.preventDefault();
     this.props.dispatch(
-      login(this.state.email, this.state.password, () => {
-        this.setState({is_banned: true});
+      login(this.state.email, this.state.password, (reason, dt, un, uid) => {
+        this.setState({
+          is_banned: true,
+          ban_reason: reason,
+          ban_date: dt,
+          uname_of_ban: un,
+          uid_of_ban: uid
+        });
       })
     );
   }
@@ -32,7 +39,12 @@ class Login extends React.Component {
         </div>
         <div className="field_form authorize_form text-center">
           <p className="text-center">
-            You have been banned from accessing the portal by admin
+            You have been banned on {moment(this.state.ban_date).format('llll')}{' '}
+            from accessing the portal by admin
+          </p>
+          <p>
+            <strong className="text-blue">Reason for Ban:</strong>{' '}
+            {this.state.ban_reason}
           </p>
           <a
             href="#"
@@ -46,7 +58,21 @@ class Login extends React.Component {
             }}
           >
             <span className="fa fa-arrow-left" /> back to login
-          </a>
+          </a>{' '}
+          |
+          <Link
+            to={'/support/tickets/create/via/' + this.state.uname_of_ban}
+            // onClick={e => {
+            //   e.preventDefault();
+            //   this.setState({
+            //     is_banned: false,
+            //     email: '',
+            //     password: ''
+            //   });
+            // }}
+          >
+            Create Support Ticket <span className="fa fa-arrow-right" />
+          </Link>
         </div>
       </>
     );

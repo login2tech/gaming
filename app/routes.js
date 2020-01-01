@@ -183,6 +183,12 @@ export default function getRoutes(store) {
         component={NewTicket}
       />
       <Route
+        path="/support/tickets/create/:via/:username"
+        // onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        component={NewTicket}
+      />
+      <Route
         path="/support/tickets"
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}

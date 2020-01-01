@@ -121,6 +121,11 @@ class Profile extends React.Component {
                         onSubmit={post => {
                           const posts = this.state.posts;
                           posts.unshift(post);
+                          clearInterval(this.inrvl);
+                          this.inrvl = setInterval(
+                            this.checkNewPosts.bind(this),
+                            30000
+                          );
                           this.setState({
                             posts: posts,
                             new_post_type: 'text',

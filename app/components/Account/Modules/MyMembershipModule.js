@@ -149,10 +149,12 @@ class MyMembershipModule extends React.Component {
                   </span>
                   <span>High priority Cash Withdrawals </span>
                   <span>Free Cash Out Matches non charge 10% for each 1$</span>
-                  <span>1 Free @username change!</span>
+                  <span className="text-gold">1 Free @username change!</span>
                   <span>Match Escalations </span>
-                  <span>3 Free 24 Hour Double (XP) Token!</span>
-                  <span>10 Free Credits!</span>
+                  <span className="text-gold">
+                    3 Free 24 Hour Double (XP) Token!
+                  </span>
+                  <span className="text-gold">10 Free Credits!</span>
                 </div>
               </div>
               <div className="row">
@@ -163,17 +165,21 @@ class MyMembershipModule extends React.Component {
                         You are already a Official Comp {prime_obj.prime_type}{' '}
                         Member
                       </p>
-                      <strong>Started on: </strong>
+                      <strong className="text-blue">Started on: </strong>
                       {moment(prime_obj.starts_on).format('LLL')}
                       <br />
                       {prime_obj.cancel_requested ? (
                         <>
-                          <strong>Membership Stops on: </strong>
+                          <strong className="text-blue">
+                            Membership Stops on:{' '}
+                          </strong>
                           {moment(prime_obj.stops_on).format('LLL')}
                         </>
                       ) : (
                         <>
-                          <strong>Next Renewal on: </strong>
+                          <strong className="text-blue">
+                            Next Renewal on:{' '}
+                          </strong>
                           {moment(prime_obj.next_renew).format('LLL')}
                         </>
                       )}
@@ -186,7 +192,7 @@ class MyMembershipModule extends React.Component {
                               this.handleStopRenewal(e, 'prime');
                             }}
                           >
-                            Stop Renewal / Cancel at period end
+                            STOP RENEWAL
                           </button>
                         </div>
                       ) : (

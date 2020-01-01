@@ -20,7 +20,9 @@ class NewTicket extends React.Component {
       ticket_type:
         props.params.type && props.params.type == 'disputed'
           ? 'Match Support - Match Dispute'
-          : '',
+          : props.params.via && props.params.username
+            ? 'Customer Support - Dispute Account Ban'
+            : '',
       ticket_title: '',
       ticket_description: '',
       new_post_image: '',
@@ -76,8 +78,16 @@ class NewTicket extends React.Component {
   submitForm(event) {
     event.preventDefault();
     // fetch(, function(){
+    let url = '/api/tickets/add';
+    if (
+      this.props.params &&
+      this.props.params.via &&
+      this.props.params.username
+    ) {
+      url = '/api/tickets/addforbanned';
+    }
 
-    fetch('/api/tickets/add', {
+    fetch(url, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -86,6 +96,7 @@ class NewTicket extends React.Component {
       body: JSON.stringify({
         ticket_type: this.state.ticket_type,
         ticket_title: this.state.ticket_title,
+        banned_uname: this.props.params.username,
         ticket_description: this.state.ticket_description,
         ticket_attachment: this.state.new_post_image,
         extra_1: this.state.extra_1,
@@ -117,7 +128,18 @@ class NewTicket extends React.Component {
               },
               () => {
                 // this.fetchReplies();
-                window.location.href = '/support/tickets';
+                if (this.props.params.via) {
+                  this.setState({
+                    ticket_title: '',
+                    ticket_description: '',
+                    ticket_attachment: '',
+                    extra_1: '',
+                    extra_2: '',
+                    extra_3: ''
+                  });
+                } else {
+                  window.location.href = '/support/tickets';
+                }
               }
             );
           } else {

@@ -65,8 +65,8 @@ class Home extends React.Component {
               </div>
               <div className="carousel-item" style={{background: '#fff'}}>
                 <img src="images/banner_2.png" alt="" />
-                <div className="carousel-caption d-none d-md-block">
-                  <a href="/shop" className="btn btn-primary">
+                <div className="carousel-caption d-none d-md-block ">
+                  <a href="/shop" className="play_match_btn stretched-link">
                     View Plans
                   </a>
                 </div>

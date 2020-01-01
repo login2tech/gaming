@@ -1,7 +1,7 @@
 // const fs = require('fs');
 const Item = require('./Ticket');
 const ObjName = 'Ticket';
-
+const User = require('../../models/User');
 exports.listItem = function(req, res, next) {
   //{withRelated: ['thread_count']}
   //todo
@@ -87,6 +87,64 @@ exports.listSingleItem = function(req, res, next) {
         content: '',
         msg: 'Failed to fetch from db'
       });
+    });
+};
+
+exports.addItemForBanned = function(req, res, next) {
+  req.assert('banned_uname', 'Please specify the username').notEmpty();
+  req.assert('ticket_title', 'Title cannot be blank').notEmpty();
+  req.assert('ticket_description', 'Content cannot be blank').notEmpty();
+  req.assert('ticket_type', 'Issue Type cannot be blank').notEmpty();
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).send(errors);
+  }
+  new User()
+    .where({
+      username: req.body.banned_uname,
+      status: false
+    })
+    .fetch()
+    .then(function(u) {
+      if (!u) {
+        return res.status(400).send({
+          ok: false,
+          msg: 'No such banned user exists. Try logging in again.'
+        });
+      }
+      u = u.toJSON();
+      const uid = u.id;
+      new Item({
+        title: req.body.ticket_title,
+        description: req.body.ticket_description,
+        type: req.body.ticket_type,
+        user_id: uid,
+        extra_1: req.body.extra_1
+          ? ('' + req.body.extra_1).replace('#', '')
+          : '',
+        extra_2: req.body.extra_2,
+        extra_3: req.body.extra_3,
+        attachment: req.body.ticket_attachment ? req.body.ticket_attachment : ''
+      })
+        .save()
+        .then(function(item) {
+          res.send({
+            ok: true,
+            msg: 'New Ticket has been created successfully.'
+          });
+        })
+        .catch(function(err) {
+          console.log(err);
+          return res
+            .status(400)
+            .send({msg: 'Something went wrong while created a new Item'});
+        });
+    })
+    .catch(function(err) {
+      console.log(err);
+      return res
+        .status(400)
+        .send({msg: "Failed to fetch banned user's details"});
     });
 };
 

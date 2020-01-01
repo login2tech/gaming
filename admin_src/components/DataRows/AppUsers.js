@@ -7,6 +7,7 @@ import MoreInfo from '../Modules/Modals/MoreInfo';
 import {Link} from 'react-router';
 import ReactPaginate from 'react-paginate';
 import CashHistory from '../Modules/Modals/CashHistory';
+import moment from 'moment';
 class AppUsers extends React.Component {
   constructor(props) {
     super(props);
@@ -307,7 +308,8 @@ class AppUsers extends React.Component {
                                 this.updateItem(
                                   u.id,
                                   {
-                                    status: true
+                                    status: true,
+                                    ban_reason: ''
                                   },
                                   ''
                                 );
@@ -324,10 +326,19 @@ class AppUsers extends React.Component {
                           ) : (
                             <button
                               onClick={() => {
+                                const a = prompt(
+                                  'Please enter the reason and duration for banning the user?'
+                                );
+                                if (!a) {
+                                  return a;
+                                }
+                                // return;
                                 this.updateItem(
                                   u.id,
                                   {
-                                    status: false
+                                    status: false,
+                                    ban_reason: a,
+                                    ban_date: moment()
                                   },
                                   ''
                                 );
