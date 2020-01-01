@@ -451,7 +451,7 @@ const create_new_user_for_token = function(req, res, next) {
       console.log(customer);
       // use the customer id created
       req.use_customer_id = customer.id;
-      req.next();
+      next();
     }
   );
 };
