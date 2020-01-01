@@ -881,8 +881,25 @@ exports.deduct_money = function(req, res, next) {
   // next();
 };
 exports.deduct_ocg = function(req, res, next) {
+  const action = req.body.action;
+  let msg;
+  switch (action) {
+    case 'overallScore':
+      msg = 'For resetting profile records';
+      break;
+    case 'score_life':
+      msg = 'For resetting life records';
+      break;
+    case 'score_season':
+      msg = 'For resetting season records';
+      break;
+    default:
+      msg = 'For resetting profile records';
+      break;
+  }
+
   if (req.body.stripe_token == 'USE_OCG') {
-    utils.takeCashFromUser(req.user.id, 5, 'For resetting score', '');
+    utils.takeCashFromUser(req.user.id, 5, msg, '');
   }
   next();
 };

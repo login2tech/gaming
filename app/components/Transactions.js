@@ -140,7 +140,7 @@ class Transaction extends React.Component {
                             return (
                               <tr key={k.id}>
                                 <td>
-                                  {(this.state.cash_page - 1) * 5 + i + 1}
+                                  {(this.state.cash_page - 1) * 25 + i + 1}
                                 </td>
                                 <td>{moment(k.created_at).format('llll')}</td>
                                 <td>{k.details}</td>
@@ -205,7 +205,7 @@ class Transaction extends React.Component {
                             return (
                               <tr key={k.id}>
                                 <td>
-                                  {(this.state.credit_page - 1) * 5 + i + 1}
+                                  {(this.state.credit_page - 1) * 25 + i + 1}
                                 </td>
                                 <td>{moment(k.created_at).format('llll')}</td>
                                 <td>{k.details}</td>

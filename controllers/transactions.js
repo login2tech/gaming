@@ -15,7 +15,7 @@ exports.list = function(req, res, next) {
   mdl
     .where({user_id: req.user.id})
     .orderBy('id', 'DESC')
-    .fetchPage({page: pg, pageSize: 5})
+    .fetchPage({page: pg, pageSize: 25})
     .then(function(items) {
       //
       return res.status(200).send({
