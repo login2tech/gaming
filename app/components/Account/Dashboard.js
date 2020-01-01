@@ -31,7 +31,7 @@ class Profile extends React.Component {
       password: '',
       confirm: '',
       old_password: '',
-      currentStep: 2,
+      currentStep: 5,
       init_transaction_mode: '',
       clicked: false,
       gamer_tag_1: props.user.gamer_tag_1 ? props.user.gamer_tag_1 : '',
@@ -481,164 +481,164 @@ class Profile extends React.Component {
     );
   }
 
-  renderStep2() {
-    let prime_info = false;
-    let tmp;
-    let prime_obj = false;
-    let double_xp_obj = false;
-    if (this.props.user.prime) {
-      tmp = JSON.parse(this.props.user.prime_obj);
-      prime_obj = tmp;
-      prime_info = (
-        <span>
-          <strong className="text-white">Started On: </strong>
-          <span className="text-success">
-            {moment.unix(tmp.start).format('lll')}
-          </span>
-        </span>
-      );
-    }
-    let double_xp_info = false;
-    if (this.props.user.double_xp) {
-      tmp = JSON.parse(this.props.user.double_xp_obj);
-      double_xp_obj = tmp;
-      if (!tmp.starts_on) {
-        double_xp_info = (
-          <span>
-            <strong className="text-white">Started Manually by admin</strong>
-          </span>
-        );
-      } else {
-        double_xp_info = (
-          <span>
-            <strong className="text-white">Started On: </strong>
-            <span className="text-success">
-              {moment(tmp.starts_on).format('lll')}
-            </span>
-          </span>
-        );
-      }
-    }
-    return (
-      <div className="tab-pane" data-tab="tab1">
-        <div className="billing_details">
-          <div className="list_pad">
-            <div className="row">
-              <div className="col-md-6">
-                <h5 className="credit_summary">Official Comp Membership</h5>
-                <img
-                  src="/assets/icons/ocg_member.png"
-                  style={{
-                    height: '150px',
-                    marginTop: '20px',
-                    marginBottom: '20px'
-                  }}
-                />
-                {this.props.user.prime ? (
-                  <p>
-                    <strong className="text-white">Status:</strong>{' '}
-                    <span className="text-success">enabled</span>
-                    <br />
-                    {prime_info}
-                    <br />
-                    {prime_obj.current_period_end ? (
-                      <span>
-                        <strong className="text-white">
-                          {prime_obj.ending_on_period_end
-                            ? 'Stops on: '
-                            : 'Renews On'}
-                          :{' '}
-                        </strong>
-                        <span className="text-success">
-                          {moment
-                            .unix(prime_obj.current_period_end)
-                            .format('lll')}
-                        </span>
-                      </span>
-                    ) : (
-                      false
-                    )}
-                    <br />
-                    <br />
-                    {prime_obj.current_period_end &&
-                    !prime_obj.ending_on_period_end ? (
-                      <button
-                        className="btn btn-danger btn-xs"
-                        onClick={e => {
-                          this.handleStopRenewal(e, 'prime');
-                        }}
-                      >
-                        Stop Renewing
-                      </button>
-                    ) : (
-                      false
-                    )}
-                  </p>
-                ) : (
-                  <p>
-                    <strong className="text-white">Status:</strong>{' '}
-                    <span className="text-danger">Disabled</span>{' '}
-                    <Link to="/shop">Click to enable</Link>
-                  </p>
-                )}
-              </div>
-              <div className="col-md-6">
-                <h5 className="credit_summary">Double XP</h5>
-                <img
-                  src="/assets/icons/coin-02.png"
-                  style={{
-                    height: '150px',
-                    marginTop: '20px',
-                    marginBottom: '20px'
-                  }}
-                />
-                {this.props.user.double_xp ? (
-                  <p>
-                    <strong className="text-white">Status:</strong>{' '}
-                    <span className="text-success">enabled</span>
-                    <br />
-                    {double_xp_info}
-                    <br />
-                    {this.props.user.double_xp_exp ? (
-                      <span>
-                        <strong className="text-white">Ends on: </strong>
-                        <span className="text-success">
-                          {moment(this.props.user.double_xp_exp).format('lll')}
-                        </span>
-                      </span>
-                    ) : (
-                      false
-                    )}
-                    <br />
-                    <br />
-                    {double_xp_obj.current_period_end &&
-                    !double_xp_obj.ending_on_period_end ? (
-                      <button
-                        className="btn btn-danger btn-xs"
-                        onClick={e => {
-                          this.handleStopRenewal(e, 'double_xp');
-                        }}
-                      >
-                        Stop Renewing
-                      </button>
-                    ) : (
-                      false
-                    )}
-                  </p>
-                ) : (
-                  <p>
-                    <strong className="text-white">Status:</strong>{' '}
-                    <span className="text-danger">Disabled</span>{' '}
-                    <Link to="/shop">Click to enable</Link>
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // renderStep2() {
+  //   let prime_info = false;
+  //   let tmp;
+  //   let prime_obj = false;
+  //   let double_xp_obj = false;
+  //   if (this.props.user.prime) {
+  //     tmp = JSON.parse(this.props.user.prime_obj);
+  //     prime_obj = tmp;
+  //     prime_info = (
+  //       <span>
+  //         <strong className="text-white">Started On: </strong>
+  //         <span className="text-success">
+  //           {moment.unix(tmp.start).format('lll')}
+  //         </span>
+  //       </span>
+  //     );
+  //   }
+  //   let double_xp_info = false;
+  //   if (this.props.user.double_xp) {
+  //     tmp = JSON.parse(this.props.user.double_xp_obj);
+  //     double_xp_obj = tmp;
+  //     if (!tmp.starts_on) {
+  //       double_xp_info = (
+  //         <span>
+  //           <strong className="text-white">Started Manually by admin</strong>
+  //         </span>
+  //       );
+  //     } else {
+  //       double_xp_info = (
+  //         <span>
+  //           <strong className="text-white">Started On: </strong>
+  //           <span className="text-success">
+  //             {moment(tmp.starts_on).format('lll')}
+  //           </span>
+  //         </span>
+  //       );
+  //     }
+  //   }
+  //   return (
+  //     <div className="tab-pane" data-tab="tab1">
+  //       <div className="billing_details">
+  //         <div className="list_pad">
+  //           <div className="row">
+  //             <div className="col-md-6">
+  //               <h5 className="credit_summary">Official Comp Membership</h5>
+  //               <img
+  //                 src="/assets/icons/ocg_member.png"
+  //                 style={{
+  //                   height: '150px',
+  //                   marginTop: '20px',
+  //                   marginBottom: '20px'
+  //                 }}
+  //               />
+  //               {this.props.user.prime ? (
+  //                 <p>
+  //                   <strong className="text-white">Status:</strong>{' '}
+  //                   <span className="text-success">enabled</span>
+  //                   <br />
+  //                   {prime_info}
+  //                   <br />
+  //                   {prime_obj.current_period_end ? (
+  //                     <span>
+  //                       <strong className="text-white">
+  //                         {prime_obj.ending_on_period_end
+  //                           ? 'Stops on: '
+  //                           : 'Renews On'}
+  //                         :{' '}
+  //                       </strong>
+  //                       <span className="text-success">
+  //                         {moment
+  //                           .unix(prime_obj.current_period_end)
+  //                           .format('lll')}
+  //                       </span>
+  //                     </span>
+  //                   ) : (
+  //                     false
+  //                   )}
+  //                   <br />
+  //                   <br />
+  //                   {prime_obj.current_period_end &&
+  //                   !prime_obj.ending_on_period_end ? (
+  //                     <button
+  //                       className="btn btn-danger btn-xs"
+  //                       onClick={e => {
+  //                         this.handleStopRenewal(e, 'prime');
+  //                       }}
+  //                     >
+  //                       Stop Renewing
+  //                     </button>
+  //                   ) : (
+  //                     false
+  //                   )}
+  //                 </p>
+  //               ) : (
+  //                 <p>
+  //                   <strong className="text-white">Status:</strong>{' '}
+  //                   <span className="text-danger">Disabled</span>{' '}
+  //                   <Link to="/shop">Click to enable</Link>
+  //                 </p>
+  //               )}
+  //             </div>
+  //             <div className="col-md-6">
+  //               <h5 className="credit_summary">Double XP</h5>
+  //               <img
+  //                 src="/assets/icons/coin-02.png"
+  //                 style={{
+  //                   height: '150px',
+  //                   marginTop: '20px',
+  //                   marginBottom: '20px'
+  //                 }}
+  //               />
+  //               {this.props.user.double_xp ? (
+  //                 <p>
+  //                   <strong className="text-white">Status:</strong>{' '}
+  //                   <span className="text-success">enabled</span>
+  //                   <br />
+  //                   {double_xp_info}
+  //                   <br />
+  //                   {this.props.user.double_xp_exp ? (
+  //                     <span>
+  //                       <strong className="text-white">Ends on: </strong>
+  //                       <span className="text-success">
+  //                         {moment(this.props.user.double_xp_exp).format('lll')}
+  //                       </span>
+  //                     </span>
+  //                   ) : (
+  //                     false
+  //                   )}
+  //                   <br />
+  //                   <br />
+  //                   {double_xp_obj.current_period_end &&
+  //                   !double_xp_obj.ending_on_period_end ? (
+  //                     <button
+  //                       className="btn btn-danger btn-xs"
+  //                       onClick={e => {
+  //                         this.handleStopRenewal(e, 'double_xp');
+  //                       }}
+  //                     >
+  //                       Stop Renewing
+  //                     </button>
+  //                   ) : (
+  //                     false
+  //                   )}
+  //                 </p>
+  //               ) : (
+  //                 <p>
+  //                   <strong className="text-white">Status:</strong>{' '}
+  //                   <span className="text-danger">Disabled</span>{' '}
+  //                   <Link to="/shop">Click to enable</Link>
+  //                 </p>
+  //               )}
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   render() {
     const divStyle = this.state.new_cover_pic
@@ -831,27 +831,17 @@ class Profile extends React.Component {
                     </li>
 
                     <li
-                      className={this.state.currentStep == 2 ? 'active' : ''}
-                      onClick={() => {
-                        this.setState({currentStep: 2});
-                      }}
-                      data-tab="tab1"
-                    >
-                      Memberships
-                    </li>
-                    <li
                       className={this.state.currentStep == 4 ? 'active' : ''}
                       onClick={() => {
                         this.setState({currentStep: 4});
                       }}
                       data-tab="tab3"
                     >
-                      My Bank
+                      My Bank & Memberships
                     </li>
                   </ul>
 
                   <div className="tab-cont">
-                    {this.state.currentStep == 2 ? this.renderStep2() : false}
                     {this.state.currentStep == 4 ? this.renderStep4() : false}
                     {this.state.currentStep == 5 ? this.renderStep5() : false}
                   </div>

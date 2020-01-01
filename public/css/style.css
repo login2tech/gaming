@@ -4610,7 +4610,8 @@ ul.submenu li a {
 }
 
 .user_sugggestions li:not(:first-child) {
-    background: #fff;
+    background: #114afb;
+    color: #fff;
     padding: 0;
 }
 
