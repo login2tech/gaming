@@ -108,21 +108,27 @@ class MyMembershipModule extends React.Component {
                         Member
                       </p>
                       <strong className="text-blue">Started on: </strong>
-                      {moment(prime_obj.starts_on).format('LLL')}
+                      <span className="text-white">
+                        {moment(prime_obj.starts_on).format('LLL')}
+                      </span>
                       <br />
                       {prime_obj.cancel_requested ? (
                         <>
                           <strong className="text-blue">
                             Membership Stops on:{' '}
                           </strong>
-                          {moment(prime_obj.stops_on).format('LLL')}
+                          <span className="text-white">
+                            {moment(prime_obj.stops_on).format('LLL')}
+                          </span>
                         </>
                       ) : (
                         <>
                           <strong className="text-blue">
                             Next Renewal on:{' '}
                           </strong>
-                          {moment(prime_obj.next_renew).format('LLL')}
+                          <span className="text-white">
+                            {moment(prime_obj.next_renew).format('LLL')}
+                          </span>
                         </>
                       )}
 

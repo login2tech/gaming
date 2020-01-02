@@ -40,7 +40,6 @@ class Login extends React.Component {
         <div className="field_form authorize_form text-center">
           <p className="text-center">
             You have been banned on {moment(this.state.ban_date).format('llll')}{' '}
-            from accessing the portal by admin
           </p>
           <p>
             <strong className="text-blue">Reason for Ban:</strong>{' '}
@@ -59,7 +58,7 @@ class Login extends React.Component {
           >
             <span className="fa fa-arrow-left" /> back to login
           </a>{' '}
-          |
+          |{' '}
           <Link
             to={'/support/tickets/create/via/' + this.state.uname_of_ban}
             // onClick={e => {
