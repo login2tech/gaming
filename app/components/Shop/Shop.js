@@ -340,7 +340,13 @@ class Shop extends React.Component {
 
   render() {
     return (
-      <section className="middle_part_login">
+      <section
+        className="middle_part_login"
+        style={{
+          marginTop: 50,
+          padding: 0
+        }}
+      >
         <div className="container text-center">
           <Messages messages={this.props.messages} />
 

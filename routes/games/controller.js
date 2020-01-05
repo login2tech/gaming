@@ -9,10 +9,17 @@ exports.leaderboards = function(req, res, next) {
       items: []
     });
   }
-  new TeamScore()
-    .where({
-      game_id: req.query.game_id
-    })
+  let a = new TeamScore();
+
+  if (req.query.filter_ladder) {
+    a = a.where({
+      ladder_id: req.query.filter_ladder
+    });
+  }
+
+  a.where({
+    game_id: req.query.game_id
+  })
     .fetchAll({
       withRelated: [
         {
@@ -86,7 +93,9 @@ exports.listPaged = function(req, res, next) {
 exports.listSingleGame = function(req, res, next) {
   new Game()
     .where('id', req.params.id)
-    .fetch()
+    .fetch({
+      withRelated: ['ladders']
+    })
     .then(function(game) {
       if (!game) {
         return res

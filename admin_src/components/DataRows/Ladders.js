@@ -200,6 +200,7 @@ class Ladders extends React.Component {
                   <th>ID</th>
                   <th>Name</th>
                   <th>Game</th>
+                  <th>Platform</th>
                   <th>Min Players</th>
                   <th>Max Players</th>
                   <th>Gamer Tag Used</th>
@@ -214,6 +215,7 @@ class Ladders extends React.Component {
                         <td>{u.id}</td>
                         <td>{u.title}</td>
                         <td>{u.game_info && u.game_info.title}</td>
+                        <td>{u.platform}</td>
 
                         <td>{u.min_players}</td>
                         <td>{u.max_players}</td>

@@ -38,7 +38,7 @@ exports.list = function(req, res, next) {
   if (req.body.min_time) {
     a = a.where('created_at', '>=', req.body.min_time);
   } else {
-    a = a.where('created_at', '>=', moment().subtract(5, 'seconds'));
+    a = a.where('created_at', '>=', moment().subtract(10, 'hours'));
   }
 
   a.fetchAll({

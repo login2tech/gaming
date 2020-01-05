@@ -13,7 +13,10 @@ class Game extends React.Component {
       new_chat_msg: '',
       min_time: false,
       chats: [],
-      leaderboards: {}
+      leaderboards: {},
+      first_load_done: false,
+      is_loaded_4: false,
+      is_loaded_1: false
     };
   }
 
@@ -98,15 +101,20 @@ class Game extends React.Component {
     let str = '';
     // str;
     if (this.props.params && this.props.params.id) {
-      str = '?&filter_id=' + this.props.params.id;
+      str += '&filter_id=' + this.props.params.id;
     }
-    fetch('/api/matches/upcoming' + str)
+    if (this.state.selected_ladder && this.props.params.id) {
+      str += '&filter_ladder=' + this.state.selected_ladder;
+    }
+
+    fetch('/api/matches/upcoming?1' + str)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           this.setState(
             {
               is_loaded_1: true,
+
               matches: json.items,
               total_upcoming: json.total_upcoming
             },
@@ -122,46 +130,48 @@ class Game extends React.Component {
     let str = '';
     // str;
     if (this.props.params && this.props.params.id) {
-      str = '?&game_id=' + this.props.params.id;
+      str += ' &game_id=' + this.props.params.id;
     }
-    fetch('/api/games/leaderboards' + str)
+    //
+    if (this.state.selected_ladder && this.props.params.id) {
+      str += '&filter_ladder=' + this.state.selected_ladder;
+    }
+
+    fetch('/api/games/leaderboards?1' + str)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           const items = json.items;
           const leaderboards = {};
           // const ladders = [];
-          // console.log(ladders, ladders);
           let k = false;
           for (let i = 0; i < items.length; i++) {
             const item = items[i];
-            if (!leaderboards['l_' + item.ladder_id]) {
-              leaderboards['l_' + item.ladder_id] = {
-                ladder: item.ladder
-              };
-              if (!k) {
-                k = 'l_' + item.ladder_id;
-              }
-              // ladders.push(item.ladder);
-            }
-            if (!leaderboards['l_' + item.ladder_id]['u_' + item.team_id]) {
+            // if (!leaderboards['l_' + item.ladder_id]) {
+            //   leaderboards['l_' + item.ladder_id] = {
+            //     ladder: item.ladder
+            //   };
+            //   if (!k) {
+            //     k = 'l_' + item.ladder_id;
+            //   }
+            //   // ladders.push(item.ladder);
+            // }
+            if (!leaderboards['u_' + item.team_id]) {
               item.team.gravatar = '';
-              leaderboards['l_' + item.ladder_id]['u_' + item.team_id] = {
+              leaderboards['u_' + item.team_id] = {
                 team: item.team,
                 wins: 0,
                 loss: 0
               };
             }
-            leaderboards['l_' + item.ladder_id][
-              'u_' + item.team_id
-            ].wins += item.wins ? item.wins : 0;
-            leaderboards['l_' + item.ladder_id][
-              'u_' + item.team_id
-            ].loss += item.loss ? item.loss : 0;
+            leaderboards['u_' + item.team_id].wins += item.wins ? item.wins : 0;
+            leaderboards['u_' + item.team_id].loss += item.loss ? item.loss : 0;
           }
+          k = 'l_' + this.state.selected_ladder;
           this.setState(
             {
               is_loaded_4: true,
+              loading_3: false,
               leaderboards: leaderboards,
               active_leaderboard: k
             },
@@ -170,6 +180,54 @@ class Game extends React.Component {
         }
       });
   }
+
+  //   fetch('/api/games/leaderboards?1' + str)
+  //     .then(res => res.json())
+  //     .then(json => {
+  //       if (json.ok) {
+  //         const items = json.items;
+  //         const leaderboards = {};
+  //         // const ladders = [];
+  //         let k = false;
+  //         for (let i = 0; i < items.length; i++) {
+  //           const item = items[i];
+  //           if (!leaderboards['l_' + item.ladder_id]) {
+  //             leaderboards['l_' + item.ladder_id] = {
+  //               ladder: item.ladder
+  //             };
+  //             if (!k) {
+  //               k = 'l_' + item.ladder_id;
+  //             }
+  //             // ladders.push(item.ladder);
+  //           }
+  //           if (!leaderboards['l_' + item.ladder_id]['u_' + item.team_id]) {
+  //             item.team.gravatar = '';
+  //             leaderboards['l_' + item.ladder_id]['u_' + item.team_id] = {
+  //               team: item.team,
+  //               wins: 0,
+  //               loss: 0
+  //             };
+  //           }
+  //           leaderboards['l_' + item.ladder_id][
+  //             'u_' + item.team_id
+  //           ].wins += item.wins ? item.wins : 0;
+  //           leaderboards['l_' + item.ladder_id][
+  //             'u_' + item.team_id
+  //           ].loss += item.loss ? item.loss : 0;
+  //         }
+  //         k = 'l_' + this.state.selected_ladder;
+  //         this.setState(
+  //           {
+  //             is_loaded_4: true,
+  //             loading_3: false,
+  //             leaderboards: leaderboards,
+  //             active_leaderboard: k
+  //           },
+  //           () => {}
+  //         );
+  //       }
+  //     });
+  // }
 
   reloadChats() {
     let str = 'game_id=' + this.props.params.id;
@@ -197,10 +255,17 @@ class Game extends React.Component {
               min_time: json.fetched_on ? json.fetched_on : false
             },
             () => {
-              window.setTimeout(function() {
-                const a = jQuery('.msg_history');
-                a[0].scrollTop = a[0].scrollHeight;
-              }, 100);
+              if (this.state.first_load_done) {
+                return;
+              } else {
+                window.setTimeout(function() {
+                  const a = jQuery('.msg_history');
+                  a[0].scrollTop = a[0].scrollHeight;
+                }, 100);
+                this.setState({
+                  first_load_done: true
+                });
+              }
             }
           );
         }
@@ -210,20 +275,24 @@ class Game extends React.Component {
   fetchRecentMatches() {
     let str = '';
     if (this.props.params && this.props.params.id) {
-      str = '?&filter_id=' + this.props.params.id;
+      str += '?&filter_id=' + this.props.params.id;
     }
-    fetch('/api/matches/recent' + str)
+    if (this.state.selected_ladder && this.props.params.id) {
+      str += '&filter_ladder=' + this.state.selected_ladder;
+    }
+    fetch('/api/matches/recent?1' + str)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           this.setState(
             {
               is_loaded_2: true,
+              loading_2: false,
               done_matches: json.items,
               total_done: json.total_done
             },
             () => {
-              setInterval(this.reloadChats.bind(this), 1000);
+              // setInterval(this.reloadChats.bind(this), 1000);
               this.fetchLeaderBoards();
             }
           );
@@ -242,12 +311,12 @@ class Game extends React.Component {
   }
 
   renderLeaderBoard() {
-    const {leaderboards, active_leaderboard} = this.state;
-    if (!leaderboards || !leaderboards[active_leaderboard]) {
+    const {leaderboards} = this.state;
+    if (!leaderboards) {
       return false;
     }
     const data = [];
-    const keys = Object.keys(leaderboards[active_leaderboard]);
+    const keys = Object.keys(leaderboards);
     for (let i = 0; i < keys.length; i++) {
       const team = keys[i];
       if (team == 'ladder') {
@@ -255,14 +324,13 @@ class Game extends React.Component {
       }
       data.push({
         idx: i,
-        id: leaderboards[active_leaderboard][team].team.id,
-        username: leaderboards[active_leaderboard][team].team.title,
-        wins: leaderboards[active_leaderboard][team].wins,
-        loss: leaderboards[active_leaderboard][team].loss,
+        id: leaderboards[team].team.id,
+        username: leaderboards[team].team.title,
+        wins: leaderboards[team].wins,
+        loss: leaderboards[team].loss,
         rate: parseFloat(
-          (100 * leaderboards[active_leaderboard][team].wins) /
-            (leaderboards[active_leaderboard][team].loss +
-              leaderboards[active_leaderboard][team].wins)
+          (100 * leaderboards[team].wins) /
+            (leaderboards[team].loss + leaderboards[team].wins)
         )
       });
     }
@@ -270,10 +338,9 @@ class Game extends React.Component {
     return (
       <tbody>
         {data.map((item, idx) => {
-          // console.log(leaderboards[active_leaderboard][user]);
           return (
             <tr key={item.idx}>
-              <td>{idx}</td>
+              <td>{idx + 1}</td>
               <td>
                 <Link to={'/teams/view/' + item.id}>{item.username}</Link>
               </td>
@@ -287,8 +354,68 @@ class Game extends React.Component {
     );
   }
 
+  getLadders() {
+    if (!this.state.game) {
+      return [];
+    }
+
+    const ladders = this.state.game.ladders;
+    const platforms = ladders.map(function(item) {
+      return item.platform;
+    });
+
+    const unique_platforms = [];
+    const unique_platforms_d = [];
+
+    for (let i = 0; i < platforms.length; i++) {
+      if (unique_platforms_d.indexOf(platforms[i]) > -1) {
+        //
+      } else {
+        unique_platforms.push({
+          name: platforms[i],
+          is_platform: true,
+          id: platforms[i]
+        });
+        unique_platforms_d.push(platforms[i]);
+        for (let j = 0; j < ladders.length; j++) {
+          if (ladders[j].platform == platforms[i]) {
+            unique_platforms.push({
+              name: ladders[j].title,
+              is_ladder: true,
+              id: ladders[j].id
+            });
+          }
+        }
+      }
+    }
+    // platforms.filter(function(item, pos) {
+    //   return unique_platforms.indexOf(item) < 0;
+    // });
+    // console.log(unique_platforms);
+    // alert(unique_platforms)
+    return unique_platforms;
+  }
+
+  filterMatches(item) {
+    const obj = {
+      is_loaded_1: false,
+      is_loaded_4: false,
+      loading_2: true,
+      loading_3: true,
+      selected_ladder_name: false,
+      selected_ladder: false
+    };
+    if (item == 'none') {
+      // obj = {};
+    } else {
+      obj.selected_ladder = item.id;
+      obj.selected_ladder_name = item.name;
+    }
+    this.setState(obj, this.fetchUpcomingMatches);
+  }
+
   render() {
-    const {leaderboards, active_leaderboard} = this.state;
+    // const {leaderboards, active_leaderboard} = this.state;
     const game_id = this.props.params.id;
     return (
       <div>
@@ -308,6 +435,80 @@ class Game extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3>{this.props.params.title}</h3>
+                </div>
+                <div className="list_pad">
+                  <Link
+                    to={'/match/new'}
+                    className="btn btn-default bttn_submit dib mw_200"
+                  >
+                    Create Match
+                  </Link>{' '}
+                  <Link
+                    to={
+                      '/u/' +
+                      this.props.user.username +
+                      '/teams/new/' +
+                      this.props.params.id
+                    }
+                    className="btn btn-default bttn_submit dib mw_200"
+                  >
+                    Create Team
+                  </Link>
+                  <div className="dropdown fl-right">
+                    <button
+                      className="btn btn-default bttn_submit dib mw_200 dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      {this.state.selected_ladder_name
+                        ? this.state.selected_ladder_name
+                        : 'Filter by ladder'}
+                    </button>
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      {this.state.selected_ladder_name ? (
+                        <a
+                          className={'dropdown-item'}
+                          href="#"
+                          onClick={e => {
+                            e.preventDefault();
+                            this.filterMatches('none');
+                          }}
+                        >
+                          All Ladders
+                        </a>
+                      ) : (
+                        false
+                      )}
+                      {this.getLadders().map((item, i) => {
+                        return (
+                          <a
+                            className={
+                              'dropdown-item' +
+                              (item.is_platform ? ' disabled' : '') +
+                              (item.is_ladder ? ' is_ladder_item' : '')
+                            }
+                            href="#"
+                            onClick={e => {
+                              e.preventDefault();
+                              if (item.is_ladder) {
+                                this.filterMatches(item);
+                              }
+                            }}
+                            key={item.id}
+                            disabled={item.is_platform}
+                          >
+                            {item.name}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -374,7 +575,7 @@ class Game extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 col-sm-12 col-xs-12">
+              <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">
                 <div>
                   <h4>Matchfinder</h4>
                   {this.state.is_loaded_1 && this.state.total_upcoming < 1 ? (
@@ -385,12 +586,12 @@ class Game extends React.Component {
                   ) : (
                     false
                   )}
-                  {!this.state.is_loaded_1 ? (
-                    <div className="text-center">
+                  {this.state.is_loaded_1 ? (
+                    false
+                  ) : (
+                    <div className="text-center ym_loader_wrap">
                       <span className="fa fa-spin fa-spinner" />
                     </div>
-                  ) : (
-                    false
                   )}
                   <div className="table_wrapper">
                     <table className="table table-striped table-ongray table-hover">
@@ -460,8 +661,15 @@ class Game extends React.Component {
             </div>
 
             <div className="row">
-              <div className="col-md-6 col-sm-12 col-xs-12">
+              <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">
                 <div>
+                  {this.state.is_loaded_2 ? (
+                    false
+                  ) : (
+                    <div className="text-center ym_loader_wrap">
+                      <span className="fa fa-spin fa-spinner" />
+                    </div>
+                  )}
                   <h4 style={{lineHeight: '45px'}}>Recent Matches</h4>
 
                   <div className="table_wrapper">
@@ -536,13 +744,18 @@ class Game extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 col-sm-12 col-xs-12">
+              <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">
                 <div>
-                  <h4 style={{float: 'left', lineHeight: '45px'}}>
-                    Leaderboard
-                  </h4>
-                  <div className="btn-group" style={{float: 'right'}}>
-                    {Object.keys(leaderboards).map((ladder, idx) => {
+                  {this.state.is_loaded_4 ? (
+                    false
+                  ) : (
+                    <div className="text-center ym_loader_wrap">
+                      <span className="fa fa-spin fa-spinner" />
+                    </div>
+                  )}
+                  <h4 style={{lineHeight: '45px'}}>Leaderboard</h4>
+                  {/*<div className="btn-group" style={{float: 'right'}}>
+                  Object.keys(leaderboards).map((ladder, idx) => {
                       return (
                         <button
                           onClick={() => {
@@ -559,10 +772,8 @@ class Game extends React.Component {
                           {leaderboards[ladder].ladder.title}
                         </button>
                       );
-                    })}
-                  </div>
-                  <br />
-                  <br />
+                    })
+                  </div>*/}
                   <div className="table_wrapper">
                     <table className="table table-striped table-ongray table-hover">
                       <thead>

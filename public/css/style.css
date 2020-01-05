@@ -1,4 +1,55 @@
-@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700&display=swap'); a,a:hover {
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Light"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
+    font-weight: 100;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Semilight"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.ttf) format("truetype");
+    font-weight: 200;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Bold"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.ttf) format("truetype");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: SegoeUI;
+    src:
+        local("Segoe UI Semibold"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2) format("woff2"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff) format("woff"),
+        url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf) format("truetype");
+    font-weight: 700;
+}
+
+
+a,a:hover {
     text-decoration: none;
     font-weight: 400;
 }
@@ -15,12 +66,12 @@ html, body {
     line-height: 26px;
     font-weight: 400;
     font-size: 15px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     background: #111;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-weight: 600;
     color: #fefefe
 }
@@ -164,7 +215,7 @@ select.form-control:not([size]):not([multiple]) {
     -moz-transition: all 0.5s ease 0s;
     -o-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-size: 15px;
     padding: 0px 0px;
     font-weight: 500;
@@ -287,9 +338,25 @@ li.logo {
     overflow: hidden;
 }
 
+.ym_loader_wrap {
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 9999;text-align: center;;
+    background: #114afb7a;
+    display: flex;justify-content: center;align-items: center;
+    height: 100%;
+}
+.ym_loader_wrap .fa{
+  font-size: 40px
+}
 .personal-info-right {
     width: 50%;
     float: right;
+}
+.fl-right{
+  float :right
 }
 
 .personal-info-left {
@@ -388,7 +455,7 @@ li.logo {
 }
 
 .percentCount {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-weight: 700;
     color: #2B2B2B;
     margin-top: -11%;
@@ -451,7 +518,7 @@ li.logo {
     -o-transition: all 0.5s ease 0s;
     transition: all 0.5s ease 0s;
     font-weight: 400;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 .portfolio-nav ul li.active-portfolio {
@@ -541,7 +608,7 @@ li.logo {
 .portfolio-title h6 {
     color: #A2A0A0;
     font-weight: 400;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-size: 14px;
 }
 
@@ -807,7 +874,7 @@ li.logo {
     color: #A2A0A0;
     font-size: 13px;
     margin-top: 15px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-weight: 400;
 }
 
@@ -899,7 +966,7 @@ li.logo {
 .single-left-blog h5 {
     font-size: 13px;
     color: #A2A0A0;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-weight: 400;
 }
 
@@ -1017,7 +1084,7 @@ li.logo {
     color: #898888;
     font-weight: 600;
     margin-top: -3px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 .contact-col-1 p {
@@ -1049,7 +1116,7 @@ li.logo {
     color: #fff;
     padding: 10px 0px;
     font-weight: 700;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 /*--------------------------
@@ -1098,7 +1165,7 @@ li.logo {
 .page-title p {
     padding-top: 60px;
     font-size: 16px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 .page-title p>span {
@@ -1127,7 +1194,7 @@ li.logo {
     color: #A2A0A0;
     font-weight: 400;
     font-size: 13px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 a.read-blog {
@@ -1205,7 +1272,7 @@ a.read-blog {
 .single-recent h6 {
     font-size: 11px;
     color: #A2A0A0;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-weight: 400;
 }
 
@@ -1245,7 +1312,7 @@ a.read-blog {
 .comment-line p {
     font-size: 13px;
     font-weight: 500;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 .single-category {
@@ -1265,7 +1332,7 @@ a.read-blog {
 .single-archive a {
     color: #545454;
     display: block;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 .follow-social ul>li>a>i {
@@ -1467,7 +1534,7 @@ span.em_count {
     float: right;
     font-size: 10px;
     color: #A2A0A0;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     font-weight: 400;
 }
 
@@ -1517,7 +1584,7 @@ span.em_count {
     text-transform: uppercase;
     font-weight: 700;
     padding: 15px 20px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
 }
 
 .single-comment-form {
@@ -2176,7 +2243,7 @@ span.em_count {
     color: #fff;
     padding: 8px 25px;
     font-weight: 700;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Segoe UI Light', sans-serif;
     border: none;
 }
 
@@ -2435,7 +2502,7 @@ a.image_avar {
     background-size: cover;
 }
 
- .play_match_btn {
+.play_match_btn {
     position: static;
     margin-top: 410px;
     font-weight: normal;
@@ -2443,7 +2510,7 @@ a.image_avar {
     left: 44%;
 }
 
- .play_match_btn:hover {
+.play_match_btn:hover {
     background: #0040ff;
     font-weight: normal;
 }
@@ -2695,7 +2762,7 @@ a.image_avar {
     color: #fff;
     text-transform: uppercase;
     margin-top: 18px;
-    font: 700 .875em "Raleway",sans-serif;
+    font: 700 .875em "Segoe UI Light",sans-serif;
 }
 
 .tournament-list .tournament-box .tournament-body figure img {
@@ -2721,14 +2788,14 @@ a.image_avar {
 .tournament-list .tournament-box .tournament-footer .col h5 {
     font-weight: 600;
     font-size: 1em;
-    font-family: "Raleway",sans-serif;
+    font-family: "Segoe UI Light",sans-serif;
     color: #636f7d;
     text-transform: uppercase;
     margin-bottom: 4px;
 }
 
 .tournament-list .tournament-box .tournament-footer .col p {
-    font: 600 0.875em/1 "Raleway",sans-serif;
+    font: 600 0.875em/1 "Segoe UI Light",sans-serif;
     color: #fff;
     font-size: 1.1em;
 }
@@ -2767,7 +2834,7 @@ a.image_avar {
 }
 
 .btn-default {
-    font: 900 0.75em/1 "Raleway",sans-serif;
+    font: 900 0.75em/1 "Segoe UI Light",sans-serif;
     word-break: break-word;
     text-transform: uppercase;
     min-width: 200px;
@@ -2783,7 +2850,7 @@ a.image_avar {
 
 .tournament-list .tournament-box .tournament-body .tournament-name {
     color: #636f7d;
-    font: 500 1.125em/1 "Raleway",sans-serif;
+    font: 500 1.125em/1 "Segoe UI Light",sans-serif;
     margin-bottom: 6px;
 }
 
@@ -2822,7 +2889,7 @@ a.image_avar {
 }
 
 .team-list .team-box .team-body h3 {
-    font: 400 1.125em/1 "Raleway",sans-serif;
+    font: 400 1.125em/1 "Segoe UI Light",sans-serif;
 }
 
 .team-list .team-box .team-body h3 a {
@@ -2830,7 +2897,7 @@ a.image_avar {
 }
 
 .team-list .team-box .team-body span {
-    font: 700 0.75em/1 "Raleway",sans-serif;
+    font: 700 0.75em/1 "Segoe UI Light",sans-serif;
     color: #59596d;
     text-transform: uppercase;
 }
@@ -2892,13 +2959,13 @@ ul.members li a img {
 }
 
 .team-list .team-box .team-foot h5 {
-    font: 700 0.75em/1 "Raleway",sans-serif;
+    font: 700 0.75em/1 "Segoe UI Light",sans-serif;
     color: #59596d;
     margin-bottom: 2px;
 }
 
 .team-list .team-box .team-foot p {
-    font: 700 0.875em/1 "Raleway",sans-serif;
+    font: 700 0.875em/1 "Segoe UI Light",sans-serif;
     color: #fff;
 }
 
@@ -4043,7 +4110,7 @@ select {
 }
 
 .example.example4 * {
-    font-family: Inter UI, Raleway, Segoe UI, sans-serif;
+    font-family: Inter UI, Segoe UI Light, Segoe UI, sans-serif;
     font-size: 16px;
     font-weight: 500;
 }
@@ -4465,7 +4532,7 @@ ul.submenu li a {
     border-bottom: 1px solid #000000;
     padding: .5rem;
     height: 3.7rem;
-    font-family: "Raleway", sans-serif;
+    font-family: "Segoe UI Light", sans-serif;
     text-transform: uppercase;
     font-size: 1.25rem;
     line-height: 1.25rem;
@@ -4497,7 +4564,7 @@ ul.submenu li a {
     text-align: center;
     border-bottom: 1px solid #000000;
     padding: .5rem;
-    font-family: "Raleway", sans-serif;
+    font-family: "Segoe UI Light", sans-serif;
     text-transform: uppercase;
     font-size: 0.9375rem;
     line-height: 0.9375rem;
@@ -4660,9 +4727,10 @@ ul.submenu.notification_list {
     width: 100%;
     /* margin-left:10% */
 }
-.tooltip.show .tooltip-inner{
-  border: 1px solid #114afb;
-  box-shadow: 0px 0px 5px 3px #114afb;
+
+.tooltip.show .tooltip-inner {
+    border: 1px solid #114afb;
+    box-shadow: 0px 0px 5px 3px #114afb;
 }
 
 span.rank_prog_done {
@@ -5191,9 +5259,11 @@ ul.pagination .disabled a {
     float: left;
     margin-right: 5px;
 }
+
 .textcap, .textcap span {
     text-transform: capitalize;
 }
+
 .pf_icon_big {
     font-size: 70px !important;
     float: left;
@@ -5244,19 +5314,26 @@ th .pf_icon , td .pf_icon {
 .single_chat {
     border-bottom: 1px solid #373737;
     padding: 10px;
-    display: flex;
+    /* display: flex; */
+    display: inline-block;
+    width: 100%;
 }
 
 .chat_user_image {
-    flex: 1;
+    /* flex: 1; */
+    float: left;
 }
 
 .chat_user_name {
-    flex: 2;
+    display: block;
+    padding-left: 40px;
+    font-size: 12px;
+    color: grey;
 }
 
 .chat_msg {
-    flex: 6;
+    padding-left: 40px;
+    display: block;
 }
 
 span.chat_user_image {
@@ -5558,6 +5635,9 @@ ul.notices li:first-child {
     border-radius: 5px;
     text-transform: uppercase;
 }
+.actision_logo:not(.epic) {
+    height: 40px;
+}
 
 .bbt {
     border-bottom: 1px solid #114afb;
@@ -5571,7 +5651,7 @@ ul.notices li:first-child {
     border: 0;
     border-radius: 0;
     padding: 13px 0;
-    font: 900 0.75em/1 "Raleway",sans-serif;
+    font: 900 0.75em/1 "Segoe UI Light",sans-serif;
 }
 
 .btn.btn-primary.btn-sm {
@@ -5588,6 +5668,12 @@ ul.notices li:first-child {
     border: 1px solid #114afb !important;
 }
 
+.bttn_submit.dib{
+  line-height: 18px
+}
+.is_ladder_item{
+  padding-left: 34px;
+}
 
 @media screen and (max-width: 690px) {
     .br_1 {
@@ -5695,4 +5781,12 @@ ul.notices li:first-child {
 
 .text-blue {
     color: #114afb;
+}
+.chat_user_name:before {
+    content: '@';
+    /* font-weight: bold; */
+}
+
+.chat_user_name a {
+    color: grey;
 }

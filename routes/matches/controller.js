@@ -1248,6 +1248,11 @@ exports.listupcoming = function(req, res, next) {
       game_id: req.query.filter_id
     });
   }
+  if (req.query.filter_ladder) {
+    a = a.where({
+      ladder_id: req.query.filter_ladder
+    });
+  }
 
   a.fetchAll({withRelated: ['ladder', 'game', 'team_1_info']})
     .then(function(item) {
@@ -1286,6 +1291,12 @@ exports.listrecent = function(req, res, next) {
       game_id: req.query.filter_id
     });
   }
+  if (req.query.filter_ladder) {
+    a = a.where({
+      ladder_id: req.query.filter_ladder
+    });
+  }
+
   if (req.query.limit) {
     a = a.fetchPage({
       page: 0,

@@ -165,7 +165,7 @@ class EditLadder extends React.Component {
                 <label>Game</label>
                 <select
                   readOnly
-                  disbled
+                  disabled
                   className="form-control"
                   name="game_id"
                   onChange={this.handleChange.bind(this)}
