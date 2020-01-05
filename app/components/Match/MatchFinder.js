@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
 import game_user_ids from '../../../config/game_user_ids';
+import {leave_match} from '../../actions/match';
 
 // import Messages from '../Modules/Messages';
 
@@ -50,6 +51,19 @@ class MatchFinder extends React.Component {
       return orign;
     }
     return '/login';
+  }
+
+  initCancel(match) {
+    this.props.dispatch(
+      leave_match(
+        {
+          match_id: match.id,
+          do_cancel: false,
+          team: match.team_1_id
+        },
+        this.props.user
+      )
+    );
   }
 
   render() {
@@ -222,12 +236,39 @@ class MatchFinder extends React.Component {
                                         {txt}
                                       </Link>
                                       {show_cancel ? (
-                                        <Link
-                                          to={this.matchLink('/m/' + match.id)}
-                                          className="btn-danger btn cnclMt"
-                                        >
-                                          Cancel Match
-                                        </Link>
+                                        this.state.show_cancel_init ? (
+                                          <div>
+                                            <button
+                                              onClick={() => {
+                                                this.initCancel(match);
+                                              }}
+                                              className="btn-danger btn cnclMt width-auto"
+                                            >
+                                              SURE?
+                                            </button>
+                                            <button
+                                              onClick={() => {
+                                                this.setState({
+                                                  show_cancel_init: false
+                                                });
+                                              }}
+                                              className="btn-danger btn cnclMt width-auto"
+                                            >
+                                              x
+                                            </button>
+                                          </div>
+                                        ) : (
+                                          <button
+                                            onClick={() => {
+                                              this.setState({
+                                                show_cancel_init: true
+                                              });
+                                            }}
+                                            className="btn-danger btn cnclMt"
+                                          >
+                                            Cancel Match
+                                          </button>
+                                        )
                                       ) : (
                                         false
                                       )}

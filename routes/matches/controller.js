@@ -1413,7 +1413,10 @@ exports.leave_match = function(req, res, next) {
         });
         return;
       }
-      if (match.get('status') != 'accepted') {
+      if (
+        match.get('status') != 'accepted' &&
+        match.get('status') != 'pending'
+      ) {
         return res
           .status(400)
           .send({ok: false, msg: 'Match can not be cancelled at this stage.'});
@@ -1435,39 +1438,53 @@ exports.leave_match = function(req, res, next) {
               .send({ok: false, msg: 'Cancel Match cancellation Failed.'});
           });
       }
+      console.log('leave api');
       if (match.get('cancel_requested')) {
         const requested_by = match.get('cancel_requested_by');
         if (req.body.team != requested_by) {
-          // cancel kr match ko.
+          // cancel kr match ko. refund cron kr dega.
           return match
             .save({
               status: 'cancelled'
             })
             .then(function(m) {
-              return res
-                .status(200)
-                .send({ok: true, msg: 'Match has been cancelled.'});
+              let msg;
+              if (m.get('match_type') == 'free') {
+                msg = 'Match has been cancelled.';
+              } else {
+                msg = 'Match has been cancelled. You will get refunds shortly';
+              }
+              return res.status(200).send({ok: true, msg: msg});
             })
             .catch(function(err) {
-              res
+              return res
                 .status(400)
                 .send({ok: false, msg: 'Match cancellation Failed.'});
             });
         } else {
-          res.status(200).send({ok: true, msg: 'Match cancellation requested'});
+          return res
+            .status(200)
+            .send({ok: true, msg: 'Match cancellation requested'});
         }
       }
-      return match
-        .save({
-          cancel_requested: true,
-          cancel_requested_by: req.body.team
-        })
-        .then(function(m) {
-          res.status(200).send({ok: true, msg: 'Match cancellation requested'});
-        })
-        .catch(function(err) {
-          res.status(400).send({ok: false, msg: 'Match cancellation Failed.'});
-        });
+      if (match.get('status') == 'pending') {
+        return match
+          .save({
+            status: 'cancelled'
+          })
+          .then(function(m) {
+            let msg2 = '';
+            if (match.get('match_type') != 'free') {
+              msg2 = ' You will get refunds shorty.';
+            }
+            res.status(200).send({ok: true, msg: 'Match cancelled.' + msg2});
+          })
+          .catch(function(err) {
+            res
+              .status(400)
+              .send({ok: false, msg: 'Match cancellation Failed.'});
+          });
+      }
 
       //
     })

@@ -750,7 +750,11 @@ class MatchInfo extends React.Component {
 
                       <div className="col-md-4 col-6">
                         <span> STATUS</span>
-                        <p>
+                        <p
+                          className={
+                            'm_status status_' + this.state.match.status
+                          }
+                        >
                           {moment().isAfter(moment(this.state.match.starts_at))
                             ? this.dynamicStatus()
                             : this.state.match.status}

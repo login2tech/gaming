@@ -5778,7 +5778,13 @@ ul.notices li:first-child {
         flex-direction: column;
     }
 }
-
+.width-auto
+{width:auto}
+.cnclMt.width-auto{min-width: 0px;    padding-left: 30px;
+    padding-right: 30px;}
+    .cnclMt.width-auto:first-child{
+      border-right:1px solid #000 !important;
+    }
 .text-blue {
     color: #114afb;
 }
@@ -5789,4 +5795,10 @@ ul.notices li:first-child {
 
 .chat_user_name a {
     color: grey;
+}
+.status_cancelled {
+    color: #f00;
+}
+.m_status {
+    text-transform: capitalize;
 }
