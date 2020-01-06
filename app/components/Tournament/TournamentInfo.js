@@ -4,9 +4,6 @@ import {Link} from 'react-router';
 const moment = require('moment');
 import {join_tournament, saveScores} from '../../actions/tournament';
 import game_user_ids from '../../../config/game_user_ids';
-
-// import {Bracket} from 'react-tournament-bracket';
-
 import Messages from '../Modules/Messages';
 
 class TournamentInfo extends React.Component {
@@ -1326,8 +1323,8 @@ class TournamentInfo extends React.Component {
                   </span>
                   <div className="match_start_date">
                     {moment().isAfter(moment(this.state.tournament.starts_at))
-                      ? 'Match Started:'
-                      : 'Match Starts'}{' '}
+                      ? 'Tournament Started:'
+                      : 'Tournament Starts'}{' '}
                     {moment(this.state.tournament.starts_at).fromNow()}
                   </div>
                   {/* <div className="twovstwo">1 VS 1 MATCH</div> */}

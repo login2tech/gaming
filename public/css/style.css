@@ -2475,7 +2475,7 @@ a.image_avar {
 
 .call_action {
     padding: 70px 0px;
-    
+
     background-position: center;
     background-size: cover;
     position: relative;
@@ -5654,6 +5654,7 @@ ul.notices li:first-child {
 
 .bbt {
     border-bottom: 1px solid #114afb;
+    box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.14);
     padding-bottom: 20px;
     margin-bottom: 30px;
 }
