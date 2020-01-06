@@ -2739,7 +2739,7 @@ a.image_avar {
     transition: all .4s ease-in-out;
     background: #fff;
     background-position: center top;
-    background-blend-mode: luminosity;
+    background-blend-mode: multiply;
     background-size: cover;
     flex-shrink: 0;
     /* max-width: 555px; */

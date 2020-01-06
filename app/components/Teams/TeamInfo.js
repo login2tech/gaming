@@ -568,7 +568,6 @@ class TeamInfo extends React.Component {
           e.preventDefault();
         }}
       >
-        {/*rank : */}
         {this.rank_based_on_xp(team_info.xp_obj)}
         <div
           className="rank_box_prog_outer"
@@ -815,8 +814,8 @@ class TeamInfo extends React.Component {
               <div className="col-md-3 col-sm-3 col-xs-12 text-center mt-2">
                 <span className="textcap text-center">
                   {this.state.team_info.team_type == 'tournaments' ? (
-                    <span className="trofy">
-                      <span className="fa fa-trophy" />{' '}
+                    <span className="trofy pt-2">
+                      <span className="fa fa-trophy text-lg" />{' '}
                       {this.state.team_info.team_type}
                     </span>
                   ) : (

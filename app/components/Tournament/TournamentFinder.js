@@ -26,15 +26,10 @@ class TournamentFinder extends React.Component {
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          this.setState(
-            {
-              is_loaded: true,
-              tournaments: json.items
-            },
-            () => {
-              // this.fetchTeams();
-            }
-          );
+          this.setState({
+            is_loaded: true,
+            tournaments: json.items
+          });
         }
       });
   }
@@ -100,9 +95,16 @@ class TournamentFinder extends React.Component {
                           <li
                             key={match.id}
                             className="tournament-box"
+                            // style={{
+                            //   backgroundImage:
+                            //     "url('images/thumbnail_tournament.jpg')"
+                            // }}
                             style={{
-                              backgroundImage:
-                                "url('images/thumbnail_tournament.jpg')"
+                              backgroundColor: '#27204d',
+                              backgroundPosition: 'center',
+                              backgroundImage: match.game.banner_url
+                                ? 'url(' + match.game.banner_url + ')'
+                                : "url('images/thumbnail_tournament.jpg')"
                             }}
                           >
                             <div className="tournament-body">

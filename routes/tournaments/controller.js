@@ -231,6 +231,7 @@ const proceed_to_next_round = function(t_id, t_round) {
       console.log(err);
     });
 };
+
 exports.saveScore = function(req, res, next) {
   new TournamentMatch({id: req.body.id})
     .fetch()
@@ -504,7 +505,6 @@ const createRoundMatches = function(match) {
 };
 
 exports.join = function(req, res, next) {
-  //
   if (!req.body.tournament_id) {
     res.status(400).send({ok: false, msg: 'Please enter Tournament ID'});
   }
@@ -580,7 +580,7 @@ exports.join = function(req, res, next) {
       teams.push(req.body.team_id);
 
       teams = teams.filter(function(el) {
-        return el != null && el != '';
+        return el !== null && el != '';
       });
       // let notif_to_send_to_teams = teams;
       teams = teams.join(',');

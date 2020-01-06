@@ -101,7 +101,13 @@ class Money8List extends React.Component {
                           <li
                             key={match.id}
                             className="tournament-box"
-                            style={{background: '#27204d'}}
+                            style={{
+                              backgroundColor: '#27204d',
+                              backgroundPosition: 'center',
+                              backgroundImage: match.game.banner_url
+                                ? 'url(' + match.game.banner_url + ')'
+                                : "url('images/thumbnail_tournament.jpg')"
+                            }}
                           >
                             <div className="tournament-body">
                               <Link
