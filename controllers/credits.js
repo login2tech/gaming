@@ -7,11 +7,29 @@ const utils = require('../routes/utils');
 const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
 const WithdrawalRequest = require('../models/Withdrawal');
+const MembershipLog = require('../models/MembershipLog');
 const Notif = require('../models/Notification');
 
 const plan_costs = {
   gold: 6.99,
   silver: 4.99
+};
+
+const addMembershipLog = function(plan, action, uid) {
+  let msg;
+  if (action == 'add') {
+    msg = 'OCG ' + plan + ' membership started.';
+  } else if (action == 'renew') {
+    msg = 'OCG ' + plan + ' membership reviewed';
+  } else if (action == 'stop_at_month_end') {
+    msg = 'OCG' + plan + ' membership renewal cancelled';
+  } else if (action == 'stop') {
+    msg = 'OCG' + plan + ' membership stopped';
+  }
+  new MembershipLog().save({
+    user_id: uid,
+    descr: msg
+  });
 };
 // TODO: Change plan ids for production. not using env vars here.
 const stripe_plans = {
@@ -370,6 +388,7 @@ exports.stopRenewal = function(req, res, next) {
                   .status(400)
                   .send({ok: false, msg: 'failed to cancel subscription.'});
               }
+              const prime_type = usr.get('prime_type');
               obj.ending_on_period_end = true;
               obj.cancel_requested = true;
               obj.stops_on = obj.next_renew;
@@ -381,6 +400,11 @@ exports.stopRenewal = function(req, res, next) {
                   {patch: true}
                 )
                 .then(function(u) {
+                  addMembershipLog(
+                    prime_type,
+                    'stop_at_month_end',
+                    usr.get('id')
+                  );
                   return res.status(200).send({
                     ok: true,
                     msg: 'Subscription will stop at period end',
@@ -521,15 +545,11 @@ exports.resolveCustomerId = function(req, res, next) {
   }
   //
 };
-const addMembershipLog = function(plan, action) {
-  //
-  // TODO: do this
-};
 
 exports.stripe_hook = function(req, res, next) {
   res.status(200).send('ok!');
   const body = req.body;
-  console.log(body.type);
+  // console.log(body.type);
   if (body.type == 'customer.subscription.updated') {
     console.log('updaing');
     const sub_id = body.data.object.id;
@@ -544,6 +564,7 @@ exports.stripe_hook = function(req, res, next) {
         if (!usr) {
           return;
         }
+        const prime_type = usr.get('prime_type');
         let prime_obj = usr.get('prime_obj');
         prime_obj = JSON.parse(prime_obj);
         prime_obj.next_renew = moment(
@@ -557,7 +578,17 @@ exports.stripe_hook = function(req, res, next) {
             .save({
               prime_obj: prime_obj
             })
-            .then(function() {})
+            .then(function() {
+              if (prime_obj.cancel_requested) {
+                addMembershipLog(
+                  prime_type,
+                  'stop_at_month_end',
+                  usr.get('id')
+                );
+              } else {
+                addMembershipLog(prime_type, 'renew', usr.get('id'));
+              }
+            })
             .catch(function() {});
         }
       });
@@ -584,6 +615,7 @@ exports.stripe_hook = function(req, res, next) {
           sub_id,
           prime_obj.subscription_id == sub_id
         );
+        const prime_type = usr.get('prime_type');
         if (prime_obj.subscription_id == sub_id) {
           usr
             .save({
@@ -591,7 +623,10 @@ exports.stripe_hook = function(req, res, next) {
               prime_obj: {},
               prime_type: ''
             })
-            .then(function() {})
+            .then(function() {
+              //
+              addMembershipLog(prime_type, 'stop', usr.get('id'));
+            })
             .catch(function() {});
         }
       });
@@ -652,8 +687,8 @@ exports.buyMembership = function(req, res, next) {
         method: 'update'
       })
       .then(function(user) {
-        addMembershipLog(plan, 'add');
-        console.log(user.toJSON());
+        addMembershipLog(plan, 'add', req.user.id);
+        // console.log(user.toJSON());
         return res.status(200).send({
           ok: true,
           msg: 'Membership successfully Started',
@@ -729,6 +764,7 @@ exports.buyMembership = function(req, res, next) {
             usr
               .save(user_obj_to_save, {patch: true})
               .then(function(user) {
+                addMembershipLog(plan, 'add', req.user.id);
                 res.status(200).send({
                   ok: true,
                   action: 'PAYMENT_DONE',

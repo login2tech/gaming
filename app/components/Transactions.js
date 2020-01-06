@@ -16,18 +16,21 @@ class Transaction extends React.Component {
       cash_transactions: [],
       cash_page: 1,
       credit_page: 1,
+      membership_page: 1,
+      membership_pagi: {},
       cash_pagi: {},
       credit_pagi: {},
       credit_transactions: [],
+      membership_transactions: [],
       loaded: false
     };
   }
 
   componentDidMount() {
-    this.fTx('cash');
+    this.fTx('cash', true);
   }
 
-  fTx(type) {
+  fTx(type, proceed) {
     const pg = this.state[type + '_page'];
     fetch('/transactions/list?type=' + type + '&page=' + pg)
       .then(res => res.json())
@@ -40,7 +43,13 @@ class Transaction extends React.Component {
               [type + '_pagi']: json.pagination
             },
             () => {
-              this.fTx('credit');
+              if (proceed) {
+                if (type == 'cash') {
+                  this.fTx('credit', true);
+                } else if (type == 'credit') {
+                  this.fTx('membership');
+                }
+              }
             }
           );
         }
@@ -77,40 +86,6 @@ class Transaction extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                {/*}
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <i className="fa fa-trophy" aria-hidden="true" /> XP
-                    TRANSACTIONS
-                  </h5>
-                  <br />
-                  <div className=" ">
-                    <div className="table_wrapper"><table className="table table-stripped">
-                      <thead>
-                        <tr>
-                          <th>Id</th>
-                          <th>Description</th>
-                          <th>Count</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.xp_transactions.map((k, i) => {
-                          return (
-                            <tr key={k.id}>
-                              <td>{i + 1}</td>
-                              <td>{k.details}</td>
-                              <td>{k.qty}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table></div>
-                  </div>
-                </div>
-
-
-                */}
-
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
                     <img
@@ -234,6 +209,60 @@ class Transaction extends React.Component {
                       pageRangeDisplayed={5}
                       onPageChange={data => {
                         this.handlePageClick(data, 'credit');
+                      }}
+                      containerClassName={'pagination'}
+                      subContainerClassName={'pages pagination'}
+                      activeClassName={'active'}
+                    />
+                  </div>
+                </div>
+
+                <div className="content_box">
+                  <h5 className="prizes_desclaimer">
+                    <img
+                      src="/assets/icons/ocg_member_gold.png"
+                      style={{
+                        height: '40px',
+                        marginTop: '20px',
+                        marginBottom: '20px'
+                      }}
+                    />{' '}
+                    MEMBERSHIP TRANSACTIONS
+                  </h5>
+                  <br />
+                  <div className=" ">
+                    <div className="table_wrapper">
+                      <table className="table table-stripped">
+                        <thead>
+                          <tr>
+                            <th style={{width: '7%'}}>Id</th>
+                            <th style={{width: '23%'}}>Date</th>
+                            <th style={{width: '70%'}}>Description</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.membership_transactions.map((k, i) => {
+                            return (
+                              <tr key={k.id}>
+                                <td>{i + 1}</td>
+                                <td>{moment(k.created_at).format('llll')}</td>
+                                <td>{k.descr}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                    <ReactPaginate
+                      previousLabel={'previous'}
+                      nextLabel={'next'}
+                      breakLabel={'...'}
+                      breakClassName={'break-me'}
+                      pageCount={this.state.membership_pagi.pageCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={data => {
+                        this.handlePageClick(data, 'membership');
                       }}
                       containerClassName={'pagination'}
                       subContainerClassName={'pages pagination'}

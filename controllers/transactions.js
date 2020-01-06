@@ -1,6 +1,7 @@
 const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
 const XPTransactions = require('../models/XPTransactions');
+const MembershipLog = require('../models/MembershipLog');
 
 exports.list = function(req, res, next) {
   const pg = req.query.page ? req.query.page : 1;
@@ -9,6 +10,8 @@ exports.list = function(req, res, next) {
     mdl = new CashTransactions();
   } else if (req.query.type == 'credit') {
     mdl = new CreditTransactions();
+  } else if (req.query.type == 'membership') {
+    mdl = new MembershipLog();
   } else {
     mdl = new XPTransactions();
   }

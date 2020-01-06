@@ -2,7 +2,23 @@
 require('dotenv').config({silent: true});
 const moment = require('moment');
 const utils = require('./routes/utils');
-
+const MembershipLog = require('./models/MembershipLog');
+const addMembershipLog = function(plan, action, uid) {
+  let msg;
+  if (action == 'add') {
+    msg = 'OCG ' + plan + ' membership started.';
+  } else if (action == 'renew') {
+    msg = 'OCG ' + plan + ' membership reviewed';
+  } else if (action == 'stop_at_month_end') {
+    msg = 'OCG' + plan + ' membership renewal cancelled';
+  } else if (action == 'stop') {
+    msg = 'OCG' + plan + ' membership stopped';
+  }
+  new MembershipLog().save({
+    user_id: uid,
+    descr: msg
+  });
+};
 const plan_prices = {
   gold: 6.99,
   silver: 4.99
@@ -36,6 +52,7 @@ const stopDoubleXp = function(ta) {
 
 const checkForMembership = function(user) {
   const prime_obj = user.prime_obj;
+  const prime_type = user.prime_type;
   const obj_to_save = {};
   if (prime_obj.bought_type == 'Stripe') {
     // let  it happen with stripe's webhooks
@@ -48,7 +65,7 @@ const checkForMembership = function(user) {
         .where({id: user.id})
         .save(obj_to_save, {method: 'update'})
         .then(function(usr) {
-          //
+          addMembershipLog(prime_type, 'stop', user.id);
         })
         .catch(function(err) {
           //
@@ -63,6 +80,7 @@ const checkForMembership = function(user) {
           'Renewing membership via OCG Cash',
           ''
         );
+
         obj_to_save.prime_obj = user.prime_obj;
         obj_to_save.prime_obj.next_renew = moment(
           user.prime_obj.next_renew
@@ -71,7 +89,7 @@ const checkForMembership = function(user) {
           .where({id: user.id})
           .save(obj_to_save, {method: 'update'})
           .then(function(usr) {
-            //
+            addMembershipLog(prime_type, 'renew', user.id);
           })
           .catch(function(err) {
             //
@@ -85,7 +103,7 @@ const checkForMembership = function(user) {
           .where({id: user.id})
           .save(obj_to_save, {method: 'update'})
           .then(function(usr) {
-            //
+            addMembershipLog(prime_type, 'stop', user.id);
           })
           .catch(function(err) {
             //
