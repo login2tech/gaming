@@ -158,8 +158,6 @@ class MatchFinder extends React.Component {
                                   key={match.id}
                                   className="tournament-box"
                                   style={{
-                                    backgroundColor: '#27204d',
-                                    backgroundPosition: 'center',
                                     backgroundImage: match.game.banner_url
                                       ? 'url(' + match.game.banner_url + ')'
                                       : "url('images/thumbnail_tournament.jpg')"

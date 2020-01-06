@@ -100,8 +100,6 @@ class TournamentFinder extends React.Component {
                             //     "url('images/thumbnail_tournament.jpg')"
                             // }}
                             style={{
-                              backgroundColor: '#27204d',
-                              backgroundPosition: 'center',
                               backgroundImage: match.game.banner_url
                                 ? 'url(' + match.game.banner_url + ')'
                                 : "url('images/thumbnail_tournament.jpg')"

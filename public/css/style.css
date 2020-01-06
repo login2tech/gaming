@@ -2604,6 +2604,8 @@ a.image_avar {
     background-size: cover;
     position: relative;
     padding-top: 30px;
+    background-color: rgba(17, 74, 251, 0.4);
+    background-blend-mode: overlay;
 }
 
 .profile_pic_outline .img-fluid {
@@ -2739,23 +2741,34 @@ a.image_avar {
     transition: all .4s ease-in-out;
     background: #fff;
     background-position: center top;
-    background-blend-mode: multiply;
+    background-color: rgba(17, 74, 251, 0.49);
+    background-blend-mode: overlay;
+    background-position: center;
     background-size: cover;
     flex-shrink: 0;
     /* max-width: 555px; */
     width: 100%;
     /* min-height: 310px; */
     color: #fff;
+    position: relative;
     justify-content: flex-start;
     align-items: flex-start;
 }
-
+.tournament-list .tournament-box:before{
+  background: rgba(16,30,44,0.7) none repeat scroll 0 0;
+  content: "";
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;z-index: 0;
+  width: 100%;
+}
 .tournament-list .tournament-box .tournament-body {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
-    padding: 28px;
+    padding: 28px;z-index: 1
 }
 
 .tournament-list .tournament-box .tournament-body .date {
