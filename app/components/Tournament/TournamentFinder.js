@@ -95,10 +95,6 @@ class TournamentFinder extends React.Component {
                           <li
                             key={match.id}
                             className="tournament-box"
-                            // style={{
-                            //   backgroundImage:
-                            //     "url('images/thumbnail_tournament.jpg')"
-                            // }}
                             style={{
                               backgroundImage: match.game.banner_url
                                 ? 'url(' + match.game.banner_url + ')'
