@@ -20,6 +20,19 @@ class NewTeam extends React.Component {
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
+
+  fetchTours() {
+    fetch('/api/tournaments/upcoming')
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState({
+            is_loaded: true,
+            tournaments: json.items
+          });
+        }
+      });
+  }
   componentDidMount() {
     fetch('/api/games/list')
       .then(res => res.json())
@@ -31,7 +44,7 @@ class NewTeam extends React.Component {
               games: json.items
             },
             () => {
-              // this.fetchTeams();
+              this.fetchTours();
             }
           );
         }
@@ -158,6 +171,32 @@ class NewTeam extends React.Component {
                         <option value="tournaments">Tournaments</option>
                       </select>
                     </div>
+                    {this.state.team_type == 'tournaments' ? (
+                      <div className="form-group col-md-12">
+                        <label htmlFor="title">Tournament</label>
+
+                        <select
+                          className="form-control"
+                          required="required"
+                          name="tournament"
+                          id="tournament"
+                          value={this.state.tournament}
+                          onChange={this.handleChange.bind(this)}
+                        >
+                          <option value="">Select Team Type</option>
+                          {this.state.tournaments.map((t, i) => {
+                            return (
+                              <option value={t.id} key={i.id}>
+                                {t.title}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    ) : (
+                      false
+                    )}
+
                     <div className="form-group col-md-12">
                       <label htmlFor="title">User Id Required</label>
                       <div>

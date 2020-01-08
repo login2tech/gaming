@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
-const credit_cost = 1;
-const currency = 'usd';
+// const credit_cost = 1;
+// const currency = 'usd';
 const moment = require('moment');
 const utils = require('../routes/utils');
 const CashTransactions = require('../models/CashTransactions');
@@ -36,8 +36,9 @@ const stripe_plans = {
   gold: 'prime-monthly',
   silver: 'prime-monthly'
 };
+
 const getDoubleXPAmount = function() {
-  return 5;
+  return 2;
 };
 
 const __addNewCreditPointTransaction = function(
@@ -249,55 +250,130 @@ const __addNewCredit_points = function(
   });
 };
 
-const proceedWithDoubleXP = function(req, res) {
-  const stripeToken = req.body.stripe_token;
+exports.deduct_money = function(req, res, next) {
+  const points_to_add = req.body.points_to_add;
+  const init_transaction_mode = req.body.init_transaction_mode;
+  let cost;
+  let msg;
+  if (init_transaction_mode == 'double_xp') {
+    cost = getDoubleXPAmount();
+    msg = ' Double XP Token';
+  } else {
+    cost = points_to_add;
+    msg = init_transaction_mode;
+  }
 
-  stripe.charges.create(
-    {
-      amount: getDoubleXPAmount() * 100,
-      currency: 'usd',
-      source: stripeToken,
-      description: 'Charge for double xp for ' + req.user.email
-    },
-    function(err, charge) {
-      if (err) {
-        console.log(err);
-        res.status(400).send({ok: false, msg: 'failed to charge card'});
-        return;
+  if (req.body.stripe_token == 'USE_OCG') {
+    next();
+  } else {
+    stripe.charges.create(
+      {
+        amount: cost * 100,
+        currency: 'usd',
+        source: req.body.stripe_token,
+        description: 'Charge for adding' + msg
+      },
+      function(err, charge) {
+        if (err) {
+          console.log(err);
+          return res
+            .status(400)
+            .send({ok: false, msg: 'Failed to charge card'});
+        }
+        // req.charge_id = charge.id;
+        next();
       }
+    );
+  }
+  // next();
+};
 
-      User.forge({id: req.user.id})
-        .fetch()
+exports.deduct_ocg = function(req, res, next) {
+  // const action = req.body.action;
+  const points_to_add = req.body.points_to_add;
+  const init_transaction_mode = req.body.init_transaction_mode;
+  let cost;
+  // let msg; .
+  if (init_transaction_mode == 'double_xp') {
+    cost = getDoubleXPAmount();
+    // msg = ' Double XP Token';
+  } else {
+    cost = points_to_add;
+    // msg = init_transaction_mode;
+  }
+  let msg;
+  switch (init_transaction_mode) {
+    case 'double_xp':
+      msg = 'For buying double XP token';
+      break;
+    case 'credit':
+    case 'credits':
+      msg = 'For buying credits';
+      break;
+
+    default:
+      msg = 'For resetting profile records';
+      break;
+  }
+
+  if (req.body.stripe_token == 'USE_OCG') {
+    utils.takeCashFromUser(req.user.id, cost, msg, '');
+  }
+  next();
+};
+
+const proceedWithDoubleXP = function(req, res) {
+  // const stripeToken = req.body.stripe_token;
+  //
+  // stripe.charges.create(
+  //   {
+  //     amount: getDoubleXPAmount() * 100,
+  //     currency: 'usd',
+  //     source: stripeToken,
+  //     description: 'Charge for double xp for ' + req.user.email
+  //   },
+  //   function(err, charge) {
+  //     if (err) {
+  //       console.log(err);
+  //       res.status(400).send({ok: false, msg: 'failed to charge card'});
+  //       return;
+  //     }
+
+  User.forge({id: req.user.id})
+    .fetch()
+    .then(function(usr) {
+      if (!usr) {
+        return res.status(400).send({ok: false, msg: 'Some Error #355'});
+      }
+      let double_xp_tokens = usr.get('double_xp_tokens');
+      double_xp_tokens = double_xp_tokens + 1;
+      usr
+        .save(
+          {
+            // double_xp_obj: {starts_on: moment()},
+            // double_xp: true,
+            // double_xp_exp: moment().add(1, 'day')
+            double_xp_tokens: double_xp_tokens
+          },
+          {patch: true}
+        )
         .then(function(usr) {
-          if (!usr) {
-            return res.status(400).send({ok: false, msg: 'Some Error #355'});
-          }
-          usr
-            .save(
-              {
-                double_xp_obj: {starts_on: moment()},
-                double_xp: true,
-                double_xp_exp: moment().add(1, 'day')
-              },
-              {patch: true}
-            )
-            .then(function(usr) {
-              res.status(200).send({
-                ok: true,
-                action: 'PAYMENT_DONE',
-                user: usr.toJSON(),
-                msg: 'Successfully charged card to buy double xp token'
-              });
-            })
-            .catch(function(err) {
-              return res.status(400).send({ok: false, msg: 'Some Error #355'});
-            });
+          res.status(200).send({
+            ok: true,
+            action: 'PAYMENT_DONE',
+            user: usr.toJSON(),
+            msg: 'Successfully charged card to buy double xp token'
+          });
         })
         .catch(function(err) {
           return res.status(400).send({ok: false, msg: 'Some Error #355'});
         });
-    }
-  );
+    })
+    .catch(function(err) {
+      return res.status(400).send({ok: false, msg: 'Some Error #355'});
+    });
+  // }
+  // );
 };
 
 const newCredits = function(req, res, next) {
@@ -307,64 +383,63 @@ const newCredits = function(req, res, next) {
     .assert('points_to_add', 'Please specify the credit points to add.')
     .notEmpty();
 
-  const cost_to_consume = req.body.points_to_add * credit_cost;
+  // const cost_to_consume = req.body.points_to_add ;
 
   if (req.body.init_transaction_mode == 'double_xp') {
     proceedWithDoubleXP(req, res);
     return;
   }
 
-  const term_to_use =
-    req.body.init_transaction_mode == 'credit' ? 'credits' : 'OCG Cash';
-  stripe.charges
-    .create({
-      amount: cost_to_consume * 100,
-      currency: currency,
-      description:
-        'Charge for adding ' + req.body.points_to_add + ' ' + term_to_use,
-      source: req.body.stripe_token
-    })
-    .then(function(stripe_data) {
-      const term =
-        req.body.init_transaction_mode == 'credit' ? 'credits' : 'cash';
+  // const term_to_use =
+  // req.body.init_transaction_mode == 'credit' ? 'credits' : 'OCG Cash';
+  // stripe.charges
+  //   .create({
+  //     amount: cost_to_consume * 100,
+  //     currency: currency,
+  //     description:
+  //       'Charge for adding ' + req.body.points_to_add + ' ' + term_to_use,
+  //     source: req.body.stripe_token
+  //   })
+  //   .then(function(stripe_data) {
+  const term = req.body.init_transaction_mode == 'credit' ? 'credits' : 'cash';
 
-      // console.log('aehwehw');
-      if (stripe_data.id) {
-        __addNewCredit_points(
-          req.body.init_transaction_mode,
-          req.body.points_to_add,
-          req.user.id,
-          stripe_data.id,
-          function(resp) {
-            if (resp) {
-              res.status(200).send({
-                ok: true,
-                action: 'PAYMENT_DONE',
-                msg: 'Successfully Added ' + term + ' to your account'
-              });
-            } else {
-              res.status(200).send({
-                ok: true,
-                msg: 'Payment Successfull. Failed to ' + term + '.'
-              });
-            }
-          }
-        );
-      } else {
-        // console.log(stripe_data);
-        // console.log('rhwhe');
-        res.status(400).send({
+  // console.log('aehwehw');
+  // if (stripe_data.id) {
+  __addNewCredit_points(
+    req.body.init_transaction_mode,
+    req.body.points_to_add,
+    req.user.id,
+    '',
+    function(resp) {
+      if (resp) {
+        res.status(200).send({
           ok: true,
-          msg: 'Unable to charge the card for payment'
+          action: 'PAYMENT_DONE',
+          msg: 'Successfully Added ' + term + ' to your account'
+        });
+      } else {
+        res.status(200).send({
+          ok: true,
+          msg: 'Payment Successfull. Failed to ' + term + '.'
         });
       }
-    })
-    .catch(function(err) {
-      res.status(400).send({
-        ok: true,
-        msg: 'Some error occoured'
-      });
-    });
+    }
+  );
+  // } else {
+  //   // console.log(stripe_data);
+  //   // console.log('rhwhe');
+  //   res.status(400).send({
+  //     ok: true,
+  //     msg: 'Unable to charge the card for payment'
+  //   });
+  // }
+  // })
+  // .catch(function(err) {
+  //   res.status(400).send({
+  //     ok: true,
+  //     msg: 'Some error occoured'
+  //   });
+  // });
 };
 
 exports.stopRenewal = function(req, res, next) {

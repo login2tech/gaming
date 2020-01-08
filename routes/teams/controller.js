@@ -297,6 +297,13 @@ exports.team_of_user = function(req, res, next) {
       removed: false
     });
   }
+
+  if (req.query.filter_tournament_id) {
+    a = a.where({
+      tournament_id: req.query.filter_tournament_id
+    });
+  }
+
   if (req.query.filter_active && req.query.filter_active == 'yes') {
     a = a.where({
       removed: false

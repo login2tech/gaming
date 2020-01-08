@@ -147,15 +147,15 @@ class TournamentFinder extends React.Component {
                                 </div>
                                 <div className="col-item">
                                   <h5>entry_fee</h5>
-                                  <p>${match.entry_fee}</p>
+                                  <p>{match.entry_fee} credits</p>
                                 </div>
                                 <div className="col-item">
                                   <h5>Prize pool</h5>
                                   <p>
-                                    $
                                     {match.first_winner_price +
                                       match.second_winner_price +
-                                      match.third_winner_price}
+                                      match.third_winner_price}{' '}
+                                    credits
                                   </p>
                                 </div>
                               </div>

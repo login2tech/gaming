@@ -1,7 +1,5 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
-// import Messages from '../Messages';
-
 import React from 'react';
 class PaymentModal extends React.Component {
   constructor(props) {
@@ -16,7 +14,7 @@ class PaymentModal extends React.Component {
   doClose() {
     this.props.dispatch(
       closeModal({
-        id: 'payment'
+        id: this.props.modal_id ? this.props.modal_id : 'payment'
       })
     );
   }
@@ -196,7 +194,9 @@ class PaymentModal extends React.Component {
                 </button>
               </div>
               <div className="text-center mt-3">
-                {this.state.ocg_proceed == 1 ? (
+                {this.props.disable_ocg ? (
+                  false
+                ) : this.state.ocg_proceed == 1 ? (
                   <div className="btn-group">
                     <button
                       onClick={this.proceedWithOCG.bind(this)}

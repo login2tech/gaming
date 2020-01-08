@@ -91,8 +91,9 @@ class MyMembershipModule extends React.Component {
                   </span>
                   <span>High priority Cash Withdrawals </span>
                   <span>Free Cash Out Matches non charge 10% for each 1$</span>
-                  <span className="text-gold">1 Free @username change!</span>
+
                   <span>Match Escalations </span>
+                  <span className="text-gold">1 Free @username change!</span>
                   <span className="text-gold">
                     3 Free 24 Hour Double (XP) Token!
                   </span>

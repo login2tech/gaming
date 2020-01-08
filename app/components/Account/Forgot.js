@@ -25,7 +25,7 @@ class Forgot extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <div className="authorize_box">
+              <div className="authorize_box shadow">
                 <div className="title_default_dark title_border text-center">
                   <h4>Reset Password</h4>
                 </div>

@@ -37,7 +37,7 @@ class Login extends React.Component {
         <div className="title_default_dark title_border text-center">
           <h4>BANNED</h4>
         </div>
-        <div className="field_form authorize_form text-center">
+        <div className="field_form authorize_form text-center ">
           <p className="text-center">
             You have been banned on {moment(this.state.ban_date).format('llll')}{' '}
           </p>
@@ -140,7 +140,7 @@ class Login extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <div className="authorize_box">
+              <div className="authorize_box shadow">
                 {this.state.is_banned
                   ? this.renderBanned()
                   : this.renderLogin()}

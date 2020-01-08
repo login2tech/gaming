@@ -256,6 +256,8 @@ app.delete(
 app.post(
   '/api/credits/new',
   userController.ensureAuthenticated,
+  creditsController.deduct_money,
+  creditsController.deduct_ocg,
   creditsController.new
 );
 

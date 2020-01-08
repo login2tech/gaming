@@ -29,7 +29,7 @@ class Signup extends React.Component {
   handleChangeUsername(event) {
     let val = event.target.value ? event.target.value : '';
     val = val.trim();
-
+    val = val.toLowerCase();
     val = val.replace(/[^a-zA-Z0-9 ]/g, '_');
     val = val.replace(new RegExp('__', 'g'), '_');
     if (
@@ -48,6 +48,7 @@ class Signup extends React.Component {
     ) {
       val = val.replace(val[0], '');
     }
+
     this.setState({[event.target.name]: val});
   }
 
@@ -133,7 +134,7 @@ class Signup extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <div className="authorize_box">
+              <div className="authorize_box shadow">
                 <div className="title_default_dark title_border text-center">
                   <h4>Create Account</h4>
                 </div>
@@ -411,7 +412,9 @@ class Signup extends React.Component {
                         <label htmlFor="rememberme">
                           {' '}
                           I agree with{' '}
-                          <Link to="/p/terms">Terms of Services</Link>
+                          <Link to="/p/terms" class="text-underline">
+                            Terms of Services
+                          </Link>
                         </label>
                       </div>
                     </div>

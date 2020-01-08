@@ -76,7 +76,7 @@ exports.loginPost = function(req, res, next) {
       if (!user) {
         return res.status(401).send({
           msg:
-            'The email address ' +
+            'The email address / username ' +
             req.body.email +
             ' is not associated with any account. ' +
             'Double-check your email address and try again.'
@@ -167,7 +167,7 @@ exports.signupPost = function(req, res, next) {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
-    username: req.body.username,
+    username: req.body.username ? req.body.username.toLowerCase() : '',
     password: req.body.password,
     gender: req.body.gender,
     dob: req.body.dob,

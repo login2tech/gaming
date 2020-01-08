@@ -334,11 +334,12 @@ class TournamentInfo extends React.Component {
     if (!this.props.user) {
       return;
     }
+
     fetch(
       '/api/teams/team_of_user/?filter_type=tournaments&uid=' +
         this.props.user.id +
-        '&filter_ladder=' +
-        this.state.tournament.ladder_id
+        '&filter_tournament_id=' +
+        this.props.params.tournament_id
     )
       .then(res => res.json())
       .then(json => {
@@ -585,7 +586,7 @@ class TournamentInfo extends React.Component {
                 </div>
               </div>
               <div className="t-prizes-amount">
-                ${this.state.tournament.first_winner_price}
+                {this.state.tournament.first_winner_price} credits
                 {/* <span>$87.00 Per Player</span> */}
               </div>
             </div>
@@ -614,7 +615,7 @@ class TournamentInfo extends React.Component {
                 </div>
               </div>
               <div className="t-prizes-amount">
-                ${this.state.tournament.second_winner_price}
+                {this.state.tournament.second_winner_price} credits
                 {/* <span>$37.00 Per Player</span> */}
               </div>
             </div>
@@ -643,7 +644,7 @@ class TournamentInfo extends React.Component {
                 </div>
               </div>
               <div className="t-prizes-amount">
-                ${this.state.tournament.third_winner_price}
+                {this.state.tournament.third_winner_price} credits
                 {/* <span>$0.00 Per Player</span> */}
               </div>
             </div>
@@ -719,10 +720,10 @@ class TournamentInfo extends React.Component {
             <div className="tourn-info">
               <div className="tourn-info-title">Prize Pool</div>
               <div className="tourn-info-box">
-                $
                 {this.state.tournament.second_winner_price +
                   this.state.tournament.third_winner_price +
-                  this.state.tournament.first_winner_price}
+                  this.state.tournament.first_winner_price}{' '}
+                credits
               </div>
             </div>
           </div>
@@ -792,6 +793,7 @@ class TournamentInfo extends React.Component {
       </div>
     );
   }
+
   renderBrackets() {
     const brackets = this.state.tournament.brackets;
     if (!brackets) {
@@ -1066,6 +1068,7 @@ class TournamentInfo extends React.Component {
       </div>
     );
   }
+
   renderMatch() {
     let rounds = this.state.tournament.brackets;
     if (!rounds) {
@@ -1134,16 +1137,6 @@ class TournamentInfo extends React.Component {
 
         {this.state.team_selected ? (
           <div>
-            <button
-              className="  btn btn-primary btn-sm max-width-300"
-              onClick={() => {
-                this.setState({
-                  team_selected: false
-                });
-              }}
-            >
-              <i className="fa fa-arrow-left" /> back to team list
-            </button>
             <br />
             <form
               onSubmit={event => {
@@ -1245,7 +1238,7 @@ class TournamentInfo extends React.Component {
         )}
 
         <ul className="team_list" id="tlst">
-          {this.state.eligible_teams_loaded &&
+          {/*this.state.eligible_teams_loaded &&
             !this.state.team_selected &&
             this.state.eligible_teams.map((team_parent, i) => {
               if (
@@ -1278,13 +1271,13 @@ class TournamentInfo extends React.Component {
                   </Link>
                 </li>
               );
-            })}
+            })*/}
         </ul>
         {this.state.eligible_teams_loaded &&
           !this.state.team_selected &&
           this.state.eligible_teams.length < 1 && (
             <div className="alert alert-warning">
-              You do not have a tournament team for this ladder. Click{' '}
+              You do not have a tournament team for this tournament. Click{' '}
               <a
                 target="_blank"
                 href={'/u/' + this.props.user.username + '/teams/new'}
@@ -1309,23 +1302,51 @@ class TournamentInfo extends React.Component {
                   <div className="match_heading">
                     <h4>{this.state.tournament.title}</h4>
                   </div>
-
-                  <span className="game_station">
-                    <span
-                      className={
-                        game_user_ids.tag_icons[
-                          this.state.tournament.ladder.gamer_tag
-                        ]
-                      }
-                    />
-                    {this.state.tournament.game.title} @{' '}
-                    {this.state.tournament.ladder.title}
-                  </span>
-                  <div className="match_start_date">
-                    {moment().isAfter(moment(this.state.tournament.starts_at))
-                      ? 'Tournament Started:'
-                      : 'Tournament Starts'}{' '}
-                    {moment(this.state.tournament.starts_at).fromNow()}
+                  <div className="row">
+                    <div className="col-12 col-md">
+                      <span className="game_station">
+                        <span
+                          className={
+                            game_user_ids.tag_icons[
+                              this.state.tournament.ladder.gamer_tag
+                            ]
+                          }
+                        />
+                        {this.state.tournament.game.title} @{' '}
+                        {this.state.tournament.ladder.title}
+                      </span>
+                      <div className="match_start_date">
+                        {moment().isAfter(
+                          moment(this.state.tournament.starts_at)
+                        )
+                          ? 'Tournament Started:'
+                          : 'Tournament Starts'}{' '}
+                        {moment(this.state.tournament.starts_at).fromNow()}
+                      </div>
+                    </div>
+                    <div className="col-12 col-md">
+                      <div>
+                        {moment().isAfter(
+                          moment(this.state.tournament.registration_start_at)
+                        )
+                          ? 'Registration Started:'
+                          : 'Registration Starts'}{' '}
+                        {moment(
+                          this.state.tournament.registration_start_at
+                        ).fromNow()}
+                      </div>
+                      <div>
+                        {moment().isAfter(
+                          moment(this.state.tournament.registration_end_at)
+                        )
+                          ? 'Registration Ended:'
+                          : 'Registration Ends'}{' '}
+                        {moment(
+                          this.state.tournament.registration_end_at
+                        ).fromNow()}
+                      </div>
+                    </div>
+                    <div className="col-12 col-md"> </div>
                   </div>
                   {/* <div className="twovstwo">1 VS 1 MATCH</div> */}
                   {/* // <div className="match_end_date">// // </div> */}
