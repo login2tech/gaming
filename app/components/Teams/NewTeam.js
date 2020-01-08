@@ -8,17 +8,50 @@ import game_user_ids from '../../../config/game_user_ids';
 class NewTeam extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     this.state = {
       title: '',
       ladder: '',
+      tournaments: [],
       games: [],
       submit_started: false,
-      team_type: ''
+      team_type:
+        props && props.params && props.params.type
+          ? props.params.type == 't'
+            ? 'tournaments'
+            : 'matchfinder'
+          : '',
+      tournament:
+        props && props.params && props.params.type
+          ? props.params.type == 't'
+            ? props.params.id
+            : null
+          : null
     };
   }
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
+  }
+
+  fetchTour() {
+    if (
+      this.props &&
+      this.props.params &&
+      this.props.params.type &&
+      this.props.params.type == 't'
+    ) {
+      fetch('/api/tournaments/single/' + this.props.params.id)
+        .then(res => res.json())
+        .then(json => {
+          if (json.ok) {
+            this.setState({
+              ladder: json.item.ladder_id,
+              ladder_disabled: true
+            });
+          }
+        });
+    }
   }
 
   fetchTours() {
@@ -45,6 +78,7 @@ class NewTeam extends React.Component {
             },
             () => {
               this.fetchTours();
+              this.fetchTour();
             }
           );
         }
@@ -94,13 +128,15 @@ class NewTeam extends React.Component {
         {
           title: this.state.title,
           ladder: this.state.ladder,
-          team_type: this.state.team_type
+          team_type: this.state.team_type,
+          team_t_id: this.state.tournament
         },
         this.props.user
       )
     );
   }
   render() {
+    const {ladder_disabled} = this.state;
     return (
       <section className="middle_part_login">
         <div className="container">
@@ -134,6 +170,7 @@ class NewTeam extends React.Component {
                         className="form-control"
                         required="required"
                         name="ladder"
+                        disabled={ladder_disabled}
                         id="ladder"
                         value={this.state.ladder}
                         onChange={this.handleChange.bind(this)}
@@ -155,48 +192,55 @@ class NewTeam extends React.Component {
                         }
                       </select>
                     </div>
-                    <div className="form-group col-md-12">
-                      <label htmlFor="title">Team Type</label>
+                    {this.state.ladder_disabled ? (
+                      <div>
+                        <div className="form-group col-md-12">
+                          <label htmlFor="title">Team Type</label>
 
-                      <select
-                        className="form-control"
-                        required="required"
-                        name="team_type"
-                        id="team_type"
-                        value={this.state.team_type}
-                        onChange={this.handleChange.bind(this)}
-                      >
-                        <option value="">Select Team Type</option>
-                        <option value="matchfinder">Matchfinder</option>
-                        <option value="tournaments">Tournaments</option>
-                      </select>
-                    </div>
-                    {this.state.team_type == 'tournaments' ? (
-                      <div className="form-group col-md-12">
-                        <label htmlFor="title">Tournament</label>
+                          <select
+                            className="form-control"
+                            required="required"
+                            disabled={ladder_disabled}
+                            name="team_type"
+                            id="team_type"
+                            value={this.state.team_type}
+                            onChange={this.handleChange.bind(this)}
+                          >
+                            <option value="">Select Team Type</option>
+                            <option value="matchfinder">Matchfinder</option>
+                            <option value="tournaments">Tournaments</option>
+                          </select>
+                        </div>
+                        {this.state.team_type == 'tournaments' ? (
+                          <div className="form-group col-md-12">
+                            <label htmlFor="title">Tournament</label>
 
-                        <select
-                          className="form-control"
-                          required="required"
-                          name="tournament"
-                          id="tournament"
-                          value={this.state.tournament}
-                          onChange={this.handleChange.bind(this)}
-                        >
-                          <option value="">Select Team Type</option>
-                          {this.state.tournaments.map((t, i) => {
-                            return (
-                              <option value={t.id} key={i.id}>
-                                {t.title}
-                              </option>
-                            );
-                          })}
-                        </select>
+                            <select
+                              className="form-control"
+                              required="required"
+                              name="tournament"
+                              disabled={ladder_disabled}
+                              id="tournament"
+                              value={this.state.tournament}
+                              onChange={this.handleChange.bind(this)}
+                            >
+                              <option value="">Select Team Type</option>
+                              {this.state.tournaments.map((t, i) => {
+                                return (
+                                  <option value={t.id} key={i.id}>
+                                    {t.title}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        ) : (
+                          false
+                        )}
                       </div>
                     ) : (
                       false
                     )}
-
                     <div className="form-group col-md-12">
                       <label htmlFor="title">User Id Required</label>
                       <div>

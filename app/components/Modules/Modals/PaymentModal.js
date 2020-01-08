@@ -62,7 +62,9 @@ class PaymentModal extends React.Component {
   }
 
   proceedWithOCG() {
-    // alert('TO BE IMPLEMENTED!');
+    this.setState({
+      ocg_processing: true
+    });
     this.props.onGetToken &&
       this.props.onGetToken(
         'USE_OCG',
@@ -89,6 +91,9 @@ class PaymentModal extends React.Component {
           result.token,
           this.props.returnDataToEvent ? this.props.returnDataToEvent : {}
         );
+      this.setState({
+        token_processing: false
+      });
     } else if (result.error) {
       errorElement.textContent = result.error.message;
       errorElement.classList.add('visible');
@@ -102,7 +107,7 @@ class PaymentModal extends React.Component {
 
   handleCheckout(event) {
     //const tmp_this = this;
-    this.setState({clicked: true});
+    this.setState({clicked: true, token_processing: true});
     event.preventDefault();
 
     const extraDetails = {
@@ -185,12 +190,16 @@ class PaymentModal extends React.Component {
 
                 <button
                   type="submit"
-                  disabled={!this.state.stripe_good}
+                  disabled={
+                    !this.state.stripe_good || this.state.token_processing
+                  }
                   className="btn btn-cta btn-outline btn-post btn-primary"
                 >
-                  {this.props.button_title
-                    ? this.props.button_title
-                    : 'Pay and proceed'}
+                  {this.state.token_processing
+                    ? 'please wait...'
+                    : this.props.button_title
+                      ? this.props.button_title
+                      : 'Pay and proceed'}
                 </button>
               </div>
               <div className="text-center mt-3">
@@ -201,10 +210,13 @@ class PaymentModal extends React.Component {
                     <button
                       onClick={this.proceedWithOCG.bind(this)}
                       type="button"
-                      disabled={amount_pending > this.props.user.cash_balance}
+                      disabled={
+                        amount_pending > this.props.user.cash_balance ||
+                        this.state.ocg_processing
+                      }
                       className="btn text-white  btn-primary"
                     >
-                      confirm
+                      {this.state.ocg_processing ? 'please wait...' : 'confirm'}
                     </button>
                     <button
                       onClick={() => {

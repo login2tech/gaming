@@ -264,8 +264,15 @@ export default function getRoutes(store) {
         path="/mix-and-match"
         component={Money8List}
       />
+
       <Route
         path="/u/:username/teams/new"
+        component={NewTeam}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/u/:username/teams/new/:type/:id"
         component={NewTeam}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}

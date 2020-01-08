@@ -445,10 +445,12 @@ class Game extends React.Component {
                   </Link>{' '}
                   <Link
                     to={
-                      '/u/' +
-                      this.props.user.username +
-                      '/teams/new/' +
-                      this.props.params.id
+                      this.props.user
+                        ? '/u/' +
+                          this.props.user.username +
+                          '/teams/new/g/' +
+                          this.props.params.id
+                        : '/login'
                     }
                     className="btn btn-default bttn_submit dib mw_200"
                   >

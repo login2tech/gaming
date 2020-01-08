@@ -444,18 +444,28 @@ exports.addItem = function(req, res, next) {
           teams[i].team_info.team_type == req.body.team_type &&
           teams[i].team_info.removed == false
         ) {
-          // failed;
-          return res.status(400).send({
-            ok: false,
-            msg: 'You are already a member of another team for this ladder.'
-          });
+          // console.log(here);
+          // console
+          if (
+            req.body.team_type == 'tournaments' &&
+            teams[i].team_info.team_t_id != req.body.team_t_id
+          ) {
+            //
+          } else {
+            // failed;
+            return res.status(400).send({
+              ok: false,
+              msg: 'You are already a member of another team for this ladder.'
+            });
+          }
         }
       }
       new Item({
         title: req.body.title,
         ladder_id: req.body.ladder,
         team_creator: req.user.id,
-        team_type: req.body.team_type
+        team_type: req.body.team_type,
+        team_t_id: req.body.team_t_id
       })
         .save()
         .then(function(item) {

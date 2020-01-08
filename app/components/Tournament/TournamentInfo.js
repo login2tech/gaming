@@ -1280,7 +1280,12 @@ class TournamentInfo extends React.Component {
               You do not have a tournament team for this tournament. Click{' '}
               <a
                 target="_blank"
-                href={'/u/' + this.props.user.username + '/teams/new'}
+                href={
+                  '/u/' +
+                  this.props.user.username +
+                  '/teams/new/t/' +
+                  this.state.tournament.id
+                }
               >
                 here
               </a>{' '}
