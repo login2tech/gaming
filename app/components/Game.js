@@ -420,7 +420,7 @@ class Game extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar gm"
+          className="page_title_bar gm noblend"
           style={
             this.state.game
               ? {

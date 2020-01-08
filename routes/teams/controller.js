@@ -300,7 +300,7 @@ exports.team_of_user = function(req, res, next) {
 
   if (req.query.filter_tournament_id) {
     a = a.where({
-      tournament_id: req.query.filter_tournament_id
+      team_t_id: req.query.filter_tournament_id
     });
   }
 

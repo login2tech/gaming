@@ -2605,9 +2605,13 @@ a.image_avar {
     position: relative;
     padding-top: 30px;
     background-color: rgba(17, 74, 251, 0.4);
-    background-blend-mode: overlay;
+
 }
 
+.page_title_bar:not(.noblend)
+{
+  background-blend-mode: overlay;
+}
 .profile_pic_outline .img-fluid {
     width: 100%;
 }
@@ -2616,7 +2620,7 @@ a.image_avar {
     background-image: url(../images/cover_big2.jpg);
 }
 
-.page_title_bar:before {
+.page_title_bar:not(.noblend):before {
     background: rgba(16,30,44,0.7) none repeat scroll 0 0;
     content: "";
     height: 100%;
