@@ -298,11 +298,11 @@ exports.team_of_user = function(req, res, next) {
     });
   }
 
-  if (req.query.filter_tournament_id) {
-    a = a.where({
-      team_t_id: req.query.filter_tournament_id
-    });
-  }
+  // if (req.query.filter_tournament_id) {
+  //   a = a.where({
+  //     // team_t_id: req.query.filter_tournament_id
+  //   });
+  // }
 
   if (req.query.filter_active && req.query.filter_active == 'yes') {
     a = a.where({
@@ -323,6 +323,19 @@ exports.team_of_user = function(req, res, next) {
       if (req.query.filter_type) {
         team_info = team_info.filter(function(item) {
           if (item.team_info.team_type == req.query.filter_type) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+      }
+
+      if (req.query.filter_tournament_id) {
+        req.query.filter_tournament_id = parseInt(
+          req.query.filter_tournament_id
+        );
+        team_info = team_info.filter(function(item) {
+          if (item.team_info.team_t_id == req.query.filter_tournament_id) {
             return true;
           } else {
             return false;

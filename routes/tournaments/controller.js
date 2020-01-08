@@ -56,7 +56,7 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
               .save({
                 user_id: uid,
                 obj_type: 't_' + match_id,
-                details: 'Credit Debit for joining tournament #' + match_id,
+                details: 'Credits deducted for joining tournament #' + match_id,
                 qty: -parseFloat(input_val)
               })
               .then(function(o) {})

@@ -369,13 +369,20 @@ class TournamentInfo extends React.Component {
       team_ids = '';
     }
     team_ids = team_ids.split(',');
-    for (let i = 0; i < this.state.eligible_teams.length; i++) {
-      if (
-        team_ids.indexOf(this.state.eligible_teams[i].team_info.team_id) > -1
-      ) {
-        return true;
+    if (this.state.team_selected) {
+      const id = '' + this.state.team_selected.id;
+      if (team_ids.indexOf(id) > -1) {
+        return false;
       }
     }
+    // let selected_team_id = this.state.team_selected
+    // for (let i = 0; i < this.state.eligible_teams.length; i++) {
+    //   if (
+    //     team_ids.indexOf(this.state.eligible_teams[i].team_info.team_id) > -1
+    //   ) {
+    //     return true;
+    //   }
+    // }
 
     return (
       <button

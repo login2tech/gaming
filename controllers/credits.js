@@ -745,8 +745,6 @@ exports.buyMembership = function(req, res, next) {
       prime_obj: JSON.stringify({
         cancel_requested: false,
         bought_type: 'OCG',
-        double_xp_tokens: double_xp_tokens_to_buy,
-        pndng_uname_changes: pndng_uname_changes,
         check_for_cron: true,
         check_for_hook: false,
         prime_type: plan,
@@ -754,7 +752,9 @@ exports.buyMembership = function(req, res, next) {
         next_renew: moment().add(1, 'month')
       }),
       prime_type: plan,
-      prime_exp: moment().add(1, 'month')
+      prime_exp: moment().add(1, 'month'),
+      double_xp_tokens: double_xp_tokens_to_buy,
+      pndng_uname_changes: pndng_uname_changes
     };
     new User()
       .where({id: req.user.id})
@@ -764,11 +764,26 @@ exports.buyMembership = function(req, res, next) {
       .then(function(user) {
         addMembershipLog(plan, 'add', req.user.id);
         // console.log(user.toJSON());
-        return res.status(200).send({
-          ok: true,
-          msg: 'Membership successfully Started',
-          user: user.toJSON()
-        });
+        new User.where({
+          id: req.user.id
+        })
+          .fetch()
+          .then(function(user_obj) {
+            return res.status(200).send({
+              ok: true,
+              msg: 'Membership successfully Started',
+              user: user_obj.toJSON()
+            });
+          })
+          .catch(function() {
+            user = user.toJSON();
+            user = Object.assign(req.user, user);
+            return res.status(200).send({
+              ok: true,
+              msg: 'Membership successfully Started',
+              user: user
+            });
+          });
       })
       .catch(function(err) {
         console.log(err);
