@@ -26,7 +26,13 @@ class NewTeam extends React.Component {
           ? props.params.type == 't'
             ? props.params.id
             : null
-          : null
+          : null,
+      game_seleted:
+        props && props.params && props.params.type
+          ? props.params.type == 'g'
+            ? parseInt(props.params.id)
+            : false
+          : false
     };
   }
 
@@ -177,6 +183,12 @@ class NewTeam extends React.Component {
                       >
                         <option value="">Select Ladder</option>
                         {this.state.games.map((game, i) => {
+                          if (
+                            this.state.game_seleted &&
+                            this.state.game_seleted != game.id
+                          ) {
+                            return false;
+                          }
                           return (
                             <optgroup label={game.title} key={game.id}>
                               {game.ladders.map((ladder, j) => {

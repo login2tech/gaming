@@ -839,7 +839,9 @@ class TournamentInfo extends React.Component {
 
           return (
             <div key={team.id}>
-              <h6 className="prizes_desclaimer">{team.title}</h6>
+              <h6 className="prizes_desclaimer">
+                <Link to={'/teams/view/' + team.title}>{team.title}</Link>
+              </h6>
               <div className="table_wrapper">
                 <table className="table table-striped table-ongray table-hover">
                   <thead>
