@@ -17,7 +17,7 @@ class TeamInfo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      team_info: {ladder: {}, team_users: []},
+      team_info: {ladder: {}, team_users: [], team_type: 'matchfinder'},
       game: {},
       is_loaded: false,
       match_played: [],
@@ -128,7 +128,14 @@ class TeamInfo extends React.Component {
               game: json.item
             },
             () => {
-              this.fetchMatches();
+              if (!this.state.team_info) {
+                return;
+              }
+              if (this.state.team_info.team_type == 'matchfinder') {
+                this.fetchMatches();
+              } else {
+                this.fetchTournamentMatches();
+              }
             }
           );
         }
@@ -150,6 +157,29 @@ class TeamInfo extends React.Component {
             {
               is_loaded: true,
               match_played: json.items ? json.items : []
+            },
+            () => {
+              // this.fetchMatches();
+            }
+          );
+        }
+      });
+  }
+
+  fetchTournamentMatches() {
+    if (!this.state.team_info.ladder) {
+      return;
+    }
+    fetch(
+      '/api/tournaments/matches_of_team/?team_id=' + this.props.params.team_id
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              is_loaded: true,
+              t_match_played: json.items ? json.items : []
             },
             () => {
               // this.fetchMatches();
@@ -1133,57 +1163,119 @@ class TeamInfo extends React.Component {
                   <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
 
                   <div className="table_wrapper">
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th>Match</th>
-                          <th>Opponent</th>
-                          <th>Status</th>
+                    {this.state.team_info.team_type == 'matchfinder' ? (
+                      <table className="table table-striped table-ongray table-hover">
+                        <thead>
+                          <tr>
+                            <th>Match</th>
+                            <th>Opponent</th>
+                            <th>Status</th>
 
-                          <th>Date</th>
-                          <th>Info</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.match_played.map((match, i) => {
-                          return (
-                            <tr key={match.id}>
-                              <td>
-                                <Link to={'/m/' + match.id}>#{match.id}</Link>
-                              </td>
-                              <td>
-                                {match.team_1_id == this.state.team_info.id ? (
-                                  <Link to={'/teams/view/' + match.team_2_id}>
-                                    {match.team_2_info.title}
-                                  </Link>
-                                ) : (
-                                  <Link to={'/teams/view/' + match.team_1_id}>
-                                    {match.team_1_info.title}
-                                  </Link>
-                                )}
-                              </td>
+                            <th>Date</th>
+                            <th>Info</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.match_played.map((match, i) => {
+                            return (
+                              <tr key={match.id}>
+                                <td>
+                                  <Link to={'/m/' + match.id}>#{match.id}</Link>
+                                </td>
+                                <td>
+                                  {match.team_1_id ==
+                                  this.state.team_info.id ? (
+                                    <Link to={'/teams/view/' + match.team_2_id}>
+                                      {match.team_2_info.title}
+                                    </Link>
+                                  ) : (
+                                    <Link to={'/teams/view/' + match.team_1_id}>
+                                      {match.team_1_info.title}
+                                    </Link>
+                                  )}
+                                </td>
 
-                              <td>
-                                {match.result
-                                  ? this.renderStatus(
-                                      match.result,
-                                      match.team_1_id,
-                                      match.team_2_id,
-                                      match.status
-                                    )
-                                  : match.status}
-                              </td>
+                                <td>
+                                  {match.result
+                                    ? this.renderStatus(
+                                        match.result,
+                                        match.team_1_id,
+                                        match.team_2_id,
+                                        match.status
+                                      )
+                                    : match.status}
+                                </td>
 
-                              <td>{moment(match.created_at).format('lll')}</td>
-                              <td>
-                                {' '}
-                                <Link to={'/m/' + match.id}>View Match</Link>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                                <td>
+                                  {moment(match.created_at).format('lll')}
+                                </td>
+                                <td>
+                                  {' '}
+                                  <Link to={'/m/' + match.id}>View Match</Link>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <table className="table table-striped table-ongray table-hover">
+                        <thead>
+                          <tr>
+                            <th>Match</th>
+                            <th>Tournament</th>
+                            <th>Opponent</th>
+                            <th>Status</th>
+
+                            <th>Date</th>
+                            <th>Info</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.match_played.map((match, i) => {
+                            return (
+                              <tr key={match.id}>
+                                <td>
+                                  <Link to={'/m/' + match.id}>#{match.id}</Link>
+                                </td>
+                                <td>
+                                  <Link to={'/m/' + match.id}>#{match.id}</Link>
+                                </td>
+                                <td>
+                                  {match.team_1_id ==
+                                  this.state.team_info.id ? (
+                                    <Link to={'/teams/view/' + match.team_2_id}>
+                                      {match.team_2_info.title}
+                                    </Link>
+                                  ) : (
+                                    <Link to={'/teams/view/' + match.team_1_id}>
+                                      {match.team_1_info.title}
+                                    </Link>
+                                  )}
+                                </td>
+                                <td>
+                                  {match.result
+                                    ? this.renderStatus(
+                                        match.result,
+                                        match.team_1_id,
+                                        match.team_2_id,
+                                        match.status
+                                      )
+                                    : match.status}
+                                </td>
+                                <td>
+                                  {moment(match.created_at).format('lll')}
+                                </td>
+                                <td>
+                                  {' '}
+                                  <Link to={'/m/' + match.id}>View Match</Link>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    )}
                   </div>
                 </div>
               </div>
