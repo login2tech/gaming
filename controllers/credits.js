@@ -764,9 +764,10 @@ exports.buyMembership = function(req, res, next) {
       .then(function(user) {
         addMembershipLog(plan, 'add', req.user.id);
         // console.log(user.toJSON());
-        new User.where({
-          id: req.user.id
-        })
+        new User()
+          .where({
+            id: req.user.id
+          })
           .fetch()
           .then(function(user_obj) {
             return res.status(200).send({
