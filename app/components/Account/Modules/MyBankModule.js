@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
 import CreditsBox from './BuyBoxes/CreditsBox';
 import CashBox from './BuyBoxes/CreditsBox';
 import DoubleXPBox from './BuyBoxes/DoubleXPBox';

@@ -162,45 +162,62 @@ class MyMembershipModule extends React.Component {
               <div className="row">
                 {this.props.user ? (
                   this.props.user.prime ? (
-                    <div className="col-md-10 offset-md-1 text-center">
-                      <p className="text-success">
-                        You are already a Official Comp {prime_obj.prime_type}{' '}
-                        Member
-                      </p>
-                      <strong className="text-blue">Started on: </strong>
-                      {moment(prime_obj.starts_on).format('LLL')}
-                      <br />
-                      {prime_obj.cancel_requested ? (
-                        <>
-                          <strong className="text-blue">
-                            Membership Stops on:{' '}
-                          </strong>
-                          {moment(prime_obj.stops_on).format('LLL')}
-                        </>
-                      ) : (
-                        <>
-                          <strong className="text-blue">
-                            Next Renewal on:{' '}
-                          </strong>
-                          {moment(prime_obj.next_renew).format('LLL')}
-                        </>
-                      )}
+                    this.props.user.prime_type == 'silver' ? (
+                      <div className="col-md-10 offset-md-1 text-center">
+                        <p className="text-success">
+                          You are already a Official Comp Silver Member
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="col-md-10 offset-md-1 text-center">
+                        <p className="text-success">
+                          You are already a Official Comp {prime_obj.prime_type}{' '}
+                          Member
+                        </p>
+                        <strong className="text-blue">Started on: </strong>
+                        {moment(prime_obj.starts_on).format('LLL')}
+                        <br />
+                        {prime_obj.cancel_requested ? (
+                          <>
+                            <strong className="text-blue">
+                              Membership Stops on:{' '}
+                            </strong>
+                            {moment(prime_obj.stops_on).format('LLL')}
+                          </>
+                        ) : (
+                          <>
+                            <strong className="text-blue">
+                              Next Renewal on:{' '}
+                            </strong>
+                            {moment(prime_obj.next_renew).format('LLL')}
+                          </>
+                        )}
 
-                      {prime_obj.cancel_requested == false ? (
-                        <div className="mt-2">
-                          <button
-                            className="btn btn-primary btn-sm"
-                            onClick={e => {
-                              this.handleStopRenewal(e, 'prime');
-                            }}
-                          >
-                            STOP RENEWAL
-                          </button>
-                        </div>
-                      ) : (
-                        false
-                      )}
-                    </div>
+                        {prime_obj.cancel_requested == false ? (
+                          <div className="mt-2">
+                            <button
+                              className="btn btn-primary btn-sm"
+                              onClick={e => {
+                                this.handleStopRenewal(e, 'prime');
+                              }}
+                            >
+                              STOP RENEWAL
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <br />
+                            <br />
+                            <br />
+                          </>
+                        )}
+                      </div>
+                    )
                   ) : (
                     <div className="col-md-8 offset-md-2 text-center">
                       <input
@@ -263,28 +280,79 @@ class MyMembershipModule extends React.Component {
               </div>
 
               <div className="row">
-                <div className="col-md-8 offset-md-2 text-center">
-                  {this.props.user ? (
-                    this.props.user.prime ? (
-                      <p className="text-success">
-                        You are already a Official Comp Member
-                      </p>
+                {this.props.user ? (
+                  this.props.user.prime ? (
+                    this.props.user.prime_type == 'gold' ? (
+                      <div className="col-md-10 offset-md-1 text-center">
+                        <p className="text-success">
+                          You are already a Official Comp Gold Member
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                          <br />
+                        </p>
+                      </div>
                     ) : (
-                      <input
-                        type="submit"
-                        value="Buy Official Comp Silver Membership"
-                        onClick={() => {
-                          this.processMembership('silver');
-                        }}
-                        className="btn btn-default bttn_submit"
-                      />
+                      <div className="col-md-10 offset-md-1 text-center">
+                        <p className="text-success">
+                          You are already a Official Comp {prime_obj.prime_type}{' '}
+                          Member
+                        </p>
+                        <strong className="text-blue">Started on: </strong>
+                        {moment(prime_obj.starts_on).format('LLL')}
+                        <br />
+                        {prime_obj.cancel_requested ? (
+                          <>
+                            <strong className="text-blue">
+                              Membership Stops on:{' '}
+                            </strong>
+                            {moment(prime_obj.stops_on).format('LLL')}
+                          </>
+                        ) : (
+                          <>
+                            <strong className="text-blue">
+                              Next Renewal on:{' '}
+                            </strong>
+                            {moment(prime_obj.next_renew).format('LLL')}
+                          </>
+                        )}
+
+                        {prime_obj.cancel_requested == false ? (
+                          <div className="mt-2">
+                            <button
+                              className="btn btn-primary btn-sm"
+                              onClick={e => {
+                                this.handleStopRenewal(e, 'prime');
+                              }}
+                            >
+                              STOP RENEWAL
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <br />
+                            <br />
+                            <br />
+                          </>
+                        )}
+                      </div>
                     )
                   ) : (
-                    <Link to="/login" className="btn btn-default bttn_submit">
-                      Get Official Comp Silver Membership
-                    </Link>
-                  )}
-                </div>
+                    <input
+                      type="submit"
+                      value="Buy Official Comp Silver Membership"
+                      onClick={() => {
+                        this.processMembership('silver');
+                      }}
+                      className="btn btn-default bttn_submit"
+                    />
+                  )
+                ) : (
+                  <Link to="/login" className="btn btn-default bttn_submit">
+                    Get Official Comp Silver Membership
+                  </Link>
+                )}
               </div>
             </div>
           </div>
