@@ -56,6 +56,7 @@ import Money8Info from './components/Money8/Money8Info';
 
 import TournamentFinder from './components/Tournament/TournamentFinder';
 import TournamentInfo from './components/Tournament/TournamentInfo';
+import TMatchInfo from './components/Tournament/TMatchInfo';
 import TeamInvites from './components/Pages/TeamInvites';
 import Shop from './components/Shop/Shop';
 
@@ -247,6 +248,11 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
         path="/m/:match_id"
         component={MatchInfo}
+      />
+      <Route
+        onLeave={clearMessages}
+        path="/tournament-match/:match_id"
+        component={TMatchInfo}
       />
       <Route
         path="/mix-and-match/new/"

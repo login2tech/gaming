@@ -861,6 +861,9 @@ class Profile extends React.Component {
                         </thead>
                         <tbody>
                           {this.state.tournaments.map((match, i) => {
+                            if (match.status == 'cancelled') {
+                              return false;
+                            }
                             return (
                               <tr key={match.id}>
                                 <td>

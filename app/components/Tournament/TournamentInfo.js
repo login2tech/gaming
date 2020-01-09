@@ -58,7 +58,7 @@ class TournamentInfo extends React.Component {
 
     for (let i = 0; i < rounds_c; i++) {
       const round_data = brackets['round_' + (i + 1)];
-      console.log(round_data);
+      // console.log(round_data);
       const final_round_data = [];
       for (let j = 0; j < round_data.length; j++) {
         let team_1 = round_data[j][0];
@@ -195,7 +195,7 @@ class TournamentInfo extends React.Component {
           this.state.team_selected.team_users[i].user_info.credit_balance
         ) < amount
       ) {
-        console.log('no');
+        // console.log('no');
         return false;
       }
     }
@@ -935,9 +935,15 @@ class TournamentInfo extends React.Component {
 
     return (
       <tr key={match.id}>
-        <td>#{match.id}</td>
-        <td>{teams[0].title}</td>
-        <td>{teams[1].title}</td>
+        <td>
+          <Link to={'/tournament-match/' + match.id}>#{match.id}</Link>
+        </td>
+        <td>
+          <Link to={'/teams/view/' + teams[1].id}>{teams[0].title}</Link>
+        </td>
+        <td>
+          <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>
+        </td>
         <td>
           {match.result ? '' : 'Results Pending'}
           {match.result && match.result == 'team_1'
