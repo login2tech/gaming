@@ -3946,6 +3946,7 @@ ul.submenu li a {
 
 .nav-list {
     justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .t-prizes-place {
@@ -5390,6 +5391,9 @@ button.btn.btn-exp-menu {
         text-align: center;
     }
 
+.menu_btn{
+  border-radius: 8px
+}
     .sm_on_mob a {
         text-align: center;
     }
@@ -5427,7 +5431,9 @@ button.btn.btn-exp-menu {
         display: block;
         width: 20px;
         line-height: 20px;
+        background: #fff;
         padding: 0;
+        border: 0;z-index: 11;
     }
 
     .user_sugggestions li {

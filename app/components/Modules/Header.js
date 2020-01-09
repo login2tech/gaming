@@ -84,37 +84,39 @@ class Header extends React.Component {
     const props = this.props;
     return (
       <>
-        <li className="sm_on_mob has_children_m has_search_form">
-          <Link className="profile_menu_item">
-            <i className="fa fa-search" />
-          </Link>
-          <ul className="submenu notification_list user_sugggestions">
-            <li>
-              <input
-                type="text"
-                autoFocus
-                className="dark_text form-control"
-                placeholder={'Search here...'}
-                value={this.state.searchString}
-                onChange={event => {
-                  this.getSuggestions(event);
-                }}
-              />
-            </li>
-            {this.state.userSuggestions.map((u, i) => {
-              return (
-                <li key={u.id}>
-                  <Link href={'/u/' + u.username}>
-                    <span className="text-sm">@{u.username}</span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </li>
-
         {props.user && props.token
           ? [
+              <li
+                key={344}
+                className="sm_on_mob has_children_m has_search_form"
+              >
+                <Link className="profile_menu_item">
+                  <i className="fa fa-search" />
+                </Link>
+                <ul className="submenu notification_list user_sugggestions">
+                  <li>
+                    <input
+                      type="text"
+                      autoFocus
+                      className="dark_text form-control"
+                      placeholder={'Search here...'}
+                      value={this.state.searchString}
+                      onChange={event => {
+                        this.getSuggestions(event);
+                      }}
+                    />
+                  </li>
+                  {this.state.userSuggestions.map((u, i) => {
+                    return (
+                      <li key={u.id}>
+                        <Link href={'/u/' + u.username}>
+                          <span className="text-sm">@{u.username}</span>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>,
               <li key={5} className=" sm_on_mob has_children_m">
                 <Link className="profile_menu_item" to="/notifications">
                   <i className="fa fa-bell" />
@@ -485,7 +487,10 @@ class Header extends React.Component {
               <ul className=" navbar-nav nav-list">{this.renderLinks()}</ul>
             </div>
             <div
-              className="collapse navbar-collapse ml-3 fl-2 justify-content-end"
+              className={
+                'collapse navbar-collapse ml-3 fl-2 justify-content-end ' +
+                (this.props.user ? ' is_logged_in' : 'is_not_logged_in')
+              }
               id="menu2"
             >
               <ul className=" navbar-nav nav-list">
