@@ -27,12 +27,12 @@ const Notif = require('../../models/Notification');
 //           .save({credit_balance: credit_balance}, {patch: true})
 //           .then(function(usr) {})
 //           .catch(function(err) {
-//             // console.log(err);
+//             //
 //           });
 //       }
 //     })
 //     .catch(function(err) {
-//       console.log(err);
+//
 //     });
 // };
 
@@ -61,16 +61,22 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
               })
               .then(function(o) {})
               .catch(function(err) {
-                console.log(4, err);
+                // console.log(4, err);
+
+                Raven.captureException(err);
               });
           })
           .catch(function(err) {
-            console.log(141, err);
+            // console.log(141, err);
+
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(11, err);
+      // console.log(11, err);
+      //
+      Raven.captureException(err);
     });
 };
 
@@ -89,7 +95,7 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
 //       }
 //     })
 //     .catch(function(err) {
-//       // console.log(err);
+//       //
 //     });
 // };
 // const giveMoneyBackToTeam = function(team_id, input_val) {
@@ -107,7 +113,7 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
 //       }
 //     })
 //     .catch(function(err) {
-//       console.log(err);
+//
 //     });
 // };
 const changeIntoBye = function(seed, participantsCount) {
@@ -125,7 +131,7 @@ const proceed_to_next_round = function(t_id, t_round) {
     .fetchAll()
     .then(function(round_matches) {
       round_matches = round_matches.toJSON();
-      console.log('we have ', round_matches.length, ' in this round');
+      // console.log('we have ', round_matches.length, ' in this round');
       const winner_teams = [];
       for (let i = 0; i < round_matches.length; i++) {
         const rm = round_matches[i];
@@ -136,14 +142,14 @@ const proceed_to_next_round = function(t_id, t_round) {
           // console.log(round_matches[i]);
           return;
         }
-        console.log(' found a winner team');
+        // console.log(' found a winner team');
         if (rm.result == 'team_1') {
           winner_teams.push(rm.team_1_id);
         } else if (rm.result == 'team_2') {
           winner_teams.push(rm.team_2_id);
         }
       }
-      console.log('winners of this round are: ', winner_teams);
+      // console.log('winners of this round are: ', winner_teams);
       if (round_matches.length == winner_teams && winner_teams == 1) {
         // last match, tournament ends here
         new Item()
@@ -157,10 +163,12 @@ const proceed_to_next_round = function(t_id, t_round) {
                 status: 'complete'
               })
               .then(function(e) {
-                console.log('brackets updated');
+                // console.log('brackets updated');
               })
               .catch(function(err) {
-                console.log(err);
+                //
+
+                Raven.captureException(err);
               });
           });
         return;
@@ -203,9 +211,7 @@ const proceed_to_next_round = function(t_id, t_round) {
             .then(function(e) {
               console.log('brackets updated');
             })
-            .catch(function(err) {
-              console.log(err);
-            });
+            .catch(function(err) {});
 
           for (let i = brackets_round.length - 1; i >= 0; i--) {
             const team_set = brackets_round[i];
@@ -228,7 +234,9 @@ const proceed_to_next_round = function(t_id, t_round) {
         });
     })
     .catch(function(err) {
-      console.log(err);
+      //
+
+      Raven.captureException(err);
     });
 };
 
@@ -352,7 +360,7 @@ exports.saveScore = function(req, res, next) {
         })
         .catch(function(err) {
           console.log('1');
-          console.log(err);
+
           res.status(400).send({
             ok: false,
             msg: 'Failed to Save Score'
@@ -360,8 +368,10 @@ exports.saveScore = function(req, res, next) {
         });
     })
     .catch(function(err) {
-      console.log('2');
-      console.log(err);
+      // console.log('2');
+      //
+
+      Raven.captureException(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed to Save Score'
@@ -389,7 +399,7 @@ exports.listItem = function(req, res, next) {
         .send({ok: true, items: items.toJSON(), users_data: {}});
     })
     .catch(function(err) {
-      // console.log(err);
+      //
       return res.status(200).send({ok: false, items: []});
     });
 };
@@ -440,7 +450,9 @@ const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
       console.log('match created');
     })
     .catch(function(err) {
-      console.log(err);
+      //
+
+      Raven.captureException(err);
     });
 };
 
@@ -454,7 +466,7 @@ const createRoundMatches = function(match) {
   //   console.log('---- -- - - - --------- -- - - - -----');
   // console.log(teams);
   const participants = Array.from({length: teams_count}, (v, k) => k + 1);
-  console.log(participants);
+  // console.log(participants);
   const bracket_obj = getBracket(participants);
   const brackets_round = bracket_obj[0];
 
@@ -478,7 +490,8 @@ const createRoundMatches = function(match) {
       console.log('brackets updated');
     })
     .catch(function(err) {
-      console.log(err);
+      //
+      Raven.captureException(err);
     });
 
   for (let i = brackets_round.length - 1; i >= 0; i--) {
@@ -645,7 +658,9 @@ exports.join = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log(err);
+          //
+
+          Raven.captureException(err);
           res.status(400).send({
             ok: false,
             msg: 'Failed to Join Tournament'
@@ -653,7 +668,9 @@ exports.join = function(req, res, next) {
         });
     })
     .catch(function(err) {
-      console.log(err);
+      //
+
+      Raven.captureException(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed to Join Tournament'
@@ -744,7 +761,7 @@ exports.listSingleItem = function(req, res, next) {
 
               u.push(parseInt(k));
             }
-            console.log('here reached');
+            // console.log('here reached');
             new User()
               .where('id', 'IN', u)
               .fetchAll()
@@ -772,14 +789,18 @@ exports.listSingleItem = function(req, res, next) {
                 });
               })
               .catch(function(err) {
-                console.log(err);
+                //
+
+                Raven.captureException(err);
                 return res
                   .status(200)
                   .send({ok: true, item: item, users_data: {}});
               });
           })
           .catch(function(err) {
-            console.log(err);
+            //
+
+            Raven.captureException(err);
             return res.status(400).send({
               id: req.params.id,
               title: '',
@@ -793,7 +814,7 @@ exports.listSingleItem = function(req, res, next) {
       }
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(400).send({
         id: req.params.id,
         title: '',
@@ -821,7 +842,9 @@ exports.listupcoming = function(req, res, next) {
       return res.status(200).send({ok: true, items: item.toJSON()});
     })
     .catch(function(err) {
-      // console.log(err);
+      //
+
+      Raven.captureException(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -845,20 +868,16 @@ exports.t_of_user = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      // console.log(err);
+      Raven.captureException(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
 
 exports.addItem = function(req, res, next) {
-  // req.assert('title', 'Title cannot be blank').notEmpty();
-  // req.assert('content', 'Content cannot be blank').notEmpty();
-  // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
   const errors = req.validationErrors();
   if (errors) {
     return res.status(400).send(errors);
   }
-  console.log(req.body);
   new Item({
     title: req.body.title ? req.body.title : '-',
     game_id: req.body.game_id,
@@ -880,7 +899,8 @@ exports.addItem = function(req, res, next) {
       res.send({ok: true, msg: 'New Item has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      //
+      Raven.captureException(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});
@@ -889,16 +909,11 @@ exports.addItem = function(req, res, next) {
 
 exports.updateItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
-  // req.assert('content', 'Content cannot be blank').notEmpty();
-  // req.assert('slug', 'Fancy URL cannot be blank').notEmpty();
-  // req.assert('category_id', 'Category cannot be blank').notEmpty();
 
-  // console.log(req.body);
   const errors = req.validationErrors();
   if (errors) {
     return res.status(400).send(errors);
   }
-
   const item = new Item({id: req.body.id});
   const obj = {
     title: req.body.title,
@@ -929,15 +944,17 @@ exports.updateItem = function(req, res, next) {
           });
         })
         .catch(function(err) {
-          // console.log(err);
+          //
+          Raven.captureException(err);
           res
             .status(400)
             .send({msg: 'Something went wrong while updating the ' + ObjName});
         });
     })
     .catch(function(err) {
-      // console.log(err);
+      //
 
+      Raven.captureException(err);
       res
         .status(400)
         .send({msg: 'Something went wrong while updating the ' + ObjName});
@@ -951,6 +968,7 @@ exports.deleteItem = function(req, res, next) {
       res.send({msg: 'The ' + ObjName + ' has been successfully deleted.'});
     })
     .catch(function(err) {
+      Raven.captureException(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while deleting the ' + ObjName});

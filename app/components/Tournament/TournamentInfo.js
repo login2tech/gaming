@@ -424,8 +424,21 @@ class TournamentInfo extends React.Component {
     // }
 
     // return 'Complete - ' + result;
-
-    return 'TO BE IMPLEMENTED';
+    if (this.state.tournament.status == 'cancelled') {
+      return (
+        <span className="status_cancelled">
+          Cancelled
+          <br />
+          {this.state.tournament.teams_registered > 0 ? (
+            <small>REFUND PROCESSED</small>
+          ) : (
+            false
+          )}
+        </span>
+      );
+    }
+    return this.state.tournament.status;
+    // return 'TO BE IMPLEMENTED';
   }
 
   // renderScoreSubmit() {

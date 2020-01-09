@@ -1,3 +1,6 @@
+const Raven = require('raven');
+Raven.config('https://a6c40c1f84954d8f92472d82355a10fe@sentry.io/1876355');
+
 // Libraries
 require('dotenv').config({silent: true});
 const moment = require('moment');
@@ -14,13 +17,66 @@ const utils = require('./routes/utils');
 const Match = require('./routes/matches/Match');
 const Money8 = require('./routes/money8/Money8Match');
 const User = require('./models/User');
+const Tournament = require('./routes/tournaments/Tournament');
 
 let TICKER = 0;
 function reset_ticker() {
   // console.log('reseting..')
   TICKER = 0;
 }
+const delete_tournament = function(tid, tour) {
+  const tour_price = tour.entry_fee;
 
+  if (tour.teams_registered > 0 && tour_price > 0) {
+    let team_ids = tour.team_ids;
+    team_ids = team_ids.split(',');
+    team_ids = team_ids.filter(function(item) {
+      if (item == '') {
+        return false;
+      }
+      return true;
+    });
+    // team_ids = team_ids.map(function(item) {
+    //   return parseInt(item);
+    // });
+    const players = JSON.parse(tour.teams_obj);
+    // console.log(team_ids);
+    for (let i = 0; i < team_ids.length; i++) {
+      const team_id = team_ids[i];
+      const players_of_team = players['team_' + team_id];
+      // console.log(players_of_team);
+      for (let j = 0; j < players_of_team.length; j++) {
+        utils.giveCreditsToUser(
+          players_of_team[j],
+          tour_price,
+          'Refund for cancelled tournament #' + tour.id,
+          't_' + tour.id
+        );
+        // console.log('vo');
+
+        //tour_price
+        // refund tour price to players_of_team[i];
+        //tour_price
+      }
+    }
+  }
+  new Tournament()
+    .where({id: tid})
+    .save(
+      {
+        status: 'cancelled'
+      },
+      {
+        method: 'update'
+      }
+    )
+    .then(function(d) {
+      console.log('ye');
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+    });
+};
 const delete_match = function(ta, match) {
   let team_1 = match.team_1_players;
   let team_2 = match.team_2_players;
@@ -40,15 +96,15 @@ const delete_match = function(ta, match) {
         utils.giveCashToUser(
           team_1[i],
           match.match_fee,
-          'Refund for cancelled matchfinder #' + match.id,
-          'm8_' + match.id
+          'Refund for cancelled matchfinder match #' + match.id,
+          'm_' + match.id
         );
       } else if (match.match_type == 'credits') {
         utils.giveCreditsToUser(
           team_1[i],
           match.match_fee,
           'Refund for cancelled matchfinder match #' + match.id,
-          'm8_' + match.id
+          'm_' + match.id
         );
       }
     }
@@ -57,15 +113,15 @@ const delete_match = function(ta, match) {
         utils.giveCashToUser(
           team_2[i],
           match.match_fee,
-          'Refund for cancelled matchfinder #' + match.id,
-          'm8_' + match.id
+          'Refund for cancelled matchfinder match #' + match.id,
+          'm_' + match.id
         );
       } else if (match.match_type == 'credits') {
         utils.giveCreditsToUser(
           team_2[i],
           match.match_fee,
           'Refund for cancelled matchfinder match #' + match.id,
-          'm8_' + match.id
+          'm_' + match.id
         );
       }
     }
@@ -78,7 +134,7 @@ const delete_match = function(ta, match) {
       //
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
     });
 };
 const delete_money8 = function(ta, match) {
@@ -110,7 +166,7 @@ const delete_money8 = function(ta, match) {
       //
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
     });
 };
 const updateUserRank = function(uid, rank) {
@@ -128,115 +184,151 @@ const updateUserRank = function(uid, rank) {
       //
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
     });
 };
 
-//
-new Match()
-  .where('starts_at', '<', moment())
-  .where('status', 'LIKE', 'pending')
-  .fetchAll({withRelated: []})
-  .then(function(matches) {
-    reset_ticker();
-    if (!matches) {
-      return;
-    }
-    matches = matches.toJSON();
-    // console.log(matches.length);
-    for (let i = 0; i < matches.length; i++) {
-      // `
-      // tournaments`
-      //
-      delete_match(matches[i].id, matches[i]);
-    }
-    //
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
-
-//
-new Money8()
-  .where('expires_in', '<', moment())
-  .where('status', 'LIKE', 'pending')
-  .fetchAll({withRelated: []})
-  .then(function(matches) {
-    reset_ticker();
-    if (!matches) {
-      return;
-    }
-    matches = matches.toJSON();
-    // console.log(matches.length);
-    for (let i = 0; i < matches.length; i++) {
-      delete_money8(matches[i].id, matches[i]);
-    }
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
-
-//
-// new Match()
-//   .where('status', 'cancelled')
-//   // .destroy()
-//   .then(function() {
-//     reset_ticker();
-//     console.log('deleted');
-//   })
-//   .catch(function(err) {
-//     console.log(err);
-//   });
-
-new Match()
-  .where('status', 'cancelled')
-  .fetchAll({withRelated: []})
-  .then(function(matches) {
-    reset_ticker();
-    if (!matches) {
-      return;
-    }
-    matches = matches.toJSON();
-    // console.log(matches.length);
-    for (let i = 0; i < matches.length; i++) {
-      // `
-      // tournaments`
-      //
-      delete_match(matches[i].id, matches[i]);
-    }
-    //
-  })
-  .catch(function(err) {
-    console.log(err);
-  });
-
-new User()
-  .orderBy('life_xp', 'DESC')
-  .orderBy('life_earning', 'DESC')
-  .orderBy('id', 'DESC')
-  .fetchAll()
-  .then(function(usrs) {
-    usrs = usrs.toJSON();
-    const le = usrs.length;
-    for (let i = 0; i < le; i++) {
-      if (usrs[i].xp_rank == i + 1) {
-        continue;
+const process_5 = function() {
+  reset_ticker();
+  // console.log('settling ranks');
+  new User()
+    .orderBy('life_xp', 'DESC')
+    .orderBy('life_earning', 'DESC')
+    .orderBy('id', 'DESC')
+    .fetchAll()
+    .then(function(usrs) {
+      usrs = usrs.toJSON();
+      const le = usrs.length;
+      for (let i = 0; i < le; i++) {
+        if (usrs[i].xp_rank == i + 1) {
+          continue;
+        }
+        // console.log(usrs[i].xp_rank, i + 1);
+        updateUserRank(usrs[i].id, i + 1);
       }
-      // console.log(usrs[i].xp_rank, i + 1);
-      updateUserRank(usrs[i].id, i + 1);
-    }
-    // return res.status(200).send({ok: true, items: usrs.toJSON()});
-  })
-  .catch(function(err) {
-    console.log(err);
-    // return res.status(400).send({ok: false, items: []});
-  });
+      // return res.status(200).send({ok: true, items: usrs.toJSON()});
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      // return res.status(400).send({ok: false, items: []});
+    });
+};
+
+const process_4 = function() {
+  reset_ticker();
+  console.log('clearing old tournaments');
+
+  new Tournament()
+    .where('registration_end_at', '<', moment())
+    .where({
+      status: 'pending'
+    })
+    .fetchAll()
+    .then(function(tournaments) {
+      tournaments = tournaments.toJSON();
+      for (let i = 0; i < tournaments.length; i++) {
+        delete_tournament(tournaments[i].id, tournaments[i]);
+      }
+      reset_ticker();
+      setTimeout(process_5, 6000);
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      reset_ticker();
+      setTimeout(process_5, 6000);
+    });
+  // reset_ticker();
+  // setTimeout(process_5, 6000);
+};
+
+const process_3 = function() {
+  reset_ticker();
+  console.log('clearing cancelled matches');
+  new Match()
+    .where('status', 'cancelled')
+    .fetchAll({withRelated: []})
+    .then(function(matches) {
+      reset_ticker();
+      if (!matches) {
+        return;
+      }
+      matches = matches.toJSON();
+      // console.log(matches.length);
+      for (let i = 0; i < matches.length; i++) {
+        delete_match(matches[i].id, matches[i]);
+      }
+      reset_ticker();
+      setTimeout(process_4, 6000);
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      reset_ticker();
+      setTimeout(process_4, 6000);
+    });
+};
+
+const process_2 = function() {
+  reset_ticker();
+  console.log('clearing pending money8');
+  new Money8()
+    .where('expires_in', '<', moment())
+    .where('status', 'LIKE', 'pending')
+    .fetchAll({withRelated: []})
+    .then(function(matches) {
+      reset_ticker();
+      if (!matches) {
+        return;
+      }
+      matches = matches.toJSON();
+      // console.log(matches.length);
+      for (let i = 0; i < matches.length; i++) {
+        delete_money8(matches[i].id, matches[i]);
+      }
+      setTimeout(process_3, 6000);
+      reset_ticker();
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      reset_ticker();
+      setTimeout(process_3, 6000);
+    });
+};
+const process_1 = function() {
+  reset_ticker();
+  console.log('clearing pending matches');
+  new Match()
+    .where('starts_at', '<', moment())
+    .where('status', 'LIKE', 'pending')
+    .fetchAll({withRelated: []})
+    .then(function(matches) {
+      reset_ticker();
+      if (!matches) {
+        return;
+      }
+      matches = matches.toJSON();
+      for (let i = 0; i < matches.length; i++) {
+        delete_match(matches[i].id, matches[i]);
+      }
+      reset_ticker();
+      setTimeout(process_2, 6000);
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      reset_ticker();
+      setTimeout(process_2, 6000);
+    });
+};
+
+process_1();
 
 //
+
+// new Tournament().
+
 setInterval(function() {
   console.log('.');
   if (TICKER > 0) {
     process.exit(); // we need to exit the task if there is no activity(completed)
   }
   TICKER++;
-}, 5000);
+}, 10000);

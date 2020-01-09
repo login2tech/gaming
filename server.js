@@ -1,4 +1,8 @@
 require('dotenv').config({silent: true});
+
+const Raven = require('raven');
+Raven.config('https://a6c40c1f84954d8f92472d82355a10fe@sentry.io/1876355');
+
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
@@ -7,7 +11,6 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const jwt = require('jsonwebtoken');
 const aws = require('aws-sdk');
-
 const multer = require('multer');
 const multerS3 = require('multer-s3');
 
@@ -586,7 +589,8 @@ renderReact(app, langs);
 
 // if (app.get('env') === 'production') {
 app.use(function(err, req, res, next) {
-  console.error(err.stack);
+  // console.error(err.stack);
+  Raven.captureException(err);
   res.sendStatus(err.status || 500);
 });
 // }

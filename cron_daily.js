@@ -46,7 +46,7 @@ const stopDoubleXp = function(ta) {
       //
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
     });
 };
 
@@ -106,7 +106,7 @@ const checkForMembership = function(user) {
             addMembershipLog(prime_type, 'stop', user.id);
           })
           .catch(function(err) {
-            //
+            Raven.captureException(err);
           });
       }
     }
@@ -124,15 +124,12 @@ new User()
     usrs = usrs.toJSON();
     // console.log(matches.length);
     for (let i = 0; i < usrs.length; i++) {
-      // `
-      // tournaments`
-      //
       stopDoubleXp(usrs[i].id);
     }
     //
   })
   .catch(function(err) {
-    console.log(err);
+    Raven.captureException(err);
   });
 new User()
   .where({
