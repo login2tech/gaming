@@ -84,7 +84,7 @@ class Header extends React.Component {
     const props = this.props;
     return (
       <>
-        <li className="has_children_m has_search_form">
+        <li className="sm_on_mob has_children_m has_search_form">
           <Link className="profile_menu_item">
             <i className="fa fa-search" />
           </Link>
@@ -115,7 +115,7 @@ class Header extends React.Component {
 
         {props.user && props.token
           ? [
-              <li key={5} className="has_children_m">
+              <li key={5} className=" sm_on_mob has_children_m">
                 <Link className="profile_menu_item" to="/notifications">
                   <i className="fa fa-bell" />
                   {this.state.notifications &&
@@ -228,6 +228,7 @@ class Header extends React.Component {
                       </span>
                     </span>
                   </span>
+                  <button className="btn btn-exp-menu">+</button>
                 </Link>
                 <ul className="submenu">
                   <li>
@@ -326,10 +327,16 @@ class Header extends React.Component {
             ]
           : [
               <li key={1}>
-                <Link to="/login">Login</Link>
+                <Link to="/login" onClick={this.closeSide}>
+                  Login
+                </Link>
               </li>,
               <li key={2}>
-                <Link className="menu_btn" to="/signup">
+                <Link
+                  onClick={this.closeSide}
+                  className="menu_btn"
+                  to="/signup"
+                >
                   Signup
                 </Link>
               </li>
@@ -342,52 +349,81 @@ class Header extends React.Component {
     return (
       <>
         <li className="has_children_m">
-          <Link to="/matchfinder">Play</Link>
+          <Link onClick={this.closeSide} to="/matchfinder">
+            Play
+          </Link>
+          <button className="btn btn-exp-menu">+</button>
           <ul className="submenu">
             <li>
-              <Link to="/matchfinder">MatchFinder</Link>
+              <Link onClick={this.closeSide} to="/matchfinder">
+                MatchFinder
+              </Link>
             </li>
             <li>
-              <Link to="/tournaments">Tournaments</Link>
+              <Link onClick={this.closeSide} to="/tournaments">
+                Tournaments
+              </Link>
             </li>
             <li>
-              <Link to="/mix-and-match">Mix & Match</Link>
+              <Link onClick={this.closeSide} to="/mix-and-match">
+                Mix & Match
+              </Link>
             </li>
           </ul>
         </li>
 
         <li className="has_children_m">
-          <Link to="/feed">Social Feed</Link>
+          <Link onClick={this.closeSide} to="/feed">
+            Social Feed
+          </Link>
+          <button className="btn btn-exp-menu">+</button>
           <ul className="submenu">
             <li>
-              <Link to="/feed">Global</Link>
+              <Link onClick={this.closeSide} to="/feed">
+                Global
+              </Link>
             </li>
             <li>
-              <Link to="/feed/my">Personal</Link>
+              <Link onClick={this.closeSide} to="/feed/my">
+                Personal
+              </Link>
             </li>
           </ul>
         </li>
         <li className="has_children_m">
-          <Link to="/forums">Community</Link>
+          <Link onClick={this.closeSide} to="/forums">
+            Community
+          </Link>
+          <button className="btn btn-exp-menu">+</button>
           <ul className="submenu">
             <li>
-              <Link to="/forums">Forums</Link>
+              <Link onClick={this.closeSide} to="/forums">
+                Forums
+              </Link>
             </li>
 
             <li>
-              <Link to="/leaderboards">Leaderboards</Link>
+              <Link onClick={this.closeSide} to="/leaderboards">
+                Leaderboards
+              </Link>
             </li>
 
             <li>
-              <Link to="/clip_of_the_week_month">Clip of the week/month</Link>
+              <Link onClick={this.closeSide} to="/clip_of_the_week_month">
+                Clip of the week/month
+              </Link>
             </li>
           </ul>
         </li>
         <li>
-          <Link to="/shop">Shop</Link>
+          <Link onClick={this.closeSide} to="/shop">
+            Shop
+          </Link>
         </li>
         <li>
-          <Link to="/support/tickets">Support</Link>
+          <Link onClick={this.closeSide} to="/support/tickets">
+            Support
+          </Link>
         </li>
       </>
     );

@@ -43,8 +43,27 @@ function scrollToTop()
     "use strict";
 
 
+
   //mobile menu
   $(document).ready(function(){
+
+    $(document).on('click',  '.btn-exp-menu',function(){
+      if($(this).parent().hasClass('actv'))
+
+      {
+        $(this).html('+');
+      }else{
+        $(this).html('-');
+      }
+
+      $(this).parent().toggleClass('actv');
+    } ) ;
+
+
+    $(document).on('click', '.sm_on_mob a', function(e){
+      e.preventDefault();
+      $(this).parent().toggleClass('actvFull');
+    })
     $('body').tooltip({
         animated: 'fade',
         selector : 'a[data-toggle="tooltip"]',
