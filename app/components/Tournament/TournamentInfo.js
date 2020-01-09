@@ -173,15 +173,15 @@ class TournamentInfo extends React.Component {
     ) {
       return false;
     }
-    console.log('here');
+    // console.log('here');
 
     const amount = parseFloat(this.state.tournament.entry_fee);
     for (let i = 0; i < this.state.team_selected.team_users.length; i++) {
-      console.log(
-        this.state.using_users.indexOf(
-          this.state.team_selected.team_users[i].user_info.id
-        )
-      );
+      // console.log(
+      //   this.state.using_users.indexOf(
+      //     this.state.team_selected.team_users[i].user_info.id
+      //   )
+      // );
       if (
         this.state.using_users.indexOf(
           this.state.team_selected.team_users[i].user_info.id
@@ -1243,7 +1243,7 @@ class TournamentInfo extends React.Component {
               <br />
               <label>
                 <input type="checkbox" required /> I agree to the terms to join
-                this match.
+                this tournament.
               </label>
               <br />
               <br />
@@ -1319,58 +1319,59 @@ class TournamentInfo extends React.Component {
   }
 
   render() {
+    const {tournament} = this.state;
     return (
       <div>
-        <section className="page_title_bar">
+        <section
+          className="page_title_bar"
+          style={{
+            backgroundImage: tournament.banner_url
+              ? 'url(' + tournament.banner_url + ')'
+              : tournament.game.banner_url
+                ? 'url(' + tournament.game.banner_url + ')'
+                : "url('images/thumbnail_tournament.jpg')"
+          }}
+        >
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <div className="match_heading">
-                    <h4>{this.state.tournament.title}</h4>
+                    <h4>{tournament.title}</h4>
                   </div>
                   <div className="row">
                     <div className="col-12 col-md">
                       <span className="game_station">
                         <span
                           className={
-                            game_user_ids.tag_icons[
-                              this.state.tournament.ladder.gamer_tag
-                            ]
+                            game_user_ids.tag_icons[tournament.ladder.gamer_tag]
                           }
                         />
-                        {this.state.tournament.game.title} @{' '}
-                        {this.state.tournament.ladder.title}
+                        {tournament.game.title} @ {tournament.ladder.title}
                       </span>
                       <div className="match_start_date">
-                        {moment().isAfter(
-                          moment(this.state.tournament.starts_at)
-                        )
+                        {moment().isAfter(moment(tournament.starts_at))
                           ? 'Tournament Started:'
                           : 'Tournament Starts'}{' '}
-                        {moment(this.state.tournament.starts_at).fromNow()}
+                        {moment(tournament.starts_at).fromNow()}
                       </div>
                     </div>
                     <div className="col-12 col-md">
                       <div>
                         {moment().isAfter(
-                          moment(this.state.tournament.registration_start_at)
+                          moment(tournament.registration_start_at)
                         )
                           ? 'Registration Started:'
                           : 'Registration Starts'}{' '}
-                        {moment(
-                          this.state.tournament.registration_start_at
-                        ).fromNow()}
+                        {moment(tournament.registration_start_at).fromNow()}
                       </div>
                       <div>
                         {moment().isAfter(
-                          moment(this.state.tournament.registration_end_at)
+                          moment(tournament.registration_end_at)
                         )
                           ? 'Registration Ended:'
                           : 'Registration Ends'}{' '}
-                        {moment(
-                          this.state.tournament.registration_end_at
-                        ).fromNow()}
+                        {moment(tournament.registration_end_at).fromNow()}
                       </div>
                     </div>
                     <div className="col-12 col-md"> </div>
@@ -1388,27 +1389,25 @@ class TournamentInfo extends React.Component {
                     <div className="row">
                       <div className="col-md-4">
                         <span> TOURNAMENT ID</span>
-                        <p>#{this.state.tournament.id}</p>
+                        <p>#{tournament.id}</p>
                       </div>
 
                       <div className="col-md-4">
                         <span> STATUS</span>
                         <p>
-                          {moment().isAfter(
-                            moment(this.state.tournament.starts_at)
-                          )
+                          {moment().isAfter(moment(tournament.starts_at))
                             ? this.dynamicStatus()
-                            : this.state.tournament.status}
+                            : tournament.status}
                         </p>
                       </div>
 
                       <div className="col-md-4">
                         <span>Registered</span>
                         <p>
-                          {this.state.tournament.teams_registered
-                            ? this.state.tournament.teams_registered
+                          {tournament.teams_registered
+                            ? tournament.teams_registered
                             : 0}
-                          {' / ' + this.state.tournament.total_teams}
+                          {' / ' + tournament.total_teams}
                         </p>
                       </div>
                     </div>

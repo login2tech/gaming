@@ -96,9 +96,11 @@ class TournamentFinder extends React.Component {
                             key={match.id}
                             className="tournament-box"
                             style={{
-                              backgroundImage: match.game.banner_url
-                                ? 'url(' + match.game.banner_url + ')'
-                                : "url('images/thumbnail_tournament.jpg')"
+                              backgroundImage: match.banner_url
+                                ? 'url(' + match.banner_url + ')'
+                                : match.game.banner_url
+                                  ? 'url(' + match.game.banner_url + ')'
+                                  : "url('images/thumbnail_tournament.jpg')"
                             }}
                           >
                             <div className="tournament-body">
@@ -120,23 +122,25 @@ class TournamentFinder extends React.Component {
                                 {moment(match.registration_start_at).isAfter(
                                   moment()
                                 )
-                                  ? 'Registration starts ' +
+                                  ? 'Registration starts: ' +
                                     moment(
                                       match.registration_start_at
                                     ).fromNow()
-                                  : 'Registration ends ' +
+                                  : 'Registration ends: ' +
                                     moment(match.registration_end_at).fromNow()}
                               </span>
 
                               <span className="date">
-                                Tournament Starts{' '}
+                                {moment(match.starts_at).isAfter(moment())
+                                  ? 'Tournament Starts: '
+                                  : 'Tournament started: '}
                                 {moment(match.starts_at).fromNow()}
                               </span>
                             </div>
 
                             <div className="tournament-footer">
-                              <div className="col">
-                                <div className="col-item">
+                              <div className="row">
+                                <div className="col-6 col-md-3 t-col">
                                   <h5>Registered</h5>
                                   <p>
                                     {match.teams_registered
@@ -145,11 +149,11 @@ class TournamentFinder extends React.Component {
                                     {' / ' + match.total_teams}
                                   </p>
                                 </div>
-                                <div className="col-item">
-                                  <h5>entry_fee</h5>
+                                <div className="col-6 col-md-3 t-col">
+                                  <h5>Entry Fee</h5>
                                   <p>{match.entry_fee} credits</p>
                                 </div>
-                                <div className="col-item">
+                                <div className="col-6 col-md-3 t-col">
                                   <h5>Prize pool</h5>
                                   <p>
                                     {match.first_winner_price +

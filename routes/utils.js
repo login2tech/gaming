@@ -34,16 +34,16 @@ const giveCashOrCreditsToUser = function(typ, user_id, amount, descr, obj) {
                 //
               })
               .catch(function(err) {
-                console.log(8, err);
+                Raven.captureException(err);
               });
           })
           .catch(function(err) {
-            console.log(9, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(10, err);
+      Raven.captureException(err);
     });
 };
 
@@ -75,16 +75,16 @@ const takeCashOrCreditsFromUser = function(typ, user_id, amount, descr, obj) {
             })
               .then(function(o) {})
               .catch(function(err) {
-                console.log(8, err);
+                Raven.captureException(err);
               });
           })
           .catch(function(err) {
-            console.log(9, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(10, err);
+      Raven.captureException(err);
     });
 };
 

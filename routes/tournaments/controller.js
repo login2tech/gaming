@@ -766,7 +766,7 @@ exports.listSingleItem = function(req, res, next) {
               .where('id', 'IN', u)
               .fetchAll()
               .then(function(usrs) {
-                console.log('here reached too');
+                // console.log('here reached too');
                 if (!usrs) {
                   return res
                     .status(200)
@@ -892,7 +892,8 @@ exports.addItem = function(req, res, next) {
     member_tournament: req.body.member_tournament == 'yes' ? true : false,
     second_winner_price: req.body.second_winner_price,
     teams_registered: 0,
-    third_winner_price: req.body.third_winner_price
+    third_winner_price: req.body.third_winner_price,
+    banner_url: req.body.banner_url ? req.body.banner_url : ''
   })
     .save()
     .then(function(item) {

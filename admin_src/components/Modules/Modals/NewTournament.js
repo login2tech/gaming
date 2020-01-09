@@ -1,6 +1,6 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
-// import moment from 'moment';
+import axios from 'axios';
 import Fetcher from '../../../actions/Fetcher';
 import Messages from '../../Messages';
 import React from 'react';
@@ -12,6 +12,7 @@ class NewTournament extends React.Component {
       title: '',
       game_id: '',
       ladder_id: '',
+      banner_url: '',
       min_players: '',
       gamer_tag: '',
       member_tournament: 'no',
@@ -20,6 +21,7 @@ class NewTournament extends React.Component {
       games: [],
       ladders: []
     };
+    this.banner_url_ref = React.createRef();
   }
 
   doClose() {
@@ -128,8 +130,53 @@ class NewTournament extends React.Component {
       });
   }
 
+  uploadFile2() {
+    const data = new FormData();
+
+    const node = this.banner_url_ref.current;
+
+    const file_1 = node.files[0];
+    data.append('file', file_1, file_1.name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          // this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            banner_url: res.data.file
+          },
+          () => {
+            this.finalSubmit();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
+        // console.log(err);
+      });
+  }
+
   onSubmit(e) {
     e.preventDefault();
+    this.setState(
+      {
+        loaded: false
+      },
+      () => {
+        this.uploadFile2();
+      }
+    );
+  }
+
+  finalSubmit() {
     this.setState({
       loaded: false
     });
@@ -150,7 +197,8 @@ class NewTournament extends React.Component {
       entry_fee: this.state.entry_fee,
       first_winner_price: this.state.first_winner_price,
       second_winner_price: this.state.second_winner_price,
-      third_winner_price: this.state.third_winner_price
+      third_winner_price: this.state.third_winner_price,
+      banner_url: this.state.banner_url
     })
       .then(resp => {
         if (resp.ok) {
@@ -180,14 +228,6 @@ class NewTournament extends React.Component {
   }
 
   handleChange(event) {
-    // if (
-    //   event.target.name == 'starts_at' ||
-    //   event.target.name == 'registration_start_at' ||
-    //   event.target.name == 'registration_end_at'
-    // ) {
-    //   console.log(event.target.value);
-    //   return;
-    // }
     this.setState({[event.target.name]: event.target.value});
     if (event.target.name == 'game_id') {
       // alert(event.target.value);
@@ -196,8 +236,6 @@ class NewTournament extends React.Component {
   }
 
   render() {
-    // const {data} = this.props;
-    // console.log(data);
     return (
       <div className="">
         {this.state.loaded ? (
@@ -423,6 +461,23 @@ class NewTournament extends React.Component {
                   className="form-control"
                 />
               </div>
+              <div className="input-control">
+                <label>Tournament Banner</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="banner_url"
+                  required
+                  ref={this.banner_url_ref}
+                  // onChange={this.handleChange.bind(this)}
+                  id="banner_url"
+                />
+                <small className="alert alert-notice">
+                  If you do not select a banner for tournaments, it will use the
+                  selected game's banner
+                </small>
+              </div>
+              <br />
 
               <br />
               <input

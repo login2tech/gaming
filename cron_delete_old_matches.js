@@ -18,6 +18,7 @@ const Match = require('./routes/matches/Match');
 const Money8 = require('./routes/money8/Money8Match');
 const User = require('./models/User');
 const Tournament = require('./routes/tournaments/Tournament');
+const Notif = require('./models/Notification');
 
 let TICKER = 0;
 function reset_ticker() {
@@ -52,6 +53,12 @@ const delete_tournament = function(tid, tour) {
           'Refund for cancelled tournament #' + tour.id,
           't_' + tour.id
         );
+        new Notif().save({
+          description: 'The tournament you joined is now cancelled.',
+          user_id: players_of_team[j],
+          type: 'tournament',
+          object_id: tour.id
+        });
         // console.log('vo');
 
         //tour_price
@@ -71,7 +78,7 @@ const delete_tournament = function(tid, tour) {
       }
     )
     .then(function(d) {
-      console.log('ye');
+      // console.log('ye');
     })
     .catch(function(err) {
       Raven.captureException(err);
@@ -216,7 +223,7 @@ const process_5 = function() {
 
 const process_4 = function() {
   reset_ticker();
-  console.log('clearing old tournaments');
+  // console.log('clearing old tournaments');
 
   new Tournament()
     .where('registration_end_at', '<', moment())
@@ -243,7 +250,7 @@ const process_4 = function() {
 
 const process_3 = function() {
   reset_ticker();
-  console.log('clearing cancelled matches');
+  // console.log('clearing cancelled matches');
   new Match()
     .where('status', 'cancelled')
     .fetchAll({withRelated: []})
@@ -269,7 +276,7 @@ const process_3 = function() {
 
 const process_2 = function() {
   reset_ticker();
-  console.log('clearing pending money8');
+  // console.log('clearing pending money8');
   new Money8()
     .where('expires_in', '<', moment())
     .where('status', 'LIKE', 'pending')
@@ -295,7 +302,7 @@ const process_2 = function() {
 };
 const process_1 = function() {
   reset_ticker();
-  console.log('clearing pending matches');
+  // console.log('clearing pending matches');
   new Match()
     .where('starts_at', '<', moment())
     .where('status', 'LIKE', 'pending')
@@ -326,7 +333,7 @@ process_1();
 // new Tournament().
 
 setInterval(function() {
-  console.log('.');
+  // console.log('.');
   if (TICKER > 0) {
     process.exit(); // we need to exit the task if there is no activity(completed)
   }

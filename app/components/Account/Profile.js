@@ -863,14 +863,18 @@ class Profile extends React.Component {
                           {this.state.tournaments.map((match, i) => {
                             return (
                               <tr key={match.id}>
-                                <td>{match.id}</td>
+                                <td>
+                                  <Link to={'/t/' + match.id}>#{match.id}</Link>{' '}
+                                  - {match.title}
+                                </td>
                                 <td>
                                   {match.game.title} - {match.ladder.title}
                                 </td>
                                 <td>{moment(match.starts_at).format('lll')}</td>
-                                <td>{match.status}</td>
+                                <td className={'status_' + match.status}>
+                                  {match.status}
+                                </td>
                                 <td>
-                                  {' '}
                                   <Link to={'/t/' + match.id}>
                                     View Tournament
                                   </Link>

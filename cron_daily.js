@@ -148,7 +148,7 @@ new User()
     }
   });
 setInterval(function() {
-  console.log('.');
+  // console.log('.');
   if (TICKER > 0) {
     process.exit(); // we need to exit the task if there is no activity(completed)
   }
