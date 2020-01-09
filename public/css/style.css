@@ -5361,6 +5361,11 @@ ul.notices li:first-child {
 #sidebar li ul {
     display: none
 }
+@media (min-width: 993px) {
+  .fl-3{flex:3}
+  .fl-2{flex:2}
+  .fl-1{width:15%}
+}
 
 @media (max-width: 992px) {
     span.close_side {

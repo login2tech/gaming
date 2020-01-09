@@ -411,7 +411,7 @@ class Header extends React.Component {
           className="navbar navbar-expand-lg p-0 p-md-0  p-sm-0 p-lg-2"
         >
           <div className="container">
-            <div className="navbar-header">
+            <div className="navbar-header fl-1">
               <Link className="navbar-brand logo " to="/">
                 <img
                   src={'/images/logo.png'}
@@ -444,17 +444,11 @@ class Header extends React.Component {
               </button>
             </div>
 
-            <div
-              className=" d-lg-none collapse navbar-collapse show blue_search"
-              id="search"
-            >
-              <div className=" d-lg-none">{/*this.renderSearch('small')*/}</div>
-            </div>
-            <div className="collapse navbar-collapse mr-3" id="menu">
+            <div className="collapse navbar-collapse mr-3 fl-3" id="menu">
               <ul className=" navbar-nav nav-list">{this.renderLinks()}</ul>
             </div>
             <div
-              className="collapse navbar-collapse ml-3 justify-content-end"
+              className="collapse navbar-collapse ml-3 fl-2 justify-content-end"
               id="menu2"
             >
               <ul className=" navbar-nav nav-list">
