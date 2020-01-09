@@ -62,6 +62,12 @@ function scrollToTop()
 
     $(document).on('click', '.sm_on_mob a', function(e){
       e.preventDefault();
+      if($(this).parent().hasClass('actvFull'))
+      {
+          $(this).parent().toggleClass('actvFull');
+          return;
+      }
+      $('.actvFull').removeClass('actvFull');
       $(this).parent().toggleClass('actvFull');
     })
     $('body').tooltip({

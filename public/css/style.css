@@ -5422,18 +5422,23 @@ button.btn.btn-exp-menu {
         display: block !important;
     }
 
+    #sidebar li.actvFull {
+        position: static !important;
+    }.notification_list:not(.user_sugggestions) li a:not(.text-danger){
+      padding: 0px !important
+    }
     button.btn.btn-exp-menu {
-        position: absolute;
-        top: 23px;
-        right: 10px;
-        padding: 4px 10px;
-        height: 20px;
-        display: block;
-        width: 20px;
-        line-height: 20px;
-        background: #fff;
-        padding: 0;
-        border: 0;z-index: 11;
+      position: absolute;
+      top: 13px;
+      right: 10px;
+      height: 40px;
+      display: block;
+      width: 40px;
+      line-height: 40px;
+      background: rgb(255, 255, 255);
+      padding: 0;
+      border: 0;
+      z-index: 11;
     }
 
     .user_sugggestions li {
