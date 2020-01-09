@@ -60,7 +60,7 @@ function scrollToTop()
     } ) ;
 
 
-    $(document).on('click', '.sm_on_mob a', function(e){
+    $(document).on('click', '.sm_on_mob > a', function(e){
       e.preventDefault();
       if($(this).parent().hasClass('actvFull'))
       {

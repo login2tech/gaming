@@ -3948,6 +3948,9 @@ ul.submenu li a {
     justify-content: space-between;
     justify-content: space-evenly;
 }
+.is_logged_in .nav-list{
+  justify-content: space-between;
+}
 
 .t-prizes-place {
     border-bottom: 1px solid #000000;
