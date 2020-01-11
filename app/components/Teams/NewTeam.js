@@ -8,19 +8,26 @@ import game_user_ids from '../../../config/game_user_ids';
 class NewTeam extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
+    // console.log(props);
     this.state = {
       title: '',
-      ladder: '',
+      ladder:
+        props && props.params && props.params.type && props.params.type == 'l'
+          ? props.params.id
+          : '',
       tournaments: [],
       games: [],
       submit_started: false,
+      ladder_disabled:
+        props && props.params && props.params.type && props.params.type == 'l'
+          ? true
+          : false,
       team_type:
         props && props.params && props.params.type
           ? props.params.type == 't'
             ? 'tournaments'
             : 'matchfinder'
-          : '',
+          : 'matchfinder',
       tournament:
         props && props.params && props.params.type
           ? props.params.type == 't'

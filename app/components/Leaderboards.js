@@ -17,6 +17,38 @@ class Leaderboards extends React.Component {
     };
   }
 
+  image_based_on_i(xp) {
+    // const xp = this.getXp(xpo);
+    if (xp < 50) {
+      return 'amateur';
+    }
+    if (xp < 200) {
+      return 'beginner';
+    }
+    if (xp < 500) {
+      return 'upcoming';
+    }
+    if (xp < 1000) {
+      return 'bronze';
+    }
+    if (xp < 1500) {
+      return 'silver';
+    }
+    if (xp < 2000) {
+      return 'gold';
+    }
+    if (xp < 3000) {
+      return 'platinum';
+    }
+    if (xp < 3500) {
+      return 'diamond';
+    }
+    if (xp < 4000) {
+      return 'elite';
+    }
+    return 'elite';
+  }
+
   componentDidMount() {
     this.fetchTransactions();
   }
@@ -123,6 +155,7 @@ class Leaderboards extends React.Component {
                         <tr>
                           <th>Rank</th>
                           <th>User</th>
+                          <th>&nbsp;</th>
                           <th>
                             {showing == 'xp' ? (
                               <span className="fa fa-arrow-down m-r-10" />
@@ -165,6 +198,16 @@ class Leaderboards extends React.Component {
                                   <img src={image_url} />
                                   {k.username}
                                 </Link>
+                              </td>
+                              <td>
+                                <img
+                                  className="img-fluid mw-100p"
+                                  src={
+                                    '/assets/rank/' +
+                                    this.image_based_on_i(k.life_xp) +
+                                    '.png'
+                                  }
+                                />
                               </td>
                               <td>{k.life_xp}</td>
                               <td>${k.life_earning}</td>

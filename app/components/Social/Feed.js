@@ -99,7 +99,14 @@ class Feed extends React.Component {
                 <div className="section-headline white-headline text-left">
                   <h3>
                     Social Feed
-                    {hashtag ? ' - #' + hashtag : ''}
+                    {hashtag ? (
+                      ' - #' + hashtag
+                    ) : (
+                      <>
+                        {' '}
+                        - Global <span className="fa fa-globe" />
+                      </>
+                    )}
                   </h3>
                 </div>
               </div>

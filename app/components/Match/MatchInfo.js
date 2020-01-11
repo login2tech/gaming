@@ -1239,7 +1239,19 @@ class MatchInfo extends React.Component {
                 {this.state.eligible_teams_loaded &&
                   !this.state.team_selected && (
                     <div className="alert alert-warning" id="tlst">
-                      You dont have a team for this ladder
+                      You dont have a team for this ladder. Click{' '}
+                      <Link
+                        target="_blank"
+                        to={
+                          '/u/' +
+                          this.props.user.username +
+                          '/teams/new/l/' +
+                          this.state.match.ladder.id
+                        }
+                      >
+                        here
+                      </Link>{' '}
+                      to create a team.
                     </div>
                   )}
               </div>

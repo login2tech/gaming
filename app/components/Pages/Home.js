@@ -95,7 +95,10 @@ class Home extends React.Component {
                   return false;
                 }
                 return (
-                  <div className=" col game_hover_effect" key={games.id}>
+                  <div
+                    className="col-6 col-md game_hover_effect "
+                    key={games.id}
+                  >
                     <div className="game_c_box">
                       <div className="game_pic">
                         <a
@@ -168,7 +171,16 @@ class Home extends React.Component {
                 className="carousel-item active"
                 style={{background: '#fff'}}
               >
-                <img src="images/slide_1.png" alt="" />
+                <img
+                  src="images/slide_1.png"
+                  className="d-none d-md-inline"
+                  alt=""
+                />
+                <img
+                  src="images/slide_1_mobile.png"
+                  className="d-inline d-md-none"
+                  alt=""
+                />
               </div>
             </div>
           </div>
@@ -178,7 +190,16 @@ class Home extends React.Component {
           <div id="demo2" className="carousel slide" data-ride="carousel">
             <div className="carousel-inner">
               <div className="carousel-item active">
-                <img src="images/slide_2.png" alt="" />
+                <img
+                  src="images/slide_2.png"
+                  alt=""
+                  className="d-none d-md-inline"
+                />
+                <img
+                  src="images/slide_2_mobile.png"
+                  alt=""
+                  className="d-inline d-md-none pt-3"
+                />
               </div>
             </div>
           </div>
