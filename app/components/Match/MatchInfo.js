@@ -681,7 +681,7 @@ class MatchInfo extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <div className="row bbt">
-                    <div className="col-2 col-md-1">
+                    <div className="col  col-md-1">
                       <span
                         className={
                           game_user_ids.tag_icons[
@@ -690,7 +690,7 @@ class MatchInfo extends React.Component {
                         }
                       />
                     </div>
-                    <div className="col-12 col-md-3">
+                    <div className="col  col-md-3">
                       <div className="match_heading">
                         <h4>Match</h4>
                       </div>
@@ -700,7 +700,7 @@ class MatchInfo extends React.Component {
                       </div>
                     </div>
 
-                    <div className="col-10 col-md-7 pt-3">
+                    <div className="col-12 col-md-7 pt-3">
                       <span className="vs_match">
                         <Link
                           to={'/teams/view/' + this.state.match.team_1_info.id}

@@ -312,6 +312,8 @@ exports.team_of_user = function(req, res, next) {
   a.fetchAll({
     withRelated: [
       'team_info',
+      'team_info.ladder',
+      'team_info.ladder.game_info',
       'team_info.team_users',
       'team_info.team_users.user_info',
       'team_info.score'

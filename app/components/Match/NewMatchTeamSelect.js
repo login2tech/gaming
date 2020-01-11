@@ -23,6 +23,7 @@ class NewMatchTeamSelect extends React.Component {
       selected_team_data: {
         team_info: {ladder: {title: ''}, team_users: [], title: ''}
       },
+      eligible_teams: [],
       selected_team: {
         ladder: {title: ''},
         team_users: [],
@@ -404,7 +405,7 @@ class NewMatchTeamSelect extends React.Component {
     'Battletag'
   ];
   render() {
-    console.log(this.state.ladder_obj);
+    // console.log(this.state.ladder_obj);
     let min = this.state.ladder_obj.min_players;
     let max = this.state.ladder_obj.max_players;
     if (max < min) {
@@ -448,11 +449,81 @@ class NewMatchTeamSelect extends React.Component {
                       <br />
                       */}
                       <div className="form-group col-md-12">
+                        <label htmlFor="team_id">Team</label>
+                        <select
+                          className="form-control"
+                          required="required"
+                          name="team_id"
+                          id="team_id"
+                          onChange={e => {
+                            this.handleChange(e);
+                            const a = parseInt(e.target.value);
+
+                            let m = this.state.eligible_teams.filter(function(
+                              item
+                            ) {
+                              if (item.team_id == a) {
+                                return true;
+                              }
+                              return false;
+                            });
+                            if (m.length) {
+                              m = m[0];
+                            } else {
+                              m = null;
+                            }
+
+                            this.setState({
+                              selected_team_data: m,
+                              selected_team: m ? m.team_info : [],
+                              ladder: m ? m.team_info.ladder_id : null,
+                              using_users: []
+                            });
+                          }}
+                        >
+                          <option value="">Select Team</option>
+                          {this.state.eligible_teams.map((team, i) => {
+                            if (team.removed) {
+                              return false;
+                            }
+                            team = team.team_info;
+                            if (team.removed) {
+                              return false;
+                            }
+                            if (team.team_type != 'matchfinder') {
+                              return false;
+                            }
+                            // console.log(team);
+                            if (
+                              this.props.params &&
+                              this.props.params.type == 'g' &&
+                              this.props.params.id
+                            ) {
+                              if (
+                                team.ladder.game_id !=
+                                parseInt(this.props.params.id)
+                              ) {
+                                return false;
+                              }
+                            }
+                            // console.log(team);
+                            return (
+                              <option key={team.id} value={team.id}>
+                                {team.title} - [ {team.ladder.game_info.title}
+                                {' - '}
+                                {team.ladder.title} ]
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+                      {/*}
+                      <div className="form-group col-md-12">
                         <label htmlFor="title">Team Ladder</label>
 
                         <select
                           className="form-control"
-                          required=""
+                          required="required"
                           name="ladder"
                           id="ladder"
                           value={this.state.ladder}
@@ -525,7 +596,7 @@ class NewMatchTeamSelect extends React.Component {
                           })}
                           }
                         </select>
-                      </div>
+                      </div>*/}
                       <br />
                       <div className="form-group col-md-12">
                         <label htmlFor="title">User Id Required</label>
@@ -533,7 +604,7 @@ class NewMatchTeamSelect extends React.Component {
                           {!this.state.ladder ? ' - ' : this.showGamerTag()}
                         </div>
                       </div>
-
+                      {/*}
                       <br />
                       <div className="form-group col-md-12">
                         <label htmlFor="title">Team Id for Match</label>
@@ -559,7 +630,7 @@ class NewMatchTeamSelect extends React.Component {
                             '-'
                           )}
                         </div>
-                      </div>
+                      </div>*/}
                       <br />
                       {/*}
                     <div className="form-group col-md-12">
@@ -586,7 +657,7 @@ class NewMatchTeamSelect extends React.Component {
                         <label htmlFor="title">Match Starts at</label>
                         <div className="input-group date">
                           <select
-                            className="form-control"
+                            className="form-control nobrd"
                             name="match_starts_in"
                             id="match_starts_in"
                             onChange={this.handleChange.bind(this)}

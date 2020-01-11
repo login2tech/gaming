@@ -5273,7 +5273,7 @@ ul.notices li:first-child {
     background: #000 !important;
 }
 
-.input-group select.form-control, .input-group input.form-control {
+.input-group select.form-control:not(.nobrd), .input-group input.form-control:not(.nobrd) {
     height: 40px !important;
     padding: 10px;
     line-height: 20px;
@@ -5561,6 +5561,9 @@ button.btn.btn-exp-menu {
 }
 
 @media screen and (max-width: 576px) {
+  .pf_icon_big{
+    padding-top:0;
+  }
     .mh190 {
         min-height: auto;
     }

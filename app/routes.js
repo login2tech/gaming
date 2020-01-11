@@ -228,6 +228,12 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
+      <Route
+        path="/match/new/:type/:id"
+        component={NewMatchTeamSelect}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
       <Route onLeave={clearMessages} path="/game/:id/:title" component={Game} />
       <Route
         onLeave={clearMessages}
