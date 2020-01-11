@@ -16,4 +16,5 @@ const Tournament = bookshelf.Model.extend({
     return this.hasMany(TournamentMatch, 'tournament_id');
   }
 });
-module.exports = Tournament;
+
+module.exports = bookshelf.model('Tournament', Tournament);

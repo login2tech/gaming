@@ -41,14 +41,14 @@ exports.updateCMSPage = function(req, res, next) {
           });
         })
         .catch(function(err) {
-          // console.log(err);
+          Raven.captureException(err);
           res.status(400).send({
             msg: 'Something went wrong while updating the CMSPage listing'
           });
         });
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       res
         .status(400)
         .send({msg: 'Something went wrong while updating the CMSPage listing'});
@@ -79,7 +79,7 @@ exports.addCMSPage = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(400).send({
         msg: 'Something went wrong while created a new CMSPage listing'
       });
@@ -97,6 +97,7 @@ exports.listCMSPage = function(req, res, next) {
       return res.status(200).send({ok: true, cms_pages: cms_pages.toJSON()});
     })
     .catch(function(err) {
+      Raven.captureException(err);
       return res.status(200).send({cms_pages: [], user: req.user});
     });
 };
@@ -114,6 +115,7 @@ exports.listSingleCMSPageSlug = function(req, res, next) {
       return res.status(200).send({ok: true, cms_page: cms_page.toJSON()});
     })
     .catch(function(err) {
+      Raven.captureException(err);
       return res.status(200).send({
         ok: false,
         id: req.params.id,
@@ -134,6 +136,7 @@ exports.getFooterLink = function(req, res, next) {
       return res.status(200).send({ok: true, pages: cms_pages.toJSON()});
     })
     .catch(function(err) {
+      Raven.captureException(err);
       return res.status(200).send({ok: true, pages: []});
     });
 };
@@ -151,6 +154,7 @@ exports.listSingleCMSPage = function(req, res, next) {
       return res.status(200).send({ok: true, cms_page: cms_page.toJSON()});
     })
     .catch(function(err) {
+      Raven.captureException(err);
       return res.status(400).send({
         id: req.params.id,
         title: '',

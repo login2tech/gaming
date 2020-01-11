@@ -8,6 +8,7 @@ module.exports = routes;
 routes.get('/list', ctrl.listItem);
 routes.get('/listPaged', ctrl.listPaged);
 routes.get('/single/:id', ctrl.listSingleItem);
+routes.get('/singlematch/:id', ctrl.listSingleMatchItem);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
 routes.post('/edit', u_ctrl.ensureAuthenticated, ctrl.updateItem);
 routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);

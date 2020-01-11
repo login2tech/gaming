@@ -65,11 +65,13 @@ exports.loginPost = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
-
+  let val = req.body.email;
+  val = val.trim();
+  val = val.toLowerCase();
   new User()
     .query({
-      where: {email: req.body.email},
-      orWhere: {username: req.body.email}
+      where: {email: val},
+      orWhere: {username: val}
     })
     .fetch()
     .then(function(user) {

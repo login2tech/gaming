@@ -8,6 +8,7 @@ const User = require('../../models/User');
 const TournamentMatch = require('./TournamentMatch');
 const CreditTransactions = require('../../models/CreditTransactions');
 const Notif = require('../../models/Notification');
+const Raven = require('raven');
 
 // const giveMoneyToMember = function(uid, input_val) {
 //   new User()
@@ -702,7 +703,32 @@ exports.listPaged = function(req, res, next) {
       return res.status(200).send([]);
     });
 };
-
+exports.listSingleMatchItem = function(req, res, next) {
+  new TournamentMatch()
+    .where({
+      id: req.params.id
+    })
+    .fetch({
+      withRelated: [
+        'tournament',
+        'tournament.ladder',
+        'tournament.game',
+        'team_1_info',
+        'team_2_info'
+      ]
+    })
+    .then(function(item) {
+      if (!item) {
+        return res.status(200).send({ok: true, item: {}, is_404: true});
+      }
+      return res.status(200).send({ok: true, item: item.toJSON()});
+    })
+    .catch(function(err) {
+      console.log(err);
+      Raven.captureException(err);
+      return res.status(200).send({ok: true, item: {}});
+    });
+};
 exports.listSingleItem = function(req, res, next) {
   new Item()
     .where('id', req.params.id)
