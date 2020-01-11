@@ -10,33 +10,6 @@ const CreditTransactions = require('../../models/CreditTransactions');
 const Notif = require('../../models/Notification');
 const Raven = require('raven');
 
-// const giveMoneyToMember = function(uid, input_val) {
-//   new User()
-//     .where({id: uid})
-//     .fetch()
-//     .then(function(usr) {
-//       if (usr) {
-//         let credit_balance = usr.get('credit_balance');
-//         const prime = usr.get('prime');
-//         if (prime) {
-//           credit_balance += parseFloat(input_val);
-//         } else {
-//           credit_balance += parseFloat((4 / 5) * input_val);
-//         }
-//
-//         usr
-//           .save({credit_balance: credit_balance}, {patch: true})
-//           .then(function(usr) {})
-//           .catch(function(err) {
-//             //
-//           });
-//       }
-//     })
-//     .catch(function(err) {
-//
-//     });
-// };
-
 const takeMoneyFromMember = function(uid, input_val, match_id) {
   // console.log(input_val);
   new User()
@@ -714,7 +687,11 @@ exports.listSingleMatchItem = function(req, res, next) {
         'tournament.ladder',
         'tournament.game',
         'team_1_info',
-        'team_2_info'
+        'team_2_info',
+        'team_1_info.team_users',
+        'team_1_info.team_users.user_info',
+        'team_2_info.team_users',
+        'team_2_info.team_users.user_info'
       ]
     })
     .then(function(item) {
@@ -724,7 +701,7 @@ exports.listSingleMatchItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       Raven.captureException(err);
       return res.status(200).send({ok: true, item: {}});
     });

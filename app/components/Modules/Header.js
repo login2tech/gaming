@@ -472,10 +472,8 @@ class Header extends React.Component {
                 Menu <span className="navbar-toggler-icon fa fa-bars" />
                 {this.state.notifications && this.state.notifications.length ? (
                   <>
-                    <span className="dot notif_dot">
-                      {this.state.notifications.length}
-                    </span>
                     <span className="notif_count fa fa-bell" />
+                    <span className="dot notif_dot fix_ui" />
                   </>
                 ) : (
                   false

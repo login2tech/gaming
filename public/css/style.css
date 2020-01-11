@@ -5012,6 +5012,11 @@ a.reset_rep {
     margin-left: 9%;
 }
 
+span.dot.notif_dot.fix_ui {
+    width: 10px;
+    height: 10px;
+    background: rgb(255, 0, 0);
+}
 .ico_no_fl .pf_icon {
     float: none;
 }

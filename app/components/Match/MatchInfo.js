@@ -443,7 +443,7 @@ class MatchInfo extends React.Component {
             this.myTeamName() +
             ''
           }
-          className="btn btn-primary bttn_submit"
+          className="btn btn-primary bttn_submit dib"
           style={{width: 'auto'}}
         >
           Create Ticket to resolve dispute
