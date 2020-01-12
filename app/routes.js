@@ -305,7 +305,12 @@ export default function getRoutes(store) {
         component={Timeline}
         onLeave={clearMessages}
       />
-      <Route path="/shop" component={Shop} onLeave={clearMessages} />
+      <Route
+        path="/shop"
+        onEnter={ensureAuthenticated}
+        component={Shop}
+        onLeave={clearMessages}
+      />
       <Route
         path="/login"
         component={Login}

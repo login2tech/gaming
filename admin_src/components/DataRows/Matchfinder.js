@@ -180,7 +180,7 @@ class MatchFinder extends React.Component {
       return;
     }
 
-    alert(action + ' ' + obj.id);
+    //alert(action + ' ' + obj.id);
   }
 
   componentDidMount() {

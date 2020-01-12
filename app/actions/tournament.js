@@ -75,6 +75,9 @@ export function saveScores(data, user, cb) {
             messages: Array.isArray(json) ? json : [json]
           });
           cb && cb();
+          setTimeout(function() {
+            window.location.href = '/tournament-match/' + json.match.id;
+          }, 1000);
         });
       } else {
         return response.json().then(json => {

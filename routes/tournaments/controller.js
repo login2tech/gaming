@@ -9,6 +9,61 @@ const TournamentMatch = require('./TournamentMatch');
 const CreditTransactions = require('../../models/CreditTransactions');
 const Notif = require('../../models/Notification');
 const Raven = require('raven');
+const matchController = require('../matches/controller');
+
+const changeIntoBye = function(seed, participantsCount) {
+  //return seed <= participantsCount ?  seed : '{0} (= bye)'.format(seed);
+  return seed <= participantsCount ? seed : null;
+};
+const getBracket = function(participants) {
+  const participantsCount = participants.length;
+  const rounds = Math.ceil(Math.log(participantsCount) / Math.log(2));
+  const bracketSize = Math.pow(2, rounds);
+  const requiredByes = bracketSize - participantsCount;
+
+  if (participantsCount < 2) {
+    return [[], rounds, bracketSize, requiredByes];
+  }
+
+  let matches = [[1, 2]];
+
+  for (let round = 1; round < rounds; round++) {
+    const roundMatches = [];
+    const sum = Math.pow(2, round + 1) + 1;
+
+    for (let i = 0; i < matches.length; i++) {
+      let home = changeIntoBye(matches[i][0], participantsCount);
+      let away = changeIntoBye(sum - matches[i][0], participantsCount);
+      roundMatches.push([home, away]);
+      home = changeIntoBye(sum - matches[i][1], participantsCount);
+      away = changeIntoBye(matches[i][1], participantsCount);
+      roundMatches.push([home, away]);
+    }
+    matches = roundMatches;
+  }
+
+  return [matches, rounds, bracketSize, requiredByes];
+};
+
+const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
+  new TournamentMatch()
+    .save({
+      tournament_id: t_id,
+      match_round: round,
+      team_1_id: team_1,
+      team_2_id: team_2,
+      starts_at: moment().add(10, 'minutes'),
+      team_1_players: t_1_u ? t_1_u.join('|') : null,
+      team_2_players: t_2_u ? t_2_u.join('|') : null,
+      status: 'pending'
+    })
+    .then(function() {
+      // console.log('match created');
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+    });
+};
 
 const takeMoneyFromMember = function(uid, input_val, match_id) {
   // console.log(input_val);
@@ -90,12 +145,9 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
 //
 //     });
 // };
-const changeIntoBye = function(seed, participantsCount) {
-  //return seed <= participantsCount ?  seed : '{0} (= bye)'.format(seed);
-  return seed <= participantsCount ? seed : null;
-};
 
 const proceed_to_next_round = function(t_id, t_round) {
+  console.log(t_id, t_round);
   new TournamentMatch()
     .where({
       tournament_id: t_id,
@@ -105,26 +157,32 @@ const proceed_to_next_round = function(t_id, t_round) {
     .fetchAll()
     .then(function(round_matches) {
       round_matches = round_matches.toJSON();
-      // console.log('we have ', round_matches.length, ' in this round');
+      console.log('we have ', round_matches.length, ' in this round');
       const winner_teams = [];
       for (let i = 0; i < round_matches.length; i++) {
         const rm = round_matches[i];
         if (
-          round_matches[i].status != 'team_1' &&
-          round_matches[i].status != 'team_2'
+          round_matches[i].result != 'team_1' &&
+          round_matches[i].result != 'team_2'
         ) {
-          // console.log(round_matches[i]);
+          console.log(round_matches[i]);
+          console.log(
+            'not proceeding as there is 1 match which doesnt have results.'
+          );
           return;
         }
-        // console.log(' found a winner team');
+        console.log(' found a winner team');
         if (rm.result == 'team_1') {
           winner_teams.push(rm.team_1_id);
         } else if (rm.result == 'team_2') {
           winner_teams.push(rm.team_2_id);
         }
       }
-      // console.log('winners of this round are: ', winner_teams);
-      if (round_matches.length == winner_teams && winner_teams == 1) {
+      console.log('winners of this round are: ', winner_teams);
+      if (
+        round_matches.length == winner_teams.length &&
+        winner_teams.length == 1
+      ) {
         // last match, tournament ends here
         new Item()
           .where({
@@ -138,16 +196,17 @@ const proceed_to_next_round = function(t_id, t_round) {
               })
               .then(function(e) {
                 // console.log('brackets updated');
+                console.log('tournament ended, distribute stuff!');
               })
               .catch(function(err) {
                 //
-
                 Raven.captureException(err);
               });
           });
         return;
       }
 
+      console.log('creating next round');
       new Item()
         .where({
           id: t_id
@@ -183,14 +242,16 @@ const proceed_to_next_round = function(t_id, t_round) {
               brackets: brackets
             })
             .then(function(e) {
-              console.log('brackets updated');
+              // console.log('brackets updated');
             })
-            .catch(function(err) {});
+            .catch(function(err) {
+              console.log(err);
+            });
 
           for (let i = brackets_round.length - 1; i >= 0; i--) {
             const team_set = brackets_round[i];
-            console.log('---- -- - - - -----');
-            console.log('team_set : ', team_set);
+            // console.log('---- -- - - - -----');
+            // console.log('team_set : ', team_set);
             const team_1 = team_set[0] ? winner_teams[team_set[0] - 1] : null;
             const team_2 = team_set[1] ? winner_teams[team_set[1] - 1] : null;
             if (team_1 && team_2) {
@@ -209,6 +270,7 @@ const proceed_to_next_round = function(t_id, t_round) {
     })
     .catch(function(err) {
       //
+      console.log(err);
 
       Raven.captureException(err);
     });
@@ -243,26 +305,47 @@ exports.saveScore = function(req, res, next) {
         return;
       }
 
-      if (
-        val.team_1_result &&
-        val.team_2_result &&
-        val.team_1_result != '' &&
-        val.team_2_result != ''
-      ) {
-        if (val.team_1_result != val.team_2_result) {
+      if (val.team_1_result && val.team_2_result) {
+        const team_2_score = val.team_2_result.split('-');
+        const team_2_score_reverse = team_2_score[1] + '-' + team_2_score[0];
+        if (val.team_1_result != team_2_score_reverse) {
           val.status = 'disputed';
           val.result = 'disputed';
         } else {
           const tmp = val.team_1_result.split('-');
           if (parseInt(tmp[0]) > parseInt(tmp[1])) {
             val.result = 'team_1';
-            val.status = 'Complete';
+            val.status = 'complete';
           } else if (parseInt(tmp[1]) > parseInt(tmp[0])) {
             val.result = 'team_2';
-            val.status = 'Complete';
+            val.status = 'complete';
           } else {
             val.status = 'tie';
             val.result = 'Tie';
+          }
+        }
+      } else {
+        // pehle se result koi b ni posted, first time post ho rha h but lose dala h khud ka toh close match
+        // console.log(
+        // 'pehle se result koi b ni posted, first time post ho rha h but lose dala h khud ka toh close match'
+        // );
+        // const winner = false;
+        // console.log(val);
+        if (val.team_1_result) {
+          const tmp = val.team_1_result.split('-');
+          const team_1_score_reverse = tmp[1] + '-' + tmp[0];
+          if (parseInt(tmp[0]) < parseInt(tmp[1])) {
+            val.result = 'team_2';
+            val.team_2_result = team_1_score_reverse;
+            val.status = 'complete';
+          }
+        } else if (val.team_2_result) {
+          const tmp = val.team_2_result.split('-');
+          const team_2_score_reverse = tmp[1] + '-' + tmp[0];
+          if (parseInt(tmp[1]) > parseInt(tmp[0])) {
+            val.result = 'team_1';
+            val.team_1_result = team_2_score_reverse;
+            val.status = 'complete';
           }
         }
       }
@@ -274,8 +357,6 @@ exports.saveScore = function(req, res, next) {
             msg: 'Score Updated successfully.',
             match: match.toJSON()
           });
-          console.log(' -- -- - - -- -');
-          console.log('checking for logs of: ', tmp_match.match_round);
 
           proceed_to_next_round(tmp_match.tournament_id, tmp_match.match_round);
 
@@ -294,20 +375,30 @@ exports.saveScore = function(req, res, next) {
             // console.log('winers are ', win_team_members);
             // console.log('lossers are ', loose_team_members);
 
-            // win_team_members = win_team_members.split('|');
-            // loose_team_members = loose_team_members.split('|');
+            win_team_members = win_team_members.split('|');
+            loose_team_members = loose_team_members.split('|');
 
-            // const award_team_id =
-            //   val.result == 'team_1'
-            //     ? tmp_match.team_1_id
-            //     : tmp_match.team_2_id;
-            // const loose_team_id =
-            //   val.result == 'team_1'
-            //     ? tmp_match.team_2_id
-            //     : tmp_match.team_1_id;
+            const award_team_id =
+              val.result == 'team_1'
+                ? tmp_match.team_1_id
+                : tmp_match.team_2_id;
+            const loose_team_id =
+              val.result == 'team_1'
+                ? tmp_match.team_2_id
+                : tmp_match.team_1_id;
             // console.log('giving xp now');
-            // giveXPtoTeam(award_team_id, win_team_members, tmp_match.id);
-            // takeXPfromTeam(loose_team_id, loose_team_members, tmp_match.id);
+            matchController.giveXPtoTeam(
+              award_team_id,
+              win_team_members,
+              tmp_match.id,
+              't'
+            );
+            matchController.takeXPfromTeam(
+              loose_team_id,
+              loose_team_members,
+              tmp_match.id,
+              't'
+            );
             // if (tmp_match.match_type == 'paid') {
             //   console.log('paid match giving xp');
             //   giveMoneyBackToTeam(
@@ -333,8 +424,8 @@ exports.saveScore = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log('1');
-
+          // console.log(err);
+          Raven.captureException(err);
           res.status(400).send({
             ok: false,
             msg: 'Failed to Save Score'
@@ -342,10 +433,8 @@ exports.saveScore = function(req, res, next) {
         });
     })
     .catch(function(err) {
-      // console.log('2');
-      //
-
       Raven.captureException(err);
+      // console.log(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed to Save Score'
@@ -375,58 +464,6 @@ exports.listItem = function(req, res, next) {
     .catch(function(err) {
       //
       return res.status(200).send({ok: false, items: []});
-    });
-};
-
-const getBracket = function(participants) {
-  const participantsCount = participants.length;
-  const rounds = Math.ceil(Math.log(participantsCount) / Math.log(2));
-  const bracketSize = Math.pow(2, rounds);
-  const requiredByes = bracketSize - participantsCount;
-
-  if (participantsCount < 2) {
-    return [[], rounds, bracketSize, requiredByes];
-  }
-
-  let matches = [[1, 2]];
-
-  for (let round = 1; round < rounds; round++) {
-    const roundMatches = [];
-    const sum = Math.pow(2, round + 1) + 1;
-
-    for (let i = 0; i < matches.length; i++) {
-      let home = changeIntoBye(matches[i][0], participantsCount);
-      let away = changeIntoBye(sum - matches[i][0], participantsCount);
-      roundMatches.push([home, away]);
-      home = changeIntoBye(sum - matches[i][1], participantsCount);
-      away = changeIntoBye(matches[i][1], participantsCount);
-      roundMatches.push([home, away]);
-    }
-    matches = roundMatches;
-  }
-
-  return [matches, rounds, bracketSize, requiredByes];
-};
-
-const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
-  new TournamentMatch()
-    .save({
-      tournament_id: t_id,
-      match_round: round,
-      team_1_id: team_1,
-      team_2_id: team_2,
-      starts_at: moment().add(10, 'minutes'),
-      team_1_players: t_1_u ? t_1_u.join('|') : null,
-      team_2_players: t_2_u ? t_2_u.join('|') : null,
-      status: 'pending'
-    })
-    .then(function() {
-      console.log('match created');
-    })
-    .catch(function(err) {
-      //
-
-      Raven.captureException(err);
     });
 };
 
@@ -461,7 +498,7 @@ const createRoundMatches = function(match) {
       brackets: brackets
     })
     .then(function(e) {
-      console.log('brackets updated');
+      // console.log('brackets updated');
     })
     .catch(function(err) {
       //
@@ -977,4 +1014,134 @@ exports.deleteItem = function(req, res, next) {
         .status(400)
         .send({msg: 'Something went wrong while deleting the ' + ObjName});
     });
+};
+
+const resolveDispute = function(req, res, next, m_id, win_to) {
+  let match_id;
+  let winner;
+  if (req) {
+    match_id = req.body.id;
+    winner = req.body.winner;
+  } else {
+    match_id = m_id;
+    winner = win_to;
+  }
+  new TournamentMatch({id: match_id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        if (res) {
+          return res.status(400).send({
+            ok: false,
+            msg: "Match doesn't exist"
+          });
+        } else {
+          return;
+        }
+      }
+      const tmp_match = match.toJSON();
+      if (tmp_match.result != 'disputed') {
+        if (res) {
+          return res.status(400).send({
+            ok: false,
+            msg: 'Match not disputed'
+          });
+        } else {
+          return;
+        }
+      }
+      const final_result = winner;
+      if (final_result != 'team_1' && final_result != 'team_2') {
+        if (res) {
+          return res.status(400).send({
+            ok: false,
+            msg: 'Thats not a valid result'
+          });
+        } else {
+          return;
+        }
+      }
+      const saved_info = {
+        status: 'complete',
+        result: final_result
+      };
+
+      match
+        .save(saved_info, {method: 'update'})
+        .then(function(match) {
+          if (res) {
+            res.status(200).send({
+              ok: true,
+              msg: 'Dispute resolved successfully',
+              match: match.toJSON()
+            });
+          }
+          const tmp_match = match.toJSON();
+          // match
+          proceed_to_next_round(tmp_match.tournament_id, tmp_match.match_round);
+
+          if (final_result != 'team_1' && final_result != 'team_2') {
+            return;
+          }
+
+          // get players
+          let win_team_members;
+          let loose_team_members;
+          if (final_result == 'team_1') {
+            win_team_members = match.get('team_1_players');
+            loose_team_members = match.get('team_2_players');
+          } else {
+            win_team_members = match.get('team_2_players');
+            loose_team_members = match.get('team_1_players');
+          }
+          win_team_members = win_team_members.split('|');
+          loose_team_members = loose_team_members.split('|');
+
+          // get winner team id
+          const award_team_id =
+            final_result == 'team_1'
+              ? tmp_match.team_1_id
+              : tmp_match.team_2_id;
+          const loose_team_id =
+            final_result == 'team_1'
+              ? tmp_match.team_2_id
+              : tmp_match.team_1_id;
+
+          // giveWinToTeam(award_team_id,win_team_members,  tmp_match.id);
+          matchController.giveXPtoTeam(
+            award_team_id,
+            win_team_members,
+            tmp_match.id,
+            't'
+          );
+          matchController.takeXPfromTeam(
+            loose_team_id,
+            loose_team_members,
+            tmp_match.id,
+            't'
+          );
+        })
+        .catch(function(err) {
+          Raven.captureException(err);
+          if (res) {
+            res.status(400).send({
+              ok: false,
+              msg: 'Failed to resolve the dispute'
+            });
+          }
+        });
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      if (res) {
+        res.status(400).send({
+          ok: false,
+          msg: 'Failed to resolve dispute'
+        });
+      }
+    });
+};
+exports.resolveDispute = resolveDispute;
+exports.resolveDisputeWrap = function(req, res, next) {
+  resolveDispute(req, res, next);
 };

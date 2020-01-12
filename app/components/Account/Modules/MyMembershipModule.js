@@ -110,14 +110,19 @@ class MyMembershipModule extends React.Component {
   }
 
   render() {
-    let prime_obj = this.props.user.prime_obj;
-    if (this.props.user.prime) {
-      if (!prime_obj) {
-        prime_obj = '{}';
+    let prime_obj = {};
+    if (this.props.user) {
+      prime_obj = this.props.user.prime_obj;
+      if (this.props.user.prime) {
+        if (!prime_obj) {
+          prime_obj = '{}';
+        }
+        if (typeof prime_obj == 'string') {
+          prime_obj = JSON.parse(prime_obj);
+        }
       }
-      if (typeof prime_obj == 'string') {
-        prime_obj = JSON.parse(prime_obj);
-      }
+    } else {
+      prime_obj = {};
     }
 
     return (

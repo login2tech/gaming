@@ -12,6 +12,7 @@ const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
 
+const Raven = require('raven');
 const getXPBasedOn = function(current_xp) {
   return 15;
 };
@@ -26,7 +27,7 @@ const getTeamWpForLooser = function() {
   return 7;
 };
 
-const giveXpToMember = function(uid, match_id) {
+const giveXpToMember = function(uid, match_id, match_type) {
   new User()
     .where({id: uid})
     .fetch()
@@ -44,7 +45,7 @@ const giveXpToMember = function(uid, match_id) {
           .save({life_xp: xp}, {patch: true})
           .then(function(usr) {})
           .catch(function(err) {
-            console.log(1, err);
+            Raven.captureException(err);
           });
 
         const year = moment().format('YYYY');
@@ -65,7 +66,7 @@ const giveXpToMember = function(uid, match_id) {
                 })
                 .then(function(o) {})
                 .catch(function(err) {
-                  console.log(2, err);
+                  Raven.captureException(err);
                 });
             } else {
               new XP()
@@ -77,32 +78,36 @@ const giveXpToMember = function(uid, match_id) {
                 })
                 .then(function(o) {})
                 .catch(function(err) {
-                  console.log(3, err);
+                  Raven.captureException(err);
                 });
+            }
+            let xtxt = '';
+            if (match_type == 't') {
+              xtxt = ' tournament';
             }
             new XPTransactions()
               .save({
                 user_id: uid,
                 obj_type: 'm_' + match_id,
-                details: 'XP Credit for winning match #' + match_id,
+                details: 'XP Credit for winning' + xtxt + ' match #' + match_id,
                 qty: xP_to_add
               })
               .then(function(o) {})
               .catch(function(err) {
-                console.log(4, err);
+                Raven.captureException(err);
               });
           })
           .catch(function(err) {
-            console.log(5, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(6, err);
+      Raven.captureException(err);
     });
 };
 
-const takeXpFromMember = function(uid, match_id) {
+const takeXpFromMember = function(uid, match_id, match_type) {
   new User()
     .where({id: uid})
     .fetch()
@@ -117,7 +122,7 @@ const takeXpFromMember = function(uid, match_id) {
           .save({life_xp: xp}, {patch: true})
           .then(function(usr) {})
           .catch(function(err) {
-            console.log(1, err);
+            Raven.captureException(err);
           });
 
         const year = moment().format('YYYY');
@@ -138,7 +143,7 @@ const takeXpFromMember = function(uid, match_id) {
                 })
                 .then(function(o) {})
                 .catch(function(err) {
-                  console.log(2, err);
+                  Raven.captureException(err);
                 });
             } else {
               new XP()
@@ -150,33 +155,36 @@ const takeXpFromMember = function(uid, match_id) {
                 })
                 .then(function(o) {})
                 .catch(function(err) {
-                  console.log(3, err);
+                  Raven.captureException(err);
                 });
+            }
+            let xtxt = '';
+            if (match_type == 't') {
+              xtxt = ' tournament';
             }
             new XPTransactions()
               .save({
                 user_id: uid,
                 obj_type: 'm_' + match_id,
-                details: 'XP Debit for lossing match #' + match_id,
+                details: 'XP Debit for lossing' + xtxt + ' match #' + match_id,
                 qty: -xP_to_add
               })
               .then(function(o) {})
               .catch(function(err) {
-                console.log(4, err);
+                Raven.captureException(err);
               });
           })
           .catch(function(err) {
-            console.log(5, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(6, err);
+      Raven.captureException(err);
     });
 };
 
 const addScoreForMember = function(uid, ladder_id, game_id, type) {
-  // console.log('168');
   const year = moment().format('YYYY');
   const season = moment().format('Q');
 
@@ -198,7 +206,7 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(4, err);
+            Raven.captureException(err);
           });
       } else {
         new Score()
@@ -212,12 +220,12 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(4, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(7, err);
+      Raven.captureException(err);
     });
   // console.log('208')
 
@@ -232,15 +240,15 @@ const addScoreForMember = function(uid, ladder_id, game_id, type) {
         usr
           .save({[type]: tpye_val}, {patch: true})
           .then(function(usr) {
-            console.log('221');
+            // console.log('221');
           })
           .catch(function(err) {
-            console.log(7, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(7, err);
+      Raven.captureException(err);
     });
 };
 
@@ -302,16 +310,16 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
             })
               .then(function(o) {})
               .catch(function(err) {
-                console.log(8, err);
+                Raven.captureException(err);
               });
           })
           .catch(function(err) {
-            console.log(9, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(10, err);
+      Raven.captureException(err);
     });
 };
 
@@ -354,23 +362,23 @@ const takeMoneyFromMember = function(uid, input_val, match_id, type) {
             })
               .then(function(o) {})
               .catch(function(err) {
-                console.log(4, err);
+                Raven.captureException(err);
               });
           })
           .catch(function(err) {
-            console.log(141, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(11, err);
+      Raven.captureException(err);
     });
 };
 
-const giveXPtoTeam = function(team_id, players, match_id) {
+const giveXPtoTeam = function(team_id, players, match_id, match_type) {
   for (let i = players.length - 1; i >= 0; i--) {
     const uid = parseInt(players[i]);
-    giveXpToMember(uid, match_id);
+    giveXpToMember(uid, match_id, match_type);
   }
   const xP_to_add = getTeamWpForWinner();
   const year = moment().format('YYYY');
@@ -390,7 +398,7 @@ const giveXPtoTeam = function(team_id, players, match_id) {
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(2, err);
+            Raven.captureException(err);
           });
       } else {
         new TeamXP()
@@ -402,19 +410,19 @@ const giveXPtoTeam = function(team_id, players, match_id) {
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(3, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(5, err);
+      Raven.captureException(err);
     });
 };
 
-const takeXPfromTeam = function(team_id, players, match_id) {
+const takeXPfromTeam = function(team_id, players, match_id, match_type) {
   for (let i = players.length - 1; i >= 0; i--) {
     const uid = parseInt(players[i]);
-    takeXpFromMember(uid, match_id);
+    takeXpFromMember(uid, match_id, match_type);
   }
   const xP_to_add = getTeamWpForLooser();
   const year = moment().format('YYYY');
@@ -435,7 +443,7 @@ const takeXPfromTeam = function(team_id, players, match_id) {
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(2, err);
+            Raven.captureException(err);
           });
       } else {
         new TeamXP()
@@ -447,14 +455,17 @@ const takeXPfromTeam = function(team_id, players, match_id) {
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(3, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(5, err);
+      Raven.captureException(err);
     });
 };
+
+exports.takeXPfromTeam = takeXPfromTeam;
+exports.giveXPtoTeam = giveXPtoTeam;
 
 const giveMoneyBackToTeam = function(
   team_id,
@@ -510,7 +521,7 @@ const addScoreForTeam = function(
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(4, err);
+            Raven.captureException(err);
           });
       } else {
         new TeamScore()
@@ -524,12 +535,12 @@ const addScoreForTeam = function(
           })
           .then(function(o) {})
           .catch(function(err) {
-            console.log(4, err);
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(7, err);
+      Raven.captureException(err);
     });
 };
 
@@ -654,8 +665,7 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
           );
         })
         .catch(function(err) {
-          console.log('1');
-          console.log(err);
+          Raven.captureException(err);
           if (res) {
             res.status(400).send({
               ok: false,
@@ -665,8 +675,7 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
         });
     })
     .catch(function(err) {
-      console.log('2');
-      console.log(err);
+      Raven.captureException(err);
       if (res) {
         res.status(400).send({
           ok: false,
@@ -746,8 +755,8 @@ const giveWin = function(req, res, next, match_id, team_to_win) {
                 tmp_match.match_type
               );
             }
-            console.log('score resotlo');
-            console.log(award_team_id, loose_team_id);
+            // console.log('score resotlo');
+            // console.log(award_team_id, loose_team_id);
             addScoreForTeam(
               tmp_match.game_id,
               tmp_match.ladder_id,
@@ -765,8 +774,7 @@ const giveWin = function(req, res, next, match_id, team_to_win) {
           }
         })
         .catch(function(err) {
-          console.log('1');
-          console.log(err);
+          Raven.captureException(err);
         });
 
       // obj_to_save;
@@ -778,7 +786,7 @@ const giveWin = function(req, res, next, match_id, team_to_win) {
       // }
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
     });
 };
 
@@ -913,8 +921,8 @@ exports.saveScore = function(req, res, next) {
                 tmp_match.match_type
               );
             }
-            console.log('score resotlo');
-            console.log(award_team_id, loose_team_id);
+            // console.log('score resotlo');
+            // console.log(award_team_id, loose_team_id);
             addScoreForTeam(
               tmp_match.game_id,
               tmp_match.ladder_id,
@@ -932,8 +940,7 @@ exports.saveScore = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log('1');
-          console.log(err);
+          Raven.captureException(err);
           res.status(400).send({
             ok: false,
             msg: 'Failed to Save Score'
@@ -941,8 +948,7 @@ exports.saveScore = function(req, res, next) {
         });
     })
     .catch(function(err) {
-      console.log('2');
-      console.log(err);
+      Raven.captureException(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed to Save Score'
@@ -982,9 +988,11 @@ const join_inner = function(match, req, res, next) {
             type: 'match',
             object_id: match.id
           })
-          .then(function() {})
-          .catch(function(er) {
-            console.log(er);
+          .then(function() {
+            //
+          })
+          .catch(function(err) {
+            Raven.captureException(err);
           });
       }
 
@@ -999,13 +1007,13 @@ const join_inner = function(match, req, res, next) {
             object_id: match.id
           })
           .then(function() {})
-          .catch(function(er) {
-            console.log(er);
+          .catch(function(err) {
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed to Join the match'
@@ -1075,7 +1083,7 @@ exports.join = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log(err);
+          Raven.captureException(err);
           return res.status(400).send({
             ok: false,
             msg: 'Failed to accept match'
@@ -1083,7 +1091,7 @@ exports.join = function(req, res, next) {
         });
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       res.status(400).send({
         ok: false,
         msg: 'Failed to Join the match'
@@ -1144,13 +1152,13 @@ exports.addItem = function(req, res, next) {
             object_id: item.id
           })
           .then(function() {})
-          .catch(function(er) {
-            console.log(er);
+          .catch(function(err) {
+            Raven.captureException(err);
           });
       }
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});
@@ -1179,7 +1187,7 @@ exports.matches_of_team = function(req, res, next) {
       return res.status(200).send({ok: true, items: item.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -1231,7 +1239,7 @@ exports.matches_of_user = function(req, res, next) {
         .send({ok: true, items: item.toJSON(), pagination: item.pagination});
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -1275,7 +1283,7 @@ exports.listupcoming = function(req, res, next) {
         .send({ok: true, items: games_obj, total_upcoming: totals});
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -1318,7 +1326,7 @@ exports.listrecent = function(req, res, next) {
     items = items.toJSON();
     return res.status(200).send({ok: true, items: items});
   }).catch(function(err) {
-    console.log(err);
+    Raven.captureException(err);
     return res.status(200).send({ok: true, items: []});
   });
 };
@@ -1334,7 +1342,7 @@ exports.listItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -1359,7 +1367,7 @@ exports.listPaged = function(req, res, next) {
         .send({ok: true, items: items.toJSON(), pagination: items.pagination});
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(200).send([]);
     });
 };
@@ -1388,7 +1396,7 @@ exports.listSingleItem = function(req, res, next) {
       return res.status(200).send({ok: true, item: item.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(400).send({
         id: req.params.id,
         title: '',
@@ -1438,7 +1446,7 @@ exports.leave_match = function(req, res, next) {
               .send({ok: false, msg: 'Cancel Match cancellation Failed.'});
           });
       }
-      console.log('leave api');
+      // console.log('leave api');
       if (match.get('cancel_requested')) {
         const requested_by = match.get('cancel_requested_by');
         if (req.body.team != requested_by) {
@@ -1489,7 +1497,7 @@ exports.leave_match = function(req, res, next) {
       //
     })
     .catch(function(err) {
-      console.log(err);
+      Raven.captureException(err);
       return res.status(400).send({
         ok: false,
         msg: 'Failed to fetch match'

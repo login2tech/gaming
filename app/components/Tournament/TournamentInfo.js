@@ -906,23 +906,23 @@ class TournamentInfo extends React.Component {
     if (!match.team_1_result || !match.team_2_result) {
       return 'Pending Results Confirmation';
     }
-    if (match.team_1_result != match.team_2_result) {
+    if (match.result == 'disputed') {
       return 'Disputed';
     }
 
-    let result;
+    let result = '';
 
     if (match.result == 'tie') {
-      result = 'Tie';
+      result = ' - Tie';
     } else {
       if (match.result == 'team_1') {
-        result = 'Team 1 Wins';
+        // result = match.team_1_info.title + ' Wins';
       } else {
-        result = 'Team 2 Wins';
+        // result = match.team_2_info.title + ' Wins';
       }
     }
 
-    return 'Complete - ' + result;
+    return 'Complete' + result;
   }
 
   renderMatchLine(match, i, round) {
@@ -931,7 +931,7 @@ class TournamentInfo extends React.Component {
     }
     const teams = this.getTeams(match);
 
-    const my_team_id = this.am_i_in_match(match);
+    // const my_team_id = this.am_i_in_match(match);
 
     return (
       <tr key={match.id}>
@@ -939,12 +939,26 @@ class TournamentInfo extends React.Component {
           <Link to={'/tournament-match/' + match.id}>#{match.id}</Link>
         </td>
         <td>
-          <Link to={'/teams/view/' + teams[1].id}>{teams[0].title}</Link>
+          <Link to={'/teams/view/' + teams[1].id}>{teams[0].title}</Link>{' '}
+          {match.result == 'team_1' ? (
+            <span className="text-success">W</span>
+          ) : match.result == 'team_2' ? (
+            <span className="text-danger">L</span>
+          ) : (
+            ''
+          )}
         </td>
         <td>
-          <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>
+          <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>{' '}
+          {match.result == 'team_2' ? (
+            <span className="text-success">W</span>
+          ) : match.result == 'team_1' ? (
+            <span className="text-danger">L</span>
+          ) : (
+            ''
+          )}
         </td>
-        <td>
+        {/*}<td>
           {match.result ? '' : 'Results Pending'}
           {match.result && match.result == 'team_1'
             ? teams[0].title + ' wins'
@@ -952,7 +966,7 @@ class TournamentInfo extends React.Component {
           {match.result && match.result == 'team_2'
             ? teams[1].title + ' wins'
             : ''}
-        </td>
+        </td>*/}
 
         <td>{moment(match.created_at).format('lll')} </td>
         <td>
@@ -961,7 +975,9 @@ class TournamentInfo extends React.Component {
             : match.status}
         </td>
         <td>
-          {my_team_id && my_team_id == teams[0].id ? (
+          <Link to={'/tournament-match/' + match.id}>View Match</Link>
+
+          {/*my_team_id && my_team_id == teams[0].id ? (
             match.team_1_result ? (
               'Your team submitted ' + match.team_1_result
             ) : (
@@ -1010,9 +1026,9 @@ class TournamentInfo extends React.Component {
             )
           ) : (
             false
-          )}
+          )*/}
 
-          {my_team_id && my_team_id == teams[1].id ? (
+          {/*my_team_id && my_team_id == teams[1].id ? (
             match.team_2_result ? (
               'Your team submitted ' + match.team_2_result
             ) : (
@@ -1061,39 +1077,9 @@ class TournamentInfo extends React.Component {
             )
           ) : (
             false
-          )}
+          )*/}
         </td>
       </tr>
-    );
-  }
-
-  renderRound(round) {
-    return (
-      <div className="col-md-12">
-        <h6 className="prizes_desclaimer">Round 1</h6>
-        <div>
-          <div className="table_wrapper">
-            <table className="table table-striped table-ongray table-hover">
-              <thead>
-                <tr>
-                  <th>Match</th>
-                  <th>Team</th>
-                  <th>Opponent</th>
-                  <th>Result</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Info</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.tournament.matches.map((match, i) => {
-                  return this.renderMatchLine(match, i, 1);
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
     );
   }
 
@@ -1120,7 +1106,6 @@ class TournamentInfo extends React.Component {
                     <th>Match</th>
                     <th>Team</th>
                     <th>Opponent</th>
-                    <th>Result</th>
                     <th>Date</th>
                     <th>Status</th>
                     <th>Info</th>

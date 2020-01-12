@@ -26,7 +26,7 @@ class Shop extends React.Component {
           <Messages messages={this.props.messages} />
 
           <MyMembershipModule
-            id={this.props.user.id}
+            id={this.props.user ? this.props.user.id : null}
             user_info={this.props.user}
           />
 

@@ -201,7 +201,7 @@ class Credits extends React.Component {
                     step="0.1"
                     min="0"
                     required
-                    max={this.props.user.credit_balance}
+                    max={this.props.user ? this.props.user.credit_balance : 0}
                     name="amount_to_transfer"
                     placeholder="Credits to transfer"
                     id="amount_to_transfer"

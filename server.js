@@ -589,7 +589,7 @@ renderReact(app, langs);
 
 // if (app.get('env') === 'production') {
 app.use(function(err, req, res, next) {
-  // console.error(err.stack);
+  console.error(err.stack);
   Raven.captureException(err);
   res.sendStatus(err.status || 500);
 });
