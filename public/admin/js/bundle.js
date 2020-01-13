@@ -9906,6 +9906,12 @@ function (_React$Component) {
 
       var data = new FormData();
       var node = this.banner_url_ref.current;
+
+      if (!node.files || node.files.length == 0) {
+        this.finalSubmit();
+        return;
+      }
+
       var file_1 = node.files[0];
       data.append('file', file_1, file_1.name);
 
@@ -10086,9 +10092,9 @@ function (_React$Component) {
       }, "Select"), _react.default.createElement("option", {
         value: "4"
       }, "4 Teams"), _react.default.createElement("option", {
-        value: "4"
+        value: "8"
       }, "8 Teams"), _react.default.createElement("option", {
-        value: "4"
+        value: "16"
       }, "16 Teams"))), _react.default.createElement("div", {
         className: "form-group"
       }, _react.default.createElement("label", null, "Members only Tournament"), _react.default.createElement("select", {
@@ -10200,7 +10206,6 @@ function (_React$Component) {
         type: "file",
         className: "form-control",
         name: "banner_url",
-        required: true,
         ref: this.banner_url_ref // onChange={this.handleChange.bind(this)}
         ,
         id: "banner_url"

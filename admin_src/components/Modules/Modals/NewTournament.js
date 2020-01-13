@@ -134,7 +134,10 @@ class NewTournament extends React.Component {
     const data = new FormData();
 
     const node = this.banner_url_ref.current;
-
+    if (!node.files || node.files.length == 0) {
+      this.finalSubmit();
+      return;
+    }
     const file_1 = node.files[0];
     data.append('file', file_1, file_1.name);
     axios
@@ -326,8 +329,8 @@ class NewTournament extends React.Component {
                 >
                   <option value="">Select</option>
                   <option value="4">4 Teams</option>
-                  <option value="4">8 Teams</option>
-                  <option value="4">16 Teams</option>
+                  <option value="8">8 Teams</option>
+                  <option value="16">16 Teams</option>
                 </select>
               </div>
 
@@ -467,7 +470,6 @@ class NewTournament extends React.Component {
                   type="file"
                   className="form-control"
                   name="banner_url"
-                  required
                   ref={this.banner_url_ref}
                   // onChange={this.handleChange.bind(this)}
                   id="banner_url"
