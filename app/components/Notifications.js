@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {Link} from 'react-router';
+import moment from 'moment';
 // import { resetPassword } from '../../actions/auth';
 // import Messages from 'Messages';
 
@@ -101,6 +101,8 @@ class Notifications extends React.Component {
                           href={lnk}
                         >
                           {notif.description}
+                          <br />
+                          <small>{moment(notif.created_at).fromNow()}</small>
                         </a>
                       </li>
                     );

@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {logout} from '../../actions/auth';
-
+import moment from 'moment';
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -118,7 +118,13 @@ class Header extends React.Component {
                 </ul>
               </li>,
               <li key={5} className=" sm_on_mob has_children_m">
-                <Link className="profile_menu_item" to="/notifications">
+                <Link
+                  className="profile_menu_item"
+                  href="/notifications"
+                  onClick={() => {
+                    window.location.href = '/notifications';
+                  }}
+                >
                   <i className="fa fa-bell" />
                   {this.state.notifications &&
                   this.state.notifications.length ? (
@@ -176,6 +182,8 @@ class Header extends React.Component {
                           href={lnk}
                         >
                           {notif.description}
+                          <br />
+                          <small>{moment(notif.created_at).fromNow()}</small>
                         </a>{' '}
                         <button
                           style={{display: 'none'}}
