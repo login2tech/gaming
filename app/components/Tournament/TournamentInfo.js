@@ -42,6 +42,26 @@ class TournamentInfo extends React.Component {
     }
   }
 
+  getMatchName(round, t1, t2) {
+    const items = this.state.tournament.matches.filter(function(item) {
+      return item.match_round == round &&
+        item.team_1_id == t1 &&
+        item.team_2_id == t2
+        ? true
+        : false;
+    });
+    if (items && items.length) {
+      return (
+        '<a href="/tournament-match/' +
+        items[0].id +
+        '">Match #' +
+        items[0].id +
+        '</a>'
+      );
+    }
+    return '';
+  }
+
   createBrackets() {
     let brackets = this.state.tournament.brackets;
 
@@ -71,6 +91,7 @@ class TournamentInfo extends React.Component {
         const team_2_name = this.get_team_name(team_2);
 
         final_round_data.push({
+          match_title: this.getMatchName(i + 1, team_1, team_2),
           player1: {name: team_1_name, ID: team_1, winner: true},
           player2: {name: team_2_name, ID: team_2}
         });
@@ -88,8 +109,8 @@ class TournamentInfo extends React.Component {
       bg_player: '#46CFB0',
       color_player_hover: 'white',
       bg_player_hover: '#E95546',
-      border_radius_player: '5px',
-      border_radius_lines: '5px'
+      border_radius_player: '4px',
+      border_radius_lines: '4px'
       // MORE OPTIONS HERE
     });
   }
