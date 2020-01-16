@@ -5602,9 +5602,9 @@ button.btn.btn-exp-menu {
 }
 
 .brackets .match {
-    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
     padding: 10px 20px;
-    box-shadow: 0px 0px 5px 2px #2a48f4;text-align: center;
+    box-shadow: 0px 0px 5px 2px #2a48f4eb;text-align: center;
 }
 .brackets .player{cursor: pointer;text-align: left;}
 .brackets .player.winner:after {
@@ -5626,7 +5626,7 @@ button.btn.btn-exp-menu {
 }
 
 .container-brackets .round.rd-2 .match .player:nth-child(2) {
-    margin-top: 35px;
+    margin-top: 37px;
 }
 
 .container-brackets .round.rd-2 .match .player:last-child {
@@ -5634,9 +5634,13 @@ button.btn.btn-exp-menu {
 }
 
 .container-brackets .round.rd-2 .match {
-    margin-bottom: 96px;
+    margin-bottom: 61px;
 }
 .container-brackets .round.rd-2 .match .player{
-  margin: 157px 0;
+  margin: 159px 0;
 
+}
+
+.container-brackets .round.rd-2{
+  margin-top:0 !important;
 }

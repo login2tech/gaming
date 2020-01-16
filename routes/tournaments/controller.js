@@ -19,6 +19,26 @@ const changeIntoBye = function(seed, participantsCount) {
 const llgg = function(a, b) {
   console.log(a, b);
 };
+
+const shuffle_me = function(array) {
+  let currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+};
 const getBracket = function(participants) {
   const participantsCount = participants.length;
   const rounds = Math.ceil(Math.log(participantsCount) / Math.log(2));
@@ -27,6 +47,60 @@ const getBracket = function(participants) {
 
   if (participantsCount < 2) {
     return [[], rounds, bracketSize, requiredByes];
+  }
+  if (participantsCount == 2) {
+    return [[[1, 2]], rounds, bracketSize, requiredByes];
+  }
+
+  if (participantsCount == 4) {
+    return [[[1, 2], [3, 4]], rounds, bracketSize, requiredByes];
+  }
+
+  if (participantsCount == 6) {
+    return [[[1, 2], [3, 4], [5, 6]], rounds, bracketSize, requiredByes];
+  }
+
+  if (participantsCount == 8) {
+    return [
+      [[1, 2], [3, 4], [5, 6], [7, 8]],
+      rounds,
+      bracketSize,
+      requiredByes
+    ];
+  }
+
+  if (participantsCount == 10) {
+    return [
+      [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]],
+      rounds,
+      bracketSize,
+      requiredByes
+    ];
+  }
+
+  if (participantsCount == 12) {
+    return [
+      [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12]],
+      rounds,
+      bracketSize,
+      requiredByes
+    ];
+  }
+  if (participantsCount == 14) {
+    return [
+      [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14]],
+      rounds,
+      bracketSize,
+      requiredByes
+    ];
+  }
+  if (participantsCount == 16) {
+    return [
+      [[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16]],
+      rounds,
+      bracketSize,
+      requiredByes
+    ];
   }
 
   let matches = [[1, 2]];
@@ -258,6 +332,7 @@ const proceed_to_next_round = function(t_id, t_round) {
             w_t_i_id = parseInt(w_t_i_id);
             return teams_obj_keys.indexOf('team_' + w_t_i_id) + 1;
           });
+          participants.sort();
           llgg('participants are : ' + participants);
           let winner = false;
           const bracket_obj = getBracket(participants);
@@ -268,9 +343,9 @@ const proceed_to_next_round = function(t_id, t_round) {
 
           // llgg('brocket_obj is', bracket_obj);
           // llgg(bracket_obj);
-          let brackets_round = bracket_obj[0];
+          const brackets_round_original = bracket_obj[0];
 
-          brackets_round = brackets_round.map(function(br_mtch) {
+          const brackets_round = brackets_round_original.map(function(br_mtch) {
             return br_mtch.map(function(br_plyr) {
               return participants[br_plyr - 1];
             });
@@ -310,7 +385,7 @@ const proceed_to_next_round = function(t_id, t_round) {
 
           if (create_further_matches) {
             for (let i = brackets_round.length - 1; i >= 0; i--) {
-              const team_set = brackets_round[i];
+              const team_set = brackets_round_original[i];
               // llgg('---- -- - - - -----');
               // llgg('team_set : ', team_set);
               const team_1 = team_set[0] ? winner_teams[team_set[0] - 1] : null;
@@ -535,8 +610,10 @@ const createRoundMatches = function(match) {
 
   //   llgg('---- -- - - - --------- -- - - - -----');
   // llgg(teams);
-  const participants = Array.from({length: teams_count}, (v, k) => k + 1);
+  let participants = Array.from({length: teams_count}, (v, k) => k + 1);
   // llgg(participants);
+  // randomize here.
+  participants = shuffle_me(participants);
   const bracket_obj = getBracket(participants);
   const brackets_round = bracket_obj[0];
 

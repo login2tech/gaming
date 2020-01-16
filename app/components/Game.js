@@ -439,7 +439,7 @@ class Game extends React.Component {
                 <div className="list_pad">
                   <Link
                     to={'/match/new/g/' + this.props.params.id}
-                    className="btn btn-default bttn_submit dib mw_200"
+                    className="fl-right ml-1 btn btn-default bttn_submit dib mw_200"
                   >
                     Create Match
                   </Link>{' '}
@@ -452,7 +452,7 @@ class Game extends React.Component {
                           this.props.params.id
                         : '/login'
                     }
-                    className="btn btn-default bttn_submit dib mw_200"
+                    className="fl-right ml-1 btn btn-default bttn_submit dib mw_200"
                   >
                     Create Team
                   </Link>
