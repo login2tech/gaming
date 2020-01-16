@@ -51,14 +51,36 @@ class TournamentInfo extends React.Component {
     });
   }
   getMatchWinner(round, t1, t2, tc) {
+    tc = parseInt(tc);
     const items = this.getM(round, t1, t2);
     if (items && items.length) {
-      if (items[0].result == 'team_1' && t1 == tc) {
+      console.log(items[0].result, items[0].team_1_id, tc);
+
+      const current_team = items[0].team_1_id == tc ? 'team_1' : 'team_2';
+
+      if (items[0].result == current_team) {
         return true;
       }
-      if (items[0].result == 'team_2' && t2 == tc) {
+      return false;
+      // if (items[0].result == 'team_1' && items[0].team_1_id == tc) {
+      //   return true;
+      // }
+      // if (items[0].result == 'team_2' && items[0].team_2_id == tc) {
+      //   return true;
+      // }
+    }
+    return false;
+  }
+
+  getMatchLooser(round, t1, t2, tc) {
+    const items = this.getM(round, t1, t2);
+    if (items && items.length) {
+      const current_team = items[0].team_1_id == tc ? 'team_2' : 'team_1';
+
+      if (items[0].result == current_team) {
         return true;
       }
+      return false;
     }
     return false;
   }
@@ -93,7 +115,7 @@ class TournamentInfo extends React.Component {
 
     for (let i = 0; i < rounds_c; i++) {
       const round_data = brackets['round_' + (i + 1)];
-      console.log(round_data);
+      // console.log(round_data);
       const final_round_data = [];
       for (let j = 0; j < round_data.length; j++) {
         let team_1 = round_data[j][0];
@@ -101,7 +123,7 @@ class TournamentInfo extends React.Component {
 
         let team_2 = round_data[j][1];
         team_2 = teams[team_2 - 1];
-        console.log(team_1, team_2);
+        // console.log(team_1, team_2);
         const team_1_name = this.get_team_name(team_1);
         const team_2_name = this.get_team_name(team_2);
         console.log(team_1_name, team_2_name, i);
@@ -111,13 +133,16 @@ class TournamentInfo extends React.Component {
             name: team_1_name,
             ID: team_1,
             url: '/teams/view/' + team_1,
-            winner: this.getMatchWinner(i + 1, team_1, team_2, team_1)
+            winner: this.getMatchWinner(i + 1, team_1, team_2, team_1),
+            looser: this.getMatchLooser(i + 1, team_1, team_2, team_1)
           },
           player2: {
             name: team_2_name,
             ID: team_2,
             url: '/teams/view/' + team_2,
-            winner: this.getMatchWinner(i + 1, team_1, team_2, team_2)
+            winner: this.getMatchWinner(i + 1, team_1, team_2, team_2),
+
+            looser: this.getMatchLooser(i + 1, team_1, team_2, team_2)
           }
         });
       }

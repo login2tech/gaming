@@ -5620,6 +5620,19 @@ button.btn.btn-exp-menu {
     width: 20px;
 }
 
+.brackets .player.looser:after {
+    content: 'L';
+    color: red;
+    float: right;
+    background: rgb(255, 255, 255);
+    padding: 0;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 22px;
+    height: 20px;
+    width: 20px;
+}
+
 .brackets .container-brackets {
   padding-left: 3px;
     padding-top: 3px;
@@ -5643,4 +5656,31 @@ button.btn.btn-exp-menu {
 
 .container-brackets .round.rd-2{
   margin-top:0 !important;
+}
+
+
+
+.container-brackets .round.rd-3 {
+    margin-top: 100px !important;
+}
+
+.container-brackets .separator-brackets.rd-2 .line:first-child {
+    margin-top: 85px !important;
+}
+
+.container-brackets .round.rd-3 .match .player {
+    margin: 300px 0 !important;
+}
+
+.container-brackets .round.rd-3 .match .player:nth-child(2) {
+    margin-top: 37px !important;
+}
+
+.container-brackets .round.rd-3 .match .player:last-child {
+    margin-bottom: 11px !important;
+}
+
+.container-brackets .separator-brackets.rd-2 .line {
+    height: 207px !important;
+    margin-bottom: 192px !important;
 }
