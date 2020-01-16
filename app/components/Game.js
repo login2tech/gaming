@@ -433,7 +433,7 @@ class Game extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
+                <div className="section-headline white-headline text-right">
                   <h3>{this.props.params.title}</h3>
                 </div>
                 <div className="list_pad">
@@ -487,6 +487,7 @@ class Game extends React.Component {
                       ) : (
                         false
                       )}
+                      <br />
                       {this.getLadders().map((item, i) => {
                         return (
                           <a
