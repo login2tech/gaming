@@ -5584,4 +5584,59 @@ button.btn.btn-exp-menu {
     .dropdown-item .fa {
         width: 30px;
     }
+    section.call_action.no_bg {
+        background-size: contain;
+        background-position: top;
+        height: auto !important;
+        background-color: #000;
+    }
+
+    .play_match_btn {
+        margin-top: 149px;
+    }
+}
+
+.container-brackets .round .match .player {
+    border-radius: 4px !important;
+    padding: 10px !important;
+}
+
+.brackets .match {
+    background: rgb(0, 0, 0);
+    padding: 10px 20px;
+    box-shadow: 0px 0px 5px 2px #2a48f4;text-align: center;
+}
+.brackets .player{cursor: pointer;text-align: left;}
+.brackets .player.winner:after {
+    content: 'W';
+    color: green;
+    float: right;
+    background: #fff;
+    padding: 0;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 22px;
+    height: 20px;
+    width: 20px;
+}
+
+.brackets .container-brackets {
+  padding-left: 3px;
+    padding-top: 3px;
+}
+
+.container-brackets .round.rd-2 .match .player:nth-child(2) {
+    margin-top: 35px;
+}
+
+.container-brackets .round.rd-2 .match .player:last-child {
+    margin-bottom: 11px;
+}
+
+.container-brackets .round.rd-2 .match {
+    margin-bottom: 96px;
+}
+.container-brackets .round.rd-2 .match .player{
+  margin: 157px 0;
+
 }

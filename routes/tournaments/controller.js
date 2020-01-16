@@ -113,43 +113,6 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
     });
 };
 
-// const giveXPtoTeam = function(team_id, input_val) {
-//   new TeamUser()
-//     .where({
-//       team_id: team_id,
-//       accepted: true
-//     })
-//     .fetchAll()
-//     .then(function(usrs) {
-//       usrs = usrs.toJSON();
-//       for (let i = 0; i < usrs.length; i++) {
-//         const uid = usrs[i].user_id;
-//         // giveXpToMember(uid, input_val);
-//       }
-//     })
-//     .catch(function(err) {
-//       //
-//     });
-// };
-// const giveMoneyBackToTeam = function(team_id, input_val) {
-//   new TeamUser()
-//     .where({
-//       team_id: team_id,
-//       accepted: true
-//     })
-//     .fetchAll()
-//     .then(function(usrs) {
-//       usrs = usrs.toJSON();
-//       for (let i = 0; i < usrs.length; i++) {
-//         const uid = usrs[i].user_id;
-//         giveMoneyToMember(uid, input_val);
-//       }
-//     })
-//     .catch(function(err) {
-//
-//     });
-// };
-
 const giveTrophy = function(type, tid, team_id, team_players) {
   for (let i = 0; i < team_players.length; i++) {
     new Trophy()
@@ -290,10 +253,12 @@ const proceed_to_next_round = function(t_id, t_round) {
         .then(function(tournament) {
           let teams_obj = tournament.get('teams_obj');
           teams_obj = JSON.parse(teams_obj);
-          const participants = Array.from(
-            {length: winner_teams.length},
-            (v, k) => k + 1
-          );
+          const teams_obj_keys = Object.keys(teams_obj);
+          const participants = winner_teams.map(function(w_t_i_id) {
+            w_t_i_id = parseInt(w_t_i_id);
+            return teams_obj_keys.indexOf('team_' + w_t_i_id) + 1;
+          });
+          llgg('participants are : ' + participants);
           let winner = false;
           const bracket_obj = getBracket(participants);
           if (winner_teams.length == 1) {
@@ -303,7 +268,13 @@ const proceed_to_next_round = function(t_id, t_round) {
 
           // llgg('brocket_obj is', bracket_obj);
           // llgg(bracket_obj);
-          const brackets_round = bracket_obj[0];
+          let brackets_round = bracket_obj[0];
+
+          brackets_round = brackets_round.map(function(br_mtch) {
+            return br_mtch.map(function(br_plyr) {
+              return participants[br_plyr - 1];
+            });
+          });
 
           let brackets = tournament.get('brackets');
           if (!brackets) {
@@ -594,7 +565,7 @@ const createRoundMatches = function(match) {
       Raven.captureException(err);
     });
 
-  for (let i = brackets_round.length - 1; i >= 0; i--) {
+  for (let i = 0; i < brackets_round.length; i++) {
     const team_set = brackets_round[i];
     // llgg('---- -- - - - -----');
     // llgg(team_set);
