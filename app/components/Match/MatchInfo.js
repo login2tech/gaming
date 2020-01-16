@@ -653,7 +653,8 @@ class MatchInfo extends React.Component {
       this.state.match.game &&
       this.state.match.game.banner_url
         ? {
-            backgroundImage: 'url(' + this.state.match.game.banner_url + ')'
+            backgroundImage: 'url(' + this.state.match.game.banner_url + ')',
+            backgroundPosition: 'left'
           }
         : {};
 

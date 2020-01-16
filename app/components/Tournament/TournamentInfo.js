@@ -115,7 +115,8 @@ class TournamentInfo extends React.Component {
 
     for (let i = 0; i < rounds_c; i++) {
       const round_data = brackets['round_' + (i + 1)];
-      // console.log(round_data);
+      console.log(round_data);
+      // if()
       const final_round_data = [];
       for (let j = 0; j < round_data.length; j++) {
         let team_1 = round_data[j][0];
@@ -126,7 +127,7 @@ class TournamentInfo extends React.Component {
         // console.log(team_1, team_2);
         const team_1_name = this.get_team_name(team_1);
         const team_2_name = this.get_team_name(team_2);
-        console.log(team_1_name, team_2_name, i);
+        // console.log(team_1_name, team_2_name, i);
         final_round_data.push({
           match_title: this.getMatchName(i + 1, team_1, team_2),
           player1: {
