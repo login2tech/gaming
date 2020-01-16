@@ -9,6 +9,7 @@ const Notif = require('../models/Notification');
 const Score = require('../models/Score');
 const utils = require('../routes/utils');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
+const Trophy = require('../routes/tournaments/Trophy');
 
 function generateToken(user) {
   const payload = {
@@ -552,7 +553,60 @@ exports.addFollower = function(req, res, next) {
       res.status(400).send({ok: false, msg: 'Failed to update'});
     });
 };
+exports.singleUser_trophies = function(req, res, next) {
+  const cur_u = req.query ? req.query.uid : 99999999;
+  if (req.params && req.params.type == 'count') {
+    new Trophy()
+      .where({user_id: cur_u, reset_done: false})
+      .fetchAll()
+      .then(function(trophies) {
+        trophies = trophies.toJSON();
+        const counts = {
+          gold: 0,
+          silver: 0,
+          bronze: 0,
+          blue: 0
+        };
+        // console.log(trophies);
+        for (let i = 0; i < trophies.length; i++) {
+          counts[trophies[i].type]++;
+        }
+        return res.status(200).send({ok: true, counts: counts});
+      })
+      .catch(function(err) {
+        // console.log(err);
+        return res.status(200).send({
+          ok: false,
+          counts: {
+            gold: 0,
+            silver: 0,
+            bronze: 0,
+            blue: 0
+          }
+        });
+      });
+    return;
+  }
 
+  new Trophy()
+    .where({user_id: cur_u, reset_done: false})
+    .fetchAll({
+      withRelated: ['tournament']
+    })
+    .then(function(trophies) {
+      trophies = trophies.toJSON();
+      return res.status(200).send({
+        ok: true,
+        items: trophies
+      });
+    })
+    .catch(function(err) {
+      return res.status(200).send({
+        ok: false,
+        items: []
+      });
+    });
+};
 exports.singleUser_info = function(req, res, next) {
   const cur_u = req.user ? req.user.id : 99999999;
   // console.log(cur_u);
@@ -598,6 +652,9 @@ exports.singleUser_info = function(req, res, next) {
         user_info: user,
         ok: true
       });
+      if (!req.user) {
+        return;
+      }
       if (req.query.addViews == 'yes' && req.user.id != user.id) {
         usr
           .save(

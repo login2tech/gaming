@@ -1,12 +1,8 @@
-1-  tournaments
-2- XP in tournaments - waiting
-7. tournamets dispute
-
-
-8. recurring to non-recurring
-  - pending for membership
-9. refund in matchfinder cron
-12. trophies count
-
-
-13. stripe hook
+- username change
+- paid username change
+- activate double xp
+- escilate ticket
+- remove ticket
+- tournament bracket winner show
+- final empty round in matches lists
+- tournament notification matches

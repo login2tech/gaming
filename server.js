@@ -230,6 +230,7 @@ app.post(
   userController.accountPic
 );
 app.get('/api/user_info', userController.singleUser_info);
+app.get('/api/user_info/trophies/:type', userController.singleUser_trophies);
 app.post('/api/user/follower/add', userController.addFollower);
 
 app.get('/api/user_info/followers/list', userController.listFollower);

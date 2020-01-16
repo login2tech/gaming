@@ -22,6 +22,12 @@ class Profile extends React.Component {
         xp_obj: [],
         score: []
       },
+      trophy_counts: {
+        gold: 0,
+        silver: 0,
+        bronze: 0,
+        blue: 0
+      },
       user_teams: [],
       is_loaded: false,
       renderTab: 'profile',
@@ -180,10 +186,29 @@ class Profile extends React.Component {
             },
             () => {
               if (forward) {
-                this.fetchTeams();
+                this.fetchTrophies();
               }
             }
           );
+        }
+      });
+  }
+
+  fetchTrophies() {
+    fetch('/api/user_info/trophies/count?uid=' + this.state.user_info.id)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              trophy_counts: json.counts
+            },
+            () => {
+              this.fetchTeams();
+            }
+          );
+        } else {
+          this.fetchTeams();
         }
       });
   }
@@ -408,7 +433,9 @@ class Profile extends React.Component {
                               <div className="trophy-name gold">
                                 Gold Trophies
                               </div>
-                              <div className="trophy-count">0</div>
+                              <div className="trophy-count">
+                                {this.state.trophy_counts.gold}
+                              </div>
                             </div>
                           </Link>
                         </div>
@@ -431,8 +458,8 @@ class Profile extends React.Component {
                               >
                                 Silver Trophies
                                 {this.props.user &&
-                                this.props.user.id ==
-                                  this.state.user_info.id ? (
+                                this.props.user.id == this.state.user_info.id &&
+                                this.state.trophy_counts.silver > 0 ? (
                                   <a
                                     style={{float: 'right'}}
                                     className="reset_rep"
@@ -447,7 +474,9 @@ class Profile extends React.Component {
                                   false
                                 )}
                               </div>
-                              <div className="trophy-count">0</div>
+                              <div className="trophy-count">
+                                {this.state.trophy_counts.silver}
+                              </div>
                             </div>
                           </Link>
                         </div>
@@ -470,8 +499,8 @@ class Profile extends React.Component {
                               >
                                 Bronze Trophies
                                 {this.props.user &&
-                                this.props.user.id ==
-                                  this.state.user_info.id ? (
+                                this.props.user.id == this.state.user_info.id &&
+                                this.state.trophy_counts.bronze > 0 ? (
                                   <a
                                     style={{float: 'right'}}
                                     className="reset_rep"
@@ -486,7 +515,9 @@ class Profile extends React.Component {
                                   false
                                 )}
                               </div>
-                              <div className="trophy-count">0</div>
+                              <div className="trophy-count">
+                                {this.state.trophy_counts.bronze}
+                              </div>
                             </div>
                           </Link>
                         </div>
@@ -531,7 +562,9 @@ class Profile extends React.Component {
                               >
                                 OCG Trophies
                               </div>
-                              <div className="trophy-count">0</div>
+                              <div className="trophy-count">
+                                {this.state.trophy_counts.blue}
+                              </div>
                             </div>
                           </Link>
                         </div>

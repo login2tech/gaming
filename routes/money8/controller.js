@@ -1043,7 +1043,7 @@ exports.listupcoming = function(req, res, next) {
 
 exports.matchesForUser = function(req, res, next) {
   // return res.status(200).send(req.query);
-  const uid = req.user.id;
+  const uid = req.query.uid ? req.query.uid : req.user.id;
   let a = new Item().orderBy('created_at', 'DESC');
 
   a = a.query(function(qb) {

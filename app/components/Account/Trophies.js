@@ -5,38 +5,45 @@ import {Link} from 'react-router';
 class Trophies extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {records: {}, loaded: true, ladders: {}, rec: []};
+    this.state = {loaded: false, items: []};
   }
 
   componentDidMount() {
-    // this.fetchNotifications();
+    this.fetchUserInfo(true);
+  }
+  fetchUserInfo(forward) {
+    fetch('/api/user_info?addViews=yes&uid=' + this.props.params.username)
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              is_loaded: true,
+              user_info: json.user_info,
+              username: this.props.params.username
+            },
+            () => {
+              if (forward) {
+                this.fetchTrophies();
+              }
+            }
+          );
+        }
+      });
   }
 
-  fetchNotifications() {
+  fetchTrophies() {
     fetch(
-      '/api/user_info/trophies?username=' +
-        this.props.params.username +
-        '&duration=' +
-        this.props.params.duration
+      '/api/user_info/trophies/details?type=' +
+        this.props.params.type +
+        '&uid=' +
+        this.state.user_info.id
     )
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          const items = json.records;
-          const ladders = this.state.ladders;
-          const details = this.state.records;
-          for (let i = items.length - 1; i >= 0; i--) {
-            const ladder_id = items[i].ladder_id;
-            ladders['l_' + ladder_id] = items[i].ladder;
-            if (!details['l_' + ladder_id]) {
-              details['l_' + ladder_id] = {wins: 0, loss: 0};
-            }
-            details['l_' + ladder_id].wins += items[i].wins;
-            details['l_' + ladder_id].loss += items[i].loss;
-          }
           this.setState({
-            records: details,
-            ladders: ladders,
+            items: json.items,
             loaded: true
           });
         }
@@ -44,7 +51,7 @@ class Trophies extends React.Component {
   }
 
   render() {
-    console.log(this.state.ladders);
+    // console.log(this.state.ladders);
 
     // const rec = Object.keys(this.state.ladders);
     // console.log(rec);
@@ -53,7 +60,7 @@ class Trophies extends React.Component {
     // console.log(records);
     return (
       <div>
-        <section className="page_title_bar">
+        <section className="page_title_bar noblend">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
@@ -78,35 +85,36 @@ class Trophies extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {this.state.loaded && (
-                  <div className="alert alert-warning">No trophies to show</div>
-                )}
+                {this.state.loaded &&
+                  this.state.items.length == 0 && (
+                    <div className="alert alert-warning">
+                      No trophies to show
+                    </div>
+                  )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container">
-                    {this.state.rec.map((notif, i) => {
+                    {this.state.items.map((item, i) => {
                       return (
                         <div
                           className="single-trophy-container m-b-20"
-                          key={notif}
+                          key={item}
                           style={{width: 'calc(50% - 10px)'}}
                         >
                           <div className="trophy-image">
-                            <img src="/images/shield-gold.png" />
+                            <img
+                              src={
+                                '/assets/icons/' +
+                                this.props.params.type +
+                                '.png'
+                              }
+                            />
                           </div>
                           <div className="trophy-info">
-                            <div className="trophy-name gold">
-                              {ladders[notif].game_info.title} -{' '}
-                              {ladders[notif].title}
-                            </div>
+                            <div className="trophy-name gold" />
                             <div className="trophy-count">
-                              <span className="text-success">
-                                {records[notif].wins}W
-                              </span>{' '}
-                              -{' '}
-                              <span className="text-danger">
-                                {records[notif].loss}L
-                              </span>
+                              <span className="text-success">W</span> -{' '}
+                              <span className="text-danger" />
                             </div>
                           </div>
                         </div>

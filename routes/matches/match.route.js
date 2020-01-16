@@ -13,7 +13,7 @@ routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);
 
 routes.get(
   '/matches_of_user',
-  u_ctrl.ensureAuthenticated,
+  // u_ctrl.ensureAuthenticated,
   ctrl.matches_of_user
 );
 

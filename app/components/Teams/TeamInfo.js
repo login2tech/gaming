@@ -872,6 +872,18 @@ class TeamInfo extends React.Component {
                 ) : (
                   false
                 )}
+                {this.state.team_info &&
+                this.state.team_info.team_type == 'tournaments' ? (
+                  <Link
+                    to={'/t/' + this.state.team_info.tournament_id}
+                    className="btn btn-default mt-2 bttn_submit mw_200"
+                    style={{margin: '0 auto'}}
+                  >
+                    View Tournament
+                  </Link>
+                ) : (
+                  false
+                )}
               </div>
 
               <div className=" order-md-last col-md-4">
