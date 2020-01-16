@@ -13,7 +13,7 @@ const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
 
 const Raven = require('raven');
-const getXPBasedOn = function(current_xp) {
+const getXPBasedOn = function(current_xp, match_type) {
   return 15;
 };
 const getXPRemoveBasedOn = function(current_xp) {
@@ -27,7 +27,7 @@ const getTeamWpForLooser = function() {
   return 7;
 };
 
-const giveXpToMember = function(uid, match_id, match_type) {
+const giveXpToMember = function(uid, match_id, match_type, force_xp_to_add) {
   new User()
     .where({id: uid})
     .fetch()
@@ -35,7 +35,12 @@ const giveXpToMember = function(uid, match_id, match_type) {
       if (usr) {
         let xp = usr.get('life_xp');
         const double_xp = usr.get('double_xp');
-        let xP_to_add = getXPBasedOn(xp);
+        let xP_to_add;
+        if (force_xp_to_add) {
+          xP_to_add = force_xp_to_add;
+        } else {
+          xP_to_add = getXPBasedOn(xp, match_type);
+        }
 
         if (double_xp) {
           xP_to_add = xP_to_add * 2;
@@ -374,13 +379,26 @@ const takeMoneyFromMember = function(uid, input_val, match_id, type) {
       Raven.captureException(err);
     });
 };
-
-const giveXPtoTeam = function(team_id, players, match_id, match_type) {
+// this is also being used in tournaments, edit at your own risk
+const giveXPtoTeam = function(
+  team_id,
+  players,
+  match_id,
+  match_type,
+  xp_amount
+) {
   for (let i = players.length - 1; i >= 0; i--) {
     const uid = parseInt(players[i]);
-    giveXpToMember(uid, match_id, match_type);
+    giveXpToMember(uid, match_id, match_type, xp_amount);
   }
-  const xP_to_add = getTeamWpForWinner();
+
+  let xP_to_add;
+  if (xp_amount) {
+    xP_to_add = xp_amount;
+  } else {
+    xP_to_add = getTeamWpForWinner();
+  }
+
   const year = moment().format('YYYY');
   const season = moment().format('Q');
   new TeamXP()
