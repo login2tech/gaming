@@ -5639,7 +5639,7 @@ button.btn.btn-exp-menu {
 }
 
 .container-brackets .round.rd-2 .match .player:nth-child(2) {
-    margin-top: 37px;
+    margin-top: 33px;
 }
 
 .container-brackets .round.rd-2 .match .player:last-child {
@@ -5647,7 +5647,7 @@ button.btn.btn-exp-menu {
 }
 
 .container-brackets .round.rd-2 .match {
-    margin-bottom: 61px;
+    margin-bottom: 70px;
 }
 .container-brackets .round.rd-2 .match .player{
   margin: 159px 0;
@@ -5683,4 +5683,7 @@ button.btn.btn-exp-menu {
 .container-brackets .separator-brackets.rd-2 .line {
     height: 207px !important;
     margin-bottom: 192px !important;
+}
+.container-brackets .round.rd-3 .match {
+    margin-bottom: 330px;
 }

@@ -875,7 +875,7 @@ class TeamInfo extends React.Component {
                 {this.state.team_info &&
                 this.state.team_info.team_type == 'tournaments' ? (
                   <Link
-                    to={'/t/' + this.state.team_info.tournament_id}
+                    to={'/t/' + this.state.team_info.team_t_id}
                     className="btn btn-default mt-2 bttn_submit mw_200"
                     style={{margin: '0 auto'}}
                   >

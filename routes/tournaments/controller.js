@@ -205,13 +205,6 @@ const giveTrophy = function(type, tid, team_id, team_players) {
   }
 };
 
-const sort_as_number = function(a, b) {
-	a =  parseInt(a);
-	b = parseInt(b);
-    return a - b;
-}
-
-
 const giveWins = function(tid, tour) {
   console.log(tour);
   let brackets = tour.brackets;
@@ -291,6 +284,12 @@ const giveWins = function(tid, tour) {
   //
 };
 
+const sort_by_number = function(a, b) {
+  a = parseInt(a);
+  b = parseInt(b);
+  return a - b;
+};
+
 const proceed_to_next_round = function(t_id, t_round) {
   llgg(t_id, t_round);
   new TournamentMatch()
@@ -365,10 +364,7 @@ const proceed_to_next_round = function(t_id, t_round) {
             w_t_i_id = parseInt(w_t_i_id);
             return teams_obj_keys.indexOf('team_' + w_t_i_id) + 1;
           });
-          //participants.sort();
-
-          participants.sort(sort_as_number);
-
+          participants.sort(sort_by_number);
           llgg('participants are : ', participants);
           let winner = false;
           const bracket_obj = getBracket(participants);
@@ -377,15 +373,16 @@ const proceed_to_next_round = function(t_id, t_round) {
           }
           // bracket_obj
 
-          // llgg('brocket_obj is', bracket_obj);
           // llgg(bracket_obj);
           const brackets_round_original = bracket_obj[0];
-
+          llgg('original brocket_obj is', bracket_obj[0]);
           const brackets_round = brackets_round_original.map(function(br_mtch) {
             return br_mtch.map(function(br_plyr) {
               return participants[br_plyr - 1];
             });
           });
+
+          llgg('team_id brocket_obj is', brackets_round);
 
           let brackets = tournament.get('brackets');
           if (!brackets) {
@@ -420,14 +417,17 @@ const proceed_to_next_round = function(t_id, t_round) {
               // llgg(err);
               Raven.captureException(err);
             });
-
           if (create_further_matches) {
             for (let i = brackets_round.length - 1; i >= 0; i--) {
-              const team_set = brackets_round_original[i];
-              // llgg('---- -- - - - -----');
-              // llgg('team_set : ', team_set);
-              const team_1 = team_set[0] ? winner_teams[team_set[0] - 1] : null;
-              const team_2 = team_set[1] ? winner_teams[team_set[1] - 1] : null;
+              const team_set = brackets_round[i];
+              llgg('---- -- - - - -----');
+              llgg('team_set : ', team_set);
+              const team_1 = team_set[0]
+                ? teams_obj_keys[team_set[0] - 1].replace('team_', '')
+                : null;
+              const team_2 = team_set[1]
+                ? teams_obj_keys[team_set[1] - 1].replace('team_', '')
+                : null;
               if (team_1 && team_2) {
                 createMatch(
                   team_1,

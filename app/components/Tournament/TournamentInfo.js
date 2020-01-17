@@ -85,21 +85,22 @@ class TournamentInfo extends React.Component {
     return false;
   }
 
-  getMatchName(round, t1, t2) {
+  getMatchName(round, t1, t2, cnt) {
     const items = this.getM(round, t1, t2);
     if (items && items.length) {
       return (
         '<a href="/tournament-match/' +
         items[0].id +
-        '">Match #' +
-        items[0].id +
+        '">Match - ' +
+        cnt +
         '</a>'
       );
     }
     return '';
   }
-
+  cnt = 1;
   createBrackets() {
+    this.cnt = 0;
     let brackets = this.state.tournament.brackets;
 
     if (!brackets) {
@@ -115,7 +116,7 @@ class TournamentInfo extends React.Component {
 
     for (let i = 0; i < rounds_c; i++) {
       const round_data = brackets['round_' + (i + 1)];
-      console.log(round_data);
+      // console.log(round_data);
       // if()
       const final_round_data = [];
       for (let j = 0; j < round_data.length; j++) {
@@ -127,9 +128,9 @@ class TournamentInfo extends React.Component {
         // console.log(team_1, team_2);
         const team_1_name = this.get_team_name(team_1);
         const team_2_name = this.get_team_name(team_2);
-        // console.log(team_1_name, team_2_name, i);
+        this.cnt++;
         final_round_data.push({
-          match_title: this.getMatchName(i + 1, team_1, team_2),
+          match_title: this.getMatchName(i + 1, team_1, team_2, this.cnt),
           player1: {
             name: team_1_name,
             ID: team_1,
@@ -1004,14 +1005,13 @@ class TournamentInfo extends React.Component {
     const teams = this.getTeams(match);
 
     // const my_team_id = this.am_i_in_match(match);
-
+    // <td>
+    //   <Link to={'/tournament-match/' + match.id}>#{match.id}</Link>
+    // </td>
     return (
       <tr key={match.id}>
         <td>
-          <Link to={'/tournament-match/' + match.id}>#{match.id}</Link>
-        </td>
-        <td>
-          <Link to={'/teams/view/' + teams[1].id}>{teams[0].title}</Link>{' '}
+          <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link>{' '}
           {match.result == 'team_1' ? (
             <span className="text-success">W</span>
           ) : match.result == 'team_2' ? (
@@ -1175,7 +1175,6 @@ class TournamentInfo extends React.Component {
               <table className="table table-striped table-ongray table-hover">
                 <thead>
                   <tr>
-                    <th>Match</th>
                     <th>Team</th>
                     <th>Opponent</th>
                     <th>Date</th>
