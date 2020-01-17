@@ -205,6 +205,13 @@ const giveTrophy = function(type, tid, team_id, team_players) {
   }
 };
 
+const sort_as_number = function(a, b) {
+	a =  parseInt(a);
+	b = parseInt(b);
+    return a - b;
+}
+
+
 const giveWins = function(tid, tour) {
   console.log(tour);
   let brackets = tour.brackets;
@@ -358,7 +365,10 @@ const proceed_to_next_round = function(t_id, t_round) {
             w_t_i_id = parseInt(w_t_i_id);
             return teams_obj_keys.indexOf('team_' + w_t_i_id) + 1;
           });
-          participants.sort();
+          //participants.sort();
+
+          participants.sort(sort_as_number);
+
           llgg('participants are : ', participants);
           let winner = false;
           const bracket_obj = getBracket(participants);
