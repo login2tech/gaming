@@ -57,7 +57,7 @@ class TournamentInfo extends React.Component {
     tc = parseInt(tc);
     const items = this.getM(round, t1, t2);
     if (items && items.length) {
-      console.log(items[0].result, items[0].team_1_id, tc);
+      // console.log(items[0].result, items[0].team_1_id, tc);
 
       const current_team = items[0].team_1_id == tc ? 'team_1' : 'team_2';
 
@@ -146,19 +146,41 @@ class TournamentInfo extends React.Component {
             ID: team_2,
             url: '/teams/view/' + team_2,
             winner: this.getMatchWinner(i + 1, team_1, team_2, team_2),
-
             looser: this.getMatchLooser(i + 1, team_1, team_2, team_2)
           }
         });
       }
-      rounds.push(final_round_data);
-      round_titles.push('Round ' + (i + 1));
+      if (final_round_data.length) {
+        rounds.push(final_round_data);
+        round_titles.push('Round ' + (i + 1));
+      }
     }
-    // console.log(JSON.stringify(rounds))
+    // console.log(brackets.winner);
+    if (brackets.winner) {
+      // team_1 = teams[team_1 - 1];
+      // console.log(teams, brackets.winner);
+      rounds.push([
+        {
+          class: 'winner_round',
+          is_winner: true,
+          match_title: '',
+          player1: {
+            name: this.get_team_name(brackets.winner),
+            ID: '' + brackets.winner,
+            url: '/teams/view/' + brackets.winner,
+            winner: true
+          }
+        }
+      ]);
+      round_titles.push('Winner');
+    }
+    // debugger;
+    console.log(rounds);
     $('.brackets').brackets({
-      titles: round_titles,
+      // titles: round_titles,
       rounds: rounds,
       color_title: 'white',
+      titles: true,
       border_color: 'rgb(41, 71, 244)',
       color_player: 'white',
       bg_player: 'rgb(41, 71, 244)',
@@ -658,7 +680,7 @@ class TournamentInfo extends React.Component {
           </div>
         </div> */}
         <div className="row">
-          <div className="col-sm-4 col-6">
+          <div className="col-sm-4 col-12">
             <div className="t-prizes">
               <div className="t-prizes-place p1">
                 <div className="table_wrapper">
@@ -689,7 +711,7 @@ class TournamentInfo extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-sm-4 col-6">
+          <div className="col-sm-4 col-12">
             <div className="t-prizes">
               <div className="t-prizes-place p2">
                 <div className="table_wrapper">
@@ -720,7 +742,7 @@ class TournamentInfo extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-sm-4 col-6">
+          <div className="col-sm-4 col-12">
             <div className="t-prizes">
               <div className="t-prizes-place p3">
                 <div className="table_wrapper">
@@ -1176,6 +1198,14 @@ class TournamentInfo extends React.Component {
       rnds.push(i + 1);
     }
     return rnds.map((round, i) => {
+      const getMatchCount = this.state.tournament.matches.filter(function(
+        mitm
+      ) {
+        return mitm.match_round == round ? true : false;
+      }).length;
+      if (getMatchCount < 1) {
+        return false;
+      }
       return (
         <div className="col-md-12" key={round}>
           <h6 className="prizes_desclaimer">Round {round}</h6>

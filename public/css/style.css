@@ -2853,7 +2853,7 @@ font-weight: 600; text-transform: uppercase; }
     border-radius: 0px;
 }
 
-.field_form .form-control, .StripeElement, .form-control, .form-control:-webkit-autofill, .form-control:-webkit-autofill:hover, .form-control:-webkit-autofill:focus, .form-control:-internal-autofill-selected {
+.field_form .form-control, .StripeElement, .form-control, .form-control:-webkit-autofill {
     border-color: #7a7a7a;
     border-radius: 5px;
     padding: 12px 15px;
@@ -2861,6 +2861,17 @@ font-weight: 600; text-transform: uppercase; }
     border-radius: 0px;
     background: #333 !important;
     color: #fff!important;
+}
+ .form-control:-webkit-autofill:hover,
+ .form-control:-webkit-autofill:focus,
+ .form-control:-internal-autofill-selected{
+   border-color: #7a7a7a;
+   border-radius: 5px;
+   padding: 12px 15px;
+   margin-bottom: 20px;
+   border-radius: 0px;
+   background: #333 !important;
+   color: #fff!important;
 }
 
 .tab-block .tab-mnu {
@@ -3114,8 +3125,11 @@ font-weight: 600; text-transform: uppercase; }
     /* border: 1px solid #2847f3; */
     box-shadow: 0 0 5px 2px #2847f3;
 }
+input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date']{
+  -webkit-appearance:none;
+}
 
-.authorize_box.shadow {
+.authorize_box.shadow , input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date']{
     box-shadow: 0 0 5px 2px #2847f3;
 }
 
@@ -5241,7 +5255,7 @@ ul.notices li:first-child {
 }
 
 .status_cancelled {
-    color: #f00;
+    color: #f00 !important;text-transform: uppercase;
 }
 
 .m_status {
@@ -5708,6 +5722,11 @@ button.btn.btn-exp-menu {
     .play_match_btn {
         margin-top: 149px;
     }
+
+    .brackets {
+
+        zoom: 0.6;
+    }
 }
 .filter-form .btn{
   min-width: auto !important;
@@ -5723,4 +5742,23 @@ a.post_image.post_image_smaller.post_video:after {
 
 .tolowercase{
   text-transform: none;
+}
+.round.winner_round .match {
+    height: 50px !important;
+}
+
+.container-brackets .separator-brackets.rd-3 .line:first-child {
+    margin-top: 195px !important;
+}
+
+.container-brackets .separator-brackets.rd-3 .line {
+    height: 345px !important;
+}
+
+.container-brackets .round.rd-4 {
+    margin-top: 310px !important;
+}
+.brackets {
+    overflow-x: scroll;
+     
 }

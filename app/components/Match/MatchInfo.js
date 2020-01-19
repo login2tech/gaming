@@ -505,6 +505,9 @@ class MatchInfo extends React.Component {
     if (!this.state.match.team_2_id) {
       return 'Expired';
     }
+    if (this.state.match.status == 'cancelled') {
+      return 'Cancelled';
+    }
     if (!this.state.match.team_1_result && !this.state.match.team_2_result) {
       return 'Pending Results';
     }
