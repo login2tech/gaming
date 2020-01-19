@@ -92,15 +92,20 @@ class MyMembershipModule extends React.Component {
                   <span>High priority Cash Withdrawals </span>
                   <span>Free Cash Out Matches non charge 10% for each 1$</span>
 
-                  <span>Match Escalations </span>
                   {this.props.user &&
                   this.props.user.prime &&
                   this.props.user.prime_type == 'silver' ? (
-                    <span className="text-silver">
-                      1 Free 24 Hour Double (XP) Token!
-                    </span>
+                    <>
+                      <span className="text-silver">Match Escalations </span>
+                      <span className="text-silver">
+                        1 Free 24 Hour Double (XP) Token!
+                      </span>
+                    </>
                   ) : (
                     <>
+                      <span className="text-gold">
+                        High Priority Ticket Escalations{' '}
+                      </span>
                       <span className="text-gold">
                         1 Free @username change!
                       </span>

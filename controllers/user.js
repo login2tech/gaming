@@ -232,7 +232,7 @@ exports.accountPut = function(req, res, next) {
 
   const user = new User({id: req.user.id});
   if ('password' in req.body) {
-    console.log(req.body.old_password);
+    // console.log(req.body.old_password);
     user.comparePassword(req.body.old_password, function(err, isMatch) {
       if (!isMatch) {
         return res.status(401).send({msg: 'Invalid old password'});
@@ -268,7 +268,7 @@ exports.accountPut = function(req, res, next) {
         gamer_tag_6: req.body.gamer_tag_6,
         timezone: req.body.timezone
       },
-      {patch: true}
+      {patch: true, method: 'update'}
     );
   }
   setTimeout(function() {
@@ -1018,7 +1018,7 @@ exports.resetScore = function(req, res, next) {
           return res.status(200).send({ok: false, msg: 'records reset done.'});
         })
         .catch(function(err) {
-          console.log(err);
+          // console.log(err);
           return res.status(400).send({
             ok: false,
             msg: 'Failed to delete records or nothing to delete'
@@ -1029,4 +1029,54 @@ exports.resetScore = function(req, res, next) {
       res.status(400).send({ok: false, msg: 'action not found'});
       break;
   }
+};
+
+exports.checkIfExists = function(req, res, next) {
+  const new_username = req.body.new_uname.new_username.toLowerCase();
+  new User()
+    .where({
+      username: new_username
+    })
+    .fetch()
+    .then(function(usr) {
+      if (usr) {
+        usr = usr.toJSON();
+        if (usr.id == req.user.id) {
+          next();
+        } else {
+          return res.status(200).send({
+            ok: false,
+            msg:
+              'This username is already being used. Please try any other username'
+          });
+        }
+      } else {
+        next();
+      }
+    })
+    .catch(function(err) {
+      return res.status(200).send({
+        ok: false,
+        msg: 'Failed to update username.'
+      });
+    });
+};
+exports.changeUname = function(req, res, next) {
+  const user = new User({id: req.user.id});
+  const new_username = req.body.new_uname.new_username.toLowerCase();
+  user
+    .save(
+      {
+        // email: req.body.email,
+        username: new_username,
+        pndng_uname_changes: 0
+      },
+      {patch: true}
+    )
+    .then(function() {
+      return res.status(200).send({ok: true, msg: 'DONE'});
+    })
+    .catch(function(err) {
+      return res.status(400).send({ok: false, msg: 'Failed'});
+    });
 };

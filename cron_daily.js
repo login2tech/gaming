@@ -1,4 +1,6 @@
 // Libraries
+const Raven = require('raven');
+Raven.config('https://a6c40c1f84954d8f92472d82355a10fe@sentry.io/1876355');
 require('dotenv').config({silent: true});
 const moment = require('moment');
 const utils = require('./routes/utils');
@@ -61,6 +63,7 @@ const checkForMembership = function(user) {
       obj_to_save.prime = false;
       obj_to_save.prime_obj = {};
       obj_to_save.prime_type = '';
+      obj_to_save.pndng_uname_changes = 0;
       new User()
         .where({id: user.id})
         .save(obj_to_save, {method: 'update'})
@@ -82,6 +85,7 @@ const checkForMembership = function(user) {
         );
 
         obj_to_save.prime_obj = user.prime_obj;
+        obj_to_save.pndng_uname_changes = 1;
         obj_to_save.prime_obj.next_renew = moment(
           user.prime_obj.next_renew
         ).add(1, 'month');
@@ -99,6 +103,7 @@ const checkForMembership = function(user) {
         obj_to_save.prime = false;
         obj_to_save.prime_obj = {};
         obj_to_save.prime_type = '';
+        obj_to_save.pndng_uname_changes = 0;
         new User()
           .where({id: user.id})
           .save(obj_to_save, {method: 'update'})

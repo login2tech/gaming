@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import CreditsBox from './BuyBoxes/CreditsBox';
-import CashBox from './BuyBoxes/CreditsBox';
+import CashBox from './BuyBoxes/CashBox';
 import DoubleXPBox from './BuyBoxes/DoubleXPBox';
 class MyBankModule extends React.Component {
   constructor(props) {

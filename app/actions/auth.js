@@ -230,6 +230,35 @@ export function updateProfile(data, token) {
   };
 }
 
+export function changeUname(uname, cb) {
+  return dispatch => {
+    dispatch({type: 'CLR_MSG'});
+
+    return fetch('/api/changeUname', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        new_uname: uname
+      })
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          if (json.ok) {
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else {
+            alert(json.msg);
+            cb && cb(false);
+          }
+        });
+      } else {
+        alert('Failed!');
+      }
+    });
+  };
+}
+
 export function team_pic(team_id, data) {
   return dispatch => {
     dispatch({

@@ -12,6 +12,7 @@ import MyMembershipModule2 from './Modules/MyMembershipModule2';
 import {accountPic} from '../../actions/auth';
 import {
   updateProfile,
+  changeUname,
   stopRenewal,
   changePassword,
   logout
@@ -29,6 +30,7 @@ class Profile extends React.Component {
       dob: props.user.dob ? props.user.dob : '',
       add_new_bal_number: '',
       password: '',
+      new_username: '',
       confirm: '',
       old_password: '',
       currentStep: 5,
@@ -54,10 +56,60 @@ class Profile extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  handleChangeUsername(event) {
+    let val = event.target.value ? event.target.value : '';
+    val = val.trim();
+    val = val.toLowerCase();
+    val = val.replace(/[^a-zA-Z0-9 ]/g, '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    if (
+      val[0] == '-' ||
+      val[0] == '_' ||
+      val[0] == '1' ||
+      val[0] == '2' ||
+      val[0] == '3' ||
+      val[0] == '4' ||
+      val[0] == '5' ||
+      val[0] == '6' ||
+      val[0] == '7' ||
+      val[0] == '8' ||
+      val[0] == '9' ||
+      val[0] == '0'
+    ) {
+      val = val.replace(val[0], '');
+    }
+
+    this.setState({[event.target.name]: val});
+  }
+
   handleLogout = event => {
     event.preventDefault();
     this.props.dispatch(logout());
   };
+
+  changeUname(event, cb) {
+    if (this.state.saving_new_name) {
+      return false;
+    }
+    this.setState({
+      saving_new_name: true
+    });
+    event.preventDefault();
+    this.props.dispatch(
+      changeUname(
+        {
+          new_username: this.state.new_username
+        },
+        rep => {
+          if (!rep) {
+            this.setState({
+              saving_new_name: false
+            });
+          }
+        }
+      )
+    );
+  }
 
   handleProfileUpdate(event) {
     event.preventDefault();
@@ -766,10 +818,69 @@ class Profile extends React.Component {
               </div>
               <div className="col-md-9 col-sm-9 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3 className="no-case-change">
-                    <Link to={'/u/' + this.props.user.username}>
-                      @{this.props.user.username}
-                    </Link>
+                  <h3 className="no-case-change position-relative">
+                    {this.state.changing_username ? (
+                      <div className="change_uname_wrap">
+                        <input
+                          id="new_username"
+                          name="new_username"
+                          className="form-control change_uname_field"
+                          onChange={this.handleChangeUsername.bind(this)}
+                          value={this.state.new_username}
+                        />
+                        <button
+                          className="btn mr-1"
+                          disabled={
+                            this.state.new_username == this.props.user.username
+                          }
+                          onClick={this.changeUname.bind(this)}
+                        >
+                          <span
+                            className={
+                              this.state.saving_new_name == true
+                                ? 'fa fa-spin fa-spinner'
+                                : 'fa fa-save'
+                            }
+                          />
+                        </button>
+                        <button
+                          className="text-danger btn"
+                          onClick={() => {
+                            this.setState({
+                              changing_username: false
+                            });
+                          }}
+                        >
+                          <span className="fa fa-times " />
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <Link to={'/u/' + this.props.user.username}>
+                          @{this.props.user.username}
+                        </Link>
+
+                        <button
+                          onClick={event => {
+                            $(event.target).tooltip('hide');
+                            if (this.props.user.pndng_uname_changes > 0) {
+                              this.setState({
+                                changing_username: true,
+                                new_username: this.props.user.username
+                              });
+                            }
+                          }}
+                          className=" fa fa-edit btn change_uname"
+                          title={
+                            'Edit Username' +
+                            (this.props.user.pndng_uname_changes > 0
+                              ? ''
+                              : ' - $2.99')
+                          }
+                          data-toggle="tooltip"
+                        />
+                      </>
+                    )}
                   </h3>
                   {/* <div className="game_platform_icon">About</div> */}
                   <div className="list_pad">

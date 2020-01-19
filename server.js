@@ -202,7 +202,12 @@ app.post('/upload', (req, res, next) => {
     }
   );
 });
-
+app.post(
+  '/api/changeUname',
+  userController.ensureAuthenticated,
+  userController.checkIfExists,
+  userController.changeUname
+);
 app.put(
   '/account',
   userController.ensureAuthenticated,

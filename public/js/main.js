@@ -72,8 +72,7 @@ function scrollToTop()
     })
     $('body').tooltip({
         animated: 'fade',
-        selector : 'a[data-toggle="tooltip"]',
-        // placement: 'bottom',
+        selector : '[data-toggle="tooltip"]',
         html: true,
       });
 

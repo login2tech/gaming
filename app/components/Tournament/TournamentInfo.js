@@ -13,6 +13,9 @@ class TournamentInfo extends React.Component {
       title: '',
       renderTab: 'overview',
       tournament: {
+        second_winner_price: 0,
+        first_winner_price: 0,
+        third_winner_price: 0,
         game: {},
         ladder: {},
         matches: [],
@@ -679,8 +682,10 @@ class TournamentInfo extends React.Component {
                 </div>
               </div>
               <div className="t-prizes-amount">
-                {this.state.tournament.first_winner_price} credits
-                {/* <span>$87.00 Per Player</span> */}
+                <span>
+                  ${this.state.tournament.first_winner_price.toFixed(2)} Per
+                  Player
+                </span>
               </div>
             </div>
           </div>
@@ -708,8 +713,10 @@ class TournamentInfo extends React.Component {
                 </div>
               </div>
               <div className="t-prizes-amount">
-                {this.state.tournament.second_winner_price} credits
-                {/* <span>$37.00 Per Player</span> */}
+                <span>
+                  ${this.state.tournament.second_winner_price.toFixed(2)} Per
+                  Player
+                </span>
               </div>
             </div>
           </div>
@@ -737,8 +744,10 @@ class TournamentInfo extends React.Component {
                 </div>
               </div>
               <div className="t-prizes-amount">
-                {this.state.tournament.third_winner_price} credits
-                {/* <span>$0.00 Per Player</span> */}
+                <span>
+                  ${this.state.tournament.second_winner_price.toFixed(2)} Per
+                  Player
+                </span>
               </div>
             </div>
           </div>

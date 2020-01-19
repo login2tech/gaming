@@ -50,14 +50,6 @@ class TournamentFinder extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="all_t_heading">Upcoming Tournaments</div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
-
-                {/*<Link
-                  to={'/matchfinder/new/ '}
-                  className="btn btn-default bttn_submit"
-                >
-                  Create a match
-                </Link>
-                */}
               </div>
             </div>
           </div>
@@ -156,10 +148,10 @@ class TournamentFinder extends React.Component {
                                 <div className="col-6 col-md-3 t-col">
                                   <h5>Prize pool</h5>
                                   <p>
+                                    $
                                     {match.first_winner_price +
                                       match.second_winner_price +
                                       match.third_winner_price}{' '}
-                                    credits
                                   </p>
                                 </div>
                               </div>

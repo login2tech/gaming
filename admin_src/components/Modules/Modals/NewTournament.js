@@ -424,7 +424,7 @@ class NewTournament extends React.Component {
               </div>
 
               <div className="form-group">
-                <label>First Price</label>
+                <label>First Price - OCG Cash</label>
                 <input
                   type="number"
                   name="first_winner_price"
@@ -438,7 +438,7 @@ class NewTournament extends React.Component {
               </div>
 
               <div className="form-group">
-                <label>Second Price</label>
+                <label>Second Price - OCG Cash</label>
                 <input
                   type="number"
                   name="second_winner_price"
@@ -452,7 +452,7 @@ class NewTournament extends React.Component {
               </div>
 
               <div className="form-group">
-                <label>Third Price</label>
+                <label>Third Price - OCG Cash</label>
                 <input
                   type="number"
                   name="third_winner_price"

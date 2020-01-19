@@ -610,11 +610,11 @@ exports.resolveCustomerId = function(req, res, next) {
     // no need to resolve customer id as not using stripe
     next();
   } else if (req.user.stripe_user_id) {
-    console.log('stripe id exists');
+    // console.log('stripe id exists');
     // customer id already linked, shall i attach a new credit card source?
     link_token_to_user(req, res, next, stripe_token);
   } else {
-    console.log('stripe id is being created');
+    // console.log('stripe id is being created');
     // no customer id, create 1 and link it and proceed
     create_new_user_for_token(req, res, next);
   }
@@ -626,7 +626,7 @@ exports.stripe_hook = function(req, res, next) {
   const body = req.body;
   // console.log(body.type);
   if (body.type == 'customer.subscription.updated') {
-    console.log('updaing');
+    // console.log('updaing');
     const sub_id = body.data.object.id;
     const customer = body.data.object.customer;
     new User()
@@ -645,13 +645,18 @@ exports.stripe_hook = function(req, res, next) {
         prime_obj.next_renew = moment(
           body.data.object.current_period_end * 1000
         );
+
+        // obj_to_save.pndng_uname_changes = 0;
         prime_obj.cancel_requested = body.data.object.cancel_at_period_end
           ? body.data.object.cancel_at_period_end
           : false;
         if (prime_obj.subscription_id == sub_id) {
           usr
             .save({
-              prime_obj: prime_obj
+              prime_obj: prime_obj,
+              pndng_uname_changes: prime_obj.cancel_requested
+                ? usr.get('pndng_uname_changes')
+                : 1
             })
             .then(function() {
               if (prime_obj.cancel_requested) {
@@ -668,9 +673,11 @@ exports.stripe_hook = function(req, res, next) {
         }
       });
   } else if (body.type == 'customer.subscription.deleted') {
-    console.log('deleting');
+    // console.log('deleting');
     const sub_id = body.data.object.id;
     const customer = body.data.object.customer;
+
+    // obj_to_save.pndng_uname_changes = 0;
     new User()
       .where({
         stripe_user_id: customer,
@@ -681,21 +688,22 @@ exports.stripe_hook = function(req, res, next) {
         if (!usr) {
           return;
         }
-        console.log('here');
+        // console.log('here');
         let prime_obj = usr.get('prime_obj');
         prime_obj = JSON.parse(prime_obj);
-        console.log(prime_obj);
-        console.log(
-          prime_obj.subscription_id,
-          sub_id,
-          prime_obj.subscription_id == sub_id
-        );
+        // console.log(prime_obj);
+        // console.log(
+        //   prime_obj.subscription_id,
+        //   sub_id,
+        //   prime_obj.subscription_id == sub_id
+        // );
         const prime_type = usr.get('prime_type');
         if (prime_obj.subscription_id == sub_id) {
           usr
             .save({
               prime: false,
               prime_obj: {},
+              pndng_uname_changes: 0,
               prime_type: ''
             })
             .then(function() {
@@ -736,9 +744,10 @@ exports.buyMembership = function(req, res, next) {
         ''
       );
       double_xp_tokens_to_buy = req.user.double_xp_tokens + 3;
-      pndng_uname_changes++;
+      pndng_uname_changes = 1;
     } else {
       double_xp_tokens_to_buy = req.user.double_xp_tokens + 1;
+      pndng_uname_changes = 0;
     }
     const user_obj_to_save = {
       prime: true,
@@ -787,7 +796,7 @@ exports.buyMembership = function(req, res, next) {
           });
       })
       .catch(function(err) {
-        console.log(err);
+        // console.log(err);
         return res.status(400).send({
           ok: false,
           msg:
@@ -837,10 +846,10 @@ exports.buyMembership = function(req, res, next) {
             'Free Credit on purchase of  ' + plan + ' Membership',
             ''
           );
-          user_obj_to_save.pndng_uname_changes =
-            req.user.pndng_uname_changes + 1;
+          user_obj_to_save.pndng_uname_changes = 1;
           user_obj_to_save.double_xp_tokens = req.user.double_xp_tokens + 3;
         } else {
+          user_obj_to_save.pndng_uname_changes = 0;
           user_obj_to_save.double_xp_tokens = req.user.double_xp_tokens + 1;
         }
 

@@ -1198,7 +1198,9 @@ class TeamInfo extends React.Component {
                                   {match.team_1_id ==
                                   this.state.team_info.id ? (
                                     <Link to={'/teams/view/' + match.team_2_id}>
-                                      {match.team_2_info.title}
+                                      {match.team_2_info
+                                        ? match.team_2_info.title
+                                        : ''}
                                     </Link>
                                   ) : (
                                     <Link to={'/teams/view/' + match.team_1_id}>
@@ -1257,7 +1259,9 @@ class TeamInfo extends React.Component {
                                   {match.team_1_id ==
                                   this.state.team_info.id ? (
                                     <Link to={'/teams/view/' + match.team_2_id}>
-                                      {match.team_2_info.title}
+                                      {match.team_2_info
+                                        ? match.team_2_info.title
+                                        : ''}
                                     </Link>
                                   ) : (
                                     <Link to={'/teams/view/' + match.team_1_id}>
