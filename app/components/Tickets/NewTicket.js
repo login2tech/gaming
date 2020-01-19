@@ -29,6 +29,9 @@ class NewTicket extends React.Component {
       extra_1: props.params.mid ? props.params.mid : '',
       extra_2: props.params.ttile ? props.params.ttile : '',
       extra_3: match_type,
+      url_1: '',
+      url_2: '',
+      url_3: '',
       readonlyFields: props.params.mid ? true : false
     };
   }
@@ -101,7 +104,10 @@ class NewTicket extends React.Component {
         ticket_attachment: this.state.new_post_image,
         extra_1: this.state.extra_1,
         extra_2: this.state.extra_2,
-        extra_3: this.state.extra_3
+        extra_3: this.state.extra_3,
+        url_1: this.state.url_1,
+        url_2: this.state.url_2,
+        url_3: this.state.url_3
       })
     }).then(rawResponse => {
       rawResponse
@@ -201,71 +207,79 @@ class NewTicket extends React.Component {
                           onChange={this.handleChange.bind(this)}
                         >
                           <option value="">-- Select a Ticket Type --</option>
-                          <option value="Customer Support - Account Issues">
-                            Customer Support - Account Issues
-                          </option>
-                          <option value="Customer Support - Account Recovery">
-                            Customer Support - Account Recovery
-                          </option>
-                          <option value="Customer Support - Dispute Account Ban">
-                            Customer Support - Dispute Account Ban
-                          </option>
-                          <option value="Customer Support - Email Issues">
-                            Customer Support - Email Issues
-                          </option>
-                          <option value="Customer Support - Platform User ID Issues">
-                            Customer Support - Platform User ID Issues
-                          </option>
-                          <option value="Customer Support - Other">
-                            Customer Support - Other
-                          </option>
-                          <option value="Customer Support - Refund Request">
-                            Customer Support - Refund Request
-                          </option>
-                          <option value="Customer Support - Staff Report">
-                            Customer Support - Staff Report
-                          </option>
-                          <option value="Customer Support - Staff Report User Evading a Ban">
-                            Customer Support - Staff Report User Evading a Ban
-                          </option>
-                          <option value="Customer Support - Store Issues">
-                            Customer Support - Store Issues
-                          </option>
-                          <option value="Customer Support - Temp Migrate - Security Hold">
-                            Customer Support - Temp Migrate - Security Hold
-                          </option>
-                          <option value="Match Support - Cancellation">
-                            Match Support - Cancellation
-                          </option>
-                          <option value="Match Support - Lag Issue">
-                            Match Support - Lag Issue
-                          </option>
-                          {this.state.readonlyFields ? (
-                            <option value="Match Support - Match Dispute">
-                              Match Support - Match Dispute
-                            </option>
+                          {this.props.params.type == 'disputed' ? (
+                            <>
+                              <option value="Match Support - Match Dispute">
+                                Match Support - Match Dispute
+                              </option>
+                              <option value="Match Dispute- Accept Loss">
+                                Match Dispute- Accept Loss
+                              </option>
+                            </>
                           ) : (
-                            false
-                          )}
+                            <>
+                              <option value="Customer Support - Account Issues">
+                                Customer Support - Account Issues
+                              </option>
+                              <option value="Customer Support - Account Recovery">
+                                Customer Support - Account Recovery
+                              </option>
+                              <option value="Customer Support - Dispute Account Ban">
+                                Customer Support - Dispute Account Ban
+                              </option>
+                              <option value="Customer Support - Email Issues">
+                                Customer Support - Email Issues
+                              </option>
+                              <option value="Customer Support - Platform User ID Issues">
+                                Customer Support - Platform User ID Issues
+                              </option>
+                              <option value="Customer Support - Other">
+                                Customer Support - Other
+                              </option>
+                              <option value="Customer Support - Refund Request">
+                                Customer Support - Refund Request
+                              </option>
+                              <option value="Customer Support - Staff Report">
+                                Customer Support - Staff Report
+                              </option>
+                              <option value="Customer Support - Staff Report User Evading a Ban">
+                                Customer Support - Staff Report User Evading a
+                                Ban
+                              </option>
+                              <option value="Customer Support - Store Issues">
+                                Customer Support - Store Issues
+                              </option>
+                              <option value="Customer Support - Temp Migrate - Security Hold">
+                                Customer Support - Temp Migrate - Security Hold
+                              </option>
+                              <option value="Match Support - Cancellation">
+                                Match Support - Cancellation
+                              </option>
+                              <option value="Match Support - Lag Issue">
+                                Match Support - Lag Issue
+                              </option>
 
-                          <option value="Match Support - No Show">
-                            Match Support - No Show
-                          </option>
-                          <option value="Match Support - Opponent Cheating">
-                            Match Support - Opponent Cheating
-                          </option>
-                          <option value="Match Support - Opponent Using Ringers">
-                            Match Support - Opponent Using Ringers
-                          </option>
-                          <option value="Match Support - Report Free Wins">
-                            Match Support - Report Free Wins
-                          </option>
-                          <option value="Tournament Support - Match Issues">
-                            Tournament Support - Match Issues
-                          </option>
-                          <option value="Tournament Support - Tournament Related Questions">
-                            Tournament Support - Tournament Related Questions
-                          </option>
+                              <option value="Match Support - No Show">
+                                Match Support - No Show
+                              </option>
+                              <option value="Match Support - Opponent Cheating">
+                                Match Support - Opponent Cheating
+                              </option>
+                              <option value="Match Support - Opponent Using Ringers">
+                                Match Support - Opponent Using Ringers
+                              </option>
+                              <option value="Match Support - Report Free Wins">
+                                Match Support - Report Free Wins
+                              </option>
+                              <option value="Tournament Support - Match Issues">
+                                Tournament Support - Match Issues
+                              </option>
+                              <option value="Tournament Support - Tournament Related Questions">
+                                Tournament Support - Tournament Related
+                                Questions
+                              </option>
+                            </>
+                          )}
                         </select>
                         <span className="text-white">
                           To create tickets for match disputes, please use the{' '}
@@ -297,7 +311,8 @@ class NewTicket extends React.Component {
                     </div>
                   </div>
 
-                  {this.state.ticket_type == 'Match Support - Match Dispute' ? (
+                  {this.state.ticket_type == 'Match Support - Match Dispute' ||
+                  this.state.ticket_type == 'Match Dispute- Accept Loss' ? (
                     <>
                       <div className="row">
                         <div className="col-md-12">
@@ -393,6 +408,70 @@ class NewTicket extends React.Component {
                       </div>
                     </div>
                   </div>
+
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label htmlFor="ticket_title">
+                          URL 1:
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="url_1"
+                          name="url_1"
+                          required
+                          value={this.state.url_1}
+                          onChange={this.handleChange.bind(this)}
+                          placeholder="Enter Reference URL 1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label htmlFor="ticket_title">
+                          URL 2:
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="url_2"
+                          name="url_2"
+                          required
+                          value={this.state.url_2}
+                          onChange={this.handleChange.bind(this)}
+                          placeholder="Enter Reference URL 2"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="form-group">
+                        <label htmlFor="ticket_title">
+                          URL 3:
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="url_3"
+                          name="url_3"
+                          required
+                          value={this.state.url_3}
+                          onChange={this.handleChange.bind(this)}
+                          placeholder="Enter Reference URL 3"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">

@@ -11,6 +11,7 @@ class TournamentInfo extends React.Component {
     super(props);
     this.state = {
       title: '',
+      zoom: 1,
       renderTab: 'overview',
       tournament: {
         second_winner_price: 0,
@@ -933,8 +934,32 @@ class TournamentInfo extends React.Component {
       <div className="col-md-12">
         {/*<div className="alert alert-warning">
           Brackets are yet not generated
+        </div>
+        <div>
+          <div className="btn-group push-right pull-right  mb-3">
+            <button
+              onClick={() => {
+                this.setState({
+                  zoom: this.state.zoom - 0.1
+                });
+              }}
+              className="btn btn-default min-width-none"
+            >
+              Zoom In
+            </button>
+            <button
+              onClick={() => {
+                this.setState({
+                  zoom: this.state.zoom + 0.1
+                });
+              }}
+              className="btn btn-default min-width-none"
+            >
+              Zoom Out
+            </button>
+          </div>
         </div>*/}
-        <div className="brackets" />
+        <div className="brackets" style={{zoom: this.state.zoom}} />
       </div>
     );
   }
@@ -1615,7 +1640,13 @@ class TournamentInfo extends React.Component {
           </div>
         </section>
         <section className="contet_part single_match_details">
-          <div className="container">
+          <div
+            className={
+              this.state.renderTab == 'brackets'
+                ? 'container-fluid half'
+                : 'container'
+            }
+          >
             <div className="row">
               {this.state.renderTab == 'overview'
                 ? this.renderOverview()

@@ -7,6 +7,7 @@ const User = require('../../models/User');
 // const TeamUser = require('../teams/TeamUser');
 const TournamentMatch = require('./TournamentMatch');
 const CreditTransactions = require('../../models/CreditTransactions');
+const CashTransactions = require('../../models/CashTransactions');
 const Notif = require('../../models/Notification');
 const Trophy = require('./Trophy');
 const Raven = require('raven');
@@ -20,6 +21,56 @@ const llgg = function(a, b) {
   console.log(a, b);
 };
 
+const giveCashToUser = function(uid, input_val, match_id) {
+  // llgg(input_val);
+  new User()
+    .where({id: uid})
+    .fetch()
+    .then(function(usr) {
+      if (usr) {
+        const cash_balance = usr.get('cash_balance');
+
+        // llgg(cash_balance);
+        cash_balance += parseFloat(input_val);
+
+        // llgg(cash_balance);
+        usr
+          .save({cash_balance: cash_balance}, {patch: true})
+          .then(function(usr) {
+            new CashTransactions()
+              .save({
+                user_id: uid,
+                obj_type: 't_' + match_id,
+                details:
+                  'Cash added for prize money of  tournament #' + match_id,
+                qty: parseFloat(input_val)
+              })
+              .then(function(o) {})
+              .catch(function(err) {
+                // llgg(4, err);
+
+                Raven.captureException(err);
+              });
+          })
+          .catch(function(err) {
+            // llgg(141, err);
+
+            Raven.captureException(err);
+          });
+      }
+    })
+    .catch(function(err) {
+      // llgg(11, err);
+      //
+      Raven.captureException(err);
+    });
+};
+
+const giveCashToTeam = function(team_id, input_val, team_members, match_id) {
+  for (let i = team_members.length - 1; i >= 0; i--) {
+    giveCashToUser(parseInt(team_members[i]), input_val, match_id);
+  }
+};
 const shuffle_me = function(array) {
   let currentIndex = array.length,
     temporaryValue,
@@ -206,11 +257,11 @@ const giveTrophy = function(type, tid, team_id, team_players) {
 };
 
 const giveWins = function(tid, tour) {
-  console.log(tour);
+  // console.log(tour);
   let brackets = tour.brackets;
-  console.log(brackets);
+  // console.log(brackets);
   let teams_obj = tour.teams_obj;
-  console.log(teams_obj);
+  // console.log(teams_obj);
   brackets = typeof brackets == 'string' ? JSON.parse(brackets) : brackets;
   teams_obj = typeof teams_obj == 'string' ? JSON.parse(teams_obj) : teams_obj;
   const total_rounds = brackets.total_rounds;
@@ -221,10 +272,10 @@ const giveWins = function(tid, tour) {
 
   const team_obj_keys = Object.keys(teams_obj);
 
-  console.log('gold_team_id is', gold_team);
+  // console.log('gold_team_id is', gold_team);
 
   const gold_team_loc = team_obj_keys.indexOf('team_' + gold_team) + 1;
-  console.log('gold_team_loc is', gold_team_loc);
+  // console.log('gold_team_loc is', gold_team_loc);
 
   let silver_team;
   if (gold_team_loc == gold_silver_teams[0]) {
@@ -232,7 +283,7 @@ const giveWins = function(tid, tour) {
   } else {
     silver_team = gold_silver_teams[0];
   }
-  console.log('silver_team_loc is', silver_team);
+  // console.log('silver_team_loc is', silver_team);
   // gold_team;
   // gold_team = teams_obj['team_' + team_obj_keys[gold_team - 1]];
   silver_team = parseInt(
@@ -261,12 +312,12 @@ const giveWins = function(tid, tour) {
   const silver_players = teams_obj['team_' + silver_team];
   const bronze_players = teams_obj['team_' + bronze_team];
 
-  console.log('gold team is ', gold_team);
-  console.log('silver team is ', silver_team);
-  console.log('bronze team is ', bronze_team);
-  console.log('gold_players are ', gold_players);
-  console.log('silver_players are ', silver_players);
-  console.log('bronze_players are ', bronze_players);
+  // console.log('gold team is ', gold_team);
+  // console.log('silver team is ', silver_team);
+  // console.log('bronze team is ', bronze_team);
+  // console.log('gold_players are ', gold_players);
+  // console.log('silver_players are ', silver_players);
+  // console.log('bronze_players are ', bronze_players);
 
   matchController.giveXPtoTeam(gold_team, gold_players, tid, 't', 50);
   if (tour.member_tournament) {
@@ -274,13 +325,20 @@ const giveWins = function(tid, tour) {
   } else {
     giveTrophy('gold', tid, gold_team, gold_players);
   }
+  // giveCashToUser()
+  // giveCashToUser()
+  // giveCashToUser()
+  giveCashToTeam(gold_team, tour.first_winner_price, gold_players, tid);
+  giveCashToTeam(silver_team, tour.second_winner_price, silver_players, tid);
+  giveCashToTeam(bronze_team, tour.third_winner_price, bronze_players, tid);
+
   giveTrophy('silver', tid, silver_team, silver_players);
   giveTrophy('bronze', tid, bronze_team, bronze_players);
 
-  llgg('winners are: ');
-  llgg('gold', gold_team, gold_players);
-  llgg('silver', silver_team, silver_players);
-  llgg('bronze', bronze_team, bronze_players);
+  // llgg('winners are: ');
+  // llgg('gold', gold_team, gold_players);
+  // llgg('silver', silver_team, silver_players);
+  // llgg('bronze', bronze_team, bronze_players);
   //
 };
 
@@ -407,9 +465,9 @@ const proceed_to_next_round = function(t_id, t_round) {
           tournament
             .save(obj)
             .then(function(obj) {
-              console.log('create_further_matches: ', create_further_matches);
+              // console.log('create_further_matches: ', create_further_matches);
               if (!create_further_matches) {
-                console.log('giving wins');
+                // console.log('giving wins');
                 giveWins(t_id, obj.toJSON());
               }
             })
@@ -534,30 +592,30 @@ exports.saveScore = function(req, res, next) {
 
           if (val.result == 'team_1' || val.result == 'team_2') {
             let win_team_members;
-            let loose_team_members;
+            // let loose_team_members;
 
             if (val.result == 'team_1') {
               win_team_members = match.get('team_1_players');
-              loose_team_members = match.get('team_2_players');
+              // loose_team_members = match.get('team_2_players');
             } else {
               win_team_members = match.get('team_2_players');
-              loose_team_members = match.get('team_1_players');
+              // loose_team_members = match.get('team_1_players');
             }
 
             // llgg('winers are ', win_team_members);
             // llgg('lossers are ', loose_team_members);
 
             win_team_members = win_team_members.split('|');
-            loose_team_members = loose_team_members.split('|');
+            // loose_team_members = loose_team_members.split('|');
 
             const award_team_id =
               val.result == 'team_1'
                 ? tmp_match.team_1_id
                 : tmp_match.team_2_id;
-            const loose_team_id =
-              val.result == 'team_1'
-                ? tmp_match.team_2_id
-                : tmp_match.team_1_id;
+            // const loose_team_id =
+            //   val.result == 'team_1'
+            //     ? tmp_match.team_2_id
+            //     : tmp_match.team_1_id;
             // llgg('giving xp now');
             matchController.giveXPtoTeam(
               award_team_id,
@@ -565,12 +623,12 @@ exports.saveScore = function(req, res, next) {
               tmp_match.id,
               't'
             );
-            matchController.takeXPfromTeam(
-              loose_team_id,
-              loose_team_members,
-              tmp_match.id,
-              't'
-            );
+            // matchController.takeXPfromTeam(
+            //   loose_team_id,
+            //   loose_team_members,
+            //   tmp_match.id,
+            //   't'
+            // );
             // if (tmp_match.match_type == 'paid') {
             //   llgg('paid match giving xp');
             //   giveMoneyBackToTeam(
@@ -1261,26 +1319,26 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
 
           // get players
           let win_team_members;
-          let loose_team_members;
+          // let loose_team_members;
           if (final_result == 'team_1') {
             win_team_members = match.get('team_1_players');
-            loose_team_members = match.get('team_2_players');
+            // loose_team_members = match.get('team_2_players');
           } else {
             win_team_members = match.get('team_2_players');
-            loose_team_members = match.get('team_1_players');
+            // loose_team_members = match.get('team_1_players');
           }
           win_team_members = win_team_members.split('|');
-          loose_team_members = loose_team_members.split('|');
+          // loose_team_members = loose_team_members.split('|');
 
           // get winner team id
           const award_team_id =
             final_result == 'team_1'
               ? tmp_match.team_1_id
               : tmp_match.team_2_id;
-          const loose_team_id =
-            final_result == 'team_1'
-              ? tmp_match.team_2_id
-              : tmp_match.team_1_id;
+          // const loose_team_id =
+          //   final_result == 'team_1'
+          //     ? tmp_match.team_2_id
+          //     : tmp_match.team_1_id;
 
           // giveWinToTeam(award_team_id,win_team_members,  tmp_match.id);
           matchController.giveXPtoTeam(
@@ -1289,12 +1347,12 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
             tmp_match.id,
             't'
           );
-          matchController.takeXPfromTeam(
-            loose_team_id,
-            loose_team_members,
-            tmp_match.id,
-            't'
-          );
+          // matchController.takeXPfromTeam(
+          //   loose_team_id,
+          //   loose_team_members,
+          //   tmp_match.id,
+          //   't'
+          // );
         })
         .catch(function(err) {
           Raven.captureException(err);

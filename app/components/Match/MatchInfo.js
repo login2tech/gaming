@@ -436,6 +436,23 @@ class MatchInfo extends React.Component {
     return (
       <div>
         <a
+          onClick={e => {
+            if (
+              this.state.match.team_1_info &&
+              this.state.match.team_1_info.team_creator == this.props.user.id
+            ) {
+              return true;
+            }
+            if (
+              this.state.match.team_2_info &&
+              this.state.match.team_2_info.team_creator == this.props.user.id
+            ) {
+              return true;
+            }
+            e.preventDefault();
+            alert('Please ask the team leader to raise dispute.');
+            return false;
+          }}
           href={
             '/support/tickets/create/m/disputed/' +
             this.state.match.id +
