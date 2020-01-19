@@ -279,7 +279,7 @@ exports.listSingleItem = function(req, res, next) {
       }
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       res.status(400).send({ok: false, post: {}});
     });
 };
@@ -289,17 +289,33 @@ exports.listItemMyFeed = function(req, res, next) {
   const a = req.users_my_following;
   a.push(req.user.id);
 
-  const n = new Item()
+  let n = new Item().orderBy('id', 'DESC');
 
-    .orderBy('id', 'DESC')
-    // .orderBy('is_pinned', 'ASC')
-    .where('user_id', 'in', a);
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
     p = parseInt(req.query.paged);
   } else {
     p = 1;
   }
+
+  n = n.query(function(qb) {
+    qb.where('user_id', 'in', a);
+    if (req.query.filter) {
+      if (req.query.filter == 'images') {
+        qb.andWhere('image_url', '!=', '');
+      } else if (req.query.filter == 'videos') {
+        qb.andWhere('video_url', '!=', '');
+      } else if (req.query.filter == 'media') {
+        qb.andWhere(qbInner =>
+          qbInner
+            .where('video_url', '!=', '')
+            .orWhere('image_url', '!=', '')
+            .orWhere('post', 'LIKE', '%youtube.com/watch%')
+        );
+      }
+    }
+  });
+
   n.fetchPage({
     page: p,
     pageSize: 10,
@@ -371,20 +387,39 @@ exports.listItemMyFeed = function(req, res, next) {
 
 exports.listItemMy = function(req, res, next) {
   const cur_u = req.user.id ? req.user.id : 99999;
-  const n = new Item()
+  let n = new Item()
 
     .orderBy('is_pinned', 'DESC')
 
-    .orderBy('id', 'DESC')
-    .where({
+    .orderBy('id', 'DESC');
+
+  n = n.query(function(qb) {
+    qb.where({
       user_id: req.query.uid ? req.query.uid : 0
     });
+    if (req.query.filter) {
+      if (req.query.filter == 'images') {
+        qb.andWhere('image_url', '!=', '');
+      } else if (req.query.filter == 'videos') {
+        qb.andWhere('video_url', '!=', '');
+      } else if (req.query.filter == 'media') {
+        qb.andWhere(qbInner =>
+          qbInner
+            .where('video_url', '!=', '')
+            .orWhere('image_url', '!=', '')
+            .orWhere('post', 'LIKE', '%youtube.com/watch%')
+        );
+      }
+    }
+  });
+
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
     p = parseInt(req.query.paged);
   } else {
     p = 1;
   }
+
   n.fetchPage({
     page: p,
     pageSize: 10,
@@ -455,16 +490,31 @@ exports.listItemAll = function(req, res, next) {
   const cur_u = req.user && req.user.id ? req.user.id : 99999;
 
   let n = new Item().orderBy('id', 'DESC');
-  // .where({
-  // user_id: req.user ? req.user.id : 0
-  // });
   // console.log(req.query);
-  if (req.query.hastag) {
-    // console.log(req.query.hashtag);
-    n = n.where('post', 'LIKE', '%' + req.query.hastag + '%');
-  }
-  n = n.where({is_private: false});
+  n = n.query(function(qb) {
+    qb.where({is_private: false});
+    if (req.query.hastag) {
+      // console.log('qhere');
+      qb.andWhere('post', 'LIKE', '%#' + req.query.hastag + '%');
+    }
+    if (req.query.filter) {
+      if (req.query.filter == 'images') {
+        qb.andWhere('image_url', '!=', '');
+      } else if (req.query.filter == 'videos') {
+        qb.andWhere('video_url', '!=', '');
+      } else if (req.query.filter == 'media') {
+        qb.andWhere(qbInner =>
+          qbInner
+            .where('video_url', '!=', '')
+            .orWhere('image_url', '!=', '')
+            .orWhere('post', 'LIKE', '%youtube.com/watch%')
+        );
+      }
+    }
+  });
+
   let p;
+
   if (req.query.page && parseInt(req.query.page) > 1) {
     p = parseInt(req.query.page);
   } else {

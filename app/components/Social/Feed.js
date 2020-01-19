@@ -12,6 +12,7 @@ class Feed extends React.Component {
       pagination: {},
       loading: false,
       posts_page: 1,
+      filter: 'all',
       has_new_posts: false
     };
   }
@@ -55,25 +56,52 @@ class Feed extends React.Component {
     }, 1000);
     this.fetchPosts();
   }
-
-  fetchPosts() {
+  fetchPostsAgain(newfilter) {
+    if (this.state.filter == newfilter) {
+      return;
+    }
+    this.setState(
+      {
+        refreshing: true,
+        posts_page: 1,
+        filter: newfilter
+      },
+      () => {
+        this.fetchPosts(true);
+      }
+    );
+  }
+  fetchPosts(refresh) {
     // console.log(this.props.params);
     let hashtag = this.props.params ? this.props.params.hashtag : '';
     if (!hashtag) {
       hashtag = '';
     }
+    let fltr = 'a=b&';
+    if (this.state.filter && this.state.filter != 'all') {
+      fltr = 'filter=' + this.state.filter + '&';
+    }
     this.setState({
       loading: true
     });
     fetch(
-      '/api/posts/list/all?hastag=' + hashtag + '&page=' + this.state.posts_page
+      '/api/posts/list/all?' +
+        fltr +
+        'hastag=' +
+        hashtag +
+        '&page=' +
+        this.state.posts_page
     )
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
+          const items = refresh
+            ? json.items
+            : this.state.posts.concat(json.items);
           this.setState(
             {
-              posts: this.state.posts.concat(json.items),
+              posts: items,
+              refreshing: false,
               pagination: json.pagination ? json.pagination : {},
               loading: false
             },
@@ -100,7 +128,12 @@ class Feed extends React.Component {
                   <h4>Social Feed</h4>
                   <h3>
                     {hashtag ? (
-                      ' - #' + hashtag
+                      <>
+                        Trend - #
+                        <span className="tolowercase">
+                          {hashtag.toLowerCase()}
+                        </span>
+                      </>
                     ) : (
                       <>
                         {' '}
@@ -122,7 +155,7 @@ class Feed extends React.Component {
                   <div className="col-md-8 offset-md-2">
                     <h4 className="text-white">
                       Latest Posts
-                      {hashtag ? ' - #' + hashtag : ''}
+                      {hashtag ? ' - #' + hashtag.toLowerCase() : ''}
                     </h4>
 
                     <NewPost
@@ -165,12 +198,66 @@ class Feed extends React.Component {
                       false
                     )}
 
-                    <ul className="timeline">
-                      {this.state.posts &&
-                        this.state.posts.map((post, i) => {
-                          return <Timeline post={post} key={post.id} />;
-                        })}
-                    </ul>
+                    <div className="filter-form mt-3">
+                      <button
+                        onClick={() => {
+                          this.fetchPostsAgain('all');
+                        }}
+                        className={
+                          (this.state.filter == 'all'
+                            ? 'btn-primary '
+                            : 'btn-outline ') + 'btn mr-1'
+                        }
+                      >
+                        All
+                      </button>
+                      <button
+                        onClick={() => {
+                          this.fetchPostsAgain('videos');
+                        }}
+                        className={
+                          (this.state.filter == 'videos'
+                            ? 'btn-primary '
+                            : 'btn-outline ') + 'btn mr-1 '
+                        }
+                      >
+                        <span className="fa fa-video" /> Videos
+                      </button>
+                      <button
+                        onClick={() => {
+                          this.fetchPostsAgain('images');
+                        }}
+                        className={
+                          (this.state.filter == 'images'
+                            ? 'btn-primary '
+                            : 'btn-outline ') + 'btn mr-1 '
+                        }
+                      >
+                        <span className="fa fa-image" /> Images
+                      </button>
+                      <button
+                        onClick={() => {
+                          this.fetchPostsAgain('media');
+                        }}
+                        className={
+                          (this.state.filter == 'media'
+                            ? 'btn-primary '
+                            : 'btn-outline ') + 'btn mr-1'
+                        }
+                      >
+                        <span className=" fa fa-images" /> All Media
+                      </button>
+                    </div>
+                    {this.state.refreshing ? (
+                      false
+                    ) : (
+                      <ul className="timeline">
+                        {this.state.posts &&
+                          this.state.posts.map((post, i) => {
+                            return <Timeline post={post} key={post.id} />;
+                          })}
+                      </ul>
+                    )}
                     <div className="text-center">
                       {this.state.loading ? (
                         <span className="fa fa-spin fa-spinner text-white" />

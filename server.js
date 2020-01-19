@@ -206,6 +206,7 @@ app.post(
   '/api/changeUname',
   userController.ensureAuthenticated,
   userController.checkIfExists,
+  creditsController.getMoneyForUnameChange,
   userController.changeUname
 );
 app.put(

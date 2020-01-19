@@ -4598,7 +4598,7 @@ a:hover {
 
 .post_image.post_image_smaller {
     max-height: 200px;
-    overflow: hidden;
+    overflow: hidden;width:100%;
     position: relative;
     display: inline-block;
 }
@@ -5708,4 +5708,19 @@ button.btn.btn-exp-menu {
     .play_match_btn {
         margin-top: 149px;
     }
+}
+.filter-form .btn{
+  min-width: auto !important;
+  width: auto !important;display: inline-block;
+}
+.filter-form .btn-outline{
+  color:#fff
+}
+
+a.post_image.post_image_smaller.post_video:after {
+    content: 'click to play video';
+}
+
+.tolowercase{
+  text-transform: none;
 }

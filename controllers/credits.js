@@ -250,6 +250,47 @@ const __addNewCredit_points = function(
   });
 };
 
+exports.getMoneyForUnameChange = function(req, res, next) {
+  const cost = 2.99;
+  if (req.body.change_username_token == 'pending_token') {
+    next();
+    return;
+  }
+
+  if (req.body.change_username_token == 'USE_OCG') {
+    if (req.user.cash_balance < cost) {
+      return res
+        .status(200)
+        .send({ok: false, msg: 'You do not have sufficient OCG cash'});
+    }
+    utils.takeCashFromUser(
+      req.user.id,
+      cost,
+      'Debit for changing username',
+      ''
+    );
+    next();
+    return;
+  }
+  // use token to de
+
+  stripe.charges.create(
+    {
+      amount: cost * 100,
+      currency: 'usd',
+      source: req.body.change_username_token,
+      description: 'Charge for Changing username by User Id #' + req.user.id
+    },
+    function(err, charge) {
+      if (err) {
+        // console.log(err);
+        return res.status(200).send({ok: false, msg: 'Failed to charge card'});
+      }
+      next();
+    }
+  );
+};
+
 exports.deduct_money = function(req, res, next) {
   const points_to_add = req.body.points_to_add;
   const init_transaction_mode = req.body.init_transaction_mode;
@@ -271,11 +312,11 @@ exports.deduct_money = function(req, res, next) {
         amount: cost * 100,
         currency: 'usd',
         source: req.body.stripe_token,
-        description: 'Charge for adding' + msg
+        description: 'Charge for adding' + msg + ' by user Id #' + req.user.id
       },
       function(err, charge) {
         if (err) {
-          console.log(err);
+          // console.log(err);
           return res
             .status(400)
             .send({ok: false, msg: 'Failed to charge card'});
@@ -832,7 +873,7 @@ exports.buyMembership = function(req, res, next) {
       },
       function(err, subscription) {
         if (err) {
-          console.log(err);
+          // console.log(err);
           return res.status(200).send({
             ok: false,
             msg: 'Failed to start subscription. Please contact site admin'

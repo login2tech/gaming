@@ -8,6 +8,8 @@ import moment from 'moment';
 import axios from 'axios';
 import MyBankModule from './Modules/MyBankModule';
 import MyMembershipModule2 from './Modules/MyMembershipModule2';
+import {openModal, closeModal} from '../../actions/modals';
+import PaymentModal from '../Modules/Modals/PaymentModal';
 
 import {accountPic} from '../../actions/auth';
 import {
@@ -87,6 +89,39 @@ class Profile extends React.Component {
     this.props.dispatch(logout());
   };
 
+  askForUnamePayment() {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'payment',
+        zIndex: 534,
+        heading: 'Change username',
+        content: (
+          <PaymentModal
+            msg={'You need to pay a small amount to change your username once.'}
+            amount={2.99}
+            // refresh={props.refresh}
+            onGetToken={token => {
+              this.onGetToken(token);
+            }}
+          />
+        )
+      })
+    );
+  }
+  onGetToken(token) {
+    this.props.dispatch(
+      closeModal({
+        id: 'payment'
+      })
+    );
+    this.setState({
+      change_username_token: token == 'USE_OCG' ? 'USE_OCG' : token.id,
+      changing_username: true,
+      new_username: this.props.user.username
+    });
+  }
+
   changeUname(event, cb) {
     if (this.state.saving_new_name) {
       return false;
@@ -98,7 +133,8 @@ class Profile extends React.Component {
     this.props.dispatch(
       changeUname(
         {
-          new_username: this.state.new_username
+          new_username: this.state.new_username,
+          change_username_token: this.state.change_username_token
         },
         rep => {
           if (!rep) {
@@ -866,8 +902,11 @@ class Profile extends React.Component {
                             if (this.props.user.pndng_uname_changes > 0) {
                               this.setState({
                                 changing_username: true,
+                                change_username_token: 'pending_token',
                                 new_username: this.props.user.username
                               });
+                            } else {
+                              this.askForUnamePayment();
                             }
                           }}
                           className=" fa fa-edit btn change_uname"

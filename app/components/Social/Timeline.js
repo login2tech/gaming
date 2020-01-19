@@ -119,7 +119,9 @@ class Timeline extends React.Component {
         </Link>
         <span className="text-date">
           <span className="float-right">
-            {moment(post.created_at).format('lll')}{' '}
+            <Link to={'/post/' + post.id}>
+              {moment(post.created_at).format('lll')}{' '}
+            </Link>
             {this.props.show_option_to_pin && (
               <button
                 onClick={() => {
@@ -185,14 +187,33 @@ class Timeline extends React.Component {
           false
         )}
         {post.video_url ? (
-          <div
-            className="embed-responsive embed-responsive-21by9"
-            style={{marginBottom: '10px'}}
-          >
-            <video controls>
-              <source src={post.video_url} type="video/mp4" />
-            </video>
-          </div>
+          this.props.is_single ? (
+            <div
+              className="embed-responsive embed-responsive-21by9"
+              style={{marginBottom: '10px'}}
+            >
+              <video controls>
+                <source src={post.video_url} type="video/mp4" />
+              </video>
+            </div>
+          ) : (
+            <Link
+              to={'/post/' + post.id}
+              className={
+                'post_image post_video' +
+                (this.props.is_single ? '' : ' post_image_smaller')
+              }
+            >
+              <div
+                className="embed-responsive embed-responsive-21by9"
+                style={{marginBottom: '10px'}}
+              >
+                <video controls>
+                  <source src={post.video_url} type="video/mp4" />
+                </video>
+              </div>
+            </Link>
+          )
         ) : (
           false
         )}

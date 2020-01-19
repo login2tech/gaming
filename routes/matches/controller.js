@@ -1492,8 +1492,7 @@ exports.leave_match = function(req, res, next) {
             .status(200)
             .send({ok: true, msg: 'Match cancellation requested'});
         }
-      }
-      if (match.get('status') == 'pending') {
+      } else if (match.get('status') == 'pending') {
         return match
           .save({
             status: 'cancelled'
@@ -1504,6 +1503,22 @@ exports.leave_match = function(req, res, next) {
               msg2 = ' You will get refunds shorty.';
             }
             res.status(200).send({ok: true, msg: 'Match cancelled.' + msg2});
+          })
+          .catch(function(err) {
+            res
+              .status(400)
+              .send({ok: false, msg: 'Match cancellation Failed.'});
+          });
+      } else {
+        return match
+          .save({
+            cancel_requested: true,
+            cancel_requested_by: req.body.team
+          })
+          .then(function(m) {
+            res
+              .status(200)
+              .send({ok: true, msg: 'Match cancellation requested'});
           })
           .catch(function(err) {
             res

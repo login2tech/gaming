@@ -15,11 +15,13 @@ class Profile extends React.Component {
         xp_obj: [],
         score: []
       },
+      filter: 'all',
       renderTab: 'profile',
       match_played: [],
       new_post_type: 'text',
       new_post_image: '',
       new_post_video: '',
+      posts: [],
       posts_page: 1
     };
   }
@@ -57,8 +59,22 @@ class Profile extends React.Component {
         }
       });
   }
-
-  fetchPosts() {
+  fetchPostsAgain(newfilter) {
+    if (this.state.filter == newfilter) {
+      return;
+    }
+    this.setState(
+      {
+        refreshing: true,
+        posts_page: 1,
+        filter: newfilter
+      },
+      () => {
+        this.fetchPosts(true);
+      }
+    );
+  }
+  fetchPosts(refresh) {
     // console.log(this.props.user);
     if (!this.props.user) {
       return;
@@ -66,8 +82,15 @@ class Profile extends React.Component {
     this.setState({
       new_posting: true
     });
+    let fltr = 'a=b&';
+    if (this.state.filter && this.state.filter != 'all') {
+      fltr = 'filter=' + this.state.filter + '&';
+    }
+
     fetch(
-      '/api/posts/list/my?uid=' +
+      '/api/posts/list/my?' +
+        fltr +
+        'uid=' +
         this.state.user_info.id +
         '&page=' +
         this.state.posts_page
@@ -75,9 +98,12 @@ class Profile extends React.Component {
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
+          const items = refresh
+            ? json.items
+            : this.state.posts.concat(json.items);
           this.setState(
             {
-              posts: json.items,
+              posts: items,
               new_posting: false
             },
             () => {
@@ -163,6 +189,56 @@ class Profile extends React.Component {
                           You need to be logged in to see the posts
                         </div>
                       )}
+                      <div className="filter-form mt-3">
+                        <button
+                          onClick={() => {
+                            this.fetchPostsAgain('all');
+                          }}
+                          className={
+                            (this.state.filter == 'all'
+                              ? 'btn-primary '
+                              : 'btn-outline ') + 'btn mr-1'
+                          }
+                        >
+                          All
+                        </button>
+                        <button
+                          onClick={() => {
+                            this.fetchPostsAgain('videos');
+                          }}
+                          className={
+                            (this.state.filter == 'videos'
+                              ? 'btn-primary '
+                              : 'btn-outline ') + 'btn mr-1 '
+                          }
+                        >
+                          <span className="fa fa-video" /> Videos
+                        </button>
+                        <button
+                          onClick={() => {
+                            this.fetchPostsAgain('images');
+                          }}
+                          className={
+                            (this.state.filter == 'images'
+                              ? 'btn-primary '
+                              : 'btn-outline ') + 'btn mr-1 '
+                          }
+                        >
+                          <span className="fa fa-image" /> Images
+                        </button>
+                        <button
+                          onClick={() => {
+                            this.fetchPostsAgain('media');
+                          }}
+                          className={
+                            (this.state.filter == 'media'
+                              ? 'btn-primary '
+                              : 'btn-outline ') + 'btn mr-1'
+                          }
+                        >
+                          <span className=" fa fa-images" /> All Media
+                        </button>
+                      </div>
                       {this.props.user &&
                         this.state.posts &&
                         this.state.posts.map((post, i) => {

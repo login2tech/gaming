@@ -1032,7 +1032,7 @@ exports.resetScore = function(req, res, next) {
 };
 
 exports.checkIfExists = function(req, res, next) {
-  const new_username = req.body.new_uname.new_username.toLowerCase();
+  const new_username = req.body.new_username.toLowerCase();
   new User()
     .where({
       username: new_username
@@ -1063,7 +1063,7 @@ exports.checkIfExists = function(req, res, next) {
 };
 exports.changeUname = function(req, res, next) {
   const user = new User({id: req.user.id});
-  const new_username = req.body.new_uname.new_username.toLowerCase();
+  const new_username = req.body.new_username.toLowerCase();
   user
     .save(
       {

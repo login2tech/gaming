@@ -230,16 +230,14 @@ export function updateProfile(data, token) {
   };
 }
 
-export function changeUname(uname, cb) {
+export function changeUname(data, cb) {
   return dispatch => {
     dispatch({type: 'CLR_MSG'});
 
     return fetch('/api/changeUname', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        new_uname: uname
-      })
+      body: JSON.stringify(data)
     }).then(response => {
       if (response.ok) {
         return response.json().then(json => {
