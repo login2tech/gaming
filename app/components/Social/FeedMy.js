@@ -75,11 +75,12 @@ class FeedMy extends React.Component {
     return (
       <div>
         <section className="page_title_bar noblend less_padding" id="is_top">
-          <div className="container">
+          <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>Social Feed - My following</h3>
+                  <h4>Social Feed</h4>
+                  <h3>My following</h3>
                 </div>
               </div>
             </div>

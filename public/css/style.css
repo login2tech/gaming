@@ -5486,6 +5486,10 @@ ul.notices li:first-child {
     margin-right: 8px;
 }
 
+.container-fluid.half {
+    width: 80%;
+}
+
 @media (min-width: 993px) {
     .fl-3 {
         flex:3

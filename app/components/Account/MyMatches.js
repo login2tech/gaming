@@ -135,8 +135,8 @@ class MyMatches extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar">
-          <div className="container">
+        <section className="page_title_bar noblend">
+          <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">

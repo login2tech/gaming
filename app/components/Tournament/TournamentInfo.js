@@ -941,8 +941,8 @@ class TournamentInfo extends React.Component {
                 <table className="table table-striped table-ongray table-hover">
                   <thead>
                     <tr>
-                      <th>Username</th>
-                      <th>Role</th>
+                      <th syle={{width: '50%'}}>Username</th>
+                      <th syle={{width: '50%'}}>Role</th>
                     </tr>
                   </thead>
                   <tbody>

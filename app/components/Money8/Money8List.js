@@ -50,7 +50,7 @@ class Money8List extends React.Component {
     return (
       <div>
         <section className="page_title_bar">
-          <div className="container">
+          <div className="container-fluid half">
             <div className="row">
               <div className="col">
                 <div className="all_t_heading">
