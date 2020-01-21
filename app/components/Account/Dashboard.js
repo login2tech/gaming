@@ -10,7 +10,7 @@ import MyBankModule from './Modules/MyBankModule';
 import MyMembershipModule2 from './Modules/MyMembershipModule2';
 import {openModal, closeModal} from '../../actions/modals';
 import PaymentModal from '../Modules/Modals/PaymentModal';
-
+import states from '../Modules/states';
 import {accountPic} from '../../actions/auth';
 import {
   updateProfile,
@@ -31,6 +31,7 @@ class Profile extends React.Component {
       gender: props.user.gender ? props.user.gender : '',
       dob: props.user.dob ? props.user.dob : '',
       add_new_bal_number: '',
+      state: props.user.state ? props.user.state : '',
       password: '',
       new_username: '',
       confirm: '',
@@ -156,6 +157,7 @@ class Profile extends React.Component {
           last_name: this.state.last_name,
           gender: this.state.gender,
           dob: this.state.dob,
+          state: this.state.state,
           gamer_tag_1: this.state.gamer_tag_1,
           timezone: this.state.timezone,
           gamer_tag_2: this.state.gamer_tag_2,
@@ -407,7 +409,27 @@ class Profile extends React.Component {
                   onChange={this.handleChange.bind(this)}
                 />
               </div>
-
+              <div className="form-group">
+                <label htmlFor="state">State</label>
+                <select
+                  required
+                  className="form-control"
+                  placeholder="State"
+                  id="state"
+                  name="state"
+                  value={this.state.state}
+                  onChange={this.handleChange.bind(this)}
+                >
+                  <option value="">Check State</option>
+                  {states.map((state, i) => {
+                    return (
+                      <option value={state} key={state}>
+                        {state}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
               <div className="form-group ">
                 <label>Gender</label>
                 <div className="row" style={{height: '53px'}}>

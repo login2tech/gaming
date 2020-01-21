@@ -97,11 +97,11 @@ class MoreInfo extends React.Component {
                   <td>{data.status}</td>
                 </tr>
                 <tr>
-                  <td>Credit_balance</td>
+                  <td>Credit Balance</td>
                   <td>{data.credit_balance}</td>
                 </tr>
                 <tr>
-                  <td>Cash_balance</td>
+                  <td>Cash Balance</td>
                   <td>{data.cash_balance}</td>
                 </tr>
                 <tr>
@@ -123,11 +123,11 @@ class MoreInfo extends React.Component {
                 </tr>
 
                 <tr>
-                  <td>Dob</td>
+                  <td>Date Of Birth</td>
                   <td>{data.dob}</td>
                 </tr>
                 <tr>
-                  <td>Double_xp</td>
+                  <td>Double XP</td>
                   <td>{data.double_xp}</td>
                 </tr>
                 <tr>
@@ -135,7 +135,19 @@ class MoreInfo extends React.Component {
                   <td>{data.prime}</td>
                 </tr>
                 <tr>
-                  <td>Xp_rank</td>
+                  <td>Prime Type</td>
+                  <td>{data.prime_type}</td>
+                </tr>
+                <tr>
+                  <td>State</td>
+                  <td>{data.state}</td>
+                </tr>
+                <tr>
+                  <td>I.P.</td>
+                  <td>{data.ip}</td>
+                </tr>
+                <tr>
+                  <td>XP Rank</td>
                   <td>{data.xp_rank}</td>
                 </tr>
                 <tr>
@@ -166,6 +178,10 @@ class MoreInfo extends React.Component {
                 <tr>
                   <td>Gamer_tag_6</td>
                   <td>{data.gamer_tag_6}</td>
+                </tr>
+                <tr>
+                  <td>Double XP Tokens</td>
+                  <td>{data.double_xp_tokens}</td>
                 </tr>
                 <tr>
                   <td>Banned ? </td>

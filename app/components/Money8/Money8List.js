@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
 import game_user_ids from '../../../config/game_user_ids';
+import {leave_match} from '../../actions/match8';
 
 // import Messages from '../Modules/Messages';
 
@@ -21,6 +22,18 @@ class Money8List extends React.Component {
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
+
+  initCancel(match) {
+    this.props.dispatch(
+      leave_match(
+        {
+          match_id: match.id
+        },
+        this.props.user
+      )
+    );
+  }
+
   componentDidMount() {
     fetch('/api/money8/upcoming')
       .then(res => res.json())
@@ -49,7 +62,7 @@ class Money8List extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar">
+        <section className="page_title_bar noblend">
           <div className="container-fluid half">
             <div className="row">
               <div className="col">
@@ -97,6 +110,22 @@ class Money8List extends React.Component {
                       className="tournament-list active"
                     >
                       {this.state.matches.map((match, id) => {
+                        let btn_lbl = 'Join Pool';
+                        let show_cancel = false;
+                        if (match.players_joined >= match.players_total) {
+                          // return false;
+                        } else {
+                          const me = this.props.user.id;
+                          const users = JSON.parse(match.players);
+                          for (let i = 0; i < users.length; i++) {
+                            // console.log(users[i] , me)
+                            if (users[i] == me) {
+                              show_cancel = true;
+                              btn_lbl = 'View Pool';
+                              break;
+                            }
+                          }
+                        }
                         return (
                           <li
                             key={match.id}
@@ -175,15 +204,58 @@ class Money8List extends React.Component {
                                 </div>
                               </div>
 
-                              <div className="col align-right">
+                              <div
+                                className="col align-right"
+                                style={{
+                                  flexDirection: 'column',
+                                  alignItems: 'flex-end'
+                                }}
+                              >
                                 <Link
                                   to={this.matchLink(
                                     '/mix-and-match/' + match.id
                                   )}
                                   className="btn-default"
                                 >
-                                  Join Pool
+                                  {btn_lbl}
                                 </Link>
+                                {show_cancel ? (
+                                  this.state.show_cancel_init ? (
+                                    <div>
+                                      <button
+                                        onClick={() => {
+                                          this.initCancel(match);
+                                        }}
+                                        className="btn-danger btn cnclMt width-auto"
+                                      >
+                                        SURE?
+                                      </button>
+                                      <button
+                                        onClick={() => {
+                                          this.setState({
+                                            show_cancel_init: false
+                                          });
+                                        }}
+                                        className="btn-danger btn cnclMt width-auto"
+                                      >
+                                        x
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <button
+                                      onClick={() => {
+                                        this.setState({
+                                          show_cancel_init: true
+                                        });
+                                      }}
+                                      className="btn-danger btn cnclMt"
+                                    >
+                                      Cancel Match
+                                    </button>
+                                  )
+                                ) : (
+                                  false
+                                )}
                               </div>
                             </div>
                           </li>

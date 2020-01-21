@@ -29,6 +29,21 @@ class MyTeamsModule extends React.Component {
       });
   }
 
+  generateTooltip(team) {
+    let str = '';
+    if (team.team_type === 'tournaments') {
+      str += "<span class='fa fa-trophy'></span> ";
+    }
+    str +=
+      team.team_type +
+      ' team' +
+      '<br />' +
+      team.ladder.game_info.title +
+      ' - ' +
+      team.ladder.title;
+    return str;
+  }
+
   render() {
     return (
       <ul className="team_list">
@@ -55,7 +70,7 @@ class MyTeamsModule extends React.Component {
                 href={
                   '/u/' + this.props.user_info.username + '/teams/' + team.id
                 }
-                title={team.team_type + ' team'}
+                title={this.generateTooltip(team)}
                 data-toggle="tooltip"
                 // onClick={event => {
                 //   $(event.target).tooltip('hide');

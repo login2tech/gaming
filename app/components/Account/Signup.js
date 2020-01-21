@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {signup} from '../../actions/auth';
 // import {facebookLogin} from '../../actions/oauth';
 import Messages from '../Modules/Messages';
-
+import states from '../Modules/states';
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -17,6 +17,7 @@ class Signup extends React.Component {
       day: '',
       month: '',
       year: '',
+      state: '',
       password: '',
       password_confirm: ''
     };
@@ -86,6 +87,7 @@ class Signup extends React.Component {
             this.state.year,
           email: this.state.email,
           password: this.state.password,
+          state: this.state.state,
           password_confirm: this.state.password_confirm
         },
         () => {
@@ -97,6 +99,7 @@ class Signup extends React.Component {
             email: '',
             day: '',
             month: '',
+            state: '',
             year: '',
             password: '',
             password_confirm: ''
@@ -203,6 +206,28 @@ class Signup extends React.Component {
                           onChange={this.handleChange.bind(this)}
                         />
                       </div>
+
+                      <div className="form-group col-md-12">
+                        <select
+                          required
+                          className="form-control"
+                          placeholder="State"
+                          id="state"
+                          name="state"
+                          value={this.state.state}
+                          onChange={this.handleChange.bind(this)}
+                        >
+                          <option value="">Check State</option>
+                          {states.map((state, i) => {
+                            return (
+                              <option value={state} key={state}>
+                                {state}
+                              </option>
+                            );
+                          })}
+                        </select>
+                      </div>
+
                       <div className="container">
                         <div className="row dobrow">
                           <div className="col-sm-4">

@@ -477,7 +477,7 @@ class Header extends React.Component {
                 aria-label="Toggle navigation"
                 // className="dropdown-toggle"
               >
-                Menu <span className="navbar-toggler-icon fa fa-bars" />
+                Menu <span className="navbar-toggler-icon fa fa-bars mr-2" />
                 {this.state.notifications && this.state.notifications.length ? (
                   <>
                     <span className="notif_count fa fa-bell" />

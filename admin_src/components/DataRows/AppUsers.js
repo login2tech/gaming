@@ -77,7 +77,7 @@ class AppUsers extends React.Component {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
             const msg = 'Failed to perform Action';
             this.props.dispatch({
               type: 'FAILURE',

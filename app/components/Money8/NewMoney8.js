@@ -33,7 +33,7 @@ class NewMoney8 extends React.Component {
   }
 
   renderGameSettings() {
-    console.log(this.state);
+    // console.log(this.state);
     if (!this.state.ladder) {
       return false;
     }
@@ -134,6 +134,10 @@ class NewMoney8 extends React.Component {
 
   handleCreation(event) {
     let p = this.state.ladder;
+    if (this.state.creating) {
+      return false;
+    }
+
     // const ladder = false;
     let game_id;
     let ladder_id;
@@ -144,6 +148,9 @@ class NewMoney8 extends React.Component {
     }
 
     event.preventDefault();
+    this.setState({
+      creating: true
+    });
     this.props.dispatch(
       createMatch8(
         {
@@ -194,6 +201,7 @@ class NewMoney8 extends React.Component {
 
     return true;
   }
+
   render() {
     let p = this.state.ladder;
     let ladder = false;
@@ -363,6 +371,7 @@ class NewMoney8 extends React.Component {
                     <div className="form-group col-md-12 text-center">
                       <button
                         disabled={
+                          this.state.creating ||
                           !this.amIEligible(this.state.players[0], ladder)
                         }
                         className="btn btn-default bttn_submit"

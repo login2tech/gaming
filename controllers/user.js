@@ -175,6 +175,8 @@ exports.signupPost = function(req, res, next) {
     gender: req.body.gender,
     dob: req.body.dob,
     role: 'user',
+    ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+    state: req.body.state ? req.body.state : '',
     status: true,
     email_verified: true
   })
@@ -253,23 +255,31 @@ exports.accountPut = function(req, res, next) {
         });
     });
   } else {
-    user.save(
-      {
-        // email: req.body.email,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        gender: req.body.gender,
-        dob: req.body.dob,
-        gamer_tag_2: req.body.gamer_tag_2,
-        gamer_tag_3: req.body.gamer_tag_3,
-        gamer_tag_1: req.body.gamer_tag_1,
-        gamer_tag_4: req.body.gamer_tag_4,
-        gamer_tag_5: req.body.gamer_tag_5,
-        gamer_tag_6: req.body.gamer_tag_6,
-        timezone: req.body.timezone
-      },
-      {patch: true, method: 'update'}
-    );
+    user
+      .save(
+        {
+          // email: req.body.email,
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          gender: req.body.gender,
+          dob: req.body.dob,
+          gamer_tag_2: req.body.gamer_tag_2,
+          gamer_tag_3: req.body.gamer_tag_3,
+          gamer_tag_1: req.body.gamer_tag_1,
+          gamer_tag_4: req.body.gamer_tag_4,
+          gamer_tag_5: req.body.gamer_tag_5,
+          state: req.body.state ? req.body.state : '',
+          gamer_tag_6: req.body.gamer_tag_6,
+          timezone: req.body.timezone
+        },
+        {patch: true, method: 'update'}
+      )
+      .then(function() {
+        //
+      })
+      .catch(function(err) {
+        // console.log(err);
+      });
   }
   setTimeout(function() {
     user
