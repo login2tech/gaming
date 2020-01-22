@@ -200,6 +200,7 @@ class EditLadder extends React.Component {
                   <option value="Xbox One">Xbox One</option>
                   <option value="Playstation">Playstation</option>
                   <option value="PC">PC</option>
+                  <option value="Crossplatform">Crossplatform</option>
                 </select>
               </div>
               <br />

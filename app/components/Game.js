@@ -147,15 +147,7 @@ class Game extends React.Component {
           let k = false;
           for (let i = 0; i < items.length; i++) {
             const item = items[i];
-            // if (!leaderboards['l_' + item.ladder_id]) {
-            //   leaderboards['l_' + item.ladder_id] = {
-            //     ladder: item.ladder
-            //   };
-            //   if (!k) {
-            //     k = 'l_' + item.ladder_id;
-            //   }
-            //   // ladders.push(item.ladder);
-            // }
+
             if (!leaderboards['u_' + item.team_id]) {
               item.team.gravatar = '';
               leaderboards['u_' + item.team_id] = {
@@ -180,54 +172,6 @@ class Game extends React.Component {
         }
       });
   }
-
-  //   fetch('/api/games/leaderboards?1' + str)
-  //     .then(res => res.json())
-  //     .then(json => {
-  //       if (json.ok) {
-  //         const items = json.items;
-  //         const leaderboards = {};
-  //         // const ladders = [];
-  //         let k = false;
-  //         for (let i = 0; i < items.length; i++) {
-  //           const item = items[i];
-  //           if (!leaderboards['l_' + item.ladder_id]) {
-  //             leaderboards['l_' + item.ladder_id] = {
-  //               ladder: item.ladder
-  //             };
-  //             if (!k) {
-  //               k = 'l_' + item.ladder_id;
-  //             }
-  //             // ladders.push(item.ladder);
-  //           }
-  //           if (!leaderboards['l_' + item.ladder_id]['u_' + item.team_id]) {
-  //             item.team.gravatar = '';
-  //             leaderboards['l_' + item.ladder_id]['u_' + item.team_id] = {
-  //               team: item.team,
-  //               wins: 0,
-  //               loss: 0
-  //             };
-  //           }
-  //           leaderboards['l_' + item.ladder_id][
-  //             'u_' + item.team_id
-  //           ].wins += item.wins ? item.wins : 0;
-  //           leaderboards['l_' + item.ladder_id][
-  //             'u_' + item.team_id
-  //           ].loss += item.loss ? item.loss : 0;
-  //         }
-  //         k = 'l_' + this.state.selected_ladder;
-  //         this.setState(
-  //           {
-  //             is_loaded_4: true,
-  //             loading_3: false,
-  //             leaderboards: leaderboards,
-  //             active_leaderboard: k
-  //           },
-  //           () => {}
-  //         );
-  //       }
-  //     });
-  // }
 
   reloadChats() {
     let str = 'game_id=' + this.props.params.id;
@@ -388,12 +332,25 @@ class Game extends React.Component {
         }
       }
     }
-    // platforms.filter(function(item, pos) {
-    //   return unique_platforms.indexOf(item) < 0;
-    // });
-    // console.log(unique_platforms);
-    // alert(unique_platforms)
     return unique_platforms;
+  }
+
+  getPlatformIcon(name) {
+    if (!name) {
+      return;
+    }
+    name = name.toLowerCase();
+    if (name.indexOf('xbox') > -1 || name.indexOf('x box') > -1) {
+      return <span className="fab fa-xbox" />;
+    }
+    if (name.indexOf('playstation') > -1) {
+      return <span className="fab fa-playstation" />;
+    } else if (name.indexOf('pc') > -1) {
+      return <span className="fa fa-desktop" />;
+    } else if (name.indexOf('crossplatform') > -1) {
+      return <span className="fa fa-cubes" />;
+    }
+    return false;
   }
 
   filterMatches(item) {
@@ -436,80 +393,94 @@ class Game extends React.Component {
                 <div className="section-headline white-headline text-right">
                   <h3>{this.props.params.title}</h3>
                 </div>
-                <div className="list_pad">
-                  <Link
-                    to={'/match/new/g/' + this.props.params.id}
-                    className="fl-right ml-1 btn btn-default bttn_submit dib mw_200"
-                  >
-                    Create Match
-                  </Link>{' '}
-                  <Link
-                    to={
-                      this.props.user
-                        ? '/u/' +
-                          this.props.user.username +
-                          '/teams/new/g/' +
-                          this.props.params.id
-                        : '/login'
-                    }
-                    className="fl-right ml-1 btn btn-default bttn_submit dib mw_200"
-                  >
-                    Create Team
-                  </Link>
-                  <div className="dropdown fl-right">
-                    <button
-                      className="btn btn-default bttn_submit dib mw_200 dropdown-toggle"
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
+                <div
+                  className="list_pad"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    flexDirection: 'column'
+                  }}
+                >
+                  <div>
+                    <Link
+                      to={'/match/new/g/' + this.props.params.id}
+                      className="fl-right ml-2 btn btn-default bttn_submit dib mw_200"
                     >
-                      {this.state.selected_ladder_name
-                        ? this.state.selected_ladder_name
-                        : 'Filter by ladder'}
-                    </button>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"
+                      Create Match
+                    </Link>{' '}
+                    <Link
+                      to={
+                        this.props.user
+                          ? '/u/' +
+                            this.props.user.username +
+                            '/teams/new/g/' +
+                            this.props.params.id
+                          : '/login'
+                      }
+                      className="fl-right ml-2 btn btn-default bttn_submit dib mw_200"
                     >
-                      {this.state.selected_ladder_name ? (
-                        <a
-                          className={'dropdown-item'}
-                          href="#"
-                          onClick={e => {
-                            e.preventDefault();
-                            this.filterMatches('none');
-                          }}
-                        >
-                          All Ladders
-                        </a>
-                      ) : (
-                        false
-                      )}
-                      <br />
-                      {this.getLadders().map((item, i) => {
-                        return (
+                      Create Team
+                    </Link>
+                  </div>
+                  <div>
+                    <div className="dropdown fl-right">
+                      <button
+                        className="btn btn-default bttn_submit dib mw_200 dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        {this.state.selected_ladder_name
+                          ? this.state.selected_ladder_name
+                          : 'Filter by ladder'}
+                      </button>
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
+                        {this.state.selected_ladder_name ? (
                           <a
-                            className={
-                              'dropdown-item' +
-                              (item.is_platform ? ' disabled' : '') +
-                              (item.is_ladder ? ' is_ladder_item' : '')
-                            }
+                            className={'dropdown-item'}
                             href="#"
                             onClick={e => {
                               e.preventDefault();
-                              if (item.is_ladder) {
-                                this.filterMatches(item);
-                              }
+                              this.filterMatches('none');
                             }}
-                            key={item.id}
-                            disabled={item.is_platform}
                           >
-                            {item.name}
+                            All Ladders
                           </a>
-                        );
-                      })}
+                        ) : (
+                          false
+                        )}
+                        <br />
+                        {this.getLadders().map((item, i) => {
+                          return (
+                            <a
+                              className={
+                                'dropdown-item' +
+                                (item.is_platform ? ' disabled' : '') +
+                                (item.is_ladder ? ' is_ladder_item' : '')
+                              }
+                              href="#"
+                              onClick={e => {
+                                e.preventDefault();
+                                if (item.is_ladder) {
+                                  this.filterMatches(item);
+                                }
+                              }}
+                              key={item.id}
+                              disabled={item.is_platform}
+                            >
+                              {item.name}{' '}
+                              {item.is_platform
+                                ? this.getPlatformIcon(item.name)
+                                : false}
+                            </a>
+                          );
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
