@@ -53,6 +53,9 @@ class ProfileHeader extends React.Component {
     if (xp < 500) {
       return 'upcoming';
     }
+    if (xp < 750) {
+      return 'advanced';
+    }
     if (xp < 1000) {
       return 'bronze';
     }
@@ -71,83 +74,12 @@ class ProfileHeader extends React.Component {
     if (xp < 4000) {
       return 'elite';
     }
-    return 'elite';
+    return 'veteran';
   }
 
   rank_based_on_xp(xpo) {
     const xp = this.getXp(xpo);
     return xp + ' season XP';
-    // if (xp < 50) {
-    //   return (
-    //     <>
-    //       Amateur <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 200) {
-    //   return (
-    //     <>
-    //       Beginner <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 500) {
-    //   return (
-    //     <>
-    //       Upcoming <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 1000) {
-    //   return (
-    //     <>
-    //       Bronze <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 1500) {
-    //   return (
-    //     <>
-    //       Silver <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 2000) {
-    //   return (
-    //     <>
-    //       Gold <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 3000) {
-    //   return (
-    //     <>
-    //       Platinum <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 3500) {
-    //   return (
-    //     <>
-    //       Diamond <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    // if (xp < 4000) {
-    //   return (
-    //     <>
-    //       Elite <span className="t-bl">({xp} season XP)</span>
-    //     </>
-    //   );
-    // }
-    //
-    // // if (xp >  5000) {
-    // return (
-    //   <>
-    //     Elite <span className="t-bl">({xp} season XP)</span>
-    //   </>
-    // );
-    // }
   }
 
   rank_min_based_on_xp(xpo) {
@@ -171,8 +103,11 @@ class ProfileHeader extends React.Component {
     if (xp < 500) {
       return '200';
     }
-    if (xp < 1000) {
+    if (xp < 750) {
       return '500';
+    }
+    if (xp < 1000) {
+      return '750';
     }
     if (xp < 1500) {
       return '1000';
@@ -206,38 +141,42 @@ class ProfileHeader extends React.Component {
         xp = xpo[i].xp;
       }
     }
-    if (xp < 0) {
+    if (xp <= 0) {
       xp = 0;
     }
-    if (xp < 50) {
+    if (xp <= 50) {
       return '50';
     }
-    if (xp < 200) {
+    if (xp <= 200) {
       return '200';
     }
-    if (xp < 500) {
+    if (xp <= 500) {
       return '500';
     }
-    if (xp < 1000) {
+
+    if (xp <= 750) {
+      return '750';
+    }
+    if (xp <= 1000) {
       return '1000';
     }
-    if (xp < 1500) {
+    if (xp <= 1500) {
       return '1500';
     }
-    if (xp < 2000) {
+    if (xp <= 2000) {
       return '2000';
     }
-    if (xp < 3000) {
+    if (xp <= 3000) {
       return '3000';
     }
-    if (xp < 3500) {
+    if (xp <= 3500) {
       return '3500';
     }
-    if (xp < 4000) {
+    if (xp <= 4000) {
       return '4000';
     }
     // if (xp >  5000) {
-    return '5000';
+    return '999999';
     // }
   }
 
@@ -262,8 +201,11 @@ class ProfileHeader extends React.Component {
     if (xp < 500) {
       return ((xp - 200) / 300) * 100;
     }
+    if (xp < 750) {
+      return ((xp - 500) / 250) * 100;
+    }
     if (xp < 1000) {
-      return ((xp - 500) / 500) * 100;
+      return ((xp - 750) / 250) * 100;
     }
     if (xp < 1500) {
       return ((xp - 1000) / 500) * 100;

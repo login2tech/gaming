@@ -28,6 +28,9 @@ class Leaderboards extends React.Component {
     if (xp < 500) {
       return 'upcoming';
     }
+    if (xp < 750) {
+      return 'advanced';
+    }
     if (xp < 1000) {
       return 'bronze';
     }

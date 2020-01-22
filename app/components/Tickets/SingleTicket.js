@@ -320,7 +320,16 @@ class SingleTicket extends React.Component {
                         this.state.ticket.attachment
                       )}
                       <hr />
-                      <h3>Other Details:</h3>
+                      {this.state.ticket.extra_1 ||
+                      this.state.ticket.extra_2 ||
+                      this.state.ticket.extra_3 ||
+                      this.state.ticket.url_1 ||
+                      this.state.ticket.url_2 ||
+                      this.state.ticket.url_3 ? (
+                        <h3>Other Details:</h3>
+                      ) : (
+                        false
+                      )}
 
                       {this.state.ticket.extra_1 ? (
                         <p>
