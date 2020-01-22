@@ -18,6 +18,8 @@ const Match = require('./routes/matches/Match');
 const Money8 = require('./routes/money8/Money8Match');
 const User = require('./models/User');
 const Tournament = require('./routes/tournaments/Tournament');
+const matchesController = require('./routes/matches/controller');
+const money8Controller = require('./routes/money8/controller');
 const Notif = require('./models/Notification');
 
 let TICKER = 0;
@@ -194,6 +196,116 @@ const updateUserRank = function(uid, rank) {
       Raven.captureException(err);
     });
 };
+const unresponsive_match = function(m_id, match) {
+  if (match.team_1_result || match.team_2_result) {
+    // console.log('// 1 ne diya score.. usko jitao');
+    if (match.team_1_result) {
+      // console.log('here');
+      matchesController.resolveDispute(null, null, null, m_id, 'team_1', true);
+    } else if (match.team_2_result) {
+      matchesController.resolveDispute(null, null, null, m_id, 'team_2', true);
+    }
+  } else {
+    new Match()
+      .where({id: m_id})
+      .save(
+        {
+          status: 'disputed',
+          result: 'disputed'
+        },
+        {method: 'update'}
+      )
+      .then(function() {
+        //
+      })
+      .catch(function(err) {
+        console.log(err);
+        Raven.captureException(err);
+      });
+  }
+};
+const unresponsive_match_money8 = function(m_id, match) {
+  if (match.team_1_result || match.team_2_result) {
+    // console.log('// 1 ne diya score.. usko jitao');
+    if (match.team_1_result) {
+      // console.log('here');
+      money8Controller.resolveDispute(null, null, null, m_id, 'team_1', true);
+    } else if (match.team_2_result) {
+      money8Controller.resolveDispute(null, null, null, m_id, 'team_2', true);
+    }
+  } else {
+    new Money8()
+      .where({id: m_id})
+      .save(
+        {
+          status: 'disputed',
+          result: 'disputed'
+        },
+        {method: 'update'}
+      )
+      .then(function() {
+        //
+      })
+      .catch(function(err) {
+        console.log(err);
+        Raven.captureException(err);
+      });
+  }
+};
+
+const process_7 = function() {
+  reset_ticker();
+  new Money8()
+    .where('status', 'LIKE', 'started')
+    .where('expires_in', '<', moment().subtract(3, 'hours'))
+    .fetchAll()
+    .then(function(matches) {
+      if (!matches) {
+        return;
+      }
+      matches = matches.toJSON();
+      console.log(matches);
+      for (let i = 0; i < matches.length; i++) {
+        // unresponsive_match_money8(matches[i].id, matches[i]);
+      }
+      reset_ticker();
+      // setTimeout(process_7, 4000);
+      //
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      // return res.status(400).send({ok: false, items: []});
+      reset_ticker();
+      // setTimeout(process_7, 4000);
+    });
+};
+
+const process_6 = function() {
+  reset_ticker();
+  new Match()
+    .where('status', 'LIKE', 'accepted')
+    .where('starts_at', '<', moment().subtract(3, 'hours'))
+    .fetchAll()
+    .then(function(matches) {
+      if (!matches) {
+        return;
+      }
+      matches = matches.toJSON();
+      // console.log(matches);
+      for (let i = 0; i < matches.length; i++) {
+        unresponsive_match(matches[i].id, matches[i]);
+      }
+      reset_ticker();
+      setTimeout(process_7, 4000);
+      //
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      // return res.status(400).send({ok: false, items: []});
+      reset_ticker();
+      setTimeout(process_7, 4000);
+    });
+};
 
 const process_5 = function() {
   reset_ticker();
@@ -213,14 +325,17 @@ const process_5 = function() {
         // console.log(usrs[i].xp_rank, i + 1);
         updateUserRank(usrs[i].id, i + 1);
       }
+      reset_ticker();
+      setTimeout(process_6, 6000);
       // return res.status(200).send({ok: true, items: usrs.toJSON()});
     })
     .catch(function(err) {
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
+      reset_ticker();
+      setTimeout(process_6, 6000);
     });
 };
-
 const process_4 = function() {
   reset_ticker();
   // console.log('clearing old tournaments');
@@ -247,7 +362,6 @@ const process_4 = function() {
   // reset_ticker();
   // setTimeout(process_5, 6000);
 };
-
 const process_3 = function() {
   reset_ticker();
   // console.log('clearing cancelled matches');
@@ -273,7 +387,6 @@ const process_3 = function() {
       setTimeout(process_4, 6000);
     });
 };
-
 const process_2 = function() {
   reset_ticker();
   // console.log('clearing pending money8');
@@ -327,6 +440,7 @@ const process_1 = function() {
 };
 
 process_1();
+// process_6();
 
 //
 

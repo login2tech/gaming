@@ -97,18 +97,26 @@ class Trophies extends React.Component {
                     {this.state.items.map((item, i) => {
                       return (
                         <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
-                          <img
-                            data-toggle="tooltip"
-                            title={
-                              item.tournament.title +
-                              '<br/>' +
-                              moment(item.created_at).fromNow()
+                          <Link
+                            to={
+                              item.tournament ? '/t/' + item.tournament.id : ''
                             }
-                            className="img-fluid"
-                            src={
-                              '/assets/icons/' + this.props.params.type + '.png'
-                            }
-                          />
+                          >
+                            <img
+                              data-toggle="tooltip"
+                              title={
+                                item.tournament.title +
+                                '<br/>' +
+                                moment(item.created_at).fromNow()
+                              }
+                              className="img-fluid"
+                              src={
+                                '/assets/icons/' +
+                                this.props.params.type +
+                                '.png'
+                              }
+                            />
+                          </Link>
                         </div>
                       );
                     })}

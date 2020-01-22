@@ -519,77 +519,83 @@ class MatchInfo extends React.Component {
   }
 
   dynamicStatus() {
-    if (!this.state.match.team_2_id) {
+    const {match} = this.state;
+    if (!match.team_2_id) {
       return 'Expired';
     }
-    if (this.state.match.status == 'cancelled') {
+    if (match.status == 'cancelled') {
       return 'Cancelled';
     }
-    if (!this.state.match.team_1_result && !this.state.match.team_2_result) {
-      return 'Pending Results';
+    if (match.status == 'disputed') {
+      return 'Disputed';
     }
-    if (!this.state.match.team_1_result || !this.state.match.team_2_result) {
-      return 'Pending Results Confirmation';
-    }
-    if (this.state.match.result == 'disputed') {
+    if (match.result == 'disputed') {
       return 'Disputed';
     }
 
     let result;
-
-    if (this.state.match.result == 'tie') {
-      result = 'Tie';
-    } else {
-      if (this.state.match.result == 'team_1') {
-        result = this.state.match.team_1_info.title + ' Wins';
+    if (match.result) {
+      if (match.result == 'tie') {
+        result = 'Tie';
       } else {
-        result = this.state.match.team_2_info.title + ' Wins';
+        if (match.result == 'team_1') {
+          result = match.team_1_info.title + ' Wins';
+        } else if (match.result == 'team_2') {
+          result = match.team_2_info.title + ' Wins';
+        }
       }
+
+      return 'Complete - ' + result;
     }
 
-    return 'Complete - ' + result;
+    if (!match.team_1_result && !match.team_2_result) {
+      return 'Pending Results';
+    }
+
+    if (!match.team_1_result || !match.team_2_result) {
+      return 'Pending Results Confirmation';
+    }
   }
 
   renderScoreSubmit() {
+    const {match} = this.state;
     if (!this.props.user) {
       return false;
     }
 
-    if (!this.state.match.team_1_id || !this.state.match.team_2_id) {
+    if (!match.team_1_id || !match.team_2_id) {
       return false;
     }
-    if (!moment().isAfter(moment(this.state.match.starts_at))) {
+    if (!moment().isAfter(moment(match.starts_at))) {
       return false;
     }
     const me = this.props.user.id;
     if (
-      me != this.state.match.team_1_info.team_creator &&
-      this.state.match.team_2_info.team_creator != me
+      me != match.team_1_info.team_creator &&
+      match.team_2_info.team_creator != me
     ) {
       return false;
     }
-    if (this.state.match.status == 'cancelled') {
+    if (
+      match.status == 'cancelled' ||
+      match.status == 'disputed' ||
+      match.status == 'complete'
+    ) {
       return false;
     }
 
-    if (
-      me == this.state.match.team_1_info.team_creator &&
-      this.state.match.team_1_result
-    ) {
+    if (me == match.team_1_info.team_creator && match.team_1_result) {
       return (
         <p className="alert alert-info">
-          You have updated score as {this.state.match.team_1_result}
+          You have updated score as {match.team_1_result}
         </p>
       );
     }
 
-    if (
-      me == this.state.match.team_2_info.team_creator &&
-      this.state.match.team_2_result
-    ) {
+    if (me == match.team_2_info.team_creator && match.team_2_result) {
       return (
         <p className="alert alert-info">
-          You have updated score as {this.state.match.team_2_result}
+          You have updated score as {match.team_2_result}
         </p>
       );
     }
@@ -668,28 +674,22 @@ class MatchInfo extends React.Component {
   }
 
   render() {
+    const {match} = this.state;
+
     const divStyle =
-      this.state.match &&
-      this.state.match.game &&
-      this.state.match.game.banner_url
+      match && match.game && match.game.banner_url
         ? {
-            backgroundImage: 'url(' + this.state.match.game.banner_url + ')',
+            backgroundImage: 'url(' + match.game.banner_url + ')',
             backgroundPosition: 'left'
           }
         : {};
 
     const team_1_players =
-      this.state.match && this.state.match.team_1_players
-        ? this.state.match.team_1_players.split('|')
-        : [];
+      match && match.team_1_players ? match.team_1_players.split('|') : [];
     const team_2_players =
-      this.state.match && this.state.match.team_2_players
-        ? this.state.match.team_2_players.split('|')
-        : [];
+      match && match.team_2_players ? match.team_2_players.split('|') : [];
     let game_settings =
-      this.state.match && this.state.match.game_settings
-        ? JSON.parse(this.state.match.game_settings)
-        : {};
+      match && match.game_settings ? JSON.parse(match.game_settings) : {};
     if (!game_settings) {
       game_settings = {};
     }
@@ -705,9 +705,8 @@ class MatchInfo extends React.Component {
                     <div className="col col-md-1">
                       <span
                         className={
-                          game_user_ids.tag_icons[
-                            this.state.match.ladder.gamer_tag
-                          ] + ' pf_icon_big'
+                          game_user_ids.tag_icons[match.ladder.gamer_tag] +
+                          ' pf_icon_big'
                         }
                       />
                     </div>
@@ -716,41 +715,33 @@ class MatchInfo extends React.Component {
                         <h4>Match</h4>
                       </div>
                       <div className="twovstwo">
-                        {this.state.match.match_players} VS{' '}
-                        {this.state.match.match_players} MATCH
+                        {match.match_players} VS {match.match_players} MATCH
                       </div>
                     </div>
 
                     <div className="col-12 col-md-7 pt-3">
                       <span className="vs_match">
-                        <Link
-                          to={'/teams/view/' + this.state.match.team_1_info.id}
-                        >
-                          {this.state.match.team_1_info.title}
+                        <Link to={'/teams/view/' + match.team_1_info.id}>
+                          {match.team_1_info.title}
                         </Link>{' '}
                         VS{' '}
-                        {this.state.match.team_2_id ? (
-                          <Link
-                            to={
-                              '/teams/view/' + this.state.match.team_2_info.id
-                            }
-                          >
-                            {this.state.match.team_2_info.title}
+                        {match.team_2_id ? (
+                          <Link to={'/teams/view/' + match.team_2_info.id}>
+                            {match.team_2_info.title}
                           </Link>
                         ) : (
                           <span className="text-grey">Pending Team</span>
                         )}
                       </span>
                       <span className="game_station">
-                        {this.state.match.game.title} @{' '}
-                        {this.state.match.ladder.title}
+                        {match.game.title} @ {match.ladder.title}
                       </span>
                       <div className="match_start_date">
-                        {moment().isAfter(moment(this.state.match.starts_at))
+                        {moment().isAfter(moment(match.starts_at))
                           ? 'Match Started:'
                           : 'Match Starts'}{' '}
-                        {moment(this.state.match.starts_at).format('lll')} ({' '}
-                        {moment(this.state.match.starts_at).fromNow()} )
+                        {moment(match.starts_at).format('lll')} ({' '}
+                        {moment(match.starts_at).fromNow()} )
                       </div>
                     </div>
                   </div>
@@ -766,35 +757,29 @@ class MatchInfo extends React.Component {
                     <div className="row">
                       <div className="col-md-4 col-6">
                         <span> MATCH ID</span>
-                        <p>#{this.state.match.id}</p>
+                        <p>#{match.id}</p>
                       </div>
 
                       <div className="col-md-4 col-6">
                         <span> STATUS</span>
-                        <p
-                          className={
-                            'm_status status_' + this.state.match.status
-                          }
-                        >
-                          {moment().isAfter(moment(this.state.match.starts_at))
+                        <p className={'m_status status_' + match.status}>
+                          {moment().isAfter(moment(match.starts_at))
                             ? this.dynamicStatus()
-                            : this.state.match.status}
+                            : match.status}
                         </p>
                       </div>
 
                       <div className="col-md-4 col-6">
                         <span>MATCH FEE</span>
                         <p>
-                          {this.state.match.match_type == 'free' ? (
+                          {match.match_type == 'free' ? (
                             'FREE'
                           ) : (
                             <span>
                               {'PAID (' +
-                                (this.state.match.match_type == 'cash'
-                                  ? '' + this.state.match.match_fee + '$'
-                                  : '' +
-                                    this.state.match.match_fee +
-                                    ' credits') +
+                                (match.match_type == 'cash'
+                                  ? '' + match.match_fee + '$'
+                                  : '' + match.match_fee + ' credits') +
                                 ')'}
                             </span>
                           )}
@@ -827,78 +812,22 @@ class MatchInfo extends React.Component {
                 <Messages messages={this.props.messages} />
                 {this.renderScoreSubmit()}
 
-                {/*}   <h5 className="prizes_desclaimer">Match Rules</h5>
-                <div className="list_pad">
-                <div className="row">
-                   <div className="col-md-6">
-                      <span>HOST</span>
-                      <p>
-                        ound 1: TBD
-                        <br />
-                        Round 2: TBD
-                        <br />
-                        Round 3: TBD
-                      </p>
-                    </div>
-
-                    <div className="col-md-6">
-                      <span> Maps</span>
-                      <p>
-                        Round 1: Battle Royale
-                        <br />
-                        Round 2: Battle Royale
-                        <br />
-                        Round 3: Battle Royale
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <span>MATCH SET</span>
-                      <p>Best Of 3</p>
-                    </div>
-
-                    <div className="col-md-6">
-                      <span> GAME TYPE</span>
-                      <p>Battle Royale</p>
-                    </div>
-                  </div>
-                </div>
-
-                <hr />
-
-                <h5 className="prizes_desclaimer">Match Options</h5>
-
-                <div className="list_pad">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <span>DETAILS</span>
-                      <p>Game Mode - Battle Royale</p>
-                    </div>
-
-                    <div className="col-md-6" />
-                  </div>
-                </div>
-                <hr />
-                */}
-
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
                     <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
                   <br />
-                  {this.state.match.status != 'pending' ? (
+                  {match.status != 'pending' ? (
                     <>
                       <h6 className="prizes_desclaimer">
-                        <Link to={'/teams/view/' + this.state.match.team_1_id}>
-                          {this.state.match.team_1_info.title}
+                        <Link to={'/teams/view/' + match.team_1_id}>
+                          {match.team_1_info.title}
                         </Link>{' '}
                         <span className="text-primary">
-                          {this.state.match.team_1_result}
+                          {match.team_1_result}
                         </span>{' '}
-                        {this.state.match.status == 'complete' &&
-                        this.state.match.result == 'team_1' ? (
+                        {match.status == 'complete' &&
+                        match.result == 'team_1' ? (
                           <span>
                             {' '}
                             - <span className="text text-success">W</span>
@@ -906,9 +835,9 @@ class MatchInfo extends React.Component {
                         ) : (
                           false
                         )}
-                        {(this.state.match.status == 'complete' ||
-                          this.state.match.status == 'Complete') &&
-                        this.state.match.result == 'team_2' ? (
+                        {(match.status == 'complete' ||
+                          match.status == 'Complete') &&
+                        match.result == 'team_2' ? (
                           <span>
                             {' '}
                             - <span className="text text-danger">L</span>
@@ -929,7 +858,7 @@ class MatchInfo extends React.Component {
                             </tr>
                           </thead>
                           <tbody>
-                            {this.state.match.team_1_info.team_users.map(
+                            {match.team_1_info.team_users.map(
                               (team_user, i) => {
                                 if (
                                   team_1_players.indexOf(
@@ -952,12 +881,10 @@ class MatchInfo extends React.Component {
                                     </td>
                                     <td>
                                       {team_user.user_info[
-                                        'gamer_tag_' +
-                                          this.state.match.ladder.gamer_tag
+                                        'gamer_tag_' + match.ladder.gamer_tag
                                       ] ? (
                                         team_user.user_info[
-                                          'gamer_tag_' +
-                                            this.state.match.ladder.gamer_tag
+                                          'gamer_tag_' + match.ladder.gamer_tag
                                         ]
                                       ) : (
                                         <span className="text-danger">
@@ -968,7 +895,7 @@ class MatchInfo extends React.Component {
 
                                     <td>
                                       {team_user.user_id ==
-                                      this.state.match.team_1_info.team_creator
+                                      match.team_1_info.team_creator
                                         ? 'Leader'
                                         : 'Member'}
                                     </td>
@@ -980,20 +907,18 @@ class MatchInfo extends React.Component {
                         </table>
                       </div>
                       <br />
-                      {this.state.match.team_2_id ? (
+                      {match.team_2_id ? (
                         <div>
                           <h6 className="prizes_desclaimer">
-                            <Link
-                              to={'/teams/view/' + this.state.match.team_2_id}
-                            >
-                              {this.state.match.team_2_info.title}
+                            <Link to={'/teams/view/' + match.team_2_id}>
+                              {match.team_2_info.title}
                             </Link>{' '}
                             <span className="text-primary">
-                              {this.state.match.team_2_result}
+                              {match.team_2_result}
                             </span>{' '}
-                            {(this.state.match.status == 'complete' ||
-                              this.state.match.status == 'Complete') &&
-                            this.state.match.result == 'team_2' ? (
+                            {(match.status == 'complete' ||
+                              match.status == 'Complete') &&
+                            match.result == 'team_2' ? (
                               <span>
                                 {' '}
                                 - <span className="text text-success">W</span>
@@ -1001,8 +926,8 @@ class MatchInfo extends React.Component {
                             ) : (
                               false
                             )}
-                            {this.state.match.status == 'complete' &&
-                            this.state.match.result == 'team_1' ? (
+                            {match.status == 'complete' &&
+                            match.result == 'team_1' ? (
                               <span>
                                 {' '}
                                 - <span className="text text-danger">L</span>
@@ -1023,7 +948,7 @@ class MatchInfo extends React.Component {
                                 </tr>
                               </thead>
                               <tbody>
-                                {this.state.match.team_2_info.team_users.map(
+                                {match.team_2_info.team_users.map(
                                   (team_user, i) => {
                                     if (
                                       team_2_players.indexOf(
@@ -1047,12 +972,11 @@ class MatchInfo extends React.Component {
                                         <td>
                                           {team_user.user_info[
                                             'gamer_tag_' +
-                                              this.state.match.ladder.gamer_tag
+                                              match.ladder.gamer_tag
                                           ] ? (
                                             team_user.user_info[
                                               'gamer_tag_' +
-                                                this.state.match.ladder
-                                                  .gamer_tag
+                                                match.ladder.gamer_tag
                                             ]
                                           ) : (
                                             <span className="text-danger">
@@ -1062,8 +986,7 @@ class MatchInfo extends React.Component {
                                         </td>
                                         <td>
                                           {team_user.user_id ==
-                                          this.state.match.team_2_info
-                                            .team_creator
+                                          match.team_2_info.team_creator
                                             ? 'Leader'
                                             : 'Member'}
                                         </td>
@@ -1091,17 +1014,6 @@ class MatchInfo extends React.Component {
 
                 {this.state.team_selected ? (
                   <div id="tlst">
-                    {/*}<button
-                      className="  btn btn-primary btn-sm max-width-300"
-                      onClick={() => {
-                        this.setState({
-                          team_selected: false
-                        });
-                      }}
-                    >
-                      <i className="fa fa-arrow-left" /> back to team list
-                    </button>
-                    <br />*/}
                     <form
                       onSubmit={event => {
                         this.agreeToTermsForMatchJoin(event);
@@ -1214,49 +1126,7 @@ class MatchInfo extends React.Component {
                 ) : (
                   false
                 )}
-                {/*
-                <ul className="team_list" id="tlst">
-                  {0 &&
-                    this.state.eligible_teams_loaded &&
-                    !this.state.team_selected &&
-                    this.state.eligible_teams.map((team_parent, i) => {
-                      if (team_parent.team_info.removed) {
-                        return false;
-                      }
-                      if (
-                        team_parent.team_info.ladder_id !=
-                        this.state.match.ladder_id
-                      ) {
-                        return false;
-                      }
-                      const team = team_parent.team_info
-                        ? team_parent.team_info
-                        : {};
-                      if (team.removed == 1) {
-                        return false;
-                      }
-                      return (
-                        <li className="" key={team.id}>
-                          <Link
-                            // to={
-                            //   '/u/' +
-                            //   this.state.user_info.username +
-                            //   '/teams/' +
-                            //   team.id
-                            // }
-                            onClick={() => {
-                              this.setState({
-                                team_selected: team
-                              });
-                            }}
-                          >
-                            <img src="/images/team_bg.png" />
-                            <div className="info">{team.title}</div>
-                          </Link>
-                        </li>
-                      );
-                    })}
-                </ul>*/}
+
                 {this.state.eligible_teams_loaded &&
                   !this.state.team_selected && (
                     <div className="alert alert-warning" id="tlst">
@@ -1267,7 +1137,7 @@ class MatchInfo extends React.Component {
                           '/u/' +
                           this.props.user.username +
                           '/teams/new/l/' +
-                          this.state.match.ladder.id
+                          match.ladder.id
                         }
                       >
                         here

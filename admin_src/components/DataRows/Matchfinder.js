@@ -303,12 +303,12 @@ class MatchFinder extends React.Component {
                         </td>
                         <td>
                           {u.result ? (
-                            u.result == 'team_2' ? (
+                            u.result == 'disputed' ? (
+                              <span className="text-danger">Disputed</span>
+                            ) : u.result == 'team_2' ? (
                               'Team 2 Wins'
                             ) : u.result == 'team_1' ? (
                               'Team 1 Wins'
-                            ) : u.result == 'disputed' ? (
-                              <span className="text-danger">Disputed</span>
                             ) : (
                               <span className="text-warning">{u.result}</span>
                             )
@@ -440,7 +440,8 @@ class MatchFinder extends React.Component {
                                             this.viewTicket(ticket.id);
                                           }}
                                         >
-                                          Show Ticket {i + 1} #{ticket.id}
+                                          Show Ticket {i + 1} #{ticket.id} by
+                                          team "{ticket.extra_2}"
                                         </a>
                                       </li>
                                     );

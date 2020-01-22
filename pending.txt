@@ -1,8 +1,5 @@
-- username change
-- paid username change
 - activate double xp
 - escilate ticket
-- remove ticket
-- tournament bracket winner show
-- final empty round in matches lists
+- remove ticket ? 
 - tournament notification matches
+- "advanced" rank image

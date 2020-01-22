@@ -269,6 +269,21 @@ class SingleTicket extends React.Component {
                 ) : (
                   false
                 )}
+                {this.state.ticket.status == 'closed' &&
+                this.props.user.prime &&
+                this.props.user.id == this.state.ticket.user.id ? (
+                  <button
+                    className="btn btn-primary m-0 max-width-200 dib"
+                    type="button"
+                    onClick={() => {
+                      alert('work in progress');
+                    }}
+                  >
+                    Escilate Ticket
+                  </button>
+                ) : (
+                  false
+                )}
               </div>
             </div>
           </div>
@@ -466,9 +481,15 @@ class SingleTicket extends React.Component {
             })}
 
             <div className="col-sm-12">
+              {this.state.ticket.status == 'closed' && (
+                <div className="alert alert-success">
+                  This ticket has been resolved and closed by admin
+                </div>
+              )}
               {this.props.user &&
                 (this.props.user.id == this.state.ticket.user_id ||
-                  this.props.user.role == 'admin') && (
+                  this.props.user.role == 'admin') &&
+                this.state.ticket.status == 'submitted' && (
                   <form onSubmit={this.submitForm.bind(this)}>
                     <fieldset>
                       <div className="form-group">

@@ -931,20 +931,20 @@ exports.leaderboard_2 = function(req, res, next) {
 };
 
 exports.deduct_money = function(req, res, next) {
-  // console.log(req.body);
+  const amount = req.body.amount ? req.body.amount : 5;
   if (req.body.stripe_token == 'USE_OCG') {
     next();
   } else {
     stripe.charges.create(
       {
-        amount: 5 * 100,
+        amount: amount * 100,
         currency: 'usd',
         source: req.body.stripe_token,
         description: 'Charge for Reset of  ' + req.body.duration
       },
       function(err, charge) {
         if (err) {
-          console.log(err);
+          // console.log(err);
           res.status(400).send({ok: false, msg: 'Failed to charge card'});
           return;
         }
@@ -955,6 +955,7 @@ exports.deduct_money = function(req, res, next) {
   // next();
 };
 exports.deduct_ocg = function(req, res, next) {
+  const amount = req.body.amount ? req.body.amount : 5;
   const action = req.body.action;
   let msg;
   switch (action) {
@@ -973,7 +974,7 @@ exports.deduct_ocg = function(req, res, next) {
   }
 
   if (req.body.stripe_token == 'USE_OCG') {
-    utils.takeCashFromUser(req.user.id, 5, msg, '');
+    utils.takeCashFromUser(req.user.id, amount, msg, '');
   }
   next();
 };
@@ -982,6 +983,7 @@ exports.resetScore = function(req, res, next) {
   const action = req.body.action;
   const year = moment().format('YYYY');
   const season = moment().format('Q');
+  let a;
   switch (action) {
     case 'overallScore':
       new User()
@@ -999,22 +1001,26 @@ exports.resetScore = function(req, res, next) {
           return res.status(200).send({ok: true, msg: 'Score reset done.'});
         })
         .catch(function(err) {
-          console.log(err);
           return res
             .status(400)
             .send({ok: false, msg: 'failed to reset score.'});
         });
       break;
     case 'score_life':
-      new Score()
-        .where({
-          user_id: req.user.id
-        })
-        .destroy()
+      a = new Score().where({
+        user_id: req.user.id
+      });
+      if (req.body.only_for_ladder) {
+        a = a.where({
+          ladder_id: req.body.only_for_ladder
+        });
+      }
+      a.destroy()
         .then(function() {
           return res.status(200).send({ok: false, msg: 'records reset done.'});
         })
-        .catch(function() {
+        .catch(function(err) {
+          console.log(err);
           return res.status(400).send({
             ok: false,
             msg: 'Failed to delete records or nothing to delete'
@@ -1022,18 +1028,58 @@ exports.resetScore = function(req, res, next) {
         });
       break;
     case 'score_season':
-      new Score()
-        .where({
-          user_id: req.user.id,
-          year: year,
-          season: season
-        })
-        .destroy()
+      a = new Score().where({
+        user_id: req.user.id,
+        year: year,
+        season: season
+      });
+      if (req.body.only_for_ladder) {
+        a = a.where({
+          ladder_id: req.body.only_for_ladder
+        });
+      }
+      a.destroy()
         .then(function() {
           return res.status(200).send({ok: false, msg: 'records reset done.'});
         })
         .catch(function(err) {
-          // console.log(err);
+          console.log(err);
+          return res.status(400).send({
+            ok: false,
+            msg: 'Failed to delete records or nothing to delete'
+          });
+        });
+      break;
+    case 'BRONZE_TROPHIES':
+      a = new Trophy().where({
+        user_id: req.user.id,
+        type: 'bronze'
+      });
+
+      a.save({reset_done: true}, {method: 'update'})
+        .then(function() {
+          return res.status(200).send({ok: false, msg: 'records reset done.'});
+        })
+        .catch(function(err) {
+          console.log(err);
+          return res.status(400).send({
+            ok: false,
+            msg: 'Failed to delete records or nothing to delete'
+          });
+        });
+      break;
+    case 'SILVER_TROPHIES':
+      a = new Trophy().where({
+        user_id: req.user.id,
+        type: 'silver'
+      });
+
+      a.save({reset_done: true}, {method: 'update'})
+        .then(function() {
+          return res.status(200).send({ok: false, msg: 'records reset done.'});
+        })
+        .catch(function(err) {
+          console.log(err);
           return res.status(400).send({
             ok: false,
             msg: 'Failed to delete records or nothing to delete'

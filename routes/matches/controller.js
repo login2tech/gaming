@@ -562,7 +562,14 @@ const addScoreForTeam = function(
     });
 };
 
-const resolveDispute = function(req, res, next, m_id, win_to) {
+const resolveDispute = function(
+  req,
+  res,
+  next,
+  m_id,
+  win_to,
+  proceed_if_no_dispute
+) {
   let match_id;
   let winner;
   if (req) {
@@ -575,6 +582,7 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
   new Item({id: match_id})
     .fetch()
     .then(function(match) {
+      // console.log('problem?');
       if (!match) {
         if (res) {
           return res.status(400).send({
@@ -593,7 +601,12 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
             msg: 'Match not disputed'
           });
         } else {
-          return;
+          if (proceed_if_no_dispute) {
+            console.log('allowing this time! was a sudo');
+          } else {
+            console.log('resolving dispute? create a dispute first!');
+            return;
+          }
         }
       }
       const final_result = winner;
@@ -611,6 +624,13 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
         status: 'complete',
         result: final_result
       };
+      if (proceed_if_no_dispute) {
+        if (saved_info.result == 'team_1') {
+          saved_info.team_2_result = tmp_match.team_1_result;
+        } else if (saved_info.result == 'team_2') {
+          saved_info.team_1_result = tmp_match.team_2_result;
+        }
+      }
 
       match
         .save(saved_info, {method: 'update'})
@@ -693,6 +713,7 @@ const resolveDispute = function(req, res, next, m_id, win_to) {
         });
     })
     .catch(function(err) {
+      console.log('error');
       Raven.captureException(err);
       if (res) {
         res.status(400).send({

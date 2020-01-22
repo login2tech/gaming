@@ -141,7 +141,9 @@ class Profile extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
                   <div className="col-md-8 offset-md-2">
-                    {this.props.user.id == this.state.user_info.id ? (
+                    {this.state.user_info &&
+                    this.props.user &&
+                    this.props.user.id == this.state.user_info.id ? (
                       <NewPost
                         user_info={this.state.user_info}
                         onSubmit={post => {

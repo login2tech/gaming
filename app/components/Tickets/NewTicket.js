@@ -413,10 +413,7 @@ class NewTicket extends React.Component {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="ticket_title">
-                          URL 1:
-                          <span className="text-danger">*</span>
-                        </label>
+                        <label htmlFor="ticket_title">URL 1:</label>
                         <input
                           type="url"
                           className="form-control"
@@ -433,10 +430,7 @@ class NewTicket extends React.Component {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="ticket_title">
-                          URL 2:
-                          <span className="text-danger">*</span>
-                        </label>
+                        <label htmlFor="ticket_title">URL 2:</label>
                         <input
                           type="url"
                           className="form-control"
@@ -453,10 +447,7 @@ class NewTicket extends React.Component {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="form-group">
-                        <label htmlFor="ticket_title">
-                          URL 3:
-                          <span className="text-danger">*</span>
-                        </label>
+                        <label htmlFor="ticket_title">URL 3:</label>
                         <input
                           type="url"
                           className="form-control"

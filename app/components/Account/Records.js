@@ -16,7 +16,7 @@ class Records extends React.Component {
     this.fetchrecords();
   }
 
-  onGetToken(token) {
+  onGetToken(token, ladder_data) {
     fetch('/api/user/reset/score', {
       method: 'POST',
       headers: {
@@ -25,7 +25,12 @@ class Records extends React.Component {
       body: JSON.stringify({
         stripe_token: token == 'USE_OCG' ? 'USE_OCG' : token.id,
         action: 'score_' + this.props.params.duration,
-        duration: this.props.params.duration
+        amount: ladder_data && ladder_data.only_for_ladder ? 1.99 : 5,
+        duration: this.props.params.duration,
+        only_for_ladder:
+          ladder_data && ladder_data.only_for_ladder
+            ? ladder_data.ladder_id
+            : false
       })
     }).then(response => {
       this.props.dispatch(
@@ -60,6 +65,34 @@ class Records extends React.Component {
       }
     });
   }
+  resetIndividualScore(ladder_id, ladder_title) {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'payment',
+        zIndex: 534,
+        heading: 'Reset Records - ' + ladder_title,
+        content: (
+          <PaymentModal
+            msg={
+              'You need to pay a small amount to reset ' +
+              this.props.params.duration +
+              ' records for ladder ' +
+              ladder_title
+            }
+            amount={1.99}
+            returnDataToEvent={{
+              ladder_id: ladder_id,
+              only_for_ladder: true
+            }}
+            onGetToken={(token, return_data) => {
+              this.onGetToken(token, return_data);
+            }}
+          />
+        )
+      })
+    );
+  }
 
   resetOverall(e) {
     e.preventDefault();
@@ -74,7 +107,7 @@ class Records extends React.Component {
             msg={
               'You need to pay a small amount to reset ' +
               this.props.params.duration +
-              ' records. This will have no impact on your life and season score.'
+              ' records.'
             }
             amount={5}
             // refresh={props.refresh}
@@ -145,7 +178,9 @@ class Records extends React.Component {
                     <span className="fa fa-arrow-left" /> back to profile
                   </Link>
 
-                  {this.props.user.username == this.props.params.username &&
+                  {this.props.user &&
+                  this.props.params &&
+                  this.props.user.username == this.props.params.username &&
                   rec.length > 0 &&
                   this.state.loaded ? (
                     <>
@@ -176,30 +211,55 @@ class Records extends React.Component {
                   )}
 
                 <div className="user-profile-trophies-wrapper">
-                  <div className="user-profile-trophies-container">
+                  <div className="user-profile-trophies-container row">
                     {rec.map((notif, i) => {
                       return (
                         <div
-                          className="single-trophy-container dib m-b-20"
+                          className="single-trophy-container col-12 col-md-6 col-lg-4"
                           key={notif}
-                          style={{width: 'calc(50% - 10px)'}}
                         >
-                          <div className="trophy-image">
-                            <img src="/images/shield-gold.png" />
-                          </div>
-                          <div className="trophy-info">
-                            <div className="trophy-name gold">
-                              {ladders[notif].game_info.title} -{' '}
-                              {ladders[notif].title}
+                          <div className="trof_a link_alt">
+                            <div className="trophy-image">
+                              <img src="/images/shield-gold.png" />
                             </div>
-                            <div className="trophy-count">
-                              <span className="text-success">
-                                {records[notif].wins}W
-                              </span>{' '}
-                              -{' '}
-                              <span className="text-danger">
-                                {records[notif].loss}L
-                              </span>
+                            <div className="trophy-info">
+                              <div className="trophy-name gold">
+                                {ladders[notif].game_info.title} -{' '}
+                                {ladders[notif].title}
+                                {this.props.user &&
+                                this.props.user.username ==
+                                  this.props.params.username &&
+                                (records[notif].wins > 0 ||
+                                  records[notif].loss > 0) ? (
+                                  <a
+                                    style={{float: 'right'}}
+                                    className="reset_rep"
+                                    href="#"
+                                    onClick={() => {
+                                      this.resetIndividualScore(
+                                        ladders[notif].id,
+                                        ladders[notif].game_info.title +
+                                          ' - ' +
+                                          ladders[notif].title
+                                      );
+                                    }}
+                                  >
+                                    <span className="fa fa-repeat" /> reset
+                                    ($1.99)
+                                  </a>
+                                ) : (
+                                  false
+                                )}
+                              </div>
+                              <div className="trophy-count">
+                                <span className="text-success">
+                                  {records[notif].wins}W
+                                </span>{' '}
+                                -{' '}
+                                <span className="text-danger">
+                                  {records[notif].loss}L
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
