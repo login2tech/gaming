@@ -490,7 +490,7 @@ class Profile extends React.Component {
                             className="trof_a"
                           >
                             <div className="trophy-image">
-                              <img src="/assets/icons/bronz.png" />
+                              <img src="/assets/icons/bronze.png" />
                             </div>
                             <div className="trophy-info">
                               <div

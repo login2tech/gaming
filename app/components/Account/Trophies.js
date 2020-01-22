@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+const moment = require('moment');
 
 class Trophies extends React.Component {
   constructor(props) {
@@ -56,7 +57,6 @@ class Trophies extends React.Component {
     // const rec = Object.keys(this.state.ladders);
     // console.log(rec);
 
-    const {ladders, records} = this.state;
     // console.log(records);
     return (
       <div>
@@ -93,30 +93,310 @@ class Trophies extends React.Component {
                   )}
 
                 <div className="user-profile-trophies-wrapper">
-                  <div className="user-profile-trophies-container">
+                  <div className="user-profile-trophies-container row">
                     {this.state.items.map((item, i) => {
                       return (
-                        <div
-                          className="single-trophy-container m-b-20"
-                          key={item}
-                          style={{width: 'calc(50% - 10px)'}}
-                        >
-                          <div className="trophy-image">
-                            <img
-                              src={
-                                '/assets/icons/' +
-                                this.props.params.type +
-                                '.png'
-                              }
-                            />
-                          </div>
-                          <div className="trophy-info">
-                            <div className="trophy-name gold" />
-                            <div className="trophy-count">
-                              <span className="text-success">W</span> -{' '}
-                              <span className="text-danger" />
-                            </div>
-                          </div>
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
+                        </div>
+                      );
+                    })}
+                    {this.state.items.map((item, i) => {
+                      return (
+                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                          <img
+                            data-toggle="tooltip"
+                            title={
+                              item.tournament.title +
+                              '<br/>' +
+                              moment(item.created_at).fromNow()
+                            }
+                            className="img-fluid"
+                            src={
+                              '/assets/icons/' + this.props.params.type + '.png'
+                            }
+                          />
                         </div>
                       );
                     })}

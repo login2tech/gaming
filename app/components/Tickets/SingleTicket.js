@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import axios from 'axios';
 import Messages from '../Modules/Messages';
 import moment from 'moment';
+import {Link} from 'react-router';
 
 class SingleTicket extends React.Component {
   constructor(props) {
@@ -121,7 +122,7 @@ class SingleTicket extends React.Component {
         }
       })
       .catch(a => {
-        console.log(a);
+        // console.log(a);
       });
   }
   fetchReplies() {
@@ -317,6 +318,85 @@ class SingleTicket extends React.Component {
                       />
                       {this.renderDownloadAttachment(
                         this.state.ticket.attachment
+                      )}
+                      <hr />
+                      <h3>Other Details:</h3>
+
+                      {this.state.ticket.extra_1 ? (
+                        <p>
+                          <strong>Match Id: </strong>{' '}
+                          {this.state.ticket.extra_3 == 'MatchFinder' ? (
+                            <Link to={'/m/' + this.state.ticket.extra_1}>
+                              # {this.state.ticket.extra_1}
+                            </Link>
+                          ) : this.state.ticket.extra_3 == 'Mix-and-match' ? (
+                            <Link
+                              to={'/mix-and-match/' + this.state.ticket.extra_1}
+                            >
+                              # {this.state.ticket.extra_1}
+                            </Link>
+                          ) : this.state.ticket.extra_3 == 'Tournament' ? (
+                            <Link
+                              to={
+                                '/tournament-match/' + this.state.ticket.extra_1
+                              }
+                            >
+                              # {this.state.ticket.extra_1}
+                            </Link>
+                          ) : (
+                            <># {this.state.ticket.extra_1}</>
+                          )}
+                        </p>
+                      ) : (
+                        false
+                      )}
+                      {this.state.ticket.extra_2 ? (
+                        <p>
+                          <strong>Team Name: </strong>{' '}
+                          {this.state.ticket.extra_2}
+                        </p>
+                      ) : (
+                        false
+                      )}
+                      {this.state.ticket.extra_3 ? (
+                        <p>
+                          <strong>Match Type: </strong>{' '}
+                          {this.state.ticket.extra_3}
+                        </p>
+                      ) : (
+                        false
+                      )}
+                      {this.state.ticket.url_1 ? (
+                        <p>
+                          <strong>URL 1: </strong>{' '}
+                          <a href={this.state.ticket.url_1} target="_blank">
+                            {this.state.ticket.url_1}
+                          </a>
+                        </p>
+                      ) : (
+                        false
+                      )}
+
+                      {this.state.ticket.url_2 ? (
+                        <p>
+                          <strong>URL 2: </strong>{' '}
+                          <a href={this.state.ticket.url_2} target="_blank">
+                            {this.state.ticket.url_2}
+                          </a>
+                        </p>
+                      ) : (
+                        false
+                      )}
+
+                      {this.state.ticket.url_3 ? (
+                        <p>
+                          <strong>URL 3: </strong>{' '}
+                          <a href={this.state.ticket.url_3} target="_blank">
+                            {this.state.ticket.url_3}
+                          </a>
+                        </p>
+                      ) : (
+                        false
                       )}
                     </div>
                   </div>

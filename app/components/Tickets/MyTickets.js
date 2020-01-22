@@ -88,6 +88,7 @@ class Tickets extends React.Component {
                         <th>Department</th>
                         <th>Last Updated</th>
                         <th>Status</th>
+                        <th>View Ticket</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -114,6 +115,11 @@ class Tickets extends React.Component {
                               ) : (
                                 <span className="text-primary">Open</span>
                               )}
+                            </td>
+                            <td>
+                              <a href={'/support/tickets/ticket/' + item.id}>
+                                View Ticket
+                              </a>
                             </td>
                           </tr>
                         );

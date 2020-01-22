@@ -24,6 +24,7 @@ class NewTicket extends React.Component {
             ? 'Customer Support - Dispute Account Ban'
             : '',
       ticket_title: '',
+      upload_started: false,
       ticket_description: '',
       new_post_image: '',
       extra_1: props.params.mid ? props.params.mid : '',
@@ -417,11 +418,10 @@ class NewTicket extends React.Component {
                           <span className="text-danger">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="url"
                           className="form-control"
                           id="url_1"
                           name="url_1"
-                          required
                           value={this.state.url_1}
                           onChange={this.handleChange.bind(this)}
                           placeholder="Enter Reference URL 1"
@@ -438,11 +438,10 @@ class NewTicket extends React.Component {
                           <span className="text-danger">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="url"
                           className="form-control"
                           id="url_2"
                           name="url_2"
-                          required
                           value={this.state.url_2}
                           onChange={this.handleChange.bind(this)}
                           placeholder="Enter Reference URL 2"
@@ -459,11 +458,10 @@ class NewTicket extends React.Component {
                           <span className="text-danger">*</span>
                         </label>
                         <input
-                          type="text"
+                          type="url"
                           className="form-control"
                           id="url_3"
                           name="url_3"
-                          required
                           value={this.state.url_3}
                           onChange={this.handleChange.bind(this)}
                           placeholder="Enter Reference URL 3"
@@ -512,6 +510,7 @@ class NewTicket extends React.Component {
                         Create Ticket
                       </button>
                     </div>
+                    {JSON.stringify(this.state.ticket)}
                   </div>
                 </form>
               </div>

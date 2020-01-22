@@ -51,6 +51,10 @@ class TMatchInfo extends React.Component {
     fetch('/api/tournaments/singlematch/' + this.props.params.match_id)
       .then(res => res.json())
       .then(json => {
+        if (json.is_404) {
+          window.location.href = '/404';
+          return false;
+        }
         if (json.ok) {
           this.setState(
             {

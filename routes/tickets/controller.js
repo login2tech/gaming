@@ -23,7 +23,8 @@ exports.listItem = function(req, res, next) {
 };
 
 exports.listMy = function(req, res, next) {
-  Item.where({user_id: req.user.id})
+  Item.orderBy('id', 'DESC')
+    .where({user_id: req.user.id})
     .fetchAll()
     .then(function(items) {
       if (!items) {
@@ -32,7 +33,7 @@ exports.listMy = function(req, res, next) {
       return res.status(200).send({ok: true, items: items.toJSON()});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -123,6 +124,9 @@ exports.addItemForBanned = function(req, res, next) {
           ? ('' + req.body.extra_1).replace('#', '')
           : '',
         extra_2: req.body.extra_2,
+        url_1: req.body.url_1 ? req.body.url_1 : '',
+        url_3: req.body.url_3 ? req.body.url_3 : '',
+        url_2: req.body.url_2 ? req.body.url_2 : '',
         extra_3: req.body.extra_3,
         attachment: req.body.ticket_attachment ? req.body.ticket_attachment : ''
       })
@@ -164,6 +168,9 @@ exports.addItem = function(req, res, next) {
     extra_1: req.body.extra_1 ? ('' + req.body.extra_1).replace('#', '') : '',
     extra_2: req.body.extra_2,
     extra_3: req.body.extra_3,
+    url_1: req.body.url_1 ? req.body.url_1 : '',
+    url_3: req.body.url_3 ? req.body.url_3 : '',
+    url_2: req.body.url_2 ? req.body.url_2 : '',
     attachment: req.body.ticket_attachment ? req.body.ticket_attachment : ''
   })
     .save()
@@ -171,7 +178,7 @@ exports.addItem = function(req, res, next) {
       res.send({ok: true, msg: 'New Ticket has been created successfully.'});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new Item'});

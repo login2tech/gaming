@@ -598,11 +598,16 @@ exports.singleUser_trophies = function(req, res, next) {
     return;
   }
 
-  new Trophy()
-    .where({user_id: cur_u, reset_done: false})
-    .fetchAll({
-      withRelated: ['tournament']
-    })
+  let a = new Trophy().where({user_id: cur_u, reset_done: false});
+
+  if (req.query.type) {
+    a = a.where({
+      type: req.query.type
+    });
+  }
+  a.fetchAll({
+    withRelated: ['tournament']
+  })
     .then(function(trophies) {
       trophies = trophies.toJSON();
       return res.status(200).send({

@@ -3129,7 +3129,8 @@ input[type='text'],input[type='text'],input[type='password'],input[type='number'
   -webkit-appearance:none;
 }
 
-.authorize_box.shadow , input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date']{
+.authorize_box.shadow ,
+.card, input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date']{
     box-shadow: 0 0 5px 2px #2847f3;
 }
 
@@ -3200,11 +3201,11 @@ input[type='text'],input[type='text'],input[type='password'],input[type='number'
     flex-direction: column;
     min-width: 100px;
     word-wrap: break-word;
-    background-color: #585656;
+    background-color: #000;
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, .125);
     border-radius: .25rem;
-    box-shadow: 3px 3px 10px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px 2px #2847f3
 }
 
 .post-header {
@@ -3300,6 +3301,7 @@ span.profile_menu_item.ticket_item {
     display: inline-block;
     background: black;
     border-radius: 9px;
+    box-shadow: 0 0 42px 0.5px #2847f3ad
 }
 
 /*}*/
@@ -3359,6 +3361,10 @@ textarea.form-control {
 
 .card {
     color: #000;
+}
+.card a{
+  color : 2847f3 !important;
+  text-decoration: underline !important;
 }
 
 .pagination {
