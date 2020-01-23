@@ -187,6 +187,7 @@ class NewTournament extends React.Component {
     Fetcher.post('/api/tournaments/add', {
       title: this.state.title,
       game_id: this.state.game_id,
+      member_tournament: this.state.member_tournament,
       ladder_id: this.state.ladder_id,
       max_players: this.state.max_players,
       total_teams: this.state.total_teams,

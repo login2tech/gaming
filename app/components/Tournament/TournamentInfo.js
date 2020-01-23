@@ -1462,6 +1462,14 @@ class TournamentInfo extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
+                  {tournament.member_tournament ? (
+                    <img
+                      src="http://localhost:5000/assets/icons/ocg_member_gold.png"
+                      className="star_img big"
+                    />
+                  ) : (
+                    false
+                  )}
                   <div className="match_heading">
                     <h4>{tournament.title}</h4>
                   </div>

@@ -2122,8 +2122,7 @@ a.image_avar {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
-
-.tournament-list .tournament-box {
+ .tournament-list .tournament-box {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
@@ -2137,9 +2136,8 @@ a.image_avar {
     background-position: center;
     background-size: cover;
     flex-shrink: 0;
-    /* max-width: 555px; */
+
     width: 100%;
-    /* min-height: 310px; */
     color: #fff;
     position: relative;
     justify-content: flex-start;
@@ -2260,11 +2258,11 @@ a.image_avar {
     font-weight: 900;
 }
 
-.tournament-list .tournament-box .tournament-body .tournament-name {
+/* .tournament-list .tournament-box .tournament-body .tournament-name {
     color: #636f7d;
     font: 500 1.125em/1 "Segoe UI Light",sans-serif;
     margin-bottom: 6px;
-}
+} */
 
 .tournament-footer .col-item {
     min-width: 100px;
@@ -2907,7 +2905,7 @@ font-weight: 600; text-transform: uppercase; }
 .tab-block .tab-cont .tab-pane {
     padding: 20px 25px;
 }
-
+/*
 .tab-block .tournament-list .tournament-box {
     max-width: 529px;
 }
@@ -2915,7 +2913,7 @@ font-weight: 600; text-transform: uppercase; }
 .tab-block .tournament-list .tournament-box .btn-default {
     width: 100% !important;
     margin-left: 0px;
-}
+} */
 
 .flag_icons {
     margin: 0px;
@@ -4277,10 +4275,10 @@ button.btn.btn-danger:not(.btn-sm) {
 .btn.btn-sm.btn-danger {
     margin-left: 5px;
 }
-
+/*
 li.tournament-box {
-    margin-bottom: 10px;
-}
+    margin-bottom: 10px; */
+/* } */
 
 .score_obj {
     background: #3d3d3d;
@@ -5228,9 +5226,9 @@ ul.notices li:first-child {
         font-size: 30px
     }
 
-    .tournament-list .tournament-box {
+    /* .tournament-list .tournament-box {
         flex-direction: column;
-    }
+    } */
 }
 
 .width-auto {
@@ -5513,6 +5511,169 @@ ul.notices li:first-child {
     width: 80%;
 }
 
+.filter-form .btn{
+  min-width: auto !important;
+  width: auto !important;display: inline-block;
+}
+.filter-form .btn-outline{
+  color:#fff
+}
+
+a.post_image.post_image_smaller.post_video:after {
+    content: 'click to play video';
+}
+
+.tolowercase{
+  text-transform: none;
+}
+.round.winner_round .match {
+    height: 50px !important;
+}
+
+.container-brackets .separator-brackets.rd-3 .line:first-child {
+    margin-top: 195px !important;
+}
+
+.container-brackets .separator-brackets.rd-3 .line {
+    height: 345px !important;
+}
+
+.container-brackets .round.rd-4 {
+    margin-top: 310px !important;
+}
+.brackets {
+    overflow-x: scroll;
+
+}
+
+
+
+.container-brackets .round.rd-4 .match .player:last-child {
+   margin-bottom: 14px !important;
+}
+
+.container-brackets .round.rd-4 .match .player:nth-child(2) {
+   margin-top: 19px !important;
+   margin-bottom: 700px !important;
+}
+
+.container-brackets .separator-brackets.rd-4 .line:first-child {
+   margin-top: 380px !important;
+   height: 750px !important;
+}
+
+.round.rd-5.winner_round {
+   margin-top: 600px !important;
+}
+.round.winner_round span {
+    display: none !important;
+}
+.container-brackets .round.winner_round .match .player {margin-top:0!important;margin-bottom:0!important;}
+.container-brackets .round.winner_round .match .player:nth-child(2){margin-top:0!important;margin-bottom:0!important;}
+
+a.dropdown-item.disabled {
+    padding-left: 10px;
+}
+
+
+.tour-box {
+    background-color: rgb(41, 41, 41);
+    max-width: 100%;
+    margin-bottom: 50px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.star_img:not(.big) {
+    position: absolute;
+    top: -25px;
+    left: -25px;
+    height: 50px;
+}
+.star_img.big{
+  float: right;
+    height: 200px;
+    top: 0;
+    position: absolute;
+    right: 0;
+}
+.tour-box .tour-details {
+    color: rgb(179, 179, 179);
+    width: 100%;
+    padding: 10px;
+    height: 180px;
+    /* display: flex; */
+    /* flex-direction: row; */
+}
+
+.tour-box > a {
+    width: 100%;
+    align-self: flex-end;
+    border-top: 1px solid rgb(0, 0, 0);
+    width: 100%;
+    height: 48px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-size: 17.5px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 48px;
+}
+.tour-platform {
+    float: right;
+}
+
+.tour-stats {
+    display: inline-table;
+    margin-right: 4px;
+    flex: 2;
+}
+p.tour-name small {
+    font-size: 14px;
+}
+.tour-stats small {
+    font-size: 9px;
+    font-weight: 500;
+    text-align: left;
+    color: rgb(179, 179, 179);
+}
+.flex-3{
+  flex:3;
+}
+.tour-stats-block {
+    display: flex;
+    flex-direction: row;
+}
+.tour-stats p {
+
+  margin-top: 4px;
+  font-size: 21px;
+  text-align: left;
+  color: rgb(255, 255, 255);
+    line-height: 21px;
+  margin: 0;
+}
+
+.tour-stats p span.credits-info {
+    font-size: 14px;
+}
+
+
+.tour-name {
+
+    font-size: 24px;
+    font-weight: 800;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-align: left;
+    color: rgb(255, 255, 255);
+    width: calc(100% - 35px);
+    margin-bottom: 2px;max-height: 48px;
+    overflow-y: hidden;
+}
+
 @media (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5544,6 +5705,8 @@ button.btn.btn-exp-menu {
     .sm_on_mob a {
         text-align: center;
     }
+
+
 
     span.close_side {
         position: absolute;
@@ -5703,6 +5866,9 @@ button.btn.btn-exp-menu {
 }
 
 @media screen and (max-width: 576px) {
+  .star_img.big{
+    width:50px;height: auto;
+  }
   .pf_icon_big{
     padding-top:0;
   }
@@ -5736,67 +5902,4 @@ button.btn.btn-exp-menu {
 
         zoom: 0.6;
     }
-}
-.filter-form .btn{
-  min-width: auto !important;
-  width: auto !important;display: inline-block;
-}
-.filter-form .btn-outline{
-  color:#fff
-}
-
-a.post_image.post_image_smaller.post_video:after {
-    content: 'click to play video';
-}
-
-.tolowercase{
-  text-transform: none;
-}
-.round.winner_round .match {
-    height: 50px !important;
-}
-
-.container-brackets .separator-brackets.rd-3 .line:first-child {
-    margin-top: 195px !important;
-}
-
-.container-brackets .separator-brackets.rd-3 .line {
-    height: 345px !important;
-}
-
-.container-brackets .round.rd-4 {
-    margin-top: 310px !important;
-}
-.brackets {
-    overflow-x: scroll;
-
-}
-
-
-
-.container-brackets .round.rd-4 .match .player:last-child {
-   margin-bottom: 14px !important;
-}
-
-.container-brackets .round.rd-4 .match .player:nth-child(2) {
-   margin-top: 19px !important;
-   margin-bottom: 700px !important;
-}
-
-.container-brackets .separator-brackets.rd-4 .line:first-child {
-   margin-top: 380px !important;
-   height: 750px !important;
-}
-
-.round.rd-5.winner_round {
-   margin-top: 600px !important;
-}
-.round.winner_round span {
-    display: none !important;
-}
-.container-brackets .round.winner_round .match .player {margin-top:0!important;margin-bottom:0!important;}
-.container-brackets .round.winner_round .match .player:nth-child(2){margin-top:0!important;margin-bottom:0!important;}
-
-a.dropdown-item.disabled {
-    padding-left: 10px;
 }

@@ -34,8 +34,20 @@ class Home extends React.Component {
         });
       }
     });
+    this.runQuery4();
   }
-
+  runQuery4() {
+    fetch('/api/tournaments/upcoming?limit=5')
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState({
+            is_loaded: true,
+            tournaments: json.items
+          });
+        }
+      });
+  }
   language = {};
   render() {
     // console.log(this.props);

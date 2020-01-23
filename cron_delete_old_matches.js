@@ -219,7 +219,7 @@ const unresponsive_match = function(m_id, match) {
         //
       })
       .catch(function(err) {
-        console.log(err);
+        // console.log(err);
         Raven.captureException(err);
       });
   }
@@ -247,7 +247,7 @@ const unresponsive_match_money8 = function(m_id, match) {
         //
       })
       .catch(function(err) {
-        console.log(err);
+        // console.log(err);
         Raven.captureException(err);
       });
   }
@@ -266,7 +266,7 @@ const process_7 = function() {
       matches = matches.toJSON();
       console.log(matches);
       for (let i = 0; i < matches.length; i++) {
-        // unresponsive_match_money8(matches[i].id, matches[i]);
+        unresponsive_match_money8(matches[i].id, matches[i]);
       }
       reset_ticker();
       // setTimeout(process_7, 4000);

@@ -12,5 +12,9 @@ routes.get('/user_info', ctrl.listItem);
 routes.get('/single/:id', ctrl.listSingleItem);
 routes.get('/upcoming', ctrl.listupcoming);
 routes.post('/add', u_ctrl.ensureAuthenticated, ctrl.addItem);
-routes.post('/resolveDispute', u_ctrl.ensureAuthenticated, ctrl.resolveDispute);
+routes.post(
+  '/resolveDispute',
+  u_ctrl.ensureAuthenticated,
+  ctrl.resolveDisputeWrap
+);
 routes.get('/matches_of_user', ctrl.matchesForUser);
