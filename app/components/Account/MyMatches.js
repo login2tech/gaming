@@ -26,10 +26,10 @@ class MyMatches extends React.Component {
     setTimeout(() => {
       scrollToTop();
     }, 500);
-    this.fetchTeams();
+    this.fetchTeams(true);
   }
 
-  fetchTeams() {
+  fetchTeams(forward) {
     fetch('/api/teams/team_of_user?uid=' + this.state.user_info.id)
       .then(res => res.json())
       .then(json => {
@@ -39,19 +39,23 @@ class MyMatches extends React.Component {
               user_teams: json.teams
             },
             () => {
-              this.fetchMatches();
+              if (forward) {
+                this.fetchMatches(true);
+              }
             }
           );
         }
       });
   }
 
-  fetchMatches() {
+  fetchMatches(forward) {
     let team_array = [];
     for (let i = 0; i < this.state.user_teams.length; i++) {
       const team_parent = this.state.user_teams[i];
       const team = team_parent.team_info ? team_parent.team_info : {};
-      team_array.push(team.id);
+      if (team.id && team.team_type == 'matchfinder') {
+        team_array.push(team.id);
+      }
     }
     team_array = team_array.join(',');
 
@@ -72,14 +76,51 @@ class MyMatches extends React.Component {
               pagination_matchfinder: json.pagination ? json.pagination : {}
             },
             () => {
-              this.fetchMoney8();
+              if (forward) {
+                this.fetchMoney8(true);
+              }
             }
           );
         }
       });
   }
 
-  fetchMoney8() {
+  fetchTournaments() {
+    let team_array = [];
+    for (let i = 0; i < this.state.user_teams.length; i++) {
+      const team_parent = this.state.user_teams[i];
+      const team = team_parent.team_info ? team_parent.team_info : {};
+      if (team.id && team.team_type == 'tournaments') {
+        team_array.push(team.id);
+      }
+    }
+    team_array = team_array.join(',');
+
+    fetch(
+      '/api/tournaments/matches_of_user?only_pending=yes&page=' +
+        this.state.matchfinder_page +
+        '&uid=' +
+        this.state.user_info.id +
+        '&teams=' +
+        team_array
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState(
+            {
+              tournaments: json.items,
+              pagination_tour: json.pagination ? json.pagination : {}
+            },
+            () => {
+              // this.fetchMoney8();
+            }
+          );
+        }
+      });
+  }
+
+  fetchMoney8(forward) {
     fetch(
       '/api/money8/matches_of_user?only_pending=yes&page=' +
         this.state.money8_page +
@@ -95,7 +136,9 @@ class MyMatches extends React.Component {
               pagination_money8: json.pagination ? json.pagination : {}
             },
             () => {
-              // this.fetchTournaments();
+              if (forward) {
+                this.fetchTournaments();
+              }
             }
           );
         }
@@ -111,7 +154,7 @@ class MyMatches extends React.Component {
       } else if (typ == 'money8') {
         this.fetchMoney8();
       } else if (typ == 'tour') {
-        this.fetchTeams();
+        this.fetchTournaments();
       }
     });
   };
@@ -161,9 +204,9 @@ class MyMatches extends React.Component {
                           <th>Match</th>
                           <th>Team</th>
                           <th>Opponent</th>
-                          <th>Result</th>
+                          <th>Status</th>
                           <th>Date</th>
-                          <th>Info</th>
+                          <th style={{width: '10%'}}>Info</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -284,9 +327,9 @@ class MyMatches extends React.Component {
                       <thead>
                         <tr>
                           <th>Match</th>
-                          <th>Result</th>
-                          <th>Date</th>
-                          <th>Info</th>
+                          <th>Status</th>
+                          <th>Expires In</th>
+                          <th style={{width: '10%'}}>Info</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -333,7 +376,7 @@ class MyMatches extends React.Component {
                                   match.status
                                 )}
                               </td>
-                              <td>{moment(match.created_at).format('lll')}</td>
+                              <td>{moment(match.expires_in).format('lll')}</td>
                               <td>
                                 <Link to={'/mix-and-match/' + match.id}>
                                   View Match
@@ -355,6 +398,103 @@ class MyMatches extends React.Component {
                     pageRangeDisplayed={5}
                     onPageChange={data => {
                       this.handlePageClick(data, 'money8');
+                    }}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={'active'}
+                  />
+                </div>
+
+                <div className="mb-3 mt-3 pt-3">
+                  <h5 className="prizes_desclaimer">Tournament Matches</h5>
+
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Tournament</th>
+                          <th>Match</th>
+                          <th>Round</th>
+                          <th>Status</th>
+                          <th>Date</th>
+                          <th style={{width: '10%'}}>Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.tournaments.map((match, i) => {
+                          let team_1 = [];
+                          let team_2 = [];
+                          if (match.status != 'pending') {
+                            team_1 = match.team_1_players
+                              .split('|')
+                              .map(function(a) {
+                                return parseInt(a);
+                              });
+
+                            team_2 = match.team_2_players
+                              .split('|')
+                              .map(function(a) {
+                                return parseInt(a);
+                              });
+                          }
+                          return (
+                            <tr key={match.id}>
+                              <td>
+                                <Link to={'/t/' + match.tournament_id}>
+                                  {match.tournament.title}
+                                </Link>
+                              </td>
+                              <td>
+                                <Link to={'/tournament-match/' + match.id}>
+                                  #{match.id}
+                                </Link>
+                              </td>
+                              <td>{match.match_round}</td>
+                              <td>
+                                {match.result ? (
+                                  match.result == 'team_1' ? (
+                                    team_1.indexOf(this.state.user_info.id) >
+                                    -1 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : match.result == 'team_2' ? (
+                                    team_2.indexOf(this.state.user_info.id) >
+                                    -1 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : (
+                                    match.result
+                                  )
+                                ) : (
+                                  match.status
+                                )}
+                              </td>
+                              <td>{moment(match.starts_at).format('lll')}</td>
+                              <td>
+                                <Link to={'/tournament-match/' + match.id}>
+                                  View Match
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  <ReactPaginate
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={this.state.pagination_tour.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={data => {
+                      this.handlePageClick(data, 'tour');
                     }}
                     containerClassName={'pagination'}
                     subContainerClassName={'pages pagination'}

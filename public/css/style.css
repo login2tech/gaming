@@ -33,10 +33,6 @@ a,a:hover {
     font-weight: 400;
 }
 
-:focus {
-    outline: 2px solid rgb(16, 71, 244);
-}
-
 label, legend {
     color: #fff;
 }

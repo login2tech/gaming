@@ -22,3 +22,9 @@ routes.post(
   u_ctrl.ensureAuthenticated,
   ctrl.resolveDisputeWrap
 );
+
+routes.get(
+  '/matches_of_user',
+  // u_ctrl.ensureAuthenticated,
+  ctrl.matches_of_user
+);

@@ -723,6 +723,7 @@ const resolveDispute = function(
       }
     });
 };
+
 exports.resolveDispute = resolveDispute;
 
 exports.resolveDisputeWrap = function(req, res, next) {
@@ -1090,9 +1091,11 @@ exports.join = function(req, res, next) {
           team_2_id: match.get('team_1_id')
         })
         .where('starts_at', '>', moment().subtract(3, 'hours'))
+        .where('status', '!=', 'cancelled')
         .fetch()
         .then(function(old_matches) {
           //old_matches
+          // console.log(old_matches.toJSON());
 
           if (old_matches) {
             return res.status(400).send({
@@ -1107,6 +1110,7 @@ exports.join = function(req, res, next) {
                 team_1_id: match.get('team_1_id')
               })
               .where('starts_at', '>', moment().subtract(3, 'hours'))
+              .where('status', '!=', 'cancelled')
               .fetch()
               .then(function(old_matches) {
                 if (old_matches) {
@@ -1122,6 +1126,7 @@ exports.join = function(req, res, next) {
           }
         })
         .catch(function(err) {
+          console.log(err);
           Raven.captureException(err);
           return res.status(400).send({
             ok: false,
@@ -1475,7 +1480,40 @@ exports.leave_match = function(req, res, next) {
             cancel_requested_by: ''
           })
           .then(function(m) {
-            res
+            let notify = '';
+            if (req.body.team == 'team_1') {
+              notify = match.get('team_2_players');
+            } else if (req.body.team == 'team_2') {
+              notify = match.get('team_1_players');
+            }
+            notify = ('' + notify)
+              .split('|')
+              .filter(function(item) {
+                if (item != '') {
+                  return true;
+                }
+                return false;
+              })
+              .map(function(item) {
+                return parseInt(item);
+              });
+            for (let i = 0; i < notify.length; i++) {
+              new Notif()
+                .save({
+                  user_id: notify[i],
+                  description:
+                    'Other Team has rejected your cancellation request.',
+                  type: 'match',
+                  object_id: match.id
+                })
+                .then(function() {
+                  //
+                })
+                .catch(function() {
+                  //
+                });
+            }
+            return res
               .status(200)
               .send({ok: true, msg: 'Match cancellation request cancelled.'});
           })
@@ -1500,6 +1538,39 @@ exports.leave_match = function(req, res, next) {
                 msg = 'Match has been cancelled.';
               } else {
                 msg = 'Match has been cancelled. You will get refunds shortly';
+              }
+              let notify;
+              if (req.body.team == 'team_1') {
+                notify = match.get('team_2_players');
+              } else if (req.body.team == 'team_2') {
+                notify = match.get('team_1_players');
+              }
+              notify = ('' + notify)
+                .split('|')
+                .filter(function(item) {
+                  if (item != '') {
+                    return true;
+                  }
+                  return false;
+                })
+                .map(function(item) {
+                  return parseInt(item);
+                });
+              for (let i = 0; i < notify.length; i++) {
+                new Notif()
+                  .save({
+                    user_id: notify[i],
+                    description:
+                      'Other Team has accepted your cancellation request',
+                    type: 'match',
+                    object_id: match.id
+                  })
+                  .then(function() {
+                    //
+                  })
+                  .catch(function() {
+                    //
+                  });
               }
               return res.status(200).send({ok: true, msg: msg});
             })
@@ -1537,7 +1608,39 @@ exports.leave_match = function(req, res, next) {
             cancel_requested_by: req.body.team
           })
           .then(function(m) {
-            res
+            let notify = '';
+            if (req.body.team == 'team_1') {
+              notify = match.get('team_2_players');
+            } else if (req.body.team == 'team_2') {
+              notify = match.get('team_1_players');
+            }
+            notify = ('' + notify)
+              .split('|')
+              .filter(function(item) {
+                if (item != '') {
+                  return true;
+                }
+                return false;
+              })
+              .map(function(item) {
+                return parseInt(item);
+              });
+            for (let i = 0; i < notify.length; i++) {
+              new Notif()
+                .save({
+                  user_id: notify[i],
+                  description: 'Other Team has requested to cancel the match',
+                  type: 'match',
+                  object_id: match.id
+                })
+                .then(function() {
+                  //
+                })
+                .catch(function() {
+                  //
+                });
+            }
+            return res
               .status(200)
               .send({ok: true, msg: 'Match cancellation requested'});
           })

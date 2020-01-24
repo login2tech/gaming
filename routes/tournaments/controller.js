@@ -1385,3 +1385,53 @@ exports.resolveDispute = resolveDispute;
 exports.resolveDisputeWrap = function(req, res, next) {
   resolveDispute(req, res, next);
 };
+
+exports.matches_of_user = function(req, res, next) {
+  // console.log(req.query);
+  let teams = req.query.teams;
+  if (!teams || teams == '') {
+    teams = [];
+  } else {
+    teams = teams.split(',');
+  }
+  let mdl = new TournamentMatch();
+  mdl = mdl.orderBy('created_at', 'DESC');
+
+  if (req.query.exclude_pending == 'yes') {
+    // console.log('yesysey');
+    mdl = mdl.where('status', 'NOT LIKE', 'pending');
+    // mdl = mdl.where('status', '!=', 'pending');
+  }
+
+  if (req.query.only_pending == 'yes') {
+    mdl = mdl.query(function(qb) {
+      qb.where('status', 'LIKE', 'pending')
+        .orWhere('status', 'LIKE', 'accepted')
+        .orWhere('status', 'LIKE', 'started');
+    });
+  }
+
+  mdl = mdl.query(function(qb) {
+    qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+  });
+
+  mdl
+    .fetchPage({
+      page: req.query.page ? req.query.page : 1,
+      pageSize: 5,
+      withRelated: ['tournament', 'team_1_info', 'team_2_info']
+    })
+
+    .then(function(item) {
+      if (!item) {
+        return res.status(200).send({ok: true, items: [], r: 'EMPTy'});
+      }
+      return res
+        .status(200)
+        .send({ok: true, items: item.toJSON(), pagination: item.pagination});
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
