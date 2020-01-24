@@ -134,9 +134,10 @@ class MatchFinder extends React.Component {
                           <div id="upcoming-match" className="match-list">
                             <div className="live-wager-row table-header d-none d-md-flex ">
                               <div className="game-logo-container">Game</div>
+
                               <div className="wager-cost">Prize</div>
                               <div className="wager-team-size">Team Size</div>
-                              <div className="wager-game-mode">Competition</div>
+
                               <div className="wager-region">Platform</div>
 
                               <div className="start-time">Starting</div>

@@ -2122,7 +2122,8 @@ a.image_avar {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
- .tournament-list .tournament-box {
+
+.tournament-list .tournament-box {
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
@@ -2136,7 +2137,6 @@ a.image_avar {
     background-position: center;
     background-size: cover;
     flex-shrink: 0;
-
     width: 100%;
     color: #fff;
     position: relative;
@@ -2263,7 +2263,6 @@ a.image_avar {
     font: 500 1.125em/1 "Segoe UI Light",sans-serif;
     margin-bottom: 6px;
 } */
-
 .tournament-footer .col-item {
     min-width: 100px;
 }
@@ -2481,9 +2480,11 @@ ul.members li a img {
     width: 100%;
     margin: auto 0;
 }
-.mw-100p{
-  max-width: 100px
+
+.mw-100p {
+    max-width: 100px
 }
+
 @media (min-width: 576px) and (max-width: 767.98px) {
     .grid {
         width: 540px;
@@ -2860,16 +2861,15 @@ font-weight: 600; text-transform: uppercase; }
     background: #333 !important;
     color: #fff!important;
 }
- .form-control:-webkit-autofill:hover,
- .form-control:-webkit-autofill:focus,
- .form-control:-internal-autofill-selected{
-   border-color: #7a7a7a;
-   border-radius: 5px;
-   padding: 12px 15px;
-   margin-bottom: 20px;
-   border-radius: 0px;
-   background: #333 !important;
-   color: #fff!important;
+
+.form-control:-webkit-autofill:hover, .form-control:-webkit-autofill:focus, .form-control:-internal-autofill-selected {
+    border-color: #7a7a7a;
+    border-radius: 5px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 0px;
+    background: #333 !important;
+    color: #fff!important;
 }
 
 .tab-block .tab-mnu {
@@ -2905,6 +2905,7 @@ font-weight: 600; text-transform: uppercase; }
 .tab-block .tab-cont .tab-pane {
     padding: 20px 25px;
 }
+
 /*
 .tab-block .tournament-list .tournament-box {
     max-width: 529px;
@@ -2914,7 +2915,6 @@ font-weight: 600; text-transform: uppercase; }
     width: 100% !important;
     margin-left: 0px;
 } */
-
 .flag_icons {
     margin: 0px;
     padding: 0px;
@@ -3123,12 +3123,12 @@ font-weight: 600; text-transform: uppercase; }
     /* border: 1px solid #2847f3; */
     box-shadow: 0 0 5px 2px #2847f3;
 }
-input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date']{
-  -webkit-appearance:none;
+
+input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date'] {
+    -webkit-appearance: none;
 }
 
-.authorize_box.shadow ,
-.card, input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date']{
+.authorize_box.shadow , .card,.live-wager-row, input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date'] {
     box-shadow: 0 0 5px 2px #2847f3;
 }
 
@@ -3360,9 +3360,10 @@ textarea.form-control {
 .card {
     color: #000;
 }
-.card a{
-  color : 2847f3 !important;
-  text-decoration: underline !important;
+
+.card a {
+    color : 2847f3 !important;
+    text-decoration: underline !important;
 }
 
 .pagination {
@@ -3968,8 +3969,9 @@ ul.submenu li a {
     justify-content: space-between;
     justify-content: space-evenly;
 }
-.is_logged_in .nav-list{
-  justify-content: space-between;
+
+.is_logged_in .nav-list {
+    justify-content: space-between;
 }
 
 .t-prizes-place {
@@ -4275,11 +4277,11 @@ button.btn.btn-danger:not(.btn-sm) {
 .btn.btn-sm.btn-danger {
     margin-left: 5px;
 }
+
 /*
 li.tournament-box {
     margin-bottom: 10px; */
 /* } */
-
 .score_obj {
     background: #3d3d3d;
     padding: 0;
@@ -4616,7 +4618,8 @@ a:hover {
 
 .post_image.post_image_smaller {
     max-height: 200px;
-    overflow: hidden;width:100%;
+    overflow: hidden;
+    width: 100%;
     position: relative;
     display: inline-block;
 }
@@ -5035,6 +5038,7 @@ span.dot.notif_dot.fix_ui {
     height: 10px;
     background: rgb(255, 0, 0);
 }
+
 .ico_no_fl .pf_icon {
     float: none;
 }
@@ -5100,7 +5104,7 @@ ul.notices li:first-child {
     margin-top: 5px;
     min-width: 165px;
     border: 0;
-    border-radius: 0;
+    /* border-radius: 0; */
     padding: 13px 0;
     font: 900 0.75em/1 "Segoe UI Light",sans-serif;
 }
@@ -5234,8 +5238,9 @@ ul.notices li:first-child {
 .width-auto {
     width: auto !important
 }
-.min-width-none{
-  min-width: 0px !important
+
+.min-width-none {
+    min-width: 0px !important
 }
 
 .cnclMt.width-auto {
@@ -5262,7 +5267,8 @@ ul.notices li:first-child {
 }
 
 .status_cancelled {
-    color: #f00 !important;text-transform: uppercase;
+    color: #f00 !important;
+    text-transform: uppercase;
 }
 
 .m_status {
@@ -5397,7 +5403,6 @@ ul.notices li:first-child {
     display: none
 }
 
-
 .container-brackets .round .match .player {
     border-radius: 4px !important;
     padding: 10px !important;
@@ -5406,9 +5411,15 @@ ul.notices li:first-child {
 .brackets .match {
     background: rgba(0, 0, 0, 0.5);
     padding: 10px 20px;
-    box-shadow: 0px 0px 5px 2px #2a48f4eb;text-align: center;
+    box-shadow: 0px 0px 5px 2px #2a48f4eb;
+    text-align: center;
 }
-.brackets .player{cursor: pointer;text-align: left;}
+
+.brackets .player {
+    cursor: pointer;
+    text-align: left;
+}
+
 .brackets .player.winner:after {
     content: 'W';
     color: green;
@@ -5436,7 +5447,7 @@ ul.notices li:first-child {
 }
 
 .brackets .container-brackets {
-  padding-left: 3px;
+    padding-left: 3px;
     padding-top: 3px;
 }
 
@@ -5451,16 +5462,14 @@ ul.notices li:first-child {
 .container-brackets .round.rd-2 .match {
     margin-bottom: 70px;
 }
-.container-brackets .round.rd-2 .match .player{
-  margin: 159px 0;
 
+.container-brackets .round.rd-2 .match .player {
+    margin: 159px 0;
 }
 
-.container-brackets .round.rd-2{
-  margin-top:0 !important;
+.container-brackets .round.rd-2 {
+    margin-top: 0 !important;
 }
-
-
 
 .container-brackets .round.rd-3 {
     margin-top: 100px !important;
@@ -5486,14 +5495,15 @@ ul.notices li:first-child {
     height: 207px !important;
     margin-bottom: 192px !important;
 }
+
 .container-brackets .round.rd-3 .match {
     margin-bottom: 330px;
 }
 
-.change_uname{
-  position: absolute;
-  top: 0;
-  right: -60px;
+.change_uname {
+    position: absolute;
+    top: 0;
+    right: -60px;
 }
 
 .change_uname_wrap {
@@ -5511,21 +5521,24 @@ ul.notices li:first-child {
     width: 80%;
 }
 
-.filter-form .btn{
-  min-width: auto !important;
-  width: auto !important;display: inline-block;
+.filter-form .btn {
+    min-width: auto !important;
+    width: auto !important;
+    display: inline-block;
 }
-.filter-form .btn-outline{
-  color:#fff
+
+.filter-form .btn-outline {
+    color: #fff
 }
 
 a.post_image.post_image_smaller.post_video:after {
     content: 'click to play video';
 }
 
-.tolowercase{
-  text-transform: none;
+.tolowercase {
+    text-transform: none;
 }
+
 .round.winner_round .match {
     height: 50px !important;
 }
@@ -5541,61 +5554,71 @@ a.post_image.post_image_smaller.post_video:after {
 .container-brackets .round.rd-4 {
     margin-top: 310px !important;
 }
+
 .brackets {
     overflow-x: scroll;
-
 }
 
-
-
 .container-brackets .round.rd-4 .match .player:last-child {
-   margin-bottom: 14px !important;
+    margin-bottom: 14px !important;
 }
 
 .container-brackets .round.rd-4 .match .player:nth-child(2) {
-   margin-top: 19px !important;
-   margin-bottom: 700px !important;
+    margin-top: 19px !important;
+    margin-bottom: 700px !important;
 }
 
 .container-brackets .separator-brackets.rd-4 .line:first-child {
-   margin-top: 380px !important;
-   height: 750px !important;
+    margin-top: 380px !important;
+    height: 750px !important;
 }
 
 .round.rd-5.winner_round {
-   margin-top: 600px !important;
+    margin-top: 600px !important;
 }
+
 .round.winner_round span {
     display: none !important;
 }
-.container-brackets .round.winner_round .match .player {margin-top:0!important;margin-bottom:0!important;}
-.container-brackets .round.winner_round .match .player:nth-child(2){margin-top:0!important;margin-bottom:0!important;}
+
+.container-brackets .round.winner_round .match .player {
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+}
+
+.container-brackets .round.winner_round .match .player:nth-child(2) {
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+}
 
 a.dropdown-item.disabled {
     padding-left: 10px;
 }
 
-
 .tour-box {
-    background-color: rgb(41, 41, 41);
+    background-color: #000;
     max-width: 100%;
     margin-bottom: 50px;
     display: flex;
+    box-shadow: 0 0 5px 2px #2847f3;
     flex-wrap: wrap;
 }
+
 .star_img:not(.big) {
     position: absolute;
     top: -25px;
     left: -25px;
     height: 50px;
 }
-.star_img.big{
-  float: right;
+
+.star_img.big {
+    float: right;
     height: 200px;
     top: 0;
     position: absolute;
     right: 0;
 }
+
 .tour-box .tour-details {
     color: rgb(179, 179, 179);
     width: 100%;
@@ -5604,14 +5627,18 @@ a.dropdown-item.disabled {
     /* display: flex; */
     /* flex-direction: row; */
 }
-.tour-box .tour-actions{
-  display: flex;width: 100%;border-top: 1px solid rgb(0, 0, 0);
+
+.tour-box .tour-actions {
+    display: flex;
+    width: 100%;
+    border-top: 1px solid rgba(40, 71, 243, 0.54);
 }
- .tour-box .tour-actions a, .tour-box .tour-actions button {
+
+.tour-box .tour-actions a, .tour-box .tour-actions button {
     flex: 1;
     align-self: flex-end;
-
-    width: 100%;cursor: pointer;
+    width: 100%;
+    cursor: pointer;
     height: 48px;
     padding-left: 24px;
     padding-right: 24px;
@@ -5624,6 +5651,7 @@ a.dropdown-item.disabled {
     border: none;
     color: rgb(255, 255, 255);
 }
+
 .tour-platform {
     float: right;
 }
@@ -5638,34 +5666,36 @@ p.tour-name small {
     display: block;
     line-height: 25px;
 }
+
 .tour-stats small {
     font-size: 9px;
     font-weight: 500;
     text-align: left;
     color: rgb(179, 179, 179);
 }
-.flex-3{
-  flex:3;
-}
-.tour-stats-block {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.tour-stats p {
 
-  margin-top: 4px;
-  font-size: 21px;
-  text-align: left;
-  color: rgb(255, 255, 255);
+.flex-3 {
+    flex: 3;
+}
+
+.tour-stats-block {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.tour-stats p {
+    margin-top: 4px;
+    font-size: 21px;
+    text-align: left;
+    color: rgb(255, 255, 255);
     line-height: 21px;
-  margin: 0;
+    margin: 0;
 }
 
 .tour-stats p span.credits-info {
     font-size: 14px;
 }
-
 
 .tour-name {
     font-size: 24px;
@@ -5677,8 +5707,126 @@ p.tour-name small {
     text-align: left;
     color: rgb(255, 255, 255);
     width: calc(100% - 35px);
-    margin-bottom: 2px;max-height: 48px;
+    margin-bottom: 2px;
+    max-height: 48px;
     overflow-y: hidden;
+}
+
+.live-wager-row>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4px;
+    flex: 1 0 1%;
+    color: rgb(255, 255, 255);
+    font-size: 13.3px;
+    flex-direction: column;
+    flex: 1;
+    font-size: 17px;
+}
+
+.live-wager-row.table-header div {
+    text-align: center !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.live-wager-row img.game-logo {
+    width: 50px;
+    margin-right: 5px;
+}
+
+.live-wager-row {
+    background-color: #000;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 16px;
+    justify-content: space-between;
+    min-height: 66.5px;
+    transition: all .15s;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+a.match-accept-link {
+    display: inline-block;
+    line-height: 20px;
+}
+
+.wager-actions {
+    flex-direction: column;
+}
+
+.live-wager-mobile-block {
+    width: 100%;
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.live-wager-row.live-wager-row-mobile {
+    flex-direction: column;
+    padding: 20px;
+}
+
+.live-wager-row.live-wager-row-mobile div {
+    align-items: flex-start !important;
+}
+
+.live-wager-mobile-block > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+img.inline-star {
+    height: 49px;
+    margin-right: 19px;
+}
+
+.table td, .table th {
+    vertical-align: middle;
+}
+
+.no_bg {
+    background: none !important;
+}
+
+.tour-details .col-9 {
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.tour-platform {
+    font-size: 30px;
+}
+
+.wager-actions .cancel_btn {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+button.btn.btn-exp-menu {
+    display: none;
+}
+
+.d-md-none.live-wager-arrow {
+    flex: 1;
+}
+
+.live-wager-row.live-wager-row-mobile div {
+    align-items: flex-start !important;
+}
+
+.live-wager-row>div:first-child {
+    flex: 2 !important;
+    align-items: flex-start !important;
+    padding-left: 20px
+}
+
+.wager-region .fa, .wager-region .fab {
+    font-size: 30px !important;
 }
 
 @media (min-width: 993px) {
@@ -5695,10 +5843,6 @@ p.tour-name small {
     }
 }
 
-button.btn.btn-exp-menu {
-    display: none;
-}
-
 @media (max-width: 992px) {
     .sm_on_mob {
         width: 50% !important;
@@ -5706,14 +5850,13 @@ button.btn.btn-exp-menu {
         text-align: center;
     }
 
-.menu_btn{
-  border-radius: 8px
-}
+    .menu_btn {
+        border-radius: 8px
+    }
+
     .sm_on_mob a {
         text-align: center;
     }
-
-
 
     span.close_side {
         position: absolute;
@@ -5741,21 +5884,24 @@ button.btn.btn-exp-menu {
 
     #sidebar li.actvFull {
         position: static !important;
-    }.notification_list:not(.user_sugggestions) li a:not(.text-danger){
-      padding: 0px !important
     }
+
+    .notification_list:not(.user_sugggestions) li a:not(.text-danger) {
+        padding: 0px !important
+    }
+
     button.btn.btn-exp-menu {
-      position: absolute;
-      top: 13px;
-      right: 10px;
-      height: 40px;
-      display: block;
-      width: 40px;
-      line-height: 40px;
-      background: rgb(255, 255, 255);
-      padding: 0;
-      border: 0;
-      z-index: 11;
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        height: 40px;
+        display: block;
+        width: 40px;
+        line-height: 40px;
+        background: rgb(255, 255, 255);
+        padding: 0;
+        border: 0;
+        z-index: 11;
     }
 
     .user_sugggestions li {
@@ -5873,16 +6019,19 @@ button.btn.btn-exp-menu {
 }
 
 @media screen and (max-width: 576px) {
-
-  .tour-box .tour-details{
+    .tour-box .tour-details {
         height: 200px;
-  }
-  .star_img.big{
-    width:50px;height: auto;
-  }
-  .pf_icon_big{
-    padding-top:0;
-  }
+    }
+
+    .star_img.big {
+        width: 50px;
+        height: auto;
+    }
+
+    .pf_icon_big {
+        padding-top: 0;
+    }
+
     .mh190 {
         min-height: auto;
     }
@@ -5898,6 +6047,7 @@ button.btn.btn-exp-menu {
     .dropdown-item .fa {
         width: 30px;
     }
+
     section.call_action.no_bg {
         background-size: contain;
         background-position: top;
@@ -5910,94 +6060,23 @@ button.btn.btn-exp-menu {
     }
 
     .brackets {
+        zoom: 0.6; }
 
-        zoom: 0.6;
-    }
     .tour-stats {
         width: 50%;
         flex: none;
         margin: 0;
     }
 
-    .live-wager-row>div:not(.live-wager-arrow){
-
-      align-items: flex-start;
+    .live-wager-row>div:not(.live-wager-arrow) {
+        flex: 2;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
     }
-}
-.live-wager-row>div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 4px;
-    flex: 1 0 1%;
-    color: rgb(255, 255, 255);
-    font-size: 13.3px;
-    flex-direction: column;  flex: 1;
-}
 
-.live-wager-row {
-    width: 100%;
-    display: flex;
-}
-
-
-.live-wager-row.table-header div {
-    text-align: center !important;
-    align-items: center;
-    justify-content: center;
-}
-
-.live-wager-row img.game-logo {
-    width: 50px;
-}
-
-.live-wager-row {
-  margin-bottom: 4px;
-  background-color: rgb(41, 41, 41);
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  min-height: 66.5px;
-  font-family: Roboto,sans-serif;
-  transition: all .15s;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-a.match-accept-link {
-    display: inline-block;
-    line-height: 20px;
-  }
-  .wager-actions {
-      flex-direction: column;
-  }
-
-  .live-wager-mobile-block {
-      width: 100%;
-      display: flex !important;
-      flex-direction: row !important;
-  }
-
-  .live-wager-row.live-wager-row-mobile {
-      flex-direction: column;
-      padding: 20px;
-  }
-
-  .live-wager-mobile-block > div {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-  }
-
-  img.inline-star {
-      height: 49px;
-      margin-right: 19px;
-  }
-
-.table td, .table th{
-  vertical-align: middle;
-}
-.no_bg{
-  background: none !important;
+    .live-wager-row>div:first-child {
+        flex: 5 !important;
+        padding-left: 0;
+    }
 }

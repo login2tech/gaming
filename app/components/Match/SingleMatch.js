@@ -36,37 +36,36 @@ const SingleMatch = props => {
       <div className="live-wager-row">
         <div>
           <div className="game-cover-block">
-            <img className="game-logo" src={match.game.image_url} />
+            <img className="game-logo" src={match.game.image_url} />{' '}
+            {match.game.title} - {match.ladder.title}
           </div>
         </div>
         <div className="wager-cost">
           <span>
-            {'PAID (' +
-              (match.match_type == 'cash'
-                ? '' + match.match_fee + '$'
-                : '' + match.match_fee + ' credits') +
-              ')'}
+            {(match.match_type == 'free') == 'FREE' ? (
+              'FREE'
+            ) : (
+              <>
+                PAID
+                <span>
+                  {match.match_type == 'cash'
+                    ? '' + match.match_fee + '$'
+                    : '' + match.match_fee + ' credits'}
+                </span>
+              </>
+            )}
           </span>
         </div>
         <div className="wager-team-size d-none d-md-flex">
           {match.match_players}v{match.match_players}
         </div>
-        <div className="wager-mobile-info d-md-none">
-          <strong>
-            {match.game.title} - {match.ladder.title}
-          </strong>
-        </div>
-        <div className="wager-game-mode d-none d-md-flex">
-          {match.game.title} - {match.ladder.title}
-        </div>
+
         <div className="wager-region d-none d-md-flex">
           {utils.platform_icon(match.ladder.platform)}
         </div>
 
         <div className="start-time d-none d-md-flex">
-          <span className="starts-in">
-            Starts {moment(match.starts_at).fromNow()}
-          </span>
+          <span className="starts-in">{moment(match.starts_at).fromNow()}</span>
         </div>
         <div className="wager-actions d-none d-md-flex">
           <Link
@@ -91,7 +90,7 @@ const SingleMatch = props => {
                   onClick={() => {
                     setShowCancelInit(false);
                   }}
-                  className="btn-danger btn cnclMt width-auto"
+                  className=" cancel_btn btn-danger btn cnclMt width-auto"
                 >
                   x
                 </button>
@@ -132,7 +131,7 @@ const SingleMatch = props => {
         <div className="live-wager-row live-wager-row-mobile d-md-none">
           <div className=" live-wager-mobile-block">
             <div className="info-block-left">
-              <strong>Starting</strong>
+              <strong>Starts</strong>
 
               <strong>Team Size</strong>
               <strong>Platform</strong>
@@ -155,6 +154,39 @@ const SingleMatch = props => {
             >
               <span className="wager-hide-tablet">Accept</span>
             </Link>
+            {show_cancel ? (
+              showCancelInit ? (
+                <div>
+                  <button
+                    onClick={() => {
+                      props.initCancel(match);
+                    }}
+                    className="btn-danger btn cnclMt width-auto"
+                  >
+                    SURE?
+                  </button>
+                  <button
+                    onClick={() => {
+                      setShowCancelInit(false);
+                    }}
+                    className=" cancel_btn btn-danger btn cnclMt width-auto"
+                  >
+                    x
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    setShowCancelInit(true);
+                  }}
+                  className="btn-danger btn cnclMt width-100"
+                >
+                  Cancel Match
+                </button>
+              )
+            ) : (
+              false
+            )}
           </div>
         </div>
       ) : (
