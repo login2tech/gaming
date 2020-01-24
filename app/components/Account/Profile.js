@@ -618,6 +618,15 @@ class Profile extends React.Component {
                           </p>
                         </div>
 
+                        <div className="col-md-4">
+                          <span> STATE </span>
+                          <p>
+                            {this.state.user_info.state
+                              ? this.state.user_info.state
+                              : '-'}
+                          </p>
+                        </div>
+
                         {/*}<div className="col-md-4">
                           <span>Rank</span>
                           <p>-</p>
@@ -679,6 +688,9 @@ class Profile extends React.Component {
                           {this.state.match_played.map((match, i) => {
                             const teams = this.getTeams(match);
                             let is_win = false;
+                            if (match.status == 'cancelled') {
+                              return false;
+                            }
                             let is_loss = false;
                             // is_status = true;
                             if (match.result) {
@@ -805,6 +817,9 @@ class Profile extends React.Component {
                             // const teams = this.getTeams(match);
                             // const is_win = false;
                             // const is_loss = false;
+                            if (match.status == 'cancelled') {
+                              return false;
+                            }
                             let team_1 = [];
                             let team_2 = [];
                             if (match.status != 'pending') {

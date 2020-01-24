@@ -104,7 +104,7 @@ class MyMembershipModule extends React.Component {
                   ) : (
                     <>
                       <span className="text-gold">
-                        High Priority Ticket Escalations{' '}
+                        High Priority Match Escalations
                       </span>
                       <span className="text-gold">
                         1 Free @username change!

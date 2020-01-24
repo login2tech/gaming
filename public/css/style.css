@@ -5989,3 +5989,15 @@ a.match-accept-link {
       flex-direction: column;
       flex: 1;
   }
+
+  img.inline-star {
+      height: 49px;
+      margin-right: 19px;
+  }
+
+.table td, .table th{
+  vertical-align: middle;
+}
+.no_bg{
+  background: none !important;
+}

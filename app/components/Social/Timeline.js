@@ -143,8 +143,7 @@ class Timeline extends React.Component {
                 (post.user ? post.user.username : this.props.user.username)
               }
             >
-              {post.user ? post.user.first_name : ''}{' '}
-              {post.user ? post.user.last_name : ''}
+              @{post.user ? post.user.username : ''}
             </Link>{' '}
             {post.is_repost && post.original_poster ? (
               <span>

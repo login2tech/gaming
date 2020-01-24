@@ -97,8 +97,9 @@ class Trophies extends React.Component {
                     {this.state.items.map((item, i) => {
                       return (
                         <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
-                          <Link
-                            to={
+                          <a
+                            className="no_bg"
+                            href={
                               item.tournament ? '/t/' + item.tournament.id : ''
                             }
                           >
@@ -116,7 +117,7 @@ class Trophies extends React.Component {
                                 '.png'
                               }
                             />
-                          </Link>
+                          </a>
                         </div>
                       );
                     })}

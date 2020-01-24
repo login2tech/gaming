@@ -44,7 +44,7 @@ class PostComments extends React.Component {
           </span>
           <span className="">
             <Link to={'/u/' + comment.user.username}>
-              {comment.user.first_name} {comment.user.last_name}
+              @{comment.user.username}
             </Link>
           </span>
         </span>
@@ -63,7 +63,7 @@ class PostComments extends React.Component {
           </span>
           <span className="">
             <Link to={'/u/' + this.props.user.username}>
-              {this.props.user.first_name} {this.props.user.last_name}
+              @{this.props.user.username}
             </Link>
           </span>
         </span>

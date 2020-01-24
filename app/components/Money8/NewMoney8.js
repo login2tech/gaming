@@ -377,7 +377,9 @@ class NewMoney8 extends React.Component {
                         className="btn btn-default bttn_submit"
                         type="submit"
                       >
-                        Create Match
+                        {this.state.creating
+                          ? 'please wait...'
+                          : 'Create Match'}
                       </button>
                     </div>
                   </form>
@@ -402,6 +404,16 @@ class NewMoney8 extends React.Component {
                                 return (
                                   <tr key={team_user.id}>
                                     <td>
+                                      {team_user.prime && (
+                                        <img
+                                          src={
+                                            '/assets/icons/ocg_member_' +
+                                            team_user.prime_type +
+                                            '.png'
+                                          }
+                                          className="inline-star"
+                                        />
+                                      )}
                                       <Link
                                         to={
                                           team_user

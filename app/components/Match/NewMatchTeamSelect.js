@@ -14,6 +14,7 @@ class NewMatchTeamSelect extends React.Component {
     this.state = {
       title: '',
       ladder: '',
+      creating: false,
       games: [],
       game_settings: {},
       ladder_obj: {
@@ -141,7 +142,14 @@ class NewMatchTeamSelect extends React.Component {
 
   handleCreation(event) {
     event.preventDefault();
-    // ();
+
+    if (this.state.creating) {
+      return false;
+    }
+    this.setState({
+      creating: true
+    });
+
     this.props.dispatch(
       createMatch(
         {
@@ -750,11 +758,13 @@ class NewMatchTeamSelect extends React.Component {
                       {this.renderGameSettings()}
                       <div className="form-group col-md-12 text-center">
                         <button
-                          disabled={!this.isEligible()}
+                          disabled={!this.isEligible() || this.state.creating}
                           className="btn btn-default bttn_submit"
                           type="submit"
                         >
-                          Create Match
+                          {this.state.creating
+                            ? 'please wait...'
+                            : 'Create Match'}
                         </button>
                       </div>
                     </form>
@@ -807,6 +817,17 @@ class NewMatchTeamSelect extends React.Component {
                                       return (
                                         <tr key={team_user.id}>
                                           <td>
+                                            {team_user.user_info.prime && (
+                                              <img
+                                                src={
+                                                  '/assets/icons/ocg_member_' +
+                                                  team_user.user_info
+                                                    .prime_type +
+                                                  '.png'
+                                                }
+                                                className="inline-star"
+                                              />
+                                            )}
                                             <Link
                                               to={
                                                 team_user.user_info

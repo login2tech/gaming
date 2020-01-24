@@ -91,7 +91,7 @@ class Credits extends React.Component {
               className="btn btn-primary m-0 width-100"
               onClick={this.initAdd.bind(this)}
             >
-              Add Credits
+              Deposit OCG Cash
             </button>
           </div>
           <div className=" col-12 col-md m-2 width-100">
@@ -101,7 +101,7 @@ class Credits extends React.Component {
               className="btn btn-primary m-0"
               onClick={this.initTransfer.bind(this)}
             >
-              Withdraw
+              Withdraw OCG Cash
             </button>
           </div>
         </div>
@@ -236,7 +236,7 @@ class Credits extends React.Component {
               </div>
               <input
                 type="submit"
-                value="Withdraw"
+                value="Withdraw OCG Cash"
                 className="btn btn-primary"
               />
             </form>
