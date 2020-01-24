@@ -5604,12 +5604,14 @@ a.dropdown-item.disabled {
     /* display: flex; */
     /* flex-direction: row; */
 }
-
-.tour-box > a {
-    width: 100%;
+.tour-box .tour-actions{
+  display: flex;width: 100%;border-top: 1px solid rgb(0, 0, 0);
+}
+ .tour-box .tour-actions a, .tour-box .tour-actions button {
+    flex: 1;
     align-self: flex-end;
-    border-top: 1px solid rgb(0, 0, 0);
-    width: 100%;
+
+    width: 100%;cursor: pointer;
     height: 48px;
     padding-left: 24px;
     padding-right: 24px;
@@ -5618,18 +5620,23 @@ a.dropdown-item.disabled {
     vertical-align: middle;
     display: inline-block;
     line-height: 48px;
+    background: none;
+    border: none;
+    color: rgb(255, 255, 255);
 }
 .tour-platform {
     float: right;
 }
 
 .tour-stats {
-    display: inline-table;
     margin-right: 4px;
     flex: 2;
 }
+
 p.tour-name small {
     font-size: 14px;
+    display: block;
+    line-height: 25px;
 }
 .tour-stats small {
     font-size: 9px;
@@ -5641,8 +5648,9 @@ p.tour-name small {
   flex:3;
 }
 .tour-stats-block {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 .tour-stats p {
 
@@ -5660,7 +5668,6 @@ p.tour-name small {
 
 
 .tour-name {
-
     font-size: 24px;
     font-weight: 800;
     font-style: normal;
@@ -5866,6 +5873,10 @@ button.btn.btn-exp-menu {
 }
 
 @media screen and (max-width: 576px) {
+
+  .tour-box .tour-details{
+        height: 200px;
+  }
   .star_img.big{
     width:50px;height: auto;
   }
@@ -5901,5 +5912,10 @@ button.btn.btn-exp-menu {
     .brackets {
 
         zoom: 0.6;
+    }
+    .tour-stats {
+        width: 50%;
+        flex: none;
+        margin: 0;
     }
 }

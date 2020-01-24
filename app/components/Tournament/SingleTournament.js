@@ -1,9 +1,10 @@
 import React from 'react';
 import {Link} from 'react-router';
 import utils from '../../utils';
+const moment = require('moment');
+
 const SingleTournament = props => {
   const {tour} = props;
-  const moment = require('moment');
 
   return (
     <div className="col-xs-12 col-sm-12 col-md-6 padding-tournament">
@@ -40,11 +41,9 @@ const SingleTournament = props => {
               </div>
               <div className="region-block">
                 <div className="region-content">
-                  <span data-v-d7de8704="" className="countdown-timer">
-                    <span data-v-d7de8704="">Starts </span>{' '}
-                    <span data-v-d7de8704="">
-                      {moment(tour.starts_at).fromNow()}
-                    </span>
+                  <span className="countdown-timer">
+                    <span>Starts </span>{' '}
+                    <span>{moment(tour.starts_at).fromNow()}</span>
                   </span>
                 </div>
               </div>
@@ -65,10 +64,7 @@ const SingleTournament = props => {
                     tour.third_winner_price}
                 </p>
               </div>
-
-              <small> </small>
-
-              <div className="tour-stats hidden-xs hidden-sm">
+              <div className="tour-stats">
                 <small>MAX TEAMS</small> <p>{tour.total_teams}</p>
               </div>
               <div className="tour-stats">
@@ -83,9 +79,11 @@ const SingleTournament = props => {
             </div>
           </div>
         </div>
-        <Link to={'/t/' + tour.id}>
-          View Tournament <span className="fa fa-arrow-right" />
-        </Link>
+        <div className="tour-actions">
+          <Link to={'/t/' + tour.id}>
+            View Tournament <span className="fa fa-arrow-right" />
+          </Link>
+        </div>
       </div>
     </div>
   );

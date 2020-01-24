@@ -176,7 +176,7 @@ class TournamentInfo extends React.Component {
       round_titles.push('Winner');
     }
     // debugger;
-    console.log(rounds);
+    // console.log(rounds);
     $('.brackets').brackets({
       // titles: round_titles,
       rounds: rounds,

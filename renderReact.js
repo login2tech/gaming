@@ -26,7 +26,7 @@ module.exports = function(app, langs) {
           next();
         })
         .catch(function(err) {
-          console.log(err);
+          // console.log(err);
           next();
         });
     },
