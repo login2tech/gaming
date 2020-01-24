@@ -81,6 +81,12 @@ class NewTicket extends React.Component {
 
   submitForm(event) {
     event.preventDefault();
+    if (this.state.submit_started) {
+      return false;
+    }
+    this.setState({
+      submit_started: true
+    });
     // fetch(, function(){
     let url = '/api/tickets/add';
     if (
@@ -131,6 +137,7 @@ class NewTicket extends React.Component {
             this.setState(
               {
                 text: '',
+                submit_started: false,
                 cur_page: 1
               },
               () => {
@@ -153,6 +160,9 @@ class NewTicket extends React.Component {
             this.props.dispatch({
               type: 'FAILURE',
               messages: Array.isArray(json) ? json : [json]
+            });
+            this.setState({
+              submit_started: false
             });
           }
         })
@@ -495,13 +505,16 @@ class NewTicket extends React.Component {
                         className="btn btn-blue btn-lg bttn_submit"
                         type="submit"
                         disabled={
-                          this.state.upload_started || !this.state.ticket_title
+                          this.state.upload_started ||
+                          !this.state.ticket_title ||
+                          this.state.submit_started
                         }
                       >
-                        Create Ticket
+                        {this.state.submit_started
+                          ? 'please wait...'
+                          : 'Create Ticket'}
                       </button>
                     </div>
-                    {JSON.stringify(this.state.ticket)}
                   </div>
                 </form>
               </div>

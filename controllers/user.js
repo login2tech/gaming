@@ -70,9 +70,9 @@ exports.loginPost = function(req, res, next) {
   val = val.trim();
   val = val.toLowerCase();
   new User()
-    .query({
-      where: {email: val},
-      orWhere: {username: val}
+    .query(function(qb) {
+      qb.where({email: val});
+      qb.orWhere('username', 'ILIKE', val);
     })
     .fetch()
     .then(function(user) {

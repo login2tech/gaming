@@ -18,10 +18,13 @@ class SingleTicket extends React.Component {
   }
 
   submitForm(event) {
+    if (this.state.submit_started) {
+      return false;
+    }
     this.setState({
       submit_started: true
     });
-    event.preventDefault();
+    event && event.preventDefault();
     fetch('/api/ticket_replies/add', {
       method: 'POST',
       headers: {
@@ -50,10 +53,17 @@ class SingleTicket extends React.Component {
               type: 'SUCCESS',
               messages: Array.isArray(json) ? json : [json]
             });
+            if (this.state.text == 'CODE:ESCILATE') {
+              setTimeout(function() {
+                window.location.reload();
+              }, 2000);
+              return false;
+            }
             this.setState(
               {
                 text: '',
                 cur_page: 1,
+
                 submit_started: false
               },
               () => {
@@ -89,9 +99,7 @@ class SingleTicket extends React.Component {
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
-  componentWillUnmount() {
-    // this.serverRequest.abort();
-  }
+
   componentDidMount() {
     fetch('/api/tickets/single/' + this.props.params.ticket_id)
       .then(res => res.json())
@@ -276,10 +284,17 @@ class SingleTicket extends React.Component {
                     className="btn btn-primary m-0 max-width-200 dib"
                     type="button"
                     onClick={() => {
-                      alert('work in progress');
+                      this.setState(
+                        {
+                          text: 'CODE:ESCILATE'
+                        },
+                        this.submitForm
+                      );
                     }}
                   >
-                    Escilate Ticket
+                    {this.state.submit_started
+                      ? 'please wait...'
+                      : 'Escilate Ticket'}
                   </button>
                 ) : (
                   false
@@ -512,7 +527,7 @@ class SingleTicket extends React.Component {
                           this.state.submit_started
                         }
                       >
-                        Reply
+                        {this.state.submit_started ? 'please wait...' : 'Reply'}
                       </button>
                       <br />
                       <br />

@@ -91,8 +91,14 @@ exports.addItem = function(req, res, next) {
   if (errors) {
     return res.status(400).send(errors);
   }
+  let is_escilate = false;
+  let text = req.body.text;
+  if (text == 'CODE:ESCILATE') {
+    is_escilate = true;
+    text = 'I am escilating this match.';
+  }
   new Item({
-    content: req.body.text,
+    content: text,
     ticket_id: req.body.ticket_id,
     user_id: req.user.id,
     attachment: req.body.attachment ? req.body.attachment : '',
@@ -100,9 +106,14 @@ exports.addItem = function(req, res, next) {
   })
     .save()
     .then(function(item) {
-      res.send({ok: true, msg: 'New Comment has been created successfully.'});
+      res.send({
+        ok: true,
+        msg: is_escilate
+          ? 'Your match/ticket has been escilated.'
+          : 'New Comment has been created successfully.'
+      });
 
-      if (req.user.role == 'admin') {
+      if (req.user.role == 'admin' || is_escilate) {
         new Ticket()
           .where({
             id: req.body.ticket_id
@@ -112,15 +123,28 @@ exports.addItem = function(req, res, next) {
             if (!tckt) {
               return;
             }
+            if (is_escilate) {
+              tckt
+                .save({
+                  status: 'submitted'
+                })
+                .then(function() {
+                  //
+                })
+                .catch(function() {
+                  //
+                });
+            }
             tckt = tckt.toJSON();
             const tckt_creator = tckt.user_id;
-
-            new Notif().save({
-              description: 'You have a reply on ticket',
-              user_id: tckt_creator,
-              type: 'ticket',
-              object_id: req.body.ticket_id
-            });
+            if (req.user.role == 'admin') {
+              new Notif().save({
+                description: 'You have a reply on ticket',
+                user_id: tckt_creator,
+                type: 'ticket',
+                object_id: req.body.ticket_id
+              });
+            }
           });
       }
     })

@@ -274,6 +274,96 @@ class ViewTicket extends React.Component {
                     {this.renderDownloadAttachment(
                       this.state.ticket.attachment
                     )}
+                    {this.state.ticket.extra_1 ||
+                    this.state.ticket.extra_2 ||
+                    this.state.ticket.extra_3 ||
+                    this.state.ticket.url_1 ||
+                    this.state.ticket.url_2 ||
+                    this.state.ticket.url_3 ? (
+                      <h3>Other Details:</h3>
+                    ) : (
+                      false
+                    )}
+                    {this.state.ticket.extra_1 ? (
+                      <p>
+                        <strong>Match Id: </strong>{' '}
+                        {this.state.ticket.extra_3 == 'MatchFinder' ? (
+                          <a
+                            target="_blank"
+                            href={'/m/' + this.state.ticket.extra_1}
+                          >
+                            # {this.state.ticket.extra_1}
+                          </a>
+                        ) : this.state.ticket.extra_3 == 'Mix-and-match' ? (
+                          <a
+                            target="_blank"
+                            href={'/mix-and-match/' + this.state.ticket.extra_1}
+                          >
+                            # {this.state.ticket.extra_1}
+                          </a>
+                        ) : this.state.ticket.extra_3 == 'Tournament' ? (
+                          <a
+                            target="_blank"
+                            href={
+                              '/tournament-match/' + this.state.ticket.extra_1
+                            }
+                          >
+                            # {this.state.ticket.extra_1}
+                          </a>
+                        ) : (
+                          <># {this.state.ticket.extra_1}</>
+                        )}
+                      </p>
+                    ) : (
+                      false
+                    )}
+                    {this.state.ticket.extra_2 ? (
+                      <p>
+                        <strong>Team Name: </strong> {this.state.ticket.extra_2}
+                      </p>
+                    ) : (
+                      false
+                    )}
+                    {this.state.ticket.extra_3 ? (
+                      <p>
+                        <strong>Match Type: </strong>{' '}
+                        {this.state.ticket.extra_3}
+                      </p>
+                    ) : (
+                      false
+                    )}
+                    {this.state.ticket.url_1 ? (
+                      <p>
+                        <strong>URL 1: </strong>{' '}
+                        <a href={this.state.ticket.url_1} target="_blank">
+                          {this.state.ticket.url_1}
+                        </a>
+                      </p>
+                    ) : (
+                      false
+                    )}
+
+                    {this.state.ticket.url_2 ? (
+                      <p>
+                        <strong>URL 2: </strong>{' '}
+                        <a href={this.state.ticket.url_2} target="_blank">
+                          {this.state.ticket.url_2}
+                        </a>
+                      </p>
+                    ) : (
+                      false
+                    )}
+
+                    {this.state.ticket.url_3 ? (
+                      <p>
+                        <strong>URL 3: </strong>{' '}
+                        <a href={this.state.ticket.url_3} target="_blank">
+                          {this.state.ticket.url_3}
+                        </a>
+                      </p>
+                    ) : (
+                      false
+                    )}
                   </div>
                 </div>
               </div>
@@ -322,102 +412,6 @@ class ViewTicket extends React.Component {
                       <div className="col-sm-9 post-content">
                         <div dangerouslySetInnerHTML={{__html: item.content}} />
                         {this.renderDownloadAttachment(item.attachment)}
-
-                        {this.state.ticket.extra_1 ||
-                        this.state.ticket.extra_2 ||
-                        this.state.ticket.extra_3 ||
-                        this.state.ticket.url_1 ||
-                        this.state.ticket.url_2 ||
-                        this.state.ticket.url_3 ? (
-                          <h3>Other Details:</h3>
-                        ) : (
-                          false
-                        )}
-
-                        {this.state.ticket.extra_1 ? (
-                          <p>
-                            <strong>Match Id: </strong>{' '}
-                            {this.state.ticket.extra_3 == 'MatchFinder' ? (
-                              <a
-                                target="_blank"
-                                href={'/m/' + this.state.ticket.extra_1}
-                              >
-                                # {this.state.ticket.extra_1}
-                              </a>
-                            ) : this.state.ticket.extra_3 == 'Mix-and-match' ? (
-                              <a
-                                target="_blank"
-                                href={
-                                  '/mix-and-match/' + this.state.ticket.extra_1
-                                }
-                              >
-                                # {this.state.ticket.extra_1}
-                              </a>
-                            ) : this.state.ticket.extra_3 == 'Tournament' ? (
-                              <a
-                                target="_blank"
-                                href={
-                                  '/tournament-match/' +
-                                  this.state.ticket.extra_1
-                                }
-                              >
-                                # {this.state.ticket.extra_1}
-                              </a>
-                            ) : (
-                              <># {this.state.ticket.extra_1}</>
-                            )}
-                          </p>
-                        ) : (
-                          false
-                        )}
-                        {this.state.ticket.extra_2 ? (
-                          <p>
-                            <strong>Team Name: </strong>{' '}
-                            {this.state.ticket.extra_2}
-                          </p>
-                        ) : (
-                          false
-                        )}
-                        {this.state.ticket.extra_3 ? (
-                          <p>
-                            <strong>Match Type: </strong>{' '}
-                            {this.state.ticket.extra_3}
-                          </p>
-                        ) : (
-                          false
-                        )}
-                        {this.state.ticket.url_1 ? (
-                          <p>
-                            <strong>URL 1: </strong>{' '}
-                            <a href={this.state.ticket.url_1} target="_blank">
-                              {this.state.ticket.url_1}
-                            </a>
-                          </p>
-                        ) : (
-                          false
-                        )}
-
-                        {this.state.ticket.url_2 ? (
-                          <p>
-                            <strong>URL 2: </strong>{' '}
-                            <a href={this.state.ticket.url_2} target="_blank">
-                              {this.state.ticket.url_2}
-                            </a>
-                          </p>
-                        ) : (
-                          false
-                        )}
-
-                        {this.state.ticket.url_3 ? (
-                          <p>
-                            <strong>URL 3: </strong>{' '}
-                            <a href={this.state.ticket.url_3} target="_blank">
-                              {this.state.ticket.url_3}
-                            </a>
-                          </p>
-                        ) : (
-                          false
-                        )}
                       </div>
                     </div>
                   </div>
