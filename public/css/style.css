@@ -5918,4 +5918,74 @@ button.btn.btn-exp-menu {
         flex: none;
         margin: 0;
     }
+
+    .live-wager-row>div:not(.live-wager-arrow){
+
+      align-items: flex-start;
+    }
 }
+.live-wager-row>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 4px;
+    flex: 1 0 1%;
+    color: rgb(255, 255, 255);
+    font-size: 13.3px;
+    flex-direction: column;  flex: 1;
+}
+
+.live-wager-row {
+    width: 100%;
+    display: flex;
+}
+
+
+.live-wager-row.table-header div {
+    text-align: center !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.live-wager-row img.game-logo {
+    width: 50px;
+}
+
+.live-wager-row {
+  margin-bottom: 4px;
+  background-color: rgb(41, 41, 41);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  min-height: 66.5px;
+  font-family: Roboto,sans-serif;
+  transition: all .15s;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+a.match-accept-link {
+    display: inline-block;
+    line-height: 20px;
+  }
+  .wager-actions {
+      flex-direction: column;
+  }
+
+  .live-wager-mobile-block {
+      width: 100%;
+      display: flex !important;
+      flex-direction: row !important;
+  }
+
+  .live-wager-row.live-wager-row-mobile {
+      flex-direction: column;
+      padding: 20px;
+  }
+
+  .live-wager-mobile-block > div {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+  }

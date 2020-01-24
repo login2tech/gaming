@@ -1,10 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
-const moment = require('moment');
-import game_user_ids from '../../../config/game_user_ids';
+// const moment = require('moment');
+// import game_user_ids from '../../../config/game_user_ids';
 import {leave_match} from '../../actions/match';
-
+import SingleMatch from './SingleMatch';
 // import Messages from '../Modules/Messages';
 
 class MatchFinder extends React.Component {
@@ -78,10 +78,10 @@ class MatchFinder extends React.Component {
                 <div className="t_big_heading">Play. Win. Collect.</div>
                 <Link
                   to={'/match/new'}
-                  className="btn btn-default bttn_submit max-width-200 dib"
+                  className="btn btn-default bttn_submit max-width-200 dib mr-2"
                 >
                   Create a match
-                </Link>{' '}
+                </Link>
                 {this.props.user ? (
                   <Link
                     to={'/u/' + this.props.user.username + '/teams/new'}
@@ -131,157 +131,30 @@ class MatchFinder extends React.Component {
                             {this.state.matches[game_id][0].game.title}
                           </h5>
 
-                          <ul
-                            id="upcoming-tournament"
-                            className="tournament-list active"
-                          >
+                          <div id="upcoming-match" className="match-list">
+                            <div className="live-wager-row table-header d-none d-md-flex ">
+                              <div className="game-logo-container">Game</div>
+                              <div className="wager-cost">Prize</div>
+                              <div className="wager-team-size">Team Size</div>
+                              <div className="wager-game-mode">Competition</div>
+                              <div className="wager-region">Platform</div>
+
+                              <div className="start-time">Starting</div>
+
+                              <div className="wager-actions" />
+                            </div>
                             {this.state.matches[game_id].map((match, i) => {
-                              let txt = '';
-                              // const txt2 = '';
-                              txt = 'Accept Match';
-                              let t1p = match.team_1_players;
-                              if (!t1p) {
-                                t1p = '';
-                              }
-                              let show_cancel = false;
-                              t1p = t1p.split('|');
-                              // console.log(t1p);
-                              if (t1p.indexOf('' + this.props.user.id) > -1) {
-                                txt = 'View Match';
-                                if (match.status == 'pending') {
-                                  show_cancel = true;
-                                }
-                              }
-
                               return (
-                                <li
+                                <SingleMatch
+                                  id={match.id}
+                                  match={match}
+                                  user={this.props.user}
+                                  initCancel={this.initCancel.bind(this)}
                                   key={match.id}
-                                  className="tournament-box"
-                                  style={{
-                                    backgroundImage: match.game.banner_url
-                                      ? 'url(' + match.game.banner_url + ')'
-                                      : "url('images/thumbnail_tournament.jpg')"
-                                  }}
-                                >
-                                  <div className="tournament-body">
-                                    <Link
-                                      to={this.matchLink('/m/' + match.id)}
-                                      className="tournament-name text-white"
-                                    >
-                                      <span
-                                        className={
-                                          game_user_ids.tag_icons[
-                                            match.ladder.gamer_tag
-                                          ] + ' float-none'
-                                        }
-                                      />
-                                      {match.game.title} - {match.ladder.title}
-                                    </Link>
-
-                                    <span className="date">
-                                      {moment(match.starts_at).format('lll')}
-                                    </span>
-                                    <span className="date">
-                                      Starts {moment(match.starts_at).fromNow()}
-                                    </span>
-                                  </div>
-                                  <div className="tournament-footer">
-                                    <div className="row">
-                                      <div className="col-6 col-md-3 t-col">
-                                        <h5>Status</h5>
-                                        <p>{match.status}</p>
-                                      </div>
-                                      <div className="col-6 col-md-3 t-col">
-                                        <h5>TYPE</h5>
-                                        <p>
-                                          {match.match_type == 'free' ? (
-                                            'FREE'
-                                          ) : (
-                                            <span>
-                                              {'PAID (' +
-                                                (match.match_type == 'cash'
-                                                  ? '' + match.match_fee + '$'
-                                                  : '' +
-                                                    match.match_fee +
-                                                    ' credits') +
-                                                ')'}
-                                            </span>
-                                          )}
-                                        </p>
-                                      </div>
-                                      {/*}  <div className="col-6 col-md-3 t-col">
-                                        <h5>Prize pool</h5>
-                                        <p>
-                                          {match.match_type == 'paid'
-                                            ? '$ ' + match.match_fee
-                                            : '--'}
-                                        </p>
-                                      </div>*/}
-                                      <div className="col-6 col-md-3 t-col">
-                                        <h5>Players</h5>
-                                        <p>
-                                          {match.match_players}v
-                                          {match.match_players}
-                                        </p>
-                                      </div>
-                                    </div>
-
-                                    <div
-                                      className="col align-right"
-                                      style={{
-                                        flexDirection: 'column',
-                                        alignItems: 'flex-end'
-                                      }}
-                                    >
-                                      <Link
-                                        to={this.matchLink('/m/' + match.id)}
-                                        className="btn-default"
-                                      >
-                                        {txt}
-                                      </Link>
-                                      {show_cancel ? (
-                                        this.state.show_cancel_init ? (
-                                          <div>
-                                            <button
-                                              onClick={() => {
-                                                this.initCancel(match);
-                                              }}
-                                              className="btn-danger btn cnclMt width-auto"
-                                            >
-                                              SURE?
-                                            </button>
-                                            <button
-                                              onClick={() => {
-                                                this.setState({
-                                                  show_cancel_init: false
-                                                });
-                                              }}
-                                              className="btn-danger btn cnclMt width-auto"
-                                            >
-                                              x
-                                            </button>
-                                          </div>
-                                        ) : (
-                                          <button
-                                            onClick={() => {
-                                              this.setState({
-                                                show_cancel_init: true
-                                              });
-                                            }}
-                                            className="btn-danger btn cnclMt"
-                                          >
-                                            Cancel Match
-                                          </button>
-                                        )
-                                      ) : (
-                                        false
-                                      )}
-                                    </div>
-                                  </div>
-                                </li>
+                                />
                               );
                             })}
-                          </ul>
+                          </div>
                         </div>
                       );
                     })}
