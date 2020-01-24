@@ -328,7 +328,7 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col team_spn_m">
+                      <div className="col-5 team_spn_m no-just">
                         <span>
                           <span className="text-l">
                             {match.ladder.game_info.title}
@@ -374,13 +374,13 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col team_spn_m">
+                      <div className="col-5 team_spn_m no-just">
                         <span>
                           <span className="text-l">
                             {' '}
                             ${match.match_fee ? match.match_fee : '0'}
                           </span>
-                          <span className="text-m">price</span>
+                          <span className="text-m">PRIZE</span>
                         </span>
                       </div>
                     </div>

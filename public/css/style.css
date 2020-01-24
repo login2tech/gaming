@@ -4901,7 +4901,8 @@ img.hover_img {
 }
 
 img.img-fluid.team_avat {
-    width: 60px;
+  width: 60px;
+    min-: 60px;
     /* float: right; */
     border-radius: 60px;
     border: 3px solid #fff;
@@ -4911,8 +4912,11 @@ img.img-fluid.team_avat {
 
 .team_spn_m {
     display: flex;
-    justify-content: center;
+
     align-items: center;
+}
+.team_spn_m:not(.no-just) {
+  justify-content: center;
 }
 
 .has_m .team_spn_m {

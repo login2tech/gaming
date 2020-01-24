@@ -35,10 +35,10 @@ exports.list = function(req, res, next) {
     // msg: req.body.msg
   });
 
-  if (req.body.min_time) {
-    a = a.where('created_at', '>=', req.body.min_time);
+  if (req.query.min_time) {
+    a = a.where('created_at', '>=', moment(req.query.min_time));
   } else {
-    a = a.where('created_at', '>=', moment().subtract(10, 'hours'));
+    a = a.where('created_at', '>=', moment().subtract(24, 'hours'));
   }
 
   a.fetchAll({
@@ -50,7 +50,7 @@ exports.list = function(req, res, next) {
         .send({ok: true, chats: items.toJSON(), fetched_on: moment()});
     })
     .catch(function(err) {
-      console.log(err);
+      // console.log(err);
       return res.status(400).send({ok: false, chats: []});
     });
 };
