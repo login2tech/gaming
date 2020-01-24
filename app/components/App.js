@@ -61,7 +61,14 @@ class App extends React.Component {
         {this.props.routes[1].isNoWrap ? false : <Header />}
         {this.props.children}
         {this.props.routes[1].isNoWrap ? false : <Footer />}
-
+        <div className="backtotop" id="backtotop">
+          <span
+            className="fa fa-arrow-up"
+            onClick={() => {
+              scrollToTop();
+            }}
+          />
+        </div>
         <ModalContainer />
       </div>
     );

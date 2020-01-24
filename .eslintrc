@@ -19,7 +19,7 @@
         "chartToolTipInit": true,
         "angular": true,
         "scrolltoTop": true,
-         "linkHashTags": true,
-        "scrollToTop":true
+        "linkHashTags": true,
+        "scrollToTop": true
     }
 }

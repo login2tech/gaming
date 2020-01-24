@@ -98,7 +98,7 @@ class Trophies extends React.Component {
                       return (
                         <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
                           <a
-                            className="no_bg"
+                            className="no_background"
                             href={
                               item.tournament ? '/t/' + item.tournament.id : ''
                             }

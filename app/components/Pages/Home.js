@@ -377,7 +377,6 @@ class Home extends React.Component {
                       <div className="col-5 team_spn_m no-just">
                         <span>
                           <span className="text-l">
-                            {' '}
                             ${match.match_fee ? match.match_fee : '0'}
                           </span>
                           <span className="text-m">PRIZE</span>

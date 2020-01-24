@@ -30,6 +30,11 @@ return txt;
 function scrollToTop()
 {
   const element = document.getElementById('mainNav');
+  if(!element)
+{
+    element = document.body;
+}
+
   if (element) {
     element.scrollIntoView({
       behavior: 'smooth',
