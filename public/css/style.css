@@ -32,9 +32,11 @@ a,a:hover {
     text-decoration: none;
     font-weight: 400;
 }
+
 :focus {
     outline: 2px solid rgb(16, 71, 244);
 }
+
 label, legend {
     color: #fff;
 }
@@ -326,7 +328,6 @@ li.logo {
     height: 158px;
 }
 
-
 .single-left-content {
     overflow: hidden;
     margin-left: 41%;
@@ -477,7 +478,6 @@ li.logo {
     padding-top: 160px;
 }
 
-
 .search-box p>a {
     background: #16329e;
     color: #fff;
@@ -515,12 +515,10 @@ li.logo {
     z-index: 1;
 }
 
-
 .single-recent {
     display: flex;
     margin-bottom: 30px;
 }
-
 
 .modal button.upvoted {
     border-bottom-left-radius: 0;
@@ -544,7 +542,6 @@ li.logo {
     line-height: 30px;
 }
 
-
 #backtotop {
     background-color: #16329e;
     color: #ffffff;
@@ -560,7 +557,8 @@ li.logo {
     opacity: 0.5;
     position: fixed;
     right: 20px;
-    text-align: center; cursor: pointer;
+    text-align: center;
+    cursor: pointer;
     width: 36px;
     z-index: 999;
     border-radius: 50%;
@@ -731,7 +729,6 @@ li.logo {
         width: 87%;
     }
 
-
     .contact-col-4 h4 {
         text-align: right;
     }
@@ -842,7 +839,6 @@ li.logo {
     .promo-info a {
         width: 100%;
     }
-
 
     .overlay::after {
         height: 74.4%;
@@ -1362,7 +1358,7 @@ a.image_avar {
     background-size: cover;
     position: relative;
     padding-top: 30px;
-    background-color: rgba(17, 74, 251, 0.4);
+    background-color: rgba(0,0,0, 0.4);
 }
 
 .page_title_bar:not(.noblend) {
@@ -4271,8 +4267,8 @@ img.hover_img {
 }
 
 img.img-fluid.team_avat {
-  width: 60px;
-    min-: 60px;
+    width: 60px;
+    min-width: 60px;
     /* float: right; */
     border-radius: 60px;
     border: 3px solid #fff;
@@ -4282,11 +4278,11 @@ img.img-fluid.team_avat {
 
 .team_spn_m {
     display: flex;
-
     align-items: center;
 }
+
 .team_spn_m:not(.no-just) {
-  justify-content: center;
+    justify-content: center;
 }
 
 .has_m .team_spn_m {
@@ -4320,9 +4316,10 @@ span.text-l a.mw100 {
     display: inline-block;
 }
 
-td a{
-  vertical-align: middle;
+td a {
+    vertical-align: middle;
 }
+
 div#modal_following .modal-body, div#modal_followers .modal-body {
     max-height: 80vh;
     overflow-y: auto;
@@ -5000,9 +4997,11 @@ a.dropdown-item.disabled {
     color: rgb(179, 179, 179);
     width: 100%;
     padding: 10px;
-    height: 180px;
-    /* display: flex; */
-    /* flex-direction: row; */
+    height: 200px;
+}
+
+.tour-box.small .tour-details {
+    height: 90px;
 }
 
 .tour-box .tour-actions {
@@ -5169,7 +5168,7 @@ img.inline-star {
     background: none !important;
 }
 
-.tour-details .col-9 {
+.tour-details .col-md-9 {
     justify-content: center;
     display: flex;
     flex-direction: column;
@@ -5205,11 +5204,40 @@ button.btn.btn-exp-menu {
 .wager-region .fa, .wager-region .fab {
     font-size: 30px !important;
 }
-.form-control:focus {
 
+.form-control:focus {
     box-shadow: 0 0 5px 3px #2847f3;
 }
 
+.tour-description-block {
+    width: 100%;
+    z-index: 2;
+}.tour-box.small {
+    margin-bottom: 10px;
+}
+
+.tour-box.small .tour-actions a, .tour-box.small .tour-actions button {
+    height: 28px;
+    line-height: 28px;
+    font-size: 14px;
+}
+.tour-box.small .star_img:not(.big) {
+    z-index: 3;
+    right: 20px;
+    left: auto;
+    top: 38px;
+    height: 40px;
+}
+.tour-box.small .tour-details:after {
+    background: rgba(0,0,0, 0.66);
+    content: ' ';
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    height: 100%;
+}
 @media (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5397,11 +5425,37 @@ button.btn.btn-exp-menu {
         color: #34495e !important;
         background: #fff !important;
     }
+
+    .tour-cover-block.col-md-3.col-12 {
+        position: absolute;
+        z-index: 0;
+        width: 100%;
+        padding: 0;
+        top: 0;
+        height: 100%;
+        left: 0;
+    }
+
+    .tour-cover-block:after  {
+        background: rgba(0,0,0, 0.66);
+        content: ' ';
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        left: 0;
+        height: 100%;
+    }
+
+    .tour-cover-block img:not(.star_img) {
+        width: 100%;
+        display: none;
+    }
 }
 
 @media screen and (max-width: 576px) {
     .tour-box .tour-details {
-        height: 200px;
+        height: auto
     }
 
     .star_img.big {
@@ -5446,7 +5500,7 @@ button.btn.btn-exp-menu {
     .tour-stats {
         width: 50%;
         flex: none;
-        margin: 0;
+        margin: 10px 0;
     }
 
     .live-wager-row>div:not(.live-wager-arrow) {
@@ -5459,5 +5513,34 @@ button.btn.btn-exp-menu {
     .live-wager-row>div:first-child {
         flex: 5 !important;
         padding-left: 0;
+    }
+
+    .team_spn_m {
+        justify-content: center;
+    }
+
+    .star_img:not(.big) {
+        right: 40px;
+        top: 30px;
+        left: auto;
+        z-index: 2;
+    }
+
+    .section-headline.white-headline h3 {
+        font-size: 25px;
+    }
+
+    .has_m {
+        margin-bottom: 40px
+    }
+
+    .has_m .team_spn_m {
+        margin-bottom: 10px
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .tour-cover-block {
+        background: none !important
     }
 }

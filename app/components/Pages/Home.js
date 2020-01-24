@@ -3,12 +3,14 @@ import {connect} from 'react-redux';
 // import {Link} from 'react-router';
 // import {Translate} from 'react-localize-redux';
 import {Link} from 'react-router';
-
+import SingleTournament from '../Tournament/SingleTournament';
+import SingleTournamentSmall from '../Tournament/SingleTournamentSmall';
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       games: [],
+      tournaments: [],
       recentMatches: []
     };
   }
@@ -108,7 +110,7 @@ class Home extends React.Component {
                 }
                 return (
                   <div
-                    className="col-6 col-md game_hover_effect "
+                    className="col-12 col-md game_hover_effect "
                     key={games.id}
                   >
                     <div className="game_c_box">
@@ -292,7 +294,7 @@ class Home extends React.Component {
                 return (
                   <div className="col-md-6 br_1" key={match.id}>
                     <div className="row has_m">
-                      <div className="col team_spn_m">
+                      <div className="col-12 col-md team_spn_m">
                         {match.team_1_info ? (
                           <>
                             <Link
@@ -328,7 +330,7 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col-5 team_spn_m no-just">
+                      <div className="col-12 col-md-5 team_spn_m no-just">
                         <span>
                           <span className="text-l">
                             {match.ladder.game_info.title}
@@ -338,7 +340,7 @@ class Home extends React.Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col team_spn_m">
+                      <div className="col-12 col-md team_spn_m">
                         {match.team_1_info ? (
                           <>
                             <Link
@@ -374,7 +376,7 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col-5 team_spn_m no-just">
+                      <div className="col-12 col-md-5 team_spn_m no-just">
                         <span>
                           <span className="text-l">
                             ${match.match_fee ? match.match_fee : '0'}
@@ -394,6 +396,44 @@ class Home extends React.Component {
                   </div>
                 );
               })}
+            </div>
+          </div>
+        </section>
+
+        <section className="tournaments">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-center">
+                  <h3>Upcoming Tournaments</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              {this.state.tournaments.map((tour, i) => {
+                if (i == 0) {
+                  return <SingleTournament key={tour.id} tour={tour} />;
+                }
+                return false;
+              })}
+              <div className="col-md-6">
+                <div className="row">
+                  {this.state.tournaments.map((tour, i) => {
+                    if (i == 0) {
+                      return false;
+                    }
+                    return <SingleTournamentSmall key={tour.id} tour={tour} />;
+                  })}
+                </div>
+              </div>
+              {this.state.t_loaded && this.state.tournaments.length == 0 ? (
+                <div className="alert alert-warning">
+                  There is no upcoming tournament. Check again later.
+                </div>
+              ) : (
+                false
+              )}
             </div>
           </div>
         </section>

@@ -1098,28 +1098,35 @@ exports.listSingleItem = function(req, res, next) {
 };
 
 exports.listupcoming = function(req, res, next) {
-  new Item()
-    .orderBy('created_at', 'DESC')
-    .query(function(qb) {
-      qb.where('status', 'LIKE', 'started').orWhere(
-        'registration_end_at',
-        '>',
-        moment()
-      );
-    })
-    .fetchAll({withRelated: ['ladder', 'game']})
-    .then(function(item) {
-      if (!item) {
-        return res.status(200).send({ok: true, items: []});
-      }
-      return res.status(200).send({ok: true, items: item.toJSON()});
-    })
-    .catch(function(err) {
-      //
+  let a = new Item().orderBy('created_at', 'DESC').query(function(qb) {
+    qb.where('status', 'LIKE', 'started').orWhere(
+      'registration_end_at',
+      '>',
+      moment()
+    );
+  });
 
-      Raven.captureException(err);
-      return res.status(200).send({ok: true, items: []});
+  if (req.query.limit) {
+    a = a.fetchPage({
+      page: req.query.page ? req.query.page : 1,
+      pageSize: req.query.limit,
+      withRelated: ['ladder', 'game']
     });
+  } else {
+    a = a.fetchAll({withRelated: ['ladder', 'game']});
+  }
+
+  a.then(function(item) {
+    if (!item) {
+      return res.status(200).send({ok: true, items: []});
+    }
+    return res.status(200).send({ok: true, items: item.toJSON()});
+  }).catch(function(err) {
+    //
+
+    Raven.captureException(err);
+    return res.status(200).send({ok: true, items: []});
+  });
 };
 
 exports.t_of_user = function(req, res, next) {

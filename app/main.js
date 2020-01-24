@@ -8,7 +8,7 @@ import getRoutes from './routes';
 import {LocalizeProvider} from 'react-localize-redux';
 const store = configureStore(window.INITIAL_STATE);
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <Provider store={store}>
     <LocalizeProvider store={store}>
       <Router

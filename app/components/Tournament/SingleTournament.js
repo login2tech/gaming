@@ -8,9 +8,20 @@ const SingleTournament = props => {
 
   return (
     <div className="col-xs-12 col-sm-12 col-md-6 padding-tournament">
-      <div className="tour-box ">
-        <div className="tour-details row m-0">
-          <div className="tour-cover-block col-3">
+      <div className="tour-box position-relative ">
+        <div className="tour-details row m-0 position-relative ">
+          <div
+            className="tour-cover-block col-md-3 col-12"
+            style={
+              tour.game.image_url
+                ? {
+                    background:
+                      'url(' + tour.game.image_url + ') no-repeat center',
+                    backgroundSize: 'cover'
+                  }
+                : {}
+            }
+          >
             {tour.member_tournament ? (
               <img
                 src="http://localhost:5000/assets/icons/ocg_member_gold.png"
@@ -26,7 +37,7 @@ const SingleTournament = props => {
               />
             </div>
           </div>
-          <div className="col-9">
+          <div className="col-md-9 col-12">
             <div className="tour-description-block">
               <div className="name-block">
                 <div className="tour-platform">
