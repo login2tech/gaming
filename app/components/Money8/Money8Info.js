@@ -33,6 +33,12 @@ class Money8Info extends React.Component {
     if (!this.state.match.team_1) {
       return 'Pending';
     }
+    if (this.state.match.status == 'disputed') {
+      return 'Disputed';
+    }
+    if (this.state.match.status == 'complete') {
+      return 'Complete';
+    }
     if (!this.state.match.team_1_result && !this.state.match.team_2_result) {
       return 'Pending Results';
     }
@@ -319,6 +325,12 @@ class Money8Info extends React.Component {
 
   renderScoreSubmit() {
     if (!this.state.is_loaded) {
+      return false;
+    }
+    if (
+      this.state.match.status == 'disputed' ||
+      this.state.match.status == 'complete'
+    ) {
       return false;
     }
     const team_1 = this.state.match.team_1.split('|');

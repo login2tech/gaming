@@ -234,6 +234,7 @@ const unresponsive_match_money8 = function(m_id, match) {
       money8Controller.resolveDispute(null, null, null, m_id, 'team_2', true);
     }
   } else {
+    console.log('here');
     new Money8()
       .where({id: m_id})
       .save(
@@ -247,7 +248,7 @@ const unresponsive_match_money8 = function(m_id, match) {
         //
       })
       .catch(function(err) {
-        // console.log(err);
+        console.log(err);
         Raven.captureException(err);
       });
   }
