@@ -1029,14 +1029,17 @@ class TournamentInfo extends React.Component {
     if (!match.team_2_id) {
       return 'Expired';
     }
+    if (match.status == 'disputed') {
+      return 'Disputed';
+    }
+    if (match.status == 'complete') {
+      return 'Complete';
+    }
     if (!match.team_1_result && !match.team_2_result) {
       return 'Pending Results';
     }
     if (!match.team_1_result || !match.team_2_result) {
       return 'Pending Results Confirmation';
-    }
-    if (match.result == 'disputed') {
-      return 'Disputed';
     }
 
     let result = '';
@@ -1096,7 +1099,7 @@ class TournamentInfo extends React.Component {
             : ''}
         </td>*/}
 
-        <td>{moment(match.created_at).format('lll')} </td>
+        <td>{moment(match.starts_at).format('lll')} </td>
         <td>
           {moment().isAfter(moment(match.starts_at))
             ? this.dynamicStatus_match(match)
@@ -1239,11 +1242,11 @@ class TournamentInfo extends React.Component {
               <table className="table table-striped table-ongray table-hover">
                 <thead>
                   <tr>
-                    <th>Team</th>
-                    <th>Opponent</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Info</th>
+                    <th style={{width: '23%'}}>Team</th>
+                    <th style={{width: '23%'}}>Opponent</th>
+                    <th style={{width: '20%'}}>Date</th>
+                    <th style={{width: '24%'}}>Status</th>
+                    <th style={{width: '10%'}}>Info</th>
                   </tr>
                 </thead>
                 <tbody>

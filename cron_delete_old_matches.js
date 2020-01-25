@@ -18,8 +18,10 @@ const Match = require('./routes/matches/Match');
 const Money8 = require('./routes/money8/Money8Match');
 const User = require('./models/User');
 const Tournament = require('./routes/tournaments/Tournament');
+const TournamentMatch = require('./routes/tournaments/TournamentMatch');
 const matchesController = require('./routes/matches/controller');
 const money8Controller = require('./routes/money8/controller');
+const tournamentController = require('./routes/tournaments/controller');
 const Notif = require('./models/Notification');
 
 let TICKER = 0;
@@ -234,7 +236,7 @@ const unresponsive_match_money8 = function(m_id, match) {
       money8Controller.resolveDispute(null, null, null, m_id, 'team_2', true);
     }
   } else {
-    console.log('here');
+    // console.log('here');
     new Money8()
       .where({id: m_id})
       .save(
@@ -248,12 +250,81 @@ const unresponsive_match_money8 = function(m_id, match) {
         //
       })
       .catch(function(err) {
-        console.log(err);
+        // console.log(err);
         Raven.captureException(err);
       });
   }
 };
-
+const unresponsive_tour_match = function(m_id, match) {
+  console.log(match);
+  if (match.team_1_result || match.team_2_result) {
+    // console.log('// 1 ne diya score.. usko jitao');
+    if (match.team_1_result) {
+      // console.log('here');
+      tournamentController.resolveDispute(
+        null,
+        null,
+        null,
+        m_id,
+        'team_1',
+        true
+      );
+    } else if (match.team_2_result) {
+      tournamentController.resolveDispute(
+        null,
+        null,
+        null,
+        m_id,
+        'team_2',
+        true
+      );
+    }
+  } else {
+    // console.log('here');
+    new TournamentMatch()
+      .where({id: m_id})
+      .save(
+        {
+          status: 'disputed',
+          result: 'disputed'
+        },
+        {method: 'update'}
+      )
+      .then(function() {
+        //
+      })
+      .catch(function(err) {
+        // console.log(err);
+        Raven.captureException(err);
+      });
+  }
+};
+const process_8 = function() {
+  reset_ticker();
+  new TournamentMatch()
+    .where('status', 'LIKE', 'started')
+    .where('starts_at', '<', moment().subtract(3, 'hours'))
+    .fetchAll()
+    .then(function(matches) {
+      if (!matches) {
+        return;
+      }
+      matches = matches.toJSON();
+      // console.log(matches);
+      for (let i = 0; i < matches.length; i++) {
+        unresponsive_tour_match(matches[i].id, matches[i]);
+      }
+      reset_ticker();
+      // setTimeout(process_8, 4000);
+      //
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      // return res.status(400).send({ok: false, items: []});
+      reset_ticker();
+      // setTimeout(process_7, 4000);
+    });
+};
 const process_7 = function() {
   reset_ticker();
   new Money8()
@@ -265,22 +336,21 @@ const process_7 = function() {
         return;
       }
       matches = matches.toJSON();
-      console.log(matches);
+      // console.log(matches);
       for (let i = 0; i < matches.length; i++) {
         unresponsive_match_money8(matches[i].id, matches[i]);
       }
       reset_ticker();
-      // setTimeout(process_7, 4000);
+      setTimeout(process_8, 4000);
       //
     })
     .catch(function(err) {
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
-      // setTimeout(process_7, 4000);
+      setTimeout(process_8, 4000);
     });
 };
-
 const process_6 = function() {
   reset_ticker();
   new Match()
@@ -307,7 +377,6 @@ const process_6 = function() {
       setTimeout(process_7, 4000);
     });
 };
-
 const process_5 = function() {
   reset_ticker();
   // console.log('settling ranks');
@@ -440,9 +509,11 @@ const process_1 = function() {
     });
 };
 
-process_1();
+process_8();
 // process_6();
-
+if (0) {
+  process_1();
+}
 //
 
 // new Tournament().

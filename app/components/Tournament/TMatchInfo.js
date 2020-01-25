@@ -208,28 +208,32 @@ class TMatchInfo extends React.Component {
   }
 
   dynamicStatus() {
-    if (!this.state.match.team_2_id) {
+    const match = this.state.match;
+    if (!match.team_2_id) {
       return 'Expired';
     }
-    if (!this.state.match.team_1_result && !this.state.match.team_2_result) {
+    if (match.result == 'disputed') {
+      return 'Disputed';
+    }
+    if (match.status == 'complete') {
+      return 'Complete';
+    }
+    if (!match.team_1_result && !match.team_2_result) {
       return 'Pending Results';
     }
-    if (!this.state.match.team_1_result || !this.state.match.team_2_result) {
+    if (!match.team_1_result || !match.team_2_result) {
       return 'Pending Results Confirmation';
-    }
-    if (this.state.match.result == 'disputed') {
-      return 'Disputed';
     }
 
     let result;
 
-    if (this.state.match.result == 'tie') {
+    if (match.result == 'tie') {
       result = 'Tie';
     } else {
-      if (this.state.match.result == 'team_1') {
-        result = this.state.match.team_1_info.title + ' Wins';
+      if (match.result == 'team_1') {
+        result = match.team_1_info.title + ' Wins';
       } else {
-        result = this.state.match.team_2_info.title + ' Wins';
+        result = match.team_2_info.title + ' Wins';
       }
     }
 
@@ -238,6 +242,12 @@ class TMatchInfo extends React.Component {
 
   renderScoreSubmit() {
     if (!this.props.user) {
+      return false;
+    }
+    if (
+      this.state.match.status == 'complete' ||
+      this.state.match.status == 'disputed'
+    ) {
       return false;
     }
 
