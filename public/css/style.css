@@ -36,10 +36,7 @@ a,a:hover {
 label, legend {
     color: #fff;
 }
-
-.form-control:focus {
-    #114afb }
-
+ 
 html, body {
     color: #fff;
     line-height: 26px;

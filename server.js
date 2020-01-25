@@ -290,7 +290,7 @@ app.post(
 );
 
 app.get('/langController', langController.importLang);
-app.post('/signup', userController.signupPost);
+app.post('/signup', userController.checkIfExists, userController.signupPost);
 app.get('/resend', userController.resend);
 app.post('/login', userController.loginPost);
 app.post('/forgot', userController.forgotPost);

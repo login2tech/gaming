@@ -170,7 +170,7 @@ exports.signupPost = function(req, res, next) {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
-    username: req.body.username ? req.body.username.toLowerCase() : '',
+    username: req.body.username ? req.body.username : '',
     password: req.body.password,
     gender: req.body.gender,
     dob: req.body.dob,
@@ -1093,15 +1093,21 @@ exports.resetScore = function(req, res, next) {
 };
 
 exports.checkIfExists = function(req, res, next) {
-  const new_username = req.body.new_username.toLowerCase();
+  const new_username = req.body.new_username
+    ? req.body.new_username
+    : req.body.username;
   new User()
-    .where({
-      username: new_username
-    })
+    .where('username', 'ILIKE', new_username)
     .fetch()
     .then(function(usr) {
       if (usr) {
         usr = usr.toJSON();
+        if (!req.user) {
+          return res.status(400).send({
+            ok: false,
+            msg: 'This username is already taken.'
+          });
+        }
         if (usr.id == req.user.id) {
           next();
         } else {
@@ -1116,7 +1122,8 @@ exports.checkIfExists = function(req, res, next) {
       }
     })
     .catch(function(err) {
-      return res.status(200).send({
+      console.log(err);
+      return res.status(400).send({
         ok: false,
         msg: 'Failed to update username.'
       });
@@ -1124,7 +1131,7 @@ exports.checkIfExists = function(req, res, next) {
 };
 exports.changeUname = function(req, res, next) {
   const user = new User({id: req.user.id});
-  const new_username = req.body.new_username.toLowerCase();
+  const new_username = req.body.new_username;
   user
     .save(
       {

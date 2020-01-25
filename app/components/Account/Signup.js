@@ -30,7 +30,7 @@ class Signup extends React.Component {
   handleChangeUsername(event) {
     let val = event.target.value ? event.target.value : '';
     val = val.trim();
-    val = val.toLowerCase();
+    // val = val.toLowerCase();
     val = val.replace(/[^a-zA-Z0-9 ]/g, '_');
     val = val.replace(new RegExp('__', 'g'), '_');
     if (
@@ -55,6 +55,9 @@ class Signup extends React.Component {
 
   handleSignup(event) {
     event.preventDefault();
+    if (this.state.creating) {
+      return false;
+    }
 
     if (this.state.email && this.state.email_confirm != this.state.email) {
       this.props.dispatch({
@@ -71,6 +74,15 @@ class Signup extends React.Component {
       }
       return;
     }
+    this.setState({
+      creating: true
+    });
+    scrollToTop();
+    setTimeout(() => {
+      this.setState({
+        creating: false
+      });
+    }, 2000);
 
     this.props.dispatch(
       signup(
@@ -98,6 +110,7 @@ class Signup extends React.Component {
             username: '',
             email: '',
             day: '',
+            creating: false,
             month: '',
             state: '',
             year: '',
@@ -463,9 +476,10 @@ class Signup extends React.Component {
                     <div className="form-group col-md-12 text-center">
                       <button
                         className="btn btn-default btn-radius bttn_submit"
+                        disabled={this.state.creating}
                         type="submit"
                       >
-                        Submit
+                        {this.state.creating ? 'Please wait...' : 'Submit'}
                       </button>
                     </div>
                     <p className="text-center foo_login">
