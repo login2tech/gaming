@@ -30,6 +30,7 @@ import TournamentMatches from './components/DataRows/TournamentMatches';
 
 import WithdrawalCompleted from './components/DataRows/WithdrawalCompleted';
 import WithdrawalPending from './components/DataRows/WithdrawalPending';
+import Settings from './components/DataRows/Settings';
 
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
@@ -71,6 +72,12 @@ export default function getRoutes(store) {
       <Route
         path="/forms/subscribers"
         component={Subscribers}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/settings"
+        component={Settings}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />

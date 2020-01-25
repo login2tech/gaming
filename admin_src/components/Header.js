@@ -224,6 +224,11 @@ class Header extends React.Component {
                   </ul>
                 </li>
                 <li>
+                  <Link to="/settings">
+                    Settings <span className="badge">New</span>
+                  </Link>
+                </li>
+                <li>
                   <Link
                     className="dropdown-toggle"
                     data-toggle="dropdown"
@@ -231,7 +236,7 @@ class Header extends React.Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Form Submissions
+                    Form
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
