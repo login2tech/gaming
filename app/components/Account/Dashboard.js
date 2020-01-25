@@ -420,7 +420,7 @@ class Profile extends React.Component {
                   value={this.state.state}
                   onChange={this.handleChange.bind(this)}
                 >
-                  <option value="">Check State</option>
+                  <option value="">Choose State</option>
                   {states.map((state, i) => {
                     return (
                       <option value={state} key={state}>

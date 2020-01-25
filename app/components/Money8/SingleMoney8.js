@@ -78,7 +78,7 @@ const SingleMoney8 = props => {
               </div>
 
               <div className="tour-stats">
-                <small>MAX TEAMS</small> <p>{match.players_total}</p>
+                <small>MAX PLAYERS</small> <p>{match.players_total}</p>
               </div>
               <div className="tour-stats">
                 <small>ENROLLED</small> <p>{match.players_joined}</p>

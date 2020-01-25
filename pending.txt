@@ -1,6 +1,6 @@
 - activate double xp
-- escilate ticket
+
 - remove ticket ?
 - tournament notification matches
-- "advanced" rank image
+ 
 - 10 credits on rank up
