@@ -1,6 +1,6 @@
 // has translations
 import React from 'react';
-import {Translate} from 'react-localize-redux';
+// import {Translate} from 'react-localize-redux';
 
 const NotFound = props => {
   return (
@@ -11,9 +11,7 @@ const NotFound = props => {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>
-                    <Translate id="404_heading" />
-                  </h3>
+                  <h3>404 Not Found</h3>
                 </div>
               </div>
             </div>
@@ -24,7 +22,7 @@ const NotFound = props => {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <Translate id="404_content" />
+                The page you are looking for doesnt exist
               </div>
             </div>
           </div>

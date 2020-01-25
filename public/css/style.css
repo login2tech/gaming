@@ -5540,3 +5540,9 @@ button.btn.btn-exp-menu {
         background: none !important
     }
 }
+
+
+.platform_notice {
+    bottom: 0;left:0;position: fixed;
+    width: 100%;line-height: 40px;
+}

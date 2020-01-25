@@ -1,24 +1,21 @@
 import React from 'react';
 import Header from './Modules/Header';
 import Footer from './Modules/Footer';
-
+import {connect} from 'react-redux';
+import moment from 'moment';
 import ModalContainer from './ModalContainer';
 
-import {withLocalize} from 'react-localize-redux';
+// import {withLocalize} from 'react-localize-redux';
 
 class App extends React.Component {
   loadLang() {}
+  state = {
+    canShowPlatformNotice: false
+  };
 
   componentDidMount() {
-    this.langLoader();
+    this.canShowPlatformNotice();
   }
-  //
-  // loadLang(lang_data) {
-  //   this.props.dispatch({
-  //     type: 'SET_LANG',
-  //     data: 'sdf'
-  //   });
-  // }
 
   downloadLang(lang) {
     fetch('/api/lang/').then(resp => {
@@ -37,7 +34,6 @@ class App extends React.Component {
 
   langLoader() {
     const languages = ['en', 'fr'];
-
     this.props.initialize({
       languages,
       options: {
@@ -49,9 +45,36 @@ class App extends React.Component {
         }
       }
     });
-
     // this.props.dispatch(initialize(languages));
     this.downloadLang();
+  }
+
+  canShowPlatformNotice() {
+    const a = window.localStorage.getItem('pnotice_snoozed_till');
+    if (!a) {
+      this.setState({
+        canShowPlatformNotice: true
+      });
+      return;
+    }
+    if (moment().isAfter(a)) {
+      this.setState({
+        canShowPlatformNotice: true
+      });
+      return;
+    }
+    this.setState({
+      canShowPlatformNotice: false
+    });
+  }
+  snoozePlatformNotice() {
+    window.localStorage.setItem(
+      'pnotice_snoozed_till',
+      moment().add(1, 'hour')
+    );
+    this.setState({
+      canShowPlatformNotice: false
+    });
   }
 
   render() {
@@ -69,16 +92,37 @@ class App extends React.Component {
             }}
           />
         </div>
+
+        {this.props.settings.platform_notice &&
+        this.state.canShowPlatformNotice ? (
+          <>
+            <div className="alert alert-warning p-4 platform_notice m-0">
+              <button
+                className="btn btn-primary max-width-200 float-right btn-sm mr-4"
+                onClick={this.snoozePlatformNotice.bind(this)}
+              >
+                Close
+              </button>
+              {this.props.settings.platform_notice}
+            </div>
+          </>
+        ) : (
+          false
+        )}
         <ModalContainer />
       </div>
     );
   }
 }
 
-export default withLocalize(App);
+// const App2 = withLocalize(App);
 //
-// const mapStateToProps = state => {
-//   messages:state.messages
-// };
-//
-// export default connect(mapStateToProps)(App);
+const mapStateToProps = state => {
+  return {
+    // token: state.auth.token,
+    settings: state.settings
+    // userHash: state.auth.userHash
+  };
+};
+
+export default connect(mapStateToProps)(App);

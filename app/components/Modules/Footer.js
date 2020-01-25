@@ -1,6 +1,6 @@
 // has objects
 import React from 'react';
-import {Translate} from 'react-localize-redux';
+// import {Translate} from 'react-localize-redux';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {applySubscribe} from '../../actions/contact';
@@ -155,7 +155,7 @@ class Footer extends React.Component {
               <div className="col-lg-12 col-md-12 col-sm-12 text-center">
                 <div className="copyright">
                   <p>
-                    <Translate id="footer_text_copyright" />
+                    &copy; 2020 Only Comp Gaming
                     <br />
                     <small>
                       All content, games titles, trade names and/or trade dress,

@@ -4,7 +4,7 @@ const Router = require('react-router');
 
 const Provider = require('react-redux').Provider;
 // import {LocalizeProvider} from 'react-localize-redux';
-const LocalizeProvider = require('react-localize-redux').LocalizeProvider;
+// const LocalizeProvider = require('react-localize-redux').LocalizeProvider;
 const routes = require('./app/routes');
 const configureStore = require('./app/store/configureStore').default;
 const Settings = require('./models/Settings');
@@ -60,18 +60,7 @@ module.exports = function(app, langs) {
             React.createElement(
               Provider,
               {store: store},
-              <LocalizeProvider
-                initialize={{
-                  languages: [{name: 'English', code: 'en'}],
-                  translation: langs,
-                  options: {
-                    defaultLanguage: 'en',
-                    renderToStaticMarkup: ReactDOM.renderToStaticMarkup
-                  }
-                }}
-              >
-                {React.createElement(Router.RouterContext, renderProps)}
-              </LocalizeProvider>
+              React.createElement(Router.RouterContext, renderProps)
             )
           );
           res.render('layout', {

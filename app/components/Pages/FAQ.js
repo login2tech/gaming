@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Translate, withLocalize} from 'react-localize-redux';
+// import {Translate, withLocalize} from 'react-localize-redux';
 
 class FAQ extends React.Component {
   constructor(props) {
@@ -31,9 +31,7 @@ class FAQ extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <h2 className="title_heading">
-                  <Translate id="faq_page_title" />
-                </h2>
+                <h2 className="title_heading">F.A.Q.</h2>
               </div>
             </div>
           </div>
@@ -100,4 +98,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default withLocalize(connect(mapStateToProps)(FAQ));
+export default connect(mapStateToProps)(FAQ);

@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {submitContactForm} from '../../actions/contact';
 import Messages from '../Modules/Messages';
-import {Translate} from 'react-localize-redux';
+// import {Translate} from 'react-localize-redux';
 
 class Contact extends React.Component {
   constructor(props) {
@@ -47,8 +47,7 @@ class Contact extends React.Component {
                     <div className="row clearfix">
                       <div className="form-group col-md-6 col-sm-6 co-xs-12">
                         <label>
-                          <Translate id="contact_page_name_label" />{' '}
-                          <span className="required">*</span>
+                          Name <span className="required">*</span>
                         </label>
                         <input
                           type="text"
@@ -62,8 +61,7 @@ class Contact extends React.Component {
                       </div>
                       <div className="form-group col-md-6 col-sm-6 co-xs-12">
                         <label>
-                          <Translate id="contact_page_email_label" />{' '}
-                          <span className="required">*</span>
+                          Email Address <span className="required">*</span>
                         </label>
                         <input
                           type="email"
@@ -90,9 +88,7 @@ class Contact extends React.Component {
                       </div>
 
                       <div className="form-group col-md-12 col-sm-12 co-xs-12">
-                        <label>
-                          <Translate id="contact_page_message_label" />{' '}
-                        </label>
+                        <label>Message </label>
                         <textarea
                           name="message"
                           id="message"
@@ -108,7 +104,7 @@ class Contact extends React.Component {
                           type="submit"
                           className="btn btn-default bttn_submit"
                         >
-                          <Translate id="contact_page_send_btn_label" />
+                          Send
                         </button>
                       </div>
                     </div>
