@@ -5563,3 +5563,6 @@ button.btn.btn-exp-menu {
 th.act_pr6 .actision_logo{
   float:left;
 }
+.following_btn a{
+  font-weight: bold;
+}

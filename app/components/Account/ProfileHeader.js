@@ -476,7 +476,7 @@ class ProfileHeader extends React.Component {
                 <div className="col-md-11">{this.renderXPMeter()}</div>
               </div>
             </div>
-            <div className="col-6 col-md-2 following_btn">
+            <div className="col-6 col-md-2 following_btn text-bold text-center">
               <span>
                 <a
                   href="#"
@@ -488,7 +488,7 @@ class ProfileHeader extends React.Component {
                   Following
                 </a>
               </span>
-              <p>
+              <p className="text-center">
                 <a
                   href="#"
                   onClick={e => {
@@ -501,19 +501,23 @@ class ProfileHeader extends React.Component {
               </p>
             </div>
 
-            <div className="col-6 col-md-2 following_btn">
+            <div className="col-6 col-md-2 following_btn text-bold text-center">
               <span>
                 <a
-                  onClick={() => {
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
                     this.showFollowers(user_info.id);
                   }}
                 >
                   Followers
                 </a>
               </span>
-              <p>
+              <p className="text-center">
                 <a
-                  onClick={() => {
+                  href="#"
+                  onClick={e => {
+                    e.preventDefault();
                     this.showFollowers(user_info.id);
                   }}
                 >
