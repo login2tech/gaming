@@ -282,11 +282,20 @@ class Game extends React.Component {
     return (
       <tbody>
         {data.map((item, idx) => {
+          const image_url =
+            item && item.profile_picture
+              ? item.profile_picture
+              : 'https://ui-avatars.com/api/?size=30&name=' +
+                (item ? item.username : '') +
+                '&color=124afb&background=fff';
+
           return (
             <tr key={item.idx}>
               <td>{idx + 1}</td>
               <td>
-                <Link to={'/teams/view/' + item.id}>{item.username}</Link>
+                <Link class="avatar_img_r" to={'/teams/view/' + item.id}>
+                  <img src={image_url} /> {item.username}
+                </Link>
               </td>
               <td className="text-success">{item.wins}</td>
               <td className="text-danger">{item.loss}</td>
@@ -584,7 +593,7 @@ class Game extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <td>Game Rank</td>
+                          <td>Rank</td>
                           <td>Team</td>
                           <td>Wins</td>
                           <td>Loss</td>
