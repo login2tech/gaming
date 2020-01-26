@@ -5566,3 +5566,6 @@ th.act_pr6 .actision_logo{
 .following_btn a{
   font-weight: bold;
 }
+.game_pic_tournament, .page_title_bar{
+  background-position: left center;
+}

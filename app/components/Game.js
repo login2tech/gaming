@@ -236,7 +236,7 @@ class Game extends React.Component {
               total_done: json.total_done
             },
             () => {
-              setInterval(this.reloadChats.bind(this), 1000);
+              setInterval(this.reloadChats.bind(this), 2000);
               this.fetchLeaderBoards();
             }
           );

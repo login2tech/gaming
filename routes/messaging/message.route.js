@@ -6,7 +6,7 @@ const ctrl = require('./controller.js');
 module.exports = routes;
 
 routes.post('/newMsg', u_ctrl.ensureAuthenticated, ctrl.new);
-routes.get('/list', u_ctrl.ensureAuthenticated, ctrl.list);
+routes.get('/list', ctrl.list);
 // routes.get(
 //   '/group_has_unread',
 //   u_ctrl.ensureAuthenticated,
