@@ -47,8 +47,14 @@ class Threads extends React.Component {
           <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
+                <div className="section-headline m-0 white-headline text-left">
                   <h3>{this.props.params.title}</h3>
+                  <h5>Topic</h5>
+                  <br />
+                  <br />
+                  <a href="/forums" className="">
+                    <span className="fa fa-arrow-left" /> back to topics
+                  </a>
                 </div>
               </div>
             </div>
@@ -62,20 +68,7 @@ class Threads extends React.Component {
               role="tablist"
               style={{marginBottom: 40}}
             >
-              <li role="presentation" className="pull-right text-right">
-                <Link
-                  to={
-                    '/forums/' +
-                    this.props.params.id +
-                    '/' +
-                    this.props.params.title +
-                    '/new'
-                  }
-                  role="tab"
-                >
-                  <i className="fa fa-plus" /> Create New Thread
-                </Link>
-              </li>
+              <li role="presentation" className="pull-right text-right" />
             </ul>
 
             <div className="row">
@@ -95,7 +88,13 @@ class Threads extends React.Component {
                           <tr key={item.id}>
                             <td>
                               <a
-                                href={'/forums/thread/' + item.id + '/page/1/'}
+                                href={
+                                  '/forums/' +
+                                  this.props.params.title +
+                                  '/thread/' +
+                                  item.id +
+                                  '/page/1/'
+                                }
                               >
                                 {item.title}
                               </a>

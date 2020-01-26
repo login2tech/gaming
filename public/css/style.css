@@ -36,7 +36,7 @@ a,a:hover {
 label, legend {
     color: #fff;
 }
- 
+
 html, body {
     color: #fff;
     line-height: 26px;
@@ -2038,13 +2038,14 @@ ul.members li a img {
 .forum_topic_list li a {
     display: block;
     padding: 35px;
-    background: #3c3939;
-    border: 1px solid #5f5d5d;
+    background: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     border-radius: 4px;
+    box-shadow: 0 0 5px 2px #2847f3;
 }
 
 .forum_topic_list li a:hover {
-    background: #222;
+    box-shadow: 0 0 14px 6px #2847f3;
 }
 
 .fourm_time {
@@ -5205,7 +5206,9 @@ button.btn.btn-exp-menu {
 .tour-description-block {
     width: 100%;
     z-index: 2;
-}.tour-box.small {
+}
+
+.tour-box.small {
     margin-bottom: 10px;
 }
 
@@ -5214,6 +5217,7 @@ button.btn.btn-exp-menu {
     line-height: 28px;
     font-size: 14px;
 }
+
 .tour-box.small .star_img:not(.big) {
     z-index: 3;
     right: 20px;
@@ -5221,6 +5225,7 @@ button.btn.btn-exp-menu {
     top: 38px;
     height: 40px;
 }
+
 .tour-box.small .tour-details:after {
     background: rgba(0,0,0, 0.66);
     content: ' ';
@@ -5231,6 +5236,7 @@ button.btn.btn-exp-menu {
     left: 0;
     height: 100%;
 }
+
 @media (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5429,7 +5435,7 @@ button.btn.btn-exp-menu {
         left: 0;
     }
 
-    .tour-cover-block:after  {
+    .tour-cover-block:after {
         background: rgba(0,0,0, 0.66);
         content: ' ';
         z-index: 1;
@@ -5538,8 +5544,18 @@ button.btn.btn-exp-menu {
     }
 }
 
-
 .platform_notice {
-    bottom: 0;left:0;position: fixed;
-    width: 100%;line-height: 40px;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    line-height: 40px;
+    z-index: 99999;
+    background: rgb(17, 74, 251);
+    color: rgb(255, 255, 255);
+    border: 0;
+}
+
+.platform_notice .btn {
+    background: rgb(0, 0, 0) !important;
 }

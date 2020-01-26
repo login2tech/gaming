@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import { resetPassword } from '../../actions/auth';
+import {Link} from 'react-router';
 import Messages from '../Modules/Messages';
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
@@ -123,12 +123,13 @@ class SingleThread extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar less_padding" id="less_padding">
+        <section className="page_title_bar" id=" ">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
+                <div className="section-headline m-0 white-headline text-left">
                   <h3>{this.state.thread.title}</h3>
+                  <h5 className="text-capitalize">{this.props.params.topic}</h5>
                   <p>
                     Started by{' '}
                     <a href={'/u/' + this.state.thread.user.username}>
@@ -136,6 +137,20 @@ class SingleThread extends React.Component {
                     </a>{' '}
                     {moment(this.state.thread.created_at).fromNow()}
                   </p>
+                  <br />
+                  <a
+                    href="/forums"
+                    className=""
+                    onClick={e => {
+                      if (history.length == 1) {
+                        return;
+                      }
+                      history.back();
+                      e.preventDefault();
+                    }}
+                  >
+                    <span className="fa fa-arrow-left" /> back to threads
+                  </a>
                 </div>
               </div>
             </div>
@@ -166,9 +181,9 @@ class SingleThread extends React.Component {
                         <span className="menu_prof_name_w">
                           <span className="menu_prof_name_top">
                             By{' '}
-                            {this.state.thread.user.first_name +
-                              ' ' +
-                              this.state.thread.user.last_name}
+                            <Link to={'/u/' + this.state.thread.user.username}>
+                              @{this.state.thread.user.username}
+                            </Link>
                           </span>
                           <span className="menu_prof_name_bot">
                             {moment(this.state.thread.created_at).format('lll')}
@@ -209,9 +224,9 @@ class SingleThread extends React.Component {
                             <span className="menu_prof_name_w">
                               <span className="menu_prof_name_top">
                                 By{' '}
-                                {item.user.first_name +
-                                  ' ' +
-                                  item.user.last_name}
+                                <Link to={'/u/' + item.user.username}>
+                                  @{item.user.username}
+                                </Link>
                               </span>
                               <span className="menu_prof_name_bot">
                                 {moment(item.created_at).format('lll')}

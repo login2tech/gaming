@@ -210,7 +210,13 @@ class FeedMy extends React.Component {
                       <ul className="timeline">
                         {this.state.posts &&
                           this.state.posts.map((post, i) => {
-                            return <Timeline post={post} key={post.id} />;
+                            return (
+                              <Timeline
+                                expand_comments
+                                post={post}
+                                key={post.id}
+                              />
+                            );
                           })}
                       </ul>
                     )}

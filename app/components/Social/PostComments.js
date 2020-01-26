@@ -7,7 +7,7 @@ import moment from 'moment';
 // import UpvoteButton from '../Modules/UpvoteButton';
 // import PostComments from './PostComments';
 class PostComments extends React.Component {
-  state = {new_post_content: '', posts: []};
+  state = {new_post_content: '', posts: [], focussed: false};
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
@@ -110,17 +110,29 @@ class PostComments extends React.Component {
             <textarea
               className="form-control"
               id="new_post_content"
+              onFocus={() => {
+                this.setState({
+                  focussed: true
+                });
+              }}
+              onBlur={() => {
+                this.setState({
+                  focussed: false
+                });
+              }}
               required
-              rows="3"
+              rows={this.state.focussed ? '3' : '1'}
               value={this.state.new_post_content}
               placeholder="Add a comment?"
               name="new_post_content"
               onChange={this.handleChange.bind(this)}
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Reply
-          </button>
+          {this.state.focussed && (
+            <button type="submit" className="btn btn-primary">
+              Reply
+            </button>
+          )}
         </form>
       </div>
     );

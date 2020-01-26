@@ -51,26 +51,20 @@ class App extends React.Component {
 
   canShowPlatformNotice() {
     const a = window.localStorage.getItem('pnotice_snoozed_till');
-    if (!a) {
+    if (a == this.props.settings.platform_notice) {
       this.setState({
-        canShowPlatformNotice: true
-      });
-      return;
-    }
-    if (moment().isAfter(a)) {
-      this.setState({
-        canShowPlatformNotice: true
+        canShowPlatformNotice: false
       });
       return;
     }
     this.setState({
-      canShowPlatformNotice: false
+      canShowPlatformNotice: true
     });
   }
   snoozePlatformNotice() {
     window.localStorage.setItem(
       'pnotice_snoozed_till',
-      moment().add(1, 'hour')
+      this.props.settings.platform_notice
     );
     this.setState({
       canShowPlatformNotice: false

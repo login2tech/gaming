@@ -17,6 +17,7 @@ export function login(email, password, cb) {
     }).then(response => {
       if (response.ok) {
         return response.json().then(json => {
+          window.localStorage.setItem('pnotice_snoozed_till', '');
           dispatch({
             type: 'LOGIN_SUCCESS',
             token: json.token,
@@ -60,6 +61,7 @@ export function signup(data, cb) {
     }).then(response => {
       return response.json().then(json => {
         if (response.ok) {
+          window.localStorage.setItem('pnotice_snoozed_till', '');
           dispatch({
             type: 'CONTACT_FORM_SUCCESS',
             messages: Array.isArray(json) ? json : [json]

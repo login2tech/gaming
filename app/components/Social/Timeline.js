@@ -132,7 +132,7 @@ class Timeline extends React.Component {
                   ' pinner btn btn-sm is_link'
                 }
               >
-                <i className="fa fa-thumb-tack" />
+                <i className="fa fa-thumbtack" />
               </button>
             )}
           </span>

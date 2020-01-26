@@ -201,6 +201,11 @@ export default function getRoutes(store) {
         component={props => <SingleThread key={props.params.page} {...props} />}
       />
       <Route
+        path="/forums/:topic/thread/:thread_id/page/:page"
+        onLeave={clearMessages}
+        component={props => <SingleThread key={props.params.page} {...props} />}
+      />
+      <Route
         onLeave={clearMessages}
         path="/forums/:id/:title"
         component={Threads}

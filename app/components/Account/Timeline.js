@@ -246,6 +246,7 @@ class Profile extends React.Component {
                         this.state.posts.map((post, i) => {
                           return (
                             <Timeline
+                              expand_comments
                               post={post}
                               key={post.id}
                               show_option_to_pin

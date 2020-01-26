@@ -495,7 +495,9 @@ class Header extends React.Component {
             <div
               className={
                 'collapse navbar-collapse ml-3 fl-2 justify-content-end ' +
-                (this.props.user ? ' is_logged_in' : 'is_not_logged_in')
+                (this.props.user && this.props.token
+                  ? ' is_logged_in'
+                  : 'is_not_logged_in')
               }
               id="menu2"
             >
