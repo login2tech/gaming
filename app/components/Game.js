@@ -568,7 +568,7 @@ class Game extends React.Component {
                       <span className="fa fa-spin fa-spinner" />
                     </div>
                   )}
-                  <h4>Leaderboard</h4>
+                  <h4>Leaderboards</h4>
                   {/*<div className="btn-group" style={{float: 'right'}}>
                     Object.keys(leaderboards).map((ladder, idx) => {
                         return (
