@@ -42,18 +42,13 @@ const SingleMatch = props => {
         </div>
         <div className="wager-cost">
           <span>
-            {(match.match_type == 'free') == 'FREE' ? (
-              'FREE'
-            ) : (
-              <>
-                PAID
-                <span>
-                  {match.match_type == 'cash'
-                    ? '' + match.match_fee + '$'
-                    : '' + match.match_fee + ' credits'}
-                </span>
-              </>
-            )}
+            {match.match_type == 'free'
+              ? 'FREE'
+              : match.match_type == 'credits' || match.match_type == 'credit'
+                ? match.match_fee + ' credits'
+                : match.match_type == 'cash'
+                  ? '$' + match.match_fee
+                  : ' '}
           </span>
         </div>
         <div className="wager-team-size d-none d-md-flex">

@@ -66,14 +66,15 @@ const SingleMoney8 = props => {
             </div>
             <div className="tour-stats-block">
               <div className="tour-stats flex-3">
-                <small>ENTRY/PLAYER</small>{' '}
+                <small>ENTRY PER PLAYER</small>{' '}
                 <p>
-                  {match.match_type == 'free' ? 'FREE' : match.match_fee}
-                  {match.match_type == 'free' ? (
-                    false
-                  ) : (
-                    <span className="credits-info">{match.match_type}</span>
-                  )}
+                  {match.match_type == 'free'
+                    ? 'FREE'
+                    : match.match_type == 'credits'
+                      ? match.match_fee + ' credits'
+                      : match.match_type == 'cash'
+                        ? '$' + match.match_fee
+                        : ' '}
                 </p>
               </div>
 
@@ -127,7 +128,7 @@ const SingleMoney8 = props => {
                   setShowCancelInit(true);
                 }}
               >
-                Cancel Match
+                Leave Pool
               </button>
             )
           ) : (

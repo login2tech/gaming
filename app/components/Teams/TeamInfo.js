@@ -1020,6 +1020,16 @@ class TeamInfo extends React.Component {
                               )}
                               <td>
                                 <Link to={'/u/' + team_user.user_info.username}>
+                                  {team_user.user_info.prime && (
+                                    <img
+                                      src={
+                                        '/assets/icons/ocg_member_' +
+                                        team_user.user_info.prime_type +
+                                        '.png'
+                                      }
+                                      className="inline-star float-right"
+                                    />
+                                  )}
                                   {team_user.user_info.username}
                                 </Link>
                               </td>

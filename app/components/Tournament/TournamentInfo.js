@@ -1467,7 +1467,7 @@ class TournamentInfo extends React.Component {
                 <div className="section-headline white-headline text-left">
                   {tournament.member_tournament ? (
                     <img
-                      src="http://localhost:5000/assets/icons/ocg_member_gold.png"
+                      src="/assets/icons/ocg_member_gold.png"
                       className="star_img big"
                     />
                   ) : (

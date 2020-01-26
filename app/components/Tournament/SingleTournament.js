@@ -24,7 +24,7 @@ const SingleTournament = props => {
           >
             {tour.member_tournament ? (
               <img
-                src="http://localhost:5000/assets/icons/ocg_member_gold.png"
+                src="/assets/icons/ocg_member_gold.png"
                 className="star_img"
               />
             ) : (
@@ -61,7 +61,7 @@ const SingleTournament = props => {
             </div>
             <div className="tour-stats-block">
               <div className="tour-stats flex-3">
-                <small>ENTRY/PLAYER</small>{' '}
+                <small>ENTRY per PLAYER</small>{' '}
                 <p>
                   {tour.entry_fee} <span className="credits-info">credits</span>
                 </p>

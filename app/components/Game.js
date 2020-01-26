@@ -492,6 +492,113 @@ class Game extends React.Component {
         <section className="contet_part" style={{paddingTop: 30}}>
           <div className="container">
             <div className="row">
+              <div className="col-md-6 col-sm-12 col-xs-12">
+                <div>
+                  <h4>Chatbox</h4>
+                  <div className="chat_box">
+                    <div className="chat_box_message_list msg_history">
+                      {this.state.chats.map((chat, i) => {
+                        if (!chat.user) {
+                          chat.user = chat.from;
+                        }
+                        if (!chat.user) {
+                          chat.user = {id: '', username: ''};
+                        }
+                        const image_url =
+                          chat.user && chat.user.profile_picture
+                            ? chat.user.profile_picture
+                            : 'https://ui-avatars.com/api/?size=30&name=' +
+                              (chat.user ? chat.user.first_name : ' ') +
+                              ' ' +
+                              (chat.user ? chat.user.last_name : ' ') +
+                              '&color=223cf3&background=000000';
+
+                        return (
+                          <div key={chat.id} className="single_chat">
+                            <span className="chat_user_image">
+                              <img src={image_url} />
+                            </span>
+
+                            <span className="chat_user_name">
+                              <Link to={'/u/' + chat.user.username}>
+                                {chat.user.username}
+                              </Link>
+                            </span>
+
+                            <span className="chat_msg">{chat.msg}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="chat_box_message_post">
+                      <form onSubmit={this.newMsgSubmit.bind(this)}>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="new_chat_msg"
+                          id="new_chat_msg"
+                          placeholder="Type your message and press enter key to send a message.."
+                          value={this.state.new_chat_msg}
+                          onChange={this.handleChange.bind(this)}
+                        />
+                        <button type="submit" className="cht_send_btn">
+                          Submit
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">
+                <div>
+                  {this.state.is_loaded_4 ? (
+                    false
+                  ) : (
+                    <div className="text-center ym_loader_wrap">
+                      <span className="fa fa-spin fa-spinner" />
+                    </div>
+                  )}
+                  <h4>Leaderboard</h4>
+                  {/*<div className="btn-group" style={{float: 'right'}}>
+                    Object.keys(leaderboards).map((ladder, idx) => {
+                        return (
+                          <button
+                            onClick={() => {
+                              this.setState({
+                                active_leaderboard: ladder
+                              });
+                            }}
+                            className={
+                              'btn ' +
+                              (active_leaderboard == ladder ? ' btn-primary' : '')
+                            }
+                            key={ladder}
+                          >
+                            {leaderboards[ladder].ladder.title}
+                          </button>
+                        );
+                      })
+                    </div>*/}
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <td>Game Rank</td>
+                          <td>Team</td>
+                          <td>Wins</td>
+                          <td>Loss</td>
+                          <td>Win Rate</td>
+                        </tr>
+                      </thead>
+                      {this.renderLeaderBoard()}
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
               <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">
                 <div>
                   <h4>Matchfinder</h4>
@@ -572,113 +679,6 @@ class Game extends React.Component {
                           )}
                       </tbody>
                     </table>
-                  </div>
-                </div>
-              </div>
-
-              <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">
-                <div>
-                  {this.state.is_loaded_4 ? (
-                    false
-                  ) : (
-                    <div className="text-center ym_loader_wrap">
-                      <span className="fa fa-spin fa-spinner" />
-                    </div>
-                  )}
-                  <h4>Leaderboard</h4>
-                  {/*<div className="btn-group" style={{float: 'right'}}>
-                    Object.keys(leaderboards).map((ladder, idx) => {
-                        return (
-                          <button
-                            onClick={() => {
-                              this.setState({
-                                active_leaderboard: ladder
-                              });
-                            }}
-                            className={
-                              'btn ' +
-                              (active_leaderboard == ladder ? ' btn-primary' : '')
-                            }
-                            key={ladder}
-                          >
-                            {leaderboards[ladder].ladder.title}
-                          </button>
-                        );
-                      })
-                    </div>*/}
-                  <div className="table_wrapper">
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <td>Game Rank</td>
-                          <td>Team</td>
-                          <td>Wins</td>
-                          <td>Loss</td>
-                          <td>Win Rate</td>
-                        </tr>
-                      </thead>
-                      {this.renderLeaderBoard()}
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-md-6 col-sm-12 col-xs-12">
-                <div>
-                  <h4>Chatbox</h4>
-                  <div className="chat_box">
-                    <div className="chat_box_message_list msg_history">
-                      {this.state.chats.map((chat, i) => {
-                        if (!chat.user) {
-                          chat.user = chat.from;
-                        }
-                        if (!chat.user) {
-                          chat.user = {id: '', username: ''};
-                        }
-                        const image_url =
-                          chat.user && chat.user.profile_picture
-                            ? chat.user.profile_picture
-                            : 'https://ui-avatars.com/api/?size=30&name=' +
-                              (chat.user ? chat.user.first_name : ' ') +
-                              ' ' +
-                              (chat.user ? chat.user.last_name : ' ') +
-                              '&color=223cf3&background=000000';
-
-                        return (
-                          <div key={chat.id} className="single_chat">
-                            <span className="chat_user_image">
-                              <img src={image_url} />
-                            </span>
-
-                            <span className="chat_user_name">
-                              <Link to={'/u/' + chat.user.username}>
-                                {chat.user.username}
-                              </Link>
-                            </span>
-
-                            <span className="chat_msg">{chat.msg}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    <div className="chat_box_message_post">
-                      <form onSubmit={this.newMsgSubmit.bind(this)}>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="new_chat_msg"
-                          id="new_chat_msg"
-                          placeholder="Type your message and press enter key to send a message.."
-                          value={this.state.new_chat_msg}
-                          onChange={this.handleChange.bind(this)}
-                        />
-                        <button type="submit" className="cht_send_btn">
-                          Submit
-                        </button>
-                      </form>
-                    </div>
                   </div>
                 </div>
               </div>
