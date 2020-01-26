@@ -72,7 +72,10 @@ class Trophies extends React.Component {
                     {this.props.params.type} Trophies
                   </h3>
                   <br />
-                  <Link to={'/u/' + this.props.params.username}>
+                  <Link
+                    class="pt-3 pb-3 dib"
+                    to={'/u/' + this.props.params.username}
+                  >
                     <span className="fa fa-arrow-left" /> back to profile
                   </Link>
                 </div>

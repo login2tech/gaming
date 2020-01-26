@@ -166,17 +166,19 @@ class Records extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3 className="no-case-change">
-                    {this.props.params.duration == 'life' ? 'Life' : ''}
-                    {this.props.params.duration == 'season'
-                      ? 'Season'
-                      : ''}{' '}
+                  <h2 className="no-case-change text-lg">
+                    {this.props.params.duration == 'life' ? 'Career ' : ''}
+                    {this.props.params.duration == 'season' ? 'Season ' : ''}
                     Records for @{this.props.params.username}
-                  </h3>
-                  <br />
-                  <Link to={'/u/' + this.props.params.username}>
+                  </h2>
+
+                  <Link
+                    to={'/u/' + this.props.params.username}
+                    class="pt-3 pb-3 dib"
+                  >
                     <span className="fa fa-arrow-left" /> back to profile
                   </Link>
+                  <p> </p>
 
                   {this.props.user &&
                   this.props.params &&
@@ -184,9 +186,11 @@ class Records extends React.Component {
                   rec.length > 0 &&
                   this.state.loaded ? (
                     <>
-                      {' '}
-                      |{' '}
-                      <a href="#" onClick={this.resetOverall.bind(this)}>
+                      <a
+                        href="#"
+                        className="pt-3 pb-3 dib  text-lg"
+                        onClick={this.resetOverall.bind(this)}
+                      >
                         <span className="fa fa-repeat" /> reset ($5)
                       </a>
                     </>
