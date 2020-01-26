@@ -1,6 +1,15 @@
-- activate double xp
-
-- remove ticket ?
+- activate double XP
+- notification in matches
 - tournament notification matches
- 
 - 10 credits on rank up
+- show brackets in tournaments
+- show tournament matches
+- undo tournament matches
+- admin panel responsive
+- frontend responsive
+- mails
+- live chat
+- stripe, make it live
+- stripe create plans in stripe dashboard
+- delete all testing images ?
+- 
