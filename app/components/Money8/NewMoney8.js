@@ -102,10 +102,11 @@ class NewMoney8 extends React.Component {
     if (!ladder) {
       return 'Platform User id';
     }
+    const tg = game_user_ids.tag_names[ladder.gamer_tag];
     return (
       <>
         <span className={game_user_ids.tag_icons[ladder.gamer_tag]} />
-        {game_user_ids.tag_names[ladder.gamer_tag]}
+        {tg == 'Activision ID' ? 'ID' : tg}
       </>
     );
   }
@@ -395,7 +396,9 @@ class NewMoney8 extends React.Component {
                             <thead>
                               <tr>
                                 <th>Username</th>
-                                <th>{this.showGamerTag(ladder)}</th>
+                                <th className={'act_pr' + ladder.gamer_tag}>
+                                  {this.showGamerTag(ladder)}
+                                </th>
                                 <th>Eligibility</th>
                               </tr>
                             </thead>

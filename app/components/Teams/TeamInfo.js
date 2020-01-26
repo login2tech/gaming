@@ -31,6 +31,7 @@ class TeamInfo extends React.Component {
     if (!this.state.team_info || !this.state.team_info.ladder) {
       return '';
     }
+    const tg = game_user_ids.tag_names[this.state.team_info.ladder.gamer_tag];
     return (
       <>
         <span
@@ -38,7 +39,7 @@ class TeamInfo extends React.Component {
             game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
           }
         />
-        {game_user_ids.tag_names[this.state.team_info.ladder.gamer_tag]}
+        {tg == 'Activision ID' ? 'ID' : tg}
       </>
     );
   }
@@ -973,7 +974,13 @@ class TeamInfo extends React.Component {
                           {this.state.is_edit_mode && <th>{'remove'}</th>}
                           <th>Username</th>
                           <th>Role</th>
-                          <th>{this.showGamerTag()}</th>
+                          <th
+                            className={
+                              'act_pr' + this.state.team_info.ladder.gamer_tag
+                            }
+                          >
+                            {this.showGamerTag()}
+                          </th>
                           <th>Eligible</th>
                           <th>Date Joined</th>
                         </tr>

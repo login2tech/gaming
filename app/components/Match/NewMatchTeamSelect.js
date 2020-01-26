@@ -87,6 +87,7 @@ class NewMatchTeamSelect extends React.Component {
       const tmp_game = games[i];
       for (let j = 0; j < tmp_game.ladders.length; j++) {
         if (tmp_game.ladders[j].id == this.state.ladder) {
+          const tg = game_user_ids.tag_names[tmp_game.ladders[j].gamer_tag];
           return (
             <>
               <span
@@ -94,7 +95,7 @@ class NewMatchTeamSelect extends React.Component {
                   game_user_ids.tag_icons[tmp_game.ladders[j].gamer_tag]
                 }
               />
-              {game_user_ids.tag_names[tmp_game.ladders[j].gamer_tag]}
+              {tg == 'Activision ID' ? 'ID' : tg}
               <br />
               <br />
             </>

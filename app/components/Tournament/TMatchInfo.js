@@ -33,12 +33,13 @@ class TMatchInfo extends React.Component {
 
   showGamerTag() {
     const {match} = this.state;
+    const tg = game_user_ids.tag_names[match.tournament.ladder.gamer_tag];
     return (
       <>
         <span
           className={game_user_ids.tag_icons[match.tournament.ladder.gamer_tag]}
         />
-        {game_user_ids.tag_names[match.tournament.ladder.gamer_tag]}
+        {tg == 'Activision ID' ? 'ID' : tg}
       </>
     );
   }
@@ -525,7 +526,14 @@ class TMatchInfo extends React.Component {
                       <thead>
                         <tr>
                           <th style={{width: '33%'}}>Username</th>
-                          <th style={{width: '33%'}}>{this.showGamerTag()}</th>
+                          <th
+                            style={{width: '33%'}}
+                            className={
+                              'act_pr' + match.tournament.ladder.gamer_tag
+                            }
+                          >
+                            {this.showGamerTag()}
+                          </th>
                           <th style={{width: '33%'}}>Role</th>
                         </tr>
                       </thead>
@@ -619,7 +627,12 @@ class TMatchInfo extends React.Component {
                           <thead>
                             <tr>
                               <th style={{width: '33%'}}>Username</th>
-                              <th style={{width: '33%'}}>
+                              <th
+                                style={{width: '33%'}}
+                                className={
+                                  'act_pr' + match.tournament.ladder.gamer_tag
+                                }
+                              >
                                 {this.showGamerTag()}
                               </th>
                               <th style={{width: '33%'}}>Role</th>

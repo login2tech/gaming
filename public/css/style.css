@@ -5559,3 +5559,7 @@ button.btn.btn-exp-menu {
 .platform_notice .btn {
     background: rgb(0, 0, 0) !important;
 }
+.act_pr6 {line-height: 40px;}
+th.act_pr6 .actision_logo{
+  float:left;
+}

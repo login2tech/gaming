@@ -28,12 +28,13 @@ class MatchInfo extends React.Component {
   }
 
   showGamerTag() {
+    const tg = game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
     return (
       <>
         <span
           className={game_user_ids.tag_icons[this.state.match.ladder.gamer_tag]}
         />
-        {game_user_ids.tag_names[this.state.match.ladder.gamer_tag]}
+        {tg == 'Activision ID' ? 'ID' : tg}
       </>
     );
   }
@@ -851,7 +852,10 @@ class MatchInfo extends React.Component {
                           <thead>
                             <tr>
                               <th style={{width: '33%'}}>Username</th>
-                              <th style={{width: '33%'}}>
+                              <th
+                                style={{width: '33%'}}
+                                className={'act_pr' + match.ladder.gamer_tag}
+                              >
                                 {this.showGamerTag()}
                               </th>
                               <th style={{width: '33%'}}>Role</th>
@@ -951,7 +955,13 @@ class MatchInfo extends React.Component {
                               <thead>
                                 <tr>
                                   <th style={{width: '33%'}}>Username</th>
-                                  <th style={{width: '33%'}}>
+                                  <th
+                                    style={{width: '33%'}}
+                                    className={
+                                      'act_pr' +
+                                      this.state.match.ladder.gamer_tag
+                                    }
+                                  >
                                     {this.showGamerTag()}
                                   </th>
                                   <th style={{width: '33%'}}>Role</th>

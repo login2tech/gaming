@@ -481,7 +481,9 @@ class Money8Info extends React.Component {
             <thead>
               <tr>
                 <th style={{width: '50%'}}>Username</th>
-                <th>{this.showGamerTag()}</th>
+                <th className={'act_pr' + this.state.match.ladder.gamer_tag}>
+                  {this.showGamerTag()}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -556,7 +558,9 @@ class Money8Info extends React.Component {
             <thead>
               <tr>
                 <th style={{width: '50%'}}>Username</th>
-                <th>{this.showGamerTag()}</th>
+                <th className={'act_pr' + this.state.match.ladder.gamer_tag}>
+                  {this.showGamerTag()}
+                </th>
               </tr>
             </thead>
             <tbody>
