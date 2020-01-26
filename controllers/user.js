@@ -234,25 +234,26 @@ exports.accountPut = function(req, res, next) {
 
   const user = new User({id: req.user.id});
   if ('password' in req.body) {
-    // console.log(req.body.old_password);
-    user.comparePassword(req.body.old_password, function(err, isMatch) {
-      if (!isMatch) {
-        return res.status(401).send({msg: 'Invalid old password'});
-      }
-      user
-        .save({password: req.body.password}, {patch: true})
-        .then(function(user) {
-          return res.send({
-            msg: 'Your password has been changed.',
-            user: user.toJSON()
+    user.fetch().then(function(user) {
+      user.comparePassword(req.body.old_password, function(err, isMatch) {
+        if (!isMatch) {
+          return res.status(401).send({msg: 'Invalid old password'});
+        }
+        user
+          .save({password: req.body.password}, {patch: true})
+          .then(function(user) {
+            return res.send({
+              msg: 'Your password has been changed.',
+              user: user.toJSON()
+            });
+          })
+          .catch(function() {
+            return res.status(400).send({
+              msg: 'Failed to update password.',
+              user: user.toJSON()
+            });
           });
-        })
-        .catch(function() {
-          return res.status(400).send({
-            msg: 'Failed to update password.',
-            user: user.toJSON()
-          });
-        });
+      });
     });
   } else {
     user
