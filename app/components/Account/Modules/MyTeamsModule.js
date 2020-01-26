@@ -41,7 +41,7 @@ class MyTeamsModule extends React.Component {
       team.ladder.game_info.title +
       ' - ' +
       team.ladder.title;
-    return str;
+    return '<span class="text-capitalize">' + str + '</span>';
   }
 
   render() {

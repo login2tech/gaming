@@ -4276,7 +4276,7 @@ img.img-fluid.team_avat {
 }
 
 .team_spn_m:not(.no-just) {
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .has_m .team_spn_m {

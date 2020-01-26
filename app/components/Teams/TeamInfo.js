@@ -27,6 +27,20 @@ class TeamInfo extends React.Component {
     };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.params.team_id != prevState.team_id) {
+      return {team_id: nextProps.params.team_id};
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.team_id != this.state.team_id) {
+      this.fetchTeam(true);
+    }
+    //
+  }
+
   showGamerTag() {
     if (!this.state.team_info || !this.state.team_info.ladder) {
       return '';
@@ -105,6 +119,8 @@ class TeamInfo extends React.Component {
             {
               is_loaded: true,
               team_info: json.item,
+
+              team_id: this.props.params.team_id,
               removing: []
             },
             () => {
