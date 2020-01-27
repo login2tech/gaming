@@ -27,7 +27,7 @@ exports.leaderboards = function(req, res, next) {
             qb.select('id', 'title');
           },
           team: function(qb) {
-            qb.select('id', 'title');
+            qb.select('id', 'title', 'profile_picture');
           }
         }
       ]
