@@ -270,6 +270,7 @@ class Game extends React.Component {
         idx: i,
         id: leaderboards[team].team.id,
         username: leaderboards[team].team.title,
+        profile_picture: leaderboards[team].team.profile_picture,
         wins: leaderboards[team].wins,
         loss: leaderboards[team].loss,
         rate: parseFloat(
