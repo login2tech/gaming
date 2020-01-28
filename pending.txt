@@ -12,4 +12,11 @@
 - stripe, make it live
 - stripe create plans in stripe dashboard
 - delete all testing images ?
-- 
+-
+
+- chat on match page
+- new actions on social feel - edit post, delete post.
+
+  game page - matchfinder should have "game name" .
+
+ admin, add name of the tournmanet

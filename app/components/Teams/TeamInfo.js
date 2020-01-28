@@ -889,6 +889,13 @@ class TeamInfo extends React.Component {
                 ) : (
                   false
                 )}
+                <Link
+                  to={'/matchfinder/'}
+                  className="btn btn-default bttn_submit mw_200"
+                  style={{margin: '0 auto'}}
+                >
+                  Find a match
+                </Link>
                 {this.state.team_info &&
                 this.state.team_info.team_type == 'tournaments' ? (
                   <Link

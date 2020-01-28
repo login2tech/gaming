@@ -1,12 +1,11 @@
-1. Reset score
-2. Membership ? scene yet to decide?
-3. Team xp
-4. User xp kitna and kab
-5. Tournaments brackets
-6. Tournament Trophies
-7. Special tournament eligibility fix.
-8. Settings in admin panel
-9. Games Page
-10. Rank
-11. Leaderboard
-12. 
+ 7. Special tournament eligibility fix.
+ - chat on match page
+- new actions on social feel - edit post, delete post.
+
+ gamepage add s to leaderboard[s]
+ game page - matchfinder should have "game name" .
+
+ admin, add name of the tournmanet
+
+
+edit team's photo when logged out
