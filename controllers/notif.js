@@ -37,6 +37,29 @@ exports.delete = function(req, res, next) {
   const obj = {user_id: req.user.id};
   if (req.query.id) {
     obj.id = req.query.id;
+    new Notification()
+      .where(obj)
+      .save(
+        {
+          read: true
+        },
+        {method: 'update'}
+      )
+      .then(function(user) {
+        if (req.query.id) {
+          res.status(200).send({ok: true});
+          return;
+        }
+        res.redirect('/notifications');
+      })
+      .catch(function(err) {
+        if (req.query.id) {
+          res.status(200).send({ok: true});
+          return;
+        }
+        res.redirect('/notifications');
+      });
+    return;
   }
   new Notification()
     .where(obj)

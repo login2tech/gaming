@@ -184,13 +184,12 @@ class Header extends React.Component {
                           {notif.description}
                           <br />
                           <small>{moment(notif.created_at).fromNow()}</small>
+                          {notif.read ? (
+                            false
+                          ) : (
+                            <span className="badge  float-right">new</span>
+                          )}
                         </a>{' '}
-                        <button
-                          style={{display: 'none'}}
-                          className="btn removeNotif"
-                        >
-                          <span className="text-danger fa fa-times" />
-                        </button>
                       </li>
                     );
                   })}

@@ -92,8 +92,9 @@ class Notifications extends React.Component {
                     }
 
                     return (
-                      <li key={notif.id}>
+                      <li key={notif.id} className="position-relative">
                         <a
+                          className="stretched-link"
                           onClick={e => {
                             e.preventDefault();
                             this.deleteNotif(notif.id, lnk);
@@ -103,6 +104,13 @@ class Notifications extends React.Component {
                           {notif.description}
                           <br />
                           <small>{moment(notif.created_at).fromNow()}</small>
+                          {notif.read ? (
+                            false
+                          ) : (
+                            <span className="badge  text-m float-right">
+                              new
+                            </span>
+                          )}
                         </a>
                       </li>
                     );

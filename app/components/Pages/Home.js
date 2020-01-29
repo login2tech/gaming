@@ -218,67 +218,7 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-        {/*<section className="featruedboxes">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 col-sm-6 col-xs-6">
-                <div className="section-headline white-headline text-center">
-                  <h3>
-                    Upcoming <br />
-                    matches
-                  </h3>
-                  <br />
 
-                  <br />
-                  <br />
-                  <Link to={'/matchfinder'} className="play_match_btn">
-                    View All
-                  </Link>
-                </div>
-              </div>
-              <div className="col-md-6 col-sm-6 col-xs-6">
-                <div className="section-headline white-headline text-center">
-                  <h3>
-                    Upcoming <br />
-                    tournaments
-                  </h3>
-                  <br />
-
-                  <br />
-                  <br />
-                  <Link to={'/tournaments'} className="play_match_btn">
-                    View All
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="tournaments">
-          <div className="container">
-
-
-
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-center">
-                  <h3>Tournaments</h3>
-                  <p>Watch latest tournaments</p>
-                </div>
-              </div>
-            </div>
-
-             <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <ul
-                  id="upcoming-tournament"
-                  className="tournament-list active"
-                />
-              </div>
-            </div>
-          </div>
-        </section>*/}
         <section className="tournaments">
           <div className="container">
             <div className="row">
@@ -289,7 +229,7 @@ class Home extends React.Component {
               </div>
             </div>
 
-            <div className="row">
+            <div className="row" style={{overflow: 'hidden'}}>
               {this.state.recentMatches.map((match, i) => {
                 return (
                   <div className="col-md-6 br_1" key={match.id}>
@@ -442,6 +382,23 @@ class Home extends React.Component {
           <Link className="play_match_btn stretched-link" to="/shop">
             View Plans
           </Link>
+        </section>
+
+        <section className="featruedboxes">
+          <div className="container">
+            <div className="row">
+              <div className="col ">
+                <div className="section-headline white-headline text-center">
+                  <h3>WHAT ARE YOU WAITING FOR</h3>
+                  <br />
+
+                  <Link to={'/signup'} className="play_match_btn mt-4">
+                    Sign Up Free
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     );
