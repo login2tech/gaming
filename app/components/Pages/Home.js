@@ -231,8 +231,12 @@ class Home extends React.Component {
 
             <div className="row" style={{overflow: 'hidden'}}>
               {this.state.recentMatches.map((match, i) => {
+                let cls = 'col-md-5 br_1 pl-4';
+                if (i == 0) {
+                  cls = 'col-md-5 br_1 offset-md-1';
+                }
                 return (
-                  <div className="col-md-6 br_1" key={match.id}>
+                  <div className={cls} key={match.id}>
                     <div className="row has_m">
                       <div className="col-12 col-md team_spn_m">
                         {match.team_1_info ? (
@@ -318,7 +322,7 @@ class Home extends React.Component {
                       </div>
                       <div className="col-12 col-md-5 team_spn_m no-just">
                         <span>
-                          <span className="text-l">
+                          <span className="text-l  text-success">
                             ${match.match_fee ? match.match_fee : '0'}
                           </span>
                           <span className="text-m">PRIZE</span>

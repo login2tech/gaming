@@ -10,6 +10,11 @@ const SingleTournament = props => {
     <div className="col-xs-12 col-sm-12 col-md-6 padding-tournament">
       <div className="tour-box position-relative ">
         <div className="tour-details row m-0 position-relative ">
+          {tour.member_tournament ? (
+            <img src="/assets/icons/ocg_member_gold.png" className="star_img" />
+          ) : (
+            false
+          )}
           <div
             className="tour-cover-block col-md-3 col-12"
             style={
@@ -22,14 +27,6 @@ const SingleTournament = props => {
                 : {}
             }
           >
-            {tour.member_tournament ? (
-              <img
-                src="/assets/icons/ocg_member_gold.png"
-                className="star_img"
-              />
-            ) : (
-              false
-            )}
             <div className="cover-image">
               <img
                 className="logo-image ls-is-cached lazyloaded"
