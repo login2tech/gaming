@@ -4174,10 +4174,7 @@ span.t-bl {
 .carousel-item.active {
     text-align: center;
 }
-
-#demo2 .carousel-inner img {
-    width: auto;
-}
+ 
 
 .table td, .table th {
     border: 0;
