@@ -420,12 +420,12 @@ class ProfileHeader extends React.Component {
       >
         <div className="container profile_container">
           <div className="row">
-            <div className="col-md-3 text-center">
+            <div className="col-md-3 col-6 text-center">
               {this.renderProfilePicture()}
               {this.renderNameAndFollow('mobile')}
             </div>
-            <div className="col-md-1 text-center" />
-            <div className="col-md-3 text-center">
+            <div className="col-md-1 d-none d-md-block text-center" />
+            <div className="col-md-3 col-6 text-center">
               {prime_type ? (
                 <img
                   src={'/assets/icons/ocg_member_' + prime_type + '.png'}

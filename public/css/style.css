@@ -5622,6 +5622,12 @@ button.btn.btn-exp-menu {
         padding-left: 10px;
         padding-right: 10px;
     }
+    .row.gamer_tags_profile {
+    margin: 10px;
+    background: rgb(0, 0, 0);
+    padding: 10px;
+    padding-top: 25px;
+}
 }
 
 @media screen and (min-width: 768px) {

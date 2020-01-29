@@ -634,6 +634,9 @@ class Profile extends React.Component {
                       </div>
 
                       <div className="row gamer_tags_profile">
+                        <h4 className="display-block display-md-none mb-4">
+                          GAME ID
+                        </h4>
                         {game_user_ids.tags.map((k, i) => {
                           if (
                             !this.state.user_info['gamer_tag_' + k] ||
