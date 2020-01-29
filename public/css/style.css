@@ -4304,7 +4304,7 @@ img.img-fluid.team_avat {
 .br_1:last-child {
     box-shadow: -2px 1px 5px 0px rgb(0,83,204);
 }
- 
+
 .dib {
     display: inline-block;
 }
@@ -5540,6 +5540,23 @@ button.btn.btn-exp-menu {
 
     .has_m .team_spn_m {
         margin-bottom: 10px
+    }
+    .sm_btn_on_mob_wrap{
+      top: 150px;
+      padding: 0;
+    }
+    .sm_btn_on_mob{
+      margin: 0;border-radius:5px;
+      padding-bottom: 5px;
+      line-height: 20px;
+      height: 30px;
+      padding-top: 5px;
+    }
+    .section-headline{
+    margin-bottom: 5px
+    }
+    .less_mrgns h3, .less_mrgns p{
+      margin-bottom: 0
     }
 }
 

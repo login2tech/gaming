@@ -79,8 +79,11 @@ class Home extends React.Component {
               </div>
               <div className="carousel-item" style={{background: '#fff'}}>
                 <img src="images/banner_2.png" alt="" />
-                <div className="carousel-caption d-none d-md-block ">
-                  <a href="/shop" className="play_match_btn stretched-link">
+                <div className="carousel-caption sm_btn_on_mob_wrap ">
+                  <a
+                    href="/shop"
+                    className="sm_btn_on_mob play_match_btn stretched-link"
+                  >
                     View Plans
                   </a>
                 </div>
@@ -96,9 +99,12 @@ class Home extends React.Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12 ">
-                <div className="section-headline white-headline text-center">
+                <div className="section-headline white-headline text-center less_mrgns">
                   <h3>Find Your Game</h3>
-                  <p>Play Your Favorite Games</p>
+                  <p className="d-none d-md-inline-block">
+                    Play Your Favorite Games
+                  </p>
+                  <p className="d-md-none">Choose Your Game To Get Started</p>
                 </div>
               </div>
             </div>
@@ -110,7 +116,7 @@ class Home extends React.Component {
                 }
                 return (
                   <div
-                    className="col-12 col-md game_hover_effect "
+                    className="col-6 col-md game_hover_effect "
                     key={games.id}
                   >
                     <div className="game_c_box">
@@ -218,6 +224,44 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
+
+        <section className="tournaments">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-center">
+                  <h3>Upcoming Tournaments</h3>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              {this.state.tournaments.map((tour, i) => {
+                if (i == 0) {
+                  return <SingleTournament key={tour.id} tour={tour} />;
+                }
+                return false;
+              })}
+              <div className="col-md-6">
+                <div className="row">
+                  {this.state.tournaments.map((tour, i) => {
+                    if (i == 0) {
+                      return false;
+                    }
+                    return <SingleTournamentSmall key={tour.id} tour={tour} />;
+                  })}
+                </div>
+              </div>
+              {this.state.t_loaded && this.state.tournaments.length == 0 ? (
+                <div className="alert alert-warning">
+                  There is no upcoming tournament. Check again later.
+                </div>
+              ) : (
+                false
+              )}
+            </div>
+          </div>
+        </section>
 
         <section className="tournaments">
           <div className="container">
@@ -344,49 +388,32 @@ class Home extends React.Component {
           </div>
         </section>
 
-        <section className="tournaments">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-center">
-                  <h3>Upcoming Tournaments</h3>
+        <div className="main_slider_home">
+          <div
+            id="demo2"
+            className="carousel slide"
+            data-ride="carousel"
+            data-pause="false"
+          >
+            <div className="carousel-inner">
+              <div
+                className="carousel-item"
+                style={{background: '#fff', display: 'block'}}
+              >
+                <img src="images/banner_2.png" alt="" />
+                <div className="carousel-caption sm_btn_on_mob_wrap ">
+                  <a
+                    href="/shop"
+                    className="sm_btn_on_mob play_match_btn stretched-link"
+                  >
+                    View Plans
+                  </a>
                 </div>
+                <a href="/shop" className="stretched-link" />
               </div>
-            </div>
-
-            <div className="row">
-              {this.state.tournaments.map((tour, i) => {
-                if (i == 0) {
-                  return <SingleTournament key={tour.id} tour={tour} />;
-                }
-                return false;
-              })}
-              <div className="col-md-6">
-                <div className="row">
-                  {this.state.tournaments.map((tour, i) => {
-                    if (i == 0) {
-                      return false;
-                    }
-                    return <SingleTournamentSmall key={tour.id} tour={tour} />;
-                  })}
-                </div>
-              </div>
-              {this.state.t_loaded && this.state.tournaments.length == 0 ? (
-                <div className="alert alert-warning">
-                  There is no upcoming tournament. Check again later.
-                </div>
-              ) : (
-                false
-              )}
             </div>
           </div>
-        </section>
-
-        <section className="call_action no_bg">
-          <Link className="play_match_btn stretched-link" to="/shop">
-            View Plans
-          </Link>
-        </section>
+        </div>
 
         <section className="featruedboxes">
           <div className="container">
