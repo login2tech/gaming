@@ -5570,3 +5570,10 @@ th.act_pr6 .actision_logo{
 .game_pic_tournament, .page_title_bar{
   background-position: left center;
 }
+.team_actions{
+  display: flex;
+}
+.team_actions .btn{
+  min-width: 100px;
+  flex:1;
+}
