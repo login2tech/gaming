@@ -400,11 +400,11 @@ class Game extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-right">
+                <div className="section-headline white-headline text-right d-none d-md-inline-block">
                   <h3>{this.props.params.title}</h3>
                 </div>
                 <div
-                  className="list_pad"
+                  className="list_pad game_actions"
                   style={{
                     display: 'flex',
                     justifyContent: 'flex-end',
@@ -502,6 +502,90 @@ class Game extends React.Component {
         <section className="contet_part" style={{paddingTop: 30}}>
           <div className="container">
             <div className="row">
+              <div className="col-md-6 col-sm-12 d-md-none d-inline-block col-xs-12 pos-rel">
+                <div>
+                  <h4>Matchfinder</h4>
+                  {this.state.is_loaded_1 && this.state.total_upcoming < 1 ? (
+                    <div className="alert alert-warning">
+                      There are no active matches. Please check back later or
+                      start a new match
+                    </div>
+                  ) : (
+                    false
+                  )}
+                  {this.state.is_loaded_1 ? (
+                    false
+                  ) : (
+                    <div className="text-center ym_loader_wrap">
+                      <span className="fa fa-spin fa-spinner" />
+                    </div>
+                  )}
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th>Match</th>
+                          <th>Starts At</th>
+
+                          <th style={{width: '15%'}}>Fee</th>
+                          <th>Players</th>
+                          <th> </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.matches &&
+                          this.state.matches['game_' + game_id] &&
+                          this.state.matches['game_' + game_id].map(
+                            (match, i) => {
+                              if (match.status == 'expired') {
+                                return false;
+                              }
+                              return (
+                                <tr
+                                  key={match.id}
+                                  className="tournament-box"
+                                  style={{background: '#27204d'}}
+                                >
+                                  <td>
+                                    <Link
+                                      to={this.matchLink('/m/' + match.id)}
+                                      className="tournament-name"
+                                    >
+                                      {match.ladder.title}
+                                    </Link>
+                                  </td>
+                                  <td>
+                                    {moment(match.starts_at).format('lll')}
+                                  </td>
+                                  <td>
+                                    {match.match_type == 'free'
+                                      ? 'FREE'
+                                      : match.match_type == 'credits' ||
+                                        match.match_type == 'credit'
+                                        ? match.match_fee + ' credits'
+                                        : match.match_type == 'cash'
+                                          ? '$' + match.match_fee
+                                          : ' '}
+                                  </td>
+
+                                  <td className="col-item">
+                                    {match.match_players}v{match.match_players}
+                                  </td>
+                                  <td>
+                                    <Link to={this.matchLink('/m/' + match.id)}>
+                                      Accept Match
+                                    </Link>
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          )}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
               <div className="col-md-6 col-sm-12 col-xs-12">
                 <div>
                   <h4>Chatbox</h4>
@@ -609,7 +693,7 @@ class Game extends React.Component {
             </div>
 
             <div className="row">
-              <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">
+              <div className="col-md-6 col-sm-12 d-none d-md-inline-block col-xs-12 pos-rel">
                 <div>
                   <h4>Matchfinder</h4>
                   {this.state.is_loaded_1 && this.state.total_upcoming < 1 ? (
@@ -633,8 +717,7 @@ class Game extends React.Component {
                         <tr>
                           <th>Match</th>
                           <th>Starts At</th>
-                          <th>Type</th>
-                          <th>Fee</th>
+                          <th style={{width: '15%'}}>Fee</th>
                           <th>Players</th>
                           <th> </th>
                         </tr>
@@ -665,14 +748,14 @@ class Game extends React.Component {
                                     {moment(match.starts_at).format('lll')}
                                   </td>
                                   <td>
-                                    {match.match_type == 'paid'
-                                      ? 'PAID'
-                                      : 'FREE'}
-                                  </td>
-                                  <td>
-                                    {match.match_type == 'paid'
-                                      ? '$ ' + match.match_fee
-                                      : '--'}
+                                    {match.match_type == 'free'
+                                      ? 'FREE'
+                                      : match.match_type == 'credits' ||
+                                        match.match_type == 'credit'
+                                        ? match.match_fee + ' credits'
+                                        : match.match_type == 'cash'
+                                          ? '$' + match.match_fee
+                                          : ' '}
                                   </td>
 
                                   <td className="col-item">

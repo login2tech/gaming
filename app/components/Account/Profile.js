@@ -417,7 +417,7 @@ class Profile extends React.Component {
 
                     <div className="user-profile-trophies-wrapper">
                       <div className="user-profile-trophies-container row">
-                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
+                        <div className="single-trophy-container col-6 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -439,7 +439,7 @@ class Profile extends React.Component {
                             </div>
                           </Link>
                         </div>
-                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
+                        <div className="single-trophy-container col-6 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -480,7 +480,7 @@ class Profile extends React.Component {
                             </div>
                           </Link>
                         </div>
-                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
+                        <div className="single-trophy-container col-6 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -522,28 +522,7 @@ class Profile extends React.Component {
                           </Link>
                         </div>
 
-                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
-                          <Link
-                            to={
-                              '/records/' +
-                              this.state.user_info.username +
-                              '/season'
-                            }
-                            className="trof_a"
-                          >
-                            <div className="trophy-image">
-                              <img src="/images/shield-gold.png" />
-                            </div>
-                            <div className="trophy-info">
-                              <div className="trophy-name blue">
-                                Seasonal Records
-                              </div>
-                              <div className="trophy-count"> </div>
-                            </div>
-                          </Link>
-                        </div>
-
-                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
+                        <div className="single-trophy-container col-6 col-md-6 col-lg-4 order-md-5">
                           <Link
                             to={
                               '/u/' +
@@ -569,7 +548,28 @@ class Profile extends React.Component {
                           </Link>
                         </div>
 
-                        <div className="single-trophy-container col-12 col-md-6 col-lg-4">
+                        <div className="single-trophy-container col-6 col-md-6 col-lg-4 order-md-4">
+                          <Link
+                            to={
+                              '/records/' +
+                              this.state.user_info.username +
+                              '/season'
+                            }
+                            className="trof_a"
+                          >
+                            <div className="trophy-image">
+                              <img src="/images/shield-gold.png" />
+                            </div>
+                            <div className="trophy-info">
+                              <div className="trophy-name blue">
+                                Seasonal Records
+                              </div>
+                              <div className="trophy-count"> </div>
+                            </div>
+                          </Link>
+                        </div>
+
+                        <div className="single-trophy-container col-6 col-md-6 col-lg-4 order-md-6">
                           <Link
                             to={
                               '/records/' +
@@ -609,7 +609,7 @@ class Profile extends React.Component {
                           </p>
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <span> TIME ZONE </span>
                           <p>
                             {this.state.user_info.timezone
@@ -618,7 +618,7 @@ class Profile extends React.Component {
                           </p>
                         </div>
 
-                        <div className="col-md-4">
+                        <div className="col-md-4 col-6">
                           <span> STATE </span>
                           <p>
                             {this.state.user_info.state
@@ -633,7 +633,7 @@ class Profile extends React.Component {
                         </div>*/}
                       </div>
 
-                      <div className="row">
+                      <div className="row gamer_tags_profile">
                         {game_user_ids.tags.map((k, i) => {
                           if (
                             !this.state.user_info['gamer_tag_' + k] ||

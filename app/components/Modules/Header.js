@@ -458,13 +458,6 @@ class Header extends React.Component {
         >
           <div className="container">
             <div className="navbar-header fl-1">
-              <Link className="navbar-brand logo " to="/">
-                <img
-                  src={'/images/logo.png'}
-                  alt="Only Comp Gaming"
-                  className="Logo__logoImage__3oOkB"
-                />
-              </Link>
               <button
                 className="navbar-toggler float-right collapsed text-white"
                 type="button"
@@ -476,7 +469,7 @@ class Header extends React.Component {
                 aria-label="Toggle navigation"
                 // className="dropdown-toggle"
               >
-                Menu <span className="navbar-toggler-icon fa fa-bars mr-2" />
+                <span className="navbar-toggler-icon fa fa-bars mr-2" />
                 {this.state.notifications && this.state.notifications.length ? (
                   <>
                     <span className="notif_count fa fa-bell" />
@@ -486,6 +479,29 @@ class Header extends React.Component {
                   false
                 )}
               </button>
+              <Link className="navbar-brand logo " to="/">
+                <img
+                  src={'/images/logo.png'}
+                  alt="Only Comp Gaming"
+                  className="Logo__logoImage__3oOkB"
+                />
+              </Link>
+              {this.props.user ? (
+                false
+              ) : (
+                <button
+                  className="navbar-toggler float-right collapsed text-white"
+                  type="button"
+                  data-toggle="collapse"
+                  // data-target="#menu"
+                  data-target="#sidebar2"
+                  aria-controls="menu"
+                  aria-expanded="false"
+                  aria-label="Toggle login sidebar"
+                >
+                  LOGIN
+                </button>
+              )}
             </div>
 
             <div className="collapse navbar-collapse mr-3 fl-3" id="menu">

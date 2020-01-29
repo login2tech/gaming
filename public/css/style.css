@@ -4298,9 +4298,10 @@ img.img-fluid.team_avat {
 }
 
 .br_1:not(:last-child) {
-  border-right: 1px solid rgb(0, 83, 204);
-  box-shadow: 1px 0 5px 0px rgb(0,83,204);
+    border-right: 1px solid rgb(0, 83, 204);
+    box-shadow: 1px 0 5px 0px rgb(0,83,204);
 }
+
 .br_1:last-child {
     box-shadow: -2px 1px 5px 0px rgb(0,83,204);
 }
@@ -4977,11 +4978,11 @@ a.dropdown-item.disabled {
 }
 
 .star_img:not(.big) {
-  position: absolute;
-right: 61px;
-height: 50px;
-top: 28px;
-left: auto;
+    position: absolute;
+    right: 61px;
+    height: 50px;
+    top: 28px;
+    left: auto;
 }
 
 .star_img.big {
@@ -5541,22 +5542,85 @@ button.btn.btn-exp-menu {
     .has_m .team_spn_m {
         margin-bottom: 10px
     }
-    .sm_btn_on_mob_wrap{
-      top: 150px;
-      padding: 0;
+
+    .sm_btn_on_mob_wrap {
+        top: 150px;
+        padding: 0;
     }
-    .sm_btn_on_mob{
-      margin: 0;border-radius:5px;
-      padding-bottom: 5px;
-      line-height: 20px;
-      height: 30px;
-      padding-top: 5px;
+
+    .sm_btn_on_mob {
+        margin: 0;
+        border-radius: 5px;
+        padding-bottom: 5px;
+        line-height: 20px;
+        height: 30px;
+        padding-top: 5px;
     }
-    .section-headline{
-    margin-bottom: 5px
+
+    .section-headline {
+        margin-bottom: 5px
     }
-    .less_mrgns h3, .less_mrgns p{
-      margin-bottom: 0
+
+    .less_mrgns h3, .less_mrgns p {
+        margin-bottom: 0
+    }
+
+    .game_actions {
+        flex-direction: row !important;
+    }
+
+    .game_actions > div {
+        flex: 1
+    }
+
+    .game_actions > div:first-child {
+        flex: 2;
+        display: flex;
+        flex-direction: row;
+        margin-right: 10px;
+    }
+
+    .game_actions .btn {
+        min-width: 0 !important;
+        width: auto;
+        flex: 1;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    a.trof_a {
+        flex-direction: column;
+        text-align: center;
+        background: #000 !important;
+        padding: 10px;
+
+    }
+
+    .user-profile-trophies-container>div div.trophy-image {
+        height: auto;
+        background: #000;
+        padding: 0;
+        margin-bottom: 10px;
+    }
+
+    .trophy-image {
+        height: auto;
+        text-align: center;
+        background: none;
+    }
+
+    .user-profile-trophies-container>div div.trophy-info {
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    .trophy-name {
+        padding-bottom: 10px;
+    }
+
+    .single-trophy-container:last-child .trophy-name {
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }
 
@@ -5581,20 +5645,28 @@ button.btn.btn-exp-menu {
 .platform_notice .btn {
     background: rgb(0, 0, 0) !important;
 }
-.act_pr6 {line-height: 40px;}
-th.act_pr6 .actision_logo{
-  float:left;
+
+.act_pr6 {
+    line-height: 40px;
 }
-.following_btn a{
-  font-weight: bold;
+
+th.act_pr6 .actision_logo {
+    float: left;
 }
-.game_pic_tournament, .page_title_bar{
-  background-position: left center;
+
+.following_btn a {
+    font-weight: bold;
 }
-.team_actions{
-  display: flex;
+
+.game_pic_tournament, .page_title_bar {
+    background-position: left center;
 }
-.team_actions .btn{
-  min-width: 100px;
-  flex:1;
+
+.team_actions {
+    display: flex;
+}
+
+.team_actions .btn {
+    min-width: 100px;
+    flex: 1;
 }
