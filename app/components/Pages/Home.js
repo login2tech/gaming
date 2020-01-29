@@ -390,7 +390,7 @@ class Home extends React.Component {
 
         <div className="main_slider_home">
           <div
-            id="demo2"
+            id="demo3"
             className="carousel slide"
             data-ride="carousel"
             data-pause="false"
