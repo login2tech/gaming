@@ -316,12 +316,20 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col-12 col-md-5 team_spn_m no-just">
+                      <div className="col-6 col-md-5 team_spn_m no-just">
                         <span>
                           <span className="text-l">
                             {match.ladder.game_info.title}
                           </span>
                           <span className="text-m">{match.ladder.title}</span>
+                        </span>
+                      </div>
+                      <div className="col-6 col-md-5 team_spn_m no-just d-md-none">
+                        <span>
+                          <span className="text-l  text-success">
+                            ${match.match_fee ? match.match_fee : '0'}
+                          </span>
+                          <span className="text-m">PRIZE</span>
                         </span>
                       </div>
                     </div>
@@ -362,7 +370,7 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col-12 col-md-5 team_spn_m no-just">
+                      <div className="col-12 col-md-5 team_spn_m no-just d-none d-md-flex">
                         <span>
                           <span className="text-l  text-success">
                             ${match.match_fee ? match.match_fee : '0'}
