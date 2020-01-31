@@ -524,7 +524,7 @@ class Game extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th>Match</th>
+                          <th className="h-o-p">Match</th>
                           <th>Starts At</th>
 
                           <th style={{width: '15%'}}>Fee</th>
@@ -546,7 +546,7 @@ class Game extends React.Component {
                                   className="tournament-box"
                                   style={{background: '#27204d'}}
                                 >
-                                  <td>
+                                  <td className="h-o-p">
                                     <Link
                                       to={this.matchLink('/m/' + match.id)}
                                       className="tournament-name"
@@ -573,7 +573,8 @@ class Game extends React.Component {
                                   </td>
                                   <td>
                                     <Link to={this.matchLink('/m/' + match.id)}>
-                                      Accept Match
+                                      Accept{' '}
+                                      <span className="h-o-p">Match</span>
                                     </Link>
                                   </td>
                                 </tr>
@@ -715,7 +716,7 @@ class Game extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th>Match</th>
+                          <th className="h-o-p">Match</th>
                           <th>Starts At</th>
                           <th style={{width: '15%'}}>Fee</th>
                           <th>Players</th>
@@ -736,7 +737,7 @@ class Game extends React.Component {
                                   className="tournament-box"
                                   style={{background: '#27204d'}}
                                 >
-                                  <td>
+                                  <td className="h-o-p">
                                     <Link
                                       to={this.matchLink('/m/' + match.id)}
                                       className="tournament-name"
@@ -763,7 +764,8 @@ class Game extends React.Component {
                                   </td>
                                   <td>
                                     <Link to={this.matchLink('/m/' + match.id)}>
-                                      Accept Match
+                                      Accept{' '}
+                                      <span className="h-o-p">Match</span>
                                     </Link>
                                   </td>
                                 </tr>
@@ -790,7 +792,7 @@ class Game extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th>Match</th>
+                          <th className="h-o-p">Match</th>
                           <th>Team 1</th>
                           <th>Team 2</th>
                           <th>Date</th>
@@ -819,7 +821,7 @@ class Game extends React.Component {
 
                           return (
                             <tr key={match.id}>
-                              <td>
+                              <td className="h-o-p">
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
                               <td>
@@ -847,8 +849,9 @@ class Game extends React.Component {
 
                               <td>{moment(match.created_at).format('lll')}</td>
                               <td>
-                                {' '}
-                                <Link to={'/m/' + match.id}>View Match</Link>
+                                <Link to={'/m/' + match.id}>
+                                  View <span className="h-o-p">Match</span>
+                                </Link>
                               </td>
                             </tr>
                           );

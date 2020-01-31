@@ -679,7 +679,7 @@ class Profile extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th>Match</th>
+                            <th className="h-o-p">Match</th>
                             <th>Team</th>
                             <th>Opponent</th>
                             <th>Result</th>
@@ -733,7 +733,7 @@ class Profile extends React.Component {
 
                             return (
                               <tr key={match.id}>
-                                <td>
+                                <td className="h-o-p">
                                   <Link to={'/m/' + match.id}>#{match.id}</Link>
                                 </td>
                                 <td>
@@ -777,7 +777,9 @@ class Profile extends React.Component {
                                 </td>
                                 <td>
                                   {' '}
-                                  <Link to={'/m/' + match.id}>View Match</Link>
+                                  <Link to={'/m/' + match.id}>
+                                    View <span className="h-o-p">Match</span>
+                                  </Link>
                                 </td>
                               </tr>
                             );
@@ -809,7 +811,7 @@ class Profile extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th>Match</th>
+                            <th className="h-o-p">Match</th>
                             <th>Result</th>
                             <th>Date</th>
                             <th>Info</th>
@@ -836,7 +838,7 @@ class Profile extends React.Component {
                             }
                             return (
                               <tr key={match.id}>
-                                <td>
+                                <td className="h-o-p">
                                   <Link to={'/mix-and-match/' + match.id}>
                                     #{match.id}
                                   </Link>
@@ -870,7 +872,7 @@ class Profile extends React.Component {
                                 </td>
                                 <td>
                                   <Link to={'/mix-and-match/' + match.id}>
-                                    View Match
+                                    View <span className="h-o-p">Match</span>
                                   </Link>
                                 </td>
                               </tr>

@@ -1221,7 +1221,7 @@ class TeamInfo extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th>Match</th>
+                            <th className="h-o-p">Match</th>
                             <th>Opponent</th>
                             <th>Status</th>
 
@@ -1233,7 +1233,7 @@ class TeamInfo extends React.Component {
                           {this.state.match_played.map((match, i) => {
                             return (
                               <tr key={match.id}>
-                                <td>
+                                <td className="h-o-p">
                                   <Link to={'/m/' + match.id}>#{match.id}</Link>
                                 </td>
                                 <td>
@@ -1266,8 +1266,9 @@ class TeamInfo extends React.Component {
                                   {moment(match.created_at).format('lll')}
                                 </td>
                                 <td>
-                                  {' '}
-                                  <Link to={'/m/' + match.id}>View Match</Link>
+                                  <Link to={'/m/' + match.id}>
+                                    View <span className="h-o-p">Match</span>
+                                  </Link>
                                 </td>
                               </tr>
                             );
@@ -1278,7 +1279,7 @@ class TeamInfo extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th>Match</th>
+                            <th className="h-o-p">Match</th>
                             <th>Tournament</th>
                             <th>Opponent</th>
                             <th>Status</th>
@@ -1291,7 +1292,7 @@ class TeamInfo extends React.Component {
                           {this.state.match_played.map((match, i) => {
                             return (
                               <tr key={match.id}>
-                                <td>
+                                <td className="h-o-p">
                                   <Link to={'/m/' + match.id}>#{match.id}</Link>
                                 </td>
                                 <td>
@@ -1325,8 +1326,9 @@ class TeamInfo extends React.Component {
                                   {moment(match.created_at).format('lll')}
                                 </td>
                                 <td>
-                                  {' '}
-                                  <Link to={'/m/' + match.id}>View Match</Link>
+                                  <Link to={'/m/' + match.id}>
+                                    View <span className="h-o-p">Match</span>
+                                  </Link>
                                 </td>
                               </tr>
                             );

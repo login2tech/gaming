@@ -183,7 +183,7 @@ class MyMatches extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3 className="no-case-change">My Upcoming Matches</h3>
+                  <h3 className="no-case-change">Upcoming Matches</h3>
                   <br />
                 </div>
               </div>
@@ -201,7 +201,7 @@ class MyMatches extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th>Match</th>
+                          <th className="h-o-p">Match</th>
                           <th>Team</th>
                           <th>Opponent</th>
                           <th>Status</th>
@@ -252,7 +252,7 @@ class MyMatches extends React.Component {
 
                           return (
                             <tr key={match.id}>
-                              <td>
+                              <td className="h-o-p">
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
                               <td>
@@ -294,7 +294,9 @@ class MyMatches extends React.Component {
                               <td>{moment(match.starts_at).fromNow()}</td>
                               <td>
                                 {' '}
-                                <Link to={'/m/' + match.id}>View Match</Link>
+                                <Link to={'/m/' + match.id}>
+                                  View <span className="h-o-p">Match</span>
+                                </Link>
                               </td>
                             </tr>
                           );
@@ -326,7 +328,7 @@ class MyMatches extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th>Match</th>
+                          <th className="h-o-p">Match</th>
                           <th>Status</th>
                           <th>Expires In</th>
                           <th style={{width: '10%'}}>Info</th>
@@ -347,7 +349,7 @@ class MyMatches extends React.Component {
                           }
                           return (
                             <tr key={match.id}>
-                              <td>
+                              <td className="h-o-p">
                                 <Link to={'/mix-and-match/' + match.id}>
                                   #{match.id}
                                 </Link>
@@ -379,7 +381,7 @@ class MyMatches extends React.Component {
                               <td>{moment(match.expires_in).format('lll')}</td>
                               <td>
                                 <Link to={'/mix-and-match/' + match.id}>
-                                  View Match
+                                  View <span className="h-o-p">Match</span>
                                 </Link>
                               </td>
                             </tr>
@@ -476,7 +478,7 @@ class MyMatches extends React.Component {
                               <td>{moment(match.starts_at).format('lll')}</td>
                               <td>
                                 <Link to={'/tournament-match/' + match.id}>
-                                  View Match
+                                  View <span className="h-o-p">Match</span>
                                 </Link>
                               </td>
                             </tr>

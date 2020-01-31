@@ -5595,6 +5595,10 @@ button.btn.btn-exp-menu {
 
     }
 
+    .h-o-p{
+      display: none
+    }
+
     .user-profile-trophies-container>div div.trophy-image {
         height: auto;
         background: #000;
