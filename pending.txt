@@ -1,4 +1,4 @@
-- activate double XP
+<!-- - activate double XP -->
 - notification in matches
 - tournament notification matches
 - 10 credits on rank up

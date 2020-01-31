@@ -1,13 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {transfer} from '../../../../actions/stripe';
 import {openBuyPopup, token_received} from './Common';
-// import Messages from '../../../Modules/Messages';
-// import moment from 'moment';
-// import PaymentModal from '../../../Modules/Modals/PaymentModal';
-// import {openModal, closeModal} from '../../../../actions/modals';
-// import CommonFuncs from './Common';
-// import {Link} from 'react-router';
+import {activate_doublexp_token} from '../../../../actions/stripe';
 class Credits extends React.Component {
   state = {
     showing: 'actions'
@@ -31,24 +25,79 @@ class Credits extends React.Component {
   //   });
   // }
 
-  initTransfer() {
-    this.setState({showing: 'transfer'});
-    this.props.dispatch({
-      type: 'CLR_MSG'
-    });
-  }
+  // initTransfer() {
+  //   this.setState({showing: 'transfer'});
+  //   this.props.dispatch({
+  //     type: 'CLR_MSG'
+  //   });
+  // }
 
   submitInitForm(e) {
     e.preventDefault();
-    // const credits_to_buy = this.state.add_new_bal_number;
     this.openBuyPopup('double_xp', 'Buy Double XP Token', 2, {
       points: 2,
       type: 'double_xp'
     });
   }
 
+  activateDoubleXP() {
+    this.props.dispatch(
+      activate_doublexp_token(
+        {},
+
+        st => {
+          scrollToTop();
+          this.setState({
+            // init_transaction_mode: false,
+            // prev_success_type: 'withdraw'
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+      )
+    );
+  }
+
   initActivate() {
-    //
+    this.setState({
+      showing: 'activate'
+    });
+  }
+
+  renderActivate() {
+    if (this.state.showing != 'activate') {
+      return false;
+    }
+    return (
+      <div className=" text-center  mt-3">
+        <p>Are you sure?</p>
+        <div className="row no-gutters" role="group" aria-label="Basic example">
+          <div className=" col-12 col-md m-2">
+            <button
+              type="button"
+              className="btn btn-primary m-0 width-100"
+              onClick={this.activateDoubleXP.bind(this)}
+            >
+              Yes
+            </button>
+          </div>
+          <div className=" col-12 col-md m-2 width-100">
+            <button
+              type="button"
+              className="btn btn-danger m-0 width-100"
+              onClick={() => {
+                this.setState({
+                  showing: 'actions'
+                });
+              }}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   renderActions() {
@@ -170,6 +219,7 @@ class Credits extends React.Component {
 
           {this.renderActions()}
           {this.renderTransfer()}
+          {this.renderActivate()}
         </div>
       </div>
     );

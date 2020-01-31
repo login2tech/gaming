@@ -317,6 +317,9 @@ class TournamentInfo extends React.Component {
     if (parseFloat(team_u.user_info.credit_balance) < amount) {
       return false;
     }
+    if (this.state.tournament.member_tournament && !team_u.user_info.prime) {
+      return false;
+    }
     return true;
   }
 
@@ -335,6 +338,14 @@ class TournamentInfo extends React.Component {
     const amount = parseFloat(this.state.tournament.entry_fee);
 
     if (parseFloat(team_u.user_info.credit_balance) < amount) {
+      return (
+        <span className="text-danger">
+          <img src="/images/controller-red.svg" className="icon_size" /> Not
+          Eligible
+        </span>
+      );
+    }
+    if (this.state.tournament.member_tournament && !team_u.user_info.prime) {
       return (
         <span className="text-danger">
           <img src="/images/controller-red.svg" className="icon_size" /> Not
@@ -1281,6 +1292,19 @@ class TournamentInfo extends React.Component {
   }
 
   renderJoinPage() {
+    // alert();
+    if (this.state.tournament.member_tournament && !this.props.user.prime) {
+      return (
+        <div className="alert alert-warning width-100">
+          You need to be a prime member to join OCG Members Tournament. Click
+          <a target="_blank" href={'/shop'}>
+            here
+          </a>{' '}
+          to purchase stripe.
+        </div>
+      );
+    }
+
     return (
       <div className="col-md-12">
         <Messages messages={this.props.messages} />
@@ -1424,6 +1448,7 @@ class TournamentInfo extends React.Component {
               );
             })*/}
         </ul>
+
         {this.state.eligible_teams_loaded &&
           !this.state.team_selected &&
           this.state.eligible_teams.length < 1 && (

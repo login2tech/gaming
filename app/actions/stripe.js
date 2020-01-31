@@ -1,3 +1,44 @@
+export function activate_doublexp_token(obj, cb) {
+  return dispatch => {
+    dispatch({type: 'CLR_MSG'});
+    return fetch('/api/activateToken', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: '{}'
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          scrollToTop();
+          if (json.action && json.action == 'PAYMENT_DONE') {
+            cb(true, json);
+            dispatch({
+              type: 'SUCCESS',
+              messages: [json]
+            });
+          } else {
+            cb(false);
+            dispatch({
+              type: 'FAILURE',
+              messages: [json]
+            });
+          }
+        });
+      } else {
+        scrollToTop();
+        cb();
+        return response.json().then(json => {
+          dispatch({
+            type: 'FAILURE',
+            messages: [json]
+          });
+        });
+      }
+    });
+  };
+}
+
 export function charge(obj, token, cb) {
   return dispatch => {
     dispatch({

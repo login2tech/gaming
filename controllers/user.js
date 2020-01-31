@@ -1149,3 +1149,44 @@ exports.changeUname = function(req, res, next) {
       return res.status(400).send({ok: false, msg: 'Failed'});
     });
 };
+
+exports.activateXPToken = function(req, res, next) {
+  const current_token_count = req.user.double_xp_tokens;
+  if (current_token_count < 1) {
+    return res.status(400).send({
+      ok: false,
+      msg: 'You can not activate as you do not have a token.'
+    });
+  }
+  if (req.user.double_xp) {
+    return res.status(400).send({
+      ok: false,
+      msg: 'You can not activate as its already active.'
+    });
+  }
+  new User()
+    .where({
+      id: req.user.id
+    })
+    .save(
+      {
+        double_xp_tokens: req.user.double_xp_tokens - 1,
+        double_xp_obj: {starts_on: moment()},
+        double_xp: true,
+        double_xp_exp: moment().add(1, 'day')
+      },
+      {method: 'update'}
+    )
+    .then(function(usr) {
+      return res.status(200).send({
+        ok: true,
+        action: 'PAYMENT_DONE',
+        msg: 'Double XP is now active.'
+      });
+    })
+    .catch(function(err) {
+      return res
+        .status(400)
+        .send({ok: false, msg: 'Failed to activate Double XP token.'});
+    });
+};

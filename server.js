@@ -209,6 +209,13 @@ app.post(
   creditsController.getMoneyForUnameChange,
   userController.changeUname
 );
+
+app.post(
+  '/api/activateToken',
+  userController.ensureAuthenticated,
+  userController.activateXPToken
+);
+
 app.put(
   '/account',
   userController.ensureAuthenticated,
