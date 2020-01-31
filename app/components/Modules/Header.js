@@ -503,7 +503,7 @@ class Header extends React.Component {
                 />
               </Link>
               {this.props.user ? (
-                <span className="profile_menu_item_inner small_avat">
+                <span className="d-md-none profile_menu_item_inner small_avat">
                   <a className="menu_avatar" href={'/u/' + props.user.username}>
                     {props.user && props.user.profile_picture ? (
                       <img

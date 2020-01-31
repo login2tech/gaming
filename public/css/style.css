@@ -5716,6 +5716,11 @@ th.act_pr6 .actision_logo {
       background: rgb(22, 56, 195);
       border-radius: 0;
     }
+    .platform_notice .btn {
+        float: right;
+        margin-right: 0 !important;
+        right: 0;
+    }
 
 
 }
