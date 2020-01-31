@@ -672,7 +672,7 @@ class NewMatchTeamSelect extends React.Component {
                             onChange={this.handleChange.bind(this)}
                           >
                             <option value="">{'Select'}</option>
-                            <option value="5|minutes">In 5 minutes</option>
+                            <option value="60|minutes">Available Now</option>
                             <option value="10|minutes">In 10 minutes</option>
                             <option value="15|minutes">In 15 minutes</option>
                             <option value="30|minutes">In 30 minutes</option>

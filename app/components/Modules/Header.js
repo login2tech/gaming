@@ -18,6 +18,7 @@ class Header extends React.Component {
     // const node = this.myRef.current;
     // console.log(node);
     $('#sidebar').collapse('hide');
+    $('#sidebar2').collapse('hide');
   }
   handleLogout = event => {
     event.preventDefault();
@@ -440,7 +441,7 @@ class Header extends React.Component {
   }
 
   render() {
-    // const props = this.props;
+    const props = this.props;
     return (
       <>
         <nav id="sidebar" className="d-lg-none" key={1} ref={this.myRef}>
@@ -452,6 +453,21 @@ class Header extends React.Component {
             <span className="close_side">x</span>
           </div>
         </nav>
+        {!this.props.user ? (
+          <nav id="sidebar2" className="d-lg-none" key={1} ref={this.myRef2}>
+            <h3>Get Started</h3>
+            <hr />
+            <ul className="list-unstyled components">
+              {this.renderProfileLinks()}
+            </ul>
+            <div className="sidebar_blue" onClick={this.closeSide}>
+              <span className="close_side">x</span>
+            </div>
+          </nav>
+        ) : (
+          false
+        )}
+
         <nav
           id="mainNav"
           className="navbar navbar-expand-lg p-0 p-md-0  p-sm-0 p-lg-2"
@@ -487,10 +503,30 @@ class Header extends React.Component {
                 />
               </Link>
               {this.props.user ? (
-                false
+                <span className="profile_menu_item_inner small_avat">
+                  <a className="menu_avatar" href={'/u/' + props.user.username}>
+                    {props.user && props.user.profile_picture ? (
+                      <img
+                        src={props.user.profile_picture}
+                        className="img-fluid profile_pic_outline"
+                      />
+                    ) : (
+                      <img
+                        className="img-fluid profile_pic_outline"
+                        src={
+                          'https://ui-avatars.com/api/?size=512&name=' +
+                          props.user.first_name +
+                          ' ' +
+                          props.user.last_name +
+                          '&color=223cf3&background=000000'
+                        }
+                      />
+                    )}
+                  </a>
+                </span>
               ) : (
                 <button
-                  className="navbar-toggler float-right collapsed text-white"
+                  className="navbar-toggler float-right collapsed login-ph-btn text-white"
                   type="button"
                   data-toggle="collapse"
                   // data-target="#menu"

@@ -4687,7 +4687,7 @@ ul.notices li:first-child {
     border-bottom-left-radius: 4px;
 }
 
-#sidebar {
+#sidebar, #sidebar2 {
     position: fixed;
     background: #fff;
     color: #fff;
@@ -4696,7 +4696,7 @@ ul.notices li:first-child {
     /* padding-top: 50px; */
 }
 
-#sidebar ul li a {
+#sidebar ul li a, #sidebar2 ul li a {
     padding: 10px;
     font-size: 1.1em;
     display: block;
@@ -4727,12 +4727,12 @@ ul.notices li:first-child {
     color: #308cd9 !important
 }
 
-#sidebar ul li.active > a {
+#sidebar ul li.active > a, #sidebar2 ul li.active > a {
     color: #fff;
     background: #6d7fcc;
 }
 
-#sidebar {
+#sidebar, #sidebar2 {
     min-width: 300px;
     /* max-width: 250px; */
     width: 100%;
@@ -4743,36 +4743,53 @@ ul.notices li:first-child {
 #sidebar.show {
     margin-left: 0;
 }
+#sidebar2.show {
+  margin-right: 0;
+margin-left: auto;
+}#sidebar2 .sidebar_blue {
+    left: 0;
+    right: auto;
+}
+#sidebar2 > h3 {
+    max-width: 300px;
+    clear: both;
+    margin-left: calc(100vw - 300px);
+    padding-top: 20px;
+    padding-left: 20px;
+}
 
-#sidebar > ul {
+#sidebar > ul, #sidebar2 > ul {
     /* min-width: 100vw; */
     width: 100vw;
     max-width: 300px;
     height: 100vh;
     overflow-y: scroll !important;
     position: relative;
+}#sidebar2 > ul {
+    float: right;
 }
 
-#sidebar li ul {
+#sidebar li ul , #sidebar2 li ul {
     position: relative;
     display: block;
     width: 100%;
     padding: 0;
 }
 
-#sidebar li {
+#sidebar li, #sidebar2 li {
     padding: 10px;
     width: 100%;
     position: relative !important;
 }
 
-#sidebar li ul li, #sidebar li ul li a {
+#sidebar li ul li, #sidebar li ul li a ,
+#sidebar2 li ul li, #sidebar2 li ul li a {
     width: 100%;
     /* background: #fff; */
     color: #fff !important;
 }
 
-#sidebar li ul {
+#sidebar li ul , #sidebar2 li ul {
     display: none
 }
 
@@ -5392,7 +5409,7 @@ th.act_pr6 .actision_logo {
         display: flex;
     }
 
-    #sidebar {
+    #sidebar , #sidebar2{
         background: #000;
     }
 
@@ -5690,6 +5707,14 @@ th.act_pr6 .actision_logo {
 
     .br_1:last-child {
         border-left:0;
+    }.navbar-brand{
+      margin:0
+    }
+    .login-ph-btn{
+      width: 60px;
+      font-size: 12px;
+      background: rgb(22, 56, 195);
+      border-radius: 0;
     }
 
 
@@ -5699,4 +5724,14 @@ th.act_pr6 .actision_logo {
     .tour-cover-block {
         background: none !important
     }
+}
+
+.small_avat img.profile_pic_outline {
+    border-radius: 50%;
+}span.profile_menu_item_inner.small_avat {
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+    margin-right: 10px;
+    border-radius: 50%;
 }
