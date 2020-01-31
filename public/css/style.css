@@ -4299,11 +4299,11 @@ img.img-fluid.team_avat {
 
 .br_1:not(:last-child) {
     border-right: 1px solid rgb(0, 83, 204);
-    box-shadow: 1px 0 5px 0px rgb(0,83,204);
+    /* box-shadow: 1px 0 5px 0px rgb(0,83,204); */
 }
 
 .br_1:last-child {
-    box-shadow: -2px 1px 5px 0px rgb(0,83,204);
+    border-left: 1px solid rgb(0, 83, 204);
 }
 
 .dib {
@@ -5243,6 +5243,47 @@ button.btn.btn-exp-menu {
     height: 100%;
 }
 
+.platform_notice {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    line-height: 40px;
+    z-index: 99999;
+    background: rgb(17, 74, 251);
+    color: rgb(255, 255, 255);
+    border: 0;
+}
+
+.platform_notice .btn {
+    background: rgb(0, 0, 0) !important;
+}
+
+.act_pr6 {
+    line-height: 40px;
+}
+
+th.act_pr6 .actision_logo {
+    float: left;
+}
+
+.following_btn a {
+    font-weight: bold;
+}
+
+.game_pic_tournament, .page_title_bar {
+    background-position: left center;
+}
+
+.team_actions {
+    display: flex;
+}
+
+.team_actions .btn {
+    min-width: 100px;
+    flex: 1;
+}
+
 @media (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5587,16 +5628,16 @@ button.btn.btn-exp-menu {
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
+
     a.trof_a {
         flex-direction: column;
         text-align: center;
         background: #000 !important;
         padding: 10px;
-
     }
 
-    .h-o-p{
-      display: none
+    .h-o-p {
+        display: none
     }
 
     .user-profile-trophies-container>div div.trophy-image {
@@ -5604,6 +5645,10 @@ button.btn.btn-exp-menu {
         background: #000;
         padding: 0;
         margin-bottom: 10px;
+    }
+
+    .container-fluid.half {
+        width: 100%;
     }
 
     .trophy-image {
@@ -5626,57 +5671,32 @@ button.btn.btn-exp-menu {
         padding-left: 10px;
         padding-right: 10px;
     }
+
     .row.gamer_tags_profile {
-    margin: 10px;
-    background: rgb(0, 0, 0);
-    padding: 10px;
-    padding-top: 25px;
-}
+        margin: 10px;
+        background: rgb(0, 0, 0);
+        padding: 10px;
+        padding-top: 25px;
+    }
+
+
+    .br_1:not(:last-child) {
+        border-right:  0;
+        border-left:  0;
+        border-bottom:  1px solid rgb(0, 83, 204);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+
+    .br_1:last-child {
+        border-left:0;
+    }
+
+
 }
 
 @media screen and (min-width: 768px) {
     .tour-cover-block {
         background: none !important
     }
-}
-
-.platform_notice {
-    bottom: 0;
-    left: 0;
-    position: fixed;
-    width: 100%;
-    line-height: 40px;
-    z-index: 99999;
-    background: rgb(17, 74, 251);
-    color: rgb(255, 255, 255);
-    border: 0;
-}
-
-.platform_notice .btn {
-    background: rgb(0, 0, 0) !important;
-}
-
-.act_pr6 {
-    line-height: 40px;
-}
-
-th.act_pr6 .actision_logo {
-    float: left;
-}
-
-.following_btn a {
-    font-weight: bold;
-}
-
-.game_pic_tournament, .page_title_bar {
-    background-position: left center;
-}
-
-.team_actions {
-    display: flex;
-}
-
-.team_actions .btn {
-    min-width: 100px;
-    flex: 1;
 }

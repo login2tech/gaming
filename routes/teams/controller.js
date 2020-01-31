@@ -192,9 +192,7 @@ exports.invite = function(req, res, next) {
         }
       }
       new User()
-        .where({
-          username: req.body.username
-        })
+        .where('username', 'ILIKE', req.body.username)
         .fetch()
         .then(function(user) {
           if (!user) {

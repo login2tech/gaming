@@ -101,9 +101,7 @@ class Home extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12 ">
                 <div className="section-headline white-headline text-center less_mrgns">
                   <h3>Find Your Game</h3>
-                  <p className="d-none d-md-inline-block">
-                    Play Your Favorite Games
-                  </p>
+                  <p className="d-none d-md-block">Play Your Favorite Games</p>
                   <p className="d-md-none">Choose Your Game To Get Started</p>
                 </div>
               </div>
