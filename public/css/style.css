@@ -4024,12 +4024,15 @@ span.profile_menu_item.ticket_item.from_admin {
 
 ul.pagination a {
     padding: 10px;
-    background: #124afb;box-shadow: none;border:0
+    background: #124afb;
+    box-shadow: none;
+    border: 0
 }
-ul.pagination li.active a
-{
-  background: #000 !important
+
+ul.pagination li.active a {
+    background: #000 !important
 }
+
 ul.pagination {
     margin-top: 30px;
 }
@@ -4039,7 +4042,6 @@ ul.pagination a:hover {
     cursor: pointer;
     color: #fff;
 }
-
 
 ul.pagination .disabled a {
     color: #313131;
@@ -4613,16 +4615,18 @@ ul.notices li:first-child {
         margin-right: 0;
         float: right;
     }
+
     img.inline-star, img.icon_size {
         height: 20px !important;
     }
+
     .middle_part_login {
         margin-top: 20px;
         padding-top: 10px;
     }
-    .title_default_dark h4
-    {
-      margin-bottom: 30px
+
+    .title_default_dark h4 {
+        margin-bottom: 30px
     }
 
     .match_heading h4 {
@@ -5495,7 +5499,7 @@ span.profile_menu_item_inner.small_avat {
     .tour-cover-block {
         background: none !important
     }
-  }
+}
 
 @media screen and (max-width: 768px) {
     .section-headline h3 {
@@ -5511,6 +5515,7 @@ span.profile_menu_item_inner.small_avat {
     .container-fluid.half {
         width: 100%;
     }
+
     span.navbar-toggler-icon.fa.fa-bars {
         line-height: 25px;
     }
@@ -5556,8 +5561,6 @@ span.profile_menu_item_inner.small_avat {
     div#menu2 > ul > li ul a {
         text-align: center;
     }
-
-
 
     td.footable-last-visible:after {
         content: '+';
@@ -5682,38 +5685,43 @@ span.profile_menu_item_inner.small_avat {
     .section-headline.white-headline h3 {
         font-size: 25px;
     }
-    .tournaments.toursec
-    {
-      padding-bottom:40px
+
+    .tournaments.toursec {
+        padding-bottom: 40px
     }
-    .featruedboxes{
-      padding : 30px 0
+
+    .featruedboxes {
+        padding : 30px 0
     }
 
     .has_m {
         margin-bottom: 0px
     }
+
     .mldr {
-    text-align: right;
-    padding-right: 10px;
-    justify-content: flex-end;
-}.mldr span, .mldrpr span {
-    font-size: 13px;
-}
-.mldrpr {
-    text-align: left;
-    padding-left: 10px;
-    justify-content: start;
-}
+        text-align: right;
+        padding-right: 10px;
+        justify-content: flex-end;
+    }
+
+    .mldr span, .mldrpr span {
+        font-size: 13px;
+    }
+
+    .mldrpr {
+        text-align: left;
+        padding-left: 10px;
+        justify-content: start;
+    }
 
     .has_m .team_spn_m {
         margin-bottom: 0px
     }
 
     .sm_btn_on_mob_wrap {
-      top: auto;
-  padding: 0;
-  bottom: 19px;
+        top: auto;
+        padding: 0;
+        bottom: 19px;
     }
 
     .sm_btn_on_mob {
@@ -5743,8 +5751,9 @@ span.profile_menu_item_inner.small_avat {
     .game_actions > div {
         flex: 1
     }
-    .contet_part{
-      padding-top:40px
+
+    .contet_part {
+        padding-top: 40px
     }
 
     .game_actions > div:first-child {
@@ -5863,34 +5872,34 @@ span.profile_menu_item_inner.small_avat {
     }
 
     .banner_actions .btn {
-      min-width: auto;
-      flex: 1;
-      width: auto;
-      padding: 5px 16px !important;
-      height: 25px;
-      font-size: 10px;
-      font-weight: normal;
-      line-height: 10px;
+        min-width: auto;
+        flex: 1;
+        width: auto;
+        padding: 5px 16px !important;
+        height: 25px;
+        font-size: 10px;
+        font-weight: normal;
+        line-height: 10px;
     }
 
     .page_title_bar {
-      background-position: center !important;
-      background-size: 150%;
-      min-height: 150px;
+        background-position: center !important;
+        background-size: 150%;
+        min-height: 150px;
     }
 
     .all_t_heading {
-      font-size: 19px;
-      line-height: 19px;
-      margin: 0;
-      letter-spacing: 0px;
+        font-size: 19px;
+        line-height: 19px;
+        margin: 0;
+        letter-spacing: 0px;
     }
 
     .t_big_heading {
-      font-size: 15px;
-      line-height: 16px;
-      margin: 0;
-      letter-spacing: 0;
+        font-size: 15px;
+        line-height: 16px;
+        margin: 0;
+        letter-spacing: 0;
     }
 
     .live-wager-row>div {
@@ -5988,6 +5997,7 @@ span.profile_menu_item_inner.small_avat {
     .comment_list button {
         margin-top: 10px
     }
+
     .timeline .filter-form button {
         padding-left: 10px !important;
         padding-right: 10px !important;
@@ -5997,39 +6007,77 @@ span.profile_menu_item_inner.small_avat {
         border-width: 0px !important;
         border-color: rgb(255, 0, 0) !important;
     }
-    span.profile_menu_item_inner.small_avat{
+
+    span.profile_menu_item_inner.small_avat {
         height: 100%;
     }
+
     .tab-block .tab-mnu li {
         padding: 10px;
         font-size: 10px;
     }
+
     .single_ticket .card:not(.post-main) {
         padding-top: 0;
-    }.single_ticket .container {
-    padding: 0;
-}.ticket_item_av {
-    padding: 0;
-}span.profile_menu_item.ticket_item {
-    width: 100%;
-    box-shadow: none;
-    border-bottom: 1px solid rgb(40, 71, 243);
-    border-radius: 0;
-    padding: 10px;
-}
-.card .date {
-    margin-bottom: 0;
-}
-.ticket_header h3{
-  margin:0;
-}
-.ticket_header h5{float:right;}.has_action_bar {
-    min-height: 200px;
-}
-.mw-50p-mob{
-  max-width: 40px
-}
-.avatar_img_r img{
-  width:20px;height:20px;border-radius:10px
-}
+    }
+
+    .single_ticket .container {
+        padding: 0;
+    }
+
+    .ticket_item_av {
+        padding: 0;
+    }
+
+    span.profile_menu_item.ticket_item {
+        width: 100%;
+        box-shadow: none;
+        border-bottom: 1px solid rgb(40, 71, 243);
+        border-radius: 0;
+        padding: 10px;
+    }
+
+    .card .date {
+        margin-bottom: 0;
+    }
+
+    .dropdown-item {
+        font-size: 12px;
+        padding-top: 1px;
+        padding-bottom: 1px;
+    }
+
+    .ticket_header h3 {
+        margin: 0;
+    }
+
+    .ticket_header h5 {
+        float: right;
+    }
+
+    .has_action_bar {
+        min-height: 200px;
+    }
+
+    .mw-50p-mob {
+        max-width: 40px
+    }
+
+    .avatar_img_r img {
+        width: 20px;
+        height: 20px;
+        border-radius: 10px
+    }
+
+    .has_game_banner {
+        background-position: center !important;
+        background-size: cover !important;
+        min-height: 200px !important
+    }
+    section.featruedboxes h5 {
+        background: rgba(17, 74, 251, 0.43);
+        display: inline-block;
+        border-radius: 2px;
+        box-shadow: 0 0 5px 3px #0b1b6c;
+    }
 }

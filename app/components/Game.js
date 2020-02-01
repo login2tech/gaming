@@ -387,7 +387,12 @@ class Game extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar gm noblend"
+          className={
+            'page_title_bar gm noblend' +
+            (this.state.game && this.state.game.banner_url
+              ? ' has_game_banner'
+              : ' ')
+          }
           style={
             this.state.game
               ? {
@@ -404,7 +409,7 @@ class Game extends React.Component {
                   <h3>{this.props.params.title}</h3>
                 </div>
                 <div
-                  className="list_pad game_actions"
+                  className="list_pad game_actions banner_actions"
                   style={{
                     display: 'flex',
                     justifyContent: 'flex-end',
