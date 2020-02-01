@@ -681,7 +681,7 @@ class Profile extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th className="h-o-p">Match</th>
+                            <th className="h-o-p  d-none">Match</th>
                             <th>Team</th>
                             <th>Opponent</th>
                             <th>Result</th>
@@ -735,7 +735,7 @@ class Profile extends React.Component {
 
                             return (
                               <tr key={match.id}>
-                                <td className="h-o-p">
+                                <td className="h-o-p  d-none">
                                   <Link to={'/m/' + match.id}>#{match.id}</Link>
                                 </td>
                                 <td>
@@ -813,7 +813,7 @@ class Profile extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th className="h-o-p">Match</th>
+                            <th className="h-o-p  d-none">Match</th>
                             <th>Result</th>
                             <th>Date</th>
                             <th>Info</th>
@@ -840,7 +840,7 @@ class Profile extends React.Component {
                             }
                             return (
                               <tr key={match.id}>
-                                <td className="h-o-p">
+                                <td className="h-o-p  d-none">
                                   <Link to={'/mix-and-match/' + match.id}>
                                     #{match.id}
                                   </Link>

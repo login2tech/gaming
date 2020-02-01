@@ -204,7 +204,7 @@ class MyMatches extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th className="h-o-p">Match</th>
+                          <th className="h-o-p d-none">Match</th>
                           <th>Team</th>
                           <th>Opponent</th>
                           <th>Status</th>
@@ -255,7 +255,7 @@ class MyMatches extends React.Component {
 
                           return (
                             <tr key={match.id}>
-                              <td className="h-o-p">
+                              <td className="h-o-p  d-none">
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
                               <td>
@@ -331,7 +331,7 @@ class MyMatches extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th className="h-o-p">Match</th>
+                          <th className="h-o-p d-none">Match</th>
                           <th>Status</th>
                           <th>Expires In</th>
                           <th style={{width: '10%'}}>Info</th>
@@ -352,7 +352,7 @@ class MyMatches extends React.Component {
                           }
                           return (
                             <tr key={match.id}>
-                              <td className="h-o-p">
+                              <td className="h-o-p  d-none">
                                 <Link to={'/mix-and-match/' + match.id}>
                                   #{match.id}
                                 </Link>

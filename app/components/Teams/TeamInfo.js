@@ -1221,7 +1221,7 @@ class TeamInfo extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th className="h-o-p">Match</th>
+                            <th className="h-o-p  d-none">Match</th>
                             <th>Opponent</th>
                             <th>Status</th>
 
@@ -1233,7 +1233,7 @@ class TeamInfo extends React.Component {
                           {this.state.match_played.map((match, i) => {
                             return (
                               <tr key={match.id}>
-                                <td className="h-o-p">
+                                <td className="h-o-p  d-none">
                                   <Link to={'/m/' + match.id}>#{match.id}</Link>
                                 </td>
                                 <td>
@@ -1279,7 +1279,7 @@ class TeamInfo extends React.Component {
                       <table className="table table-striped table-ongray table-hover">
                         <thead>
                           <tr>
-                            <th className="h-o-p">Match</th>
+                            <th className="h-o-p  d-none">Match</th>
                             <th>Tournament</th>
                             <th>Opponent</th>
                             <th>Status</th>
@@ -1292,7 +1292,7 @@ class TeamInfo extends React.Component {
                           {this.state.match_played.map((match, i) => {
                             return (
                               <tr key={match.id}>
-                                <td className="h-o-p">
+                                <td className="h-o-p  d-none">
                                   <Link to={'/m/' + match.id}>#{match.id}</Link>
                                 </td>
                                 <td>

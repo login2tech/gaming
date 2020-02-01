@@ -6080,4 +6080,7 @@ span.profile_menu_item_inner.small_avat {
         border-radius: 2px;
         box-shadow: 0 0 5px 3px #0b1b6c;
     }
+    .capitalize {
+        text-transform: capitalize;
+    }
 }

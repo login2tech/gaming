@@ -529,7 +529,7 @@ class Game extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th className="h-o-p">Match</th>
+                          <th className="h-o-p  d-none">Match</th>
                           <th>Starts At</th>
 
                           <th style={{width: '15%'}}>Fee</th>
@@ -551,7 +551,7 @@ class Game extends React.Component {
                                   className="tournament-box"
                                   style={{background: '#27204d'}}
                                 >
-                                  <td className="h-o-p">
+                                  <td className="h-o-p  d-none">
                                     <Link
                                       to={this.matchLink('/m/' + match.id)}
                                       className="tournament-name"
@@ -642,7 +642,7 @@ class Game extends React.Component {
                           onChange={this.handleChange.bind(this)}
                         />
                         <button type="submit" className="cht_send_btn">
-                          Submit
+                          Send
                         </button>
                       </form>
                     </div>
@@ -721,7 +721,7 @@ class Game extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th className="h-o-p">Match</th>
+                          <th className="h-o-p  d-none">Match</th>
                           <th>Starts At</th>
                           <th style={{width: '15%'}}>Fee</th>
                           <th>Players</th>
@@ -742,7 +742,7 @@ class Game extends React.Component {
                                   className="tournament-box"
                                   style={{background: '#27204d'}}
                                 >
-                                  <td className="h-o-p">
+                                  <td className="h-o-p  d-none">
                                     <Link
                                       to={this.matchLink('/m/' + match.id)}
                                       className="tournament-name"
@@ -797,7 +797,7 @@ class Game extends React.Component {
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
                         <tr>
-                          <th className="h-o-p">Match</th>
+                          <th className="h-o-p  d-none">Match</th>
                           <th>Team 1</th>
                           <th>Team 2</th>
                           <th>Date</th>
@@ -826,7 +826,7 @@ class Game extends React.Component {
 
                           return (
                             <tr key={match.id}>
-                              <td className="h-o-p">
+                              <td className="h-o-p  d-none">
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
                               <td>

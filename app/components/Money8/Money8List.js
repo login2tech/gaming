@@ -65,7 +65,7 @@ class Money8List extends React.Component {
         <section className="page_title_bar noblend">
           <div className="container-fluid half">
             <div className="row">
-              <div className="col">
+              <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="all_t_heading">
                   Upcoming Mix & Match Matches
                 </div>
