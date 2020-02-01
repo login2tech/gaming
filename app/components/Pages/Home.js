@@ -60,7 +60,7 @@ class Home extends React.Component {
             id="demo"
             className="carousel slide"
             data-ride="carousel"
-            data-pause="false"
+            data-pause="true"
           >
             <ul className="carousel-indicators">
               <li data-target="#demo" data-slide-to="0" className="active" />
@@ -222,7 +222,7 @@ class Home extends React.Component {
           </div>
         </div>
 
-        <section className="tournaments">
+        <section className="tournaments toursec">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
@@ -260,7 +260,7 @@ class Home extends React.Component {
           </div>
         </section>
 
-        <section className="tournaments">
+        <section className="tournaments toursec">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
@@ -279,7 +279,7 @@ class Home extends React.Component {
                 return (
                   <div className={cls} key={match.id}>
                     <div className="row has_m">
-                      <div className="col-12 col-md team_spn_m">
+                      <div className="col-12 col-md team_spn_m ht1info">
                         {match.team_1_info ? (
                           <>
                             <Link
@@ -315,7 +315,7 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col-6 col-md-5 team_spn_m no-just">
+                      <div className="col-6 col-md-5 team_spn_m no-just mldr">
                         <span>
                           <span className="text-l">
                             {match.ladder.game_info.title}
@@ -323,7 +323,7 @@ class Home extends React.Component {
                           <span className="text-m">{match.ladder.title}</span>
                         </span>
                       </div>
-                      <div className="col-6 col-md-5 team_spn_m no-just d-md-none">
+                      <div className="col-6 col-md-5 team_spn_m no-just d-md-none mldrpr">
                         <span>
                           <span className="text-l  text-success">
                             ${match.match_fee ? match.match_fee : '0'}
@@ -333,8 +333,8 @@ class Home extends React.Component {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-12 col-md team_spn_m">
-                        {match.team_1_info ? (
+                      <div className="col-12 col-md team_spn_m ht2info">
+                        {match.team_2_info ? (
                           <>
                             <Link
                               className="mw100"
@@ -425,11 +425,10 @@ class Home extends React.Component {
             <div className="row">
               <div className="col ">
                 <div className="section-headline white-headline text-center">
-                  <h3>WHAT ARE YOU WAITING FOR?</h3>
-                  <br />
+                  <h5>WHAT ARE YOU WAITING FOR?</h5>
 
                   <Link to={'/signup'} className="play_match_btn mt-4">
-                    Sign Up Free
+                    Get Started Now
                   </Link>
                 </div>
               </div>

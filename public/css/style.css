@@ -4024,9 +4024,12 @@ span.profile_menu_item.ticket_item.from_admin {
 
 ul.pagination a {
     padding: 10px;
-    background: #124afb;
+    background: #124afb;box-shadow: none;border:0
 }
-
+ul.pagination li.active a
+{
+  background: #000 !important
+}
 ul.pagination {
     margin-top: 30px;
 }
@@ -4037,13 +4040,6 @@ ul.pagination a:hover {
     color: #fff;
 }
 
-ul.pagination li.active a {
-    background: #0732ba;
-}
-
-ul.pagination li.active a {
-    background: #0732ba;
-}
 
 ul.pagination .disabled a {
     color: #313131;
@@ -4631,7 +4627,7 @@ ul.notices li:first-child {
 
     .match_heading h4 {
         font-size: 30px
-    } 
+    }
 }
 
 .width-auto {
@@ -5686,18 +5682,38 @@ span.profile_menu_item_inner.small_avat {
     .section-headline.white-headline h3 {
         font-size: 25px;
     }
-
-    .has_m {
-        margin-bottom: 40px
+    .tournaments.toursec
+    {
+      padding-bottom:40px
+    }
+    .featruedboxes{
+      padding : 30px 0
     }
 
+    .has_m {
+        margin-bottom: 0px
+    }
+    .mldr {
+    text-align: right;
+    padding-right: 10px;
+    justify-content: flex-end;
+}.mldr span, .mldrpr span {
+    font-size: 13px;
+}
+.mldrpr {
+    text-align: left;
+    padding-left: 10px;
+    justify-content: start;
+}
+
     .has_m .team_spn_m {
-        margin-bottom: 10px
+        margin-bottom: 0px
     }
 
     .sm_btn_on_mob_wrap {
-        top: 150px;
-        padding: 0;
+      top: auto;
+  padding: 0;
+  bottom: 19px;
     }
 
     .sm_btn_on_mob {
@@ -5707,6 +5723,9 @@ span.profile_menu_item_inner.small_avat {
         line-height: 20px;
         height: 30px;
         padding-top: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        min-width: 0px !important;
     }
 
     .section-headline {
@@ -5985,4 +6004,32 @@ span.profile_menu_item_inner.small_avat {
         padding: 10px;
         font-size: 10px;
     }
+    .single_ticket .card:not(.post-main) {
+        padding-top: 0;
+    }.single_ticket .container {
+    padding: 0;
+}.ticket_item_av {
+    padding: 0;
+}span.profile_menu_item.ticket_item {
+    width: 100%;
+    box-shadow: none;
+    border-bottom: 1px solid rgb(40, 71, 243);
+    border-radius: 0;
+    padding: 10px;
+}
+.card .date {
+    margin-bottom: 0;
+}
+.ticket_header h3{
+  margin:0;
+}
+.ticket_header h5{float:right;}.has_action_bar {
+    min-height: 200px;
+}
+.mw-50p-mob{
+  max-width: 40px
+}
+.avatar_img_r img{
+  width:20px;height:20px;border-radius:10px
+}
 }

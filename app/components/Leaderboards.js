@@ -89,7 +89,8 @@ class Leaderboards extends React.Component {
             loaded: true
           });
         }
-      });
+      })
+      .catch(function(err) {});
   }
 
   render() {
@@ -98,7 +99,7 @@ class Leaderboards extends React.Component {
     const {showing} = this.state;
     return (
       <div>
-        <section className="page_title_bar noblend">
+        <section className="page_title_bar noblend has_action_bar">
           <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
@@ -117,6 +118,7 @@ class Leaderboards extends React.Component {
                     href="#"
                     onClick={e => {
                       e.preventDefault();
+
                       this.setState({
                         showing: 'xp'
                       });
@@ -130,6 +132,7 @@ class Leaderboards extends React.Component {
                     href="#"
                     onClick={e => {
                       e.preventDefault();
+
                       this.setState({
                         showing: 'earnings'
                       });
@@ -155,7 +158,7 @@ class Leaderboards extends React.Component {
                           <th>Rank</th>
                           <th>User</th>
                           <th>&nbsp;</th>
-                          <th>
+                          <th data-breakpoints={showing == 'xp' ? '' : 'xs sm'}>
                             {showing == 'xp' ? (
                               <span className="fa fa-arrow-down m-r-10" />
                             ) : (
@@ -163,7 +166,11 @@ class Leaderboards extends React.Component {
                             )}
                             XP Earned
                           </th>
-                          <th>
+                          <th
+                            data-breakpoints={
+                              showing == 'earnings' ? '' : 'xs sm'
+                            }
+                          >
                             {showing == 'earnings' ? (
                               <span className="fa fa-arrow-down m-r-10" />
                             ) : (
@@ -172,7 +179,7 @@ class Leaderboards extends React.Component {
                             Earning
                           </th>
                           <th>Career Record</th>
-                          <th>Win Rate</th>
+                          <th data-breakpoints="xs sm">Win Rate</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -200,7 +207,7 @@ class Leaderboards extends React.Component {
                               </td>
                               <td>
                                 <img
-                                  className="img-fluid mw-100p"
+                                  className="img-fluid mw-100p mw-50p-mob"
                                   src={
                                     '/assets/rank/' +
                                     this.image_based_on_i(k.life_xp) +

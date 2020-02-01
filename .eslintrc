@@ -20,6 +20,7 @@
         "angular": true,
         "scrolltoTop": true,
         "linkHashTags": true,
-        "scrollToTop": true
+        "scrollToTop": true,
+        "FooTable" : true
     }
 }

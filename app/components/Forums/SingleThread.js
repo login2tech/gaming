@@ -123,8 +123,8 @@ class SingleThread extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar" id=" ">
-          <div className="container">
+        <section className="page_title_bar noblend" id=" ">
+          <div className="container ticket_header">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline m-0 white-headline text-left">
@@ -158,15 +158,15 @@ class SingleThread extends React.Component {
           </div>
         </section>
 
-        <section className="contet_part" id="contet_part">
+        <section className="contet_part single_ticket" id="contet_part">
           <div className="container">
             <div className="col-sm-12">
-              <div className="card post">
+              <div className="card post post-main">
                 <span className="date">
                   {moment(this.state.thread.created_at).format('lll')}
                 </span>
                 <div className="row">
-                  <div className="col-sm-3 ticket_item_av">
+                  <div className="col-sm-12 col-md-3 ticket_item_av">
                     <span className="profile_menu_item ticket_item">
                       <span className="profile_menu_item_inner">
                         <span className="menu_avatar">
