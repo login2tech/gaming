@@ -2505,7 +2505,7 @@ input[type='text'],input[type='text'],input[type='password'],input[type='number'
 }
 
 .t_big_heading {
-    font-size: 40px;
+    font-size: 35px;
     line-height: 70px;
     letter-spacing: -3px;
     color: #fff;
@@ -5338,11 +5338,16 @@ th.act_pr6 .actision_logo {
     padding-bottom: 10px;
 }
 
-.banner_actions {
+.banner_actions:not(.game_actions) {
     position: absolute;
     bottom: 20px;
 }
-
+.section-headline h3.lil-small{
+  font-size: 32px
+}
+.has_action_bar {
+    min-height: 250px;
+}
 section.page_title_bar .col-md-12 {
     position: static;
 }
