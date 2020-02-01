@@ -115,7 +115,7 @@ class FeedMy extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
-                  <div className="col-md-8 offset-md-2">
+                  <div className="col-md-8 offset-md-2 timeline-col">
                     <NewPost
                       is_private
                       user_info={this.props.user}

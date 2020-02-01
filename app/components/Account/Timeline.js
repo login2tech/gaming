@@ -140,7 +140,7 @@ class Profile extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="row">
-                  <div className="col-md-8 offset-md-2">
+                  <div className="col-md-8 offset-md-2 timeline-col">
                     {this.state.user_info &&
                     this.props.user &&
                     this.props.user.id == this.state.user_info.id ? (

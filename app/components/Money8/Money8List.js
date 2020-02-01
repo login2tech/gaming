@@ -70,13 +70,14 @@ class Money8List extends React.Component {
                   Upcoming Mix & Match Matches
                 </div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
-
-                <Link
-                  to={'/mix-and-match/new/'}
-                  className="btn btn-default bttn_submit max-width-300"
-                >
-                  Create a mix-and-match pool
-                </Link>
+                <div className="banner_actions">
+                  <Link
+                    to={'/mix-and-match/new/'}
+                    className="btn btn-default bttn_submit max-width-300"
+                  >
+                    Create a mix-and-match pool
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

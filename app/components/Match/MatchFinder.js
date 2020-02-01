@@ -76,27 +76,29 @@ class MatchFinder extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="all_t_heading">Upcoming Matches</div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
-                <Link
-                  to={'/match/new'}
-                  className="btn btn-default bttn_submit max-width-200 dib mr-2"
-                >
-                  Create a match
-                </Link>
-                {this.props.user ? (
+                <div className="banner_actions">
                   <Link
-                    to={'/u/' + this.props.user.username + '/teams/new'}
-                    className="btn btn-default bttn_submit max-width-200 dib"
+                    to={'/match/new'}
+                    className="btn btn-default bttn_submit max-width-200 dib mr-2"
                   >
-                    Create a team
+                    Create a match
                   </Link>
-                ) : (
-                  <Link
-                    to={'/login'}
-                    className="btn btn-default bttn_submit max-width-300"
-                  >
-                    Create a team
-                  </Link>
-                )}
+                  {this.props.user ? (
+                    <Link
+                      to={'/u/' + this.props.user.username + '/teams/new'}
+                      className="btn btn-default bttn_submit max-width-200 dib"
+                    >
+                      Create a team
+                    </Link>
+                  ) : (
+                    <Link
+                      to={'/login'}
+                      className="btn btn-default bttn_submit max-width-300"
+                    >
+                      Create a team
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -132,17 +134,19 @@ class MatchFinder extends React.Component {
                           </h5>
 
                           <div id="upcoming-match" className="match-list">
-                            <div className="live-wager-row table-header d-none d-md-flex ">
+                            <div className="live-wager-row table-header  d-md-flex ">
                               <div className="game-logo-container">Game</div>
-
                               <div className="wager-cost">Entry per player</div>
-                              <div className="wager-team-size">Team Size</div>
-
-                              <div className="wager-region">Platform</div>
-
-                              <div className="start-time">Starting</div>
-
-                              <div className="wager-actions" />
+                              <div className="wager-team-size d-none d-md-flex">
+                                Team Size
+                              </div>
+                              <div className="wager-region d-none d-md-flex">
+                                Platform
+                              </div>
+                              <div className="start-time d-none d-md-flex">
+                                Starting
+                              </div>
+                              <div className="wager-actions d-none d-md-flex" />
                             </div>
                             {this.state.matches[game_id].map((match, i) => {
                               return (

@@ -20,6 +20,7 @@ class MyMatches extends React.Component {
       pagination_money8: {},
       pagination_tour: {}
     };
+    this.table = React.createRef(); // initi
   }
 
   componentDidMount() {
@@ -113,7 +114,9 @@ class MyMatches extends React.Component {
               pagination_tour: json.pagination ? json.pagination : {}
             },
             () => {
-              // this.fetchMoney8();
+              setTimeout(() => {
+                $(this.table).footable();
+              }, 500);
             }
           );
         }
@@ -411,15 +414,20 @@ class MyMatches extends React.Component {
                   <h5 className="prizes_desclaimer">Tournament Matches</h5>
 
                   <div className="table_wrapper">
-                    <table className="table table-striped table-ongray table-hover">
+                    <table
+                      className="table table-striped table-ongray table-hover"
+                      ref={element => (this.table = element)}
+                    >
                       <thead>
                         <tr>
                           <th>Tournament</th>
                           <th>Match</th>
                           <th>Round</th>
-                          <th>Status</th>
-                          <th>Date</th>
-                          <th style={{width: '10%'}}>Info</th>
+                          <th data-breakpoints="xs sm">Status</th>
+                          <th data-breakpoints="xs sm">Date</th>
+                          <th style={{width: '10%'}} data-breakpoints="xs sm">
+                            Info
+                          </th>
                         </tr>
                       </thead>
                       <tbody>

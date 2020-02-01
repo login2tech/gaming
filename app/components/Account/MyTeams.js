@@ -17,11 +17,12 @@ class MyTeams extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3 className="no-case-change">My Teams</h3>
-                  <br />
-                  <br />
-                  <Link to={'/u/' + this.props.params.username + '/teams/new'}>
-                    <span className="fa fa-plus" /> create a new team
-                  </Link>
+
+                  <div className="banner_actions">
+                    <Link to={'/u/' + this.props.user.username + '/teams/new'}>
+                      <span className="fa fa-plus" /> create a new team
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

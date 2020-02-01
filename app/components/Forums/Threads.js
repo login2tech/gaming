@@ -51,10 +51,11 @@ class Threads extends React.Component {
                   <h3>{this.props.params.title}</h3>
                   <h5>Topic</h5>
                   <br />
-                  <br />
-                  <a href="/forums" className="">
-                    <span className="fa fa-arrow-left" /> back to topics
-                  </a>
+                  <div className="banner_actions">
+                    <a href="/forums" className="">
+                      <span className="fa fa-arrow-left" /> back to topics
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
 import moment from 'moment';
 // import { resetPassword } from '../../actions/auth';
 // import Messages from 'Messages';
@@ -48,6 +48,7 @@ class Notifications extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <h3>Notifications</h3>
+                  <br />
                 </div>
               </div>
             </div>
@@ -125,8 +126,4 @@ class Notifications extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  return state;
-};
-
-export default connect(mapStateToProps)(Notifications);
+export default Notifications;

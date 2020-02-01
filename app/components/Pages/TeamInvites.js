@@ -10,6 +10,7 @@ class TeamInvites extends React.Component {
       invites: [],
       loaded: false
     };
+    this.table = React.createRef();
   }
 
   approveRequest(team_id, event, reject) {
@@ -42,6 +43,9 @@ class TeamInvites extends React.Component {
             invites: json.items,
             loaded: true
           });
+          setTimeout(() => {
+            $(this.table).footable();
+          }, 500);
         }
       });
   }
@@ -70,20 +74,32 @@ class TeamInvites extends React.Component {
               <div className="col">
                 <div className="content_box">
                   <div className=" ">
+                    {this.state.invites.length == 0 && this.state.loaded ? (
+                      <div className="alert alert-warning">
+                        You have no pending invites.
+                      </div>
+                    ) : (
+                      false
+                    )}
                     <div className="table_wrapper">
-                      <table className="table table-striped table-ongray table-hover">
+                      <table
+                        className="table table-striped table-ongray table-hover"
+                        ref={element => (this.table = element)}
+                      >
                         <thead>
                           <tr>
-                            <th style={{width: '10%'}}>Team Id</th>
+                            <th style={{width: '15%'}}>Team Id</th>
                             <th>Team Name</th>
-                            <th>Team Type</th>
-                            <th>Invited on</th>
-                            <th style={{width: '15%'}}>Action</th>
+                            <th className="d-md-none">Team Type</th>
+                            <th data-breakpoints="xs sm">Team Type</th>
+                            <th data-breakpoints="xs sm">Invited on</th>
+                            <th data-breakpoints="xs sm" style={{width: '15%'}}>
+                              Action
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
                           {this.state.invites.map((m, i) => {
-                            console.log(m);
                             const k = m.team_info;
                             return (
                               <tr key={k.id}>
@@ -94,12 +110,15 @@ class TeamInvites extends React.Component {
                                       {k.title}
                                     </Link>
                                   </h5>
-                                  <small>
+                                  <small className="d-none d-md-inline-block">
                                     {k.ladder.game_info.title} -{' '}
                                     {k.ladder.title}
                                   </small>
                                 </td>
-                                <td>{k.team_type}</td>
+                                <td className="d-md-none">
+                                  {k.ladder.game_info.title} - {k.ladder.title}
+                                </td>
+                                <td className="capitalize">{k.team_type}</td>
                                 <td>{moment(m.created_at).format('LLL')}</td>
 
                                 <td>

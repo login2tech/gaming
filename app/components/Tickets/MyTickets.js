@@ -2,7 +2,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
-
 class Tickets extends React.Component {
   constructor(props) {
     super(props);
@@ -11,6 +10,7 @@ class Tickets extends React.Component {
       showing_closed: false,
       items: []
     };
+    this.table = React.createRef(); // initi
   }
 
   checkboxChange() {
@@ -26,6 +26,9 @@ class Tickets extends React.Component {
             is_loaded: true,
             items: json.items
           });
+          setTimeout(() => {
+            $(this.table).footable();
+          }, 500);
         } else {
           this.setState({
             is_page: false,
@@ -80,14 +83,17 @@ class Tickets extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="table_wrapper">
-                  <table className="table table-striped table-ongray table-hover">
+                  <table
+                    ref={element => (this.table = element)}
+                    className="table table-striped table-ongray table-hover"
+                  >
                     <thead>
                       <tr>
                         <th width="30">ID</th>
                         <th>Title</th>
-                        <th>Department</th>
-                        <th>Last Updated</th>
-                        <th>Status</th>
+                        <th data-breakpoints="xs sm">Department</th>
+                        <th data-breakpoints="xs sm">Last Updated</th>
+                        <th data-breakpoints="xs sm">Status</th>
                         <th>View Ticket</th>
                       </tr>
                     </thead>

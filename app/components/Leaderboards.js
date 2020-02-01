@@ -103,11 +103,7 @@ class Leaderboards extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <br />
                   <h3>Leaderboards</h3>
-                  <br />
-                  <br />
-                  <br />
                   <br />
                 </div>
               </div>

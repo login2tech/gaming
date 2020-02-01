@@ -4243,8 +4243,8 @@ img.hover_img {
     }
 
     .table td, .table th {
-        padding: 0.5rem;
-        font-size: 12px
+        padding: 0.3rem;
+        font-size: 11px
     }
 }
 
@@ -4584,7 +4584,24 @@ ul.notices li:first-child {
     }
 
     .prof_stat.row .col-6 {
-        margin-bottom: 20px
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+
+    .usr_obj >div > div:first-child {
+        margin-bottom: 10px;
+    }
+
+    .prof_stat {
+        padding: 20px 0
+    }
+
+    a.reset_rep {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-top: 20px;
+        width: 100%;
     }
 
     .usr_obj:nth-child(even) {
@@ -4595,17 +4612,26 @@ ul.notices li:first-child {
         width: 45%;
     }
 
+    ul.team_list li:nth-child(even) {
+        margin-left: 10px;
+        margin-right: 0;
+        float: right;
+    }
+    img.inline-star, img.icon_size {
+        height: 20px !important;
+    }
     .middle_part_login {
-        margin-top: 20px
+        margin-top: 20px;
+        padding-top: 10px;
+    }
+    .title_default_dark h4
+    {
+      margin-bottom: 30px
     }
 
     .match_heading h4 {
         font-size: 30px
-    }
-
-    /* .tournament-list .tournament-box {
-        flex-direction: column;
-    } */
+    } 
 }
 
 .width-auto {
@@ -4743,13 +4769,17 @@ ul.notices li:first-child {
 #sidebar.show {
     margin-left: 0;
 }
+
 #sidebar2.show {
-  margin-right: 0;
-margin-left: auto;
-}#sidebar2 .sidebar_blue {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+#sidebar2 .sidebar_blue {
     left: 0;
     right: auto;
 }
+
 #sidebar2 > h3 {
     max-width: 300px;
     clear: both;
@@ -4765,7 +4795,9 @@ margin-left: auto;
     height: 100vh;
     overflow-y: scroll !important;
     position: relative;
-}#sidebar2 > ul {
+}
+
+#sidebar2 > ul {
     float: right;
 }
 
@@ -4782,8 +4814,7 @@ margin-left: auto;
     position: relative !important;
 }
 
-#sidebar li ul li, #sidebar li ul li a ,
-#sidebar2 li ul li, #sidebar2 li ul li a {
+#sidebar li ul li, #sidebar li ul li a , #sidebar2 li ul li, #sidebar2 li ul li a {
     width: 100%;
     /* background: #fff; */
     color: #fff !important;
@@ -5301,7 +5332,34 @@ th.act_pr6 .actision_logo {
     flex: 1;
 }
 
-@media (min-width: 993px) {
+.row.gamer_tags_profile {
+    background: rgb(0, 0, 0);
+    padding: 50px 20px;
+    padding-bottom: 10px;
+}
+
+.banner_actions {
+    position: absolute;
+    bottom: 20px;
+}
+
+section.page_title_bar .col-md-12 {
+    position: static;
+}
+
+.small_avat img.profile_pic_outline {
+    border-radius: 50%;
+}
+
+span.profile_menu_item_inner.small_avat {
+    width: 50px;
+    height: 50px;
+    margin-top: 20px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+@media screen and (min-width: 993px) {
     .fl-3 {
         flex:3
     }
@@ -5315,7 +5373,7 @@ th.act_pr6 .actision_logo {
     }
 }
 
-@media (max-width: 992px) {
+@media screen and (max-width: 992px) {
     .sm_on_mob {
         width: 50% !important;
         display: inline-block;
@@ -5409,7 +5467,7 @@ th.act_pr6 .actision_logo {
         display: flex;
     }
 
-    #sidebar , #sidebar2{
+    #sidebar , #sidebar2 {
         background: #000;
     }
 
@@ -5437,7 +5495,26 @@ th.act_pr6 .actision_logo {
     }
 }
 
+@media screen and (min-width: 768px) {
+    .tour-cover-block {
+        background: none !important
+    }
+  }
+
 @media screen and (max-width: 768px) {
+    .section-headline h3 {
+        font-size: 24px;
+        line-height: 30px;
+    }
+
+    .page_title_bar {
+        padding-top: 10px;
+        padding-bottom: 40px;
+    }
+
+    .container-fluid.half {
+        width: 100%;
+    }
     span.navbar-toggler-icon.fa.fa-bars {
         line-height: 25px;
     }
@@ -5482,6 +5559,23 @@ th.act_pr6 .actision_logo {
 
     div#menu2 > ul > li ul a {
         text-align: center;
+    }
+
+
+
+    td.footable-last-visible:after {
+        content: '+';
+        float: right;
+        font-size: 20px;
+    }
+
+    [data-expanded="true"] .footable-last-visible:after {
+        content: '- ';
+        padding-right: 5px;
+    }
+
+    .table .table {
+        background: #000;
     }
 
     .navbar-toggler:not(.collapsed) {
@@ -5630,6 +5724,9 @@ th.act_pr6 .actision_logo {
     .game_actions > div {
         flex: 1
     }
+    .contet_part{
+      padding-top:40px
+    }
 
     .game_actions > div:first-child {
         flex: 2;
@@ -5696,47 +5793,196 @@ th.act_pr6 .actision_logo {
         padding-top: 25px;
     }
 
-
     .br_1:not(:last-child) {
-        border-right:  0;
-        border-left:  0;
-        border-bottom:  1px solid rgb(0, 83, 204);
+        border-right: 0;
+        border-left: 0;
+        border-bottom: 1px solid rgb(0, 83, 204);
         padding-bottom: 20px;
         margin-bottom: 20px;
     }
 
     .br_1:last-child {
-        border-left:0;
-    }.navbar-brand{
-      margin:0
+        border-left: 0;
     }
-    .login-ph-btn{
-      width: 60px;
-      font-size: 12px;
-      background: rgb(22, 56, 195);
-      border-radius: 0;
+
+    .navbar-brand {
+        margin: 0
     }
+
+    .login-ph-btn {
+        width: 60px;
+        font-size: 12px;
+        background: rgb(22, 56, 195);
+        border-radius: 0;
+    }
+
     .platform_notice .btn {
         float: right;
         margin-right: 0 !important;
         right: 0;
     }
 
-
-}
-
-@media screen and (min-width: 768px) {
-    .tour-cover-block {
-        background: none !important
+    .page_title_bar {
+        min-height: 120px;
+        padding: 0;
     }
-}
 
-.small_avat img.profile_pic_outline {
-    border-radius: 50%;
-}span.profile_menu_item_inner.small_avat {
-    width: 50px;
-    height: 50px;
-    margin-top: 20px;
-    margin-right: 10px;
-    border-radius: 50%;
+    .page_title_bar h3 {
+        font-size: 19px !important;
+        line-height: 19px;
+    }
+
+    ul.team_list li img {
+        height: auto;
+        max-height: 150px;
+    }
+
+    .banner_actions {
+        display: flex;
+        padding-bottom: 0;
+        bottom: 10px;
+    }
+
+    .banner_actions .btn {
+      min-width: auto;
+      flex: 1;
+      width: auto;
+      padding: 5px 16px !important;
+      height: 25px;
+      font-size: 10px;
+      font-weight: normal;
+      line-height: 10px;
+    }
+
+    .page_title_bar {
+      background-position: center !important;
+      background-size: 150%;
+      min-height: 150px;
+    }
+
+    .all_t_heading {
+      font-size: 19px;
+      line-height: 19px;
+      margin: 0;
+      letter-spacing: 0px;
+    }
+
+    .t_big_heading {
+      font-size: 15px;
+      line-height: 16px;
+      margin: 0;
+      letter-spacing: 0;
+    }
+
+    .live-wager-row>div {
+        font-size: 14px;
+    }
+
+    .live-wager-mobile-block {
+        margin-bottom: 10px !important;
+    }
+
+    .table-header >div.game-logo-container:first-child {
+        flex: 2 !important;
+    }
+
+    .single-trophy a {
+        margin: 20px;
+        display: inline-block;
+    }
+
+    .gamer_tags_profile .pf_icon {
+        width: 30%;
+        background-position: left;
+    }
+
+    .card.gedf-card {
+        padding: 0;
+        margin: 10px
+    }
+
+    .timeline-col {
+        padding: 0;
+    }
+
+    ul.timeline {
+        padding: 0;
+        margin: 0;
+    }
+
+    ul.timeline:before {
+        display: none;
+    }
+
+    ul.timeline > li {
+        margin: 0;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        margin-bottom: 10px;
+        margin-top: 5px;
+    }
+
+    .image_alternate_feed {
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        top: 5px;
+    }
+
+    .image_alternate_feed + .text-date {
+        width: calc(100% - 40px);
+        float: right;
+        margin-bottom: 10px !important;
+    }
+
+    p.feed_post_content {
+        display: inline-block;
+        width: 100%;
+        margin: 0;
+    }
+
+    .timeline .text-date {
+        margin-bottom: 0;
+    }
+
+    .btn-vote {
+        padding: 2px;
+    }
+
+    span.social_btns > span:first-child {
+        padding-top: 25px;
+    }
+
+    .comment_list .form-group, .comment_list textarea {
+        margin: 0;
+    }
+
+    .comment_list {
+        margin: 0;
+    }
+
+    ul.timeline li li {
+        padding: 3px 7px;
+    }
+
+    .comment_list button {
+        margin-top: 10px
+    }
+    .timeline .filter-form button {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+        height: auto !important;
+        border-width: 0px !important;
+        border-color: rgb(255, 0, 0) !important;
+    }
+    span.profile_menu_item_inner.small_avat{
+        height: 100%;
+    }
+    .tab-block .tab-mnu li {
+        padding: 10px;
+        font-size: 10px;
+    }
 }

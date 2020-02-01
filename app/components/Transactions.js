@@ -24,6 +24,9 @@ class Transaction extends React.Component {
       membership_transactions: [],
       loaded: false
     };
+    this.table1 = React.createRef();
+    this.table2 = React.createRef();
+    this.table3 = React.createRef();
   }
 
   componentDidMount() {
@@ -48,7 +51,19 @@ class Transaction extends React.Component {
                   this.fTx('credit', true);
                 } else if (type == 'credit') {
                   this.fTx('membership');
+                } else {
+                  setTimeout(() => {
+                    $(this.table1).footable();
+                    $(this.table2).footable();
+                    $(this.table3).footable();
+                  }, 500);
                 }
+              } else {
+                setTimeout(() => {
+                  $(this.table1).footable();
+                  $(this.table2).footable();
+                  $(this.table3).footable();
+                }, 500);
               }
             }
           );
@@ -101,12 +116,17 @@ class Transaction extends React.Component {
                   <br />
                   <div className=" ">
                     <div className="table_wrapper">
-                      <table className="table table-stripped">
+                      <table
+                        className="table table-stripped"
+                        ref={element => (this.table1 = element)}
+                      >
                         <thead>
                           <tr>
                             <th style={{width: '7%'}}>Id</th>
                             <th style={{width: '23%'}}>Date</th>
-                            <th style={{width: '55%'}}>Description</th>
+                            <th data-breakpoints="xs sm" style={{width: '55%'}}>
+                              Description
+                            </th>
                             <th style={{width: '15%'}}>OCH Cash</th>
                           </tr>
                         </thead>
@@ -166,12 +186,17 @@ class Transaction extends React.Component {
                   <br />
                   <div className=" ">
                     <div className="table_wrapper">
-                      <table className="table table-stripped">
+                      <table
+                        className="table table-stripped"
+                        ref={element => (this.table2 = element)}
+                      >
                         <thead>
                           <tr>
                             <th style={{width: '7%'}}>Id</th>
                             <th style={{width: '23%'}}>Date</th>
-                            <th style={{width: '55%'}}>Description</th>
+                            <th data-breakpoints="xs sm" style={{width: '55%'}}>
+                              Description
+                            </th>
                             <th style={{width: '15%'}}>Credits</th>
                           </tr>
                         </thead>
@@ -232,12 +257,17 @@ class Transaction extends React.Component {
                   <br />
                   <div className=" ">
                     <div className="table_wrapper">
-                      <table className="table table-stripped">
+                      <table
+                        className="table table-stripped"
+                        ref={element => (this.table3 = element)}
+                      >
                         <thead>
                           <tr>
                             <th style={{width: '7%'}}>Id</th>
                             <th style={{width: '23%'}}>Date</th>
-                            <th style={{width: '70%'}}>Description</th>
+                            <th data-breakpoints="xs sm" style={{width: '70%'}}>
+                              Description
+                            </th>
                           </tr>
                         </thead>
                         <tbody>

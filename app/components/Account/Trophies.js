@@ -71,13 +71,14 @@ class Trophies extends React.Component {
                   >
                     {this.props.params.type} Trophies
                   </h3>
-                  <br />
-                  <Link
-                    class="pt-3 pb-3 dib"
-                    to={'/u/' + this.props.params.username}
-                  >
-                    <span className="fa fa-arrow-left" /> back to profile
-                  </Link>
+                  <div className="banner_actions">
+                    <Link
+                      class="pt-3 pb-3 dib"
+                      to={'/u/' + this.props.params.username}
+                    >
+                      <span className="fa fa-arrow-left" /> back to profile
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -99,7 +100,10 @@ class Trophies extends React.Component {
                   <div className="user-profile-trophies-container row">
                     {this.state.items.map((item, i) => {
                       return (
-                        <div key={item.id} className="col-md-3 col-lg-2 mb-5 ">
+                        <div
+                          key={item.id}
+                          className="col-md-3 col-lg-2 mb-5  col-6 single-trophy"
+                        >
                           <a
                             className="no_background"
                             href={

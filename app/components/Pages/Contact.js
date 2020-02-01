@@ -73,9 +73,7 @@ class Contact extends React.Component {
                         />
                       </div>
                       <div className="form-group col-md-12 col-sm-12 co-xs-12">
-                        <label>
-                          <Translate id="contact_page_subject_label" />
-                        </label>
+                        <label>Subject</label>
 
                         <input
                           type="text"

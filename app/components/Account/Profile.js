@@ -45,6 +45,7 @@ class Profile extends React.Component {
       new_post_video: '',
       posts_page: 1
     };
+    this.tour_tbl_ref = React.createRef();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -300,6 +301,9 @@ class Profile extends React.Component {
             tournaments: json.items,
             pagination_tour: json.pagination ? json.pagination : {}
           });
+          setTimeout(() => {
+            $(this.tour_tbl_ref).footable();
+          }, 500);
         }
       });
   }
@@ -373,6 +377,18 @@ class Profile extends React.Component {
                               L
                             </span>
                           </div>
+                          <div>
+                            {this.state.user_info.wins +
+                              this.state.user_info.loss ==
+                            0
+                              ? 100
+                              : parseFloat(
+                                  (this.state.user_info.wins * 100) /
+                                    (this.state.user_info.wins +
+                                      this.state.user_info.loss)
+                                ).toFixed(2)}
+                            % WIN RATE
+                          </div>
                           {this.props.user &&
                           this.props.user.id == this.state.user_info.id &&
                           (this.state.user_info.wins ||
@@ -388,18 +404,6 @@ class Profile extends React.Component {
                           ) : (
                             false
                           )}
-                          <div>
-                            {this.state.user_info.wins +
-                              this.state.user_info.loss ==
-                            0
-                              ? 100
-                              : parseFloat(
-                                  (this.state.user_info.wins * 100) /
-                                    (this.state.user_info.wins +
-                                      this.state.user_info.loss)
-                                ).toFixed(2)}
-                            % WIN RATE
-                          </div>
                         </div>
                       </div>
                       <div className="col-6 col-md-3 usr_obj">
@@ -634,9 +638,7 @@ class Profile extends React.Component {
                       </div>
 
                       <div className="row gamer_tags_profile">
-                        <h4 className="display-block display-md-none mb-4">
-                          GAME ID
-                        </h4>
+                        <h4 className="d-md-none mb-4">GAME ID</h4>
                         {game_user_ids.tags.map((k, i) => {
                           if (
                             !this.state.user_info['gamer_tag_' + k] ||
@@ -902,13 +904,17 @@ class Profile extends React.Component {
                     <h5 className="prizes_desclaimer">RECENT TOURNAMENTS</h5>
 
                     <div className="table_wrapper">
-                      <table className="table table-striped table-ongray table-hover">
+                      <table
+                        ref={element => (this.tour_tbl_ref = element)}
+                        key={'tour_data' + this.state.user_info.id}
+                        className="table table-striped table-ongray table-hover"
+                      >
                         <thead>
                           <tr>
                             <th>Tournament</th>
-                            <th>Tournament Placing</th>
-                            <th>Date</th>
-                            <th>Status</th>
+                            <th data-breakpoints="xs sm">Tournament Placing</th>
+                            <th data-breakpoints="xs sm">Date</th>
+                            <th data-breakpoints="xs sm">Status</th>
                             <th>Info</th>
                           </tr>
                         </thead>
@@ -920,8 +926,13 @@ class Profile extends React.Component {
                             return (
                               <tr key={match.id}>
                                 <td>
-                                  <Link to={'/t/' + match.id}>#{match.id}</Link>{' '}
-                                  - {match.title}
+                                  <span className="h-o-p">
+                                    <Link to={'/t/' + match.id}>
+                                      #{match.id}
+                                    </Link>{' '}
+                                    -{' '}
+                                  </span>
+                                  {match.title}
                                 </td>
                                 <td>
                                   {match.game.title} - {match.ladder.title}
@@ -932,7 +943,8 @@ class Profile extends React.Component {
                                 </td>
                                 <td>
                                   <Link to={'/t/' + match.id}>
-                                    View Tournament
+                                    View{' '}
+                                    <span className="h-o-p">Tournament</span>
                                   </Link>
                                 </td>
                               </tr>

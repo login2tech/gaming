@@ -137,20 +137,21 @@ class SingleThread extends React.Component {
                     </a>{' '}
                     {moment(this.state.thread.created_at).fromNow()}
                   </p>
-                  <br />
-                  <a
-                    href="/forums"
-                    className=""
-                    onClick={e => {
-                      if (history.length == 1) {
-                        return;
-                      }
-                      history.back();
-                      e.preventDefault();
-                    }}
-                  >
-                    <span className="fa fa-arrow-left" /> back to threads
-                  </a>
+                  <div className="banner_actions">
+                    <a
+                      href="/forums"
+                      className=""
+                      onClick={e => {
+                        if (history.length == 1) {
+                          return;
+                        }
+                        history.back();
+                        e.preventDefault();
+                      }}
+                    >
+                      <span className="fa fa-arrow-left" /> back to threads
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
