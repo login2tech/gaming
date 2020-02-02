@@ -179,7 +179,7 @@ class Leaderboards extends React.Component {
                             Earning
                           </th>
                           <th>Career Record</th>
-                          <th data-breakpoints="xs sm">Win Rate</th>
+                          <th class="d-none d-md-table-cell">Win Rate</th>
                         </tr>
                       </thead>
                       <tbody>

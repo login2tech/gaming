@@ -46,7 +46,7 @@ class Profile extends React.Component {
       new_post_video: '',
       posts_page: 1
     };
-    this.tour_tbl_ref = React.createRef();
+    // this.tour_tbl_ref = React.createRef();
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -302,9 +302,6 @@ class Profile extends React.Component {
             tournaments: json.items,
             pagination_tour: json.pagination ? json.pagination : {}
           });
-          setTimeout(() => {
-            $(this.tour_tbl_ref).footable();
-          }, 500);
         }
       });
   }
@@ -912,17 +909,20 @@ class Profile extends React.Component {
 
                     <div className="table_wrapper">
                       <table
-                        ref={element => (this.tour_tbl_ref = element)}
+                        // ref={element => (this.tour_tbl_ref = element)}
                         key={'tour_data' + this.state.user_info.id}
                         className="table table-striped table-ongray table-hover"
                       >
                         <thead>
                           <tr>
                             <th>Tournament</th>
-                            <th data-breakpoints="xs sm">Tournament Placing</th>
-                            <th data-breakpoints="xs sm">Date</th>
-                            <th data-breakpoints="xs sm">Status</th>
+                            <th className="d-none d-md-table-cell">
+                              Tournament Placing
+                            </th>
+                            <th className="d-none d-md-table-cell">Date</th>
+                            <th className="d-none d-md-table-cell">Status</th>
                             <th>Info</th>
+                            <th style={{width: '10%'}} className="d-md-none" />
                           </tr>
                         </thead>
                         <tbody>
@@ -931,30 +931,83 @@ class Profile extends React.Component {
                               return false;
                             }
                             return (
-                              <tr key={match.id}>
-                                <td>
-                                  <span className="h-o-p">
+                              <>
+                                <tr key={match.id}>
+                                  <td>
+                                    <span className="h-o-p">
+                                      <Link to={'/t/' + match.id}>
+                                        #{match.id}
+                                      </Link>{' '}
+                                      -{' '}
+                                    </span>
+                                    {match.title}
+                                  </td>
+                                  <td>
+                                    {match.game.title} - {match.ladder.title}
+                                  </td>
+                                  <td className="d-none d-md-table-cell">
+                                    {moment(match.starts_at).format('lll')}
+                                  </td>
+                                  <td
+                                    className={
+                                      ' d-none d-md-table-cell status_' +
+                                      match.status
+                                    }
+                                  >
+                                    {match.status}
+                                  </td>
+                                  <td>
                                     <Link to={'/t/' + match.id}>
-                                      #{match.id}
-                                    </Link>{' '}
-                                    -{' '}
-                                  </span>
-                                  {match.title}
-                                </td>
-                                <td>
-                                  {match.game.title} - {match.ladder.title}
-                                </td>
-                                <td>{moment(match.starts_at).format('lll')}</td>
-                                <td className={'status_' + match.status}>
-                                  {match.status}
-                                </td>
-                                <td>
-                                  <Link to={'/t/' + match.id}>
-                                    View{' '}
-                                    <span className="h-o-p">Tournament</span>
-                                  </Link>
-                                </td>
-                              </tr>
+                                      View{' '}
+                                      <span className="h-o-p">Tournament</span>
+                                    </Link>
+                                  </td>
+                                  <td className="d-md-none">
+                                    <button
+                                      className="btn btn-link"
+                                      onClick={() => {
+                                        this.setState({
+                                          expanded:
+                                            match.id == this.state.expand_id
+                                              ? !this.state.expanded
+                                              : true,
+                                          expand_id: match.id
+                                        });
+                                      }}
+                                    >
+                                      <span
+                                        className={
+                                          this.state.expanded &&
+                                          this.state.expand_id == match.id
+                                            ? ' fa fa-minus'
+                                            : ' fa fa-plus '
+                                        }
+                                      />
+                                    </button>
+                                  </td>
+                                </tr>
+                                {this.state.expanded &&
+                                this.state.expanded_id == match.id ? (
+                                  <tr>
+                                    <td>
+                                      <table className="table">
+                                        <tbody>
+                                          <tr>
+                                            <td>a</td>
+                                            <td>b</td>
+                                          </tr>
+                                          <tr>
+                                            <td>1</td>
+                                            <td>21</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  false
+                                )}
+                              </>
                             );
                           })}
                         </tbody>

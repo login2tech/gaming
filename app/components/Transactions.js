@@ -124,7 +124,7 @@ class Transaction extends React.Component {
                           <tr>
                             <th style={{width: '7%'}}>Id</th>
                             <th style={{width: '23%'}}>Date</th>
-                            <th data-breakpoints="xs sm" style={{width: '55%'}}>
+                            <th class="d-none d-md-table-cell" style={{width: '55%'}}>
                               Description
                             </th>
                             <th style={{width: '15%'}}>OCH Cash</th>
@@ -194,7 +194,7 @@ class Transaction extends React.Component {
                           <tr>
                             <th style={{width: '7%'}}>Id</th>
                             <th style={{width: '23%'}}>Date</th>
-                            <th data-breakpoints="xs sm" style={{width: '55%'}}>
+                            <th class="d-none d-md-table-cell" style={{width: '55%'}}>
                               Description
                             </th>
                             <th style={{width: '15%'}}>Credits</th>
@@ -265,7 +265,7 @@ class Transaction extends React.Component {
                           <tr>
                             <th style={{width: '7%'}}>Id</th>
                             <th style={{width: '23%'}}>Date</th>
-                            <th data-breakpoints="xs sm" style={{width: '70%'}}>
+                            <th class="d-none d-md-table-cell" style={{width: '70%'}}>
                               Description
                             </th>
                           </tr>

@@ -20,7 +20,7 @@ class MyMatches extends React.Component {
       pagination_money8: {},
       pagination_tour: {}
     };
-    this.table = React.createRef(); // initi
+    // this.table = React.createRef(); // initi
   }
 
   componentDidMount() {
@@ -108,17 +108,10 @@ class MyMatches extends React.Component {
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          this.setState(
-            {
-              tournaments: json.items,
-              pagination_tour: json.pagination ? json.pagination : {}
-            },
-            () => {
-              setTimeout(() => {
-                $(this.table).footable();
-              }, 500);
-            }
-          );
+          this.setState({
+            tournaments: json.items,
+            pagination_tour: json.pagination ? json.pagination : {}
+          });
         }
       });
   }
@@ -416,18 +409,17 @@ class MyMatches extends React.Component {
                   <div className="table_wrapper">
                     <table
                       className="table table-striped table-ongray table-hover"
-                      ref={element => (this.table = element)}
+                      // ref={element => (this.table = element)}
                     >
                       <thead>
                         <tr>
                           <th>Tournament</th>
                           <th>Match</th>
                           <th>Round</th>
-                          <th data-breakpoints="xs sm">Status</th>
-                          <th data-breakpoints="xs sm">Date</th>
-                          <th style={{width: '10%'}} data-breakpoints="xs sm">
-                            Info
-                          </th>
+                          <th className="d-none d-md-table-cell">Status</th>
+                          <th className="d-none d-md-table-cell">Date</th>
+                          <th style={{width: '10%'}}>Info</th>
+                          <th style={{width: '10%'}} className="d-md-none" />
                         </tr>
                       </thead>
                       <tbody>
@@ -448,48 +440,132 @@ class MyMatches extends React.Component {
                               });
                           }
                           return (
-                            <tr key={match.id}>
-                              <td>
-                                <Link to={'/t/' + match.tournament_id}>
-                                  {match.tournament.title}
-                                </Link>
-                              </td>
-                              <td>
-                                <Link to={'/tournament-match/' + match.id}>
-                                  #{match.id}
-                                </Link>
-                              </td>
-                              <td>{match.match_round}</td>
-                              <td>
-                                {match.result ? (
-                                  match.result == 'team_1' ? (
-                                    team_1.indexOf(this.state.user_info.id) >
-                                    -1 ? (
-                                      <span className="text-success">W</span>
+                            <>
+                              <tr key={match.id}>
+                                <td>
+                                  <Link to={'/t/' + match.tournament_id}>
+                                    {match.tournament.title}
+                                  </Link>
+                                </td>
+                                <td>
+                                  <Link to={'/tournament-match/' + match.id}>
+                                    #{match.id}
+                                  </Link>
+                                </td>
+                                <td>{match.match_round}</td>
+                                <td className="d-none d-md-table-cell">
+                                  {match.result ? (
+                                    match.result == 'team_1' ? (
+                                      team_1.indexOf(this.state.user_info.id) >
+                                      -1 ? (
+                                        <span className="text-success">W</span>
+                                      ) : (
+                                        <span className="text-danger">L</span>
+                                      )
+                                    ) : match.result == 'team_2' ? (
+                                      team_2.indexOf(this.state.user_info.id) >
+                                      -1 ? (
+                                        <span className="text-success">W</span>
+                                      ) : (
+                                        <span className="text-danger">L</span>
+                                      )
                                     ) : (
-                                      <span className="text-danger">L</span>
-                                    )
-                                  ) : match.result == 'team_2' ? (
-                                    team_2.indexOf(this.state.user_info.id) >
-                                    -1 ? (
-                                      <span className="text-success">W</span>
-                                    ) : (
-                                      <span className="text-danger">L</span>
+                                      match.result
                                     )
                                   ) : (
-                                    match.result
-                                  )
-                                ) : (
-                                  match.status
-                                )}
-                              </td>
-                              <td>{moment(match.starts_at).format('lll')}</td>
-                              <td>
-                                <Link to={'/tournament-match/' + match.id}>
-                                  View <span className="h-o-p">Match</span>
-                                </Link>
-                              </td>
-                            </tr>
+                                    match.status
+                                  )}
+                                </td>
+                                <td className="d-none d-md-table-cell">
+                                  {moment(match.starts_at).format('lll')}
+                                </td>
+                                <td>
+                                  <Link to={'/tournament-match/' + match.id}>
+                                    View <span className="h-o-p">Match</span>
+                                  </Link>
+                                </td>
+                                <td className="d-md-none">
+                                  <button
+                                    className="btn btn-link"
+                                    onClick={() => {
+                                      this.setState({
+                                        expanded:
+                                          match.id == this.state.expand_id
+                                            ? !this.state.expanded
+                                            : true,
+                                        expand_id: match.id
+                                      });
+                                    }}
+                                  >
+                                    <span
+                                      className={
+                                        this.state.expanded &&
+                                        this.state.expand_id == match.id
+                                          ? ' fa fa-minus'
+                                          : ' fa fa-plus '
+                                      }
+                                    />
+                                  </button>
+                                </td>
+                              </tr>
+                              {this.state.expanded &&
+                              this.state.expand_id == match.id ? (
+                                <tr>
+                                  <td colSpan="5">
+                                    <table className="table">
+                                      <tbody>
+                                        <tr>
+                                          <td>Status</td>
+                                          <td>
+                                            {match.result ? (
+                                              match.result == 'team_1' ? (
+                                                team_1.indexOf(
+                                                  this.state.user_info.id
+                                                ) > -1 ? (
+                                                  <span className="text-success">
+                                                    W
+                                                  </span>
+                                                ) : (
+                                                  <span className="text-danger">
+                                                    L
+                                                  </span>
+                                                )
+                                              ) : match.result == 'team_2' ? (
+                                                team_2.indexOf(
+                                                  this.state.user_info.id
+                                                ) > -1 ? (
+                                                  <span className="text-success">
+                                                    W
+                                                  </span>
+                                                ) : (
+                                                  <span className="text-danger">
+                                                    L
+                                                  </span>
+                                                )
+                                              ) : (
+                                                match.result
+                                              )
+                                            ) : (
+                                              match.status
+                                            )}
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>Date</td>
+                                          <td>
+                                            {moment(match.starts_at).format(
+                                              'lll'
+                                            )}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              ) : (
+                                false
+                              )}
+                            </>
                           );
                         })}
                       </tbody>

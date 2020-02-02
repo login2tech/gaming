@@ -91,9 +91,9 @@ class TeamInvites extends React.Component {
                             <th style={{width: '15%'}}>Team Id</th>
                             <th>Team Name</th>
                             <th className="d-md-none">Team Type</th>
-                            <th data-breakpoints="xs sm">Team Type</th>
-                            <th data-breakpoints="xs sm">Invited on</th>
-                            <th data-breakpoints="xs sm" style={{width: '15%'}}>
+                            <th class="d-none d-md-table-cell">Team Type</th>
+                            <th class="d-none d-md-table-cell">Invited on</th>
+                            <th class="d-none d-md-table-cell" style={{width: '15%'}}>
                               Action
                             </th>
                           </tr>

@@ -91,9 +91,9 @@ class Tickets extends React.Component {
                       <tr>
                         <th width="30">ID</th>
                         <th>Title</th>
-                        <th data-breakpoints="xs sm">Department</th>
-                        <th data-breakpoints="xs sm">Last Updated</th>
-                        <th data-breakpoints="xs sm">Status</th>
+                        <th class="d-none d-md-table-cell">Department</th>
+                        <th class="d-none d-md-table-cell">Last Updated</th>
+                        <th class="d-none d-md-table-cell">Status</th>
                         <th>View Ticket</th>
                       </tr>
                     </thead>

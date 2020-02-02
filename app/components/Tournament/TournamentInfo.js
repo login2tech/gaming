@@ -1116,7 +1116,10 @@ class TournamentInfo extends React.Component {
               className="btn btn-link"
               onClick={() => {
                 this.setState({
-                  expanded: match.id == this.state.expand_id ? false : true,
+                  expanded:
+                    match.id == this.state.expand_id
+                      ? !this.state.expanded
+                      : true,
                   expand_id: match.id
                 });
               }}
