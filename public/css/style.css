@@ -4572,10 +4572,7 @@ ul.notices li:first-child {
         background: rgba(17, 17, 17, 0.5);
     }
 
-    .tab-block .tab-mnu li {
-        padding: 11px 14px;
-        font-size: 13px;
-    }
+
 
     .tab-pane .authorize_box {
         margin-bottom: 10px
@@ -5510,6 +5507,11 @@ span.profile_menu_item_inner.small_avat {
 }
 
 @media screen and (max-width: 768px) {
+
+  .tab-block .tab-mnu li {
+      padding: 11px 14px;
+      font-size: 13px;
+  }
     .section-headline h3 {
         font-size: 24px;
         line-height: 30px;
@@ -6220,5 +6222,18 @@ span.profile_menu_item_inner.small_avat {
     }
     .profile-header-data .profile-header-data-middle > div {
         flex: 1;
+    }
+    .dash-profh-wrap{
+          margin-top: 100px;
+    }
+    .dsh-profhww{
+      height: 140px;
+      margin-bottom: 150px;
+    }
+    .dsh-m-r{
+      margin-top: 160px;
+    }
+    .mptl{
+      padding-top: 30px;
     }
 }

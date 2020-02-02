@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Timeline from '../Social/Timeline';
 import ProfileHeader from './ProfileHeader';
+import ProfileHeaderMobile from './ProfileHeaderMobile';
+
 import NewPost from './NewPost';
 class Profile extends React.Component {
   constructor(props) {
@@ -134,7 +136,12 @@ class Profile extends React.Component {
           fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="timeline"
         />
-
+        <ProfileHeaderMobile
+          user_info={this.state.user_info}
+          is_loaded={this.state.is_loaded}
+          fetchUserInfo={this.fetchUserInfo.bind(this)}
+          current_tab="timeline"
+        />
         <section className="contet_part single_match_details">
           <div className="container">
             <div className="row">
