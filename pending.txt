@@ -19,8 +19,8 @@
 - create match, time gaps if existing scheduled
 
 RESPONSIVE FIXES PENDING:
-- tournament page
-- tournament match page
+[DONE] - tournament page
+[DONE] - tournament match page
 - team profile
 - remove footable
-- admin
+[DONE] - admin

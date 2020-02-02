@@ -4502,135 +4502,6 @@ ul.notices li:first-child {
     padding-left: 34px;
 }
 
-@media screen and (max-width: 690px) {
-    .br_1 {
-        border:0;
-    }
-
-    .header_container {
-        width: 100%;
-        max-width: 100%
-    }
-
-    .has_children_m a {
-        text-align: left;
-        padding-left: 10px !important;
-    }
-
-    /*
-    ul.submenu {
-        position: relative;
-        display: block;
-    } */
-    .contact-col-3.contact-inner ul li a {
-        width: 100%;
-        padding: 5px 10px;
-        display: inline-block;
-        background: #101010;
-    }
-
-    .social-contacts.text-center a {
-        padding: 10px;
-        font-size: 30px;
-    }
-
-    span.social_btns button {
-        margin-bottom: 10px;
-    }
-
-    span.social_btns span {
-        display: inline-block;
-    }
-
-    p.feed_post_content iframe {
-        width: 100%;
-    }
-
-    .comment_list li {
-        margin-left: 0 !important;
-    }
-
-    .t_big_heading {
-        font-size: 20px;
-        letter-spacing: 1px;
-    }
-
-    .authorize_box {
-        padding: 20px
-    }
-
-    .shop_row {
-        margin-bottom: 0 !important
-    }
-
-    .authorize_box.shop {
-        margin-bottom: 20px
-    }
-
-    .photo_progress {
-        z-index: 5;
-        background: rgba(17, 17, 17, 0.5);
-    }
-
-
-
-    .tab-pane .authorize_box {
-        margin-bottom: 10px
-    }
-
-    .prof_stat.row .col-6 {
-        margin-bottom: 20px;
-        padding: 0 10px;
-    }
-
-    .usr_obj >div > div:first-child {
-        margin-bottom: 10px;
-    }
-
-    .prof_stat {
-        padding: 20px 0
-    }
-
-    a.reset_rep {
-        position: relative;
-        top: auto;
-        left: auto;
-        margin-top: 20px;
-        width: 100%;
-    }
-
-    .usr_obj:nth-child(even) {
-        border-right: 0;
-    }
-
-    ul.team_list li {
-        width: 45%;
-    }
-
-    ul.team_list li:nth-child(even) {
-        margin-left: 10px;
-        margin-right: 0;
-        float: right;
-    }
-
-    img.inline-star, img.icon_size {
-        height: 20px !important;
-    }
-
-    .middle_part_login {
-        margin-top: 20px;
-        padding-top: 10px;
-    }
-
-    .title_default_dark h4 {
-        margin-bottom: 30px
-    }
-
-    .match_heading h4 {
-        font-size: 30px
-    }
-}
-
 .width-auto {
     width: auto !important
 }
@@ -5508,10 +5379,10 @@ span.profile_menu_item_inner.small_avat {
 
 @media screen and (max-width: 768px) {
 
-  .tab-block .tab-mnu li {
-      padding: 11px 14px;
-      font-size: 13px;
-  }
+    .tab-block .tab-mnu li {
+        padding: 11px 14px;
+        font-size: 13px;
+    }
     .section-headline h3 {
         font-size: 24px;
         line-height: 30px;
@@ -5612,10 +5483,167 @@ span.profile_menu_item_inner.small_avat {
         left: 0;
         height: 100%;
     }
+    .match_heading h4{
+      font-size: 40px
+    }
 
     .tour-cover-block img:not(.star_img) {
         width: 100%;
         display: none;
+    }
+    .tourinfo .baris {
+        bottom: -140px;
+    }
+
+    .single-finder-match{
+        background-color: rgba(0,0,0, 0.1);
+        background-position: top center !important;
+        max-height: 184px;
+        background-size: cover !important;
+        margin-bottom: 150px;
+        padding-top: 7px;
+    }
+    .single-finder-match .btn {
+        margin: 0;
+    }
+    .single-finder-match.tourinfo {
+        max-height: 165px;
+        border-bottom: 1px solid rgb(40, 72, 243);
+    }
+    .baris li a {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+
+
+}
+
+@media screen and (max-width: 690px) {
+    .br_1 {
+        border:0;
+    }
+
+    .header_container {
+        width: 100%;
+        max-width: 100%
+    }
+
+    .has_children_m a {
+        text-align: left;
+        padding-left: 10px !important;
+    }
+
+    /*
+    ul.submenu {
+        position: relative;
+        display: block;
+    } */
+    .contact-col-3.contact-inner ul li a {
+        width: 100%;
+        padding: 5px 10px;
+        display: inline-block;
+        background: #101010;
+    }
+
+    .social-contacts.text-center a {
+        padding: 10px;
+        font-size: 30px;
+    }
+
+    span.social_btns button {
+        margin-bottom: 10px;
+    }
+
+    span.social_btns span {
+        display: inline-block;
+    }
+
+    p.feed_post_content iframe {
+        width: 100%;
+    }
+
+    .comment_list li {
+        margin-left: 0 !important;
+    }
+
+    .t_big_heading {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    .authorize_box {
+        padding: 20px
+    }
+
+    .shop_row {
+        margin-bottom: 0 !important
+    }
+
+    .authorize_box.shop {
+        margin-bottom: 20px
+    }
+
+    .photo_progress {
+        z-index: 5;
+        background: rgba(17, 17, 17, 0.5);
+    }
+
+
+
+    .tab-pane .authorize_box {
+        margin-bottom: 10px
+    }
+
+    .prof_stat.row .col-6 {
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+
+    .usr_obj >div > div:first-child {
+        margin-bottom: 10px;
+    }
+
+    .prof_stat {
+        padding: 20px 0
+    }
+
+    a.reset_rep {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .usr_obj:nth-child(even) {
+        border-right: 0;
+    }
+
+    ul.team_list li {
+        width: 45%;
+    }
+
+    ul.team_list li:nth-child(even) {
+        margin-left: 10px;
+        margin-right: 0;
+        float: right;
+    }
+
+    img.inline-star, img.icon_size {
+        height: 20px !important;
+    }
+
+    .middle_part_login {
+        margin-top: 20px;
+        padding-top: 10px;
+    }
+
+    .title_default_dark h4 {
+        margin-bottom: 30px
+    }
+
+    .match_heading h4 {
+        font-size: 30px
     }
 }
 
@@ -6244,17 +6272,7 @@ span.profile_menu_item_inner.small_avat {
     .dsh-profhww:before{
       display:none;
     }
-    .single-finder-match{
-        background-color: rgba(0,0,0, 0.1);
-        background-position: top center !important;
-        max-height: 184px;
-        background-size: cover;
-        margin-bottom: 150px;
-        padding-top: 7px;
-    }
-    .single-finder-match .btn {
-        margin: 0;
-    }
+
     .single-finder-match .col-4 span, .single-finder-match .col-4 p {
         font-size: 14px;
     }
@@ -6262,4 +6280,19 @@ span.profile_menu_item_inner.small_avat {
         width: 95%;
         padding-left: 11px !important;
     }
+    .match_start_date {
+        font-size: 13px;
+    }
+
+    .tour-single-content {
+        padding-top: 0;
+    }
+
+    .tour-single-content h5, .tour-single-content h6 {
+        margin: 0 !important;
+    }
+
+}
+.tourinfo .container{
+  position: relative;
 }

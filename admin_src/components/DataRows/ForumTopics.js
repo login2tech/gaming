@@ -172,7 +172,7 @@ class Ladders extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <Messages messages={this.props.messages} />
-            <table className="table  table-hover  table-responsive   table-striped table-bordered">
+            <div className="table-responsive"><table className="table  table-hover  table-responsive   table-striped table-bordered">
               <thead>
                 <tr>
                   <th>ID</th>
@@ -222,7 +222,7 @@ class Ladders extends React.Component {
                     );
                   })}
               </tbody>
-            </table>
+            </table></div>
 
             <ReactPaginate
               previousLabel={'previous'}

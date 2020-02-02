@@ -392,7 +392,10 @@ class TMatchInfo extends React.Component {
     const game_settings_keys = Object.keys(game_settings);
     return (
       <div>
-        <section className="page_title_bar" style={divStyle}>
+        <section
+          className="page_title_bar single-finder-match"
+          style={divStyle}
+        >
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
@@ -406,7 +409,7 @@ class TMatchInfo extends React.Component {
                         }
                       />
                     </div>
-                    <div className="col col-md-3">
+                    <div className="col-8 col-md-3">
                       <div className="match_heading">
                         <h4>Match</h4>
                       </div>
@@ -444,12 +447,12 @@ class TMatchInfo extends React.Component {
                   </div>
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-md-4 col-6">
+                      <div className="col-md-4 col-4">
                         <span> MATCH ID</span>
                         <p>#{match.id}</p>
                       </div>
 
-                      <div className="col-md-4 col-6">
+                      <div className="col-md-4 col-4">
                         <span> STATUS</span>
                         <p className={'m_status status_' + match.status}>
                           {moment().isAfter(moment(match.starts_at))
@@ -458,7 +461,7 @@ class TMatchInfo extends React.Component {
                         </p>
                       </div>
 
-                      <div className="col-md-4 col-6">
+                      <div className="col-md-4 col-4">
                         <span>TOURNAMENT</span>
                         <p>
                           <Link to={'/t/' + tournament.id}>
@@ -484,7 +487,7 @@ class TMatchInfo extends React.Component {
           </div>
         </section>
 
-        <section className="contet_part single_match_details">
+        <section className="contet_part single_match_details tour-single-content">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">

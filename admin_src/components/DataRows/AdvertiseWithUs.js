@@ -128,50 +128,52 @@ class AdvertiseWithUs extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <Messages messages={this.props.messages} />
-            <table className="table  table-hover  table-responsive   table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Email</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.items &&
-                  this.state.items.map((u, i) => {
-                    return (
-                      <tr key={u.id}>
-                        <td>{u.id}</td>
-                        <td>{u.email}</td>
-                        <td>
-                          <button
-                            className="btn btn-priamry btn-xs"
-                            onClick={e => {
-                              e.preventDefault();
-                              this.doAction(u);
-                            }}
-                          >
-                            More Info
-                          </button>{' '}
-                          <button
-                            onClick={() => {
-                              this.deleteItem(u.id);
-                            }}
-                            className="btn btn-danger btn-xs"
-                          >
-                            {this.state['update_' + u.id] ? (
-                              <i className="fa fa-spinner fa-spin" />
-                            ) : (
-                              false
-                            )}{' '}
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
+            <div className="table-responsive">
+              <table className="table  table-hover  table-responsive   table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.items &&
+                    this.state.items.map((u, i) => {
+                      return (
+                        <tr key={u.id}>
+                          <td>{u.id}</td>
+                          <td>{u.email}</td>
+                          <td>
+                            <button
+                              className="btn btn-priamry btn-xs"
+                              onClick={e => {
+                                e.preventDefault();
+                                this.doAction(u);
+                              }}
+                            >
+                              More Info
+                            </button>{' '}
+                            <button
+                              onClick={() => {
+                                this.deleteItem(u.id);
+                              }}
+                              className="btn btn-danger btn-xs"
+                            >
+                              {this.state['update_' + u.id] ? (
+                                <i className="fa fa-spinner fa-spin" />
+                              ) : (
+                                false
+                              )}{' '}
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
 
             <ReactPaginate
               previousLabel={'previous'}

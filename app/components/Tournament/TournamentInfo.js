@@ -692,7 +692,7 @@ class TournamentInfo extends React.Component {
           </div>
         </div> */}
         <div className="row">
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="t-prizes">
               <div className="t-prizes-place p1">
                 <div className="table_wrapper">
@@ -723,7 +723,7 @@ class TournamentInfo extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="t-prizes">
               <div className="t-prizes-place p2">
                 <div className="table_wrapper">
@@ -754,7 +754,7 @@ class TournamentInfo extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="t-prizes">
               <div className="t-prizes-place p3">
                 <div className="table_wrapper">
@@ -788,7 +788,7 @@ class TournamentInfo extends React.Component {
         </div>
 
         <div className="row">
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Game</div>
               <div
@@ -800,7 +800,7 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
 
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Ladder</div>
               <div className="tourn-info-box tourn-info-game ico_no_fl">
@@ -816,14 +816,14 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
 
-          {/* <div className="col-sm-4 col-12">
+          {/* <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Platforms</div>
               <div className="tourn-info-box">PS4</div>
             </div>
           </div>
 
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Regions</div>
               <div className="tourn-info-box">North America, Europe</div>
@@ -831,7 +831,7 @@ class TournamentInfo extends React.Component {
           </div>
          */}
 
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Entry fee</div>
               <div className="tourn-info-box">
@@ -843,7 +843,7 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
 
-          {/* <div className="col-sm-4 col-12">
+          {/* <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Team Size</div>
               <div className="tourn-info-box">1v1</div>
@@ -852,7 +852,7 @@ class TournamentInfo extends React.Component {
         </div>
 
         <div className="row">
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">Prize Pool</div>
               <div className="tourn-info-box">
@@ -864,7 +864,7 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
 
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">bracket size</div>
               <div className="tourn-info-box">
@@ -873,14 +873,14 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
 
-          {/* <div className="col-sm-4 col-12">
+          {/* <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">bracket type</div>
               <div className="tourn-info-box">Single Elimination</div>
             </div>
           </div> */}
 
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">teams registered</div>
               <div className="tourn-info-box">
@@ -893,7 +893,7 @@ class TournamentInfo extends React.Component {
         </div>
 
         <div className="row">
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">REGISTRATION ENDS</div>
               <div className="tourn-info-box">
@@ -904,7 +904,7 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
 
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">EVENT START</div>
               <div className="tourn-info-box">
@@ -913,7 +913,7 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
 
-          <div className="col-sm-4 col-12">
+          <div className="col-md-4 col-12">
             <div className="tourn-info">
               <div className="tourn-info-title">REGISTRATION OPENS</div>
               <div className="tourn-info-box">
@@ -1074,154 +1074,88 @@ class TournamentInfo extends React.Component {
     }
     const teams = this.getTeams(match);
 
-    // const my_team_id = this.am_i_in_match(match);
-    // <td>
-    //   <Link to={'/tournament-match/' + match.id}>#{match.id}</Link>
-    // </td>
     return (
-      <tr key={match.id}>
-        <td>
-          <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link>{' '}
-          {match.result == 'team_1' ? (
-            <span className="text-success">W</span>
-          ) : match.result == 'team_2' ? (
-            <span className="text-danger">L</span>
-          ) : (
-            ''
-          )}
-        </td>
-        <td>
-          <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>{' '}
-          {match.result == 'team_2' ? (
-            <span className="text-success">W</span>
-          ) : match.result == 'team_1' ? (
-            <span className="text-danger">L</span>
-          ) : (
-            ''
-          )}
-        </td>
-        {/*}<td>
-          {match.result ? '' : 'Results Pending'}
-          {match.result && match.result == 'team_1'
-            ? teams[0].title + ' wins'
-            : ''}
-          {match.result && match.result == 'team_2'
-            ? teams[1].title + ' wins'
-            : ''}
-        </td>*/}
-
-        <td>{moment(match.starts_at).format('lll')} </td>
-        <td>
-          {moment().isAfter(moment(match.starts_at))
-            ? this.dynamicStatus_match(match)
-            : match.status}
-        </td>
-        <td>
-          <Link to={'/tournament-match/' + match.id}>View Match</Link>
-
-          {/*my_team_id && my_team_id == teams[0].id ? (
-            match.team_1_result ? (
-              'Your team submitted ' + match.team_1_result
+      <>
+        <tr key={match.id}>
+          <td>
+            <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link>{' '}
+            {match.result == 'team_1' ? (
+              <span className="text-success">W</span>
+            ) : match.result == 'team_2' ? (
+              <span className="text-danger">L</span>
             ) : (
-              <form
-                onSubmit={e => {
-                  e.preventDefault();
-                  this.submitScore(match.id, 1);
-                }}
-              >
-                <div className="">
-                  <input
-                    placeholder="Your Team score"
-                    name={'match_' + match.id + '_1_team_1_score'}
-                    type="text"
-                    value={this.state['match_' + match.id + '_1_team_1_score']}
-                    onChange={event => {
-                      this.setState({
-                        ['match_' + match.id + '_1_team_1_score']: event.target
-                          .value
-                      });
-                    }}
-                    className="form-control"
-                  />
-                  <input
-                    placeholder="Opponent Team score"
-                    name={'match_' + match.id + '_1_team_2_score'}
-                    type="text"
-                    value={this.state['match_' + match.id + '_1_team_2_score']}
-                    onChange={event => {
-                      this.setState({
-                        ['match_' + match.id + '_1_team_2_score']: event.target
-                          .value
-                      });
-                    }}
-                    className="form-control"
-                  />
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    // onClick={() => {}}
-                  >
-                    Submit Score
-                  </button>
-                </div>
-              </form>
-            )
-          ) : (
-            false
-          )*/}
-
-          {/*my_team_id && my_team_id == teams[1].id ? (
-            match.team_2_result ? (
-              'Your team submitted ' + match.team_2_result
+              ''
+            )}
+          </td>
+          <td>
+            <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>{' '}
+            {match.result == 'team_2' ? (
+              <span className="text-success">W</span>
+            ) : match.result == 'team_1' ? (
+              <span className="text-danger">L</span>
             ) : (
-              <form
-                onSubmit={e => {
-                  e.preventDefault();
-                  this.submitScore(match.id, 2);
-                }}
-              >
-                <div className="">
-                  <input
-                    placeholder="Your Team score"
-                    name={'match_' + match.id + '_2_team_2_score'}
-                    type="text"
-                    value={this.state['match_' + match.id + '_2_team_2_score']}
-                    onChange={event => {
-                      this.setState({
-                        ['match_' + match.id + '_2_team_2_score']: event.target
-                          .value
-                      });
-                    }}
-                    className="form-control"
-                  />
-                  <input
-                    placeholder="Opponent Team score"
-                    name={'match_' + match.id + '_2_team_1_score'}
-                    type="text"
-                    value={this.state['match_' + match.id + '_2_team_1_score']}
-                    onChange={event => {
-                      this.setState({
-                        ['match_' + match.id + '_2_team_1_score']: event.target
-                          .value
-                      });
-                    }}
-                    className="form-control"
-                  />
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    // onClick={() => {}}
-                  >
-                    Submit Score
-                  </button>
-                </div>
-              </form>
-            )
-          ) : (
-            false
-          )*/}
-        </td>
-      </tr>
+              ''
+            )}
+          </td>
+
+          <td className="d-md-table-cell d-none">
+            {moment(match.starts_at).format('lll')}{' '}
+          </td>
+          <td className="d-md-table-cell d-none">
+            {moment().isAfter(moment(match.starts_at))
+              ? this.dynamicStatus_match(match)
+              : match.status}
+          </td>
+          <td>
+            <Link to={'/tournament-match/' + match.id}>
+              View <span className="h-o-p">Match</span>
+            </Link>
+          </td>
+          <td className="d-md-none">
+            <button
+              className="btn btn-link"
+              onClick={() => {
+                this.setState({
+                  expanded: match.id == this.state.expand_id ? false : true,
+                  expand_id: match.id
+                });
+              }}
+            >
+              <span
+                className={
+                  this.state.expanded && this.state.expand_id == match.id
+                    ? ' fa fa-minus'
+                    : ' fa fa-plus '
+                }
+              />
+            </button>
+          </td>
+        </tr>
+        {this.state.expanded && this.state.expand_id == match.id ? (
+          <tr>
+            <td colSpan={4}>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td>Date</td>
+                    <td>{moment(match.starts_at).format('lll')} </td>
+                  </tr>
+                  <tr>
+                    <td>Status</td>
+                    <td>
+                      {moment().isAfter(moment(match.starts_at))
+                        ? this.dynamicStatus_match(match)
+                        : match.status}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        ) : (
+          false
+        )}
+      </>
     );
   }
 
@@ -1255,9 +1189,20 @@ class TournamentInfo extends React.Component {
                   <tr>
                     <th style={{width: '23%'}}>Team</th>
                     <th style={{width: '23%'}}>Opponent</th>
-                    <th style={{width: '20%'}}>Date</th>
-                    <th style={{width: '24%'}}>Status</th>
+                    <th
+                      className="d-md-table-cell d-none"
+                      style={{width: '20%'}}
+                    >
+                      Date
+                    </th>
+                    <th
+                      className="d-md-table-cell d-none"
+                      style={{width: '24%'}}
+                    >
+                      Status
+                    </th>
                     <th style={{width: '10%'}}>Info</th>
+                    <th style={{width: '10%'}} className="d-md-none" />
                   </tr>
                 </thead>
                 <tbody>
@@ -1477,7 +1422,7 @@ class TournamentInfo extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar"
+          className="page_title_bar tourinfo single-finder-match"
           style={{
             backgroundImage: tournament.banner_url
               ? 'url(' + tournament.banner_url + ')'
@@ -1538,23 +1483,15 @@ class TournamentInfo extends React.Component {
                     </div>
                     <div className="col-12 col-md"> </div>
                   </div>
-                  {/* <div className="twovstwo">1 VS 1 MATCH</div> */}
-                  {/* // <div className="match_end_date">// // </div> */}
-                  {/* <div className="rules_point">
-                    <ul>
-                      <li>
-                        <a href="#">View Rules</a>
-                      </li>
-                    </ul>
-                  </div> */}
+
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-5">
                         <span> TOURNAMENT ID</span>
                         <p>#{tournament.id}</p>
                       </div>
 
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-3">
                         <span> STATUS</span>
                         <p>
                           {moment().isAfter(moment(tournament.starts_at))
@@ -1563,7 +1500,7 @@ class TournamentInfo extends React.Component {
                         </p>
                       </div>
 
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-4">
                         <span>Registered</span>
                         <p>
                           {tournament.teams_registered

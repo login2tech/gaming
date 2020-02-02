@@ -242,3 +242,10 @@ div#modal_orders .modal-dialog {
         width: 1200px;
     }
 }
+
+
+@media (min-width: 769px) {
+h2 {
+    font-size: 22px;
+}
+}

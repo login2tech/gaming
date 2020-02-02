@@ -8,13 +8,19 @@ class Header extends React.Component {
     event.preventDefault();
     this.props.dispatch(logout());
   }
-
+  closeSide = this._closeCollapse.bind(this);
+  _closeCollapse() {
+    // const node = this.myRef.current;
+    // console.log(node);
+    $('#navbar').collapse('hide');
+  }
   render() {
     const active = {borderBottomColor: '#3f51b5'};
     const rightNav = this.props.token ? (
       <ul className="nav navbar-nav navbar-right">
         <li className="dropdown">
           <a
+            onClick={this.closeSide}
             href="/"
             // data-toggle="dropdown"
             // className=" "
@@ -24,6 +30,7 @@ class Header extends React.Component {
         </li>
         <li className="dropdown">
           <a
+            onClick={this.closeSide}
             href="#"
             data-toggle="dropdown"
             className="navbar-avatar dropdown-toggle"
@@ -37,11 +44,17 @@ class Header extends React.Component {
           </a>
           <ul className="dropdown-menu">
             <li>
-              <Link to="/account">My Account</Link>
+              <Link onClick={this.closeSide} to="/account">
+                My Account
+              </Link>
             </li>
             <li className="divider" />
             <li>
-              <a href="#" onClick={this.handleLogout.bind(this)}>
+              <a
+                // onClick={this.closeSide}
+                href="#"
+                onClick={this.handleLogout.bind(this)}
+              >
                 Logout
               </a>
             </li>
@@ -51,12 +64,14 @@ class Header extends React.Component {
     ) : (
       <ul className="nav navbar-nav navbar-right">
         <li>
-          <Link to="/login" activeStyle={active}>
+          <Link onClick={this.closeSide} to="/login" activeStyle={active}>
             Log in
           </Link>
         </li>
         <li>
-          <a href="/signup">Sign up</a>
+          <a onClick={this.closeSide} href="/signup">
+            Sign up
+          </a>
         </li>
       </ul>
     );
@@ -94,13 +109,18 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/admin_users">Admin Users</Link>
+                      <Link onClick={this.closeSide} to="/admin_users">
+                        Admin Users
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/app_users">Web App User</Link>
+                      <Link onClick={this.closeSide} to="/app_users">
+                        Web App User
+                      </Link>
                     </li>
                     <li>
                       <a
+                        // onClick={this.closeSide}
                         onClick={e => {
                           window.location.href = '/admin/#/teams';
                           window.location.reload();
@@ -127,6 +147,7 @@ class Header extends React.Component {
                   <ul className="dropdown-menu">
                     <li>
                       <a
+                        // onClick={this.closeSide}
                         href="/admin/#/matchfinder"
                         onClick={e => {
                           window.location.href = '/admin/#/matchfinder';
@@ -138,6 +159,7 @@ class Header extends React.Component {
                     </li>
                     <li>
                       <a
+                        // onClick={this.closeSide}
                         href="/admin/#/money8"
                         onClick={e => {
                           window.location.href = '/admin/#/money8';
@@ -149,6 +171,7 @@ class Header extends React.Component {
                     </li>
                     <li>
                       <a
+                        // onClick={this.closeSide}
                         href="/admin/#/tournaments"
                         onClick={e => {
                           window.location.href = '/admin/#/tournaments';
@@ -173,10 +196,14 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/games">List Games</Link>
+                      <Link onClick={this.closeSide} to="/games">
+                        List Games
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/ladders">List Ladders</Link>
+                      <Link onClick={this.closeSide} to="/ladders">
+                        List Ladders
+                      </Link>
                     </li>
                   </ul>
                 </li>
@@ -193,13 +220,19 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/topics">Forum Topics</Link>
+                      <Link onClick={this.closeSide} to="/topics">
+                        Forum Topics
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/threads">Forum Threads</Link>
+                      <Link onClick={this.closeSide} to="/threads">
+                        Forum Threads
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/posts">Social</Link>
+                      <Link onClick={this.closeSide} to="/posts">
+                        Social
+                      </Link>
                     </li>
                   </ul>
                 </li>
@@ -216,15 +249,19 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/tickets">List Open Tickets</Link>
+                      <Link onClick={this.closeSide} to="/tickets">
+                        List Open Tickets
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/tickets_closed">List Closed Tickets</Link>
+                      <Link onClick={this.closeSide} to="/tickets_closed">
+                        List Closed Tickets
+                      </Link>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <Link to="/settings">
+                  <Link onClick={this.closeSide} to="/settings">
                     Settings <span className="badge">New</span>
                   </Link>
                 </li>
@@ -240,15 +277,25 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/forms/apply_for_staff">Apply for staff</Link>
+                      <Link
+                        onClick={this.closeSide}
+                        to="/forms/apply_for_staff"
+                      >
+                        Apply for staff
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/forms/advertise_with_us">
+                      <Link
+                        onClick={this.closeSide}
+                        to="/forms/advertise_with_us"
+                      >
                         Advertise with Us
                       </Link>
                     </li>
                     <li>
-                      <Link to="/forms/subscribers">Subscribers</Link>
+                      <Link onClick={this.closeSide} to="/forms/subscribers">
+                        Subscribers
+                      </Link>
                     </li>
                   </ul>
                 </li>
@@ -265,12 +312,12 @@ class Header extends React.Component {
                   </Link>
                   <ul className="dropdown-menu">
                     <li>
-                      <Link to="/withdrawal/pending">
+                      <Link onClick={this.closeSide} to="/withdrawal/pending">
                         Pending Withdrawal Requests
                       </Link>
                     </li>
                     <li>
-                      <Link to="/withdrawal/completed">
+                      <Link onClick={this.closeSide} to="/withdrawal/completed">
                         Completed Withdrawal Requests
                       </Link>
                     </li>
@@ -290,6 +337,7 @@ class Header extends React.Component {
                   <ul className="dropdown-menu">
                     <li>
                       <a
+                        // onClick={this.closeSide}
                         href="/admin/#/matchfinder/filter/disputed"
                         onClick={e => {
                           window.location.href =
@@ -302,6 +350,7 @@ class Header extends React.Component {
                     </li>
                     <li>
                       <a
+                        // onClick={this.closeSide}
                         href="/admin/#/money8/filter/disputed"
                         onClick={e => {
                           window.location.href =
@@ -314,6 +363,7 @@ class Header extends React.Component {
                     </li>
                     <li>
                       <a
+                        // onClick={this.closeSide}
                         href="/admin/#/tournamentmatches/filter/disputed"
                         onClick={e => {
                           window.location.href =
