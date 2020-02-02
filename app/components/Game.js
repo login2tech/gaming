@@ -509,7 +509,9 @@ class Game extends React.Component {
             <div className="row">
               <div className="col-md-6 col-sm-12 d-md-none d-inline-block col-xs-12 pos-rel">
                 <div>
-                  <h4>Matchfinder</h4>
+                  <h4 className="capitalize">
+                    {this.props.params.title} Matchfinder
+                  </h4>
                   {this.state.is_loaded_1 && this.state.total_upcoming < 1 ? (
                     <div className="alert alert-warning">
                       There are no active matches. Please check back later or

@@ -1,4 +1,3 @@
-<!-- - activate double XP -->
 - notification in matches
 - tournament notification matches
 - 10 credits on rank up
@@ -6,17 +5,22 @@
 - show tournament matches
 - undo tournament matches
 - admin panel responsive
-- frontend responsive
 - mails
 - live chat
 - stripe, make it live
 - stripe create plans in stripe dashboard
 - delete all testing images ?
--
-
-- chat on match page
+- admin, add name of the tournament
+- chat on match page [NOT DOING]
 - new actions on social feel - edit post, delete post.
+- admin, add name of the tournament
+- edit team's photo when logged out
+- create match, check if existing match pending score
+- create match, time gaps if existing scheduled
 
-  game page - matchfinder should have "game name" .
-
- admin, add name of the tournmanet
+RESPONSIVE FIXES PENDING:
+- tournament page
+- tournament match page
+- team profile
+- remove footable
+- admin

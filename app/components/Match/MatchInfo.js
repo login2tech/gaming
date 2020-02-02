@@ -697,7 +697,10 @@ class MatchInfo extends React.Component {
     const game_settings_keys = Object.keys(game_settings);
     return (
       <div>
-        <section className="page_title_bar" style={divStyle}>
+        <section
+          className="page_title_bar single-finder-match"
+          style={divStyle}
+        >
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
@@ -746,22 +749,14 @@ class MatchInfo extends React.Component {
                       </div>
                     </div>
                   </div>
-
-                  {/* <div className="rules_point">
-                    <ul>
-                      <li>
-                        <a href="#">View Rules</a>
-                      </li>
-                    </ul>
-                  </div> */}
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-md-4 col-6">
+                      <div className="col-4">
                         <span> MATCH ID</span>
                         <p>#{match.id}</p>
                       </div>
 
-                      <div className="col-md-4 col-6">
+                      <div className="col-4">
                         <span> STATUS</span>
                         <p className={'m_status status_' + match.status}>
                           {moment().isAfter(moment(match.starts_at))
@@ -770,7 +765,7 @@ class MatchInfo extends React.Component {
                         </p>
                       </div>
 
-                      <div className="col-md-4 col-6">
+                      <div className="col-4">
                         <span>MATCH FEE</span>
                         <p>
                           {match.match_type == 'free' ? (

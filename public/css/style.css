@@ -5877,8 +5877,10 @@ span.profile_menu_item_inner.small_avat {
 
     .banner_actions {
         display: flex;
-        padding-bottom: 0;
-        bottom: 10px;
+        padding-bottom: 0;width:100%;    flex-wrap: wrap;
+
+        bottom: 10px;    position: absolute;
+    left: 0;
     }
 
     .banner_actions .btn {
@@ -6235,5 +6237,29 @@ span.profile_menu_item_inner.small_avat {
     }
     .mptl{
       padding-top: 30px;
+    }
+    .expand_on_hover:hover span{
+          width: 1px;
+    }
+    .dsh-profhww:before{
+      display:none;
+    }
+    .single-finder-match{
+        background-color: rgba(0,0,0, 0.1);
+        background-position: top center !important;
+        max-height: 184px;
+        background-size: cover;
+        margin-bottom: 150px;
+        padding-top: 7px;
+    }
+    .single-finder-match .btn {
+        margin: 0;
+    }
+    .single-finder-match .col-4 span, .single-finder-match .col-4 p {
+        font-size: 14px;
+    }
+    #dropdownMenuButton {
+        width: 95%;
+        padding-left: 11px !important;
     }
 }
