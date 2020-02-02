@@ -6,6 +6,7 @@ import {openModal, closeModal} from '../../actions/modals';
 import game_user_ids from '../../../config/game_user_ids';
 import PaymentModal from '../Modules/Modals/PaymentModal';
 import ProfileHeader from './ProfileHeader';
+import ProfileHeaderMobile from './ProfileHeaderMobile';
 import MyTeamsModule from './Modules/MyTeamsModule';
 
 import ReactPaginate from 'react-paginate';
@@ -326,6 +327,12 @@ class Profile extends React.Component {
     return (
       <div>
         <ProfileHeader
+          user_info={this.state.user_info}
+          is_loaded={this.state.is_loaded}
+          fetchUserInfo={this.fetchUserInfo.bind(this)}
+          current_tab="profile"
+        />
+        <ProfileHeaderMobile
           user_info={this.state.user_info}
           is_loaded={this.state.is_loaded}
           fetchUserInfo={this.fetchUserInfo.bind(this)}

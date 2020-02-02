@@ -6,6 +6,7 @@ import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
 import moment from 'moment';
 import Following from '../Modules/Modals/Following';
+import utils from '../../utils';
 // import game_user_ids from '../../../config/game_user_ids';
 class ProfileHeader extends React.Component {
   state = {};
@@ -44,37 +45,7 @@ class ProfileHeader extends React.Component {
 
   image_based_on_i(xpo) {
     const xp = this.getXp(xpo);
-    if (xp < 50) {
-      return 'amateur';
-    }
-    if (xp < 200) {
-      return 'beginner';
-    }
-    if (xp < 500) {
-      return 'upcoming';
-    }
-    if (xp < 750) {
-      return 'advanced';
-    }
-    if (xp < 1000) {
-      return 'bronze';
-    }
-    if (xp < 1500) {
-      return 'silver';
-    }
-    if (xp < 2000) {
-      return 'gold';
-    }
-    if (xp < 3000) {
-      return 'platinum';
-    }
-    if (xp < 3500) {
-      return 'diamond';
-    }
-    if (xp < 4000) {
-      return 'elite';
-    }
-    return 'veteran';
+    return utils.getMeterImage(xp);
   }
 
   rank_based_on_xp(xpo) {
@@ -83,149 +54,18 @@ class ProfileHeader extends React.Component {
   }
 
   rank_min_based_on_xp(xpo) {
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
-    let xp = 0;
-    for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
-        xp = xpo[i].xp;
-      }
-    }
-    if (xp < 0) {
-      xp = 0;
-    }
-    if (xp < 50) {
-      return '0';
-    }
-    if (xp < 200) {
-      return '50';
-    }
-    if (xp < 500) {
-      return '200';
-    }
-    if (xp < 750) {
-      return '500';
-    }
-    if (xp < 1000) {
-      return '750';
-    }
-    if (xp < 1500) {
-      return '1000';
-    }
-    if (xp < 2000) {
-      return '1500';
-    }
-    if (xp < 3000) {
-      return '2000';
-    }
-    if (xp < 3500) {
-      return '3000';
-    }
-    if (xp < 4000) {
-      return '3500';
-    }
-    if (xp < 0) {
-      return 0;
-    }
-    // if (xp >  5000) {
-    return '4000';
-    // }
+    const xp = this.getXp(xpo);
+    return utils.getMeterMin(xp);
   }
 
   rank_max_based_on_xp(xpo) {
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
-    let xp = 0;
-    for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
-        xp = xpo[i].xp;
-      }
-    }
-    if (xp <= 0) {
-      xp = 0;
-    }
-    if (xp <= 50) {
-      return '50';
-    }
-    if (xp <= 200) {
-      return '200';
-    }
-    if (xp <= 500) {
-      return '500';
-    }
-
-    if (xp <= 750) {
-      return '750';
-    }
-    if (xp <= 1000) {
-      return '1000';
-    }
-    if (xp <= 1500) {
-      return '1500';
-    }
-    if (xp <= 2000) {
-      return '2000';
-    }
-    if (xp <= 3000) {
-      return '3000';
-    }
-    if (xp <= 3500) {
-      return '3500';
-    }
-    if (xp <= 4000) {
-      return '4000';
-    }
-    // if (xp >  5000) {
-    return '999999';
-    // }
+    const xp = this.getXp(xpo);
+    return utils.getMeterPercent(xp);
   }
 
   rank_percent_based_on_xp(xpo) {
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
-    let xp = 0;
-    for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
-        xp = xpo[i].xp;
-      }
-    }
-    if (xp < 0) {
-      xp = 0;
-    }
-    if (xp < 50) {
-      return (xp * 10) / 5;
-    }
-    if (xp < 200) {
-      return ((xp - 50) / 150) * 100;
-    }
-    if (xp < 500) {
-      return ((xp - 200) / 300) * 100;
-    }
-    if (xp < 750) {
-      return ((xp - 500) / 250) * 100;
-    }
-    if (xp < 1000) {
-      return ((xp - 750) / 250) * 100;
-    }
-    if (xp < 1500) {
-      return ((xp - 1000) / 500) * 100;
-    }
-    if (xp < 2000) {
-      return ((xp - 1500) / 500) * 100;
-    }
-    if (xp < 3000) {
-      return ((xp - 2000) / 1000) * 100;
-    }
-    if (xp < 3500) {
-      return ((xp - 3000) / 500) * 100;
-    }
-    if (xp < 4000) {
-      return ((xp - 3500) / 500) * 100;
-    }
-    // if(xp)
-    // if (xp >  5000) {
-    return 100;
-    // }
+    const xp = this.getXp(xpo);
+    return utils.getMeterPercent(xp);
   }
 
   showFollowing(id) {
@@ -265,13 +105,7 @@ class ProfileHeader extends React.Component {
           ) : (
             <img
               className={'img-fluid ' + (user_info.prime ? ' prime ' : ' ')}
-              src={
-                'https://ui-avatars.com/api/?size=512&name=' +
-                user_info.first_name +
-                ' ' +
-                user_info.last_name +
-                '&color=223cf3&background=000000'
-              }
+              src={user_info.gravatar}
             />
           )}
         </div>
@@ -378,7 +212,7 @@ class ProfileHeader extends React.Component {
     if (!user_info || !user_info.id) {
       return (
         <section
-          className="page_title_bar less_padding"
+          className="page_title_bar less_padding d-none d-md-block"
           id="is_top"
           style={{
             backgroundPosition: 'bottom'
@@ -414,7 +248,7 @@ class ProfileHeader extends React.Component {
 
     return (
       <section
-        className="page_title_bar less_padding bigger_bg"
+        className="page_title_bar less_padding bigger_bg d-none d-md-block"
         id="is_top"
         style={divStyle}
       >
