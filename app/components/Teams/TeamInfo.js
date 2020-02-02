@@ -757,39 +757,42 @@ class TeamInfo extends React.Component {
                   }
                 >
                   <div className="content">
-                    <div className="update_btn">
-                      <label
-                        htmlFor="profile_image_select"
-                        className=" expand_on_hover"
-                      >
-                        <i className="fa fa-edit" /> <span>edit picture</span>
-                      </label>
-
-                      {this.state.new_profile_pic &&
-                      !this.state.new_profile_pic_saved ? (
-                        <button
-                          onClick={event => {
-                            this.doSaveProfilePic(event);
-                          }}
-                          type="button"
-                          className="expand_on_hover"
+                    {this.props.user ? (
+                      <div className="update_btn">
+                        <label
+                          htmlFor="profile_image_select"
+                          className=" expand_on_hover"
                         >
-                          <i className="fa fa-save" /> <span>Save</span>
-                        </button>
-                      ) : (
-                        false
-                      )}
+                          <i className="fa fa-edit" /> <span>edit picture</span>
+                        </label>
 
-                      <input
-                        type="file"
-                        name="profile_image_select"
-                        id="profile_image_select"
-                        className="hidden hide"
-                        accept="image/gif, image/jpeg, image/png"
-                        onChange={this.handleselectedFile}
-                      />
-                    </div>
+                        {this.state.new_profile_pic &&
+                        !this.state.new_profile_pic_saved ? (
+                          <button
+                            onClick={event => {
+                              this.doSaveProfilePic(event);
+                            }}
+                            type="button"
+                            className="expand_on_hover"
+                          >
+                            <i className="fa fa-save" /> <span>Save</span>
+                          </button>
+                        ) : (
+                          false
+                        )}
 
+                        <input
+                          type="file"
+                          name="profile_image_select"
+                          id="profile_image_select"
+                          className="hidden hide"
+                          accept="image/gif, image/jpeg, image/png"
+                          onChange={this.handleselectedFile}
+                        />
+                      </div>
+                    ) : (
+                      false
+                    )}
                     {this.state.saving_profile_photo ? (
                       <div className="photo_progress">
                         <span className="fa fa-spinner fa-spin" />

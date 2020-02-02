@@ -939,6 +939,27 @@ exports.addItem = function(req, res, next) {
     });
 };
 
+exports.deleteItem = function(req, res, next) {
+  req.assert('post_id', 'ID cannot be blank').notEmpty();
+  const errors = req.validationErrors();
+  if (errors) {
+    return res.status(400).send(errors);
+  }
+
+  const item = new Item({id: req.body.post_id, user_id: req.user.id});
+
+  item
+    .destroy()
+    .then(function() {
+      res.status(200).send({ok: true, msg: 'done'});
+    })
+    .catch(function(err) {
+      res
+        .status(400)
+        .send({msg: 'Something went wrong while updating the pin'});
+    });
+};
+
 exports.doPin = function(req, res, next) {
   req.assert('post_id', 'ID cannot be blank').notEmpty();
   const errors = req.validationErrors();

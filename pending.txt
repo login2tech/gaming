@@ -4,23 +4,28 @@
 - show brackets in tournaments
 - show tournament matches
 - undo tournament matches
-- admin panel responsive
 - mails
-- live chat
-- stripe, make it live
-- stripe create plans in stripe dashboard
-- delete all testing images ?
-- admin, add name of the tournament
-- chat on match page [NOT DOING]
-- new actions on social feel - edit post, delete post.
-- admin, add name of the tournament
-- edit team's photo when logged out
+-season dates
 - create match, check if existing match pending score
 - create match, time gaps if existing scheduled
 
 RESPONSIVE FIXES PENDING:
-[DONE] - tournament page
-[DONE] - tournament match page
 - team profile
 - remove footable
-[DONE] - admin
+- internet explorer
+
+[GOLIVE] - stripe, make it live
+[GOLIVE] - stripe create plans in stripe dashboard
+[GOLIVE] - hooks url change
+[GOLIVETASK]- delete all testing images?
+[waiting on client] - live chat
+[waiting on client] - game rules
+[DONE] - Responsive: tournament page
+[DONE] - Responsive: tournament match page
+[DONE] - admin responsive
+[DONE] - admin panel responsive
+[DONE] - admin, add name of the tournament
+[DONE] - new actions on social feel - edit post, delete post.
+[DONE] - fix: edit team's photo when logged out
+[skipped] - chat on match page
+[skipped] - ending balance on each transaction

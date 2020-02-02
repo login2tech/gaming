@@ -27,6 +27,28 @@ class Timeline extends React.Component {
     };
   }
 
+  doDelete(id) {
+    const a = confirm('Are you sure, you want to delete this post?');
+    if (!a) {
+      return false;
+    }
+    return fetch('/api/posts/delete', {
+      method: 'post',
+      body: JSON.stringify({post_id: id}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        this.setState({
+          is_deleted: true
+        });
+      } else {
+        alert('Failed to delete post!');
+      }
+    });
+  }
+
   doPin(id, is_pinned) {
     if (this.props.post.user_id != this.props.user.id) {
       return;
@@ -93,6 +115,13 @@ class Timeline extends React.Component {
   }
   state = {};
   render() {
+    if (this.state.is_deleted) {
+      return (
+        <div className="alert alert-warning mt-1">
+          This post has been deleted
+        </div>
+      );
+    }
     const {post} = this.props;
     const image_url =
       post.user && post.user.profile_picture
@@ -129,10 +158,20 @@ class Timeline extends React.Component {
                 }}
                 className={
                   (post.is_pinned ? ' is_pinned' : ' ') +
-                  ' pinner btn btn-sm is_link'
+                  ' pinner btn btn-sm is_link mr-1'
                 }
               >
                 <i className="fa fa-thumbtack" />
+              </button>
+            )}
+            {this.props.show_option_to_pin && (
+              <button
+                onClick={() => {
+                  this.doDelete(post.id);
+                }}
+                className={' btn-danger   btn btn-sm is_link'}
+              >
+                <i className="fa fa-trash" />
               </button>
             )}
           </span>

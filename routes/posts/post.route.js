@@ -34,4 +34,4 @@ routes.get('/famous', ctrl.famousDay, ctrl.famousWeek, ctrl.famousMonth);
 routes.get('/single/:id', ctrl.listSingleItem);
 
 // routes.post('/edit', u_ctrl.ensureAuthenticated, ctrl.updateItem);
-// routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);
+routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);

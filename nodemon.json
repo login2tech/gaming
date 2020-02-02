@@ -1,5 +1,5 @@
 {
   "verbose": true,
-  "ignore": ["public/*", "admin/*", "admin_src/*", "test/*", ".git", "./node_modules/*", "./admin/*", "./app/actions/*", "./app/components/*" ]
+  "ignore": ["public/*", "admin/*", "admin_src/*", "test/*", ".git", "./node_modules/*", "./admin/*", "./app/actions/*", "app/components/*" ]
 
 }
