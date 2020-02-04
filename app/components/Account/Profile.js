@@ -916,6 +916,7 @@ class Profile extends React.Component {
                         <thead>
                           <tr>
                             <th>Tournament</th>
+                            <th />
                             <th className="d-none d-md-table-cell">
                               Tournament Placing
                             </th>
@@ -987,7 +988,7 @@ class Profile extends React.Component {
                                   </td>
                                 </tr>
                                 {this.state.expanded &&
-                                this.state.expanded_id == match.id ? (
+                                this.state.expand_id == match.id ? (
                                   <tr>
                                     <td>
                                       <table className="table">
