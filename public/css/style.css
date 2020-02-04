@@ -5648,6 +5648,7 @@ span.profile_menu_item_inner.small_avat {
           padding: 0;
         line-height: 14px;
     }
+
     .update_btn label, .update_btn button {
 
         font-size: 10px;
@@ -5659,6 +5660,9 @@ span.profile_menu_item_inner.small_avat {
     }
     .lss_size {
     padding: 5px;
+}
+.team_actions{
+  margin-bottom: 20px
 }
     .lss_size span, .lss_size p{
         font-size: 12px
@@ -5678,8 +5682,13 @@ span.profile_menu_item_inner.small_avat {
     }
     .mptl{
       padding-top: 30px;
-    }
+    }  .more-m-m-b.dsh-profhww{
+        margin-bottom: 220px
+      }
+.single_match_details .prizes_desclaimer{
 
+    font-size: 17px;
+}
 
 }
 

@@ -268,7 +268,7 @@ class TeamInfo extends React.Component {
           const obj = {saving_profile_photo: false};
           if (st) {
             // obj.new_profile_pic = '';
-            obj.new_profile_pic_saved = false;
+            obj.new_profile_pic_saved = true;
           }
           this.setState(obj);
         }
@@ -448,13 +448,13 @@ class TeamInfo extends React.Component {
     return utils.getMeterImage(xp);
   }
 
-  renderXPMeter() {
+  renderXPMeter(cls) {
     const {team_info} = this.state;
     return (
       <a
         title="<img class='hover_img' src='/images/xp_banner_team.jpg' />"
         data-toggle="tooltip"
-        className="float-right rank_box_wrap"
+        className={'' + cls}
         onClick={e => {
           e.preventDefault();
         }}
@@ -478,13 +478,15 @@ class TeamInfo extends React.Component {
           <span>{this.rank_min_based_on_xp(team_info.xp_obj)}</span>
           <span
             style={{
-              position: 'absolute',
+              // position: 'absolute',
               background: 'url(/images/blank_ctrl2.png) center no-repeat',
               marginTop: '5px',
               backgroundSize: 'contain',
               padding: '5px 20px 9px 20px',
-              marginLeft: '-20px',
-              left: '' + this.rank_percent_based_on_xp(team_info.xp_obj) + '%'
+              marginLeft:
+                'calc(' +
+                +this.rank_percent_based_on_xp(team_info.xp_obj) +
+                '% - 29px)'
             }}
           >
             {this.getXp(team_info.xp_obj)}
@@ -545,7 +547,7 @@ class TeamInfo extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar less_padding bigger_bg  dsh-profhww  dff-none  dff-md-block"
+          className="page_title_bar less_padding bigger_bg  dsh-profhww  more-m-m-b dff-none  dff-md-block"
           id="is_top"
           style={divStyle}
         >
@@ -770,22 +772,32 @@ class TeamInfo extends React.Component {
                 )}
               </div>
 
-              <div className=" order-md-last col-md-4">
+              <div className=" order-md-last col-md-4 d-md-block d-none row   ">
                 <div className="row">
                   <div className="col-md-1" />
-                  <div className="col-3 d-md-none">
-                    <img
-                      src={
-                        '/assets/rank/' +
-                        this.image_based_on_i(this.state.team_info.xp_obj) +
-                        '.png'
-                      }
-                      className="rank-image float-left"
-                    />
+
+                  <div className="col-md-11 col-9">
+                    {this.renderXPMeter('rank_box_wrap float-right ')}
                   </div>
-                  <div className="col-md-11 col-9">{this.renderXPMeter()}</div>
                 </div>
               </div>
+
+              <div className=" order-md-last col-md-4 d-md-none user-rank-mobile row  rank_box_wrap">
+                <div className="col-3 d-md-none">
+                  <img
+                    src={
+                      '/assets/rank/' +
+                      this.image_based_on_i(this.state.team_info.xp_obj) +
+                      '.png'
+                    }
+                    className="rank-image float-left"
+                  />
+                </div>
+                <div className="col-md-11 col-9  rank-data">
+                  {this.renderXPMeter('')}
+                </div>
+              </div>
+
               <div className="col-md-5">
                 <div className="section-headline white-headline text-left">
                   <div className="list_pad">
