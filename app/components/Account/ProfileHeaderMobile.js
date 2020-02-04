@@ -102,7 +102,6 @@ class ProfileHeader extends React.Component {
           e.preventDefault();
         }}
       >
-        {/*rank : */}
         {this.rank_based_on_xp(user_info.xp_obj)}
         <div
           className="rank_box_prog_outer"

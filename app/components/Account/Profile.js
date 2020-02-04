@@ -916,10 +916,7 @@ class Profile extends React.Component {
                         <thead>
                           <tr>
                             <th>Tournament</th>
-                            <th />
-                            <th className="d-none d-md-table-cell">
-                              Tournament Placing
-                            </th>
+                            <th>Tournament Placing</th>
                             <th className="d-none d-md-table-cell">Date</th>
                             <th className="d-none d-md-table-cell">Status</th>
                             <th>Info</th>

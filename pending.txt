@@ -1,18 +1,18 @@
-- notification in matches
-- tournament notification matches
-- 10 credits on rank up
-- show brackets in tournaments
-- show tournament matches
-- undo tournament matches
-- mails
--season dates
-- create match, check if existing match pending score
-- create match, time gaps if existing scheduled
+[TO-TEST] - notification in matches
+[TO-TEST] - tournament notification matches
+[TO-TEST] - 10 credits on rank up
+[ADMIN] - show brackets in tournaments
+[ADMIN][UI CHANGES] - show tournament matches
+[ADMIN] - undo tournament matches
+[Credentials change] - mails
+ -season dates
+[TO-TEST]- create match, check if existing match pending score
+[TO-TEST]- create match, time gaps if existing scheduled
 
 RESPONSIVE FIXES PENDING:
-- team profile
-- remove footable
-- internet explorer
+[pending]- team profile
+[DONE]- remove footable [not working on profile. partially done]
+[pending]- internet explorer
 
 [GOLIVE] - stripe, make it live
 [GOLIVE] - stripe create plans in stripe dashboard

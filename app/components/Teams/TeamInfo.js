@@ -12,7 +12,8 @@ import {
 import Messages from '../Modules/Messages';
 import axios from 'axios';
 import game_user_ids from '../../../config/game_user_ids';
-
+// import TeamHeaderMobile from './TeamHeaderMobile';
+import utils from '../../utils';
 class TeamInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -428,180 +429,23 @@ class TeamInfo extends React.Component {
   }
 
   rank_min_based_on_xp(xpo) {
-    if (!xpo) {
-      xpo = [];
-    }
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
-    let xp = 0;
-    for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
-        xp = xpo[i].xp;
-      }
-    }
-    if (xp < 0) {
-      xp = 0;
-    }
-    if (xp < 50) {
-      return '0';
-    }
-    if (xp < 200) {
-      return '50';
-    }
-    if (xp < 500) {
-      return '200';
-    }
-    if (xp < 1000) {
-      return '500';
-    }
-    if (xp < 1500) {
-      return '1000';
-    }
-    if (xp < 2000) {
-      return '1500';
-    }
-    if (xp < 3000) {
-      return '2000';
-    }
-    if (xp < 3500) {
-      return '3000';
-    }
-    if (xp < 4000) {
-      return '3500';
-    }
-    if (xp < 0) {
-      return 0;
-    }
-    // if (xp >  5000) {
-    return '4000';
-    // }
+    const xp = this.getXp(xpo);
+    return utils.getMeterMin(xp);
   }
 
   rank_max_based_on_xp(xpo) {
-    if (!xpo) {
-      xpo = [];
-    }
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
-    let xp = 0;
-    for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
-        xp = xpo[i].xp;
-      }
-    }
-    if (xp < 0) {
-      xp = 0;
-    }
-    if (xp < 50) {
-      return '50';
-    }
-    if (xp < 200) {
-      return '200';
-    }
-    if (xp < 500) {
-      return '500';
-    }
-    if (xp < 1000) {
-      return '1000';
-    }
-    if (xp < 1500) {
-      return '1500';
-    }
-    if (xp < 2000) {
-      return '2000';
-    }
-    if (xp < 3000) {
-      return '3000';
-    }
-    if (xp < 3500) {
-      return '3500';
-    }
-    if (xp < 4000) {
-      return '4000';
-    }
-    // if (xp >  5000) {
-    return '5000';
-    // }
+    const xp = this.getXp(xpo);
+    return utils.getMeterMax(xp);
   }
 
   rank_percent_based_on_xp(xpo) {
-    if (!xpo) {
-      xpo = [];
-    }
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
-    let xp = 0;
-    for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
-        xp = xpo[i].xp;
-      }
-    }
-    if (xp < 0) {
-      xp = 0;
-    }
-    if (xp < 50) {
-      return (xp * 10) / 5;
-    }
-    if (xp < 200) {
-      return ((xp - 50) / 150) * 100;
-    }
-    if (xp < 500) {
-      return ((xp - 200) / 300) * 100;
-    }
-    if (xp < 1000) {
-      return ((xp - 500) / 500) * 100;
-    }
-    if (xp < 1500) {
-      return ((xp - 1000) / 500) * 100;
-    }
-    if (xp < 2000) {
-      return ((xp - 1500) / 500) * 100;
-    }
-    if (xp < 3000) {
-      return ((xp - 2000) / 1000) * 100;
-    }
-    if (xp < 3500) {
-      return ((xp - 3000) / 500) * 100;
-    }
-    if (xp < 4000) {
-      return ((xp - 3500) / 500) * 100;
-    }
-    // if(xp)
-    // if (xp >  5000) {
-    return 100;
-    // }
+    const xp = this.getXp(xpo);
+    return utils.getMeterPercent(xp);
   }
 
   image_based_on_i(xpo) {
     const xp = this.getXp(xpo);
-    if (xp < 50) {
-      return 'amateur';
-    }
-    if (xp < 200) {
-      return 'beginner';
-    }
-    if (xp < 500) {
-      return 'upcoming';
-    }
-    if (xp < 1000) {
-      return 'bronze';
-    }
-    if (xp < 1500) {
-      return 'silver';
-    }
-    if (xp < 2000) {
-      return 'gold';
-    }
-    if (xp < 3000) {
-      return 'platinum';
-    }
-    if (xp < 3500) {
-      return 'diamond';
-    }
-    if (xp < 4000) {
-      return 'elite';
-    }
-    return 'elite';
+    return utils.getMeterImage(xp);
   }
 
   renderXPMeter() {
@@ -701,7 +545,7 @@ class TeamInfo extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar less_padding bigger_bg"
+          className="page_title_bar less_padding bigger_bg  dsh-profhww  dff-none  dff-md-block"
           id="is_top"
           style={divStyle}
         >
@@ -749,7 +593,7 @@ class TeamInfo extends React.Component {
 
           <div className="container profile_container">
             <div className="row">
-              <div className="col-md-3 text-center">
+              <div className=" col-md-3 col-3 col-xs-12 dash-profh-wrap text-center">
                 <div
                   className={
                     'game_pic_tournament profile_pic_outline  ' +
@@ -816,7 +660,7 @@ class TeamInfo extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3  ">
+              <div className="col-md-3 col-9 p-m-t-20">
                 <span
                   className={
                     game_user_ids.tag_icons[
@@ -828,10 +672,21 @@ class TeamInfo extends React.Component {
                   {this.state.team_info.title}
                   {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
                 </h3>
+                <span className="textcap text-center d-md-none">
+                  {this.state.team_info.team_type == 'tournaments' ? (
+                    <span className="trofy pt-2">
+                      <span className="fa fa-trophy text-lg" />{' '}
+                      {this.state.team_info.team_type}
+                    </span>
+                  ) : (
+                    this.state.team_info.team_type
+                  )}{' '}
+                  team
+                </span>
                 {this.renderWinLoss()}
               </div>
-              <div className="col-md-2 text-center" />
-              <div className="col-md-4 justify-content-end d-flex flex-column">
+              <div className="col-md-2  text-center d-md-block d-none" />
+              <div className="col-md-4  col-6 justify-content-end  flex-column  d-none d-md-flex">
                 <div> </div>
                 <div>
                   <div className="row">
@@ -862,7 +717,7 @@ class TeamInfo extends React.Component {
 
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12 text-center mt-2">
-                <span className="textcap text-center">
+                <span className="textcap text-center d-md-block d-none">
                   {this.state.team_info.team_type == 'tournaments' ? (
                     <span className="trofy pt-2">
                       <span className="fa fa-trophy text-lg" />{' '}
@@ -918,21 +773,31 @@ class TeamInfo extends React.Component {
               <div className=" order-md-last col-md-4">
                 <div className="row">
                   <div className="col-md-1" />
-                  <div className="col-md-11">{this.renderXPMeter()}</div>
+                  <div className="col-3 d-md-none">
+                    <img
+                      src={
+                        '/assets/rank/' +
+                        this.image_based_on_i(this.state.team_info.xp_obj) +
+                        '.png'
+                      }
+                      className="rank-image float-left"
+                    />
+                  </div>
+                  <div className="col-md-11 col-9">{this.renderXPMeter()}</div>
                 </div>
               </div>
               <div className="col-md-5">
                 <div className="section-headline white-headline text-left">
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-4 lss_size">
                         <span>
                           <i className="fa fa-gamepad" aria-hidden="true" />
                           {this.state.game.title}
                         </span>
                         <p>Game </p>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-4 lss_size">
                         <span>
                           <i className="fa fa-trophy" aria-hidden="true" />
                           {this.state.team_info.ladder &&
@@ -940,7 +805,7 @@ class TeamInfo extends React.Component {
                         </span>
                         <p>Ladder </p>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-4 col-4 lss_size">
                         <span>
                           <i className="fa fa-users" aria-hidden="true" />
                           Min:{' '}
