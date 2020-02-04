@@ -10,7 +10,6 @@ class Tickets extends React.Component {
       showing_closed: false,
       items: []
     };
-    this.table = React.createRef(); // initi
   }
 
   checkboxChange() {
@@ -26,9 +25,6 @@ class Tickets extends React.Component {
             is_loaded: true,
             items: json.items
           });
-          setTimeout(() => {
-            $(this.table).footable();
-          }, 500);
         } else {
           this.setState({
             is_page: false,
@@ -91,10 +87,11 @@ class Tickets extends React.Component {
                       <tr>
                         <th width="30">ID</th>
                         <th>Title</th>
-                        <th class="d-none d-md-table-cell">Department</th>
-                        <th class="d-none d-md-table-cell">Last Updated</th>
-                        <th class="d-none d-md-table-cell">Status</th>
+                        <th className="d-none d-md-table-cell">Department</th>
+                        <th className="d-none d-md-table-cell">Last Updated</th>
+                        <th className="d-none d-md-table-cell">Status</th>
                         <th>View Ticket</th>
+                        <th style={{width: '10%'}} className="d-md-none" />
                       </tr>
                     </thead>
                     <tbody>
@@ -106,28 +103,94 @@ class Tickets extends React.Component {
                           return false;
                         }
                         return (
-                          <tr key={item.id}>
-                            <td>{item.id}</td>
-                            <td>
-                              <a href={'/support/tickets/ticket/' + item.id}>
-                                {item.title}
-                              </a>
-                            </td>
-                            <td>{item.type}</td>
-                            <td>{moment(item.updated_at).fromNow()}</td>
-                            <td>
-                              {item.status == 'closed' ? (
-                                <span className="text-success">Closed</span>
-                              ) : (
-                                <span className="text-primary">Open</span>
-                              )}
-                            </td>
-                            <td>
-                              <a href={'/support/tickets/ticket/' + item.id}>
-                                View Ticket
-                              </a>
-                            </td>
-                          </tr>
+                          <React.Fragment key={item.id}>
+                            <tr>
+                              <td>{item.id}</td>
+                              <td>
+                                <a href={'/support/tickets/ticket/' + item.id}>
+                                  {item.title}
+                                </a>
+                              </td>
+                              <td className="d-none d-md-table-cell  ">
+                                {item.type}
+                              </td>
+                              <td className="d-none d-md-table-cell">
+                                {moment(item.updated_at).fromNow()}
+                              </td>
+                              <td className="d-none d-md-table-cell">
+                                {item.status == 'closed' ? (
+                                  <span className="text-success">Closed</span>
+                                ) : (
+                                  <span className="text-primary">Open</span>
+                                )}
+                              </td>
+                              <td>
+                                <a href={'/support/tickets/ticket/' + item.id}>
+                                  View Ticket
+                                </a>
+                              </td>
+                              <td className="d-md-none">
+                                <button
+                                  className="btn btn-link"
+                                  onClick={() => {
+                                    this.setState({
+                                      expanded:
+                                        item.id == this.state.expand_id
+                                          ? !this.state.expanded
+                                          : true,
+                                      expand_id: item.id
+                                    });
+                                  }}
+                                >
+                                  <span
+                                    className={
+                                      this.state.expanded &&
+                                      this.state.expand_id == item.id
+                                        ? ' fa fa-minus'
+                                        : ' fa fa-plus '
+                                    }
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                            {this.state.expanded &&
+                            this.state.expand_id == item.id ? (
+                              <tr>
+                                <td colSpan="4">
+                                  <table className="table">
+                                    <tbody>
+                                      <tr>
+                                        <td>Department</td>
+                                        <td>{item.type}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Last Updated</td>
+                                        <td>
+                                          {moment(item.updated_at).fromNow()}
+                                        </td>
+                                      </tr>
+                                      <tr>
+                                        <td>Status</td>
+                                        <td>
+                                          {item.status == 'closed' ? (
+                                            <span className="text-success">
+                                              Closed
+                                            </span>
+                                          ) : (
+                                            <span className="text-primary">
+                                              Open
+                                            </span>
+                                          )}
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            ) : (
+                              false
+                            )}
+                          </React.Fragment>
                         );
                       })}
                     </tbody>

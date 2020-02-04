@@ -440,8 +440,9 @@ class MyMatches extends React.Component {
                               });
                           }
                           return (
-                            <>
-                              <tr key={match.id}>
+                            <React.Fragment key={match.id}>
+                              >
+                              <tr>
                                 <td>
                                   <Link to={'/t/' + match.tournament_id}>
                                     {match.tournament.title}
@@ -510,7 +511,7 @@ class MyMatches extends React.Component {
                               </tr>
                               {this.state.expanded &&
                               this.state.expand_id == match.id ? (
-                                <tr>
+                                <tr key={'e_' + match.id}>
                                   <td colSpan="5">
                                     <table className="table">
                                       <tbody>
@@ -565,7 +566,7 @@ class MyMatches extends React.Component {
                               ) : (
                                 false
                               )}
-                            </>
+                            </React.Fragment>
                           );
                         })}
                       </tbody>

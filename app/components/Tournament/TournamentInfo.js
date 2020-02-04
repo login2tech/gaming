@@ -1075,7 +1075,7 @@ class TournamentInfo extends React.Component {
     const teams = this.getTeams(match);
 
     return (
-      <>
+      <React.Fragment key={match.id}>
         <tr key={match.id}>
           <td>
             <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link>{' '}
@@ -1135,7 +1135,7 @@ class TournamentInfo extends React.Component {
           </td>
         </tr>
         {this.state.expanded && this.state.expand_id == match.id ? (
-          <tr>
+          <tr key={'e_' + match.id}>
             <td colSpan={4}>
               <table className="table">
                 <tbody>
@@ -1158,7 +1158,7 @@ class TournamentInfo extends React.Component {
         ) : (
           false
         )}
-      </>
+      </React.Fragment>
     );
   }
 

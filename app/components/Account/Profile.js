@@ -929,8 +929,8 @@ class Profile extends React.Component {
                               return false;
                             }
                             return (
-                              <>
-                                <tr key={match.id}>
+                              <React.Fragment key={match.id}>
+                                <tr>
                                   <td>
                                     <span className="h-o-p">
                                       <Link to={'/t/' + match.id}>
@@ -986,17 +986,21 @@ class Profile extends React.Component {
                                 </tr>
                                 {this.state.expanded &&
                                 this.state.expand_id == match.id ? (
-                                  <tr>
-                                    <td>
+                                  <tr key={'e_' + match.id}>
+                                    <td colSpan="4">
                                       <table className="table">
                                         <tbody>
                                           <tr>
-                                            <td>a</td>
-                                            <td>b</td>
+                                            <td>Date</td>
+                                            <td>
+                                              {moment(match.starts_at).format(
+                                                'lll'
+                                              )}
+                                            </td>
                                           </tr>
                                           <tr>
-                                            <td>1</td>
-                                            <td>21</td>
+                                            <td>Status</td>
+                                            <td>{match.status}</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -1005,7 +1009,7 @@ class Profile extends React.Component {
                                 ) : (
                                   false
                                 )}
-                              </>
+                              </React.Fragment>
                             );
                           })}
                         </tbody>

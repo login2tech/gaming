@@ -6,13 +6,13 @@
 [ADMIN] - undo tournament matches
 [Credentials change] - mails
  -season dates
-[TO-TEST]- create match, check if existing match pending score
-[TO-TEST]- create match, time gaps if existing scheduled
+[TO-TEST] - create match, check if existing match pending score
+[TO-TEST] - create match, time gaps if existing scheduled
 
 RESPONSIVE FIXES PENDING:
-[pending]- team profile
+[pending] - team profile
 [DONE]- remove footable [not working on profile. partially done]
-[pending]- internet explorer
+[pending] - internet explorer
 
 [GOLIVE] - stripe, make it live
 [GOLIVE] - stripe create plans in stripe dashboard

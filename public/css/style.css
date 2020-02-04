@@ -5378,11 +5378,11 @@ span.profile_menu_item_inner.small_avat {
 }
 
 @media screen and (max-width: 768px) {
-
     .tab-block .tab-mnu li {
         padding: 11px 14px;
         font-size: 13px;
     }
+
     .section-headline h3 {
         font-size: 24px;
         line-height: 30px;
@@ -5483,19 +5483,21 @@ span.profile_menu_item_inner.small_avat {
         left: 0;
         height: 100%;
     }
-    .match_heading h4{
-      font-size: 40px
+
+    .match_heading h4 {
+        font-size: 40px
     }
 
     .tour-cover-block img:not(.star_img) {
         width: 100%;
         display: none;
     }
+
     .tourinfo .baris {
         bottom: -140px;
     }
 
-    .single-finder-match{
+    .single-finder-match {
         background-color: rgba(0,0,0, 0.1);
         background-position: top center !important;
         max-height: 184px;
@@ -5503,13 +5505,16 @@ span.profile_menu_item_inner.small_avat {
         margin-bottom: 150px;
         padding-top: 7px;
     }
+
     .single-finder-match .btn {
         margin: 0;
     }
+
     .single-finder-match.tourinfo {
         max-height: 165px;
         border-bottom: 1px solid rgb(40, 72, 243);
     }
+
     .baris li a {
         padding: 5px 8px;
         font-size: 12px;
@@ -5521,11 +5526,13 @@ span.profile_menu_item_inner.small_avat {
         right: 16px;
         z-index: 1;
     }
+
     div#profile-page-container {
         position: relative;
         padding-bottom: 55px;
     }
-     .member-star-mobile {
+
+    .member-star-mobile {
         height: 50px;
     }
 
@@ -5574,8 +5581,9 @@ span.profile_menu_item_inner.small_avat {
         flex-basis: unset;
         margin-bottom: 1px;
     }
-    .profile-header-data-middle .btn{
-      margin-top: 0
+
+    .profile-header-data-middle .btn {
+        margin-top: 0
     }
 
     .profile-avatar {
@@ -5639,18 +5647,18 @@ span.profile_menu_item_inner.small_avat {
         height: auto;
         margin-right: 24px;
     }
+
     .profile-header-data .profile-header-data-middle > div {
         flex: 1;
     }
-    .update_btn {
 
-          font-size: 10px;
-          padding: 0;
+    .update_btn {
+        font-size: 10px;
+        padding: 0;
         line-height: 14px;
     }
 
     .update_btn label, .update_btn button {
-
         font-size: 10px;
         padding: 1px 2px;
         height: 14px;
@@ -5658,38 +5666,49 @@ span.profile_menu_item_inner.small_avat {
         line-height: 14px;
         text-align: center;
     }
+
     .lss_size {
-    padding: 5px;
-}
-.team_actions{
-  margin-bottom: 20px
-}
-    .lss_size span, .lss_size p{
+        padding: 5px;
+    }
+
+    .team_actions {
+        margin-bottom: 20px
+    }
+
+    .lss_size span, .lss_size p {
         font-size: 12px
     }
-    .dash-profh-wrap{
-          margin-top: 100px;
+
+    .dash-profh-wrap {
+        margin-top: 100px;
     }
-    .p-m-t-20{
-      padding-top:20px
+
+    .p-m-t-20 {
+        padding-top: 20px
     }
-    .dsh-profhww{
-      height: 140px;min-height: 140px !important;
-      margin-bottom: 150px;padding: 0 !important;
+
+    .dsh-profhww {
+        height: 140px;
+        min-height: 140px !important;
+        margin-bottom: 150px;
+        padding: 0 !important;
     }
-    .dsh-m-r{
-      margin-top: 160px;
+
+    .dsh-m-r {
+        margin-top: 160px;
     }
-    .mptl{
-      padding-top: 30px;
-    }  .more-m-m-b.dsh-profhww{
+
+    .mptl {
+        padding-top: 30px;
+    }
+
+    .more-m-m-b.dsh-profhww {
         margin-bottom: 220px
-      }
-.single_match_details .prizes_desclaimer{
+    }
 
-    font-size: 17px;
-}
-
+    .single_match_details .prizes_desclaimer {
+        font-size: 17px;
+    }
 }
 
 @media screen and (max-width: 690px) {
@@ -5761,8 +5780,6 @@ span.profile_menu_item_inner.small_avat {
         z-index: 5;
         background: rgba(17, 17, 17, 0.5);
     }
-
-
 
     .tab-pane .authorize_box {
         margin-bottom: 10px
@@ -6079,10 +6096,12 @@ span.profile_menu_item_inner.small_avat {
 
     .banner_actions {
         display: flex;
-        padding-bottom: 0;width:100%;    flex-wrap: wrap;
-
-        bottom: 10px;    position: absolute;
-    left: 0;
+        padding-bottom: 0;
+        width: 100%;
+        flex-wrap: wrap;
+        bottom: 10px;
+        position: absolute;
+        left: 0;
     }
 
     .banner_actions .btn {
@@ -6300,21 +6319,23 @@ span.profile_menu_item_inner.small_avat {
         text-transform: capitalize;
     }
 
-
-    .expand_on_hover:hover span{
-          width: 1px;
+    .expand_on_hover:hover span {
+        width: 1px;
     }
-    .dsh-profhww:before{
-      display:none;
+
+    .dsh-profhww:before {
+        display: none;
     }
 
     .single-finder-match .col-4 span, .single-finder-match .col-4 p {
         font-size: 14px;
     }
+
     #dropdownMenuButton {
         width: 95%;
         padding-left: 11px !important;
     }
+
     .match_start_date {
         font-size: 13px;
     }
@@ -6326,8 +6347,8 @@ span.profile_menu_item_inner.small_avat {
     .tour-single-content h5, .tour-single-content h6 {
         margin: 0 !important;
     }
-
 }
-.tourinfo .container{
-  position: relative;
+
+.tourinfo .container {
+    position: relative;
 }
