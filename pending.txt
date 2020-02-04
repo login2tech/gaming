@@ -10,9 +10,9 @@
 [TO-TEST] - create match, time gaps if existing scheduled
 
 RESPONSIVE FIXES PENDING:
-[pending] - team profile
-[DONE]- remove footable [not working on profile. partially done]
 [pending] - internet explorer
+
+
 
 [GOLIVE] - stripe, make it live
 [GOLIVE] - stripe create plans in stripe dashboard
@@ -27,5 +27,8 @@ RESPONSIVE FIXES PENDING:
 [DONE] - admin, add name of the tournament
 [DONE] - new actions on social feel - edit post, delete post.
 [DONE] - fix: edit team's photo when logged out
+[DONE] - team profile
+[DONE] - remove footable [not working on profile. partially done]
+
 [skipped] - chat on match page
 [skipped] - ending balance on each transaction

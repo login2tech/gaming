@@ -45,6 +45,7 @@ class TournamentInfo extends React.Component {
       }
     }
   }
+
   getM(round, t1, t2) {
     return this.state.tournament.matches.filter(function(item) {
       return item.match_round == round &&
@@ -54,6 +55,7 @@ class TournamentInfo extends React.Component {
         : false;
     });
   }
+
   getMatchWinner(round, t1, t2, tc) {
     tc = parseInt(tc);
     const items = this.getM(round, t1, t2);
@@ -102,7 +104,9 @@ class TournamentInfo extends React.Component {
     }
     return '';
   }
+
   cnt = 1;
+
   createBrackets() {
     this.cnt = 0;
     let brackets = this.state.tournament.brackets;
@@ -943,33 +947,6 @@ class TournamentInfo extends React.Component {
     }
     return (
       <div className="col-md-12">
-        {/*<div className="alert alert-warning">
-          Brackets are yet not generated
-        </div>
-        <div>
-          <div className="btn-group push-right pull-right  mb-3">
-            <button
-              onClick={() => {
-                this.setState({
-                  zoom: this.state.zoom - 0.1
-                });
-              }}
-              className="btn btn-default min-width-none"
-            >
-              Zoom In
-            </button>
-            <button
-              onClick={() => {
-                this.setState({
-                  zoom: this.state.zoom + 0.1
-                });
-              }}
-              className="btn btn-default min-width-none"
-            >
-              Zoom Out
-            </button>
-          </div>
-        </div>*/}
         <div className="brackets" style={{zoom: this.state.zoom}} />
       </div>
     );

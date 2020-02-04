@@ -64,7 +64,7 @@ class Header extends React.Component {
     ) : (
       <ul className="nav navbar-nav navbar-right">
         <li>
-          <Link onClick={this.closeSide} to="/login" activeStyle={active}>
+          <Link onClick={this.closeSide} to="/login">
             Log in
           </Link>
         </li>
@@ -120,13 +120,11 @@ class Header extends React.Component {
                     </li>
                     <li>
                       <a
-                        // onClick={this.closeSide}
                         onClick={e => {
                           window.location.href = '/admin/#/teams';
                           window.location.reload();
                         }}
                         href="/admin/#/teams"
-                        activeStyle={active}
                       >
                         Teams
                       </a>

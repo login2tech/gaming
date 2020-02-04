@@ -28,7 +28,7 @@ class AdminUsers extends React.Component {
       '/api/admin/listPaged/users?filter_role=admin&page=' + this.state.page
     )
       .then(resp => {
-        console.log(resp);
+        // console.log(resp);
         if (resp.ok) {
           this.setState({
             is_loaded: true,
@@ -154,94 +154,98 @@ class AdminUsers extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <Messages messages={this.props.messages} />
-            <div className="table-responsive"><table className="table  table-hover  table-responsive   table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Active</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.admin_users &&
-                  this.state.admin_users.map((u, i) => {
-                    return (
-                      <tr key={u.id}>
-                        <td>{u.id}</td>
-                        <td>
-                          {u.first_name} {u.last_name}
-                        </td>
-                        <td>{u.email}</td>
-                        <td>
-                          {u.status ? (
-                            <span className="label label-primary">Active</span>
-                          ) : (
-                            <span className="label label-danger">
-                              In-Active
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          {u.status ? (
+            <div className="table-responsive">
+              <table className="table  table-hover  table-responsive   table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.admin_users &&
+                    this.state.admin_users.map((u, i) => {
+                      return (
+                        <tr key={u.id}>
+                          <td>{u.id}</td>
+                          <td>
+                            {u.first_name} {u.last_name}
+                          </td>
+                          <td>{u.email}</td>
+                          <td>
+                            {u.status ? (
+                              <span className="label label-primary">
+                                Active
+                              </span>
+                            ) : (
+                              <span className="label label-danger">
+                                In-Active
+                              </span>
+                            )}
+                          </td>
+                          <td>
+                            {u.status ? (
+                              <button
+                                onClick={() => {
+                                  this.updateItem(u.id, {
+                                    status: false
+                                  });
+                                }}
+                                className="btn btn-warning btn-xs"
+                              >
+                                {this.state['update_' + u.id] ? (
+                                  <i className="fa fa-spinner fa-spin" />
+                                ) : (
+                                  false
+                                )}{' '}
+                                Disable
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => {
+                                  this.updateItem(u.id, {
+                                    status: true
+                                  });
+                                }}
+                                className="btn btn-success btn-xs"
+                              >
+                                {this.state['update_' + u.id] ? (
+                                  <i className="fa fa-spinner fa-spin" />
+                                ) : (
+                                  false
+                                )}{' '}
+                                Enable
+                              </button>
+                            )}{' '}
                             <button
                               onClick={() => {
-                                this.updateItem(u.id, {
-                                  status: false
-                                });
+                                this.updateItem(
+                                  u.id,
+                                  {
+                                    role: 'user'
+                                  },
+                                  'role_'
+                                );
                               }}
                               className="btn btn-warning btn-xs"
                             >
-                              {this.state['update_' + u.id] ? (
+                              {this.state['update_role_' + u.id] ? (
                                 <i className="fa fa-spinner fa-spin" />
                               ) : (
                                 false
                               )}{' '}
-                              Disable
+                              Make User
                             </button>
-                          ) : (
-                            <button
-                              onClick={() => {
-                                this.updateItem(u.id, {
-                                  status: true
-                                });
-                              }}
-                              className="btn btn-success btn-xs"
-                            >
-                              {this.state['update_' + u.id] ? (
-                                <i className="fa fa-spinner fa-spin" />
-                              ) : (
-                                false
-                              )}{' '}
-                              Enable
-                            </button>
-                          )}{' '}
-                          <button
-                            onClick={() => {
-                              this.updateItem(
-                                u.id,
-                                {
-                                  role: 'user'
-                                },
-                                'role_'
-                              );
-                            }}
-                            className="btn btn-warning btn-xs"
-                          >
-                            {this.state['update_role_' + u.id] ? (
-                              <i className="fa fa-spinner fa-spin" />
-                            ) : (
-                              false
-                            )}{' '}
-                            Make User
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table></div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
 
             <ReactPaginate
               previousLabel={'previous'}

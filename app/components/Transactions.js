@@ -24,9 +24,6 @@ class Transaction extends React.Component {
       membership_transactions: [],
       loaded: false
     };
-    this.table1 = React.createRef();
-    this.table2 = React.createRef();
-    this.table3 = React.createRef();
   }
 
   componentDidMount() {
@@ -51,19 +48,7 @@ class Transaction extends React.Component {
                   this.fTx('credit', true);
                 } else if (type == 'credit') {
                   this.fTx('membership');
-                } else {
-                  setTimeout(() => {
-                    $(this.table1).footable();
-                    $(this.table2).footable();
-                    $(this.table3).footable();
-                  }, 500);
                 }
-              } else {
-                setTimeout(() => {
-                  $(this.table1).footable();
-                  $(this.table2).footable();
-                  $(this.table3).footable();
-                }, 500);
               }
             }
           );
@@ -116,39 +101,85 @@ class Transaction extends React.Component {
                   <br />
                   <div className=" ">
                     <div className="table_wrapper">
-                      <table
-                        className="table table-stripped"
-                        ref={element => (this.table1 = element)}
-                      >
+                      <table className="table table-stripped">
                         <thead>
                           <tr>
-                            <th style={{width: '7%'}}>Id</th>
-                            <th style={{width: '23%'}}>Date</th>
-                            <th class="d-none d-md-table-cell" style={{width: '55%'}}>
+                            <th style={{width: '6%'}}>Id</th>
+                            <th style={{width: '24%'}}>Date</th>
+                            <th
+                              className="d-none d-md-table-cell"
+                              style={{width: '55%'}}
+                            >
                               Description
                             </th>
-                            <th style={{width: '15%'}}>OCH Cash</th>
+                            <th style={{width: '13%'}}>OCH Cash</th>
+                            <th style={{width: '5%'}} className="d-md-none" />
                           </tr>
                         </thead>
                         <tbody>
                           {this.state.cash_transactions.map((k, i) => {
                             return (
-                              <tr key={k.id}>
-                                <td>
-                                  {(this.state.cash_page - 1) * 25 + i + 1}
-                                </td>
-                                <td>{moment(k.created_at).format('llll')}</td>
-                                <td>{k.details}</td>
-                                <td
-                                  className={
-                                    parseFloat(k.qty) > 0
-                                      ? 'text-success'
-                                      : 'text-danger'
-                                  }
-                                >
-                                  $ {k.qty}
-                                </td>
-                              </tr>
+                              <React.Fragment key={k.id}>
+                                <tr key={k.id}>
+                                  <td>
+                                    {(this.state.cash_page - 1) * 25 + i + 1}
+                                  </td>
+                                  <td>{moment(k.created_at).format('llll')}</td>
+                                  <td className="d-none d-md-table-cell">
+                                    {k.details}
+                                  </td>
+                                  <td
+                                    className={
+                                      parseFloat(k.qty) > 0
+                                        ? 'text-success'
+                                        : 'text-danger'
+                                    }
+                                  >
+                                    $ {k.qty}
+                                  </td>
+                                  <td className="d-md-none">
+                                    <button
+                                      className="btn btn-link"
+                                      onClick={() => {
+                                        this.setState({
+                                          expanded:
+                                            k.id == this.state.expand_id
+                                              ? !this.state.expanded
+                                              : true,
+                                          expand_id: k.id
+                                        });
+                                      }}
+                                    >
+                                      <span
+                                        className={
+                                          this.state.expanded &&
+                                          this.state.expand_id == k.id
+                                            ? ' fa fa-minus'
+                                            : ' fa fa-plus '
+                                        }
+                                      />
+                                    </button>
+                                  </td>
+                                </tr>
+
+                                {this.state.expanded &&
+                                this.state.expand_id == k.id ? (
+                                  <tr>
+                                    <td colSpan="4">
+                                      <table className="table">
+                                        <tbody>
+                                          <tr>
+                                            <td>Description</td>
+                                            <td>{k.details}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  false
+                                )}
+                              </React.Fragment>
                             );
                           })}
                         </tbody>
@@ -186,39 +217,85 @@ class Transaction extends React.Component {
                   <br />
                   <div className=" ">
                     <div className="table_wrapper">
-                      <table
-                        className="table table-stripped"
-                        ref={element => (this.table2 = element)}
-                      >
+                      <table className="table table-stripped">
                         <thead>
                           <tr>
-                            <th style={{width: '7%'}}>Id</th>
-                            <th style={{width: '23%'}}>Date</th>
-                            <th class="d-none d-md-table-cell" style={{width: '55%'}}>
+                            <th style={{width: '6%'}}>Id</th>
+                            <th style={{width: '24%'}}>Date</th>
+                            <th
+                              className="d-none d-md-table-cell"
+                              style={{width: '55%'}}
+                            >
                               Description
                             </th>
-                            <th style={{width: '15%'}}>Credits</th>
+                            <th style={{width: '13%'}}>Credits</th>
+                            <th style={{width: '5%'}} className="d-md-none" />
                           </tr>
                         </thead>
                         <tbody>
                           {this.state.credit_transactions.map((k, i) => {
                             return (
-                              <tr key={k.id}>
-                                <td>
-                                  {(this.state.credit_page - 1) * 25 + i + 1}
-                                </td>
-                                <td>{moment(k.created_at).format('llll')}</td>
-                                <td>{k.details}</td>
-                                <td
-                                  className={
-                                    parseFloat(k.qty) > 0
-                                      ? 'text-success'
-                                      : 'text-danger'
-                                  }
-                                >
-                                  {k.qty} credits
-                                </td>
-                              </tr>
+                              <React.Fragment key={k.id}>
+                                <tr key={k.id}>
+                                  <td>
+                                    {(this.state.credit_page - 1) * 25 + i + 1}
+                                  </td>
+                                  <td>{moment(k.created_at).format('llll')}</td>
+                                  <td className="d-none d-md-table-cell">
+                                    {k.details}
+                                  </td>
+                                  <td
+                                    className={
+                                      parseFloat(k.qty) > 0
+                                        ? 'text-success'
+                                        : 'text-danger'
+                                    }
+                                  >
+                                    {k.qty} credits
+                                  </td>
+                                  <td className="d-md-none">
+                                    <button
+                                      className="btn btn-link"
+                                      onClick={() => {
+                                        this.setState({
+                                          expanded:
+                                            k.id == this.state.expand_id
+                                              ? !this.state.expanded
+                                              : true,
+                                          expand_id: k.id
+                                        });
+                                      }}
+                                    >
+                                      <span
+                                        className={
+                                          this.state.expanded &&
+                                          this.state.expand_id == k.id
+                                            ? ' fa fa-minus'
+                                            : ' fa fa-plus '
+                                        }
+                                      />
+                                    </button>
+                                  </td>
+                                </tr>
+
+                                {this.state.expanded &&
+                                this.state.expand_id == k.id ? (
+                                  <tr>
+                                    <td colSpan="4">
+                                      <table className="table">
+                                        <tbody>
+                                          <tr>
+                                            <td>Description</td>
+                                            <td>{k.details}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  false
+                                )}
+                              </React.Fragment>
                             );
                           })}
                         </tbody>
@@ -257,27 +334,73 @@ class Transaction extends React.Component {
                   <br />
                   <div className=" ">
                     <div className="table_wrapper">
-                      <table
-                        className="table table-stripped"
-                        ref={element => (this.table3 = element)}
-                      >
+                      <table className="table table-stripped">
                         <thead>
                           <tr>
-                            <th style={{width: '7%'}}>Id</th>
-                            <th style={{width: '23%'}}>Date</th>
-                            <th class="d-none d-md-table-cell" style={{width: '70%'}}>
+                            <th style={{width: '6%'}}>Id</th>
+                            <th style={{width: '24%'}}>Date</th>
+                            <th
+                              className="d-none d-md-table-cell"
+                              style={{width: '70%'}}
+                            >
                               Description
                             </th>
+                            <th style={{width: '10%'}} className="d-md-none" />
                           </tr>
                         </thead>
                         <tbody>
                           {this.state.membership_transactions.map((k, i) => {
                             return (
-                              <tr key={k.id}>
-                                <td>{i + 1}</td>
-                                <td>{moment(k.created_at).format('llll')}</td>
-                                <td>{k.descr}</td>
-                              </tr>
+                              <React.Fragment key={k.id}>
+                                <tr key={k.id}>
+                                  <td>{i + 1}</td>
+                                  <td>{moment(k.created_at).format('llll')}</td>
+                                  <td className="d-none d-md-table-cell">
+                                    {k.descr}
+                                  </td>
+                                  <td className="d-md-none">
+                                    <button
+                                      className="btn btn-link"
+                                      onClick={() => {
+                                        this.setState({
+                                          expanded:
+                                            k.id == this.state.expand_id
+                                              ? !this.state.expanded
+                                              : true,
+                                          expand_id: k.id
+                                        });
+                                      }}
+                                    >
+                                      <span
+                                        className={
+                                          this.state.expanded &&
+                                          this.state.expand_id == k.id
+                                            ? ' fa fa-minus'
+                                            : ' fa fa-plus '
+                                        }
+                                      />
+                                    </button>
+                                  </td>
+                                </tr>
+
+                                {this.state.expanded &&
+                                this.state.expand_id == k.id ? (
+                                  <tr>
+                                    <td colSpan="4">
+                                      <table className="table">
+                                        <tbody>
+                                          <tr>
+                                            <td>Description</td>
+                                            <td>{k.descr}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </td>
+                                  </tr>
+                                ) : (
+                                  false
+                                )}
+                              </React.Fragment>
                             );
                           })}
                         </tbody>

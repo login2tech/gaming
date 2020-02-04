@@ -249,3 +249,102 @@ div#modal_orders .modal-dialog {
       font-size: 22px;
   }
 }
+
+
+
+.container-brackets .round .match .player {
+    border-radius: 4px !important;
+    padding: 10px !important;
+}
+
+.brackets .match {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 20px;
+    box-shadow: 0px 0px 5px 2px #2a48f4eb;
+    text-align: center;
+}
+
+.brackets .player {
+    cursor: pointer;
+    text-align: left;
+}
+
+.brackets .player.winner:after {
+    content: 'W';
+    color: green;
+    float: right;
+    background: #fff;
+    padding: 0;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 22px;
+    height: 20px;
+    width: 20px;
+}
+
+.brackets .player.looser:after {
+    content: 'L';
+    color: red;
+    float: right;
+    background: rgb(255, 255, 255);
+    padding: 0;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 22px;
+    height: 20px;
+    width: 20px;
+}
+
+.brackets .container-brackets {
+    padding-left: 3px;
+    padding-top: 3px;
+}
+
+.container-brackets .round.rd-2 .match .player:nth-child(2) {
+    margin-top: 33px;
+}
+
+.container-brackets .round.rd-2 .match .player:last-child {
+    margin-bottom: 11px;
+}
+
+.container-brackets .round.rd-2 .match {
+    margin-bottom: 70px;
+}
+
+.container-brackets .round.rd-2 .match .player {
+    margin: 159px 0;
+}
+
+.container-brackets .round.rd-2 {
+    margin-top: 0 !important;
+}
+
+.container-brackets .round.rd-3 {
+    margin-top: 100px !important;
+}
+
+.container-brackets .separator-brackets.rd-2 .line:first-child {
+    margin-top: 85px !important;
+}
+
+.container-brackets .round.rd-3 .match .player {
+    margin: 300px 0 !important;
+}
+
+.container-brackets .round.rd-3 .match .player:nth-child(2) {
+    margin-top: 37px !important;
+}
+
+.container-brackets .round.rd-3 .match .player:last-child {
+    margin-bottom: 11px !important;
+}
+
+.container-brackets .separator-brackets.rd-2 .line {
+    height: 207px !important;
+    margin-bottom: 192px !important;
+}
+
+.container-brackets .round.rd-3 .match {
+    margin-bottom: 330px;
+}

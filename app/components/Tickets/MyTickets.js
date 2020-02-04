@@ -111,7 +111,7 @@ class Tickets extends React.Component {
                                   {item.title}
                                 </a>
                               </td>
-                              <td className="d-none d-md-table-cell  ">
+                              <td className="d-none d-md-table-cell">
                                 {item.type}
                               </td>
                               <td className="d-none d-md-table-cell">

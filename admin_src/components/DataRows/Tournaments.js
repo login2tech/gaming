@@ -8,6 +8,8 @@ import ReactPaginate from 'react-paginate';
 import {openModal} from '../../actions/modals';
 import CashHistory from '../Modules/Modals/CashHistory';
 import NewTournament from '../Modules/Modals/NewTournament';
+import TMatches from '../Modules/Modals/TMatches';
+import TBrackets from '../Modules/Modals/TBrackets';
 class Tournament extends React.Component {
   constructor(props) {
     super(props);
@@ -152,10 +154,11 @@ class Tournament extends React.Component {
       });
   }
 
-  showMatchesOf(t_id) {
+  showMatchesOf(t_id, item) {
     this.setState(
       {
         showing_matches_of: t_id,
+        showing_tour: item,
         match_page: 1,
         match_pagination: {}
       },
@@ -163,13 +166,27 @@ class Tournament extends React.Component {
     );
   }
 
-  loadTournamentMatches() {
+  showBracketsOf(t_id, item) {
+    this.setState(
+      {
+        showing_matches_of: t_id,
+        showing_tour: item,
+        match_page: 1,
+        match_pagination: {}
+      },
+      () => {
+        this.loadTournamentMatches('brackets');
+      }
+    );
+  }
+
+  loadTournamentMatches(type) {
     let other = '';
     other = 'related=team_1_info,team_2_info';
     // if (this.props.params && this.props.params.team_id) {
     other += '&filter_tournament_id=' + this.state.showing_matches_of;
     // }
-    console.log('doing');
+    // console.log('doing');
     Fetcher.get(
       '/api/admin/listPaged/tournamentmaches?' +
         other +
@@ -178,11 +195,20 @@ class Tournament extends React.Component {
     )
       .then(resp => {
         if (resp.ok) {
-          this.setState({
-            is_loaded: true,
-            matches: resp.items,
-            match_pagination: resp.pagination ? resp.pagination : {}
-          });
+          this.setState(
+            {
+              is_loaded: true,
+              matches: resp.items,
+              match_pagination: resp.pagination ? resp.pagination : {}
+            },
+            () => {
+              if (type == 'brackets') {
+                this.openBracketsPopup();
+              } else {
+                this.openMatchesPopup();
+              }
+            }
+          );
         } else {
           this.props.dispatch({
             type: 'FAILURE',
@@ -198,6 +224,46 @@ class Tournament extends React.Component {
           messages: [{msg: msg}]
         });
       });
+  }
+
+  openBracketsPopup() {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'tmatches',
+        modal_class: ' modal-lg',
+        zIndex: 534,
+        heading: 'Tournament Brackets',
+        content: (
+          <TBrackets
+            matches={this.state.matches}
+            modal_class=" modal-lg"
+            tournament={this.state.showing_tour}
+          />
+        )
+      })
+    );
+    return;
+  }
+
+  openMatchesPopup() {
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'tmatches',
+        modal_class: ' modal-lg',
+        zIndex: 534,
+        heading: 'Tournament Matches',
+        content: (
+          <TMatches
+            matches={this.state.matches}
+            modal_class=" modal-lg"
+            tournament={this.state.showing_tour}
+          />
+        )
+      })
+    );
+    return;
   }
 
   resolveDispute(id, team_id) {
@@ -219,7 +285,7 @@ class Tournament extends React.Component {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
             const msg = 'Failed to perform Action';
             this.props.dispatch({
               type: 'FAILURE',
@@ -230,283 +296,16 @@ class Tournament extends React.Component {
     );
   }
 
-  // deleteItem(id) {
-  //   const r = confirm('Are you sure you want to delete the user? ');
-  //   if (r == true) {
-  //   } else {
-  //   }
-  //   this.setState(
-  //     {
-  //       ['update_' + key + id]: true
-  //     },
-  //     () => {
-  //       Fetcher.post('/api/admin/delete/matches', {id: id})
-  //         .then(resp => {
-  //           this.setState({
-  //              ['update_' + key + id]: false
-  //           });
-  //           if (resp.ok) {
-  //             this.loadData();
-  //           } else {
-  //             this.props.dispatch({type: 'FAILURE', messages: [resp]});
-  //           }
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //           const msg = 'Failed to perform Action';
-  //           this.props.dispatch({
-  //             type: 'FAILURE',
-  //             messages: [{msg: msg}]
-  //           });
-  //         });
-  //     }
-  //   );
-  // }
-
   componentDidMount() {
     this.loadData();
   }
 
-  addItem() {
-    // todo
-  }
-
-  renderMatches() {
-    if (!this.state.showing_matches_of) {
-      return false;
+  runAction(actions, id, item) {
+    if (actions == 'brackets') {
+      this.showBracketsOf(id, item);
+    } else if (actions == 'matches') {
+      this.showMatchesOf(id, item);
     }
-    return (
-      <div>
-        <div className="panel">
-          <div className="panel-body">
-            <h2 style={{padding: 0, margin: 0}}>
-              Matches of Tournament #{this.state.showing_matches_of}
-            </h2>
-          </div>
-        </div>
-        <div className="panel">
-          <div className="panel-body">
-            <div className="table-responsive">
-              <table className="table  table-hover  table-responsive   table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-
-                    <th>Round</th>
-                    <th>Team 1</th>
-                    <th>Team 2</th>
-                    <th>Status</th>
-                    <th>Result</th>
-                    <th>Match type</th>
-                    <th>Team 1 Result</th>
-                    <th>Team 2 Result</th>
-
-                    <th>Actions</th>
-                    <th>Starts At</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.matches &&
-                    this.state.matches.map((u, i) => {
-                      return (
-                        <tr key={u.id}>
-                          <td>{u.id}</td>
-
-                          <td>{u.match_round}</td>
-                          <td>
-                            {u.result == 'team_2' ? (
-                              <span className="text-danger">
-                                {u.team_1_info.title}
-                              </span>
-                            ) : u.result == 'team_1' ? (
-                              <span className="text-success">
-                                {u.team_1_info.title}
-                              </span>
-                            ) : (
-                              u.team_1_info.title
-                            )}
-                          </td>
-                          <td>
-                            {u.team_2_info ? (
-                              u.result == 'team_1' ? (
-                                <span className="text-danger">
-                                  {u.team_2_info.title}
-                                </span>
-                              ) : u.result == 'team_2' ? (
-                                <span className="text-success">
-                                  {u.team_2_info.title}
-                                </span>
-                              ) : (
-                                u.team_2_info.title
-                              )
-                            ) : (
-                              <span className="text-danger">Yet to Join</span>
-                            )}
-                          </td>
-                          <td>
-                            {u.status == 'complete' ? (
-                              <span className="badge badge-success">
-                                Complete
-                              </span>
-                            ) : (
-                              u.status
-                            )}
-                          </td>
-                          <td>
-                            {u.result ? (
-                              u.result == 'team_2' ? (
-                                'Team 2 Wins'
-                              ) : u.result == 'team_1' ? (
-                                'Team 1 Wins'
-                              ) : u.result == 'disputed' ? (
-                                <span className="text-danger">Disputed</span>
-                              ) : (
-                                <span className="text-warning">{u.result}</span>
-                              )
-                            ) : (
-                              <span className="text-warning">
-                                Yet to declare
-                              </span>
-                            )}
-                          </td>
-                          <td>
-                            {u.match_type == 'paid'
-                              ? '' + u.match_fee + '/- OCG CASH'
-                              : 'FREE'}
-                          </td>
-                          <td>{u.team_1_result}</td>
-
-                          <td>{u.team_2_result}</td>
-                          <td>
-                            <div className="dropdown">
-                              <button
-                                className="btn btn-primary btn-xs dropdown-toggle"
-                                type="button"
-                                data-toggle="dropdown"
-                              >
-                                Actions
-                                <span className="caret" />
-                              </button>
-                              <ul className="dropdown-menu">
-                                <li>
-                                  <a href={'/m/' + u.id} target="_blank">
-                                    View Match Public Page
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href={'/teams/view/' + u.team_1_info.id}
-                                    target="_blank"
-                                  >
-                                    View Team 1 Public Page
-                                  </a>
-                                </li>
-                                {u.team_2_info ? (
-                                  <li>
-                                    <a
-                                      href={'/teams/view/' + u.team_2_info.id}
-                                      target="_blank"
-                                    >
-                                      View Team 2 Public Page
-                                    </a>
-                                  </li>
-                                ) : (
-                                  false
-                                )}
-
-                                <li>
-                                  <a
-                                    href="#"
-                                    onClick={e => {
-                                      e.preventDefault();
-                                      this.doAction('show_xp', u);
-                                    }}
-                                  >
-                                    Show XP Transactions
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="#"
-                                    onClick={e => {
-                                      e.preventDefault();
-                                      this.doAction('show_credit', u);
-                                    }}
-                                  >
-                                    Show Credit Transactions
-                                  </a>
-                                </li>
-                                <li>
-                                  <a
-                                    href="#"
-                                    onClick={e => {
-                                      e.preventDefault();
-                                      this.doAction('show_cash', u);
-                                    }}
-                                  >
-                                    Show Cash Transactions
-                                  </a>
-                                </li>
-
-                                {u.result == 'disputed' ? (
-                                  <li>
-                                    <a
-                                      href="#"
-                                      onClick={e => {
-                                        e.preventDefault();
-                                        this.resolveDispute(u.id, 'team_1');
-                                      }}
-                                    >
-                                      Resolve dispute by giving win to team 1
-                                    </a>
-                                  </li>
-                                ) : (
-                                  false
-                                )}
-
-                                {u.result == 'disputed' ? (
-                                  <li>
-                                    <a
-                                      href="#"
-                                      onClick={e => {
-                                        e.preventDefault();
-                                        this.resolveDispute(u.id, 'team_2');
-                                      }}
-                                    >
-                                      Resolve dispute by giving win to team 2
-                                    </a>
-                                  </li>
-                                ) : (
-                                  false
-                                )}
-                              </ul>
-                            </div>
-                          </td>
-                          <td>{moment(u.starts_at).format('lll')}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-
-            <ReactPaginate
-              previousLabel={'previous'}
-              nextLabel={'next'}
-              breakLabel={'...'}
-              breakClassName={'break-me'}
-              pageCount={this.state.match_pagination.pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handleMatchPageCount}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
-            />
-          </div>
-        </div>
-      </div>
-    );
   }
 
   render() {
@@ -554,15 +353,16 @@ class Tournament extends React.Component {
                     <th>Ladder</th>
                     <th>Total Teams</th>
                     <th>Total Joined</th>
-                    <th>Status</th>
+
                     <th>Entry Fees</th>
                     <th>Max Players Per Team</th>
-                    <th>Actions</th>
+
                     <th>Reg Period</th>
                     <th>Starts at</th>
                     <th>Actions</th>
+                    <th>Status</th>
                     {/*<th>Match type</th>
-                  <th>Actions</th>
+                  <th>Actions</th>  <th>Actions</th>
 
                   <th>Team 1</th>
                   <th>Team 2</th>
@@ -573,18 +373,18 @@ class Tournament extends React.Component {
                 <tbody>
                   {this.state.items &&
                     this.state.items.map((u, i) => {
-                      let team_1 = false;
-                      let team_2 = false;
-                      if (u.team_1) {
-                        team_1 = u.team_1.split('|').map(function(a) {
-                          return parseInt(a);
-                        });
-                      }
-                      if (u.team_2) {
-                        team_2 = u.team_2.split('|').map(function(a) {
-                          return parseInt(a);
-                        });
-                      }
+                      // let team_1 = false;
+                      // let team_2 = false;
+                      // if (u.team_1) {
+                      //   team_1 = u.team_1.split('|').map(function(a) {
+                      //     return parseInt(a);
+                      //   });
+                      // }
+                      // if (u.team_2) {
+                      //   team_2 = u.team_2.split('|').map(function(a) {
+                      //     return parseInt(a);
+                      //   });
+                      // }
                       return (
                         <tr key={u.id}>
                           <td>{u.id}</td>
@@ -593,18 +393,16 @@ class Tournament extends React.Component {
                           <td>{u.ladder.title}</td>
                           <td>{u.total_teams}</td>
                           <td>{u.teams_registered}</td>
-                          <td>
-                            {u.status == 'complete' ? (
-                              <span className="badge badge-success">
-                                Complete
-                              </span>
-                            ) : (
-                              u.status
-                            )}
-                          </td>
+
                           <td>{u.entry_fee}</td>
                           <td>{u.max_players}</td>
 
+                          <td>
+                            {moment(u.registration_start_at).format('lll')}{' '}
+                            <code>to</code>{' '}
+                            {moment(u.registration_end_at).format('lll')}
+                          </td>
+                          <td>{moment(u.starts_at).format('lll')}</td>
                           <td>
                             <div className="dropdown">
                               <button
@@ -620,25 +418,39 @@ class Tournament extends React.Component {
                                     View Public Page
                                   </a>
                                 </li>
+                                <li>
+                                  <a
+                                    href={'#'}
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.runAction('brackets', u.id, u);
+                                    }}
+                                  >
+                                    View Brackets
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href={'#'}
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.runAction('matches', u.id, u);
+                                    }}
+                                  >
+                                    View Matches
+                                  </a>
+                                </li>
                               </ul>
                             </div>
                           </td>
-
                           <td>
-                            {moment(u.registration_start_at).format('lll')}{' '}
-                            <code>to</code>{' '}
-                            {moment(u.registration_end_at).format('lll')}
-                          </td>
-                          <td>{moment(u.starts_at).format('lll')}</td>
-                          <td>
-                            <button
-                              className="btn btn-primary btn-xs"
-                              onClick={() => {
-                                this.showMatchesOf(u.id);
-                              }}
-                            >
-                              Show matches
-                            </button>
+                            {u.status == 'complete' ? (
+                              <span className="badge badge-success">
+                                Complete
+                              </span>
+                            ) : (
+                              u.status
+                            )}
                           </td>
                         </tr>
                       );
@@ -662,10 +474,9 @@ class Tournament extends React.Component {
             />
           </div>
         </div>
-
-        {this.renderMatches()}
       </div>
     );
+    // {this.renderMatches()}
   }
 }
 
