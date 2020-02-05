@@ -3261,7 +3261,7 @@ span.menu_avatar img {
     width: 63px;
     border-radius: 46px;
     margin-right: 10px;
-    height: 63px;
+    height: 63px;object-fit:  cover;
 }
 
 a.profile_menu_item {
@@ -6284,7 +6284,7 @@ span.profile_menu_item_inner.small_avat {
     }
 
     .tab-block .tab-mnu li {
-        padding: 10px;
+        padding: 10px 7px;
         font-size: 10px;
     }
 
