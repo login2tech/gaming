@@ -806,7 +806,7 @@ class Profile extends React.Component {
 
           <div className="container">
             <div className="row">
-              <div className="col-md-3 col-3 col-xs-12 dash-profh-wrap">
+              <div className="col-md-3 col-6 col-xs-12 dash-profh-wrap">
                 <div className="game_pic_tournament profile_pic_outline square">
                   <div className="content">
                     <div className="update_btn">
@@ -874,7 +874,7 @@ class Profile extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-9 col-9 col-xs-12 dsh-m-r">
+              <div className="col-md-9 col-12 col-xs-12 dsh-m-r">
                 <div className="section-headline white-headline text-left">
                   <h3 className="no-case-change position-relative">
                     {this.state.changing_username ? (
@@ -948,14 +948,14 @@ class Profile extends React.Component {
                   {/* <div className="game_platform_icon">About</div> */}
                   <div className="list_pad">
                     <div className="row">
-                      <div className="col-12 col-md-6">
+                      <div className="col-6 col-md-6">
                         <span> MEMBER SINCE</span>
                         <p>
                           {moment(this.props.user.created_at).format('lll')}
                         </p>
                       </div>
 
-                      <div className="col-12 col-md-6">
+                      <div className="col-6 col-md-6">
                         <span> TIME ZONE </span>
                         <p>
                           {this.props.user.timezone

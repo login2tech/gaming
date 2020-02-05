@@ -105,6 +105,11 @@ class PostComments extends React.Component {
           onSubmit={event => {
             this.doComment(event);
           }}
+          onBlur={() => {
+            this.setState({
+              focussed: false
+            });
+          }}
         >
           <div className="form-group">
             <textarea
@@ -113,11 +118,6 @@ class PostComments extends React.Component {
               onFocus={() => {
                 this.setState({
                   focussed: true
-                });
-              }}
-              onBlur={() => {
-                this.setState({
-                  focussed: false
                 });
               }}
               required
