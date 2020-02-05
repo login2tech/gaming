@@ -397,16 +397,17 @@ class Game extends React.Component {
             this.state.game
               ? {
                   minHeight: 250,
+                  paddingBottom: 10,
                   backgroundImage: "url('" + this.state.game.banner_url + "')"
                 }
-              : {minHeight: 250}
+              : {minHeight: 250, paddingBottom: 10}
           }
         >
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-right d-none d-md-inline-block">
-                  <h3>{this.props.params.title}</h3>
+                  <h3> </h3>
                 </div>
                 <div
                   className="list_pad game_actions banner_actions"

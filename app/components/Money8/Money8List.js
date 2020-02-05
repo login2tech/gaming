@@ -66,7 +66,7 @@ class Money8List extends React.Component {
           <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="all_t_heading">
+                <div className="all_t_heading" style={{fontSize: 28}}>
                   Upcoming Mix & Match Matches
                 </div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
