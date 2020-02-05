@@ -268,7 +268,9 @@ class SingleTicket extends React.Component {
                   </div>
                 ) : this.state.page_loaded ? (
                   <div className="section-headline white-headline text-left">
-                    <h3>{this.state.ticket.title}</h3>
+                    <p>
+                      <strong>{this.state.ticket.title}</strong>
+                    </p>
                     <p>
                       Started {moment(this.state.ticket.created_at).fromNow()} |{' '}
                       {this.state.ticket.type}
@@ -294,7 +296,7 @@ class SingleTicket extends React.Component {
                   >
                     {this.state.submit_started
                       ? 'please wait...'
-                      : 'Escilate Ticket'}
+                      : 'Escalate Ticket'}
                   </button>
                 ) : (
                   false

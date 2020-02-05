@@ -95,7 +95,7 @@ exports.addItem = function(req, res, next) {
   let text = req.body.text;
   if (text == 'CODE:ESCILATE') {
     is_escilate = true;
-    text = 'I am escilating this match.';
+    text = 'I am escalate this match.';
   }
   new Item({
     content: text,
