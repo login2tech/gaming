@@ -6090,8 +6090,8 @@ span.profile_menu_item_inner.small_avat {
     }
 
     ul.team_list li img {
-        height: auto;
-        max-height: 150px;
+      /* height: auto; */
+height: 110px;
     }
 
     .banner_actions {
