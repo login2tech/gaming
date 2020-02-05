@@ -5208,7 +5208,11 @@ th.act_pr6 .actision_logo {
 
 .banner_actions:not(.game_actions) {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
+}
+.banner_actions.b-0{
+  /* bottom: 0 */
+
 }
 
 .section-headline h3.lil-small {
@@ -5234,6 +5238,14 @@ span.profile_menu_item_inner.small_avat {
     margin-right: 10px;
     border-radius: 50%;
 }
+
+
+
+.money8heading{
+  font-size: 28px;
+  line-height: 30px
+}
+
 
 @media screen and (min-width: 993px) {
     .fl-3 {
@@ -5710,6 +5722,9 @@ span.profile_menu_item_inner.small_avat {
     .single_match_details .prizes_desclaimer {
         font-size: 17px;
     }
+    ul.submenu {
+        margin-top: 10px;
+    }
 }
 
 @media screen and (max-width: 690px) {
@@ -6091,8 +6106,7 @@ span.profile_menu_item_inner.small_avat {
     }
 
     ul.team_list li img {
-      /* height: auto; */
-height: 110px;
+      height: 110px;
     }
 
     .banner_actions {
@@ -6103,6 +6117,13 @@ height: 110px;
         bottom: 10px;
         position: absolute;
         left: 0;
+        padding-left: 10px;
+        padding-right:10px;
+
+    }
+    .banner_actions:not(.justify-left)
+    {
+      justify-content: center;
     }
 
     .banner_actions .btn {
@@ -6126,6 +6147,7 @@ height: 110px;
         font-size: 19px;
         line-height: 19px;
         margin: 0;
+        margin-bottom:3px;
         letter-spacing: 0px;
     }
 

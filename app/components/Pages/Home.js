@@ -60,7 +60,7 @@ class Home extends React.Component {
             id="demo"
             className="carousel slide"
             data-ride="carousel"
-            data-pause="true"
+            data-pause="false"
           >
             <ul className="carousel-indicators">
               <li data-target="#demo" data-slide-to="0" className="active" />

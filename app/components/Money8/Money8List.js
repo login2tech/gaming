@@ -66,11 +66,11 @@ class Money8List extends React.Component {
           <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="all_t_heading" style={{fontSize: 28}}>
+                <div className="all_t_heading money8heading">
                   Upcoming Mix & Match Matches
                 </div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
-                <div className="banner_actions">
+                <div className="banner_actions b-0">
                   <Link
                     to={'/mix-and-match/new/'}
                     className="btn btn-default bttn_submit max-width-300"
