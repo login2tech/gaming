@@ -5246,6 +5246,9 @@ span.profile_menu_item_inner.small_avat {
   line-height: 30px
 }
 
+.team_list a {
+    width: 100%;
+}
 
 @media screen and (min-width: 993px) {
     .fl-3 {
@@ -5598,6 +5601,12 @@ span.profile_menu_item_inner.small_avat {
         margin-top: 0;
     min-width: 100%;
     }
+    .menu_avatar  .profile_pic_outline {
+          border: 4px solid rgb(0, 64, 255);
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+      }
 
     .profile-avatar {
         width: 124px;
@@ -5605,7 +5614,8 @@ span.profile_menu_item_inner.small_avat {
         position: relative;
         border: 4px solid rgb(255, 255, 255);
         width: 140px;
-        height: 140px;
+        /* height: 140px; */
+    overflow: hidden;
     }
 
     .profile-avatar img {
@@ -5703,12 +5713,12 @@ span.profile_menu_item_inner.small_avat {
     .dsh-profhww {
         height: 140px;
         min-height: 140px !important;
-        margin-bottom: 300px;
+        margin-bottom: 250px;
         padding: 0 !important;
     }
 
     .dsh-m-r {
-        margin-top: 160px;
+        margin-top: 20px;
     }
 
     .mptl {

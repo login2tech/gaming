@@ -497,7 +497,7 @@ class TeamInfo extends React.Component {
     );
   }
 
-  renderWinLoss() {
+  renderWinLoss(mt) {
     const team = this.state.team_info;
     let wins = 0;
     let loss = 0;
@@ -512,7 +512,7 @@ class TeamInfo extends React.Component {
     }
     const styl = {
       fontSize: 30,
-      marginTop: 34,
+      marginTop: mt ? mt : 0,
       fontWeight: 'bold'
     };
 
@@ -526,6 +526,90 @@ class TeamInfo extends React.Component {
         <span className="text-success">0 W</span> -{' '}
         <span className="text-danger">0 L</span>
       </div>
+    );
+  }
+
+  renderProfileImage() {
+    return (
+      <div className="content">
+        {this.props.user ? (
+          <div className="update_btn">
+            <label htmlFor="profile_image_select" className=" expand_on_hover">
+              <i className="fa fa-edit" /> <span>edit picture</span>
+            </label>
+
+            {this.state.new_profile_pic && !this.state.new_profile_pic_saved ? (
+              <button
+                onClick={event => {
+                  this.doSaveProfilePic(event);
+                }}
+                type="button"
+                className="expand_on_hover"
+              >
+                <i className="fa fa-save" /> <span>Save</span>
+              </button>
+            ) : (
+              false
+            )}
+
+            <input
+              type="file"
+              name="profile_image_select"
+              id="profile_image_select"
+              className="hidden hide"
+              accept="image/gif, image/jpeg, image/png"
+              onChange={this.handleselectedFile}
+            />
+          </div>
+        ) : (
+          false
+        )}
+        {this.state.saving_profile_photo ? (
+          <div className="photo_progress">
+            <span className="fa fa-spinner fa-spin" />
+          </div>
+        ) : (
+          false
+        )}
+        {this.state.new_profile_pic ? (
+          <img src={this.state.new_profile_pic} className="img-fluid" />
+        ) : this.state.team_info.profile_picture ? (
+          <img
+            src={this.state.team_info.profile_picture}
+            className="img-fluid "
+          />
+        ) : (
+          <img className="img-fluid  " src="/images/team_bg.png" />
+        )}
+      </div>
+    );
+  }
+
+  renderNameAndFollow(renderWinL) {
+    return (
+      <>
+        <h3>
+          <span
+            className={
+              game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
+            }
+          />
+          {this.state.team_info.title}
+          {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
+        </h3>
+        <span className="textcap d-md-none d-inline-block width-100 pl-2">
+          {this.state.team_info.team_type == 'tournaments' ? (
+            <span className="trofy pt-2">
+              <span className="fa fa-trophy text-lg" />{' '}
+              {this.state.team_info.team_type}
+            </span>
+          ) : (
+            this.state.team_info.team_type
+          )}{' '}
+          team
+        </span>
+        {renderWinL ? this.renderWinLoss(34) : false}
+      </>
     );
   }
 
@@ -547,7 +631,7 @@ class TeamInfo extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar less_padding bigger_bg  dsh-profhww  more-m-m-b dff-none  dff-md-block"
+          className="page_title_bar less_padding bigger_bg  dsh-profhww  more-m-m-b d-none  d-md-block"
           id="is_top"
           style={divStyle}
         >
@@ -602,93 +686,14 @@ class TeamInfo extends React.Component {
                     (this.state.new_profile_pic ? ' square' : '')
                   }
                 >
-                  <div className="content">
-                    {this.props.user ? (
-                      <div className="update_btn">
-                        <label
-                          htmlFor="profile_image_select"
-                          className=" expand_on_hover"
-                        >
-                          <i className="fa fa-edit" /> <span>edit picture</span>
-                        </label>
-
-                        {this.state.new_profile_pic &&
-                        !this.state.new_profile_pic_saved ? (
-                          <button
-                            onClick={event => {
-                              this.doSaveProfilePic(event);
-                            }}
-                            type="button"
-                            className="expand_on_hover"
-                          >
-                            <i className="fa fa-save" /> <span>Save</span>
-                          </button>
-                        ) : (
-                          false
-                        )}
-
-                        <input
-                          type="file"
-                          name="profile_image_select"
-                          id="profile_image_select"
-                          className="hidden hide"
-                          accept="image/gif, image/jpeg, image/png"
-                          onChange={this.handleselectedFile}
-                        />
-                      </div>
-                    ) : (
-                      false
-                    )}
-                    {this.state.saving_profile_photo ? (
-                      <div className="photo_progress">
-                        <span className="fa fa-spinner fa-spin" />
-                      </div>
-                    ) : (
-                      false
-                    )}
-                    {this.state.new_profile_pic ? (
-                      <img
-                        src={this.state.new_profile_pic}
-                        className="img-fluid"
-                      />
-                    ) : this.state.team_info.profile_picture ? (
-                      <img
-                        src={this.state.team_info.profile_picture}
-                        className="img-fluid "
-                      />
-                    ) : (
-                      <img className="img-fluid  " src="/images/team_bg.png" />
-                    )}
-                  </div>
+                  {this.renderProfileImage()}
                 </div>
               </div>
               <div className="col-md-3 col-12 p-m-t-20">
-                <span
-                  className={
-                    game_user_ids.tag_icons[
-                      this.state.team_info.ladder.gamer_tag
-                    ]
-                  }
-                />
-                <h3>
-                  {this.state.team_info.title}
-                  {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
-                </h3>
-                <span className="textcap text-center d-md-none">
-                  {this.state.team_info.team_type == 'tournaments' ? (
-                    <span className="trofy pt-2">
-                      <span className="fa fa-trophy text-lg" />{' '}
-                      {this.state.team_info.team_type}
-                    </span>
-                  ) : (
-                    this.state.team_info.team_type
-                  )}{' '}
-                  team
-                </span>
-                {this.renderWinLoss()}
+                {this.renderNameAndFollow(true)}
               </div>
               <div className="col-md-2  text-center d-md-block d-none" />
-              <div className="col-md-4  col-6 justify-content-end  flex-column  d-none d-md-flex">
+              <div className="col-md-4  col-6 justify-content-end  flex-column d-md-flex">
                 <div> </div>
                 <div>
                   <div className="row">
@@ -782,22 +787,6 @@ class TeamInfo extends React.Component {
                 </div>
               </div>
 
-              <div className=" order-md-last col-md-4 d-md-none user-rank-mobile row  rank_box_wrap">
-                <div className="col-3 d-md-none">
-                  <img
-                    src={
-                      '/assets/rank/' +
-                      this.image_based_on_i(this.state.team_info.xp_obj) +
-                      '.png'
-                    }
-                    className="rank-image float-left"
-                  />
-                </div>
-                <div className="col-md-11 col-9  rank-data">
-                  {this.renderXPMeter('')}
-                </div>
-              </div>
-
               <div className="col-md-5">
                 <div className="section-headline white-headline text-left">
                   <div className="list_pad">
@@ -831,13 +820,6 @@ class TeamInfo extends React.Component {
                         </span>
                         <p>Players </p>
                       </div>
-
-                      {/*<div className="col-md-4">
-                      <span>
-                        <i className="fa fa-eye" aria-hidden="true" /> 739
-                      </span>
-                      <p>Profile Views </p>
-                    </div>*/}
                     </div>
                   </div>
                 </div>
@@ -845,6 +827,45 @@ class TeamInfo extends React.Component {
             </div>
           </div>
         </section>
+
+        <div
+          id="profile-page-container"
+          className="profile-page team-profile-page user-profile d-md-none"
+        >
+          <div className="profile-header" style={divStyle} />
+          <div className="container profile-page-container">
+            <div className="profile-header-data">
+              <div className="profile-header-data-left">
+                <div className="profile-avatar">
+                  {this.renderProfileImage()}
+                </div>
+              </div>
+              <div className="profile-header-data-middle">
+                <div>{this.renderNameAndFollow(false)}</div>
+                <div>{this.renderWinLoss(0)}</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="user-rank-mobile row  rank_box_wrap">
+                <div className="col-3">
+                  <img
+                    src={
+                      '/assets/rank/team_' +
+                      this.image_based_on_i(this.state.team_info.xp_obj) +
+                      '.png'
+                    }
+                    className="rank-image float-left"
+                  />
+                </div>
+                <div className="col-9  rank-data">{this.renderXPMeter()}</div>
+              </div>
+              <div className="col-xs-12 profile-page-stats-block-wrapper">
+                <div className="profile-page-stats-block" />
+              </div>
+              <div className="clearfix" />
+            </div>
+          </div>
+        </div>
 
         <section className="contet_part single_match_details">
           <div className="container">
