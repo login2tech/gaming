@@ -5546,6 +5546,10 @@ span.profile_menu_item_inner.small_avat {
         position: relative;
         padding-bottom: 55px;
     }
+    div#profile-page-container.team-profile-page
+    {
+      padding-bottom: 0
+    }
 
     .member-star-mobile {
         height: 50px;
