@@ -435,6 +435,9 @@ exports.listSingleItem = function(req, res, next) {
 
 exports.addItem = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
+
+  req.assert('title', 'Team name must be atleast 3 characters long').len(3);
+
   const errors = req.validationErrors();
   if (errors) {
     return res.status(400).send(errors);

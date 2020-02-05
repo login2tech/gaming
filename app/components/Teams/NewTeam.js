@@ -171,6 +171,8 @@ class NewTeam extends React.Component {
                         type="text"
                         id="title"
                         className="form-control"
+                        maxlen="15"
+                        max="15"
                         required="required"
                         placeholder="Enter Team Name"
                         name="title"

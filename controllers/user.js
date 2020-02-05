@@ -147,13 +147,14 @@ exports.signupPost = function(req, res, next) {
   req.assert('username', 'Username cannot be blank').notEmpty();
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('email', 'Email cannot be blank').notEmpty();
-  req.assert('password', 'Password must be at least 6 characters long').len(6);
+  req.assert('password', 'Password must be at least 6 characters long').len(7);
+  req.assert('username', 'Username must be atleast 3 characters long').len(3);
   req
     .assert(
       'password_confirm',
       'Confirm Password must be at least 6 characters long'
     )
-    .len(6);
+    .len(7);
   req.sanitize('email').normalizeEmail({remove_dots: false});
 
   const errors = req.validationErrors();
@@ -214,7 +215,7 @@ exports.accountPut = function(req, res, next) {
   if ('password' in req.body) {
     req
       .assert('password', 'Password must be at least 4 characters long')
-      .len(4);
+      .len(7);
     req.assert('confirm', 'Passwords must match').equals(req.body.password);
     req.assert('old_password', 'Please enter old password').notEmpty();
   } else {
@@ -1131,6 +1132,18 @@ exports.checkIfExists = function(req, res, next) {
     });
 };
 exports.changeUname = function(req, res, next) {
+  req.assert('new_username', 'Username cannot be blank').notEmpty();
+  // req.assert('new_username', 'Username cannot be blank').notEmpty();
+  req
+    .assert('new_username', 'Username must be atleast 3 characters long')
+    .len(3);
+
+  const errors = req.validationErrors();
+
+  if (errors) {
+    return res.status(400).send(errors);
+  }
+
   const user = new User({id: req.user.id});
   const new_username = req.body.new_username;
   user
