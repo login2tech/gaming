@@ -147,12 +147,12 @@ exports.signupPost = function(req, res, next) {
   req.assert('username', 'Username cannot be blank').notEmpty();
   req.assert('email', 'Email is not valid').isEmail();
   req.assert('email', 'Email cannot be blank').notEmpty();
-  req.assert('password', 'Password must be at least 6 characters long').len(7);
+  req.assert('password', 'Password must be at least 7 characters long').len(7);
   req.assert('username', 'Username must be atleast 3 characters long').len(3);
   req
     .assert(
       'password_confirm',
-      'Confirm Password must be at least 6 characters long'
+      'Confirm Password must be at least 7 characters long'
     )
     .len(7);
   req.sanitize('email').normalizeEmail({remove_dots: false});
@@ -214,7 +214,7 @@ exports.signupPost = function(req, res, next) {
 exports.accountPut = function(req, res, next) {
   if ('password' in req.body) {
     req
-      .assert('password', 'Password must be at least 4 characters long')
+      .assert('password', 'Password must be at least 7 characters long')
       .len(7);
     req.assert('confirm', 'Passwords must match').equals(req.body.password);
     req.assert('old_password', 'Please enter old password').notEmpty();
@@ -431,7 +431,7 @@ exports.forgotPost = function(req, res, next) {
  * POST /reset
  */
 exports.resetPost = function(req, res, next) {
-  req.assert('password', 'Password must be at least 4 characters long').len(4);
+  req.assert('password', 'Password must be at least 7 characters long').len(7);
   req.assert('confirm', 'Passwords must match').equals(req.body.password);
 
   const errors = req.validationErrors();
