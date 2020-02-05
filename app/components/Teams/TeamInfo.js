@@ -595,7 +595,7 @@ class TeamInfo extends React.Component {
 
           <div className="container profile_container">
             <div className="row">
-              <div className=" col-md-3 col-3 col-xs-12 dash-profh-wrap text-center">
+              <div className=" col-md-3 col-6 col-xs-12 dash-profh-wrap text-center">
                 <div
                   className={
                     'game_pic_tournament profile_pic_outline  ' +
@@ -662,7 +662,7 @@ class TeamInfo extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-3 col-9 p-m-t-20">
+              <div className="col-md-3 col-12 p-m-t-20">
                 <span
                   className={
                     game_user_ids.tag_icons[

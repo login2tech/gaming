@@ -5566,8 +5566,8 @@ span.profile_menu_item_inner.small_avat {
         left: 0;
         display: flex;
         width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 0;
+        padding-right: 0;
         position: relative;
         transform: none;
         flex-direction: column;
@@ -5583,7 +5583,8 @@ span.profile_menu_item_inner.small_avat {
     }
 
     .profile-header-data-middle .btn {
-        margin-top: 0
+        margin-top: 0;
+    min-width: 100%;
     }
 
     .profile-avatar {
@@ -5703,7 +5704,7 @@ span.profile_menu_item_inner.small_avat {
     }
 
     .more-m-m-b.dsh-profhww {
-        margin-bottom: 220px
+        margin-bottom: 400px
     }
 
     .single_match_details .prizes_desclaimer {
