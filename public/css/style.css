@@ -5571,7 +5571,7 @@ span.profile_menu_item_inner.small_avat {
         position: relative;
         transform: none;
         flex-direction: column;
-        margin-top: -48px;
+        margin-top: -66px;
         margin-bottom: 16px;
     }
 
@@ -5591,8 +5591,8 @@ span.profile_menu_item_inner.small_avat {
         height: 124px;
         position: relative;
         border: 4px solid rgb(255, 255, 255);
-        width: 96px;
-        height: 96px;
+        width: 140px;
+        height: 140px;
     }
 
     .profile-avatar img {
@@ -6347,6 +6347,9 @@ height: 110px;
     .tour-single-content h5, .tour-single-content h6 {
         margin: 0 !important;
     }
+    .btn-primary:not([disabled]):hover {
+    background: rgb(40, 72, 243) !important;
+}
 }
 
 .tourinfo .container {
