@@ -6388,6 +6388,17 @@ span.profile_menu_item_inner.small_avat {
     .btn-primary:not([disabled]):hover {
     background: rgb(40, 72, 243) !important;
 }
+.team-profile-page .profile-header-data-middle > div:first-child h3 {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    line-height: 6px
+}
+
+.team-profile-page .profile-header-data-middle > div:first-child span {
+    font-size: 10px !important;
+}
+
 }
 
 .tourinfo .container {

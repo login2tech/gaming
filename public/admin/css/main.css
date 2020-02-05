@@ -348,3 +348,9 @@ div#modal_orders .modal-dialog {
 .container-brackets .round.rd-3 .match {
     margin-bottom: 330px;
 }
+.modal a{
+  color:#000;text-decoration:underline
+}
+.table-responsive{
+  overflow-y: visible;
+}
