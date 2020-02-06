@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 const utils = {
   platform_icon: function(name) {
     if (!name) {
@@ -153,6 +154,34 @@ const utils = {
       return '3500';
     }
     return '4000';
+  },
+
+  get_current_season: function() {
+    let today = moment();
+    today = today.add('6', 'months');
+    const cur_year = today.format('YYYY');
+    cur_year = '' + cur_year;
+    const next_year = parseInt(cur_year) + 1;
+    if (today.isBetween(cur_year + '-03-19', cur_year + '-06-20', null, '[]')) {
+      return [parseInt(cur_year), 1];
+    } else if (
+      today.isBetween(cur_year + '-06-20', cur_year + '-09-22', null, '[]')
+    ) {
+      return [parseInt(cur_year), 2];
+    } else if (
+      today.isBetween(cur_year + '-09-22', cur_year + '-12-21', null, '[]')
+    ) {
+      return [parseInt(cur_year), 3];
+    } else if (
+      today.isBetween(cur_year + '-12-21', next_year + '-03-19', null, '[]')
+    ) {
+      return [parseInt(cur_year), 4];
+    } else if (today.isBefore(cur_year + '-03-19', 'YYYY-MM-DD')) {
+      if (cur_year - 1 == 2019) {
+        return [2020, 1];
+      }
+      return [parseInt(cur_year) - 1, 4];
+    }
   }
 };
 export default utils;

@@ -42,8 +42,9 @@ const giveXpToMember = function(uid, match_id) {
             console.log(1, err);
           });
 
-        const year = moment().format('YYYY');
-        const season = moment().format('Q');
+        const season_obj = utils.get_current_season();
+        const year = season_obj[0];
+        const season = season_obj[1];
 
         new XP()
           .where({
@@ -113,9 +114,9 @@ const takeXpFromMember = function(uid, match_id) {
           .catch(function(err) {
             console.log(1, err);
           });
-
-        const year = moment().format('YYYY');
-        const season = moment().format('Q');
+        const season_obj = utils.get_current_season();
+        const year = season_obj[0];
+        const season = season_obj[1];
 
         new XP()
           .where({
@@ -170,9 +171,9 @@ const takeXpFromMember = function(uid, match_id) {
 };
 
 const addScoreForMember = function(uid, ladder_id, game_id, type) {
-  console.log('73');
-  const year = moment().format('YYYY');
-  const season = moment().format('Q');
+  const season_obj = utils.get_current_season();
+  const year = season_obj[0];
+  const season = season_obj[1];
 
   new Score()
     .where({

@@ -878,8 +878,9 @@ exports.records = function(req, res, next) {
         user_id: user_id
       });
       if (duration == 'season') {
-        const year = moment().format('YYYY');
-        const season = moment().format('Q');
+        const season_obj = utils.get_current_season();
+        const year = season_obj[0];
+        const season = season_obj[1];
 
         scr = scr.where({
           year: year,
@@ -894,7 +895,6 @@ exports.records = function(req, res, next) {
           res.status(200).send({ok: true, records: items.toJSON()});
         })
         .catch(function(err) {
-          console.log(err);
           return res.status(400).send({ok: false, msg: 'Failed to fetch'});
         });
     });
@@ -983,8 +983,9 @@ exports.deduct_ocg = function(req, res, next) {
 
 exports.resetScore = function(req, res, next) {
   const action = req.body.action;
-  const year = moment().format('YYYY');
-  const season = moment().format('Q');
+  const season_obj = utils.get_current_season();
+  const year = season_obj[0];
+  const season = season_obj[1];
   let a;
   switch (action) {
     case 'overallScore':

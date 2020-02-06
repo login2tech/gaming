@@ -417,11 +417,12 @@ class TeamInfo extends React.Component {
     if (!xpo) {
       xpo = [];
     }
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
+    const season_obj = utils.get_current_season();
+    const year = season_obj[0];
+    const season = season_obj[1];
     let xp = 0;
     for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
+      if (parseInt(xpo[i].year) == year && season == parseInt(xpo[i].season)) {
         xp = xpo[i].xp;
       }
     }

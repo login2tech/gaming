@@ -1,12 +1,10 @@
 
 [TO-TEST] - 10 credits on rank up
-[ADMIN] - undo tournament matches
+
 [Credentials change] - mails
  -season dates
 [TO-TEST] - create match, check if existing match pending score
 [TO-TEST] - create match, time gaps if existing scheduled
-RESPONSIVE FIXES PENDING:
-[pending] - internet explorer
 
 
 
@@ -27,6 +25,8 @@ RESPONSIVE FIXES PENDING:
 [DONE] - remove footable [not working on profile. partially done]
 [DONE] - show brackets in tournaments
 [DONE] - show tournament matches
+[DONE] - internet explorer
+[DONE] - undo tournament matches
 
 [skipped] - chat on match page
 [skipped] - ending balance on each transaction

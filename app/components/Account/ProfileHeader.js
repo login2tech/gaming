@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import {add_friend} from '../../actions/social';
 import {openModal} from '../../actions/modals';
 import Followers from '../Modules/Modals/Followers';
-import moment from 'moment';
+// import moment from 'moment';
 import Following from '../Modules/Modals/Following';
 import utils from '../../utils';
 // import game_user_ids from '../../../config/game_user_ids';
@@ -32,11 +32,12 @@ class ProfileHeader extends React.Component {
   }
 
   getXp(xpo) {
-    const year = moment().format('YYYY');
-    const season = moment().format('Q');
+    const season_obj = utils.get_current_season();
+    const year = season_obj[0];
+    const season = season_obj[1];
     let xp = 0;
     for (let i = xpo.length - 1; i >= 0; i--) {
-      if (xpo[i].year == year && season == xpo[i].season) {
+      if (parseInt(xpo[i].year) == year && season == parseInt(xpo[i].season)) {
         xp = xpo[i].xp;
       }
     }

@@ -11,6 +11,7 @@ const CreditTransactions = require('../../models/CreditTransactions');
 const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
+const utils = require('../utils');
 
 const Raven = require('raven');
 const getXPBasedOn = function(current_xp, match_type) {
@@ -53,8 +54,9 @@ const giveXpToMember = function(uid, match_id, match_type, force_xp_to_add) {
             Raven.captureException(err);
           });
 
-        const year = moment().format('YYYY');
-        const season = moment().format('Q');
+        const season_obj = utils.get_current_season();
+        const year = season_obj[0];
+        const season = season_obj[1];
 
         new XP()
           .where({
@@ -129,9 +131,9 @@ const takeXpFromMember = function(uid, match_id, match_type) {
           .catch(function(err) {
             Raven.captureException(err);
           });
-
-        const year = moment().format('YYYY');
-        const season = moment().format('Q');
+        const season_obj = utils.get_current_season();
+        const year = season_obj[0];
+        const season = season_obj[1];
 
         new XP()
           .where({
@@ -190,8 +192,9 @@ const takeXpFromMember = function(uid, match_id, match_type) {
 };
 
 const addScoreForMember = function(uid, ladder_id, game_id, type) {
-  const year = moment().format('YYYY');
-  const season = moment().format('Q');
+  const season_obj = utils.get_current_season();
+  const year = season_obj[0];
+  const season = season_obj[1];
 
   new Score()
     .where({
@@ -398,9 +401,9 @@ const giveXPtoTeam = function(
   } else {
     xP_to_add = getTeamWpForWinner();
   }
-
-  const year = moment().format('YYYY');
-  const season = moment().format('Q');
+  const season_obj = utils.get_current_season();
+  const year = season_obj[0];
+  const season = season_obj[1];
   new TeamXP()
     .where({
       year: year,
@@ -443,8 +446,9 @@ const takeXPfromTeam = function(team_id, players, match_id, match_type) {
     takeXpFromMember(uid, match_id, match_type);
   }
   const xP_to_add = getTeamWpForLooser();
-  const year = moment().format('YYYY');
-  const season = moment().format('Q');
+  const season_obj = utils.get_current_season();
+  const year = season_obj[0];
+  const season = season_obj[1];
 
   new TeamXP()
     .where({
@@ -519,8 +523,9 @@ const addScoreForTeam = function(
   for (let i = team_members.length - 1; i >= 0; i--) {
     addScoreForMember(parseInt(team_members[i]), ladder_id, game_id, type);
   }
-  const year = moment().format('YYYY');
-  const season = moment().format('Q');
+  const season_obj = utils.get_current_season();
+  const year = season_obj[0];
+  const season = season_obj[1];
   new TeamScore()
     .where({
       year: year,
