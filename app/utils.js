@@ -159,7 +159,7 @@ const utils = {
   get_current_season: function() {
     let today = moment();
     today = today.add('6', 'months');
-    const cur_year = today.format('YYYY');
+    let cur_year = today.format('YYYY');
     cur_year = '' + cur_year;
     const next_year = parseInt(cur_year) + 1;
     if (today.isBetween(cur_year + '-03-19', cur_year + '-06-20', null, '[]')) {
