@@ -5262,6 +5262,9 @@ span.profile_menu_item_inner.small_avat {
     .fl-1 {
         width: 15%
     }
+    .is_not_logged_in ul.navbar-nav.nav-list {
+        flex-direction: row-reverse;
+    }
 }
 
 @media screen and (max-width: 992px) {

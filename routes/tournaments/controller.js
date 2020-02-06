@@ -1453,3 +1453,70 @@ exports.matches_of_user = function(req, res, next) {
       return res.status(200).send({ok: true, items: []});
     });
 };
+
+exports.reverseMatch = function(req, res, next) {
+  new TournamentMatch()
+    .where({id: req.body.match_id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        return res.status(400).send({ok: false, msg: 'No such match'});
+      }
+      const match_obj = match.toJSON();
+      const new_save = {};
+      if (match_obj.result == 'team_1') {
+        new_save.result = 'team_2';
+      } else if (match_obj.result == 'team_2') {
+        new_save.result = 'team_1';
+      }
+      match
+        .save(new_save)
+        .then(function() {
+          res.status(200).send({
+            ok:
+              'match updated, please close this popup and open again to see updated results.'
+          });
+
+          let take_xp_from_team;
+          let give_xp_to_team;
+          let take_xp_from_team_id;
+          let give_xp_to_team_id;
+
+          if (new_save.result == 'team_1') {
+            give_xp_to_team = match.get('team_1_players');
+            take_xp_from_team = match.get('team_2_players');
+            give_xp_to_team_id = match.get('team_1_id');
+            take_xp_from_team_id = match.get('team_2_id');
+          } else {
+            give_xp_to_team = match.get('team_2_players');
+            take_xp_from_team = match.get('team_1_players');
+
+            give_xp_to_team_id = match.get('team_2_id');
+            take_xp_from_team_id = match.get('team_1_id');
+          }
+
+          give_xp_to_team = give_xp_to_team.split('|');
+          take_xp_from_team = take_xp_from_team.split('|');
+
+          matchController.giveXPtoTeam(
+            give_xp_to_team_id,
+            give_xp_to_team,
+            match_obj.id,
+            't'
+          );
+          matchController.takeXPfromTeam(
+            take_xp_from_team_id,
+            take_xp_from_team,
+            match_obj.id,
+            't',
+            'reverse'
+          );
+        })
+        .catch(function(err) {
+          Raven.handleException();
+        });
+    })
+    .catch(function(err) {
+      Raven.handleException();
+    });
+};

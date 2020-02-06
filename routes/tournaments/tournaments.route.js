@@ -15,6 +15,13 @@ routes.post('/delete', u_ctrl.ensureAuthenticated, ctrl.deleteItem);
 routes.get('/upcoming', ctrl.listupcoming);
 routes.post('/join', u_ctrl.ensureAuthenticated, ctrl.join);
 
+routes.post(
+  '/reverseMatch',
+  u_ctrl.ensureAuthenticated,
+  u_ctrl.isAdmin,
+  ctrl.reverseMatch
+);
+
 routes.get('/t_of_user', ctrl.t_of_user);
 routes.post('/saveScore', u_ctrl.ensureAuthenticated, ctrl.saveScore);
 routes.post(

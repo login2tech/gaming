@@ -11217,7 +11217,9 @@ var _modals = require("../../../actions/modals");
 
 var _reactRedux = require("react-redux");
 
-var _reactRouter = require("react-router");
+var _Fetcher = _interopRequireDefault(require("../../../actions/Fetcher"));
+
+var _Messages = _interopRequireDefault(require("../../Messages"));
 
 var _react = _interopRequireDefault(require("react"));
 
@@ -11241,6 +11243,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+// import {Link} from 'react-router';
 var moment = require('moment');
 
 var TMatches =
@@ -11264,6 +11267,53 @@ function (_React$Component) {
       this.props.dispatch((0, _modals.closeModal)({
         id: 'tmatches'
       }));
+    }
+  }, {
+    key: "reverseMatch",
+    value: function reverseMatch(match_id, match) {
+      var _this2 = this;
+
+      this.setState({
+        loaded: false
+      });
+
+      _Fetcher.default.post('/api/tournaments/reverseMatch', {
+        match_id: match_id
+      }).then(function (resp) {
+        if (resp.ok) {
+          // this.props.onComplete && this.props.onComplete();
+          // this.doClose();
+          _this2.setState({
+            loaded: true
+          });
+
+          _this2.props.dispatch({
+            type: 'SUCCESS',
+            messages: [{
+              msg: resp
+            }]
+          });
+        } else {
+          _this2.props.dispatch({
+            type: 'FAILURE',
+            messages: [resp]
+          });
+        }
+      }).catch(function (err) {
+        // console.log(err);
+        _this2.setState({
+          loaded: true
+        });
+
+        var msg = 'Failed to perform Action';
+
+        _this2.props.dispatch({
+          type: 'FAILURE',
+          messages: [{
+            msg: msg
+          }]
+        });
+      });
     }
   }, {
     key: "dynamicStatus_match",
@@ -11307,7 +11357,9 @@ function (_React$Component) {
     }
   }, {
     key: "renderMatchLine",
-    value: function renderMatchLine(match, i, round) {
+    value: function renderMatchLine(match, i, round, can_modify, can_modify_round) {
+      var _this3 = this;
+
       if (match.match_round != round) {
         return false;
       }
@@ -11338,35 +11390,62 @@ function (_React$Component) {
         href: '/tournament-match/' + match.id
       }, "View ", _react.default.createElement("span", {
         className: "h-o-p"
-      }, "Match"))));
+      }, "Match")), ' ', can_modify && can_modify_round == round && match.result && (match.result == 'team_1' || match.result == 'team_2') ? _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("br", null), _react.default.createElement("a", {
+        href: "#",
+        style: {
+          background: 'rgba(255, 0, 0, 0.5)'
+        },
+        onClick: function onClick(e) {
+          e.preventDefault();
+
+          _this3.reverseMatch(match.id, match);
+        }
+      }, "Give win to other team", ' ')) : false));
     }
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       var rounds = this.props.tournament.brackets;
+      console.log(this.props.tournament);
 
       if (!rounds) {
-        rounds = '[]';
+        rounds = '{}';
       }
 
+      var can_modify = false;
       rounds = JSON.parse(rounds);
+      var orig_rounds = rounds;
       rounds = rounds.rounds_calculated;
+
+      if (!rounds.winner) {
+        can_modify = true;
+      }
+
+      var can_modify_round = 0;
+
+      if (orig_rounds && orig_rounds.rounds_calculated) {
+        can_modify_round = orig_rounds.rounds_calculated;
+      }
+
       var rnds = [];
 
       for (var i = 0; i < rounds; i++) {
         rnds.push(i + 1);
       }
 
+      console.log(can_modify, can_modify_round);
       return _react.default.createElement("div", {
         style: {
           maxHeight: '50vh',
           overflowY: 'auto',
           padding: 10
         }
-      }, rnds.map(function (round, i) {
-        var getMatchCount = _this2.props.matches.filter(function (mitm) {
+      }, _react.default.createElement(_Messages.default, {
+        messages: this.props.messages
+      }), rnds.map(function (round, i) {
+        var getMatchCount = _this4.props.matches.filter(function (mitm) {
           return mitm.match_round == round ? true : false;
         }).length;
 
@@ -11405,8 +11484,8 @@ function (_React$Component) {
           style: {
             width: '15%'
           }
-        }, "Info"))), _react.default.createElement("tbody", null, _this2.props.matches.map(function (match, i) {
-          return _this2.renderMatchLine(match, i, round);
+        }, "Info"))), _react.default.createElement("tbody", null, _this4.props.matches.map(function (match, i) {
+          return _this4.renderMatchLine(match, i, round, can_modify, can_modify_round);
         }))))));
       }));
     }
@@ -11427,7 +11506,7 @@ var _default = (0, _reactRedux.connect)(mapStateToProps)(TMatches);
 
 exports.default = _default;
 
-},{"../../../actions/modals":3,"moment":124,"react":193,"react-redux":152,"react-router":183}],48:[function(require,module,exports){
+},{"../../../actions/Fetcher":1,"../../../actions/modals":3,"../../Messages":33,"moment":124,"react":193,"react-redux":152}],48:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
