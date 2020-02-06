@@ -29,7 +29,7 @@ return txt;
 // }
 function scrollToTop()
 {
-  const element = document.getElementById('mainNav');
+  let element = document.getElementById('mainNav');
   if(!element)
 {
     element = document.body;
