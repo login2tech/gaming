@@ -14,6 +14,9 @@ class TMatches extends React.Component {
   }
 
   doClose() {
+    this.props.dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
     this.props.dispatch(
       closeModal({
         id: 'tmatches'
@@ -36,10 +39,8 @@ class TMatches extends React.Component {
           this.setState({
             loaded: true
           });
-          this.props.dispatch({
-            type: 'SUCCESS',
-            messages: [{msg: resp}]
-          });
+          console.log(resp);
+          this.props.dispatch({type: 'SUCCESS', messages: [{msg: resp.msg}]});
         } else {
           this.props.dispatch({type: 'FAILURE', messages: [resp]});
         }
@@ -165,7 +166,7 @@ class TMatches extends React.Component {
 
   render() {
     let rounds = this.props.tournament.brackets;
-    console.log(this.props.tournament);
+    // console.log(this.props.tournament);
     if (!rounds) {
       rounds = '{}';
     }
@@ -186,7 +187,7 @@ class TMatches extends React.Component {
     for (let i = 0; i < rounds; i++) {
       rnds.push(i + 1);
     }
-    console.log(can_modify, can_modify_round);
+    // console.log(can_modify, can_modify_round);
     return (
       <div style={{maxHeight: '50vh', overflowY: 'auto', padding: 10}}>
         <Messages messages={this.props.messages} />

@@ -6809,6 +6809,9 @@ function (_React$Component) {
   }, {
     key: "showMatchesOf",
     value: function showMatchesOf(t_id, item) {
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
       this.setState({
         showing_matches_of: t_id,
         showing_tour: item,
@@ -6821,6 +6824,9 @@ function (_React$Component) {
     value: function showBracketsOf(t_id, item) {
       var _this4 = this;
 
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
       this.setState({
         showing_matches_of: t_id,
         showing_tour: item,
@@ -11264,6 +11270,9 @@ function (_React$Component) {
   _createClass(TMatches, [{
     key: "doClose",
     value: function doClose() {
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
       this.props.dispatch((0, _modals.closeModal)({
         id: 'tmatches'
       }));
@@ -11287,10 +11296,12 @@ function (_React$Component) {
             loaded: true
           });
 
+          console.log(resp);
+
           _this2.props.dispatch({
             type: 'SUCCESS',
             messages: [{
-              msg: resp
+              msg: resp.msg
             }]
           });
         } else {
@@ -11407,8 +11418,7 @@ function (_React$Component) {
     value: function render() {
       var _this4 = this;
 
-      var rounds = this.props.tournament.brackets;
-      console.log(this.props.tournament);
+      var rounds = this.props.tournament.brackets; // console.log(this.props.tournament);
 
       if (!rounds) {
         rounds = '{}';
@@ -11433,9 +11443,9 @@ function (_React$Component) {
 
       for (var i = 0; i < rounds; i++) {
         rnds.push(i + 1);
-      }
+      } // console.log(can_modify, can_modify_round);
 
-      console.log(can_modify, can_modify_round);
+
       return _react.default.createElement("div", {
         style: {
           maxHeight: '50vh',

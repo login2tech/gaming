@@ -155,6 +155,9 @@ class Tournament extends React.Component {
   }
 
   showMatchesOf(t_id, item) {
+    this.props.dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
     this.setState(
       {
         showing_matches_of: t_id,
@@ -167,6 +170,9 @@ class Tournament extends React.Component {
   }
 
   showBracketsOf(t_id, item) {
+    this.props.dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
     this.setState(
       {
         showing_matches_of: t_id,

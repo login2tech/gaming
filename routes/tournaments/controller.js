@@ -1473,7 +1473,8 @@ exports.reverseMatch = function(req, res, next) {
         .save(new_save)
         .then(function() {
           res.status(200).send({
-            ok:
+            ok: true,
+            msg:
               'match updated, please close this popup and open again to see updated results.'
           });
 
