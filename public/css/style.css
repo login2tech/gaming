@@ -5461,11 +5461,7 @@ span.profile_menu_item_inner.small_avat {
         text-align: center;
     }
 
-    td.footable-last-visible:after {
-        content: '+';
-        float: right;
-        font-size: 20px;
-    }
+   
 
     [data-expanded="true"] .footable-last-visible:after {
         content: '- ';
