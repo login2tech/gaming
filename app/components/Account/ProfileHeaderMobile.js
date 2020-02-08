@@ -36,7 +36,6 @@ class ProfileHeader extends React.Component {
     const year = season_obj[0];
 
     const season = season_obj[1];
-    alert(year + ':' + season);
     let xp = 0;
     for (let i = xpo.length - 1; i >= 0; i--) {
       if (parseInt(xpo[i].year) == year && season == parseInt(xpo[i].season)) {

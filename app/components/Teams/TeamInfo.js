@@ -533,7 +533,9 @@ class TeamInfo extends React.Component {
   renderProfileImage() {
     return (
       <div className="content">
-        {this.props.user ? (
+        {this.props.user &&
+        this.currentUserInTeam() &&
+        !this.state.team_info.removed ? (
           <div className="update_btn">
             <label htmlFor="profile_image_select" className=" expand_on_hover">
               <i className="fa fa-edit" /> <span>edit picture</span>
