@@ -157,8 +157,8 @@ const utils = {
   },
 
   get_current_season: function() {
-    let today = moment();
-    today = today.add('6', 'months');
+    const today = moment();
+    // today = today.add('6', 'months');
     let cur_year = today.format('YYYY');
     cur_year = '' + cur_year;
     const next_year = parseInt(cur_year) + 1;

@@ -1,8 +1,5 @@
-
 [TO-TEST] - 10 credits on rank up
-
 [Credentials change] - mails
- -season dates
 [TO-TEST] - create match, check if existing match pending score
 [TO-TEST] - create match, time gaps if existing scheduled
 
@@ -11,7 +8,7 @@
 [GOLIVE] - stripe, make it live
 [GOLIVE] - stripe create plans in stripe dashboard
 [GOLIVE] - hooks url change
-[GOLIVETASK]- delete all testing images?
+[GO-LIVE-TASK]- delete all testing images?
 [waiting on client] - live chat
 [waiting on client] - game rules
 [DONE] - Responsive: tournament page
@@ -22,11 +19,13 @@
 [DONE] - new actions on social feel - edit post, delete post.
 [DONE] - fix: edit team's photo when logged out
 [DONE] - team profile
-[DONE] - remove footable [not working on profile. partially done]
+[DONE] - remove Footable [not working on profile. partially done]
 [DONE] - show brackets in tournaments
 [DONE] - show tournament matches
 [DONE] - internet explorer
 [DONE] - undo tournament matches
+[DONE] -season dates
+
 
 [skipped] - chat on match page
 [skipped] - ending balance on each transaction
