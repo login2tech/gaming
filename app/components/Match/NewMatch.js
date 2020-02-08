@@ -459,7 +459,7 @@ class NewTeam extends React.Component {
                             onChange={this.handleChange.bind(this)}
                           >
                             <option value="">{'Select'}</option>
-                            <option value="60|minutes">Available Now</option>
+                            <option value="61|minutes">Available Now</option>
                             <option value="10|minutes">In 10 minutes</option>
                             <option value="15|minutes">In 15 minutes</option>
                             <option value="30|minutes">In 30 minutes</option>
@@ -488,6 +488,16 @@ class NewTeam extends React.Component {
                         </span>*/}
                           </select>
                         </div>
+                        {this.state.match_starts_in == '61|minutes' ? (
+                          <span>
+                            This match will remain active for 1 hour or until
+                            the match gets acceepted. Once your match is
+                            accepted, it will be scheduled for nearest 10 minute
+                            mark.
+                          </span>
+                        ) : (
+                          ''
+                        )}
                       </div>
 
                       <div className="form-group col-md-12">

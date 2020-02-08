@@ -23,7 +23,8 @@ class Timeline extends React.Component {
     this.state = {
       repost_done: false,
       show_comments: props.expand_comments ? true : false,
-      is_pinned: false
+      is_pinned: false,
+      added_comments: 0
     };
   }
 
@@ -273,8 +274,8 @@ class Timeline extends React.Component {
                   });
                 }}
               >
-                {post.comments && post.comments.length
-                  ? post.comments.length
+                {post.comments
+                  ? post.comments.length + this.state.added_comments
                   : '0'}{' '}
                 <i className="fa fa-comment" />
               </button>
@@ -316,6 +317,9 @@ class Timeline extends React.Component {
             <PostComments
               comments={post.comments}
               post_id={post.id}
+              on_add={() => {
+                this.setState({added_comments: this.state.added_comments + 1});
+              }}
               is_single={this.props.is_single}
             />
           )}
