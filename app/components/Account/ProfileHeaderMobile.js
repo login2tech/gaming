@@ -60,7 +60,7 @@ class ProfileHeader extends React.Component {
 
   rank_max_based_on_xp(xpo) {
     const xp = this.getXp(xpo);
-    return utils.getMeterPercent(xp);
+    return utils.getMeterMax(xp);
   }
 
   rank_percent_based_on_xp(xpo) {
