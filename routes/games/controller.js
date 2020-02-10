@@ -65,7 +65,7 @@ exports.listGame = function(req, res, next) {
 
 exports.listPaged = function(req, res, next) {
   let c = new Game();
-  c = c.orderBy('id', 'DESC');
+  c = c.orderBy('game_order', 'ASC');
   // if (req.query.category_id) {
   //   c = c.where('category_id', 'LIKE', req.query.category_id);
   // }

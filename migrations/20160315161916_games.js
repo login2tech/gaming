@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
       table.string('image_url');
       table.string('banner_url');
       table.string('game_logo');
+      table.string('game_order');
       table.text('rules');
     })
   ]);
