@@ -5461,7 +5461,7 @@ span.profile_menu_item_inner.small_avat {
         text-align: center;
     }
 
-   
+
 
     [data-expanded="true"] .footable-last-visible:after {
         content: '- ';
@@ -6401,5 +6401,9 @@ span.profile_menu_item_inner.small_avat {
 }
 
 .tourinfo .container {
+    position: relative;
+}
+.list_pad{
+  z-index: 1;
     position: relative;
 }
