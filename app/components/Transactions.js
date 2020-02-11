@@ -85,344 +85,402 @@ class Transaction extends React.Component {
         <section className="contet_part">
           <div className="container">
             <div className="row">
+              <div className="col col-md-4">
+                <img
+                  onClick={() => {
+                    this.setState({
+                      show_only: 'cash'
+                    });
+                  }}
+                  style={{height: 100}}
+                  className="pr-4"
+                  src="/assets/icons/money-01.png"
+                />
+
+                <img
+                  onClick={() => {
+                    this.setState({
+                      show_only: 'credits'
+                    });
+                  }}
+                  style={{height: 100}}
+                  className="pr-4"
+                  src="/assets/icons/coin-01.png"
+                />
+
+                <img
+                  onClick={() => {
+                    this.setState({
+                      show_only: 'membership'
+                    });
+                  }}
+                  style={{height: 100}}
+                  className="pr-4"
+                  src="/assets/icons/ocg_member_gold.png"
+                />
+              </div>
+            </div>
+            <div className="row">
               <div className="col">
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <img
-                      src="/assets/icons/money-01.png"
-                      style={{
-                        height: '30px',
-                        marginTop: '20px',
-                        marginBottom: '20px'
-                      }}
-                    />{' '}
-                    OCG CASH TRANSACTIONS
-                  </h5>
-                  <br />
-                  <div className=" ">
-                    <div className="table_wrapper">
-                      <table className="table table-stripped">
-                        <thead>
-                          <tr>
-                            <th style={{width: '6%'}}>Id</th>
-                            <th style={{width: '24%'}}>Date</th>
-                            <th
-                              className="d-none d-md-table-cell"
-                              style={{width: '55%'}}
-                            >
-                              Description
-                            </th>
-                            <th style={{width: '13%'}}>OCH Cash</th>
-                            <th style={{width: '5%'}} className="d-md-none" />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.cash_transactions.map((k, i) => {
-                            return (
-                              <React.Fragment key={k.id}>
-                                <tr key={k.id}>
-                                  <td>
-                                    {(this.state.cash_page - 1) * 25 + i + 1}
-                                  </td>
-                                  <td>{moment(k.created_at).format('llll')}</td>
-                                  <td className="d-none d-md-table-cell">
-                                    {k.details}
-                                  </td>
-                                  <td
-                                    className={
-                                      parseFloat(k.qty) > 0
-                                        ? 'text-success'
-                                        : 'text-danger'
-                                    }
-                                  >
-                                    $ {k.qty}
-                                  </td>
-                                  <td className="d-md-none">
-                                    <button
-                                      className="btn btn-link"
-                                      onClick={() => {
-                                        this.setState({
-                                          expanded:
-                                            k.id == this.state.expand_id
-                                              ? !this.state.expanded
-                                              : true,
-                                          expand_id: k.id
-                                        });
-                                      }}
+                {this.state.show_only == 'cash' ? (
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">
+                      <img
+                        src="/assets/icons/money-01.png"
+                        style={{
+                          height: '30px',
+                          marginTop: '20px',
+                          marginBottom: '20px'
+                        }}
+                      />{' '}
+                      OCG CASH TRANSACTIONS
+                    </h5>
+                    <br />
+                    <div className=" ">
+                      <div className="table_wrapper">
+                        <table className="table table-stripped">
+                          <thead>
+                            <tr>
+                              <th style={{width: '6%'}}>Id</th>
+                              <th style={{width: '24%'}}>Date</th>
+                              <th
+                                className="d-none d-md-table-cell"
+                                style={{width: '55%'}}
+                              >
+                                Description
+                              </th>
+                              <th style={{width: '13%'}}>OCH Cash</th>
+                              <th style={{width: '5%'}} className="d-md-none" />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {this.state.cash_transactions.map((k, i) => {
+                              return (
+                                <React.Fragment key={k.id}>
+                                  <tr key={k.id}>
+                                    <td>
+                                      {(this.state.cash_page - 1) * 25 + i + 1}
+                                    </td>
+                                    <td>
+                                      {moment(k.created_at).format('llll')}
+                                    </td>
+                                    <td className="d-none d-md-table-cell">
+                                      {k.details}
+                                    </td>
+                                    <td
+                                      className={
+                                        parseFloat(k.qty) > 0
+                                          ? 'text-success'
+                                          : 'text-danger'
+                                      }
                                     >
-                                      <span
-                                        className={
-                                          this.state.expanded &&
-                                          this.state.expand_id == k.id
-                                            ? ' fa fa-minus'
-                                            : ' fa fa-plus '
-                                        }
-                                      />
-                                    </button>
-                                  </td>
-                                </tr>
-
-                                {this.state.expanded &&
-                                this.state.expand_id == k.id ? (
-                                  <tr>
-                                    <td colSpan="4">
-                                      <table className="table">
-                                        <tbody>
-                                          <tr>
-                                            <td>Description</td>
-                                            <td>{k.details}</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
+                                      $ {k.qty}
+                                    </td>
+                                    <td className="d-md-none">
+                                      <button
+                                        className="btn btn-link"
+                                        onClick={() => {
+                                          this.setState({
+                                            expanded:
+                                              k.id == this.state.expand_id
+                                                ? !this.state.expanded
+                                                : true,
+                                            expand_id: k.id
+                                          });
+                                        }}
+                                      >
+                                        <span
+                                          className={
+                                            this.state.expanded &&
+                                            this.state.expand_id == k.id
+                                              ? ' fa fa-minus'
+                                              : ' fa fa-plus '
+                                          }
+                                        />
+                                      </button>
                                     </td>
                                   </tr>
-                                ) : (
-                                  false
-                                )}
-                              </React.Fragment>
-                            );
-                          })}
-                        </tbody>
-                      </table>
-                    </div>
-                    <ReactPaginate
-                      previousLabel={'previous'}
-                      nextLabel={'next'}
-                      breakLabel={'...'}
-                      breakClassName={'break-me'}
-                      pageCount={this.state.cash_pagi.pageCount}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={data => {
-                        this.handlePageClick(data, 'cash');
-                      }}
-                      containerClassName={'pagination'}
-                      subContainerClassName={'pages pagination'}
-                      activeClassName={'active'}
-                    />
-                  </div>
-                </div>
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <img
-                      src="/assets/icons/coin-01.png"
-                      style={{
-                        height: '40px',
-                        marginTop: '20px',
-                        marginBottom: '20px'
-                      }}
-                    />{' '}
-                    CREDIT TRANSACTIONS
-                  </h5>
-                  <br />
-                  <div className=" ">
-                    <div className="table_wrapper">
-                      <table className="table table-stripped">
-                        <thead>
-                          <tr>
-                            <th style={{width: '6%'}}>Id</th>
-                            <th style={{width: '24%'}}>Date</th>
-                            <th
-                              className="d-none d-md-table-cell"
-                              style={{width: '55%'}}
-                            >
-                              Description
-                            </th>
-                            <th style={{width: '13%'}}>Credits</th>
-                            <th style={{width: '5%'}} className="d-md-none" />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.credit_transactions.map((k, i) => {
-                            return (
-                              <React.Fragment key={k.id}>
-                                <tr key={k.id}>
-                                  <td>
-                                    {(this.state.credit_page - 1) * 25 + i + 1}
-                                  </td>
-                                  <td>{moment(k.created_at).format('llll')}</td>
-                                  <td className="d-none d-md-table-cell">
-                                    {k.details}
-                                  </td>
-                                  <td
-                                    className={
-                                      parseFloat(k.qty) > 0
-                                        ? 'text-success'
-                                        : 'text-danger'
-                                    }
-                                  >
-                                    {k.qty} credits
-                                  </td>
-                                  <td className="d-md-none">
-                                    <button
-                                      className="btn btn-link"
-                                      onClick={() => {
-                                        this.setState({
-                                          expanded:
-                                            k.id == this.state.expand_id
-                                              ? !this.state.expanded
-                                              : true,
-                                          expand_id: k.id
-                                        });
-                                      }}
-                                    >
-                                      <span
-                                        className={
-                                          this.state.expanded &&
-                                          this.state.expand_id == k.id
-                                            ? ' fa fa-minus'
-                                            : ' fa fa-plus '
-                                        }
-                                      />
-                                    </button>
-                                  </td>
-                                </tr>
 
-                                {this.state.expanded &&
-                                this.state.expand_id == k.id ? (
-                                  <tr>
-                                    <td colSpan="4">
-                                      <table className="table">
-                                        <tbody>
-                                          <tr>
-                                            <td>Description</td>
-                                            <td>{k.details}</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
+                                  {this.state.expanded &&
+                                  this.state.expand_id == k.id ? (
+                                    <tr>
+                                      <td colSpan="4">
+                                        <table className="table">
+                                          <tbody>
+                                            <tr>
+                                              <td>Description</td>
+                                              <td>{k.details}</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  ) : (
+                                    false
+                                  )}
+                                </React.Fragment>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                      <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={this.state.cash_pagi.pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={data => {
+                          this.handlePageClick(data, 'cash');
+                        }}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  false
+                )}
+                {this.state.show_only == 'credits' ? (
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">
+                      <img
+                        src="/assets/icons/coin-01.png"
+                        style={{
+                          height: '40px',
+                          marginTop: '20px',
+                          marginBottom: '20px'
+                        }}
+                      />{' '}
+                      CREDIT TRANSACTIONS
+                    </h5>
+                    <br />
+                    <div className=" ">
+                      <div className="table_wrapper">
+                        <table className="table table-stripped">
+                          <thead>
+                            <tr>
+                              <th style={{width: '6%'}}>Id</th>
+                              <th style={{width: '24%'}}>Date</th>
+                              <th
+                                className="d-none d-md-table-cell"
+                                style={{width: '55%'}}
+                              >
+                                Description
+                              </th>
+                              <th style={{width: '13%'}}>Credits</th>
+                              <th style={{width: '5%'}} className="d-md-none" />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {this.state.credit_transactions.map((k, i) => {
+                              return (
+                                <React.Fragment key={k.id}>
+                                  <tr key={k.id}>
+                                    <td>
+                                      {(this.state.credit_page - 1) * 25 +
+                                        i +
+                                        1}
+                                    </td>
+                                    <td>
+                                      {moment(k.created_at).format('llll')}
+                                    </td>
+                                    <td className="d-none d-md-table-cell">
+                                      {k.details}
+                                    </td>
+                                    <td
+                                      className={
+                                        parseFloat(k.qty) > 0
+                                          ? 'text-success'
+                                          : 'text-danger'
+                                      }
+                                    >
+                                      {k.qty} credits
+                                    </td>
+                                    <td className="d-md-none">
+                                      <button
+                                        className="btn btn-link"
+                                        onClick={() => {
+                                          this.setState({
+                                            expanded:
+                                              k.id == this.state.expand_id
+                                                ? !this.state.expanded
+                                                : true,
+                                            expand_id: k.id
+                                          });
+                                        }}
+                                      >
+                                        <span
+                                          className={
+                                            this.state.expanded &&
+                                            this.state.expand_id == k.id
+                                              ? ' fa fa-minus'
+                                              : ' fa fa-plus '
+                                          }
+                                        />
+                                      </button>
                                     </td>
                                   </tr>
-                                ) : (
-                                  false
-                                )}
-                              </React.Fragment>
-                            );
-                          })}
-                        </tbody>
-                      </table>
+
+                                  {this.state.expanded &&
+                                  this.state.expand_id == k.id ? (
+                                    <tr>
+                                      <td colSpan="4">
+                                        <table className="table">
+                                          <tbody>
+                                            <tr>
+                                              <td>Description</td>
+                                              <td>{k.details}</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  ) : (
+                                    false
+                                  )}
+                                </React.Fragment>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                      <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={this.state.credit_pagi.pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={data => {
+                          this.handlePageClick(data, 'credit');
+                        }}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                      />
                     </div>
-                    <ReactPaginate
-                      previousLabel={'previous'}
-                      nextLabel={'next'}
-                      breakLabel={'...'}
-                      breakClassName={'break-me'}
-                      pageCount={this.state.credit_pagi.pageCount}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={data => {
-                        this.handlePageClick(data, 'credit');
-                      }}
-                      containerClassName={'pagination'}
-                      subContainerClassName={'pages pagination'}
-                      activeClassName={'active'}
-                    />
                   </div>
-                </div>
-
-                <div className="content_box">
-                  <h5 className="prizes_desclaimer">
-                    <img
-                      src="/assets/icons/ocg_member_gold.png"
-                      style={{
-                        height: '40px',
-                        marginTop: '20px',
-                        marginBottom: '20px'
-                      }}
-                    />{' '}
-                    MEMBERSHIP TRANSACTIONS
-                  </h5>
-                  <br />
-                  <div className=" ">
-                    <div className="table_wrapper">
-                      <table className="table table-stripped">
-                        <thead>
-                          <tr>
-                            <th style={{width: '6%'}}>Id</th>
-                            <th style={{width: '24%'}}>Date</th>
-                            <th
-                              className="d-none d-md-table-cell"
-                              style={{width: '70%'}}
-                            >
-                              Description
-                            </th>
-                            <th style={{width: '10%'}} className="d-md-none" />
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {this.state.membership_transactions.map((k, i) => {
-                            return (
-                              <React.Fragment key={k.id}>
-                                <tr key={k.id}>
-                                  <td>{i + 1}</td>
-                                  <td>{moment(k.created_at).format('llll')}</td>
-                                  <td className="d-none d-md-table-cell">
-                                    {k.descr}
-                                  </td>
-                                  <td className="d-md-none">
-                                    <button
-                                      className="btn btn-link"
-                                      onClick={() => {
-                                        this.setState({
-                                          expanded:
-                                            k.id == this.state.expand_id
-                                              ? !this.state.expanded
-                                              : true,
-                                          expand_id: k.id
-                                        });
-                                      }}
-                                    >
-                                      <span
-                                        className={
-                                          this.state.expanded &&
-                                          this.state.expand_id == k.id
-                                            ? ' fa fa-minus'
-                                            : ' fa fa-plus '
-                                        }
-                                      />
-                                    </button>
-                                  </td>
-                                </tr>
-
-                                {this.state.expanded &&
-                                this.state.expand_id == k.id ? (
-                                  <tr>
-                                    <td colSpan="4">
-                                      <table className="table">
-                                        <tbody>
-                                          <tr>
-                                            <td>Description</td>
-                                            <td>{k.descr}</td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
+                ) : (
+                  false
+                )}
+                {this.state.show_only == 'membership' ? (
+                  <div className="content_box">
+                    <h5 className="prizes_desclaimer">
+                      <img
+                        src="/assets/icons/ocg_member_gold.png"
+                        style={{
+                          height: '40px',
+                          marginTop: '20px',
+                          marginBottom: '20px'
+                        }}
+                      />{' '}
+                      MEMBERSHIP TRANSACTIONS
+                    </h5>
+                    <br />
+                    <div className=" ">
+                      <div className="table_wrapper">
+                        <table className="table table-stripped">
+                          <thead>
+                            <tr>
+                              <th style={{width: '6%'}}>Id</th>
+                              <th style={{width: '24%'}}>Date</th>
+                              <th
+                                className="d-none d-md-table-cell"
+                                style={{width: '70%'}}
+                              >
+                                Description
+                              </th>
+                              <th
+                                style={{width: '10%'}}
+                                className="d-md-none"
+                              />
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {this.state.membership_transactions.map((k, i) => {
+                              return (
+                                <React.Fragment key={k.id}>
+                                  <tr key={k.id}>
+                                    <td>{i + 1}</td>
+                                    <td>
+                                      {moment(k.created_at).format('llll')}
+                                    </td>
+                                    <td className="d-none d-md-table-cell">
+                                      {k.descr}
+                                    </td>
+                                    <td className="d-md-none">
+                                      <button
+                                        className="btn btn-link"
+                                        onClick={() => {
+                                          this.setState({
+                                            expanded:
+                                              k.id == this.state.expand_id
+                                                ? !this.state.expanded
+                                                : true,
+                                            expand_id: k.id
+                                          });
+                                        }}
+                                      >
+                                        <span
+                                          className={
+                                            this.state.expanded &&
+                                            this.state.expand_id == k.id
+                                              ? ' fa fa-minus'
+                                              : ' fa fa-plus '
+                                          }
+                                        />
+                                      </button>
                                     </td>
                                   </tr>
-                                ) : (
-                                  false
-                                )}
-                              </React.Fragment>
-                            );
-                          })}
-                        </tbody>
-                      </table>
+
+                                  {this.state.expanded &&
+                                  this.state.expand_id == k.id ? (
+                                    <tr>
+                                      <td colSpan="4">
+                                        <table className="table">
+                                          <tbody>
+                                            <tr>
+                                              <td>Description</td>
+                                              <td>{k.descr}</td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </td>
+                                    </tr>
+                                  ) : (
+                                    false
+                                  )}
+                                </React.Fragment>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                      <ReactPaginate
+                        previousLabel={'previous'}
+                        nextLabel={'next'}
+                        breakLabel={'...'}
+                        breakClassName={'break-me'}
+                        pageCount={this.state.membership_pagi.pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={data => {
+                          this.handlePageClick(data, 'membership');
+                        }}
+                        containerClassName={'pagination'}
+                        subContainerClassName={'pages pagination'}
+                        activeClassName={'active'}
+                      />
                     </div>
-                    <ReactPaginate
-                      previousLabel={'previous'}
-                      nextLabel={'next'}
-                      breakLabel={'...'}
-                      breakClassName={'break-me'}
-                      pageCount={this.state.membership_pagi.pageCount}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={data => {
-                        this.handlePageClick(data, 'membership');
-                      }}
-                      containerClassName={'pagination'}
-                      subContainerClassName={'pages pagination'}
-                      activeClassName={'active'}
-                    />
                   </div>
-                </div>
+                ) : (
+                  false
+                )}
               </div>
             </div>
           </div>

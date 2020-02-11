@@ -3160,6 +3160,8 @@ a.bttn_submit:hover {
     padding: 10px 30px;
     display: inline-block;
     cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .baris li.active {

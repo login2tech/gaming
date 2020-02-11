@@ -179,7 +179,7 @@ const transfer = function(req, res, next) {
       utils.takeCreditsFromUser(
         req.user.id,
         req.body.amount_to_transfer,
-        'Transferred to @' + req.body.username_to_transfer,
+        'Transferred to @' + u.get('username'),
         ''
       );
       utils.giveCreditsToUser(

@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 
 const transporter = nodemailer.createTransport({
-  service: 'SendGrid',
+  service: 'Mailgun',
   auth: {
     user: process.env.MAIL_USERNAME,
     pass: process.env.MAIL_PASSWORD
