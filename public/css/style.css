@@ -6410,3 +6410,6 @@ span.profile_menu_item_inner.small_avat {
   z-index: 1;
     position: relative;
 }
+.nrread{
+  opacity: 0.6;
+}

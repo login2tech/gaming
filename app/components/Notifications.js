@@ -93,7 +93,14 @@ class Notifications extends React.Component {
                     }
 
                     return (
-                      <li key={notif.id} className="position-relative">
+                      <li
+                        key={notif.id}
+                        className={
+                          notif.read
+                            ? ' nrread position-relative '
+                            : '   position-relative '
+                        }
+                      >
                         <a
                           className="stretched-link"
                           onClick={e => {

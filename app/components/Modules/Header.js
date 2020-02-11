@@ -179,7 +179,10 @@ class Header extends React.Component {
                       lnk = '/my_bank';
                     }
                     return (
-                      <li key={notif.id}>
+                      <li
+                        key={notif.id}
+                        className={notif.read ? ' nrread ' : ' '}
+                      >
                         <a
                           onClick={e => {
                             e.preventDefault();
