@@ -85,7 +85,7 @@ class Credits extends React.Component {
     return (
       <div className="text-center mt-3">
         <div className="row no-gutters" role="group" aria-label="Basic example">
-          <div className="col-12 col-md-6 pl-2 mt-2 mb-2">
+          <div className=" col-12 col-md col-lg-6 p-2">
             <button
               type="button"
               className="btn btn-primary m-0 width-100"
@@ -94,7 +94,7 @@ class Credits extends React.Component {
               Deposit OCG Cash
             </button>
           </div>
-          <div className="  col-12 col-md-6 pl-2 mt-2 mb-2">
+          <div className="   col-12 col-md col-lg-6 p-2">
             <button
               type="button"
               disabled={user.cash_balance <= 0.1}

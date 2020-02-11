@@ -61,14 +61,7 @@ class Footer extends React.Component {
                           <i className="fab fa-facebook" />
                         </Link>
                       </li>
-                      <li>
-                        <Link
-                          target="_blank"
-                          to={this.props.settings.twitter_url}
-                        >
-                          <i className="fab fa-twitter" />
-                        </Link>
-                      </li>
+
                       <li>
                         <Link
                           target="_blank"

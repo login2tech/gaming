@@ -24,7 +24,12 @@ class Header extends React.Component {
     event.preventDefault();
     this.props.dispatch(logout());
   };
-
+  notifCount = notifs => {
+    const unread_notif = notifs.filter(function(item) {
+      return item.read ? false : true;
+    });
+    return unread_notif.length;
+  };
   getSuggestions(event) {
     const val = event.target.value;
     this.setState(
@@ -130,7 +135,7 @@ class Header extends React.Component {
                   {this.state.notifications &&
                   this.state.notifications.length ? (
                     <span className="dot notif_dot">
-                      {this.state.notifications.length}
+                      {this.notifCount(this.state.notifications)}
                     </span>
                   ) : (
                     false

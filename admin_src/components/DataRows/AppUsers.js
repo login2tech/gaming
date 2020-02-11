@@ -169,7 +169,7 @@ class AppUsers extends React.Component {
           <div className="panel-body">
             <Messages messages={this.props.messages} />
 
-            <div className="form-group col-md-12">
+            <div className="form-group">
               <input
                 type="text"
                 required
@@ -181,204 +181,208 @@ class AppUsers extends React.Component {
                 onChange={this.handleChange.bind(this)}
               />
             </div>
-            <div className="table-responsive"><table className="table  table-hover  table-responsive   table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>ID</th>
+            <div className="table-responsive">
+              <table className="table  table-hover table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
 
-                  <th>Name</th>
-                  <th>Username</th>
-                  <th>Email</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
 
-                  <th>Status</th>
-                  <th> </th>
-                  <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.items &&
-                  this.state.items.map((u, i) => {
-                    // return JSON.stringify(u);
-                    if (this.state.search) {
-                      let f_name =
-                        u.first_name +
-                        ' ' +
-                        u.last_name +
-                        ' ' +
-                        u.email +
-                        ' ' +
-                        u.username;
-                      f_name = f_name.toLowerCase();
-                      const s = this.state.search.toLowerCase();
-                      if (f_name.indexOf(s) > -1) {
-                        //
-                      } else {
-                        return false;
+                    <th>Status</th>
+                    <th> </th>
+                    <th> </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.items &&
+                    this.state.items.map((u, i) => {
+                      // return JSON.stringify(u);
+                      if (this.state.search) {
+                        let f_name =
+                          u.first_name +
+                          ' ' +
+                          u.last_name +
+                          ' ' +
+                          u.email +
+                          ' ' +
+                          u.username;
+                        f_name = f_name.toLowerCase();
+                        const s = this.state.search.toLowerCase();
+                        if (f_name.indexOf(s) > -1) {
+                          //
+                        } else {
+                          return false;
+                        }
                       }
-                    }
-                    return (
-                      <tr key={u.id}>
-                        <td>{u.id}</td>
-                        <td>
-                          {u.first_name} {u.last_name}
-                        </td>
-                        <td>{u.username}</td>
-                        <td>{u.email}</td>
+                      return (
+                        <tr key={u.id}>
+                          <td>{u.id}</td>
+                          <td>
+                            {u.first_name} {u.last_name}
+                          </td>
+                          <td>{u.username}</td>
+                          <td>{u.email}</td>
 
-                        <td>
-                          {u.banned ? (
-                            <span className="label label-danger">
-                              In-Active
-                            </span>
-                          ) : (
-                            <span className="label label-primary">Active</span>
-                          )}
-                        </td>
+                          <td>
+                            {u.banned ? (
+                              <span className="label label-danger">
+                                In-Active
+                              </span>
+                            ) : (
+                              <span className="label label-primary">
+                                Active
+                              </span>
+                            )}
+                          </td>
 
-                        <td>
-                          <div className="dropdown">
+                          <td>
+                            <div className="dropdown">
+                              <button
+                                className="btn btn-primary btn-xs dropdown-toggle"
+                                type="button"
+                                data-toggle="dropdown"
+                              >
+                                Details
+                                <span className="caret" />
+                              </button>
+                              <ul className="dropdown-menu">
+                                <li>
+                                  <a
+                                    href="#"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.doAction('profile', u);
+                                    }}
+                                  >
+                                    Profile Info
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href={'/u/' + u.username} target="_blank">
+                                    Public Profile
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.doAction('show_xp', u);
+                                    }}
+                                  >
+                                    Show XP Transactions
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.doAction('show_credit', u);
+                                    }}
+                                  >
+                                    Show Credit Transactions
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.doAction('show_cash', u);
+                                    }}
+                                  >
+                                    Show Cash Transactions
+                                  </a>
+                                </li>
+                                <li>
+                                  <Link to={'/teams/' + u.id}>Teams</Link>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                          <td>
+                            {!u.status ? (
+                              <button
+                                onClick={() => {
+                                  this.updateItem(
+                                    u.id,
+                                    {
+                                      status: true,
+                                      ban_reason: ''
+                                    },
+                                    ''
+                                  );
+                                }}
+                                className="btn btn-success btn-xs"
+                              >
+                                {this.state['update_' + u.id] ? (
+                                  <i className="fa fa-spinner fa-spin" />
+                                ) : (
+                                  false
+                                )}{' '}
+                                Enable
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => {
+                                  const a = prompt(
+                                    'Please enter the reason and duration for banning the user?'
+                                  );
+                                  if (!a) {
+                                    return a;
+                                  }
+                                  // return;
+                                  this.updateItem(
+                                    u.id,
+                                    {
+                                      status: false,
+                                      ban_reason: a,
+                                      ban_date: moment()
+                                    },
+                                    ''
+                                  );
+                                }}
+                                className="btn btn-warning btn-xs"
+                              >
+                                {this.state['update_' + u.id] ? (
+                                  <i className="fa fa-spinner fa-spin" />
+                                ) : (
+                                  false
+                                )}{' '}
+                                Disable
+                              </button>
+                            )}{' '}
                             <button
-                              className="btn btn-primary btn-xs dropdown-toggle"
-                              type="button"
-                              data-toggle="dropdown"
-                            >
-                              Details
-                              <span className="caret" />
-                            </button>
-                            <ul className="dropdown-menu">
-                              <li>
-                                <a
-                                  href="#"
-                                  onClick={e => {
-                                    e.preventDefault();
-                                    this.doAction('profile', u);
-                                  }}
-                                >
-                                  Profile Info
-                                </a>
-                              </li>
-                              <li>
-                                <a href={'/u/' + u.username} target="_blank">
-                                  Public Profile
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  onClick={e => {
-                                    e.preventDefault();
-                                    this.doAction('show_xp', u);
-                                  }}
-                                >
-                                  Show XP Transactions
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  onClick={e => {
-                                    e.preventDefault();
-                                    this.doAction('show_credit', u);
-                                  }}
-                                >
-                                  Show Credit Transactions
-                                </a>
-                              </li>
-                              <li>
-                                <a
-                                  href="#"
-                                  onClick={e => {
-                                    e.preventDefault();
-                                    this.doAction('show_cash', u);
-                                  }}
-                                >
-                                  Show Cash Transactions
-                                </a>
-                              </li>
-                              <li>
-                                <Link to={'/teams/' + u.id}>Teams</Link>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                        <td>
-                          {!u.status ? (
-                            <button
-                              onClick={() => {
+                              onClick={e => {
+                                e.preventDefault();
                                 this.updateItem(
                                   u.id,
                                   {
-                                    status: true,
-                                    ban_reason: ''
+                                    role: 'admin'
                                   },
-                                  ''
-                                );
-                              }}
-                              className="btn btn-success btn-xs"
-                            >
-                              {this.state['update_' + u.id] ? (
-                                <i className="fa fa-spinner fa-spin" />
-                              ) : (
-                                false
-                              )}{' '}
-                              Enable
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => {
-                                const a = prompt(
-                                  'Please enter the reason and duration for banning the user?'
-                                );
-                                if (!a) {
-                                  return a;
-                                }
-                                // return;
-                                this.updateItem(
-                                  u.id,
-                                  {
-                                    status: false,
-                                    ban_reason: a,
-                                    ban_date: moment()
-                                  },
-                                  ''
+                                  'make_admin'
                                 );
                               }}
                               className="btn btn-warning btn-xs"
                             >
-                              {this.state['update_' + u.id] ? (
+                              {this.state['update_make_admin' + u.id] ? (
                                 <i className="fa fa-spinner fa-spin" />
                               ) : (
                                 false
                               )}{' '}
-                              Disable
+                              Make Admin
                             </button>
-                          )}{' '}
-                          <button
-                            onClick={e => {
-                              e.preventDefault();
-                              this.updateItem(
-                                u.id,
-                                {
-                                  role: 'admin'
-                                },
-                                'make_admin'
-                              );
-                            }}
-                            className="btn btn-warning btn-xs"
-                          >
-                            {this.state['update_make_admin' + u.id] ? (
-                              <i className="fa fa-spinner fa-spin" />
-                            ) : (
-                              false
-                            )}{' '}
-                            Make Admin
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table></div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
 
             <ReactPaginate
               previousLabel={'previous'}

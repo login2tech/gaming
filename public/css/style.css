@@ -743,6 +743,9 @@ li.logo {
     .carousel-item img {
         height:auto !important
     }
+    .authorize_box{
+        padding: 20px;
+    }
 }
 
 /* Mobile Phones */
