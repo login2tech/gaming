@@ -354,7 +354,11 @@ class NewMatchTeamSelect extends React.Component {
     const gamer_tag = this.state.ladder_obj.gamer_tag;
     if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
       return (
-        <span className="text-danger">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="GamerTag does not exist"
+        >
           <img className="icon_size" src="/images/controller-red.svg" /> Not
           Eligible
         </span>
@@ -381,7 +385,11 @@ class NewMatchTeamSelect extends React.Component {
       parseFloat(team_u.user_info.cash_balance) < amount
     ) {
       return (
-        <span className="text-danger">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="Not Enough OCG Cash Balance"
+        >
           <img className="icon_size" src="/images/controller-red.svg" /> Not
           Eligible
         </span>
@@ -392,7 +400,11 @@ class NewMatchTeamSelect extends React.Component {
       parseFloat(team_u.user_info.credit_balance) < amount
     ) {
       return (
-        <span className="text-danger">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="Not Enough Credit Balance"
+        >
           <img className="icon_size" src="/images/controller-red.svg" /> Not
           Eligible
         </span>

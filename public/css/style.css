@@ -335,7 +335,7 @@ li.logo {
  ----------------------------*/
 .contact-area {
     background: #000;
-    padding: 70px 0px;
+    padding: 70px 0px;box-shadow: 0 0 5px 2px #2847f3
 }
 
 .contact-col-2 {
@@ -418,7 +418,7 @@ li.logo {
  ----------------------------*/
 .footer-area {
     padding: 15px 0px;
-    background: #111;
+    background: #111;box-shadow: 0 0 5px 2px #2847f3
 }
 
 .copyright p {
@@ -2494,7 +2494,7 @@ input[type='text'],input[type='text'],input[type='password'],input[type='number'
     -webkit-appearance: none;
 }
 
-.authorize_box.shadow , .card,.live-wager-row, input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date'] {
+.authorize_box.shadow , .card,.live-wager-row, input[type='text'],input[type='text'],input[type='password'],input[type='number'],textarea,input[type='tel'],input[type='email'],select,input[type='date'], .has_shdow {
     box-shadow: 0 0 5px 2px #2847f3;
 }
 

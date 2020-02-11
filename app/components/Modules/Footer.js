@@ -82,7 +82,6 @@ class Footer extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-lg-2 col-md-2 col-sm-6 col-xs-12"> </div>
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div className="contact-col-3 contact-inner">
                   <h4>Information</h4>
@@ -108,7 +107,11 @@ class Footer extends React.Component {
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+              <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <img src="/images/payments.png" alt="accepted payment" />
+              </div>
+
+              <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div className="contact-col-4 contact-inner">
                   <h4>SUBSCRIBE</h4>
                   <p>Please subscribe for latest game updates.</p>

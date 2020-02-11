@@ -21,6 +21,7 @@ class Transaction extends React.Component {
       cash_pagi: {},
       credit_pagi: {},
       credit_transactions: [],
+      show_only: 'cash',
       membership_transactions: [],
       loaded: false
     };
@@ -85,7 +86,7 @@ class Transaction extends React.Component {
         <section className="contet_part">
           <div className="container">
             <div className="row">
-              <div className="col col-md-4">
+              <div className="col">
                 <img
                   onClick={() => {
                     this.setState({
@@ -93,7 +94,9 @@ class Transaction extends React.Component {
                     });
                   }}
                   style={{height: 100}}
-                  className="pr-4"
+                  className={
+                    this.state.show_only == 'cash' ? 'has_shdow mr-5' : 'mr-5'
+                  }
                   src="/assets/icons/money-01.png"
                 />
 
@@ -104,7 +107,11 @@ class Transaction extends React.Component {
                     });
                   }}
                   style={{height: 100}}
-                  className="pr-4"
+                  className={
+                    this.state.show_only == 'credits'
+                      ? 'has_shdow mr-5'
+                      : 'mr-5'
+                  }
                   src="/assets/icons/coin-01.png"
                 />
 
@@ -115,7 +122,11 @@ class Transaction extends React.Component {
                     });
                   }}
                   style={{height: 100}}
-                  className="pr-4"
+                  className={
+                    this.state.show_only == 'membership'
+                      ? 'has_shdow mr-5'
+                      : 'mr-5'
+                  }
                   src="/assets/icons/ocg_member_gold.png"
                 />
               </div>

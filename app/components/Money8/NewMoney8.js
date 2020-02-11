@@ -169,6 +169,40 @@ class NewMoney8 extends React.Component {
     );
   }
 
+  amIEligibleReason(team_u, ladder) {
+    const gamer_tag = ladder.gamer_tag;
+    if (!team_u['gamer_tag_' + gamer_tag]) {
+      return 'GamerTag does not exist';
+    }
+    if (this.state.match_type == '') {
+      return '';
+    }
+
+    const amount = parseFloat(this.state.match_fee);
+
+    if (this.state.match_type == 'free') {
+      return '';
+    }
+
+    if (this.state.match_type != 'free' && !this.state.match_fee) {
+      return '';
+    }
+
+    if (this.state.match_type == 'cash') {
+      if (parseFloat(team_u.cash_balance) < amount) {
+        return 'Not Enough OCG Cash Balance';
+      }
+    }
+
+    if (this.state.match_type == 'credits') {
+      if (parseFloat(team_u.credit_balance) < amount) {
+        return 'Not Enough Credit Balance';
+      }
+    }
+
+    return '';
+  }
+
   amIEligible(team_u, ladder) {
     const gamer_tag = ladder.gamer_tag;
     if (!team_u['gamer_tag_' + gamer_tag]) {
@@ -468,6 +502,11 @@ class NewMoney8 extends React.Component {
                                         <span className="text-danger">
                                           <img
                                             className="icon_size"
+                                            data-toggle="tooltip"
+                                            title={this.amIEligibleReason(
+                                              team_user,
+                                              ladder
+                                            )}
                                             src="/images/controller-red.svg"
                                           />{' '}
                                           Not Eligible
