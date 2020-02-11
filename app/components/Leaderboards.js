@@ -160,7 +160,7 @@ class Leaderboards extends React.Component {
                           <th>&nbsp;</th>
                           <th data-breakpoints={showing == 'xp' ? '' : 'xs sm'}>
                             {showing == 'xp' ? (
-                              <span className="fa fa-arrow-down m-r-10" />
+                              <span className="text-blue fa fa-arrow-down m-r-10" />
                             ) : (
                               false
                             )}
@@ -172,14 +172,14 @@ class Leaderboards extends React.Component {
                             }
                           >
                             {showing == 'earnings' ? (
-                              <span className="fa fa-arrow-down m-r-10" />
+                              <span className=" text-blue  fa fa-arrow-down m-r-10" />
                             ) : (
                               false
                             )}
                             Earning
                           </th>
                           <th>Career Record</th>
-                          <th class="d-none d-md-table-cell">Win Rate</th>
+                          <th className="d-none d-md-table-cell">Win Rate</th>
                         </tr>
                       </thead>
                       <tbody>

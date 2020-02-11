@@ -4529,7 +4529,7 @@ ul.notices li:first-child {
 }
 
 .text-blue {
-    color: #114afb;
+    color: rgb(40, 72, 243);
 }
 
 .chat_user_name:before {
