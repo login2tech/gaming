@@ -25,6 +25,7 @@ import Dashboard from './components/Account/Dashboard';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
 import Game from './components/Game';
+import GameRules from './components/GameRules';
 import Leaderboards from './components/Leaderboards';
 
 import Topics from './components/Forums/Topic';
@@ -240,6 +241,11 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route onLeave={clearMessages} path="/game/:id/:title" component={Game} />
+      <Route
+        onLeave={clearMessages}
+        path="/game-rules/:id"
+        component={GameRules}
+      />
       <Route
         onLeave={clearMessages}
         path="/matchfinder"

@@ -8,7 +8,15 @@ import React from 'react';
 class NewGame extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loaded: true, title: '', image_url: '', banner_url: ''};
+    this.state = {
+      loaded: true,
+      title: '',
+      image_url: '',
+
+      rules: '',
+
+      banner_url: ''
+    };
     this.image_url_ref = React.createRef();
     this.banner_url_ref = React.createRef();
   }
@@ -30,6 +38,7 @@ class NewGame extends React.Component {
     Fetcher.post('/api/games/add', {
       title: this.state.title,
       image_url: this.state.image_url,
+      rules: this.state.rules,
       banner_url: this.state.banner_url
     })
       .then(resp => {
@@ -193,8 +202,17 @@ class NewGame extends React.Component {
                   // value={this.state.title}
                 />
               </div>
+              <div className="input-control">
+                <label>Rules</label>
+                <textarea
+                  className="form-control"
+                  name="rules"
+                  onChange={this.handleChange.bind(this)}
+                  id="rules"
+                  value={this.state.rules}
+                />
+              </div>
               <br />
-
               <input
                 value="Create Game"
                 type="submit"

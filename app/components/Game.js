@@ -439,7 +439,7 @@ class Game extends React.Component {
                     </Link>
                   </div>
                   <div>
-                    <div className="dropdown fl-right">
+                    <div className="dropdown fl-right ml-2  dib mw_200">
                       <button
                         className="btn btn-default bttn_submit dib mw_200 dropdown-toggle"
                         type="button"
@@ -497,7 +497,13 @@ class Game extends React.Component {
                           );
                         })}
                       </div>
-                    </div>
+                    </div>{' '}
+                    <Link
+                      to={'/game-rules/' + this.props.params.id}
+                      className="fl-right ml-2 btn btn-default bttn_submit dib mw_200"
+                    >
+                      Rules
+                    </Link>
                   </div>
                 </div>
               </div>

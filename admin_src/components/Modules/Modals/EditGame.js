@@ -9,7 +9,13 @@ import React from 'react';
 class EditGame extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loaded: true, title: '', image_url: '', banner_url: ''};
+    this.state = {
+      loaded: true,
+      title: '',
+      image_url: '',
+      banner_url: '',
+      rules: ''
+    };
     this.image_url_ref = React.createRef();
     this.banner_url_ref = React.createRef();
   }
@@ -24,7 +30,8 @@ class EditGame extends React.Component {
         title: dt.title,
         id: dt.id,
         image_url: dt.image_url,
-        banner_url: dt.banner_url
+        banner_url: dt.banner_url,
+        rules: dt.rules
       });
     }
   }
@@ -47,6 +54,7 @@ class EditGame extends React.Component {
       title: this.state.title,
       id: this.state.id,
       image_url: this.state.image_url,
+      rules: this.state.rules,
       banner_url: this.state.banner_url
     })
       .then(resp => {
@@ -220,6 +228,16 @@ class EditGame extends React.Component {
                   // onChange={this.handleChange.bind(this)}
                   id="banner_url"
                   // value={this.state.title}
+                />
+              </div>
+              <div className="input-control">
+                <label>Rules</label>
+                <textarea
+                  className="form-control"
+                  name="rules"
+                  onChange={this.handleChange.bind(this)}
+                  id="rules"
+                  value={this.state.rules}
                 />
               </div>
               <br />

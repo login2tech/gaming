@@ -14,9 +14,9 @@ class EditLadder extends React.Component {
       min_players: '',
       gamer_tag: '',
       platform: '',
-      rules: '',
       max_players: '',
-      games: []
+      games: [],
+      rules: ''
     };
   }
 
