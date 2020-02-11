@@ -109,8 +109,7 @@ exports.takeCashFromUser = function(user_id, amount, descr, obj) {
 };
 
 exports.get_current_season = function() {
-  let today = moment();
-  today = today.add('6', 'months');
+  const today = moment();
   let cur_year = today.format('YYYY');
   cur_year = '' + cur_year;
   const next_year = parseInt(cur_year) + 1;
