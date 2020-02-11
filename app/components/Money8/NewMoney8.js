@@ -257,6 +257,15 @@ class NewMoney8 extends React.Component {
                           return (
                             <optgroup label={game.title} key={game.id}>
                               {game.ladders.map((ladder, j) => {
+                                if (
+                                  ladder.title
+                                    .toLowerCase()
+                                    .indexOf('singles') > -1 ||
+                                  ladder.min_players == 1 ||
+                                  ladder.max_players == 1
+                                ) {
+                                  return false;
+                                }
                                 return (
                                   <option
                                     value={'' + game.id + '_' + ladder.id}

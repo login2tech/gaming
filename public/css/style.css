@@ -737,6 +737,9 @@ li.logo {
     .single-service h3 {
         font-size: 20px;
     }
+    .authorize_box{
+        padding: 20px  !important
+    }
 }
 
 @media only screen and (max-width: 767px) {
@@ -744,7 +747,7 @@ li.logo {
         height:auto !important
     }
     .authorize_box{
-        padding: 20px;
+        padding: 20px  !important
     }
 }
 
@@ -3828,14 +3831,14 @@ p.score_obj_scr {
 }
 
 .user-profile-trophies-container>div > a, .user-profile-trophies-container>div > .link_alt {
-    background-color: #222d39;
+    background-color: #000;
 }
 
 .user-profile-trophies-container>div div.trophy-image {
     width: 100px;
     height: 100%;
     flex-shrink: 0;
-    background-color: #111111;
+    background-color: #000;
     display: flex;
     align-items: center;
     text-align: center;
@@ -5872,6 +5875,21 @@ span.profile_menu_item_inner.small_avat {
 }
 
 @media screen and (max-width: 576px) {
+
+  .recordentr .link_alt{
+    background: #000 !important;
+
+    padding-top: 10px;
+padding-bottom: 15px;
+  }
+  .recordentr .reset_rep{
+
+    margin-top: 10px;
+  }
+  .user-profile-trophies-container>div{
+
+    padding-left: 15px;
+  }
     .tour-box .tour-details {
         height: auto
     }
@@ -6100,7 +6118,7 @@ span.profile_menu_item_inner.small_avat {
     }
 
     .login-ph-btn {
-        width: 60px;
+        width: 94px;
         font-size: 12px;
         background: rgb(22, 56, 195);
         border-radius: 0;
@@ -6412,4 +6430,10 @@ span.profile_menu_item_inner.small_avat {
 }
 .nrread{
   opacity: 0.6;
+}
+.lpb .btn.btn-primary{
+    padding: 10px 10px !important;
+}
+optgroup:empty {
+  display: none
 }

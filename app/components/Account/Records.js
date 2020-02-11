@@ -219,7 +219,7 @@ class Records extends React.Component {
                     {rec.map((notif, i) => {
                       return (
                         <div
-                          className="single-trophy-container col-12 col-md-6 col-lg-4"
+                          className="single-trophy-container col-12 col-md-6 col-lg-4 recordentr"
                           key={notif}
                         >
                           <div className="trof_a link_alt">

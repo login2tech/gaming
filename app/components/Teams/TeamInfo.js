@@ -478,17 +478,31 @@ class TeamInfo extends React.Component {
           </div>
           <span>{this.rank_min_based_on_xp(team_info.xp_obj)}</span>
           <span
-            style={{
-              // position: 'absolute',
-              background: 'url(/images/blank_ctrl2.png) center no-repeat',
-              marginTop: '5px',
-              backgroundSize: 'contain',
-              padding: '5px 20px 9px 20px',
-              marginLeft:
-                'calc(' +
-                +this.rank_percent_based_on_xp(team_info.xp_obj) +
-                '% - 29px)'
-            }}
+            style={
+              cls == 'mobile'
+                ? {
+                    // position: 'absolute',
+                    background: 'url(/images/blank_ctrl2.png) center no-repeat',
+                    marginTop: '5px',
+                    backgroundSize: 'contain',
+                    padding: '5px 20px 9px 20px',
+                    marginLeft:
+                      'calc(' +
+                      +this.rank_percent_based_on_xp(team_info.xp_obj) +
+                      '% - 29px)'
+                  }
+                : {
+                    position: 'absolute',
+                    background: 'url(/images/blank_ctrl2.png) center no-repeat',
+                    marginTop: '5px',
+                    backgroundSize: 'contain',
+                    padding: '5px 20px 9px 20px',
+                    left:
+                      'calc(' +
+                      +this.rank_percent_based_on_xp(team_info.xp_obj) +
+                      '% - 29px)'
+                  }
+            }
           >
             {this.getXp(team_info.xp_obj)}
           </span>
@@ -780,7 +794,7 @@ class TeamInfo extends React.Component {
                 )}
               </div>
 
-              <div className=" order-md-last col-md-4 d-md-block d-none row   ">
+              <div className=" order-md-last col-md-4 d-md-block d-none row  pr-0 ">
                 <div className="row">
                   <div className="col-md-1" />
 
@@ -860,7 +874,9 @@ class TeamInfo extends React.Component {
                     className="rank-image float-left"
                   />
                 </div>
-                <div className="col-9  rank-data">{this.renderXPMeter()}</div>
+                <div className="col-9  rank-data">
+                  {this.renderXPMeter('mobile')}
+                </div>
               </div>
               <div className="col-xs-12 profile-page-stats-block-wrapper">
                 <div className="profile-page-stats-block" />

@@ -219,7 +219,7 @@ exports.hasNewPosts = function(req, res, next) {
 };
 
 exports.listSingleItem = function(req, res, next) {
-  const cur_u = req.user.id ? req.user.id : 99999;
+  const cur_u = req.user && req.user.id ? req.user.id : 99999;
   new Item()
     .where({id: req.params.id})
     .fetch({
@@ -285,7 +285,7 @@ exports.listSingleItem = function(req, res, next) {
 };
 
 exports.listItemMyFeed = function(req, res, next) {
-  const cur_u = req.user.id ? req.user.id : 99999;
+  const cur_u = req.user && req.user.id ? req.user.id : 99999;
   const a = req.users_my_following;
   a.push(req.user.id);
 
@@ -386,7 +386,7 @@ exports.listItemMyFeed = function(req, res, next) {
 };
 
 exports.listItemMy = function(req, res, next) {
-  const cur_u = req.user.id ? req.user.id : 99999;
+  const cur_u = req.user && req.user.id ? req.user.id : 99999;
   let n = new Item()
 
     .orderBy('is_pinned', 'DESC')
@@ -592,7 +592,7 @@ exports.listItemAll = function(req, res, next) {
 };
 
 exports.famousWeek = function(req, res, next) {
-  const cur_u = req.user.id ? req.user.id : 99999;
+  const cur_u = req.user && req.user.id ? req.user.id : 99999;
   const n = new Item()
     .orderBy('id', 'DESC')
     .where('created_at', '>=', moment().subtract(7, 'days'))
@@ -675,7 +675,7 @@ exports.famousWeek = function(req, res, next) {
 };
 
 exports.famousDay = function(req, res, next) {
-  const cur_u = req.user.id ? req.user.id : 99999;
+  const cur_u = req.user && req.user.id ? req.user.id : 99999;
   const n = new Item()
     .orderBy('id', 'DESC')
     .where('created_at', '>=', moment().subtract(1, 'days'))
@@ -758,7 +758,7 @@ exports.famousDay = function(req, res, next) {
 };
 
 exports.famousMonth = function(req, res, next) {
-  const cur_u = req.user.id ? req.user.id : 99999;
+  const cur_u = req.user && req.user.id ? req.user.id : 99999;
   const n = new Item()
     .orderBy('id', 'DESC')
     .where('created_at', '>=', moment().subtract(30, 'days'))
