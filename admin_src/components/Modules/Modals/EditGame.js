@@ -315,6 +315,32 @@ class EditGame extends React.Component {
                 />
               </div>
               <div className="input-control">
+                <label>Mobile Banner</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="mobile_banner_url"
+                  required
+                  ref={this.mobile_banner_ref}
+                  // onChange={this.handleChange.bind(this)}
+                  id="mobile_banner_url"
+                  // value={this.state.title}
+                />
+              </div>
+              <div className="input-control">
+                <label> Banner 2</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="banner_2_url"
+                  required
+                  ref={this.banner_2_url_ref}
+                  // onChange={this.handleChange.bind(this)}
+                  id="banner_2_url"
+                  // value={this.state.title}
+                />
+              </div>
+              <div className="input-control">
                 <label>Rules</label>
                 <textarea
                   className="form-control"
