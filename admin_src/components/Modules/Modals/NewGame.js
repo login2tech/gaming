@@ -15,10 +15,14 @@ class NewGame extends React.Component {
 
       rules: '',
 
-      banner_url: ''
+      banner_url: '',
+      mobile_banner_url: '',
+      banner_2_url: ''
     };
     this.image_url_ref = React.createRef();
     this.banner_url_ref = React.createRef();
+    this.banner_2_url_ref = React.createRef();
+    this.mobile_banner_url = React.createRef();
   }
 
   doClose() {
@@ -39,7 +43,9 @@ class NewGame extends React.Component {
       title: this.state.title,
       image_url: this.state.image_url,
       rules: this.state.rules,
-      banner_url: this.state.banner_url
+      banner_url: this.state.banner_url,
+      mobile_banner_url: this.state.mobile_banner_url,
+      banner_2_url: this.state.banner_2_url
     })
       .then(resp => {
         if (resp.ok) {
@@ -84,6 +90,82 @@ class NewGame extends React.Component {
         this.setState(
           {
             banner_url: res.data.file
+          },
+          () => {
+            this.finalSubmit();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
+        // console.log(err);
+      });
+  }
+
+  uploadFile3() {
+    const data = new FormData();
+
+    const node = this.mobile_banner_ref.current;
+
+    const file_1 = node.files[0];
+    if (!file_1) {
+      this.uploadFile4();
+      return;
+    }
+    data.append('file', file_1, file_1.name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          // this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            mobile_banner_url: res.data.file
+          },
+          () => {
+            this.finalSubmit();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
+        // console.log(err);
+      });
+  }
+
+  uploadFile4() {
+    const data = new FormData();
+
+    const node = this.banner_2_url_ref.current;
+
+    const file_1 = node.files[0];
+    if (!file_1) {
+      this.finalSubmit();
+      return;
+    }
+    data.append('file', file_1, file_1.name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          // this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            banner_2_url: res.data.file
           },
           () => {
             this.finalSubmit();
@@ -199,6 +281,32 @@ class NewGame extends React.Component {
                   ref={this.banner_url_ref}
                   // onChange={this.handleChange.bind(this)}
                   id="banner_url"
+                  // value={this.state.title}
+                />
+              </div>
+              <div className="input-control">
+                <label>Mobile Banner</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="mobile_banner_url"
+                  required
+                  ref={this.mobile_banner_ref}
+                  // onChange={this.handleChange.bind(this)}
+                  id="mobile_banner_url"
+                  // value={this.state.title}
+                />
+              </div>
+              <div className="input-control">
+                <label> Banner 2</label>
+                <input
+                  type="file"
+                  className="form-control"
+                  name="banner_2_url"
+                  required
+                  ref={this.banner_2_url_ref}
+                  // onChange={this.handleChange.bind(this)}
+                  id="banner_2_url"
                   // value={this.state.title}
                 />
               </div>

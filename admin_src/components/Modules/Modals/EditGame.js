@@ -14,10 +14,14 @@ class EditGame extends React.Component {
       title: '',
       image_url: '',
       banner_url: '',
+      mobile_banner_url: '',
+      banner_2_url: '',
       rules: ''
     };
     this.image_url_ref = React.createRef();
     this.banner_url_ref = React.createRef();
+    this.banner_2_url_ref = React.createRef();
+    this.mobile_banner_ref = React.createRef();
   }
 
   componentDidMount() {
@@ -31,6 +35,8 @@ class EditGame extends React.Component {
         id: dt.id,
         image_url: dt.image_url,
         banner_url: dt.banner_url,
+        mobile_banner_url: dt.mobile_banner_url,
+        banner_2_url: dt.banner_2_url,
         rules: dt.rules
       });
     }
@@ -55,7 +61,9 @@ class EditGame extends React.Component {
       id: this.state.id,
       image_url: this.state.image_url,
       rules: this.state.rules,
-      banner_url: this.state.banner_url
+      banner_url: this.state.banner_url,
+      mobile_banner_url: this.state.mobile_banner_url,
+      banner_2_url: this.state.banner_2_url
     })
       .then(resp => {
         if (resp.ok) {
@@ -91,7 +99,7 @@ class EditGame extends React.Component {
 
     const file_1 = node.files[0];
     if (!file_1) {
-      this.finalSubmit();
+      this.uploadFile3();
       return;
     }
     data.append('file', file_1, file_1.name);
@@ -107,6 +115,82 @@ class EditGame extends React.Component {
         this.setState(
           {
             banner_url: res.data.file
+          },
+          () => {
+            this.finalSubmit();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
+        // console.log(err);
+      });
+  }
+
+  uploadFile3() {
+    const data = new FormData();
+
+    const node = this.mobile_banner_ref.current;
+
+    const file_1 = node.files[0];
+    if (!file_1) {
+      this.uploadFile4();
+      return;
+    }
+    data.append('file', file_1, file_1.name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          // this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            mobile_banner_url: res.data.file
+          },
+          () => {
+            this.finalSubmit();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
+        // console.log(err);
+      });
+  }
+
+  uploadFile4() {
+    const data = new FormData();
+
+    const node = this.banner_2_url_ref.current;
+
+    const file_1 = node.files[0];
+    if (!file_1) {
+      this.finalSubmit();
+      return;
+    }
+    data.append('file', file_1, file_1.name);
+    axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          // this.setState({
+          //   loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          // });
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            banner_2_url: res.data.file
           },
           () => {
             this.finalSubmit();
