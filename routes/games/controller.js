@@ -125,7 +125,9 @@ exports.addGame = function(req, res, next) {
   new Game({
     title: req.body.title,
     image_url: req.body.image_url,
-    banner_url: req.body.banner_url
+    banner_url: req.body.banner_url,
+    mobile_banner_url: req.body.mobile_banner_url,
+    banner_2_url: req.body.banner_2_url
     // category_id: req.body.category_id,
     // short_content: req.body.short_content
   })
@@ -157,7 +159,9 @@ exports.updateGame = function(req, res, next) {
   const obj = {
     title: req.body.title,
     image_url: req.body.image_url,
-    banner_url: req.body.banner_url
+    banner_url: req.body.banner_url,
+    mobile_banner_url: req.body.mobile_banner_url,
+    banner_2_url: req.body.banner_2_url
   };
 
   if (req.body.remove_media) {
