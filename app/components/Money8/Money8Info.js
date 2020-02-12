@@ -614,7 +614,11 @@ class Money8Info extends React.Component {
       this.state.match.game &&
       this.state.match.game.banner_2_url
         ? {
-            backgroundImage: 'url(' + this.state.match.game.banner_2_url + ')'
+            backgroundImage: 'url(' + this.state.match.game.banner_2_url + ')',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '400px'
           }
         : {};
     let game_settings =
