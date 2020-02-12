@@ -381,6 +381,112 @@ class Game extends React.Component {
     this.setState(obj, this.fetchUpcomingMatches);
   }
 
+  renderButton1 = cls => (
+    <Link
+      to={'/match/new/g/' + this.props.params.id}
+      className={'btn btn-default bttn_submit' + cls}
+    >
+      Create Match
+    </Link>
+  );
+  renderButton2 = cls => (
+    <Link
+      to={
+        this.props.user
+          ? '/u/' +
+            this.props.user.username +
+            '/teams/new/g/' +
+            this.props.params.id
+          : '/login'
+      }
+      className={'btn btn-default bttn_submit' + cls}
+    >
+      Create Team
+    </Link>
+  );
+
+  renderButton4 = cls => (
+    <div className={'dropdown' + cls}>
+      <button
+        className="btn btn-default bttn_submit dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {this.state.selected_ladder_name
+          ? this.state.selected_ladder_name
+          : 'Filter by ladder'}
+      </button>
+      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        {this.state.selected_ladder_name ? (
+          <a
+            className={'dropdown-item'}
+            href="#"
+            onClick={e => {
+              e.preventDefault();
+              this.filterMatches('none');
+            }}
+          >
+            All Ladders
+          </a>
+        ) : (
+          false
+        )}
+        <br />
+        {this.getLadders().map((item, i) => {
+          return (
+            <a
+              className={
+                'dropdown-item' +
+                (item.is_platform ? ' disabled' : '') +
+                (item.is_ladder ? ' is_ladder_item' : '')
+              }
+              href="#"
+              onClick={e => {
+                e.preventDefault();
+                if (item.is_ladder) {
+                  this.filterMatches(item);
+                }
+              }}
+              key={item.id}
+              disabled={item.is_platform}
+            >
+              {item.name}{' '}
+              {item.is_platform ? this.getPlatformIcon(item.name) : false}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  );
+  renderButton3 = cls => (
+    <Link
+      to={'/game-rules/' + this.props.params.id}
+      className={'btn btn-default bttn_submit' + cls}
+    >
+      Rules
+    </Link>
+  );
+  renderButtonSet1() {
+    return (
+      <>
+        {this.renderButton1(' fl-right dib mw_200')}{' '}
+        {this.renderButton2(' fl-right dib mw_200')}
+      </>
+    );
+  }
+
+  renderButtonSet2(cls) {
+    return (
+      <>
+        {this.renderButton3(' fl-right dib mw_200')}{' '}
+        {this.renderButton4(' fl-right dib mw_200')}
+      </>
+    );
+  }
+
   render() {
     // const {leaderboards, active_leaderboard} = this.state;
     const game_id = this.props.params.id;
@@ -388,7 +494,7 @@ class Game extends React.Component {
       <div>
         <section
           className={
-            'page_title_bar gm noblend' +
+            'd-md-none page_title_bar is_single_game_header gm noblend' +
             (this.state.game && this.state.game.banner_url
               ? ' has_game_banner'
               : ' ')
@@ -398,113 +504,88 @@ class Game extends React.Component {
               ? {
                   minHeight: 250,
                   paddingBottom: 10,
-                  backgroundImage: "url('" + this.state.game.banner_url + "')"
+                  display: 'flex',
+                  backgroundImage:
+                    "url('" + this.state.game.mobile_banner_url + "')"
                 }
-              : {minHeight: 250, paddingBottom: 10}
+              : {minHeight: 250, paddingBottom: 10, display: 'flex'}
           }
+        >
+          <div className="container-fluid d-flex">
+            <div
+              className="row no-gutters full_width"
+              style={{
+                alignSelf: 'flex-end'
+              }}
+            >
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-right ">
+                  <h3> </h3>
+                </div>
+
+                <div
+                  className="list_pad mobil-game-actions game_actions banner_actions d-flex p-0"
+                  style={{
+                    alignSelf: 'flex-end',
+                    flexDirection: 'row',
+
+                    justifyContent: 'flex-end'
+                  }}
+                >
+                  <div
+                    style={{
+                      flex: 1,
+                      display: 'inline-block'
+                    }}
+                  >
+                    {this.renderButtonSet1()}
+                  </div>
+                  <div
+                    style={{
+                      flex: 1,
+                      display: 'inline-block'
+                    }}
+                  >
+                    {this.renderButtonSet2()}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section
+          className={'d-none d-md-block page_title_bar  gm noblend'}
+          style={{minHeight: 250, padding: 0}}
         >
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
+              <div
+                className="col-md-8 col-sm-12 col-xs-12 is_single_game_header_desk"
+                style={
+                  this.state.game
+                    ? {
+                        minHeight: 250,
+                        paddingTop: 20,
+                        paddingBottom: 10,
+                        backgroundImage:
+                          "url('" + this.state.game.banner_url + "')"
+                      }
+                    : {minHeight: 250, paddingTop: 20, paddingBottom: 10}
+                }
+              >
                 <div className="section-headline white-headline text-right d-none d-md-inline-block">
                   <h3> </h3>
                 </div>
-                <div
-                  className="list_pad game_actions banner_actions"
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    flexDirection: 'column'
-                  }}
-                >
-                  <div>
-                    <Link
-                      to={'/match/new/g/' + this.props.params.id}
-                      className="fl-right ml-2 btn btn-default bttn_submit dib mw_200"
-                    >
-                      Create Match
-                    </Link>{' '}
-                    <Link
-                      to={
-                        this.props.user
-                          ? '/u/' +
-                            this.props.user.username +
-                            '/teams/new/g/' +
-                            this.props.params.id
-                          : '/login'
-                      }
-                      className="fl-right ml-2 btn btn-default bttn_submit dib mw_200"
-                    >
-                      Create Team
-                    </Link>
-                  </div>
-                  <div>
-                    <div className="dropdown fl-right ml-2  dib mw_200">
-                      <button
-                        className="btn btn-default bttn_submit dib mw_200 dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                      >
-                        {this.state.selected_ladder_name
-                          ? this.state.selected_ladder_name
-                          : 'Filter by ladder'}
-                      </button>
-                      <div
-                        className="dropdown-menu"
-                        aria-labelledby="dropdownMenuButton"
-                      >
-                        {this.state.selected_ladder_name ? (
-                          <a
-                            className={'dropdown-item'}
-                            href="#"
-                            onClick={e => {
-                              e.preventDefault();
-                              this.filterMatches('none');
-                            }}
-                          >
-                            All Ladders
-                          </a>
-                        ) : (
-                          false
-                        )}
-                        <br />
-                        {this.getLadders().map((item, i) => {
-                          return (
-                            <a
-                              className={
-                                'dropdown-item' +
-                                (item.is_platform ? ' disabled' : '') +
-                                (item.is_ladder ? ' is_ladder_item' : '')
-                              }
-                              href="#"
-                              onClick={e => {
-                                e.preventDefault();
-                                if (item.is_ladder) {
-                                  this.filterMatches(item);
-                                }
-                              }}
-                              key={item.id}
-                              disabled={item.is_platform}
-                            >
-                              {item.name}{' '}
-                              {item.is_platform
-                                ? this.getPlatformIcon(item.name)
-                                : false}
-                            </a>
-                          );
-                        })}
-                      </div>
-                    </div>{' '}
-                    <Link
-                      to={'/game-rules/' + this.props.params.id}
-                      className="fl-right ml-2 btn btn-default bttn_submit dib mw_200"
-                    >
-                      Rules
-                    </Link>
-                  </div>
+              </div>
+              <div className="col-md-4 game_actions">
+                <div className="row full_width">
+                  <div className="col">{this.renderButton1(' full_width')}</div>
+                  <div className="col">{this.renderButton2(' full_width')}</div>
+                </div>
+                <div className="row full_width">
+                  <div className="col">{this.renderButton3(' full_width')}</div>
+                  <div className="col">{this.renderButton4(' full_width')}</div>
                 </div>
               </div>
             </div>

@@ -43,7 +43,7 @@ html, body {
     font-weight: 400;
     font-size: 15px;
     font-family: 'Segoe UI Light', sans-serif;
-    background: #111;
+    background: #000;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -3489,7 +3489,15 @@ ul.submenu li a {
     background: none;
     color: #fff;
 }
+.mobil-game-actions {
+    width: 100%;
+  }
+  .mobil-game-actions > div > a, .mobil-game-actions > div > div {
+    width: calc(50% - 2px) !important;
+    margin-right: 1px;
+    margin-left: 1px;
 
+}
 .user_sugggestions li:not(:first-child) {
     background: #114afb;
     color: #fff;
@@ -3500,15 +3508,23 @@ ul.submenu li a {
     width: 100%;
     line-height: 10px;
 }
-
+ .full_width {
+    width: 100%;
+}
 ul.submenu.notification_list {
     max-height: 400px;
     overflow-y: auto;
+}.game_actions{
+  display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
 }
 
-.mw_200 {
+.mw_200:not(.mw_50):not(.min-w-0) {
     max-width: 200px;
 }
+.min-w-0{min-width: 0;}
 
 .following_btn a {
     font-size: 20px;
@@ -4243,6 +4259,16 @@ img.hover_img {
     max-width: none;
 }
 
+.is_single_game_header_desk{
+  background-size: cover;
+background-repeat: no-repeat;
+
+}
+.mw_50 {
+    max-width: 47%;
+    width: 100%;
+    min-width: 0px;
+}
 @media screen and (max-width: 768px) {
     .table_wrapper {
         overflow-x: scroll;
