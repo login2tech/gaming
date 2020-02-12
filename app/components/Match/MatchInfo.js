@@ -678,10 +678,13 @@ class MatchInfo extends React.Component {
     const {match} = this.state;
 
     const divStyle =
-      match && match.game && match.game.banner_url
+      match && match.game && match.game.banner_2_url
         ? {
-            backgroundImage: 'url(' + match.game.banner_url + ')',
-            backgroundPosition: 'left'
+            backgroundImage: 'url(' + match.game.banner_2_url + ')',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '400px'
           }
         : {};
 

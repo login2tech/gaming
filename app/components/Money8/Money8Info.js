@@ -612,9 +612,9 @@ class Money8Info extends React.Component {
     const divStyle =
       this.state.match &&
       this.state.match.game &&
-      this.state.match.game.banner_url
+      this.state.match.game.banner_2_url
         ? {
-            backgroundImage: 'url(' + this.state.match.game.banner_url + ')'
+            backgroundImage: 'url(' + this.state.match.game.banner_2_url + ')'
           }
         : {};
     let game_settings =
