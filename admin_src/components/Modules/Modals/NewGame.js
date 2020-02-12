@@ -92,7 +92,7 @@ class NewGame extends React.Component {
             banner_url: res.data.file
           },
           () => {
-            this.finalSubmit();
+            this.uploadFile3();
           }
         );
       })
@@ -130,7 +130,7 @@ class NewGame extends React.Component {
             mobile_banner_url: res.data.file
           },
           () => {
-            this.finalSubmit();
+            this.uploadFile4();
           }
         );
       })
