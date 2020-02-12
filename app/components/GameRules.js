@@ -1,9 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-const moment = require('moment');
-import {Link} from 'react-router';
-import {sendMsg} from '../actions/orders';
-
 class GameRules extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +28,6 @@ class GameRules extends React.Component {
   render() {
     return (
       <div>
-        {' '}
         <section className="page_title_bar noblend has_action_bar">
           <div className="container-fluid half">
             <div className="row">
@@ -46,7 +41,7 @@ class GameRules extends React.Component {
             </div>
           </div>
         </section>
-        <section className="middle_part_login">
+        <section className="">
           <div className="container">
             <div className="row">
               <div className="col-md-12">
