@@ -415,9 +415,13 @@ class Game extends React.Component {
         aria-haspopup="true"
         aria-expanded="false"
       >
-        {this.state.selected_ladder_name
-          ? this.state.selected_ladder_name
-          : 'Filter by ladder'}
+        {this.state.selected_ladder_name ? (
+          this.state.selected_ladder_name
+        ) : (
+          <>
+            Filter <span className="d-md-inline-block d-none">by ladder</span>
+          </>
+        )}
       </button>
       <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
         {this.state.selected_ladder_name ? (
@@ -580,12 +584,20 @@ class Game extends React.Component {
               </div>
               <div className="col-md-4 game_actions">
                 <div className="row full_width">
-                  <div className="col">{this.renderButton1(' full_width')}</div>
-                  <div className="col">{this.renderButton2(' full_width')}</div>
+                  <div className="col-6">
+                    {this.renderButton1(' full_width')}
+                  </div>
+                  <div className="col-6">
+                    {this.renderButton2(' full_width')}
+                  </div>
                 </div>
                 <div className="row full_width">
-                  <div className="col">{this.renderButton3(' full_width')}</div>
-                  <div className="col">{this.renderButton4(' full_width')}</div>
+                  <div className="col-6">
+                    {this.renderButton3(' full_width')}
+                  </div>
+                  <div className="col-6">
+                    {this.renderButton4(' full_width')}
+                  </div>
                 </div>
               </div>
             </div>

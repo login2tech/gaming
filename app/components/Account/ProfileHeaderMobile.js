@@ -124,12 +124,12 @@ class ProfileHeader extends React.Component {
           <span>{this.rank_min_based_on_xp(user_info.xp_obj)}</span>
           <span
             style={{
-              // position: 'absolute',
+              position: 'absolute',
               background: 'url(/images/blank_ctrl2.png) center no-repeat',
               marginTop: '5px',
               backgroundSize: 'contain',
               padding: '5px 20px 9px 20px',
-              marginLeft:
+              left:
                 'calc(' +
                 +this.rank_percent_based_on_xp(user_info.xp_obj) +
                 '% - 29px)'

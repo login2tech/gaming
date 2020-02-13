@@ -367,6 +367,9 @@ li.logo {
 
 .social-contacts {
     margin-top: 18px;
+    margin-top: 18px;
+text-align: center;
+display: inline-block;
 }
 
 .social-contacts ul>li>a>i {
@@ -1185,11 +1188,11 @@ li.logo {
 }
 
 .contact-inner ul li a {
-    color: #585858;
+    color: #fff;
 }
 
 .social-contacts ul li a {
-    font-size: 18px;
+    font-size: 30px;
     color: #fff;
 }
 
@@ -5571,7 +5574,7 @@ span.profile_menu_item_inner.small_avat {
     .user-status-mobile {
         position: absolute;
         top: 100px;
-        right: 16px;
+        right: 68px;
         z-index: 1;
     }
 
@@ -6339,7 +6342,11 @@ padding-bottom: 15px;
     .single_ticket .card:not(.post-main) {
         padding-top: 0;
     }
-
+    .mobil-game-actions.banner_actions a, .mobil-game-actions button{
+        font-size: 8px !important;
+        padding-left: 2px !important;
+        padding-right: 1px !important;
+      }
     .single_ticket .container {
         padding: 0;
     }
