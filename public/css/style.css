@@ -5696,7 +5696,7 @@ span.profile_menu_item_inner.small_avat {
         width: 95%;
         margin-left: auto;
         margin-right: auto;
-        height: 80px;
+        height: 90px;
         align-items: center;
         padding: 0 10px;
         justify-content: space-between;
@@ -5704,6 +5704,7 @@ span.profile_menu_item_inner.small_avat {
         border: 1px solid #000;
         border-radius: 4px;
         margin-top: 0;
+        padding-bottom: 20px;
     }
 
     .user-rank-mobile img {

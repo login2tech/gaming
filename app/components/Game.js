@@ -419,7 +419,7 @@ class Game extends React.Component {
           this.state.selected_ladder_name
         ) : (
           <>
-            Filter <span className="d-md-inline-block d-none">by ladder</span>
+            Filter <span className="d-md-inline-block d-none"> by ladder</span>
           </>
         )}
       </button>
