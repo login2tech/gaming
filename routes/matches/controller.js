@@ -1169,6 +1169,7 @@ exports.addItem = function(req, res, next) {
     ladder_id: req.body.ladder_id,
     starts_at: moment().add(starts_at[0], starts_at[1]),
     match_type: req.body.match_type,
+    is_available_now: req.body.match_starts_in == '61|minutes' ? true : false,
     game_settings: req.body.game_settings
       ? JSON.stringify(req.body.game_settings)
       : '{}',

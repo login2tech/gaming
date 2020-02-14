@@ -60,7 +60,11 @@ const SingleMatch = props => {
         </div>
 
         <div className="start-time d-none d-md-flex">
-          <span className="starts-in">{moment(match.starts_at).fromNow()}</span>
+          <span className="starts-in">
+            {match.is_available_now
+              ? 'AVAILABLE NOW'
+              : moment(match.starts_at).fromNow()}
+          </span>
         </div>
         <div className="wager-actions d-none d-md-flex">
           <Link
@@ -133,7 +137,9 @@ const SingleMatch = props => {
             </div>
             <div className="info-block-right">
               <span className="starts-in">
-                {moment(match.starts_at).fromNow()}
+                {match.is_available_now
+                  ? 'AVAILABLE NOW'
+                  : moment(match.starts_at).fromNow()}
               </span>
 
               <span>

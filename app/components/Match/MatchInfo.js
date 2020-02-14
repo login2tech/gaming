@@ -698,6 +698,13 @@ class MatchInfo extends React.Component {
       game_settings = {};
     }
     const game_settings_keys = Object.keys(game_settings);
+    if (!match.id) {
+      return (
+        <div className="text-center text-lg p-5">
+          <span className="fa fa-spin fa-spinner" style={{fontSize: 100}} />
+        </div>
+      );
+    }
     return (
       <div>
         <section
@@ -744,11 +751,17 @@ class MatchInfo extends React.Component {
                         {match.game.title} @ {match.ladder.title}
                       </span>
                       <div className="match_start_date">
-                        {moment().isAfter(moment(match.starts_at))
-                          ? 'Match Started:'
-                          : 'Match Starts'}{' '}
-                        {moment(match.starts_at).format('lll')} ({' '}
-                        {moment(match.starts_at).fromNow()} )
+                        {match.is_available_now
+                          ? 'AVAILABLE NOW'
+                          : moment().isAfter(moment(match.starts_at))
+                            ? 'Match Started:'
+                            : 'Match Starts'}{' '}
+                        {match.is_available_now
+                          ? ' '
+                          : moment(match.starts_at).format('lll')}{' '}
+                        {match.is_available_now
+                          ? ''
+                          : '  (' + moment(match.starts_at).fromNow() + ')'}
                       </div>
                     </div>
                   </div>

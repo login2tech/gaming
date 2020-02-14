@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.table('matches', function(table) {
       table.boolean('cancel_requested');
       table.string('cancel_requested_by');
+      table.boolean('is_available_now');
     })
   ]);
 };
