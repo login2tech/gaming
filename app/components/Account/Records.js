@@ -166,11 +166,15 @@ class Records extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h2 className="no-case-change text-lg">
+                  <div className="all_t_heading">
                     {this.props.params.duration == 'life' ? 'Career ' : ''}
                     {this.props.params.duration == 'season' ? 'Season ' : ''}
-                    Records for @{this.props.params.username}
-                  </h2>
+                    Records
+                  </div>
+                  <div className="t_big_heading">
+                    @{this.props.params.username}
+                  </div>
+
                   <div className="banner_actions">
                     <Link
                       to={'/u/' + this.props.params.username}

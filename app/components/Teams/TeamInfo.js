@@ -456,7 +456,7 @@ class TeamInfo extends React.Component {
         data-toggle="tooltip"
         className={'' + cls}
         onClick={e => {
-          $(e.target).tooltip('hide'); 
+          $(e.target).tooltip('hide');
           e.preventDefault();
         }}
       >

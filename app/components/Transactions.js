@@ -160,7 +160,7 @@ class Transaction extends React.Component {
                               >
                                 Description
                               </th>
-                              <th style={{width: '13%'}}>OCH Cash</th>
+                              <th style={{width: '13%'}}>OCG Cash</th>
                               <th style={{width: '5%'}} className="d-md-none" />
                             </tr>
                           </thead>

@@ -93,7 +93,9 @@ class PostComments extends React.Component {
               return this.renderComment(comment);
             })}
           {this.state.posts.map((comment, i) => this.renderComment2(comment))}
-          {!this.props.is_single && this.props.comments.length > 1 ? (
+          {!this.props.is_single &&
+          this.props.comments &&
+          this.props.comments.length > 1 ? (
             <li>
               <a href={'/post/' + this.props.post_id}>Show all comments</a>
             </li>
