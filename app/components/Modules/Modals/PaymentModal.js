@@ -243,7 +243,7 @@ class PaymentModal extends React.Component {
                     disabled={amount_pending > this.props.user.cash_balance}
                     className="btn text-white"
                   >
-                    Or Proceed with OCG Cash
+                    Or Proceed with ${amount_pending} OCG Cash
                   </button>
                 )}
               </div>
