@@ -10,7 +10,7 @@ class PostComments extends React.Component {
   state = {new_post_content: '', posts: [], focussed: false};
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({[event.target.name]: event.target.value.substr(0, 150)});
   }
 
   doComment(event) {

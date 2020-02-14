@@ -328,11 +328,12 @@ class NewPost extends React.Component {
                     */}
                     <MentionsInput
                       value={this.state.new_post_content}
+                      maxlength={'150'}
                       onChange={(ev, newValue) => {
                         // console.log(ev);
                         // console.log(newValue);
                         this.setState({
-                          new_post_content: newValue
+                          new_post_content: newValue.substr(0, 150)
                         });
                       }}
                       style={{

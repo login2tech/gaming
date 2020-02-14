@@ -244,7 +244,7 @@ class Signup extends React.Component {
                       </div>
 
                       <div className="container">
-                        <div className="row dobrow">
+                        <div className="row dobrow mb-3">
                           <div className="col-sm-4">
                             <div className="form-group">
                               <select
@@ -415,10 +415,10 @@ class Signup extends React.Component {
                           </div>
                         </div>
                       </div>
-                      <div className="form-group col-md-12">
+                      <div className="form-group col-md-12 mb-5">
                         <input
                           type="password"
-                          className="form-control"
+                          className="form-control  mb-0"
                           required
                           placeholder="Enter Password"
                           name="password"
@@ -426,11 +426,19 @@ class Signup extends React.Component {
                           value={this.state.password}
                           onChange={this.handleChange.bind(this)}
                         />
+                        {this.state.password &&
+                        this.state.password.length < 7 ? (
+                          <small className="text-danger">
+                            Password should be atleast 7 characters long
+                          </small>
+                        ) : (
+                          false
+                        )}
                       </div>
-                      <div className="form-group col-md-12">
+                      <div className="form-group col-md-12 mb-5">
                         <input
                           type="password"
-                          className="form-control"
+                          className="form-control  mb-0"
                           required
                           placeholder="Confirm Password"
                           name="password_confirm"
@@ -438,6 +446,14 @@ class Signup extends React.Component {
                           value={this.state.password_confirm}
                           onChange={this.handleChange.bind(this)}
                         />
+                        {this.state.password_confirm &&
+                        this.state.password_confirm.length < 7 ? (
+                          <small className="text-danger">
+                            Password should be atleast 7 characters long
+                          </small>
+                        ) : (
+                          false
+                        )}
                       </div>
                     </div>
                     <div className="form-group col-md-12">

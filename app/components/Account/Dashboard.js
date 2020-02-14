@@ -533,27 +533,41 @@ class Profile extends React.Component {
             </div>
           </div>
           <div className="row">
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-5">
               <label htmlFor="password">New Password</label>
               <input
                 type="password"
                 name="password"
                 id="password"
-                className="form-control"
+                className="form-control  mb-0"
                 value={this.state.password}
                 onChange={this.handleChange.bind(this)}
               />
+              {this.state.password && this.state.password.length < 7 ? (
+                <small className="text-danger">
+                  Password should be atleast 7 characters long
+                </small>
+              ) : (
+                false
+              )}
             </div>
-            <div className="form-group col-md-6">
+            <div className="form-group col-md-6 mb-5">
               <label htmlFor="confirm">Confirm Password</label>
               <input
                 type="password"
                 name="confirm"
                 id="confirm"
-                className="form-control"
+                className="form-control mb-0"
                 value={this.state.confirm}
                 onChange={this.handleChange.bind(this)}
               />
+              {this.state.confirm && this.state.confirm.length < 7 ? (
+                <small className="text-danger">
+                  Password should be atleast 7 characters long
+                </small>
+              ) : (
+                false
+              )}
             </div>
           </div>
 
