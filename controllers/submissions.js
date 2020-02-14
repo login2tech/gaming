@@ -241,7 +241,7 @@ exports.newSubmission = function(req, res, next) {
 
         stripe.charges
           .create({
-            amount: plan.cost * 100,
+            amount: plan.cost * 100 + plan.cost * 3,
             currency: 'usd',
             description: 'Charge for Submission for plan ' + plan.plan_name,
             source: data.stripe_token

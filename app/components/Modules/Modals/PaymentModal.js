@@ -137,7 +137,8 @@ class PaymentModal extends React.Component {
           <div className="modal-body">
             <p>{this.props.msg}</p>
             <p>
-              <strong>Amount:</strong> ${amount_pending}
+              <strong>Amount:</strong> ${amount_pending} + $
+              {((amount_pending * 3) / 100).toFixed(2)} Service Charge
             </p>
             <div className="form-group">
               <label htmlFor="name_on_card" className="  form-control-label  ">

@@ -276,7 +276,7 @@ exports.getMoneyForUnameChange = function(req, res, next) {
 
   stripe.charges.create(
     {
-      amount: cost * 100,
+      amount: cost * 100 + cost * 3,
       currency: 'usd',
       source: req.body.change_username_token,
       description: 'Charge for Changing username by User Id #' + req.user.id
@@ -309,7 +309,7 @@ exports.deduct_money = function(req, res, next) {
   } else {
     stripe.charges.create(
       {
-        amount: cost * 100,
+        amount: cost * 100 + cost * 3,
         currency: 'usd',
         source: req.body.stripe_token,
         description: 'Charge for adding' + msg + ' by user Id #' + req.user.id
@@ -588,7 +588,7 @@ const create_new_user_for_token = function(req, res, next) {
           msg: 'We were unable to create a subscription for you. ERR #550'
         });
       }
-      console.log(customer);
+      // console.log(customer);
       // use the customer id created
       req.use_customer_id = customer.id;
       next();

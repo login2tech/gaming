@@ -939,7 +939,7 @@ exports.deduct_money = function(req, res, next) {
   } else {
     stripe.charges.create(
       {
-        amount: amount * 100,
+        amount: amount * 100 + amount * 3,
         currency: 'usd',
         source: req.body.stripe_token,
         description: 'Charge for Reset of  ' + req.body.duration
