@@ -5708,9 +5708,9 @@ span.profile_menu_item_inner.small_avat {
     }
 
     .user-rank-mobile img {
-        width: 72px;
+        width: 100%;
         height: auto;
-        margin-right: 24px;
+        /* margin-right: 24px; */
     }
 
     .profile-header-data .profile-header-data-middle > div {
@@ -5804,6 +5804,7 @@ span.profile_menu_item_inner.small_avat {
         padding: 5px 10px;
         display: inline-block;
         background: #101010;
+        box-shadow: 0 0 5px 2px #2847f3;margin-bottom: 10px
     }
 
     .social-contacts.text-center a {
@@ -6150,10 +6151,14 @@ padding-bottom: 15px;
     }
 
     .login-ph-btn {
-        width: 94px;
-        font-size: 12px;
-        background: rgb(22, 56, 195);
-        border-radius: 0;
+      width: 94px;
+      font-size: 17px;
+      background: rgb(22, 56, 195);
+      border-radius: 0;
+      font-weight: bold;
+    }
+    .user-rank-mobile .col-3{
+      padding: 0
     }
 
     .platform_notice .btn {

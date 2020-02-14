@@ -93,9 +93,9 @@ class Transaction extends React.Component {
                       show_only: 'cash'
                     });
                   }}
-                  style={{height: 100}}
+                  style={{height: 60}}
                   className={
-                    this.state.show_only == 'cash' ? 'has_shdow mr-5' : 'mr-5'
+                    this.state.show_only == 'cash' ? 'has_shdow mr-4' : 'mr-4'
                   }
                   src="/assets/icons/money-01.png"
                 />
@@ -106,11 +106,11 @@ class Transaction extends React.Component {
                       show_only: 'credits'
                     });
                   }}
-                  style={{height: 100}}
+                  style={{height: 60}}
                   className={
                     this.state.show_only == 'credits'
-                      ? 'has_shdow mr-5'
-                      : 'mr-5'
+                      ? 'has_shdow mr-4'
+                      : 'mr-4'
                   }
                   src="/assets/icons/coin-01.png"
                 />
@@ -121,11 +121,11 @@ class Transaction extends React.Component {
                       show_only: 'membership'
                     });
                   }}
-                  style={{height: 100}}
+                  style={{height: 60}}
                   className={
                     this.state.show_only == 'membership'
-                      ? 'has_shdow mr-5'
-                      : 'mr-5'
+                      ? 'has_shdow mr-4'
+                      : 'mr-4'
                   }
                   src="/assets/icons/ocg_member_gold.png"
                 />
