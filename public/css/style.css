@@ -5093,6 +5093,13 @@ a.match-accept-link {
     flex-direction: row !important;
 }
 
+
+    section.featruedboxes h5 {
+         background: rgba(17, 74, 251,1);
+    box-shadow: 0 0 5px 2px #2847f3;
+    font-size: 1.55rem;
+    display: inline-block;
+      }
 .live-wager-row.live-wager-row-mobile {
     flex-direction: column;
     padding: 20px;
@@ -5803,7 +5810,7 @@ span.profile_menu_item_inner.small_avat {
         width: 100%;
         padding: 5px 10px;
         display: inline-block;
-        background: #101010;
+        background: #000;
         box-shadow: 0 0 5px 2px #2847f3;margin-bottom: 10px
     }
 
@@ -6424,7 +6431,7 @@ padding-bottom: 15px;
     section.featruedboxes h5 {
         background: rgba(17, 74, 251, 0.43);
         display: inline-block;
-        border-radius: 2px;
+        border-radius: 2px;    font-size: 1.55rem;
         box-shadow: 0 0 5px 3px #0b1b6c;
     }
 

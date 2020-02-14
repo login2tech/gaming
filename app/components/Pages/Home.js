@@ -425,8 +425,9 @@ class Home extends React.Component {
             <div className="row">
               <div className="col ">
                 <div className="section-headline white-headline text-center">
-                  <h5>WHAT ARE YOU WAITING FOR?</h5>
-
+                  <div>
+                    <h5>WHAT ARE YOU WAITING FOR?</h5>
+                  </div>
                   <Link to={'/signup'} className="play_match_btn mt-4">
                     Get Started Now
                   </Link>
