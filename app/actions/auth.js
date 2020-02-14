@@ -60,6 +60,7 @@ export function signup(data, cb) {
       body: JSON.stringify(data)
     }).then(response => {
       return response.json().then(json => {
+        scrollToTop();
         if (response.ok) {
           window.localStorage.setItem('pnotice_snoozed_till', '');
           dispatch({

@@ -93,7 +93,7 @@ class MatchFinder extends React.Component {
                   ) : (
                     <Link
                       to={'/login'}
-                      className="btn btn-default bttn_submit max-width-300"
+                      className="btn btn-default bttn_submit max-width-200 dib"
                     >
                       Create a team
                     </Link>

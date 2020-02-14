@@ -35,6 +35,6 @@ exports.doMail = function(to, from, from_name, subject, msg) {
   };
 
   transporter.sendMail(mailOptions, function(err) {
-    // console.log(err);
+    console.log(err);
   });
 };
