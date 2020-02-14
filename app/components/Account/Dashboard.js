@@ -889,7 +889,7 @@ class Profile extends React.Component {
                           value={this.state.new_username}
                         />
                         <button
-                          className="btn mr-1"
+                          className="btn bg-white mr-1"
                           disabled={
                             this.state.new_username == this.props.user.username
                           }
@@ -904,7 +904,7 @@ class Profile extends React.Component {
                           />
                         </button>
                         <button
-                          className="text-danger btn"
+                          className="text-danger btn "
                           onClick={() => {
                             this.setState({
                               changing_username: false
@@ -933,7 +933,7 @@ class Profile extends React.Component {
                               this.askForUnamePayment();
                             }
                           }}
-                          className=" fa fa-edit btn change_uname"
+                          className=" fa fa-edit btn bg-white  change_uname"
                           title={
                             'Edit Username' +
                             (this.props.user.pndng_uname_changes > 0

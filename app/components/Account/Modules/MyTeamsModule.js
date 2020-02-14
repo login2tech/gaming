@@ -72,9 +72,9 @@ class MyTeamsModule extends React.Component {
                 }
                 title={this.generateTooltip(team)}
                 data-toggle="tooltip"
-                // onClick={event => {
-                //   $(event.target).tooltip('hide');
-                // }}
+                onClick={event => {
+                  $(event.target).tooltip('hide');
+                }}
                 style={{display: 'inline-block'}}
               >
                 <figure className="avatr">

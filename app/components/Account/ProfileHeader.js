@@ -123,6 +123,7 @@ class ProfileHeader extends React.Component {
         className="float-right rank_box_wrap"
         onClick={e => {
           e.preventDefault();
+          $(e.target).tooltip('hide');
         }}
       >
         {/*rank : */}
@@ -282,6 +283,7 @@ class ProfileHeader extends React.Component {
                       data-toggle="tooltip"
                       className="dib"
                       onClick={e => {
+                        $(e.target).tooltip('hide');
                         e.preventDefault();
                       }}
                     >

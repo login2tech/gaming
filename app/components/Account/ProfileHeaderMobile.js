@@ -102,6 +102,7 @@ class ProfileHeader extends React.Component {
         data-toggle="tooltip"
         className=""
         onClick={e => {
+          $(e.target).tooltip('hide');
           e.preventDefault();
         }}
       >
