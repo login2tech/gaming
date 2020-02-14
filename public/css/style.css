@@ -5755,7 +5755,7 @@ span.profile_menu_item_inner.small_avat {
     .dsh-profhww {
         height: 140px;
         min-height: 140px !important;
-        margin-bottom: 250px;
+        margin-bottom: 280px;
         padding: 0 !important;
     }
 
@@ -6371,6 +6371,20 @@ padding-bottom: 15px;
 
     .card .date {
         margin-bottom: 0;
+    }
+
+    .text-lg {
+        font-size: 19px;
+        padding: 0;
+        line-height: 19px;
+    }
+    .banner_actions > a:not(.btn)
+    {
+      padding: 0 !important;
+      line-height: 19px;
+    }
+    .banner_actions .text-lg{
+      font-size: 15px
     }
 
     .dropdown-item {
