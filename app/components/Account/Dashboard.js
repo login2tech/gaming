@@ -896,8 +896,8 @@ class Profile extends React.Component {
                         <input
                           id="new_username"
                           name="new_username"
-                          maxlen="15"
-                          max="15"
+                          maxLength="20"
+                          max="20"
                           className="form-control change_uname_field"
                           onChange={this.handleChangeUsername.bind(this)}
                           value={this.state.new_username}

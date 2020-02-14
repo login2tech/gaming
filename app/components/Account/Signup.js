@@ -186,8 +186,8 @@ class Signup extends React.Component {
                       <div className="form-group col-md-12">
                         <input
                           type="text"
-                          maxlen="15"
-                          max="15"
+                          maxLength="20"
+                          max="20"
                           className="form-control"
                           required
                           placeholder="Enter your username"
