@@ -172,57 +172,59 @@ class Ladders extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <Messages messages={this.props.messages} />
-            <div className="table-responsive"><table className="table  table-hover  table-responsive   table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Game</th>
-                  <th>Min Players</th>
-                  <th>Max Players</th>
-                  <th>Gamer Tag Used</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.items &&
-                  this.state.items.map((u, i) => {
-                    return (
-                      <tr key={u.id}>
-                        <td>{u.id}</td>
-                        <td>{u.title}</td>
-                        <td>{u.game_info && u.game_info.title}</td>
+            <div className="table-responsive">
+              <table className="table  table-hover  table-responsive   table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Game</th>
+                    <th>Min Players</th>
+                    <th>Max Players</th>
+                    <th>Gamer Tag Used</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.items &&
+                    this.state.items.map((u, i) => {
+                      return (
+                        <tr key={u.id}>
+                          <td>{u.id}</td>
+                          <td>{u.title}</td>
+                          <td>{u.game_info && u.game_info.title}</td>
 
-                        <td>{u.min_players}</td>
-                        <td>{u.max_players}</td>
-                        <td>{this.gamer_tags['tag_' + u.gamer_tag]}</td>
-                        <td>
-                          <button
-                            onClick={() => {
-                              this.updateItem(
-                                u.id,
-                                {
-                                  role: 'member'
-                                },
-                                'del_',
-                                true
-                              );
-                            }}
-                            className="btn btn-danger btn-xs"
-                          >
-                            {this.state['update_del_' + u.id] ? (
-                              <i className="fa fa-spinner fa-spin" />
-                            ) : (
-                              false
-                            )}{' '}
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table></div>
+                          <td>{u.min_players}</td>
+                          <td>{u.max_players}</td>
+                          <td>{this.gamer_tags['tag_' + u.gamer_tag]}</td>
+                          <td>
+                            <button
+                              onClick={() => {
+                                this.updateItem(
+                                  u.id,
+                                  {
+                                    role: 'member'
+                                  },
+                                  'del_',
+                                  true
+                                );
+                              }}
+                              className="btn btn-danger btn-xs"
+                            >
+                              {this.state['update_del_' + u.id] ? (
+                                <i className="fa fa-spinner fa-spin" />
+                              ) : (
+                                false
+                              )}{' '}
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
 
             <ReactPaginate
               previousLabel={'previous'}

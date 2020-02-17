@@ -87,15 +87,17 @@ class NewThread extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar less_padding">
+        <section className="page_title_bar less_padding noblend">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>
-                    Create a New Thread in{' '}
-                    <span>{this.props.params.title}</span>
-                  </h3>
+                  <div className="all_t_heading">Create a New Thread in </div>
+                  <div className="t_big_heading">
+                    <span className="capitalize">
+                      {this.props.params.title}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>

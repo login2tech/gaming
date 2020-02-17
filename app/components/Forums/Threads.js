@@ -69,6 +69,20 @@ class Threads extends React.Component {
               role="tablist"
               style={{marginBottom: 40}}
             >
+              <li role="presentation" className="pull-right text-right">
+                <Link
+                  to={
+                    '/forums/' +
+                    this.props.params.id +
+                    '/' +
+                    this.props.params.title +
+                    '/new'
+                  }
+                  role="tab"
+                >
+                  <i className="fa fa-plus" /> Create New Thread
+                </Link>
+              </li>
               <li role="presentation" className="pull-right text-right" />
             </ul>
 

@@ -62,7 +62,7 @@ class Profile extends React.Component {
   handleChangeUsername(event) {
     let val = event.target.value ? event.target.value : '';
     val = val.trim();
-    val = val.toLowerCase();
+    // val = val.toLowerCase();
     val = val.replace(/[^a-zA-Z0-9 ]/g, '_');
     val = val.replace(new RegExp('__', 'g'), '_');
     if (
