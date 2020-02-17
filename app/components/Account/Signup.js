@@ -468,7 +468,7 @@ class Signup extends React.Component {
                         <label htmlFor="rememberme">
                           {' '}
                           I agree with{' '}
-                          <Link to="/p/terms" class="text-underline">
+                          <Link to="/p/terms" className="text-underline">
                             Terms of Services
                           </Link>
                         </label>

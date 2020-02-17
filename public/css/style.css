@@ -3302,7 +3302,7 @@ li.has_children_m a {
     cursor: pointer;
 }
 
-li.has_children_m:hover ul {
+li.has_children_m:hover > ul {
     display: block;
     z-index: 9999;
 }
@@ -4851,6 +4851,9 @@ ul.notices li:first-child {
 .container-fluid.half {
     width: 80%;
 }
+.lss_size {
+    padding: 5px;
+}
 
 .filter-form .btn {
     min-width: auto !important;
@@ -5250,6 +5253,11 @@ th.act_pr6 .actision_logo {
     min-width: 100px;
     flex: 1;
 }
+.submenu .submenu {
+    left: 100%;
+    right: auto;
+    top: 0;
+}
 
 .row.gamer_tags_profile {
     background: rgb(0, 0, 0);
@@ -5453,6 +5461,10 @@ span.profile_menu_item_inner.small_avat {
 }
 
 @media screen and (max-width: 768px) {
+
+  .user-profile-trophies-container>div div.trophy-info .trophy-name{
+    font-size: 12px;
+  }
     .tab-block .tab-mnu li {
         padding: 11px 14px;
         font-size: 13px;
@@ -5752,9 +5764,6 @@ span.profile_menu_item_inner.small_avat {
         text-align: center;
     }
 
-    .lss_size {
-        padding: 5px;
-    }
 
     .team_actions {
         margin-bottom: 20px

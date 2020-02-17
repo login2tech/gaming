@@ -294,7 +294,7 @@ class Game extends React.Component {
             <tr key={item.idx}>
               <td>{idx + 1}</td>
               <td>
-                <Link class="avatar_img_r" to={'/teams/view/' + item.id}>
+                <Link className="avatar_img_r" to={'/teams/view/' + item.id}>
                   <img src={image_url} /> {item.username}
                 </Link>
               </td>

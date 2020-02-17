@@ -67,7 +67,7 @@ class Trophies extends React.Component {
                   </h3>
                   <div className="banner_actions">
                     <Link
-                      class="pt-3 pb-3 dib"
+                      className="pt-3 pb-3 dib"
                       to={'/u/' + this.props.params.username}
                     >
                       <span className="fa fa-arrow-left" /> back to profile

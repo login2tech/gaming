@@ -178,7 +178,7 @@ class Records extends React.Component {
                   <div className="banner_actions">
                     <Link
                       to={'/u/' + this.props.params.username}
-                      class="pt-3 pb-3 dib"
+                      className="pt-3 pb-3 dib"
                     >
                       <span className="fa fa-arrow-left" /> back to profile
                     </Link>

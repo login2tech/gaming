@@ -8,6 +8,7 @@ class Header extends React.Component {
     super(props);
     this.state = {
       searchString: '',
+      games: [],
       userSuggestions: [],
       notifications: []
       // posts_page: 1
@@ -19,6 +20,16 @@ class Header extends React.Component {
     // console.log(node);
     $('#sidebar').collapse('hide');
     $('#sidebar2').collapse('hide');
+  }
+  runQuery(prps) {
+    fetch('/api/games/listPaged').then(res => {
+      if (res) {
+        res.json().then(obj => {
+          this.setState({games: obj.items});
+        });
+      }
+      // this.runQuery2();
+    });
   }
   handleLogout = event => {
     event.preventDefault();
@@ -73,6 +84,7 @@ class Header extends React.Component {
 
   fetchNotifications() {
     if (!this.props.user) {
+      this.runQuery();
       return;
     }
     fetch('/notifs/listMine')
@@ -83,6 +95,7 @@ class Header extends React.Component {
             notifications: json.notifs
           });
         }
+        this.runQuery();
       });
   }
 
@@ -373,11 +386,42 @@ class Header extends React.Component {
           </Link>
           <button className="btn btn-exp-menu">+</button>
           <ul className="submenu">
+            <li className="has_children_m">
+              <Link
+                onClick={e => {
+                  e.preventDefault();
+                }}
+                to="/matchfinder"
+              >
+                Games
+              </Link>
+              <ul className="submenu">
+                {this.state.games.map((game, i) => {
+                  return (
+                    <li key={game.i}>
+                      <Link
+                        onClick={this.closeSide}
+                        href={
+                          '/game/' +
+                          game.id +
+                          '/' +
+                          game.title.toLowerCase().replace(/ /g, '-')
+                        }
+                      >
+                        {game.title}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </li>
+
             <li>
               <Link onClick={this.closeSide} to="/matchfinder">
                 MatchFinder
               </Link>
             </li>
+
             <li>
               <Link onClick={this.closeSide} to="/tournaments">
                 Tournaments
