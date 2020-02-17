@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import {new_comment} from '../../actions/social';
+import {MentionsInput, Mention} from 'react-mentions';
 
 import moment from 'moment';
 // import UpvoteButton from '../Modules/UpvoteButton';
@@ -11,6 +12,20 @@ class PostComments extends React.Component {
 
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value.substr(0, 150)});
+  }
+
+  fetchUsers(query, callback) {
+    if (!query) {
+      return;
+    }
+    fetch(`/api/user_suggest?q=${query}`, {json: true})
+      .then(res => res.json())
+
+      // Transform the users to what react-mentions expects
+      .then(res =>
+        res.items.map(user => ({display: user.username, id: user.username}))
+      )
+      .then(callback);
   }
 
   doComment(event) {
@@ -50,7 +65,7 @@ class PostComments extends React.Component {
           </span>
         </span>
 
-        <p>{comment.comment}</p>
+        <p>{linkHashTags(comment.comment)}</p>
       </li>
     );
   }
@@ -69,7 +84,7 @@ class PostComments extends React.Component {
           </span>
         </span>
 
-        <p>{comment.comment}</p>
+        <p>{linkHashTags(comment.comment)}</p>
       </li>
     );
   }
@@ -115,21 +130,113 @@ class PostComments extends React.Component {
           // }}
         >
           <div className="form-group">
-            <textarea
-              className="form-control"
-              id="new_post_content"
+            <MentionsInput
+              value={this.state.new_post_content}
+              rows={this.state.focussed ? '3' : '1'}
+              maxLength={'150'}
               onFocus={() => {
                 this.setState({
                   focussed: true
                 });
               }}
-              required
-              rows={this.state.focussed ? '3' : '1'}
-              value={this.state.new_post_content}
-              placeholder="Add a comment?"
-              name="new_post_content"
-              onChange={this.handleChange.bind(this)}
-            />
+              onChange={(ev, newValue) => {
+                // console.log(ev);
+                // console.log(newValue);
+                this.setState({
+                  new_post_content: newValue.substr(0, 150)
+                });
+              }}
+              style={{
+                control: {
+                  // backgroundColor: '#fff',
+                  backgroundColor: '#333',
+                  boxShadow: '3px 3px 10px 1px rgba(0, 0, 0, 0.1)',
+                  borderColor: '#7a7a7a',
+                  // padding: '12px 15px',
+                  marginBottom: '20px',
+                  borderRadius: '0px',
+                  color: '#fff',
+                  fontSize: 14,
+                  fontWeight: 'normal'
+                },
+
+                highlighter: {
+                  overflow: 'hidden'
+                },
+
+                input: {
+                  margin: 0
+                },
+
+                '&singleLine': {
+                  control: {
+                    display: 'inline-block',
+
+                    width: 130
+                  },
+
+                  highlighter: {
+                    padding: 1,
+                    border: '2px inset transparent'
+                  },
+
+                  input: {
+                    padding: 1,
+
+                    border: '2px inset'
+                  }
+                },
+
+                '&multiLine': {
+                  control: {
+                    // fontFamily: 'monospace',
+                    border: '1px solid silver'
+                  },
+
+                  highlighter: {
+                    padding: 9
+                  },
+
+                  input: {
+                    padding: 9,
+                    color: '#fff',
+                    minHeight: 100,
+                    outline: 0,
+                    border: 0
+                  }
+                },
+
+                suggestions: {
+                  list: {
+                    backgroundColor: 'white',
+                    border: '1px solid rgba(0,0,0,0.15)',
+                    fontSize: 14
+                  },
+
+                  item: {
+                    padding: '5px 15px',
+                    borderBottom: '1px solid rgba(0,0,0,0.15)',
+
+                    '&focused': {
+                      backgroundColor: '#cee4e5'
+                    }
+                  }
+                }
+              }}
+              placeholder="Add a comment? "
+            >
+              <Mention
+                displayTransform={login => {
+                  return `@${login}`;
+                }}
+                markup={'@(__id__)'}
+                trigger="@"
+                data={this.fetchUsers.bind(this)}
+                style={{
+                  backgroundColor: '#114afb'
+                }}
+              />
+            </MentionsInput>
           </div>
           {this.state.focussed && (
             <button type="submit" className="btn btn-primary">
