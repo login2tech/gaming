@@ -125,7 +125,8 @@ class Records extends React.Component {
       '/api/user_info/records?username=' +
         this.props.params.username +
         '&duration=' +
-        this.props.params.duration
+        'life'
+      //        this.props.params.duration
     )
       .then(res => res.json())
       .then(json => {

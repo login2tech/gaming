@@ -3244,7 +3244,7 @@ ul.timeline > li:before {
     color: #868686;
 }
 
-ul.timeline li {
+ul.timeline li.comment {
     background: rgba(40, 71, 243, 0.3);
     padding: 10px;
     position: relative;
@@ -6350,7 +6350,7 @@ padding-bottom: 15px;
         margin: 0;
     }
 
-    ul.timeline li li {
+    ul.timeline li.comment li.comment {
         padding: 3px 7px;
     }
 

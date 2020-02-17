@@ -53,7 +53,7 @@ class PostComments extends React.Component {
 
   renderComment(comment) {
     return (
-      <li key={comment.id}>
+      <li key={comment.id} className="comment">
         <span className="text-date">
           <span className="float-right">
             {moment(comment.created_at).format('lll')}
@@ -65,14 +65,14 @@ class PostComments extends React.Component {
           </span>
         </span>
 
-        <p>{linkHashTags(comment.comment)}</p>
+        <p dangerouslySetInnerHTML={{__html: linkHashTags(comment.comment)}} />
       </li>
     );
   }
 
   renderComment2(comment) {
     return (
-      <li key={comment.id}>
+      <li key={comment.id} className="comment">
         <span className="text-date">
           <span className="float-right">
             {moment(comment.created_at).format('lll')}
@@ -84,7 +84,7 @@ class PostComments extends React.Component {
           </span>
         </span>
 
-        <p>{linkHashTags(comment.comment)}</p>
+        <p dangerouslySetInnerHTML={{__html: linkHashTags(comment.comment)}} />
       </li>
     );
   }
@@ -111,7 +111,7 @@ class PostComments extends React.Component {
           {!this.props.is_single &&
           this.props.comments &&
           this.props.comments.length > 1 ? (
-            <li>
+            <li className="comment">
               <a href={'/post/' + this.props.post_id}>Show all comments</a>
             </li>
           ) : (
@@ -150,12 +150,11 @@ class PostComments extends React.Component {
                 control: {
                   // backgroundColor: '#fff',
                   backgroundColor: '#333',
-                  boxShadow: '3px 3px 10px 1px rgba(0, 0, 0, 0.1)',
-                  borderColor: '#7a7a7a',
+                  // boxShadow: '3px 3px 10px 1px rgba(0, 0, 0, 0.1)',
+                  // borderColor: '#7a7a7a',
                   // padding: '12px 15px',
                   marginBottom: '20px',
                   borderRadius: '0px',
-                  color: '#fff',
                   fontSize: 14,
                   fontWeight: 'normal'
                 },
@@ -190,7 +189,7 @@ class PostComments extends React.Component {
                 '&multiLine': {
                   control: {
                     // fontFamily: 'monospace',
-                    border: '1px solid silver'
+                    // border: '1px solid silver'
                   },
 
                   highlighter: {
@@ -200,7 +199,8 @@ class PostComments extends React.Component {
                   input: {
                     padding: 9,
                     color: '#fff',
-                    minHeight: 100,
+                    // minHeight: 100,
+                    height: this.state.focussed ? '100px' : '40px',
                     outline: 0,
                     border: 0
                   }
@@ -216,7 +216,7 @@ class PostComments extends React.Component {
                   item: {
                     padding: '5px 15px',
                     borderBottom: '1px solid rgba(0,0,0,0.15)',
-
+                    color: '#000',
                     '&focused': {
                       backgroundColor: '#cee4e5'
                     }

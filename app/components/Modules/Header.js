@@ -398,7 +398,7 @@ class Header extends React.Component {
               <ul className="submenu">
                 {this.state.games.map((game, i) => {
                   return (
-                    <li key={game.i}>
+                    <li key={game.id}>
                       <Link
                         onClick={this.closeSide}
                         href={

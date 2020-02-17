@@ -140,7 +140,7 @@ class Timeline extends React.Component {
     }
 
     return (
-      <li data-image_url={image_url}>
+      <li data-image_url={image_url} className="comment">
         <Link
           className="image_alternate_feed"
           to={post.user ? '/u/' + post.user.username : '#'}
