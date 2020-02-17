@@ -389,7 +389,7 @@ display: inline-block;
 }
 
 .contact-col-4 p {
-    color: #000;
+    color: #fff;
     font-weight: 400;
 }
 
@@ -5264,6 +5264,9 @@ th.act_pr6 .actision_logo {
 .banner_actions.b-0{
   /* bottom: 0 */
 
+}
+.dropdown-toggle > span {
+    padding-left: 6px;
 }
 
 .section-headline h3.lil-small {
