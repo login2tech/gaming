@@ -54,7 +54,7 @@ class SinlgePost extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar less_padding" id="is_top">
+        <section className="page_title_bar less_padding noblend" id="is_top">
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">

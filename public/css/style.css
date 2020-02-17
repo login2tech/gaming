@@ -5301,6 +5301,9 @@ span.profile_menu_item_inner.small_avat {
     width: 100%;
 }
 
+.btn-default.full_width, .full_width > .btn-default {
+    min-width: 100%;
+}
 @media screen and (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5919,6 +5922,15 @@ span.profile_menu_item_inner.small_avat {
     .match_heading h4 {
         font-size: 30px
     }
+
+
+        .game_actions > div:first-child {
+            flex: 2;
+            display: flex;
+            flex-direction: row;
+            margin-right: 10px;
+        }
+
 }
 
 @media screen and (max-width: 576px) {
@@ -6083,12 +6095,6 @@ padding-bottom: 15px;
         padding-top: 40px
     }
 
-    .game_actions > div:first-child {
-        flex: 2;
-        display: flex;
-        flex-direction: row;
-        margin-right: 10px;
-    }
 
     .game_actions .btn {
         min-width: 0 !important;
