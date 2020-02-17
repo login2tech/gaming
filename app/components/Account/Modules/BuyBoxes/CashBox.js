@@ -123,6 +123,7 @@ class Credits extends React.Component {
         <div className="input-group mb-3  m-2">
           <input
             type="number"
+            min="5"
             id="add_new_bal_number"
             placeholder={
               this.state.init_transaction_mode == 'credit'

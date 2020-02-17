@@ -373,7 +373,7 @@ display: inline-block;
 }
 
 .social-contacts ul>li>a>i {
-    color: #898888;
+    color: #fff;
 }
 
 .contact-inner h5 {
@@ -421,11 +421,12 @@ display: inline-block;
  ----------------------------*/
 .footer-area {
     padding: 15px 0px;
-    background: #111;box-shadow: 0 0 5px 2px #2847f3
+    background: #000;
+    box-shadow: 0 0 5px 2px #2847f3
 }
 
 .copyright p {
-    color: #585757;
+    color: #fff;
     font-size: 14px;
     margin-bottom: 0px;
 }
@@ -3634,6 +3635,10 @@ span.rank_prog_done {
 p.feed_post_content {
     letter-spacing: 0.5px;
     font-weight: normal;
+    word-break: break-all;
+}
+.comment_list p {
+    word-break: break-all;
 }
 
 p.feed_post_content a {

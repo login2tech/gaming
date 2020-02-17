@@ -138,7 +138,7 @@ class Leaderboards extends React.Component {
                       });
                     }}
                   >
-                    Earning
+                    Earnings
                   </a>
                 </li>
               </ul>

@@ -553,7 +553,9 @@ class NewTeam extends React.Component {
                         <div className="form-group col-md-12">
                           <label htmlFor="match_fee">Match Entry Fee</label>
                           <input
-                            type="text"
+                            type="number"
+                            min="1"
+                            step="0.1"
                             id="match_fee"
                             className="form-control"
                             onChange={this.handleChange.bind(this)}

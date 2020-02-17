@@ -47,7 +47,7 @@ class Footer extends React.Component {
         <section className="contact-area" id="contact">
           <div className="container">
             <div className="row contact-fields">
-              <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+              <div className="col-lg-2 col-md-2 col-sm-6 col-xs-12">
                 <div className="contact-col-1 contact-inner text-center">
                   <img src="/images/logo.png" className="img-fluid" alt="" />
 
@@ -87,7 +87,7 @@ class Footer extends React.Component {
                   <h4>Information</h4>
                   <ul>
                     <li>
-                      <Link to="/matchfinder">MatchFinder</Link>
+                      <Link to="/matchfinder">Matchfinder</Link>
                     </li>
                     <li>
                       <Link to="/tournaments">Tournaments </Link>
@@ -107,7 +107,30 @@ class Footer extends React.Component {
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+              <div className="col-lg-2 col-md-3 col-sm-6 col-xs-12">
+                <div className="contact-col-3 contact-inner">
+                  <h4>Support</h4>
+                  <ul>
+                    <li>
+                      <Link to="/tickets">Ticket Center</Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="#"
+                        onClick={e => {
+                          e.preventDefault();
+                        }}
+                      >
+                        Live Support Chat
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/faqs">FAQ's</Link>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <img src="/images/payments.png" alt="accepted payment" />
               </div>
 

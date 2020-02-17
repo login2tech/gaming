@@ -7,7 +7,6 @@ import Contact from './components/Pages/Contact';
 import ApplyForStaff from './components/Pages/ApplyForStaff';
 import AdvertiseWithUs from './components/Pages/AdvertiseWithUs';
 import NotFound from './components/Pages/NotFound';
-import FAQ from './components/Pages/FAQ';
 
 import CMSPage from './components/CMSPage';
 import Notifications from './components/Notifications';
@@ -21,6 +20,7 @@ import Signup from './components/Account/Signup';
 import Profile from './components/Account/Profile';
 import Timeline from './components/Account/Timeline';
 import SinglePost from './components/Social/SinglePost';
+import FAQ from './components/Pages/FAQ';
 import Dashboard from './components/Account/Dashboard';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
@@ -150,6 +150,13 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         component={FeedMy}
       />
+      <Route
+        onLeave={clearMessages}
+        path="/faq"
+        // onEnter={ensureAuthenticated}
+        component={FAQ}
+      />
+
       <Route
         onLeave={clearMessages}
         path="/post/:id"

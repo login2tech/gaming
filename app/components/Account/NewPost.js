@@ -328,7 +328,7 @@ class NewPost extends React.Component {
                     */}
                     <MentionsInput
                       value={this.state.new_post_content}
-                      maxlength={'150'}
+                      maxLength={'150'}
                       onChange={(ev, newValue) => {
                         // console.log(ev);
                         // console.log(newValue);
