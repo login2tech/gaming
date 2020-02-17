@@ -783,7 +783,7 @@ class TournamentInfo extends React.Component {
               </div>
               <div className="t-prizes-amount">
                 <span>
-                  ${this.state.tournament.second_winner_price.toFixed(2)} Per
+                  ${this.state.tournament.third_winner_price.toFixed(2)} Per
                   Player
                 </span>
               </div>

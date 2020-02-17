@@ -69,7 +69,10 @@ class Trophies extends React.Component {
                   // className="no-case-change"
                   // style={{textTransform: 'capitalize !important'}}
                   >
-                    {this.props.params.type} Trophies
+                    {this.props.params.type == 'ocg'
+                      ? 'OCG'
+                      : this.props.params.type}{' '}
+                    Trophies
                   </h3>
                   <div className="banner_actions">
                     <Link
