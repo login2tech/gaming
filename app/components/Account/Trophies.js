@@ -52,12 +52,6 @@ class Trophies extends React.Component {
   }
 
   render() {
-    // console.log(this.state.ladders);
-
-    // const rec = Object.keys(this.state.ladders);
-    // console.log(rec);
-
-    // console.log(records);
     return (
       <div>
         <section className="page_title_bar noblend">
@@ -65,10 +59,7 @@ class Trophies extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3
-                  // className="no-case-change"
-                  // style={{textTransform: 'capitalize !important'}}
-                  >
+                  <h3>
                     {this.props.params.type == 'ocg'
                       ? 'OCG'
                       : this.props.params.type}{' '}

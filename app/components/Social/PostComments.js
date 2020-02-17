@@ -133,7 +133,7 @@ class PostComments extends React.Component {
           </div>
           {this.state.focussed && (
             <button type="submit" className="btn btn-primary">
-              Reply
+              Comment
             </button>
           )}
         </form>

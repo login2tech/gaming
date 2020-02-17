@@ -1221,11 +1221,10 @@ class TournamentInfo extends React.Component {
     if (this.state.tournament.member_tournament && !this.props.user.prime) {
       return (
         <div className="alert alert-warning width-100">
-          You need to be a prime member to join OCG Members Tournament. Click
+          You need to be a prime member to join OCG Members Tournament.
           <a target="_blank" href={'/shop'}>
-            here
-          </a>{' '}
-          to purchase stripe.
+            Click here to purchase Membership
+          </a>
         </div>
       );
     }

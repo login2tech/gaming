@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {charge} from '../../actions/stripe';
 import Messages from '../Modules/Messages';
 import timezones from '../Modules/timezones';
 import {Link} from 'react-router';
