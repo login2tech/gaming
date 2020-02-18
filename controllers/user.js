@@ -601,7 +601,9 @@ exports.singleUser_trophies = function(req, res, next) {
   }
 
   let a = new Trophy().where({user_id: cur_u, reset_done: false});
-
+  if (req.query.type == 'ocg') {
+    req.query.type = 'blue';
+  }
   if (req.query.type) {
     a = a.where({
       type: req.query.type

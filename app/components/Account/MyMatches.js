@@ -416,7 +416,6 @@ class MyMatches extends React.Component {
                       <thead>
                         <tr>
                           <th>Tournament</th>
-                          <th>Match</th>
                           <th>Round</th>
                           <th className="d-none d-md-table-cell">Status</th>
                           <th className="d-none d-md-table-cell">Date</th>
@@ -441,20 +440,21 @@ class MyMatches extends React.Component {
                                 return parseInt(a);
                               });
                           }
+                          if (
+                            team_1.indexOf(this.props.user.id) < 0 &&
+                            team_2.indexOf(this.props.user.id) < 0
+                          ) {
+                            return false;
+                          }
                           return (
                             <React.Fragment key={match.id}>
-                              >
                               <tr>
                                 <td>
                                   <Link to={'/t/' + match.tournament_id}>
                                     {match.tournament.title}
                                   </Link>
                                 </td>
-                                <td>
-                                  <Link to={'/tournament-match/' + match.id}>
-                                    #{match.id}
-                                  </Link>
-                                </td>
+
                                 <td>{match.match_round}</td>
                                 <td className="d-none d-md-table-cell">
                                   {match.result ? (

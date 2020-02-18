@@ -3871,8 +3871,8 @@ p.score_obj_scr {
     justify-content: center;
     position: relative;
     border: 0;
-    padding: 5px;
-    padding-right: 20px;
+    padding: 0;
+    padding-right: 0;
 }
 
 .user-profile-trophies-container>div div.trophy-info {
@@ -4089,6 +4089,7 @@ ul.pagination .disabled a {
     flex: 1;
     position: relative;
     align-self: stretch;
+    margin-bottom: 14px;
 }
 
 .pf_icon {
@@ -6530,3 +6531,9 @@ span.capitalize {
     text-transform: capitalize;
     letter-spacing: 0px;
 }
+
+.user-profile-trophies-container>div div.trophy-image img {
+    height: 89px;
+    width: auto;
+}
+ 
