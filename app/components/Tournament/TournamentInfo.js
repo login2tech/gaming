@@ -860,10 +860,10 @@ class TournamentInfo extends React.Component {
             <div className="tourn-info">
               <div className="tourn-info-title">Prize Pool</div>
               <div className="tourn-info-box">
+                $
                 {this.state.tournament.second_winner_price +
                   this.state.tournament.third_winner_price +
-                  this.state.tournament.first_winner_price}{' '}
-                credits
+                  this.state.tournament.first_winner_price}
               </div>
             </div>
           </div>
@@ -976,8 +976,8 @@ class TournamentInfo extends React.Component {
                 <table className="table table-striped table-ongray table-hover">
                   <thead>
                     <tr>
-                      <th syle={{width: '50%'}}>Username</th>
-                      <th syle={{width: '50%'}}>Role</th>
+                      <th style={{width: '50%'}}>Username</th>
+                      <th style={{width: '50%'}}>Role</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1422,7 +1422,7 @@ class TournamentInfo extends React.Component {
                   ) : (
                     false
                   )}
-                  <div className="match_heading">
+                  <div className="match_heading tmheading">
                     <h4>{tournament.title}</h4>
                   </div>
                   <div className="row">

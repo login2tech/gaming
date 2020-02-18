@@ -335,7 +335,8 @@ li.logo {
  ----------------------------*/
 .contact-area {
     background: #000;
-    padding: 70px 0px;box-shadow: 0 0 5px 2px #2847f3
+    padding: 70px 0px;
+    box-shadow: 0 0 5px 2px #2847f3
 }
 
 .contact-col-2 {
@@ -368,8 +369,8 @@ li.logo {
 .social-contacts {
     margin-top: 18px;
     margin-top: 18px;
-text-align: center;
-display: inline-block;
+    text-align: center;
+    display: inline-block;
 }
 
 .social-contacts ul>li>a>i {
@@ -741,8 +742,9 @@ display: inline-block;
     .single-service h3 {
         font-size: 20px;
     }
-    .authorize_box{
-        padding: 20px  !important
+
+    .authorize_box {
+        padding: 20px !important
     }
 }
 
@@ -750,8 +752,9 @@ display: inline-block;
     .carousel-item img {
         height:auto !important
     }
-    .authorize_box{
-        padding: 20px  !important
+
+    .authorize_box {
+        padding: 20px !important
     }
 }
 
@@ -3273,7 +3276,8 @@ span.menu_avatar img {
     width: 63px;
     border-radius: 46px;
     margin-right: 10px;
-    height: 63px;object-fit:  cover;
+    height: 63px;
+    object-fit: cover;
 }
 
 a.profile_menu_item {
@@ -3493,15 +3497,17 @@ ul.submenu li a {
     background: none;
     color: #fff;
 }
+
 .mobil-game-actions {
     width: 100%;
-  }
-  .mobil-game-actions > div > a, .mobil-game-actions > div > div {
+}
+
+.mobil-game-actions > div > a, .mobil-game-actions > div > div {
     width: calc(50% - 2px) !important;
     margin-right: 1px;
     margin-left: 1px;
-
 }
+
 .user_sugggestions li:not(:first-child) {
     background: #114afb;
     color: #fff;
@@ -3512,14 +3518,18 @@ ul.submenu li a {
     width: 100%;
     line-height: 10px;
 }
- .full_width {
+
+.full_width {
     width: 100%;
 }
+
 ul.submenu.notification_list {
     max-height: 400px;
     overflow-y: auto;
-}.game_actions{
-  display: flex;
+}
+
+.game_actions {
+    display: flex;
     justify-content: flex-end;
     align-items: flex-end;
     flex-direction: column;
@@ -3528,7 +3538,10 @@ ul.submenu.notification_list {
 .mw_200:not(.mw_50):not(.min-w-0) {
     max-width: 200px;
 }
-.min-w-0{min-width: 0;}
+
+.min-w-0 {
+    min-width: 0;
+}
 
 .following_btn a {
     font-size: 20px;
@@ -3637,6 +3650,7 @@ p.feed_post_content {
     font-weight: normal;
     word-break: break-all;
 }
+
 .comment_list p {
     word-break: break-all;
 }
@@ -4268,16 +4282,17 @@ img.hover_img {
     max-width: none;
 }
 
-.is_single_game_header_desk{
-  background-size: cover;
-background-repeat: no-repeat;
-
+.is_single_game_header_desk {
+    background-size: cover;
+    background-repeat: no-repeat;
 }
+
 .mw_50 {
     max-width: 47%;
     width: 100%;
     min-width: 0px;
 }
+
 @media screen and (max-width: 768px) {
     .table_wrapper {
         overflow-x: scroll;
@@ -4852,6 +4867,7 @@ ul.notices li:first-child {
 .container-fluid.half {
     width: 80%;
 }
+
 .lss_size {
     padding: 5px;
 }
@@ -5048,6 +5064,8 @@ p.tour-name small {
     margin-bottom: 2px;
     max-height: 48px;
     overflow-y: hidden;
+    padding-right: 61px;
+    text-overflow: ellipsis;
 }
 
 .live-wager-row>div {
@@ -5102,12 +5120,12 @@ a.match-accept-link {
     flex-direction: row !important;
 }
 
-
-    section.featruedboxes h5 {
-          text-shadow: -1px 0px 13px rgba(17, 74, 251,1), 2px 1px 13px rgba(17, 74, 251,1), 0px 1px 13px rgba(17, 74, 251,1);
+section.featruedboxes h5 {
+    text-shadow: -1px 0px 13px rgba(17, 74, 251,1), 2px 1px 13px rgba(17, 74, 251,1), 0px 1px 13px rgba(17, 74, 251,1);
     font-size: 1.55rem;
     display: inline-block;
-      }
+}
+
 .live-wager-row.live-wager-row-mobile {
     flex-direction: column;
     padding: 20px;
@@ -5212,18 +5230,18 @@ button.btn.btn-exp-menu {
 }
 
 .platform_notice {
-  bottom: 0;
-left: 0;
-position: fixed;
-width: 100%;
-line-height: 40px;
-z-index: 99999;
-background: rgb(0, 0, 0);
-color: rgb(255, 255, 255);
-box-shadow: 0 0 5px 2px #2847f3;
-border: 0;
-margin: 5px !important;
-width: calc(100% - 10px) !important;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    line-height: 40px;
+    z-index: 99999;
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    box-shadow: 0 0 5px 2px #2847f3;
+    border: 0;
+    margin: 5px !important;
+    width: calc(100% - 10px) !important;
 }
 
 .platform_notice .btn {
@@ -5254,6 +5272,7 @@ th.act_pr6 .actision_logo {
     min-width: 100px;
     flex: 1;
 }
+
 .submenu .submenu {
     left: 100%;
     right: auto;
@@ -5270,10 +5289,11 @@ th.act_pr6 .actision_logo {
     position: absolute;
     bottom: 10px;
 }
-.banner_actions.b-0{
-  /* bottom: 0 */
 
+.banner_actions.b-0 {
+    /* bottom: 0 */
 }
+
 .dropdown-toggle > span {
     padding-left: 6px;
 }
@@ -5302,11 +5322,9 @@ span.profile_menu_item_inner.small_avat {
     border-radius: 50%;
 }
 
-
-
-.money8heading{
-  font-size: 28px;
-  line-height: 30px
+.money8heading {
+    font-size: 28px;
+    line-height: 30px
 }
 
 .team_list a {
@@ -5316,6 +5334,44 @@ span.profile_menu_item_inner.small_avat {
 .btn-default.full_width, .full_width > .btn-default {
     min-width: 100%;
 }
+
+
+.tourinfo .container {
+    position: relative;
+}
+
+.list_pad {
+    z-index: 1;
+    position: relative;
+}
+
+.nrread {
+    opacity: 0.6;
+}
+
+.lpb .btn.btn-primary {
+    padding: 10px 10px !important;
+}
+
+optgroup:empty {
+    display: none
+}
+
+span.capitalize {
+    text-transform: capitalize;
+    letter-spacing: 0px;
+}
+
+.user-profile-trophies-container>div div.trophy-image img {
+    height: 89px;
+    width: auto;
+}
+
+.tmheading {
+    padding-right: 200px;
+}
+
+
 @media screen and (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5328,6 +5384,7 @@ span.profile_menu_item_inner.small_avat {
     .fl-1 {
         width: 15%
     }
+
     .is_not_logged_in ul.navbar-nav.nav-list {
         flex-direction: row-reverse;
     }
@@ -5462,10 +5519,10 @@ span.profile_menu_item_inner.small_avat {
 }
 
 @media screen and (max-width: 768px) {
+    .user-profile-trophies-container>div div.trophy-info .trophy-name {
+        font-size: 12px;
+    }
 
-  .user-profile-trophies-container>div div.trophy-info .trophy-name{
-    font-size: 12px;
-  }
     .tab-block .tab-mnu li {
         padding: 11px 14px;
         font-size: 13px;
@@ -5530,8 +5587,6 @@ span.profile_menu_item_inner.small_avat {
     div#menu2 > ul > li ul a {
         text-align: center;
     }
-
-
 
     [data-expanded="true"] .footable-last-visible:after {
         content: '- ';
@@ -5615,9 +5670,9 @@ span.profile_menu_item_inner.small_avat {
         position: relative;
         padding-bottom: 55px;
     }
-    div#profile-page-container.team-profile-page
-    {
-      padding-bottom: 0
+
+    div#profile-page-container.team-profile-page {
+        padding-bottom: 0
     }
 
     .member-star-mobile {
@@ -5672,14 +5727,15 @@ span.profile_menu_item_inner.small_avat {
 
     .profile-header-data-middle .btn {
         margin-top: 0;
-    min-width: 100%;
+        min-width: 100%;
     }
-    .menu_avatar  .profile_pic_outline {
-          border: 4px solid rgb(0, 64, 255);
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-      }
+
+    .menu_avatar .profile_pic_outline {
+        border: 4px solid rgb(0, 64, 255);
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
 
     .profile-avatar {
         width: 124px;
@@ -5688,12 +5744,12 @@ span.profile_menu_item_inner.small_avat {
         border: 4px solid rgb(255, 255, 255);
         width: 140px;
         /* height: 140px; */
-    overflow: hidden;
+        overflow: hidden;
     }
 
     .profile-avatar img {
         width: 100%;
-    object-fit: cover;
+        object-fit: cover;
         height: 100%;
     }
 
@@ -5765,7 +5821,6 @@ span.profile_menu_item_inner.small_avat {
         text-align: center;
     }
 
-
     .team_actions {
         margin-bottom: 20px
     }
@@ -5804,15 +5859,28 @@ span.profile_menu_item_inner.small_avat {
     .single_match_details .prizes_desclaimer {
         font-size: 17px;
     }
+
     ul.submenu {
         margin-top: 10px;
     }
+
+
+            .star_img.big {
+                width: 150px;
+                height: auto;
+            }
 }
 
 @media screen and (max-width: 690px) {
     .br_1 {
         border:0;
     }
+
+
+        .star_img.big {
+            width: 100px;
+            height: auto;
+        }
 
     .header_container {
         width: 100%;
@@ -5834,7 +5902,8 @@ span.profile_menu_item_inner.small_avat {
         padding: 5px 10px;
         display: inline-block;
         background: #000;
-        box-shadow: 0 0 5px 2px #2847f3;margin-bottom: 10px
+        box-shadow: 0 0 5px 2px #2847f3;
+        margin-bottom: 10px
     }
 
     .social-contacts.text-center a {
@@ -5936,32 +6005,36 @@ span.profile_menu_item_inner.small_avat {
         font-size: 30px
     }
 
-
-        .game_actions > div:first-child {
-            flex: 2;
-            display: flex;
-            flex-direction: row;
-            margin-right: 10px;
-        }
-
+    .game_actions > div:first-child {
+        flex: 2;
+        display: flex;
+        flex-direction: row;
+        margin-right: 10px;
+    }
 }
 
 @media screen and (max-width: 576px) {
 
-  .recordentr .link_alt{
-    background: #000 !important;
+  .match_heading.tmheading {
+    padding-right: 38px;
+}
+.match_heading.tmheading h4{
+    font-size:12px  ;padding-top:10px
+}
+    .recordentr .link_alt {
+        background: #000 !important;
+        padding-top: 10px;
+        padding-bottom: 15px;
+    }
 
-    padding-top: 10px;
-padding-bottom: 15px;
-  }
-  .recordentr .reset_rep{
+    .recordentr .reset_rep {
+        margin-top: 10px;
+    }
 
-    margin-top: 10px;
-  }
-  .user-profile-trophies-container>div{
+    .user-profile-trophies-container>div {
+        padding-left: 15px;
+    }
 
-    padding-left: 15px;
-  }
     .tour-box .tour-details {
         height: auto
     }
@@ -6108,7 +6181,6 @@ padding-bottom: 15px;
         padding-top: 40px
     }
 
-
     .game_actions .btn {
         min-width: 0 !important;
         width: auto;
@@ -6184,14 +6256,15 @@ padding-bottom: 15px;
     }
 
     .login-ph-btn {
-      width: 94px;
-      font-size: 17px;
-      background: rgb(22, 56, 195);
-      border-radius: 0;
-      font-weight: bold;
+        width: 94px;
+        font-size: 17px;
+        background: rgb(22, 56, 195);
+        border-radius: 0;
+        font-weight: bold;
     }
-    .user-rank-mobile .col-3{
-      padding: 0
+
+    .user-rank-mobile .col-3 {
+        padding: 0
     }
 
     .platform_notice .btn {
@@ -6211,7 +6284,7 @@ padding-bottom: 15px;
     }
 
     ul.team_list li img {
-      height: 110px;
+        height: 110px;
     }
 
     .banner_actions {
@@ -6223,12 +6296,11 @@ padding-bottom: 15px;
         position: absolute;
         left: 0;
         padding-left: 10px;
-        padding-right:10px;
-
+        padding-right: 10px;
     }
-    .banner_actions:not(.justify-left)
-    {
-      justify-content: center;
+
+    .banner_actions:not(.justify-left) {
+        justify-content: center;
     }
 
     .banner_actions .btn {
@@ -6252,7 +6324,7 @@ padding-bottom: 15px;
         font-size: 19px;
         line-height: 19px;
         margin: 0;
-        margin-bottom:3px;
+        margin-bottom: 3px;
         letter-spacing: 0px;
     }
 
@@ -6381,11 +6453,13 @@ padding-bottom: 15px;
     .single_ticket .card:not(.post-main) {
         padding-top: 0;
     }
-    .mobil-game-actions.banner_actions a, .mobil-game-actions button{
+
+    .mobil-game-actions.banner_actions a, .mobil-game-actions button {
         font-size: 8px !important;
         padding-left: 2px !important;
         padding-right: 1px !important;
-      }
+    }
+
     .single_ticket .container {
         padding: 0;
     }
@@ -6411,13 +6485,14 @@ padding-bottom: 15px;
         padding: 0;
         line-height: 19px;
     }
-    .banner_actions > a:not(.btn)
-    {
-      padding: 0 !important;
-      line-height: 19px;
+
+    .banner_actions > a:not(.btn) {
+        padding: 0 !important;
+        line-height: 19px;
     }
-    .banner_actions .text-lg{
-      font-size: 15px
+
+    .banner_actions .text-lg {
+        font-size: 15px
     }
 
     .dropdown-item {
@@ -6455,11 +6530,10 @@ padding-bottom: 15px;
     }
 
     section.featruedboxes h5 {
-          text-shadow: -1px 0px 13px rgba(17, 74, 251,1), 2px 1px 13px rgba(17, 74, 251,1), 0px 1px 13px rgba(17, 74, 251,1);
+        text-shadow: -1px 0px 13px rgba(17, 74, 251,1), 2px 1px 13px rgba(17, 74, 251,1), 0px 1px 13px rgba(17, 74, 251,1);
         display: inline-block;
         border-radius: 2px;
         font-size: 1.2rem
-
     }
 
     .capitalize {
@@ -6494,46 +6568,19 @@ padding-bottom: 15px;
     .tour-single-content h5, .tour-single-content h6 {
         margin: 0 !important;
     }
+
     .btn-primary:not([disabled]):hover {
-    background: rgb(40, 72, 243) !important;
-}
-.team-profile-page .profile-header-data-middle > div:first-child h3 {
-    font-size: 14px;
-    margin-top: 10px;
-    margin-bottom: 0;
-    line-height: 6px
-}
+        background: rgb(40, 72, 243) !important;
+    }
 
-.team-profile-page .profile-header-data-middle > div:first-child span {
-    font-size: 10px !important;
-}
+    .team-profile-page .profile-header-data-middle > div:first-child h3 {
+        font-size: 14px;
+        margin-top: 10px;
+        margin-bottom: 0;
+        line-height: 6px
+    }
 
+    .team-profile-page .profile-header-data-middle > div:first-child span {
+        font-size: 10px !important;
+    }
 }
-
-.tourinfo .container {
-    position: relative;
-}
-.list_pad{
-  z-index: 1;
-    position: relative;
-}
-.nrread{
-  opacity: 0.6;
-}
-.lpb .btn.btn-primary{
-    padding: 10px 10px !important;
-}
-optgroup:empty {
-  display: none
-}
-
-span.capitalize {
-    text-transform: capitalize;
-    letter-spacing: 0px;
-}
-
-.user-profile-trophies-container>div div.trophy-image img {
-    height: 89px;
-    width: auto;
-}
- 
