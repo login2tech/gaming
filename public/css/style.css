@@ -5304,7 +5304,7 @@ th.act_pr6 .actision_logo {
     min-height: 250px;
 }
 
-section.page_title_bar .col-md-12 {
+section.page_title_bar .col-md-12, section.page_title_bar .col-md-8  {
     position: static;
 }
 

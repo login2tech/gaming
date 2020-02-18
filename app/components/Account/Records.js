@@ -173,7 +173,7 @@ class Records extends React.Component {
         <section className="page_title_bar noblend">
           <div className="container-fluid half">
             <div className="row">
-              <div className="col-md-8 col-sm-8 col">
+              <div className="col-md-8 col-sm-8 col-8">
                 <div className="section-headline white-headline text-left">
                   <div className="all_t_heading">
                     {this.props.params.duration == 'life' ? 'Career ' : ''}
@@ -212,7 +212,7 @@ class Records extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 col-sm-4 col text-center">
+              <div className="col-md-4 col-sm-4 col-4 text-center">
                 <img
                   src={'/images/' + this.state.image_to_show}
                   style={{maxHeight: 200}}

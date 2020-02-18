@@ -6,12 +6,17 @@ const moment = require('moment');
 class Trophies extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {loaded: false, items: []};
+    this.state = {
+      loaded: false,
+      items: [],
+      image_to_show: this.props.params.type + '.png'
+    };
   }
 
   componentDidMount() {
     this.fetchUserInfo(true);
   }
+
   fetchUserInfo(forward) {
     fetch('/api/user_info?addViews=yes&uid=' + this.props.params.username)
       .then(res => res.json())
@@ -57,7 +62,7 @@ class Trophies extends React.Component {
         <section className="page_title_bar noblend">
           <div className="container-fluid half">
             <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
+              <div className="col-md-8 col-sm-8 col-8">
                 <div className="section-headline white-headline text-left">
                   <h3>
                     {this.props.params.type == 'ocg'
@@ -74,6 +79,12 @@ class Trophies extends React.Component {
                     </Link>
                   </div>
                 </div>
+              </div>
+              <div className="col-md-4 col-sm-4 col-4 text-center">
+                <img
+                  src={'/assets/icons/' + this.state.image_to_show}
+                  style={{maxHeight: 200}}
+                />
               </div>
             </div>
           </div>
