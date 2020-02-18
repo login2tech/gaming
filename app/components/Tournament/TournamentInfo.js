@@ -1463,14 +1463,14 @@ class TournamentInfo extends React.Component {
                     <div className="col-12 col-md"> </div>
                   </div>
 
-                  <div className="list_pad">
+                  <div className="list_pad tlist_pad">
                     <div className="row">
-                      <div className="col-md-4 col-5">
+                      <div className="col-md-4 col-6">
                         <span> TOURNAMENT ID</span>
                         <p>#{tournament.id}</p>
                       </div>
 
-                      <div className="col-md-4 col-3">
+                      <div className="col-md-4 col-6">
                         <span> STATUS</span>
                         <p>
                           {moment().isAfter(moment(tournament.starts_at))
@@ -1479,7 +1479,7 @@ class TournamentInfo extends React.Component {
                         </p>
                       </div>
 
-                      <div className="col-md-4 col-4">
+                      <div className="col-md-4 col-6">
                         <span>Registered</span>
                         <p>
                           {tournament.teams_registered
