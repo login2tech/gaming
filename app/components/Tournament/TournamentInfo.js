@@ -1410,7 +1410,7 @@ class TournamentInfo extends React.Component {
                 : "url('images/thumbnail_tournament.jpg')"
           }}
         >
-          <div className="container">
+          <div className="container tcontainer">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
@@ -1465,12 +1465,12 @@ class TournamentInfo extends React.Component {
 
                   <div className="list_pad tlist_pad">
                     <div className="row">
-                      <div className="col-md-4 col-6">
+                      <div className="col-md-4 col">
                         <span> TOURNAMENT ID</span>
                         <p>#{tournament.id}</p>
                       </div>
 
-                      <div className="col-md-4 col-6">
+                      <div className="col-md-4 col">
                         <span> STATUS</span>
                         <p>
                           {moment().isAfter(moment(tournament.starts_at))
@@ -1479,7 +1479,7 @@ class TournamentInfo extends React.Component {
                         </p>
                       </div>
 
-                      <div className="col-md-4 col-6">
+                      <div className="col-md-4 col">
                         <span>Registered</span>
                         <p>
                           {tournament.teams_registered
