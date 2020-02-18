@@ -1401,7 +1401,7 @@ class TournamentInfo extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar tourinfo single-finder-match"
+          className="page_title_bar tourinfo single-finder-match single-tournament-info"
           style={{
             backgroundImage: tournament.banner_url
               ? 'url(' + tournament.banner_url + ')'
