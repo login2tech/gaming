@@ -9,7 +9,15 @@ import PaymentModal from '../Modules/Modals/PaymentModal';
 class Records extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {records: {}, loaded: false, ladders: {}};
+    this.state = {
+      records: {},
+      loaded: false,
+      ladders: {},
+      image_to_show:
+        this.props.params.duration == 'life'
+          ? 'trophy_career.png'
+          : 'trophy_seasonal.png'
+    };
   }
 
   componentDidMount() {
@@ -229,7 +237,9 @@ class Records extends React.Component {
                         >
                           <div className="trof_a link_alt">
                             <div className="trophy-image">
-                              <img src="/images/shield-gold.png" />
+                              <img
+                                src={'/images/' + this.state.image_to_show}
+                              />
                             </div>
                             <div className="trophy-info">
                               <div className="trophy-name gold">

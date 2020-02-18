@@ -566,7 +566,7 @@ class Profile extends React.Component {
                             className="trof_a"
                           >
                             <div className="trophy-image">
-                              <img src="/images/shield-gold.png" />
+                              <img src="/images/trophy_seasonal.png" />
                             </div>
                             <div className="trophy-info">
                               <div className="trophy-name blue">
@@ -587,7 +587,7 @@ class Profile extends React.Component {
                             className="trof_a"
                           >
                             <div className="trophy-image">
-                              <img src="/images/shield-gold.png" />
+                              <img src="/images/trophy_career.png" />
                             </div>
                             <div className="trophy-info">
                               <div className="trophy-name blue">
