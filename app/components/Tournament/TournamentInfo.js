@@ -1399,8 +1399,8 @@ class TournamentInfo extends React.Component {
             backgroundImage: tournament.banner_url
               ? 'url(' + tournament.banner_url + ')'
               : tournament.game.banner_url
-                ? 'url(' + tournament.game.banner_url + ')'
-                : "url('images/thumbnail_tournament.jpg')"
+              ? 'url(' + tournament.game.banner_url + ')'
+              : "url('images/thumbnail_tournament.jpg')"
           }}
         >
           <div className="container tcontainer">

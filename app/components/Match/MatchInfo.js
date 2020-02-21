@@ -754,8 +754,8 @@ class MatchInfo extends React.Component {
                         {match.is_available_now
                           ? 'AVAILABLE NOW'
                           : moment().isAfter(moment(match.starts_at))
-                            ? 'Match Started:'
-                            : 'Match Starts'}{' '}
+                          ? 'Match Started:'
+                          : 'Match Starts'}{' '}
                         {match.is_available_now
                           ? ' '
                           : moment(match.starts_at).format('lll')}{' '}
@@ -1168,24 +1168,23 @@ class MatchInfo extends React.Component {
                   false
                 )}
 
-                {this.state.eligible_teams_loaded &&
-                  !this.state.team_selected && (
-                    <div className="alert alert-warning" id="tlst">
-                      You dont have a team for this ladder. Click{' '}
-                      <Link
-                        target="_blank"
-                        to={
-                          '/u/' +
-                          this.props.user.username +
-                          '/teams/new/l/' +
-                          match.ladder.id
-                        }
-                      >
-                        here
-                      </Link>{' '}
-                      to create a team.
-                    </div>
-                  )}
+                {this.state.eligible_teams_loaded && !this.state.team_selected && (
+                  <div className="alert alert-warning" id="tlst">
+                    You dont have a team for this ladder. Click{' '}
+                    <Link
+                      target="_blank"
+                      to={
+                        '/u/' +
+                        this.props.user.username +
+                        '/teams/new/l/' +
+                        match.ladder.id
+                      }
+                    >
+                      here
+                    </Link>{' '}
+                    to create a team.
+                  </div>
+                )}
               </div>
             </div>
             <GameRules title={this.state.match.game.title} />

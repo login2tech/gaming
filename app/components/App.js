@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Modules/Header';
 import Footer from './Modules/Footer';
 import {connect} from 'react-redux';
-import moment from 'moment';
 import ModalContainer from './ModalContainer';
 
 // import {withLocalize} from 'react-localize-redux';

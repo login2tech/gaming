@@ -94,12 +94,9 @@ class Trophies extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {this.state.loaded &&
-                  this.state.items.length == 0 && (
-                    <div className="alert alert-warning">
-                      No trophies to show
-                    </div>
-                  )}
+                {this.state.loaded && this.state.items.length == 0 && (
+                  <div className="alert alert-warning">No trophies to show</div>
+                )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container row">

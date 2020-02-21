@@ -467,7 +467,7 @@ class Game extends React.Component {
   );
   renderButton3 = cls => (
     <Link
-      to={'/game-rules/' + this.props.params.id}
+      to={'/game-rules/' + this.props.params.id + '/' + this.props.params.title}
       className={'btn btn-default bttn_submit' + cls}
     >
       Rules

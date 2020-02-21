@@ -272,7 +272,7 @@ class Tournament extends React.Component {
                   },
                   {
                     msg:
-                      'Please do not try to cancel the tournmemnt untill its cancelled.'
+                      'Please do not try to cancel the tournmemnt again untill its automatically cancelled within 5 minutes.'
                   }
                 ]
               });

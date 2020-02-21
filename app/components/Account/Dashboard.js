@@ -769,10 +769,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.props.user.cover_picture
-        ? {
-            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
-          }
-        : {};
+      ? {
+          backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+        }
+      : {};
 
     return (
       <div>

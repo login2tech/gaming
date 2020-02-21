@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router';
 // import MyTeamsModule from './Modules/MyTeamsModule';
 class MyTeamsModule extends React.Component {
   constructor(props) {

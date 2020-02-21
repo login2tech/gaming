@@ -43,6 +43,9 @@ class GameRules extends React.Component {
   }
   render() {
     let ttl = this.props.title;
+    if (!ttl) {
+      return false;
+    }
     ttl = ttl.toLowerCase();
     ttl = ttl.replace(new RegExp(' ', 'g'), '');
     ttl = ttl.replace(new RegExp('-', 'g'), '');

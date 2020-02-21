@@ -1,6 +1,10 @@
 {
     "parser": "babel-eslint",
-    "extends": "tschaub/react",
+    "extends":  [
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "tschaub/react"
+    ],
     "env": {
         "browser": true,
         "commonjs": true,

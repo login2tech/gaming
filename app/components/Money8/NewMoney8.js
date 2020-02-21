@@ -490,9 +490,9 @@ class NewMoney8 extends React.Component {
                                       'waiting' ? (
                                         ' -- '
                                       ) : this.amIEligible(
-                                        team_user,
-                                        ladder
-                                      ) ? (
+                                          team_user,
+                                          ladder
+                                        ) ? (
                                         <span className="text-success">
                                           <img
                                             className="icon_size"

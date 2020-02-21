@@ -346,19 +346,23 @@ class MyMembershipModule extends React.Component {
                       </div>
                     )
                   ) : (
-                    <input
-                      type="submit"
-                      value="Buy Official Comp Silver Membership"
-                      onClick={() => {
-                        this.processMembership('silver');
-                      }}
-                      className="btn btn-default bttn_submit"
-                    />
+                    <div className="col-md-8 offset-md-2 text-center">
+                      <input
+                        type="submit"
+                        value="Buy Official Comp Silver Membership"
+                        onClick={() => {
+                          this.processMembership('silver');
+                        }}
+                        className="btn btn-default bttn_submit"
+                      />
+                    </div>
                   )
                 ) : (
-                  <Link to="/login" className="btn btn-default bttn_submit">
-                    Get Official Comp Silver Membership
-                  </Link>
+                  <div className="col-md-8 offset-md-2 text-center">
+                    <Link to="/login" className="btn btn-default bttn_submit">
+                      Get Official Comp Silver Membership
+                    </Link>
+                  </div>
                 )}
               </div>
             </div>

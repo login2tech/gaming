@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-class GameRules extends React.Component {
+import {Link} from 'react-router';
+import GameRules from './Modules/GameRules';
+
+class GameRulesPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,6 +39,20 @@ class GameRules extends React.Component {
                   <h2>Game Rules </h2>
                   <h3>{this.state.game.title}</h3>
                   <br />
+                  <div className="banner_actions">
+                    <Link
+                      to={
+                        '/game/' +
+                        this.props.params.id +
+                        '/' +
+                        this.props.params.title
+                      }
+                      className="pt-3 pb-3 dib"
+                    >
+                      <span className="fa fa-arrow-left" /> back to game
+                      homepage
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
@@ -45,9 +62,12 @@ class GameRules extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <div
-                  dangerouslySetInnerHTML={{__html: this.state.game.rules}}
-                />
+                <GameRules title={this.props.params.title} />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
               </div>
             </div>
           </div>
@@ -66,4 +86,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(GameRules);
+export default connect(mapStateToProps)(GameRulesPage);

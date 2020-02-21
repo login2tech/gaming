@@ -250,7 +250,7 @@ export default function getRoutes(store) {
       <Route onLeave={clearMessages} path="/game/:id/:title" component={Game} />
       <Route
         onLeave={clearMessages}
-        path="/game-rules/:id"
+        path="/game-rules/:id/:title"
         component={GameRules}
       />
       <Route

@@ -71,10 +71,10 @@ const SingleMoney8 = props => {
                   {match.match_type == 'free'
                     ? 'FREE'
                     : match.match_type == 'credits'
-                      ? match.match_fee + ' credits'
-                      : match.match_type == 'cash'
-                        ? '$' + match.match_fee
-                        : ' '}
+                    ? match.match_fee + ' credits'
+                    : match.match_type == 'cash'
+                    ? '$' + match.match_fee
+                    : ' '}
                 </p>
               </div>
 
