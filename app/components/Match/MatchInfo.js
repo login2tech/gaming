@@ -5,7 +5,7 @@ const moment = require('moment');
 import {join_match, saveScores, leave_match} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
-
+import GameRules from '../Modules/GameRules';
 class MatchInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -1188,6 +1188,7 @@ class MatchInfo extends React.Component {
                   )}
               </div>
             </div>
+            <GameRules title={this.state.match.game.title} />
           </div>
         </section>
       </div>

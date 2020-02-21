@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import GameRules from '../Modules/GameRules';
 const moment = require('moment');
 import {join_tournament, saveScores} from '../../actions/tournament';
 import game_user_ids from '../../../config/game_user_ids';
@@ -1202,15 +1203,7 @@ class TournamentInfo extends React.Component {
     return (
       <div className="col-md-12">
         <div>
-          {this.state.tournament && this.state.tournament.ladder ? (
-            <div
-              dangerouslySetInnerHTML={{
-                __html: this.state.tournament.ladder.rules
-              }}
-            />
-          ) : (
-            false
-          )}
+          <GameRules title={this.state.match.game.title} />
         </div>
       </div>
     );

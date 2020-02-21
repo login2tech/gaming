@@ -5233,7 +5233,7 @@ button.btn.btn-exp-menu {
     position: fixed;
     width: 100%;
     line-height: 40px;
-    z-index: 99999;
+    z-index: 999999999999;
     background: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
     box-shadow: 0 0 5px 2px #2847f3;

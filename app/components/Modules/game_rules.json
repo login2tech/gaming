@@ -1,0 +1,39 @@
+{
+  "fortnite": [
+    {
+      "type": "tab",
+      "title": "Hosting Instructions",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "Below are multiple game modes for Fortnite: Battle Royale, players must read the modes and understand how the game modes are played. All game modes involve us matching you with an opponent where you add your opponents EPIC ID and play one of our competitive modes."
+        },
+        {
+          "type": "tab",
+          "title": "Kills While Downed",
+          "value": "All kills will count "
+        },
+        {
+          "type": "tab",
+          "title": "Reviving",
+          "value": "Van respawns are allowed. Kills scored by a respawned player, opponent or teammate, WILL COUNT. "
+        },
+        {
+          "type": "tab",
+          "title": "Lag/Settings",
+          "value": "After 10 seconds of landing and touching ground, any complaints on lag or pre-game settings will not be taken into consideration. There are no exceptions for this. A team must leave within 10 seconds due to lag from landing/start, and it will be replayed if they can provide proof of lag and leaving the match. For 2v2 matches both players must leave within 10 seconds. If this is a matchfinder match and your opponent refuses to replay you must provide proof of lag and leaving within 10 seconds then OCG admins will determine if the match gets cancelled. If, however, in that time you get damaged by another player, pick up items, or your opponent gets a kill/knock the match will stand from that point on. If after this point a player disconnects from the match, the match will not be replayed or cancelled. Any players enrolling in tournaments or matches, you agree to these terms. Valid proof of lag must include video in-game evidence of skipping or freezing, etc."
+        },
+        {
+          "type": "tab",
+          "title": "Kill Stealing",
+          "value": "Kill-stealing is allowed. “Stealing” kills is apart of the competitive nature of the match."
+        },
+        {
+          "type": "tab",
+          "title": "Interference/Sabotage",
+          "value": "In general, you are prohibited to intentionally interfere with your opponents attempts to secure kills or move around the map. "
+        }
+      ]
+    }
+  ]
+}

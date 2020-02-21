@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 // const moment = require('moment');
 import {join_match, saveScores, leave_match} from '../../actions/match8';
 import game_user_ids from '../../../config/game_user_ids';
-
+import GameRules from '../Modules/GameRules';
 import Messages from '../Modules/Messages';
 
 class Money8Info extends React.Component {
@@ -798,6 +798,7 @@ class Money8Info extends React.Component {
               </div>
             </div>
           </div>
+          <GameRules title={this.state.match.game.title} />
         </section>
       </div>
     );

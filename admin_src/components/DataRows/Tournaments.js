@@ -24,39 +24,6 @@ class Tournament extends React.Component {
     };
   }
 
-  resolveDispute(id, team_id) {
-    const key = 'dispute';
-    this.setState(
-      {
-        ['update_' + key + id]: true
-      },
-      () => {
-        Fetcher.post('/api/tournament/resolveDispute', {
-          id: id,
-          winner: team_id
-        })
-          .then(resp => {
-            this.setState({
-              ['update_' + key + id]: false
-            });
-            if (resp.ok) {
-              this.loadData();
-            } else {
-              this.props.dispatch({type: 'FAILURE', messages: [resp]});
-            }
-          })
-          .catch(err => {
-            console.log(err);
-            const msg = 'Failed to perform Action';
-            this.props.dispatch({
-              type: 'FAILURE',
-              messages: [{msg: msg}]
-            });
-          });
-      }
-    );
-  }
-
   createTournament() {
     this.props.dispatch(
       openModal({
@@ -272,19 +239,43 @@ class Tournament extends React.Component {
     return;
   }
 
-  resolveDispute(id, team_id) {
-    const key = 'dispute';
+  componentDidMount() {
+    this.loadData();
+  }
+
+  cancelTournamentSoon(id) {
     this.setState(
       {
-        ['update_' + key + id]: true
+        ['cancel_' + id]: true
       },
       () => {
-        Fetcher.post('/api/money8/resolveDispute', {id: id, winner: team_id})
+        const data = {
+          registration_start_at: 'CURRENT_TIME',
+          registration_end_at: 'CURRENT_TIME'
+        };
+        Fetcher.post('/api/admin/update/tournament', {id: id, data: data})
           .then(resp => {
             this.setState({
-              ['update_' + key + id]: false
+              ['cancel_' + id]: false
             });
             if (resp.ok) {
+              this.props.dispatch({
+                type: 'SUCCESS',
+                messages: [
+                  {
+                    msg:
+                      'Tournament has been cancelled. It will be reflected within next 5 minutes and if any team had joined the tournament, they will get a refund.'
+                  },
+                  {
+                    msg:
+                      'As a precaution, registrations have been stopped for the tournmant'
+                  },
+                  {
+                    msg:
+                      'Please do not try to cancel the tournmemnt untill its cancelled.'
+                  }
+                ]
+              });
               this.loadData();
             } else {
               this.props.dispatch({type: 'FAILURE', messages: [resp]});
@@ -300,10 +291,6 @@ class Tournament extends React.Component {
           });
       }
     );
-  }
-
-  componentDidMount() {
-    this.loadData();
   }
 
   runAction(actions, id, item) {
@@ -456,6 +443,24 @@ class Tournament extends React.Component {
                               </span>
                             ) : (
                               u.status
+                            )}
+                            {u.status == 'pending' ? (
+                              <button
+                                className="btn btn-xs btn-primary"
+                                type="button"
+                                onClick={() => {
+                                  this.cancelTournamentSoon(u.id);
+                                }}
+                              >
+                                {this.state['cancel_' + u.id] ? (
+                                  <i className="fa fa-spinner fa-spin" />
+                                ) : (
+                                  false
+                                )}{' '}
+                                Cancel Tournament
+                              </button>
+                            ) : (
+                              false
                             )}
                           </td>
                         </tr>

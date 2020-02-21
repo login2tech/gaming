@@ -1,3 +1,4 @@
+import moment from 'moment';
 exports.delete = function(req, res, next) {
   new req.Mdl({
     id: req.body.id
@@ -24,15 +25,23 @@ exports.delete = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
+  const data = req.body.data;
+
+  const keys = Object.keys(data);
+
+  for (let i = 0; i < keys.length; i++) {
+    if (data[keys[i]] == 'CURRENT_TIME') {
+      data[keys[i]] = moment();
+    }
+  }
   new req.Mdl({id: req.body.id})
-    .save(req.body.data, {
+    .save(data, {
       method: 'update'
     })
     .then(function() {
       return res.status(200).send({ok: true, msg: 'Update Successful'});
     })
     .catch(function(err) {
-      console.log(err);
       return res.status(200).send({ok: false, msg: 'failed to perform action'});
     });
 };
