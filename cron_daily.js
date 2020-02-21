@@ -5,16 +5,19 @@ require('dotenv').config({silent: true});
 const moment = require('moment');
 const utils = require('./routes/utils');
 const MembershipLog = require('./models/MembershipLog');
-const addMembershipLog = function(plan, action, uid) {
+const addMembershipLog = function(plan, action, uid, reason) {
   let msg;
   if (action == 'add') {
     msg = 'OCG ' + plan + ' membership started.';
   } else if (action == 'renew') {
-    msg = 'OCG ' + plan + ' membership reviewed';
+    msg = 'OCG ' + plan + ' membership renewed';
   } else if (action == 'stop_at_month_end') {
     msg = 'OCG' + plan + ' membership renewal cancelled';
   } else if (action == 'stop') {
     msg = 'OCG' + plan + ' membership stopped';
+    if (reason) {
+      msg += ' [' + reason + ']';
+    }
   }
   new MembershipLog().save({
     user_id: uid,
@@ -68,7 +71,12 @@ const checkForMembership = function(user) {
         .where({id: user.id})
         .save(obj_to_save, {method: 'update'})
         .then(function(usr) {
-          addMembershipLog(prime_type, 'stop', user.id);
+          addMembershipLog(
+            prime_type,
+            'stop',
+            user.id,
+            'Renewal was disabled by you.'
+          );
         })
         .catch(function(err) {
           //
@@ -108,7 +116,12 @@ const checkForMembership = function(user) {
           .where({id: user.id})
           .save(obj_to_save, {method: 'update'})
           .then(function(usr) {
-            addMembershipLog(prime_type, 'stop', user.id);
+            addMembershipLog(
+              prime_type,
+              'stop',
+              user.id,
+              'Insufficient OCG Cash Balance'
+            );
           })
           .catch(function(err) {
             Raven.captureException(err);
@@ -149,7 +162,7 @@ new User()
     }
     usrs = usrs.toJSON();
     for (let i = 0; i < usrs.length; i++) {
-      checkForMembership(usrs[i].id);
+      checkForMembership(usrs[i]);
     }
   });
 setInterval(function() {
