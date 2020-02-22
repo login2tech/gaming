@@ -1,13 +1,8 @@
 10 credits on rank up
-create match, check if existing match pending score
-create match, time gaps if existing scheduled
+ create match, time gaps if existing scheduled
 paypal
-when ranking up never recieved my credit this should pop up in transaction history when recieving it
-Season Records drop down need to see tested
 team records get seperate column for record of that last season need to see tested
 All game rules and FAQ's are not implemented yet
-Team Season records are not implemented on team yet. Ask me to explain on skype
-When season is over the rank you ended up will be posted into Season Records when dropped. Ask me to explain more
 
 
 

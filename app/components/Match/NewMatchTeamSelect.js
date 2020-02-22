@@ -62,7 +62,36 @@ class NewMatchTeamSelect extends React.Component {
             eligible_teams: json.teams ? json.teams : [],
             eligible_teams_loaded: true
           };
-          this.setState(obj);
+          this.setState(obj, this.checkIfPendingScore);
+        }
+      });
+  }
+
+  checkIfPendingScore() {
+    let team_array = [];
+    for (let i = 0; i < this.state.eligible_teams.length; i++) {
+      const team_parent = this.state.eligible_teams[i];
+      const team = team_parent.team_info ? team_parent.team_info : {};
+      if (team.id && team.team_type == 'matchfinder') {
+        team_array.push(team.id);
+      }
+    }
+    team_array = team_array.join(',');
+
+    fetch(
+      '/api/matches/pendingScoreMatches?uid=' +
+        this.props.user.id +
+        '&teams=' +
+        team_array
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          if (json.any_pending) {
+            this.setState({
+              has_pending_match: true
+            });
+          }
         }
       });
   }
@@ -781,7 +810,11 @@ class NewMatchTeamSelect extends React.Component {
                       {this.renderGameSettings()}
                       <div className="form-group col-md-12 text-center">
                         <button
-                          disabled={!this.isEligible() || this.state.creating}
+                          disabled={
+                            !this.isEligible() ||
+                            this.state.creating ||
+                            this.state.has_pending_match
+                          }
                           className="btn btn-default bttn_submit"
                           type="submit"
                         >
@@ -789,6 +822,14 @@ class NewMatchTeamSelect extends React.Component {
                             ? 'please wait...'
                             : 'Create Match'}
                         </button>
+                        {this.state.has_pending_match ? (
+                          <span className="text-danger">
+                            You have a match awaiting score. Please provide
+                            score of pending match before creating a new match.
+                          </span>
+                        ) : (
+                          false
+                        )}
                       </div>
                     </form>
                   )}

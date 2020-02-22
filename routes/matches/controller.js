@@ -1244,6 +1244,65 @@ exports.matches_of_team = function(req, res, next) {
       return res.status(200).send({ok: true, items: []});
     });
 };
+exports.pendingScoreMatches = function(req, res, next) {
+  // console.log(req.query);
+  let teams = req.query.teams;
+  if (!teams || teams == '') {
+    teams = [];
+  } else {
+    teams = teams.split(',');
+  }
+  teams = teams.map(function(l) {
+    return parseInt(l);
+  });
+  let mdl = new Item();
+
+  mdl = mdl.query(function(qb) {
+    qb.where('status', 'LIKE', 'accepted');
+  });
+
+  mdl = mdl.query(function(qb) {
+    qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+  });
+
+  mdl
+    .fetchAll()
+    .then(function(items) {
+      if (!items) {
+        return res.status(200).send({ok: true, any_pending: false});
+      }
+      items = items.toJSON();
+      for (let i = 0; i < items.length; i++) {
+        const match = items[i];
+        let players = [];
+        let team_score = '';
+        if (teams.indexOf(match.team_1_id) > -1) {
+          team_score = match.team_1_score;
+          players = match.team_1_players.split('|');
+        } else if (teams.indexOf(match.team_2_id) > -1) {
+          team_score = match.team_2_score;
+          players = match.team_2_players.split('|');
+        }
+
+        players = players.map(function(l) {
+          return parseInt(l);
+        });
+        // player is in match
+        if (players.indexOf(parseInt(req.query.uid)) > -1) {
+          // player's team hasnt even given score
+          if (!team_score) {
+            return res.status(200).send({ok: true, any_pending: true});
+          }
+        }
+      }
+      // all matches traversed, not even a single satisfies
+      return res.status(200).send({ok: true, any_pending: false});
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      return res.status(200).send({ok: true, any_pending: false});
+    });
+};
 
 exports.matches_of_user = function(req, res, next) {
   // console.log(req.query);

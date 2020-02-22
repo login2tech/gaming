@@ -39,6 +39,34 @@ class NewTeam extends React.Component {
       game_settings: game_settings
     });
   }
+  checkIfPendingScore() {
+    let team_array = [];
+    for (let i = 0; i < this.state.team_info.length; i++) {
+      const team_parent = this.state.team_info[i];
+      const team = team_parent.team_info ? team_parent.team_info : {};
+      if (team.id && team.team_type == 'matchfinder') {
+        team_array.push(team.id);
+      }
+    }
+    team_array = team_array.join(',');
+
+    fetch(
+      '/api/matches/pendingScoreMatches?uid=' +
+        this.props.user.id +
+        '&teams=' +
+        team_array
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          if (json.any_pending) {
+            this.setState({
+              has_pending_match: true
+            });
+          }
+        }
+      });
+  }
 
   fetchGame() {
     fetch('/api/games/single/' + this.state.team_info.ladder.game_id)
@@ -51,7 +79,7 @@ class NewTeam extends React.Component {
               game_info: json.item
             },
             () => {
-              // this.fetchGame();
+              this.checkIfPendingScore();
               // this.fetchTeam();
             }
           );
@@ -571,7 +599,11 @@ class NewTeam extends React.Component {
                       {this.renderGameSettings()}
                       <div className="form-group col-md-12 text-center">
                         <button
-                          disabled={!this.isEligible() || this.state.creating}
+                          disabled={
+                            !this.isEligible() ||
+                            this.state.creating ||
+                            this.state.has_pending_match
+                          }
                           className="btn btn-default bttn_submit"
                           type="submit"
                         >
@@ -579,6 +611,14 @@ class NewTeam extends React.Component {
                             ? 'please wait...'
                             : 'Create Match'}
                         </button>
+                        {this.state.has_pending_match ? (
+                          <span className="text-danger">
+                            You have a match awaiting score. Please provide
+                            score of pending match before creating a new match.
+                          </span>
+                        ) : (
+                          false
+                        )}
                       </div>
                     </form>
                   )}
