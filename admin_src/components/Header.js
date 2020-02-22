@@ -260,7 +260,12 @@ class Header extends React.Component {
                 </li>
                 <li>
                   <Link onClick={this.closeSide} to="/settings">
-                    Settings <span className="badge">New</span>
+                    Settings
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={this.closeSide} to="/faq">
+                    FAQs
                   </Link>
                 </li>
                 <li>

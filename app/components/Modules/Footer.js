@@ -125,7 +125,7 @@ class Footer extends React.Component {
                       </Link>
                     </li>
                     <li>
-                      <Link to="/faqs">FAQ's</Link>
+                      <Link to="/faq">FAQs</Link>
                     </li>
                   </ul>
                 </div>

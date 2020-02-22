@@ -4,27 +4,19 @@ exports.deleteFaq = function(req, res, next) {
   new Faq({id: req.body.id})
     .destroy()
     .then(function(user) {
-      res.send({msg: 'The QA Item has been successfully deleted.'});
+      res.send({ok: true, msg: 'The FAQ Item has been successfully deleted.'});
     })
     .catch(function(err) {
       return res
         .status(400)
-        .send({msg: 'Something went wrong while deleting the QA item'});
+        .send({msg: 'Something went wrong while deleting the FAQ item'});
     });
 };
 
 exports.updateFaq = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
-  req
-    .assert('title_second_language', 'Title - Second Laguage cannot be blank')
-    .notEmpty();
+
   req.assert('content', 'Content cannot be blank').notEmpty();
-  req
-    .assert(
-      'content_second_language',
-      'Content - Second Laguage cannot be blank'
-    )
-    .notEmpty();
 
   // req.assert('category' , 'Category cannot be blank').notEmpty();
 
@@ -37,35 +29,27 @@ exports.updateFaq = function(req, res, next) {
 
   faq.save({
     title: req.body.title,
-    title_second_language: req.body.title_second_language,
-    content_second_language: req.body.content_second_language,
+
     content: req.body.content
   });
 
   faq
     .fetch()
     .then(function(faq) {
-      res.send({faq: faq, msg: 'QA item has been updated.'});
+      res.send({faq: faq, ok: true, msg: 'FAQ item has been updated.'});
     })
     .catch(function(err) {
       res
         .status(400)
-        .send({msg: 'Something went wrong while updating the QA item'});
+        .send({msg: 'Something went wrong while updating the FAQ item'});
     });
 };
 
 exports.addFaq = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
-  req
-    .assert('title_second_language', 'Title - Second Laguage cannot be blank')
-    .notEmpty();
+
   req.assert('content', 'Content cannot be blank').notEmpty();
-  req
-    .assert(
-      'content_second_language',
-      'Content - Second Laguage cannot be blank'
-    )
-    .notEmpty();
+
   const errors = req.validationErrors();
 
   if (errors) {
@@ -74,19 +58,17 @@ exports.addFaq = function(req, res, next) {
 
   new Faq({
     title: req.body.title,
-    title_second_language: req.body.title_second_language,
-    content_second_language: req.body.content_second_language,
     content: req.body.content
   })
     .save()
     .then(function(user) {
-      res.send({ok: true, msg: 'New QA item has been created successfully.'});
+      res.send({ok: true, msg: 'New FAQ item has been created successfully.'});
     })
     .catch(function(err) {
       // console.log(err);
       return res
         .status(400)
-        .send({msg: 'Something went wrong while created a new QA item'});
+        .send({msg: 'Something went wrong while created a new FAQ item'});
     });
 };
 

@@ -27,33 +27,43 @@ class FAQ extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar">
-          <div className="container">
+        <section className="page_title_bar noblend">
+          <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12">
-                <h2 className="title_heading">F.A.Q.</h2>
+                <div className="section-headline white-headline text-left">
+                  <div className="all_t_heading">F.A.Q.</div>
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="faq-section">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="faq" id="accordion">
+        <section className="faq-section mb-5">
+          <div className="container mb-5">
+            <div className="row mb-5">
+              <div className="col-md-12 mb-5">
+                <div className="faq  mb-5" id="accordion">
                   {this.state.faqs.map((faq, i) => {
                     return (
-                      <div className="card" key={faq.id}>
+                      <div
+                        className={
+                          'card ' +
+                          (this.state.open_faq == faq.id ? ' is_opened ' : ' ')
+                        }
+                        key={faq.id}
+                      >
                         <div className="card-header" id="faqHeading-1">
                           <div className="mb-0">
                             <h5
-                              className="faq-title"
+                              className="faq-title text-white"
                               onClick={() => {
                                 this.setState({open_faq: faq.id});
                               }}
                             >
-                              <span className="badge">{i + 1}</span>
+                              <span className="badge badge-primary">
+                                {i + 1}
+                              </span>{' '}
                               {this.props.activeLanguage &&
                               this.props.activeLanguage.code == 'fr'
                                 ? faq.title_second_language
@@ -71,12 +81,7 @@ class FAQ extends React.Component {
                           }
                         >
                           <div className="card-body">
-                            <p>
-                              {this.props.activeLanguage &&
-                              this.props.activeLanguage.code == 'fr'
-                                ? faq.content_second_language
-                                : faq.content}
-                            </p>
+                            <p className=" text-white">{faq.content}</p>
                           </div>
                         </div>
                       </div>
