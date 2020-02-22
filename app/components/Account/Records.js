@@ -3,9 +3,17 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 
 import {openModal, closeModal} from '../../actions/modals';
-
+import utils from '../../utils';
 import PaymentModal from '../Modules/Modals/PaymentModal';
+const seasonName = {
+  1: 'Spring',
 
+  2: 'Summer',
+
+  3: 'Fall',
+
+  4: 'Winter'
+};
 class Records extends React.Component {
   constructor(props) {
     super(props);
@@ -13,6 +21,7 @@ class Records extends React.Component {
       records: {},
       loaded: false,
       ladders: {},
+      year_data: {},
       image_to_show:
         this.props.params.duration == 'life'
           ? 'trophy_career.png'
@@ -22,6 +31,7 @@ class Records extends React.Component {
 
   componentDidMount() {
     this.fetchrecords();
+    this.cur_season = utils.get_current_season();
   }
 
   onGetToken(token, ladder_data) {
@@ -134,7 +144,7 @@ class Records extends React.Component {
         this.props.params.username +
         '&duration=' +
         'life'
-      //        this.props.params.duration
+      // this.props.params.duration
     )
       .then(res => res.json())
       .then(json => {
@@ -142,22 +152,163 @@ class Records extends React.Component {
           const items = json.records;
           const ladders = this.state.ladders;
           const details = this.state.records;
-          for (let i = items.length - 1; i >= 0; i--) {
-            const ladder_id = items[i].ladder_id;
-            ladders['l_' + ladder_id] = items[i].ladder;
-            if (!details['l_' + ladder_id]) {
-              details['l_' + ladder_id] = {wins: 0, loss: 0};
+          if (this.props.params.duration == 'life') {
+            for (let i = items.length - 1; i >= 0; i--) {
+              const ladder_id = items[i].ladder_id;
+              ladders['l_' + ladder_id] = items[i].ladder;
+              if (!details['l_' + ladder_id]) {
+                details['l_' + ladder_id] = {wins: 0, loss: 0};
+              }
+              details['l_' + ladder_id].wins += items[i].wins;
+              details['l_' + ladder_id].loss += items[i].loss;
             }
-            details['l_' + ladder_id].wins += items[i].wins;
-            details['l_' + ladder_id].loss += items[i].loss;
+            this.setState({
+              records: details,
+              ladders: ladders,
+              loaded: true
+            });
+          } else {
+            const year_data = {};
+            for (let i = 0; i < items.length; i++) {
+              const item = items[i];
+              if (!year_data[item.year]) {
+                year_data[item.year] = {};
+              }
+              if (!year_data[item.year][item.season]) {
+                year_data[item.year][item.season] = {};
+              }
+              const ladder_id = items[i].ladder_id;
+              ladders['l_' + ladder_id] = items[i].ladder;
+              if (!year_data[item.year][item.season]['l_' + ladder_id]) {
+                year_data[item.year][item.season]['l_' + ladder_id] = {
+                  wins: 0,
+                  loss: 0
+                };
+              }
+              year_data[item.year][item.season]['l_' + ladder_id].wins +=
+                items[i].wins;
+              year_data[item.year][item.season]['l_' + ladder_id].loss +=
+                items[i].loss;
+            }
+            this.setState({
+              // records: details,
+              year_data: year_data,
+              records:
+                year_data[this.cur_season[0]] &&
+                year_data[this.cur_season[0]][this.cur_season[1]]
+                  ? year_data[this.cur_season[0]][this.cur_season[1]]
+                  : {},
+              ladders: ladders,
+              loaded: true
+            });
+            // console.log(year_data[cur_season[0]][cur_season[1]]);
+            // console.log(year_data);
           }
-          this.setState({
-            records: details,
-            ladders: ladders,
-            loaded: true
-          });
         }
       });
+  }
+  renderSeasonImage(y, s) {
+    return false;
+  }
+  renderData(rec, records, allowReset) {
+    const {ladders} = this.state;
+    return (
+      <>
+        {rec.map((notif, i) => {
+          if (!ladders[notif] || !records[notif]) {
+            return false;
+          }
+          return (
+            <div
+              className="single-trophy-container col-12 col-md-6 col-lg-4 recordentr"
+              key={notif}
+            >
+              <div className="trof_a link_alt">
+                <div className="trophy-image">
+                  <img src={'/images/' + this.state.image_to_show} />
+                </div>
+                <div className="trophy-info">
+                  <div className="trophy-name gold">
+                    {ladders[notif].game_info.title} - {ladders[notif].title}
+                    {this.props.user &&
+                    allowReset &&
+                    this.props.user.username == this.props.params.username &&
+                    (records[notif].wins > 0 || records[notif].loss > 0) ? (
+                      <a
+                        style={{float: 'right'}}
+                        className="reset_rep"
+                        href="#"
+                        onClick={() => {
+                          this.resetIndividualScore(
+                            ladders[notif].id,
+                            ladders[notif].game_info.title +
+                              ' - ' +
+                              ladders[notif].title
+                          );
+                        }}
+                      >
+                        <span className="fa fa-repeat" /> reset ($1.99)
+                      </a>
+                    ) : (
+                      false
+                    )}
+                  </div>
+                  <div className="trophy-count">
+                    <span className="text-success">{records[notif].wins}W</span>{' '}
+                    -{' '}
+                    <span className="text-danger">{records[notif].loss}L</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
+  }
+  renderSeason(y, s) {
+    if (
+      parseInt(this.cur_season[0]) == parseInt(y) &&
+      parseInt(this.cur_season[1]) == parseInt(s)
+    ) {
+      return false;
+    }
+    const rec = Object.keys(this.state.ladders);
+    return (
+      <div className="col-md-12 blue-border-top">
+        <div className="row">
+          <div className="col text-center m-b-5 mb-5">
+            <h3>
+              {seasonName[parseInt(s)]} {y}
+            </h3>
+          </div>
+        </div>
+        <div className="row">
+          {this.renderData(rec, this.state.year_data[y][s])}
+        </div>
+      </div>
+    );
+  }
+
+  renderYear(k) {
+    const seasons = Object.keys(this.state.year_data[k]);
+    seasons.sort();
+    seasons.reverse();
+    return seasons.map((m, i) => {
+      return this.renderSeason(k, m);
+    });
+  }
+
+  renderHistory() {
+    if (this.props.params.duration == 'life') {
+      return;
+    }
+    const years = Object.keys(this.state.year_data);
+    years.sort();
+    years.reverse();
+    return years.map((k, i) => {
+      return this.renderYear(k);
+    });
   }
 
   render() {
@@ -166,7 +317,6 @@ class Records extends React.Component {
     const rec = Object.keys(this.state.ladders);
     // console.log(rec);
 
-    const {ladders, records} = this.state;
     // console.log(records);
     return (
       <div>
@@ -226,67 +376,19 @@ class Records extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {rec.length == 0 && this.state.loaded && (
-                  <div className="alert alert-warning">No records to show</div>
-                )}
+                {rec.length == 0 &&
+                  this.state.loaded && (
+                    <div className="alert alert-warning">
+                      No records to show
+                    </div>
+                  )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container row">
-                    {rec.map((notif, i) => {
-                      return (
-                        <div
-                          className="single-trophy-container col-12 col-md-6 col-lg-4 recordentr"
-                          key={notif}
-                        >
-                          <div className="trof_a link_alt">
-                            <div className="trophy-image">
-                              <img
-                                src={'/images/' + this.state.image_to_show}
-                              />
-                            </div>
-                            <div className="trophy-info">
-                              <div className="trophy-name gold">
-                                {ladders[notif].game_info.title} -{' '}
-                                {ladders[notif].title}
-                                {this.props.user &&
-                                this.props.user.username ==
-                                  this.props.params.username &&
-                                (records[notif].wins > 0 ||
-                                  records[notif].loss > 0) ? (
-                                  <a
-                                    style={{float: 'right'}}
-                                    className="reset_rep"
-                                    href="#"
-                                    onClick={() => {
-                                      this.resetIndividualScore(
-                                        ladders[notif].id,
-                                        ladders[notif].game_info.title +
-                                          ' - ' +
-                                          ladders[notif].title
-                                      );
-                                    }}
-                                  >
-                                    <span className="fa fa-repeat" /> reset
-                                    ($1.99)
-                                  </a>
-                                ) : (
-                                  false
-                                )}
-                              </div>
-                              <div className="trophy-count">
-                                <span className="text-success">
-                                  {records[notif].wins}W
-                                </span>{' '}
-                                -{' '}
-                                <span className="text-danger">
-                                  {records[notif].loss}L
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
+                    {this.renderData(rec, this.state.records, true)}
+                  </div>
+                  <div className="user-profile-trophies-container row">
+                    {this.renderHistory()}
                   </div>
                 </div>
               </div>

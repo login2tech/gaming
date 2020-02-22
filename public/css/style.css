@@ -5374,7 +5374,7 @@ span.capitalize {
 }
 
 
-.trophy-info a.reset_rep{
+.single-trofy a.reset_rep{
   right: 100px
 }
 .badge-primary {
@@ -6653,4 +6653,10 @@ media query starts here
     .is_prime_cell{
       background-size: 22px;
     }
+}
+
+.col-md-12.blue-border-top {
+    border-top: 1px solid rgb(17, 74, 251);
+    padding-top: 50px;
+    margin-top: 50px;
 }

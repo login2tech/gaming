@@ -425,7 +425,7 @@ class Profile extends React.Component {
 
                     <div className="user-profile-trophies-wrapper">
                       <div className="user-profile-trophies-container row">
-                        <div className="single-trophy-container col-6 col-md-6 col-lg-4">
+                        <div className="single-trophy-container single-trofy col-6 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -459,7 +459,7 @@ class Profile extends React.Component {
                             </div>
                           </Link>
                         </div>
-                        <div className="single-trophy-container col-6 col-md-6 col-lg-4">
+                        <div className="single-trophy-container single-trofy col-6 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -514,7 +514,7 @@ class Profile extends React.Component {
                             </div>
                           </Link>
                         </div>
-                        <div className="single-trophy-container col-6 col-md-6 col-lg-4">
+                        <div className="single-trophy-container single-trofy col-6 col-md-6 col-lg-4">
                           <Link
                             to={
                               '/u/' +
@@ -570,7 +570,7 @@ class Profile extends React.Component {
                           </Link>
                         </div>
 
-                        <div className="single-trophy-container col-6 col-md-6 col-lg-4 order-md-5">
+                        <div className="single-trophy-container single-trofy col-6 col-md-6 col-lg-4 order-md-5">
                           <Link
                             to={
                               '/u/' +
