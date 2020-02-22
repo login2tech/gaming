@@ -1006,6 +1006,10 @@ const join_inner = function(match, req, res, next) {
     .save({
       team_2_id: req.body.team_2_id,
       status: 'accepted',
+      is_available_now: false,
+      starts_at: match.get('is_available_now')
+        ? moment().add(10, 'minutes')
+        : match.get('starts_at'),
       team_2_players: req.body.using_users ? req.body.using_users.join('|') : ''
     })
     .then(function(match) {
@@ -1131,7 +1135,6 @@ exports.join = function(req, res, next) {
           }
         })
         .catch(function(err) {
-          console.log(err);
           Raven.captureException(err);
           return res.status(400).send({
             ok: false,
