@@ -546,7 +546,7 @@ class TeamInfo extends React.Component {
 
   renderProfileImage() {
     return (
-      <div className="content">
+      <>
         {this.props.user &&
         this.currentUserInTeam() &&
         !this.state.team_info.removed ? (
@@ -588,17 +588,19 @@ class TeamInfo extends React.Component {
         ) : (
           false
         )}
-        {this.state.new_profile_pic ? (
-          <img src={this.state.new_profile_pic} className="img-fluid" />
-        ) : this.state.team_info.profile_picture ? (
-          <img
-            src={this.state.team_info.profile_picture}
-            className="img-fluid "
-          />
-        ) : (
-          <img className="img-fluid  " src="/images/team_bg.png" />
-        )}
-      </div>
+        <div className="content">
+          {this.state.new_profile_pic ? (
+            <img src={this.state.new_profile_pic} className="img-fluid" />
+          ) : this.state.team_info.profile_picture ? (
+            <img
+              src={this.state.team_info.profile_picture}
+              className="img-fluid "
+            />
+          ) : (
+            <img className="img-fluid  " src="/images/team_bg.png" />
+          )}
+        </div>
+      </>
     );
   }
 
@@ -637,13 +639,13 @@ class TeamInfo extends React.Component {
           paddingBottom: 30
         }
       : this.state.team_info && this.state.team_info.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')',
-          paddingBottom: 30
-        }
-      : {
-          paddingBottom: 30
-        };
+        ? {
+            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')',
+            paddingBottom: 30
+          }
+        : {
+            paddingBottom: 30
+          };
 
     return (
       <div>

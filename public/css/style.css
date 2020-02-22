@@ -197,6 +197,9 @@ select.form-control:not([size]):not([multiple]) {
     padding: 0px 0px;
     font-weight: 500;
 }
+.nav-list li:not(.logo)>a span{
+  color:#fff
+}
 
 .nav-list li:not(.logo)>a:after {
     display: block;
@@ -3078,6 +3081,7 @@ a.bttn_submit:hover {
     display: block;
     bottom: 5px;
     right: 5px;
+    z-index: 1
 }
 
 .hidden {
@@ -5811,12 +5815,12 @@ span.capitalize {
     }
 
     .update_btn label, .update_btn button {
-        font-size: 10px;
-        padding: 1px 2px;
-        height: 14px;
-        width: 14px;
-        line-height: 14px;
-        text-align: center;
+      font-size: 14px;
+      padding: 1px 2px;
+      height: 21px;
+      width: 21px;
+      line-height: 20px;
+      text-align: center;
     }
 
     .team_actions {

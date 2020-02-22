@@ -444,6 +444,18 @@ class Profile extends React.Component {
                               <div className="trophy-count">
                                 {this.state.trophy_counts.gold}
                               </div>
+                              {this.props.user &&
+                              this.props.user.id == this.state.user_info.id &&
+                              this.state.trophy_counts.silver > 0 ? (
+                                <a
+                                  style={{float: 'right'}}
+                                  className="reset_rep d-md-none"
+                                >
+                                  &nbsp;
+                                </a>
+                              ) : (
+                                false
+                              )}
                             </div>
                           </Link>
                         </div>
@@ -470,7 +482,7 @@ class Profile extends React.Component {
                                 this.state.trophy_counts.silver > 0 ? (
                                   <a
                                     style={{float: 'right'}}
-                                    className="reset_rep"
+                                    className="reset_rep d-none d-md-inline-block"
                                     href="#"
                                     onClick={this.resetOverallTrSilver.bind(
                                       this
@@ -485,6 +497,20 @@ class Profile extends React.Component {
                               <div className="trophy-count">
                                 {this.state.trophy_counts.silver}
                               </div>
+                              {this.props.user &&
+                              this.props.user.id == this.state.user_info.id &&
+                              this.state.trophy_counts.silver > 0 ? (
+                                <a
+                                  style={{float: 'right'}}
+                                  className="reset_rep d-md-none"
+                                  href="#"
+                                  onClick={this.resetOverallTrSilver.bind(this)}
+                                >
+                                  <span className="fa fa-repeat" /> reset ($5)
+                                </a>
+                              ) : (
+                                false
+                              )}
                             </div>
                           </Link>
                         </div>
@@ -511,7 +537,7 @@ class Profile extends React.Component {
                                 this.state.trophy_counts.bronze > 0 ? (
                                   <a
                                     style={{float: 'right'}}
-                                    className="reset_rep"
+                                    className="reset_rep d-none d-md-inline-block"
                                     href="#"
                                     onClick={this.resetOverallTrBronze.bind(
                                       this
@@ -526,6 +552,20 @@ class Profile extends React.Component {
                               <div className="trophy-count">
                                 {this.state.trophy_counts.bronze}
                               </div>
+                              {this.props.user &&
+                              this.props.user.id == this.state.user_info.id &&
+                              this.state.trophy_counts.bronze > 0 ? (
+                                <a
+                                  style={{float: 'right'}}
+                                  className="reset_rep d-md-none"
+                                  href="#"
+                                  onClick={this.resetOverallTrBronze.bind(this)}
+                                >
+                                  <span className="fa fa-repeat" /> reset ($5)
+                                </a>
+                              ) : (
+                                false
+                              )}
                             </div>
                           </Link>
                         </div>
@@ -552,6 +592,18 @@ class Profile extends React.Component {
                               <div className="trophy-count">
                                 {this.state.trophy_counts.blue}
                               </div>
+                              {this.props.user &&
+                              this.props.user.id == this.state.user_info.id &&
+                              this.state.trophy_counts.bronze > 0 ? (
+                                <a
+                                  style={{float: 'right'}}
+                                  className="reset_rep d-md-none"
+                                >
+                                  &nbsp;
+                                </a>
+                              ) : (
+                                false
+                              )}
                             </div>
                           </Link>
                         </div>
