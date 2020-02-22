@@ -56,9 +56,7 @@ const __addNewCreditPointTransaction = function(
         qty: points
       })
       .then(function(o) {})
-      .catch(function(err) {
-        console.log(8, err);
-      });
+      .catch(function(err) {});
   } else {
     new CashTransactions()
       .save({
@@ -68,9 +66,7 @@ const __addNewCreditPointTransaction = function(
         qty: points
       })
       .then(function(o) {})
-      .catch(function(err) {
-        console.log(8, err);
-      });
+      .catch(function(err) {});
   }
 };
 

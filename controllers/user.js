@@ -7,6 +7,7 @@ const UserFollower = require('../models/UserFollower');
 const mailer = require('./mailer');
 const Notif = require('../models/Notification');
 const Score = require('../models/Score');
+const XP = require('../models/XP');
 const utils = require('../routes/utils');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const Trophy = require('../routes/tournaments/Trophy');
@@ -856,6 +857,38 @@ exports.unbanUser = function(req, res, next) {
   } else {
     res.status(400).send({msg: 'Something went wrong while updating the User'});
   }
+};
+exports.xp_records = function(req, res, next) {
+  const username = req.query.username;
+  const duration = req.query.duration;
+  if (!username || !duration) {
+    return res.status(400).send({ok: false, msg: 'Invalid nubmer of params'});
+  }
+  new User()
+    .where({
+      username: username
+    })
+    .fetch()
+    .then(function(usr) {
+      if (!usr) {
+        return res.status(400).send({ok: false, msg: 'No such username'});
+      }
+      usr = usr.toJSON();
+      const user_id = usr.id;
+      let scr = new XP();
+      scr = scr.where({
+        user_id: user_id
+      });
+
+      scr
+        .fetchAll({})
+        .then(function(items) {
+          res.status(200).send({ok: true, items: items.toJSON()});
+        })
+        .catch(function(err) {
+          return res.status(400).send({ok: false, msg: 'Failed to fetch'});
+        });
+    });
 };
 
 exports.records = function(req, res, next) {

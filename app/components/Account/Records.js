@@ -20,6 +20,7 @@ class Records extends React.Component {
     this.state = {
       records: {},
       loaded: false,
+      xp_data: [],
       ladders: {},
       year_data: {},
       image_to_show:
@@ -137,7 +138,21 @@ class Records extends React.Component {
       })
     );
   }
-
+  fetchXPRanks() {
+    fetch(
+      '/api/user_info/xp?username=' +
+        this.props.params.username +
+        '&duration=' +
+        'life'
+      // this.props.params.duration
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState({xp_data: json.items ? json.items : []});
+        }
+      });
+  }
   fetchrecords() {
     fetch(
       '/api/user_info/records?username=' +
@@ -168,6 +183,7 @@ class Records extends React.Component {
               loaded: true
             });
           } else {
+            this.fetchXPRanks();
             const year_data = {};
             for (let i = 0; i < items.length; i++) {
               const item = items[i];
@@ -208,7 +224,22 @@ class Records extends React.Component {
       });
   }
   renderSeasonImage(y, s) {
-    return false;
+    const f = this.state.xp_data.filter(function(i) {
+      return (
+        parseInt(i.year) == parseInt(y) && parseInt(i.season) == parseInt(s)
+      );
+    });
+    if (!f || !f.length) {
+      return false;
+    }
+    const xp = f[0].xp;
+    return (
+      <img
+        className="  img-fluid "
+        style={{maxHeight: 100}}
+        src={'/assets/rank/' + utils.getMeterImage(xp) + '.png'}
+      />
+    );
   }
   renderData(rec, records, allowReset) {
     const {ladders} = this.state;
@@ -276,14 +307,15 @@ class Records extends React.Component {
     const rec = Object.keys(this.state.ladders);
     return (
       <div className="col-md-12 blue-border-top">
-        <div className="row">
+        <div className="row m-b-5 mb-5">
           <div className="col text-center m-b-5 mb-5">
             <h3>
               {seasonName[parseInt(s)]} {y}
             </h3>
           </div>
+          <div className="col  text-center">{this.renderSeasonImage(y, s)}</div>
         </div>
-        <div className="row">
+        <div className="row  m-t-5 mt-5">
           {this.renderData(rec, this.state.year_data[y][s])}
         </div>
       </div>
