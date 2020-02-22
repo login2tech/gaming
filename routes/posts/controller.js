@@ -30,6 +30,7 @@ exports.new_comment = function(req, res, next) {
   const uid = req.user.id;
   const post_id = req.body.post_id;
   const comment = req.body.comment;
+  const comn = req.body.comment;
   new ItemComments()
     .save({
       user_id: uid,
@@ -59,6 +60,51 @@ exports.new_comment = function(req, res, next) {
         .catch(function(err) {
           console.log(err);
         });
+
+      const mentions = [];
+      let content = comn;
+      content = content.split(' ');
+      for (let i = 0; i < content.length; i++) {
+        if (content[i][0] == '@') {
+          const uname = content[i]
+            .replace('@', '')
+            .replace('?', '')
+            .replace('(', '')
+            .replace(')', '')
+            .replace(',', '');
+          if (uname != req.user.username) {
+            mentions.push(uname);
+          }
+        }
+      }
+      for (let i = 0; i < mentions.length; i++) {
+        new User()
+          .where({username: mentions[i]})
+          .fetch()
+          .then(function(notif_usr) {
+            if (!notif_usr) {
+              return;
+            }
+            notif_usr = notif_usr.toJSON();
+            notif_usr = notif_usr.id;
+
+            new Notif()
+              .save({
+                user_id: notif_usr,
+                description:
+                  '@' + req.user.username + ' has mentioned you in a comment.',
+                type: 'post',
+                object_id: post_id
+              })
+              .then(function() {})
+              .catch(function(er) {
+                console.log(er);
+              });
+          })
+          .catch(function(er) {
+            console.log(er);
+          });
+      }
     })
     .catch(function(err) {
       res.status(400).send({

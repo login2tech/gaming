@@ -5374,6 +5374,30 @@ span.capitalize {
 }
 
 
+.trophy-info a.reset_rep{
+  right: 100px
+}
+.badge-primary {
+    background-color: rgb(14, 55, 193);
+}
+
+#accordion .card {
+    border-radius: 0 !important;
+}
+#accordion .card-header {
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.is_opened .card-header {
+  border-bottom: 1px solid rgb(29, 49, 176);
+}
+
+/* media queries starts here
+media starts here
+media query starts here
+*/
+
 @media screen and (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5974,6 +5998,9 @@ span.capitalize {
         left: auto;
         margin-top: 20px;
         width: 100%;
+    }
+    .trophy-info a.reset_rep{
+      right:auto !important
     }
 
     .usr_obj:nth-child(even) {
@@ -6599,20 +6626,4 @@ line-height: 11px;
     .team-profile-page .profile-header-data-middle > div:first-child span {
         font-size: 10px !important;
     }
-}
-
-.badge-primary {
-    background-color: rgb(14, 55, 193);
-}
-
-#accordion .card {
-    border-radius: 0 !important;
-}
-#accordion .card-header {
-    padding-bottom: 10px;
-    cursor: pointer;
-}
-
-.is_opened .card-header {
-  border-bottom: 1px solid rgb(29, 49, 176);
 }
