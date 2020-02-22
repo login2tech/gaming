@@ -1,7 +1,13 @@
-[TO-TEST] - 10 credits on rank up
-[Credentials change] - mails
-[TO-TEST] - create match, check if existing match pending score
-[TO-TEST] - create match, time gaps if existing scheduled
+10 credits on rank up
+create match, check if existing match pending score
+create match, time gaps if existing scheduled
+paypal
+when ranking up never recieved my credit this should pop up in transaction history when recieving it
+Season Records drop down need to see tested
+team records get seperate column for record of that last season need to see tested
+All game rules and FAQ's are not implemented yet
+Team Season records are not implemented on team yet. Ask me to explain on skype
+When season is over the rank you ended up will be posted into Season Records when dropped. Ask me to explain more
 
 
 
@@ -9,7 +15,7 @@
 [GOLIVE] - stripe create plans in stripe dashboard
 [GOLIVE] - hooks url change
 [GO-LIVE-TASK]- delete all testing images?
-[waiting on client] - live chat
+[DONE] - live chat
 [waiting on client] - game rules
 [DONE] - Responsive: tournament page
 [DONE] - Responsive: tournament match page
@@ -25,7 +31,7 @@
 [DONE] - internet explorer
 [DONE] - undo tournament matches
 [DONE] -season dates
-
+[DONE] - mails
 
 [skipped] - chat on match page
 [skipped] - ending balance on each transaction

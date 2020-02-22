@@ -5392,6 +5392,9 @@ span.capitalize {
 .is_opened .card-header {
   border-bottom: 1px solid rgb(29, 49, 176);
 }
+.open .card-header {
+  border-bottom: 1px solid rgb(29, 49, 176);
+}
 
 
 .team_header_mobile .update_btn{

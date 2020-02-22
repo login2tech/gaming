@@ -6,32 +6,34 @@ class GameRules extends React.Component {
     let cls = Math.floor(Math.random() * 10000 + 1);
     cls = 'cls_' + cls;
     return (
-      <div className="accordian_box">
-        <div className="accordian-box-header" id={cls + 'heading'}>
-          <h4
-            className="mb-0 accordian_click"
+      <div className="accordian_box card">
+        <div className="accordian-box-header card-header " id={cls + 'heading'}>
+          <h5
+            className="mb-0 accordian_click text-white "
             data-toggle="collapse"
             data-target={'#' + cls + 'e'}
             aria-expanded="false"
             aria-controls={cls + 'e'}
           >
             {item.title}
-          </h4>
+          </h5>
         </div>
         <div
           id={cls + 'e'}
-          className="collapse"
+          className="collapse  card-body"
           aria-labelledby={cls + 'heading'}
           data-parent={'#' + PARENT}
         >
           <div className="accordian-box-body" id={cls + 'cardbody'}>
-            {item.value ? item.value : ''}
+            {item.value ? <p className="text-white">{item.value}</p> : ''}
             {item.content &&
               item.content.map((itm, i) => {
                 return itm.type == 'tab' ? (
                   this.renderTab(itm, cls + 'cardbody')
                 ) : itm.type == 'paragraph' ? (
-                  <p>{itm.value}</p>
+                  <p className="text-white" key={'k_' + i}>
+                    {itm.value}
+                  </p>
                 ) : (
                   false
                 );
@@ -56,11 +58,9 @@ class GameRules extends React.Component {
     const rules = game_settings[ttl];
 
     return (
-      <div id="accordionExample">
+      <div id="accordion">
         {rules.map((item, i) => {
-          return item.type == 'tab'
-            ? this.renderTab(item, 'accordionExample')
-            : false;
+          return item.type == 'tab' ? this.renderTab(item, 'accordion') : false;
         })}
       </div>
     );
