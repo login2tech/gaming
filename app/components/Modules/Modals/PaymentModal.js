@@ -91,9 +91,6 @@ class PaymentModal extends React.Component {
           result.token,
           this.props.returnDataToEvent ? this.props.returnDataToEvent : {}
         );
-      this.setState({
-        token_processing: false
-      });
     } else if (result.error) {
       errorElement.textContent = result.error.message;
       errorElement.classList.add('visible');
@@ -199,8 +196,8 @@ class PaymentModal extends React.Component {
                   {this.state.token_processing
                     ? 'please wait...'
                     : this.props.button_title
-                    ? this.props.button_title
-                    : 'Pay and proceed'}
+                      ? this.props.button_title
+                      : 'Pay and proceed'}
                 </button>
               </div>
               <div className="text-center mt-3">
