@@ -70,7 +70,8 @@ class Profile extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        stripe_token: token == 'USE_OCG' ? 'USE_OCG' : token.id,
+        stripe_token:
+          token == 'USE_OCG' || token == 'USE_PAYPAL' ? token : token.id,
         action: type
       })
     }).then(response => {
@@ -116,9 +117,7 @@ class Profile extends React.Component {
         heading: heading,
         content: (
           <PaymentModal
-            msg={
-              'You need to pay a small amount to reset overall score. This will have no impact on your life and season score.'
-            }
+            msg={'You need to pay a small amount to ' + heading}
             amount={5}
             // refresh={props.refresh}
             onGetToken={token => {

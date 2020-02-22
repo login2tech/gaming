@@ -969,7 +969,10 @@ exports.leaderboard_2 = function(req, res, next) {
 
 exports.deduct_money = function(req, res, next) {
   const amount = req.body.amount ? req.body.amount : 5;
-  if (req.body.stripe_token == 'USE_OCG') {
+  if (
+    req.body.stripe_token == 'USE_OCG' ||
+    req.body.stripe_token == 'USE_PAYPAL'
+  ) {
     next();
   } else {
     stripe.charges.create(
@@ -990,6 +993,42 @@ exports.deduct_money = function(req, res, next) {
     );
   }
   // next();
+};
+exports.deduct_paypal = function(req, res, next) {
+  if (req.body.stripe_token == 'USE_PAYPAL') {
+    return res
+      .status(200)
+      .send({ok: false, msg: 'failed to transact with paypal'});
+    // const rnd = Math.random() * (10000000 - 1000000) + 1000000;
+    //
+    // paypal.pay(
+    //   rnd,
+    //   plan.cost,
+    //   'Plan Buy ' + data.selected_plan,
+    //   'USD',
+    //   true,
+    //   [req.user.id, 'action_here'],
+    //   function(err, url) {
+    //     if (err) {
+    //       res.status(400).send({
+    //         ok: false,
+    //         msg: 'Failed to create payment'
+    //       });
+    //       return;
+    //     }
+    //     data.status = 'payment_pending';
+    //     data.payment_id = rnd;
+    //
+    //     res.send({
+    //       ok: true,
+    //
+    //       url_to_paypal: url,
+    //       action: 'PAYMENT_PAYPAL'
+    //     });
+    //   }
+    // );
+  }
+  next();
 };
 exports.deduct_ocg = function(req, res, next) {
   const amount = req.body.amount ? req.body.amount : 5;

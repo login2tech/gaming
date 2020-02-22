@@ -234,6 +234,7 @@ app.post(
   userController.ensureAuthenticated,
   userController.deduct_money,
   userController.deduct_ocg,
+  userController.deduct_paypal,
   userController.resetScore
 );
 
@@ -276,6 +277,7 @@ app.post(
   userController.ensureAuthenticated,
   creditsController.deduct_money,
   creditsController.deduct_ocg,
+  userController.deduct_paypal,
   creditsController.new
 );
 

@@ -268,6 +268,24 @@ exports.getMoneyForUnameChange = function(req, res, next) {
     next();
     return;
   }
+  if (req.body.change_username_token == 'USE_PAYPAL') {
+    return res
+      .status(200)
+      .send({ok: false, msg: 'paypal not implemented yet.'});
+    // if (req.user.cash_balance < cost) {
+    //   return res
+    //     .status(200)
+    //     .send({ok: false, msg: 'You do not have sufficient OCG cash'});
+    // }
+    // utils.takeCashFromUser(
+    //   req.user.id,
+    //   cost,
+    //   'Debit for changing username',
+    //   ''
+    // );
+    // next();
+    // return;
+  }
   // use token to de
 
   stripe.charges.create(
@@ -302,7 +320,10 @@ exports.deduct_money = function(req, res, next) {
     msg = init_transaction_mode;
   }
 
-  if (req.body.stripe_token == 'USE_OCG') {
+  if (
+    req.body.stripe_token == 'USE_OCG' ||
+    req.body.stripe_token == 'USE_PAYPAL'
+  ) {
     next();
   } else {
     stripe.charges.create(

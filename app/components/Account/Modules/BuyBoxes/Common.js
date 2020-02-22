@@ -45,7 +45,7 @@ export function openBuyPopup(id, heading, amount, return_data, disable_ocg) {
   );
 }
 export function token_received(token, return_data) {
-  if (token != 'USE_OCG') {
+  if (token != 'USE_OCG' && token != 'USE_PAYPAL') {
     token = token.id;
   }
   this.props.dispatch(

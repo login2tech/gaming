@@ -42,7 +42,8 @@ class Records extends React.Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        stripe_token: token == 'USE_OCG' ? 'USE_OCG' : token.id,
+        stripe_token:
+          token == 'USE_OCG' || token == 'USE_PAYPAL' ? token : token.id,
         action: 'score_' + this.props.params.duration,
         amount: ladder_data && ladder_data.only_for_ladder ? 1.99 : 5,
         duration: this.props.params.duration,

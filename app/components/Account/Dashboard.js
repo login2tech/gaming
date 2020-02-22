@@ -102,6 +102,7 @@ class Profile extends React.Component {
         heading: 'Change username',
         content: (
           <PaymentModal
+            disable_paypal
             msg={'You need to pay a small amount to change your username once.'}
             amount={2.99}
             // refresh={props.refresh}
@@ -120,7 +121,8 @@ class Profile extends React.Component {
       })
     );
     this.setState({
-      change_username_token: token == 'USE_OCG' ? 'USE_OCG' : token.id,
+      change_username_token:
+        token == 'USE_OCG' || token == 'USE_PAYPAL' ? token : token.id,
       changing_username: true,
       new_username: this.props.user.username
     });

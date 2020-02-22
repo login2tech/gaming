@@ -97,7 +97,6 @@ const giveXpToMember = function(uid, match_id) {
       console.log(6, err);
     });
 };
-//
 const takeXpFromMember = function(uid, match_id) {
   new User()
     .where({id: uid})

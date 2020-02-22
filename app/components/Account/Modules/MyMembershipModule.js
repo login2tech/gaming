@@ -59,6 +59,7 @@ class MyMembershipModule extends React.Component {
         content: (
           <PaymentModal
             msg=""
+            disable_paypal
             modal_id="membership_popup"
             msg_footer={
               <ul className="notices">
@@ -86,7 +87,7 @@ class MyMembershipModule extends React.Component {
   }
 
   token_received(token, plan_name) {
-    if (token != 'USE_OCG') {
+    if (token != 'USE_OCG' && token != 'USE_PAYPAL') {
       token = token.id;
     }
     this.props.dispatch(

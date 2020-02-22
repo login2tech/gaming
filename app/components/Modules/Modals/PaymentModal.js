@@ -72,6 +72,17 @@ class PaymentModal extends React.Component {
       );
   }
 
+  proceedWithPaypal() {
+    this.setState({
+      ocg_processing: true
+    });
+    this.props.onGetToken &&
+      this.props.onGetToken(
+        'USE_PAYPAL',
+        this.props.returnDataToEvent ? this.props.returnDataToEvent : {}
+      );
+  }
+
   mountCard() {
     if (document.getElementById('cardElement')) {
       this.cardObj.mount('#cardElement');
@@ -200,6 +211,32 @@ class PaymentModal extends React.Component {
                       : 'Pay and proceed'}
                 </button>
               </div>
+              {this.props.disable_paypal ? (
+                false
+              ) : (
+                <h4 className="  text-center full_width d-inline-block mt-3 mb-2">
+                  OR
+                </h4>
+              )}
+              {this.props.disable_paypal ? (
+                false
+              ) : (
+                <button
+                  type="button"
+                  className="paypal-button"
+                  onClick={() => {
+                    this.proceedWithPaypal(false);
+                  }}
+                >
+                  <span className="paypal-button-title">
+                    Proceed now with&nbsp;{' '}
+                  </span>
+                  <span className="paypal-logo">
+                    <i>Pay</i>
+                    <i>Pal</i>
+                  </span>
+                </button>
+              )}
               <div className="text-center mt-3">
                 {this.props.disable_ocg ? (
                   false
