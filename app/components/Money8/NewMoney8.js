@@ -115,6 +115,40 @@ class NewMoney8 extends React.Component {
     this.setState({[event.target.name]: event.target.value});
   }
 
+  handleChangeLadder(event) {
+    const value = event.target.value;
+    this.setState({[event.target.name]: event.target.value}, () => {
+      const p = value.split('_');
+      let ladder;
+
+      const game_id = parseInt(p[0]);
+      const ladder_id = parseInt(p[1]);
+
+      for (let i = 0; i < this.state.games.length; i++) {
+        if (this.state.games[i].id == game_id) {
+          if (!this.state.games[i].ladders) {
+            continue;
+          }
+          for (let j = 0; j < this.state.games[i].ladders.length; j++) {
+            // game = this.state.games;
+            if (this.state.games[i].ladders[j].id == ladder_id) {
+              ladder = this.state.games[i].ladders[j];
+            }
+          }
+        }
+      }
+      if (ladder) {
+        let title = ladder.title;
+        title = title.toLowerCase();
+        if (title.indexOf('doubles') > -1) {
+          this.setState({
+            players_total: '4'
+          });
+        }
+      }
+    });
+  }
+
   componentDidMount() {
     fetch('/api/games/list')
       .then(res => res.json())
@@ -284,7 +318,7 @@ class NewMoney8 extends React.Component {
                         name="ladder"
                         id="ladder"
                         value={this.state.ladder}
-                        onChange={this.handleChange.bind(this)}
+                        onChange={this.handleChangeLadder.bind(this)}
                       >
                         <option value="">Select Ladder</option>
                         {this.state.games.map((game, i) => {
@@ -339,6 +373,7 @@ class NewMoney8 extends React.Component {
                         required
                         onChange={this.handleChange.bind(this)}
                         className="form-control"
+                        value={this.state.match_type}
                         name="match_type"
                         id="match_type"
                       >
@@ -355,6 +390,7 @@ class NewMoney8 extends React.Component {
                       </label>
                       <select
                         required
+                        value={this.state.players_total}
                         onChange={this.handleChange.bind(this)}
                         className="form-control"
                         name="players_total"
@@ -490,9 +526,9 @@ class NewMoney8 extends React.Component {
                                       'waiting' ? (
                                         ' -- '
                                       ) : this.amIEligible(
-                                          team_user,
-                                          ladder
-                                        ) ? (
+                                        team_user,
+                                        ladder
+                                      ) ? (
                                         <span className="text-success">
                                           <img
                                             className="icon_size"

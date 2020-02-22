@@ -1425,7 +1425,7 @@ a.image_avar {
     position: absolute;
     right: 0;
     width: 80px;
-    top: 45px;
+    /* top: 45px; */
 }
 
 .field_form .form-control, .StripeElement, .form-control:-webkit-autofill, .form-control:-webkit-autofill:hover, .form-control:-webkit-autofill:focus, .form-control:-internal-autofill-selected {
