@@ -62,7 +62,11 @@ class Profile extends React.Component {
     let val = event.target.value ? event.target.value : '';
     val = val.trim();
     // val = val.toLowerCase();
-    val = val.replace(/[^a-zA-Z0-9 ]/g, '_');
+    // console.log(val);
+    val = val.replace(/[^a-zA-Z0-9.-]/g, '_');
+    // console.log(val);
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
     val = val.replace(new RegExp('__', 'g'), '_');
     if (
       val[0] == '-' ||
@@ -769,10 +773,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.props.user.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.props.user.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+          }
+        : {};
 
     return (
       <div>

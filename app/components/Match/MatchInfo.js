@@ -754,8 +754,8 @@ class MatchInfo extends React.Component {
                         {match.is_available_now
                           ? 'AVAILABLE NOW'
                           : moment().isAfter(moment(match.starts_at))
-                          ? 'Match Started:'
-                          : 'Match Starts'}{' '}
+                            ? 'Match Started:'
+                            : 'Match Starts'}{' '}
                         {match.is_available_now
                           ? ' '
                           : moment(match.starts_at).format('lll')}{' '}
@@ -862,14 +862,14 @@ class MatchInfo extends React.Component {
                         <table className="table table-striped table-ongray table-hover">
                           <thead>
                             <tr>
-                              <th style={{width: '33%'}}>Username</th>
+                              <th style={{width: '40%'}}>Username</th>
                               <th
-                                style={{width: '33%'}}
+                                style={{width: '40%'}}
                                 className={'act_pr' + match.ladder.gamer_tag}
                               >
                                 {this.showGamerTag()}
                               </th>
-                              <th style={{width: '33%'}}>Role</th>
+                              <th style={{width: '20%'}}>Role</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -884,17 +884,14 @@ class MatchInfo extends React.Component {
                                 }
                                 return (
                                   <tr key={team_user.id}>
-                                    <td>
-                                      {team_user.user_info.prime && (
-                                        <img
-                                          src={
-                                            '/assets/icons/ocg_member_' +
-                                            team_user.user_info.prime_type +
-                                            '.png'
-                                          }
-                                          className="inline-star float-right"
-                                        />
-                                      )}
+                                    <td
+                                      className={
+                                        team_user.user_info.prime
+                                          ? ' is_prime_cell is_prime_type_' +
+                                            team_user.user_info.prime_type
+                                          : ''
+                                      }
+                                    >
                                       <Link
                                         target="_blank"
                                         to={
@@ -965,9 +962,9 @@ class MatchInfo extends React.Component {
                             <table className="table table-striped table-ongray table-hover">
                               <thead>
                                 <tr>
-                                  <th style={{width: '33%'}}>Username</th>
+                                  <th style={{width: '40%'}}>Username</th>
                                   <th
-                                    style={{width: '33%'}}
+                                    style={{width: '40%'}}
                                     className={
                                       'act_pr' +
                                       this.state.match.ladder.gamer_tag
@@ -975,7 +972,7 @@ class MatchInfo extends React.Component {
                                   >
                                     {this.showGamerTag()}
                                   </th>
-                                  <th style={{width: '33%'}}>Role</th>
+                                  <th style={{width: '20%'}}>Role</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -990,17 +987,14 @@ class MatchInfo extends React.Component {
                                     }
                                     return (
                                       <tr key={team_user.id}>
-                                        <td>
-                                          {team_user.user_info.prime && (
-                                            <img
-                                              src={
-                                                '/assets/icons/ocg_member_' +
-                                                team_user.user_info.prime_type +
-                                                '.png'
-                                              }
-                                              className="inline-star float-right"
-                                            />
-                                          )}
+                                        <td
+                                          className={
+                                            team_user.user_info.prime
+                                              ? ' is_prime_cell is_prime_type_' +
+                                                team_user.user_info.prime_type
+                                              : ''
+                                          }
+                                        >
                                           <Link
                                             to={
                                               '/u/' +
@@ -1168,23 +1162,24 @@ class MatchInfo extends React.Component {
                   false
                 )}
 
-                {this.state.eligible_teams_loaded && !this.state.team_selected && (
-                  <div className="alert alert-warning" id="tlst">
-                    You dont have a team for this ladder. Click{' '}
-                    <Link
-                      target="_blank"
-                      to={
-                        '/u/' +
-                        this.props.user.username +
-                        '/teams/new/l/' +
-                        match.ladder.id
-                      }
-                    >
-                      here
-                    </Link>{' '}
-                    to create a team.
-                  </div>
-                )}
+                {this.state.eligible_teams_loaded &&
+                  !this.state.team_selected && (
+                    <div className="alert alert-warning" id="tlst">
+                      You dont have a team for this ladder. Click{' '}
+                      <Link
+                        target="_blank"
+                        to={
+                          '/u/' +
+                          this.props.user.username +
+                          '/teams/new/l/' +
+                          match.ladder.id
+                        }
+                      >
+                        here
+                      </Link>{' '}
+                      to create a team.
+                    </div>
+                  )}
               </div>
             </div>
             <GameRules title={this.state.match.game.title} />

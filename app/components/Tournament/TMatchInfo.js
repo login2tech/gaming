@@ -551,17 +551,14 @@ class TMatchInfo extends React.Component {
                           }
                           return (
                             <tr key={team_user.id}>
-                              <td>
-                                {team_user.user_info.prime && (
-                                  <img
-                                    src={
-                                      '/assets/icons/ocg_member_' +
-                                      team_user.user_info.prime_type +
-                                      '.png'
-                                    }
-                                    className="inline-star float-right"
-                                  />
-                                )}
+                              <td
+                                className={
+                                  team_user.user_info.prime
+                                    ? ' is_prime_cell is_prime_type_' +
+                                      team_user.user_info.prime_type
+                                    : ''
+                                }
+                              >
                                 <Link
                                   target="_blank"
                                   to={'/u/' + team_user.user_info.username}
@@ -653,17 +650,14 @@ class TMatchInfo extends React.Component {
                                 }
                                 return (
                                   <tr key={team_user.id}>
-                                    <td>
-                                      {team_user.user_info.prime && (
-                                        <img
-                                          src={
-                                            '/assets/icons/ocg_member_' +
-                                            team_user.user_info.prime_type +
-                                            '.png'
-                                          }
-                                          className="inline-star float-right"
-                                        />
-                                      )}
+                                    <td
+                                      className={
+                                        team_user.user_info.prime
+                                          ? ' is_prime_cell is_prime_type_' +
+                                            team_user.user_info.prime_type
+                                          : ''
+                                      }
+                                    >
                                       <Link
                                         to={
                                           '/u/' + team_user.user_info.username

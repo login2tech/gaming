@@ -492,17 +492,14 @@ class Money8Info extends React.Component {
                   if (team_1.indexOf('' + team_user.id) > -1) {
                     return (
                       <tr key={team_user.id}>
-                        <td>
-                          {team_user.prime && (
-                            <img
-                              src={
-                                '/assets/icons/ocg_member_' +
-                                team_user.prime_type +
-                                '.png'
-                              }
-                              className="inline-star float-right"
-                            />
-                          )}
+                        <td
+                          className={
+                            team_user.prime
+                              ? ' is_prime_cell is_prime_type_' +
+                                team_user.prime_type
+                              : ''
+                          }
+                        >
                           <Link target="_blank" to={'/u/' + team_user.username}>
                             {team_user.username}
                           </Link>
@@ -569,17 +566,14 @@ class Money8Info extends React.Component {
                   if (team_2.indexOf('' + team_user.id) > -1) {
                     return (
                       <tr key={team_user.id}>
-                        <td>
-                          {team_user.prime && (
-                            <img
-                              src={
-                                '/assets/icons/ocg_member_' +
-                                team_user.prime_type +
-                                '.png'
-                              }
-                              className="inline-star float-right"
-                            />
-                          )}
+                        <td
+                          className={
+                            team_user.prime
+                              ? ' is_prime_cell is_prime_type_' +
+                                team_user.prime_type
+                              : ''
+                          }
+                        >
                           <Link target="_blank" to={'/u/' + team_user.username}>
                             {team_user.username}
                           </Link>

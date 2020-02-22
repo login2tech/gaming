@@ -941,7 +941,7 @@ exports.deduct_money = function(req, res, next) {
   } else {
     stripe.charges.create(
       {
-        amount: amount * 100 + amount * 3,
+        amount: amount * 100 + parseInt(amount * 3),
         currency: 'usd',
         source: req.body.stripe_token,
         description: 'Charge for Reset of  ' + req.body.duration
@@ -1101,6 +1101,14 @@ exports.checkIfExists = function(req, res, next) {
   const new_username = req.body.new_username
     ? req.body.new_username
     : req.body.username;
+
+  if (!new_username || new_username.length < 3) {
+    return res.status(200).send({
+      ok: false,
+      msg: 'Username must be atleast 3 characters long'
+    });
+  }
+
   new User()
     .where('username', 'ILIKE', new_username)
     .fetch()

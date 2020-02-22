@@ -31,7 +31,9 @@ class Signup extends React.Component {
     let val = event.target.value ? event.target.value : '';
     val = val.trim();
     // val = val.toLowerCase();
-    val = val.replace(/[^a-zA-Z0-9 ]/g, '_');
+    val = val.replace(/[^a-zA-Z0-9.-]/g, '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
     val = val.replace(new RegExp('__', 'g'), '_');
     if (
       val[0] == '-' ||

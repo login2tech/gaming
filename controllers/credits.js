@@ -276,15 +276,17 @@ exports.getMoneyForUnameChange = function(req, res, next) {
 
   stripe.charges.create(
     {
-      amount: cost * 100 + cost * 3,
+      amount: cost * 100 + parseInt(cost * 3),
       currency: 'usd',
       source: req.body.change_username_token,
       description: 'Charge for Changing username by User Id #' + req.user.id
     },
     function(err, charge) {
       if (err) {
-        // console.log(err);
-        return res.status(200).send({ok: false, msg: 'Failed to charge card'});
+        console.log(err);
+        return res
+          .status(200)
+          .send({ok: false, msg: 'Failed to charge card...'});
       }
       next();
     }
@@ -309,7 +311,7 @@ exports.deduct_money = function(req, res, next) {
   } else {
     stripe.charges.create(
       {
-        amount: cost * 100 + cost * 3,
+        amount: cost * 100 + parseInt(cost * 3),
         currency: 'usd',
         source: req.body.stripe_token,
         description: 'Charge for adding' + msg + ' by user Id #' + req.user.id

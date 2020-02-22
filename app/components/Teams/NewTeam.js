@@ -67,6 +67,43 @@ class NewTeam extends React.Component {
     }
   }
 
+  handleChangeTeamName(event) {
+    let val = event.target.value ? event.target.value : '';
+    // val = val.trim();
+    // val = val.toLowerCase();
+    // alert();
+    val = val.replace(/[^a-zA-Z0-9.-\s]/g, '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    if (
+      val[0] == '-' ||
+      val[0] == ' ' ||
+      val[0] == '_' ||
+      val[0] == '1' ||
+      val[0] == '2' ||
+      val[0] == '3' ||
+      val[0] == '4' ||
+      val[0] == '5' ||
+      val[0] == '6' ||
+      val[0] == '7' ||
+      val[0] == '8' ||
+      val[0] == '9' ||
+      val[0] == '0'
+    ) {
+      val = val.replace(val[0], '');
+    }
+
+    this.setState({[event.target.name]: val});
+  }
+
   fetchTours() {
     fetch('/api/tournaments/upcoming')
       .then(res => res.json())
@@ -171,13 +208,14 @@ class NewTeam extends React.Component {
                         type="text"
                         id="title"
                         className="form-control"
-                        maxlen="15"
-                        max="15"
+                        maxlen="20"
+                        maxLength="20"
+                        max="20"
                         required="required"
                         placeholder="Enter Team Name"
                         name="title"
                         value={this.state.title}
-                        onChange={this.handleChange.bind(this)}
+                        onChange={this.handleChangeTeamName.bind(this)}
                       />
                     </div>
                     <div className="form-group col-md-12">

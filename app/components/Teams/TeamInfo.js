@@ -296,7 +296,7 @@ class TeamInfo extends React.Component {
           const obj = {saving_cover_photo: false};
           if (st) {
             // obj.new_cover_pic = '';
-            obj.new_cover_pic_saved = false;
+            obj.new_cover_pic_saved = true;
           }
           this.setState(obj);
         }
@@ -848,8 +848,49 @@ class TeamInfo extends React.Component {
 
         <div
           id="profile-page-container"
-          className="profile-page team-profile-page user-profile d-md-none"
+          className="team_header_mobile profile-page team-profile-page user-profile d-md-none"
         >
+          {this.state.saving_cover_photo ? (
+            <div className="photo_progress cover_progress">
+              <span className="fa fa-spinner fa-spin" />
+            </div>
+          ) : (
+            false
+          )}
+          {this.props.user &&
+          this.currentUserInTeam() &&
+          !this.state.team_info.removed ? (
+            <div className="update_btn cover">
+              <label htmlFor="cover_image_select" className=" expand_on_hover">
+                <i className="fa fa-edit" /> <span>upload banner</span>
+              </label>
+
+              {this.state.new_cover_pic && !this.state.new_cover_pic_saved ? (
+                <button
+                  onClick={event => {
+                    this.doSaveCoverPic(event);
+                  }}
+                  type="button"
+                  className="expand_on_hover"
+                >
+                  <i className="fa fa-save" /> <span>save new banner</span>
+                </button>
+              ) : (
+                false
+              )}
+
+              <input
+                type="file"
+                name="cover_image_select"
+                id="cover_image_select"
+                className="hidden hide"
+                accept="image/gif, image/jpeg, image/png"
+                onChange={this.handleCoverFile.bind(this)}
+              />
+            </div>
+          ) : (
+            false
+          )}
           <div className="profile-header" style={divStyle} />
           <div className="container profile-page-container">
             <div className="profile-header-data">

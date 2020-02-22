@@ -902,8 +902,9 @@ class Game extends React.Component {
                           <th className="h-o-p  d-none">Match</th>
                           <th>Team 1</th>
                           <th>Team 2</th>
-                          <th>Date</th>
+                          <th className="d-none d-md-table-cell">Date</th>
                           <th>Info</th>
+                          <th style={{width: '10%'}} className="d-md-none" />
                         </tr>
                       </thead>
                       <tbody>
@@ -927,40 +928,91 @@ class Game extends React.Component {
                           }
 
                           return (
-                            <tr key={match.id}>
-                              <td className="h-o-p  d-none">
-                                <Link to={'/m/' + match.id}>#{match.id}</Link>
-                              </td>
-                              <td>
-                                <Link
-                                  to={'/teams/view/' + match.team_1_info.id}
-                                >
-                                  {match.team_1_info.title}
-                                </Link>
-                                {wl_1}
-                              </td>
-                              <td>
-                                {match.team_2_info ? (
-                                  <>
-                                    <Link
-                                      to={'/teams/view/' + match.team_2_info.id}
-                                    >
-                                      {match.team_2_info.title}
-                                    </Link>
-                                    {wl_2}
-                                  </>
-                                ) : (
-                                  ' '
-                                )}
-                              </td>
+                            <React.Fragment key={match.id}>
+                              <tr>
+                                <td className="h-o-p  d-none">
+                                  <Link to={'/m/' + match.id}>#{match.id}</Link>
+                                </td>
+                                <td>
+                                  <Link
+                                    to={'/teams/view/' + match.team_1_info.id}
+                                  >
+                                    {match.team_1_info.title}
+                                  </Link>
+                                  {wl_1}
+                                </td>
+                                <td>
+                                  {match.team_2_info ? (
+                                    <>
+                                      <Link
+                                        to={
+                                          '/teams/view/' + match.team_2_info.id
+                                        }
+                                      >
+                                        {match.team_2_info.title}
+                                      </Link>
+                                      {wl_2}
+                                    </>
+                                  ) : (
+                                    ' '
+                                  )}
+                                </td>
 
-                              <td>{moment(match.created_at).format('lll')}</td>
-                              <td>
-                                <Link to={'/m/' + match.id}>
-                                  View <span className="h-o-p">Match</span>
-                                </Link>
-                              </td>
-                            </tr>
+                                <td className="d-none d-md-table-cell">
+                                  {moment(match.created_at).format('lll')}
+                                </td>
+                                <td>
+                                  <Link to={'/m/' + match.id}>
+                                    View <span className="h-o-p">Match</span>
+                                  </Link>
+                                </td>
+                                <td className="d-md-none">
+                                  <button
+                                    className="btn btn-link"
+                                    onClick={() => {
+                                      this.setState({
+                                        expanded:
+                                          match.id == this.state.expand_id
+                                            ? !this.state.expanded
+                                            : true,
+                                        expand_id: match.id
+                                      });
+                                    }}
+                                  >
+                                    <span
+                                      className={
+                                        this.state.expanded &&
+                                        this.state.expand_id == match.id
+                                          ? ' fa fa-minus'
+                                          : ' fa fa-plus '
+                                      }
+                                    />
+                                  </button>
+                                </td>
+                              </tr>
+
+                              {this.state.expanded &&
+                              this.state.expand_id == match.id ? (
+                                <tr key={'e_' + match.id}>
+                                  <td colSpan="5">
+                                    <table className="table">
+                                      <tbody>
+                                        <tr>
+                                          <td>Date</td>
+                                          <td>
+                                            {moment(match.created_at).format(
+                                              'lll'
+                                            )}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              ) : (
+                                false
+                              )}
+                            </React.Fragment>
                           );
                         })}
                       </tbody>
