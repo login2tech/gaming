@@ -223,7 +223,7 @@ class Header extends React.Component {
                 </ul>
               </li>,
 
-              <li key={4} className="has_children_m">
+              <li key={4} className="has_children_m profile_drop">
                 <Link className="profile_menu_item is_avat">
                   <span className="profile_menu_item_inner">
                     <span className="menu_avatar">

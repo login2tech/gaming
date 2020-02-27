@@ -1,11 +1,14 @@
-10 credits on rank up
- create match, time gaps if existing scheduled
-paypal
-team records get seperate column for record of that last season need to see tested
-All game rules and FAQ's are not implemented yet
+[TEST + DOUBT]
+  1. 10 credits on rank up
+[PARTIALLY DONE]
+  2. paypal
+[SAVE DONE, SHOW ON UI PENDING]
+  3. team records get seperate column for record of that last season need to see tested
+[WAITING ON CLIENT]
+  4. All game rules and FAQ's are not implemented yet
 
 
-
+create match, time gaps if existing scheduled
 [GOLIVE] - stripe, make it live
 [GOLIVE] - stripe create plans in stripe dashboard
 [GOLIVE] - hooks url change
