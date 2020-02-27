@@ -21,8 +21,8 @@ class NewTicket extends React.Component {
         props.params.type && props.params.type == 'disputed'
           ? 'Match Support - Match Dispute'
           : props.params.via && props.params.username
-          ? 'Customer Support - Dispute Account Ban'
-          : '',
+            ? 'Customer Support - Dispute Account Ban'
+            : '',
       ticket_title: '',
       upload_started: false,
       ticket_description: '',
@@ -84,6 +84,7 @@ class NewTicket extends React.Component {
     if (this.state.submit_started) {
       return false;
     }
+
     this.setState({
       submit_started: true
     });
@@ -177,7 +178,44 @@ class NewTicket extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    this.setState({[event.target.name]: event.target.value}, () => {
+      if (this.state.url_1) {
+        if (
+          this.state.url_1.indexOf('http://') > -1 ||
+          this.state.url_1.indexOf('https://') > -1
+        ) {
+          //
+        } else {
+          this.setState({
+            url_1: 'http://' + this.state.url_1
+          });
+        }
+      }
+      if (this.state.url_2) {
+        if (
+          this.state.url_2.indexOf('http://') > -1 ||
+          this.state.url_2.indexOf('https://') > -1
+        ) {
+          //
+        } else {
+          this.setState({
+            url_2: 'http://' + this.state.url_2
+          });
+        }
+      }
+      if (this.state.url_3) {
+        if (
+          this.state.url_3.indexOf('http://') > -1 ||
+          this.state.url_3.indexOf('https://') > -1
+        ) {
+          //
+        } else {
+          this.setState({
+            url_3: 'http://' + this.state.url_3
+          });
+        }
+      }
+    });
   }
 
   render() {
