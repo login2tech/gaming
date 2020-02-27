@@ -3276,10 +3276,10 @@ span.menu_prof_name_w {
 }
 
 span.menu_avatar img {
-    width: 63px;
+    width: 60px;
     border-radius: 46px;
     margin-right: 10px;
-    height: 63px;
+    height: 60px;
     object-fit: cover;
 }
 

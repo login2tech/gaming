@@ -506,7 +506,7 @@ class SingleTicket extends React.Component {
               {this.props.user &&
                 (this.props.user.id == this.state.ticket.user_id ||
                   this.props.user.role == 'admin') &&
-                this.state.ticket.status == 'submitted' && (
+                this.state.ticket.status != 'closed' && (
                   <form onSubmit={this.submitForm.bind(this)}>
                     <fieldset>
                       <div className="form-group">

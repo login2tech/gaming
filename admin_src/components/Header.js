@@ -252,6 +252,11 @@ class Header extends React.Component {
                       </Link>
                     </li>
                     <li>
+                      <Link onClick={this.closeSide} to="/tickets_escilated">
+                        List Escilated Tickets
+                      </Link>
+                    </li>
+                    <li>
                       <Link onClick={this.closeSide} to="/tickets_closed">
                         List Closed Tickets
                       </Link>

@@ -120,6 +120,10 @@ class Tickets extends React.Component {
                               <td className="d-none d-md-table-cell">
                                 {item.status == 'closed' ? (
                                   <span className="text-success">Closed</span>
+                                ) : item.status == 'escilated' ? (
+                                  <span className="text-primary">
+                                    Escilated
+                                  </span>
                                 ) : (
                                   <span className="text-primary">Open</span>
                                 )}
@@ -175,6 +179,10 @@ class Tickets extends React.Component {
                                           {item.status == 'closed' ? (
                                             <span className="text-success">
                                               Closed
+                                            </span>
+                                          ) : item.status == 'escilated' ? (
+                                            <span className="text-primary">
+                                              Escilated
                                             </span>
                                           ) : (
                                             <span className="text-primary">

@@ -21,7 +21,7 @@ exports.listItem = function(req, res, next) {
 
 exports.listPaged = function(req, res, next) {
   let c = new Item();
-  c = c.orderBy('id', 'DESC');
+  c = c.orderBy('id', 'ASC');
   c = c.where({ticket_id: req.query.ticket_id});
   let p;
   if (req.query.paged && parseInt(req.query.paged) > 1) {
@@ -126,7 +126,7 @@ exports.addItem = function(req, res, next) {
             if (is_escilate) {
               tckt
                 .save({
-                  status: 'submitted'
+                  status: 'escilated'
                 })
                 .then(function() {
                   //

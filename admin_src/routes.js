@@ -23,6 +23,7 @@ import Topics from './components/DataRows/Topics';
 import Posts from './components/DataRows/Posts';
 import Threads from './components/DataRows/Threads';
 import Tickets from './components/DataRows/Tickets';
+import TicketsEscilated from './components/DataRows/TicketsEscilated';
 import TicketsClosed from './components/DataRows/TicketsClosed';
 import Subscribers from './components/DataRows/Subscribers';
 import ApplyStaff from './components/DataRows/ApplyStaff';
@@ -172,6 +173,11 @@ export default function getRoutes(store) {
       <Route
         path="/tickets_closed"
         component={TicketsClosed}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/tickets_escilated"
+        component={TicketsEscilated}
         onLeave={clearMessages}
       />
 
