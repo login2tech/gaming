@@ -58,7 +58,13 @@ class FAQ extends React.Component {
                             <h5
                               className="faq-title text-white"
                               onClick={() => {
-                                this.setState({open_faq: faq.id});
+                                if (this.state.open_faq == faq.id) {
+                                  this.setState({
+                                    open_faq: ''
+                                  });
+                                } else {
+                                  this.setState({open_faq: faq.id});
+                                }
                               }}
                             >
                               <span className="badge badge-primary">

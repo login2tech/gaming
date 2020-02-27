@@ -838,6 +838,27 @@ class Game extends React.Component {
                               if (match.status == 'expired') {
                                 return false;
                               }
+
+                              let txt1 = 'Accept';
+                              let txt2 = 'Match';
+                              let t1p = match.team_1_players;
+                              if (!t1p) {
+                                t1p = '';
+                              }
+                              // let show_cancel = false;
+                              t1p = t1p.split('|');
+                              // console.log(t1p);
+                              if (
+                                this.props.user &&
+                                t1p.indexOf('' + this.props.user.id) > -1
+                              ) {
+                                txt1 = 'View';
+                                txt2 = 'Match';
+                                if (match.status == 'pending') {
+                                  // show_cancel = true;
+                                }
+                              }
+
                               return (
                                 <tr
                                   key={match.id}
@@ -871,8 +892,8 @@ class Game extends React.Component {
                                   </td>
                                   <td>
                                     <Link to={this.matchLink('/m/' + match.id)}>
-                                      Accept{' '}
-                                      <span className="h-o-p">Match</span>
+                                      {txt1}{' '}
+                                      <span className="h-o-p">{txt2}</span>}
                                     </Link>
                                   </td>
                                 </tr>

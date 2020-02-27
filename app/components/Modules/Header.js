@@ -368,7 +368,7 @@ class Header extends React.Component {
                 </Link>
               </li>,
               <li key={1}>
-                <Link to="/login" onClick={this.closeSide}>
+                <Link to="/login" className="menu_btn" onClick={this.closeSide}>
                   LOGIN
                 </Link>
               </li>
@@ -507,7 +507,7 @@ class Header extends React.Component {
         </nav>
         {!this.props.user ? (
           <nav id="sidebar2" className="d-lg-none" key={1} ref={this.myRef2}>
-            <h3>Get Started</h3>
+            <h3 className="text-center">Get Started</h3>
             <hr />
             <ul className="list-unstyled components">
               {this.renderProfileLinks()}
