@@ -142,7 +142,15 @@ class NewMoney8 extends React.Component {
         title = title.toLowerCase();
         if (title.indexOf('doubles') > -1) {
           this.setState({
-            players_total: '4'
+            players_total: '4',
+            hide_gt_4: true,
+            hide_eq_4: false
+          });
+        } else {
+          this.setState({
+            players_total: '6',
+            hide_gt_4: false,
+            hide_eq_4: true
           });
         }
       }
@@ -397,9 +405,21 @@ class NewMoney8 extends React.Component {
                         id="players_total"
                       >
                         <option value="">Select</option>
-                        <option value="4">4</option>
-                        <option value="6">6</option>
-                        <option value="8">8</option>
+                        {this.state.hide_eq_4 ? (
+                          false
+                        ) : (
+                          <option value="4">4</option>
+                        )}
+                        {this.state.hide_gt_4 ? (
+                          false
+                        ) : (
+                          <option value="6">6</option>
+                        )}
+                        {this.state.hide_gt_4 ? (
+                          false
+                        ) : (
+                          <option value="8">8</option>
+                        )}
                       </select>
                     </div>
 
