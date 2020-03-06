@@ -179,6 +179,7 @@ exports.signupPost = function(req, res, next) {
     role: 'user',
     ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     state: req.body.state ? req.body.state : '',
+    country: req.body.country ? req.body.country : '',
     status: true,
     email_verified: false
   })

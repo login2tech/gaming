@@ -25,6 +25,7 @@ class Profile extends React.Component {
     this.state = {
       email: props.user.email ? props.user.email : '',
       timezone: props.user.timezone ? props.user.timezone : '',
+      country: props.user.country ? props.user.country : '',
       first_name: props.user.first_name ? props.user.first_name : '',
       last_name: props.user.last_name ? props.user.last_name : '',
       gender: props.user.gender ? props.user.gender : '',
@@ -471,7 +472,18 @@ class Profile extends React.Component {
                   onChange={this.handleChange.bind(this)}
                 />
               </div>
-
+              <div className="form-group">
+                <label htmlFor="dob">Country</label>
+                <input
+                  type="text"
+                  // name="dob"
+                  // id="dob"
+                  className="form-control"
+                  disabled
+                  value={this.state.country}
+                  // onChange={this.handleChange.bind(this)}
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="timezone">Timezone</label>
                 <select
@@ -484,7 +496,7 @@ class Profile extends React.Component {
                   required
                 >
                   <option value="">-Select-</option>
-                  {timezones.map((timezone, i) => {
+                  {timezones[this.state.country].map((timezone, i) => {
                     return (
                       <option value={timezone.value} key={timezone.label}>
                         {timezone.label}

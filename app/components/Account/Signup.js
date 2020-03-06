@@ -5,6 +5,7 @@ import {signup} from '../../actions/auth';
 // import {facebookLogin} from '../../actions/oauth';
 import Messages from '../Modules/Messages';
 import states from '../Modules/states';
+const countries = ['United States', 'Canada', 'United Kingdom'];
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -18,6 +19,7 @@ class Signup extends React.Component {
       month: '',
       year: '',
       state: '',
+      country: '',
       password: '',
       password_confirm: ''
     };
@@ -101,7 +103,8 @@ class Signup extends React.Component {
             this.state.year,
           email: this.state.email,
           password: this.state.password,
-          state: this.state.state,
+          state: this.state.country == 'United States' ? this.state.state : '-',
+          country: this.state.country,
           password_confirm: this.state.password_confirm
         },
         () => {
@@ -115,6 +118,7 @@ class Signup extends React.Component {
             creating: false,
             month: '',
             state: '',
+            country: '',
             year: '',
             password: '',
             password_confirm: ''
@@ -228,14 +232,14 @@ class Signup extends React.Component {
                         <select
                           required
                           className="form-control"
-                          placeholder="State"
-                          id="state"
-                          name="state"
-                          value={this.state.state}
+                          placeholder="Country"
+                          id="country"
+                          name="country"
+                          value={this.state.country}
                           onChange={this.handleChange.bind(this)}
                         >
-                          <option value="">Check State</option>
-                          {states.map((state, i) => {
+                          <option value="">Check Country</option>
+                          {countries.map((state, i) => {
                             return (
                               <option value={state} key={state}>
                                 {state}
@@ -244,6 +248,30 @@ class Signup extends React.Component {
                           })}
                         </select>
                       </div>
+                      {this.state.country == 'United States' ? (
+                        <div className="form-group col-md-12">
+                          <select
+                            required
+                            className="form-control"
+                            placeholder="State"
+                            id="state"
+                            name="state"
+                            value={this.state.state}
+                            onChange={this.handleChange.bind(this)}
+                          >
+                            <option value="">Check State</option>
+                            {states.map((state, i) => {
+                              return (
+                                <option value={state} key={state}>
+                                  {state}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      ) : (
+                        false
+                      )}
 
                       <div className="container">
                         <div className="row dobrow mb-3">

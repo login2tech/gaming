@@ -659,7 +659,7 @@ class Profile extends React.Component {
 
                     <div className="list_pad prof_abt">
                       <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-3">
                           <span> MEMBER SINCE</span>
                           <p>
                             {moment(this.state.user_info.created_at).format(
@@ -667,8 +667,7 @@ class Profile extends React.Component {
                             )}
                           </p>
                         </div>
-
-                        <div className="col-md-4 col-6">
+                        <div className="col-md-3 col-6">
                           <span> TIME ZONE </span>
                           <p>
                             {this.state.user_info.timezone
@@ -676,8 +675,15 @@ class Profile extends React.Component {
                               : '-'}
                           </p>
                         </div>
-
-                        <div className="col-md-4 col-6">
+                        <div className="col-md-3 col-6">
+                          <span> COUNTRY </span>
+                          <p>
+                            {this.state.user_info.country
+                              ? this.state.user_info.country
+                              : '-'}
+                          </p>
+                        </div>{' '}
+                        <div className="col-md-3 col-6">
                           <span> STATE </span>
                           <p>
                             {this.state.user_info.state
@@ -685,7 +691,6 @@ class Profile extends React.Component {
                               : '-'}
                           </p>
                         </div>
-
                         {/*}<div className="col-md-4">
                           <span>Rank</span>
                           <p>-</p>
