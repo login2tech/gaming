@@ -40,6 +40,9 @@ class Credits extends React.Component {
 
   submitInitForm(e) {
     e.preventDefault();
+    if (!this.state.add_new_bal_number) {
+      return false;
+    }
     const credits_to_buy = this.state.add_new_bal_number;
     this.openBuyPopup(
       'cash_box',
@@ -55,6 +58,14 @@ class Credits extends React.Component {
 
   withdrawFormSubmit(e) {
     e.preventDefault();
+    const form = document.getElementById('withdrawFormSubmit');
+    form.classList.add('was-validated');
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
     this.props.dispatch(
       withdraw(
         {
@@ -163,8 +174,10 @@ class Credits extends React.Component {
           <hr />
           <div className="contnet_box_border">
             <form
+              id="withdrawFormSubmit"
               onSubmit={this.withdrawFormSubmit.bind(this)}
-              className="field_form"
+              noValidate
+              className="field_form needs-validation"
             >
               <div className="form-group   m-t-2">
                 <label
@@ -176,16 +189,20 @@ class Credits extends React.Component {
                 <input
                   type="number"
                   min="1"
+                  step="0.1"
                   max={this.props.user.cash_balance}
                   required
                   autoFocus
                   name="amount_to_withdraw"
                   placeholder=""
                   id="amount_to_withdraw"
-                  className="form-control text-black"
+                  className="form-control text-black m-0"
                   value={this.state.amount_to_withdraw}
                   onChange={this.handleChange.bind(this)}
                 />
+                <div className="invalid-feedback">
+                  Amount must be more than or equal to $1.00
+                </div>
               </div>
 
               <div className="form-group   m-t-2">
@@ -221,10 +238,10 @@ class Credits extends React.Component {
                   {this.state.withdraw_method == 'paypal'
                     ? 'PayPal Id'
                     : this.state.withdraw_method == 'bank_transfer'
-                    ? 'Bank Account Details: '
-                    : this.state.withdraw_method == 'cheque'
-                    ? 'Bank acccount and shipping address:'
-                    : 'Withdrawal destination Details'}
+                      ? 'Bank Account Details: '
+                      : this.state.withdraw_method == 'cheque'
+                        ? 'Bank acccount and shipping address:'
+                        : 'Withdrawal destination Details'}
                 </label>
                 <textarea
                   required

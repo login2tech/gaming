@@ -40,6 +40,9 @@ class Credits extends React.Component {
 
   submitInitForm(e) {
     e.preventDefault();
+    if (!this.state.add_new_bal_number) {
+      return false;
+    }
     const credits_to_buy = this.state.add_new_bal_number;
     this.openBuyPopup('credits_box', 'Buy Credits', credits_to_buy, {
       points: credits_to_buy,
@@ -49,6 +52,13 @@ class Credits extends React.Component {
 
   handleTransferSubmit(e) {
     e.preventDefault();
+    const form = document.getElementsById('handleTransferSubmit');
+
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
     this.setState({
       transfer_processing: true
     });
@@ -164,8 +174,10 @@ class Credits extends React.Component {
           <hr />
           <div className="contnet_box_border">
             <form
+              id="handleTransferSubmit"
+              noValidate
               onSubmit={this.handleTransferSubmit.bind(this)}
-              className="field_form"
+              className="field_form needs-validation"
             >
               <div className="form-group m-t-2">
                 <label
@@ -188,6 +200,7 @@ class Credits extends React.Component {
                     onChange={this.handleChange.bind(this)}
                   />
                 </div>
+
                 <label
                   htmlFor="name_on_card"
                   className=" form-control-label text-white"
@@ -199,7 +212,7 @@ class Credits extends React.Component {
                   <input
                     type="number"
                     step="0.1"
-                    min="0"
+                    min="1"
                     required
                     max={this.props.user ? this.props.user.credit_balance : 0}
                     name="amount_to_transfer"
@@ -221,10 +234,12 @@ class Credits extends React.Component {
                   disabled={
                     !this.state.amount_to_transfer ||
                     !this.state.username_to_transfer ||
-                    this.state.transfer_processing
+                    this.state.transfer_processing ||
+                    parseInt(this.state.amount_to_transfer) < 1
                   }
                   className="btn btn-primary"
                 />
+                <small>Minimum amount: 1 credits</small>
               </div>
             </form>
           </div>
