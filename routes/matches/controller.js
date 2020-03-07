@@ -649,19 +649,27 @@ const resolveDispute = function(
             });
           }
 
+          console.log('here.. dispute resolved');
           new Ticket()
             .where({
               extra_1: match.get('id'),
               extra_3: 'MatchFinder',
               status: 'submitted'
             })
-            .save({
-              status: 'closed'
-            })
-            .then(function() {
+            .save(
+              {
+                status: 'closed'
+              },
+              {
+                method: 'update'
+              }
+            )
+            .then(function(a) {
+              console.log('done');
               //
             })
-            .catch(function() {
+            .catch(function(err) {
+              console.log(err);
               //
             });
 
@@ -1332,25 +1340,22 @@ exports.matches_of_user = function(req, res, next) {
   let mdl = new Item();
   mdl = mdl.orderBy('created_at', 'DESC');
 
+  // console.log(teams);
+
+  mdl = mdl.query(function(qb) {
+    qb.where(function(qb) {
+      qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+    });
+  });
+
   if (req.query.exclude_pending == 'yes') {
     // console.log('yesysey');
     mdl = mdl.where('status', 'NOT LIKE', 'pending');
     // mdl = mdl.where('status', '!=', 'pending');
   }
-
   if (req.query.only_pending == 'yes') {
-    mdl = mdl.query(function(qb) {
-      qb.where('status', 'LIKE', 'pending').orWhere(
-        'status',
-        'LIKE',
-        'accepted'
-      );
-    });
+    mdl = mdl.where('status', 'in', ['pending', 'accepted']);
   }
-
-  mdl = mdl.query(function(qb) {
-    qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
-  });
 
   mdl
     .fetchPage({
@@ -1361,7 +1366,7 @@ exports.matches_of_user = function(req, res, next) {
 
     .then(function(item) {
       if (!item) {
-        return res.status(200).send({ok: true, items: [], r: 'EMPTy'});
+        return res.status(200).send({ok: true, items: [], r: 'EMPTY'});
       }
       return res
         .status(200)

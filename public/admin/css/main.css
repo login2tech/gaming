@@ -353,4 +353,5 @@ div#modal_orders .modal-dialog {
 }
 .table-responsive{
   overflow-y: visible;
+  min-height: 400px;
 }

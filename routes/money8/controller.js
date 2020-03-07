@@ -488,9 +488,14 @@ const resolveDispute = function(
               extra_3: 'Mix-and-match',
               status: 'submitted'
             })
-            .save({
-              status: 'closed'
-            })
+            .save(
+              {
+                status: 'closed'
+              },
+              {
+                method: 'update'
+              }
+            )
             .then(function() {
               //
             })

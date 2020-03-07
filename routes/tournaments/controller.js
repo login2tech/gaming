@@ -12,6 +12,7 @@ const Notif = require('../../models/Notification');
 const Trophy = require('./Trophy');
 const Raven = require('raven');
 const matchController = require('../matches/controller');
+const Ticket = require('../tickets/Ticket');
 
 const changeIntoBye = function(seed, participantsCount) {
   //return seed <= participantsCount ?  seed : '{0} (= bye)'.format(seed);
@@ -1335,8 +1336,30 @@ const resolveDispute = function(
             });
           }
           const tmp_match = match.toJSON();
+
           // match
           proceed_to_next_round(tmp_match.tournament_id, tmp_match.match_round);
+
+          new Ticket()
+            .where({
+              extra_1: tmp_match.id,
+              extra_3: 'Tournament',
+              status: 'submitted'
+            })
+            .save(
+              {
+                status: 'closed'
+              },
+              {
+                method: 'update'
+              }
+            )
+            .then(function() {
+              //
+            })
+            .catch(function() {
+              //
+            });
 
           if (final_result != 'team_1' && final_result != 'team_2') {
             return;
