@@ -376,6 +376,22 @@ class NewMoney8 extends React.Component {
                       <strong>{this.showGamerTag(ladder)}</strong>
                     </div>
                     <div className="form-group col-md-12">
+                      <label htmlFor="title">Match Availability</label>
+                      <select
+                        required
+                        onChange={this.handleSettingsChange.bind(this)}
+                        className="form-control"
+                        name="match_available"
+                        id="match_available"
+                      >
+                        <option value="">Select</option>
+                        <option value={this.props.user.country}>
+                          {this.props.user.country}
+                        </option>
+                        <option value="All Regions">All Regions</option>
+                      </select>
+                    </div>
+                    <div className="form-group col-md-12">
                       <label htmlFor="match_type">Match Type</label>
                       <select
                         required

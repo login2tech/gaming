@@ -5,7 +5,7 @@ import {signup} from '../../actions/auth';
 // import {facebookLogin} from '../../actions/oauth';
 import Messages from '../Modules/Messages';
 import states from '../Modules/states';
-const countries = ['United States', 'Canada', 'United Kingdom'];
+const countries = ['United States', 'Canada', 'Europe'];
 class Signup extends React.Component {
   constructor(props) {
     super(props);
