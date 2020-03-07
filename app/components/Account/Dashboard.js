@@ -163,7 +163,7 @@ class Profile extends React.Component {
           last_name: this.state.last_name,
           gender: this.state.gender,
           dob: this.state.dob,
-          state: this.state.state,
+          state: this.state.county != 'United States' ? '-' : this.state.state,
           gamer_tag_1: this.state.gamer_tag_1,
           timezone: this.state.timezone,
           gamer_tag_2: this.state.gamer_tag_2,
@@ -415,27 +415,7 @@ class Profile extends React.Component {
                   onChange={this.handleChange.bind(this)}
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="state">State</label>
-                <select
-                  required
-                  className="form-control"
-                  placeholder="State"
-                  id="state"
-                  name="state"
-                  value={this.state.state}
-                  onChange={this.handleChange.bind(this)}
-                >
-                  <option value="">Choose State</option>
-                  {states.map((state, i) => {
-                    return (
-                      <option value={state} key={state}>
-                        {state}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div>
+
               <div className="form-group ">
                 <label>Gender</label>
                 <div className="row" style={{height: '53px'}}>
@@ -484,6 +464,32 @@ class Profile extends React.Component {
                   // onChange={this.handleChange.bind(this)}
                 />
               </div>
+              {this.state.county != 'United States' ? (
+                false
+              ) : (
+                <div className="form-group">
+                  <label htmlFor="state">State</label>
+                  <select
+                    required
+                    className="form-control"
+                    placeholder="State"
+                    id="state"
+                    name="state"
+                    value={this.state.state}
+                    onChange={this.handleChange.bind(this)}
+                  >
+                    <option value="">Choose State</option>
+                    {states.map((state, i) => {
+                      return (
+                        <option value={state} key={state}>
+                          {state}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              )}
+
               <div className="form-group">
                 <label htmlFor="timezone">Timezone</label>
                 <select
@@ -496,13 +502,15 @@ class Profile extends React.Component {
                   required
                 >
                   <option value="">-Select-</option>
-                  {timezones[this.state.country].map((timezone, i) => {
-                    return (
-                      <option value={timezone.value} key={timezone.label}>
-                        {timezone.label}
-                      </option>
-                    );
-                  })}
+                  {this.state.country &&
+                    timezones[this.state.country] &&
+                    timezones[this.state.country].map((timezone, i) => {
+                      return (
+                        <option value={timezone.value} key={timezone.label}>
+                          {timezone.label}
+                        </option>
+                      );
+                    })}
                 </select>
               </div>
             </div>

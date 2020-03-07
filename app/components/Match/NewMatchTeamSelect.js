@@ -755,6 +755,23 @@ class NewMatchTeamSelect extends React.Component {
                       </div>
 
                       <div className="form-group col-md-12">
+                        <label htmlFor="title">Match Availability</label>
+                        <select
+                          required
+                          onChange={this.handleSettingsChange.bind(this)}
+                          className="form-control"
+                          name="match_available"
+                          id="match_available"
+                        >
+                          <option value="">Select</option>
+                          <option value={this.props.user.country}>
+                            {this.props.user.country}
+                          </option>
+                          <option value="All Regions">All Regions</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group col-md-12">
                         <label htmlFor="title">Match Players</label>
                         <select
                           required

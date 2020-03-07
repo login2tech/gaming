@@ -11,6 +11,7 @@ const CreditTransactions = require('../../models/CreditTransactions');
 const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
+const Ticket = require('../tickets/Ticket');
 const utils = require('../utils');
 
 const Raven = require('raven');
@@ -647,6 +648,22 @@ const resolveDispute = function(
               match: match.toJSON()
             });
           }
+
+          new Ticket()
+            .where({
+              extra_1: match.get('id'),
+              extra_3: 'MatchFinder',
+              status: 'submitted'
+            })
+            .save({
+              status: 'closed'
+            })
+            .then(function() {
+              //
+            })
+            .catch(function() {
+              //
+            });
 
           if (final_result != 'team_1' && final_result != 'team_2') {
             return;

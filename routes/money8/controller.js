@@ -9,6 +9,8 @@ const CashTransactions = require('../../models/CashTransactions');
 const CreditTransactions = require('../../models/CreditTransactions');
 const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
+const Ticket = require('../tickets/Ticket');
+
 const utils = require('../utils');
 const shuffle = function(array) {
   array.sort(() => Math.random() - 0.5);
@@ -480,6 +482,21 @@ const resolveDispute = function(
               match: match.toJSON()
             });
           }
+          new Ticket()
+            .where({
+              extra_1: match.get('id'),
+              extra_3: 'Mix-and-match',
+              status: 'submitted'
+            })
+            .save({
+              status: 'closed'
+            })
+            .then(function() {
+              //
+            })
+            .catch(function() {
+              //
+            });
 
           let win_team_members;
           let loose_team_members;
