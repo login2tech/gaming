@@ -669,10 +669,10 @@ class Game extends React.Component {
                                       ? 'FREE'
                                       : match.match_type == 'credits' ||
                                         match.match_type == 'credit'
-                                        ? match.match_fee + ' credits'
-                                        : match.match_type == 'cash'
-                                          ? '$' + match.match_fee
-                                          : ' '}
+                                      ? match.match_fee + ' credits'
+                                      : match.match_type == 'cash'
+                                      ? '$' + match.match_fee
+                                      : ' '}
                                   </td>
 
                                   <td className="col-item">
@@ -881,10 +881,10 @@ class Game extends React.Component {
                                       ? 'FREE'
                                       : match.match_type == 'credits' ||
                                         match.match_type == 'credit'
-                                        ? match.match_fee + ' credits'
-                                        : match.match_type == 'cash'
-                                          ? '$' + match.match_fee
-                                          : ' '}
+                                      ? match.match_fee + ' credits'
+                                      : match.match_type == 'cash'
+                                      ? '$' + match.match_fee
+                                      : ' '}
                                   </td>
 
                                   <td className="col-item">

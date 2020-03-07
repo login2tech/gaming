@@ -23,6 +23,22 @@ const getXPRemoveBasedOn = function(current_xp) {
   return 7;
 };
 
+const checkifeligibleforcredits = function(usr, prev_xp, new_xp) {
+  const thresholds = [0, 50, 200, 500, 750, 1000, 1500, 2000, 3000, 3500, 4000];
+  let award = false;
+  for (let i = 0; i < thresholds.length; i++) {
+    if (prev_xp <= thresholds[i] && new_xp > thresholds[i]) {
+      // console.log(thresholds[i]);
+      award = true;
+      break;
+    }
+  }
+  if (award) {
+    // add credits = 1
+    utils.giveCreditsToUser(usr.id, 1, 'Free reward for prime member', null);
+  }
+};
+
 const giveXpToMember = function(uid, match_id) {
   new User()
     .where({id: uid})
@@ -57,11 +73,17 @@ const giveXpToMember = function(uid, match_id) {
           .fetch()
           .then(function(xpObj) {
             if (xpObj) {
+              const prev_xp = xpObj.get('xp');
+              const new_xp = prev_xp + xP_to_add;
               xpObj
                 .save({
-                  xp: xpObj.get('xp') + xP_to_add
+                  xp: new_xp
                 })
-                .then(function(o) {})
+                .then(function(o) {
+                  if (usr.get('prime')) {
+                    checkifeligibleforcredits(usr, prev_xp, new_xp);
+                  }
+                })
                 .catch(function(err) {
                   console.log(2, err);
                 });
@@ -73,7 +95,11 @@ const giveXpToMember = function(uid, match_id) {
                   user_id: uid,
                   xp: xP_to_add
                 })
-                .then(function(o) {})
+                .then(function(o) {
+                  if (usr.get('prime')) {
+                    checkifeligibleforcredits(usr, 0, xP_to_add);
+                  }
+                })
                 .catch(function(err) {
                   console.log(3, err);
                 });

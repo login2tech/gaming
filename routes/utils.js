@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const CashTransactions = require('../models/CashTransactions');
 const CreditTransactions = require('../models/CreditTransactions');
+const Raven = require('raven');
 const moment = require('moment');
 const giveCashOrCreditsToUser = function(typ, user_id, amount, descr, obj) {
   new User()

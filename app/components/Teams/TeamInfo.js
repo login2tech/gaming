@@ -768,13 +768,13 @@ class TeamInfo extends React.Component {
           paddingBottom: 30
         }
       : this.state.team_info && this.state.team_info.cover_picture
-        ? {
-            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')',
-            paddingBottom: 30
-          }
-        : {
-            paddingBottom: 30
-          };
+      ? {
+          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')',
+          paddingBottom: 30
+        }
+      : {
+          paddingBottom: 30
+        };
 
     return (
       <div>

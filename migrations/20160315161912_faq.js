@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
       table.increments();
       table.string('title');
       table.text('content');
+      table.text('category');
     })
   ]);
 };

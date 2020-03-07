@@ -598,6 +598,7 @@ const create_new_user_for_token = function(req, res, next) {
     {
       description: 'Created for OnlyCompGaming',
       email: req.user.email,
+      nane: req.user.first_name + ' ' + req.user.last_name,
       source: stripeToken
     },
     function(err, customer) {

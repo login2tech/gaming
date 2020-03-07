@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     knex.schema.table('users', function(table) {
       table.string('ip');
       table.string('state');
+      table.string('country');
     }),
     knex.schema.table('tickets', function(table) {
       table.string('url_1');

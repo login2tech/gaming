@@ -207,8 +207,8 @@ class PaymentModal extends React.Component {
                   {this.state.token_processing
                     ? 'please wait...'
                     : this.props.button_title
-                      ? this.props.button_title
-                      : 'Pay and proceed'}
+                    ? this.props.button_title
+                    : 'Pay and proceed'}
                 </button>
               </div>
               {this.props.disable_paypal ? (
