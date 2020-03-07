@@ -270,6 +270,9 @@ class NewTicket extends React.Component {
                               <option value="Customer Support - Account Issues">
                                 Customer Support - Account Issues
                               </option>
+                              <option value="Customer Support - Account Email Change Request">
+                                Customer Support - Account Email Change Request
+                              </option>
                               <option value="Customer Support - Account Recovery">
                                 Customer Support - Account Recovery
                               </option>
@@ -330,12 +333,33 @@ class NewTicket extends React.Component {
                             </>
                           )}
                         </select>
-                        <span className="text-white">
-                          To create tickets for match disputes, please use the{' '}
-                          <strong>"Create Ticket"</strong> button from the match
-                          details page.
-                          <br />
-                        </span>
+
+                        {this.state.ticket_type ==
+                        'Customer Support - Account Email Change Request' ? (
+                          <div
+                            className="alert alert-info"
+                            style={{
+                              padding: '0px 14px',
+                              fontSize: 13
+                            }}
+                          >
+                            Please mention your existing and new email address
+                            in ticket description below
+                          </div>
+                        ) : (
+                          <div
+                            className="alert alert-info"
+                            style={{
+                              padding: '0px 14px',
+                              fontSize: 13
+                            }}
+                          >
+                            To create tickets for match disputes, please use the{' '}
+                            <strong>"Create Ticket"</strong> button from the
+                            match details page.
+                            <br />
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

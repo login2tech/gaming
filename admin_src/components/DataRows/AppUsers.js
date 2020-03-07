@@ -56,7 +56,7 @@ class AppUsers extends React.Component {
       });
   }
 
-  updateItem(id, data, key) {
+  updateItem(id, data, key, msg) {
     if (!key) {
       key = '';
     }
@@ -73,12 +73,13 @@ class AppUsers extends React.Component {
             if (resp.ok) {
               this.loadUsers();
             } else {
-              this.props.dispatch({type: 'FAILURE', messages: [resp]});
+              msg = msg ? msg : 'Failed to perform Action';
+              this.props.dispatch({type: 'FAILURE', messages: [{msg: msg}]});
             }
           })
           .catch(err => {
             // console.log(err);
-            const msg = 'Failed to perform Action';
+            msg = msg ? msg : 'Failed to perform Action';
             this.props.dispatch({
               type: 'FAILURE',
               messages: [{msg: msg}]
@@ -92,8 +93,30 @@ class AppUsers extends React.Component {
     this.loadUsers();
   }
 
+  update_email(new_email, id) {
+    // this.updateItem(id, 'email')
+    this.updateItem(
+      id,
+      {
+        email: new_email
+      },
+      'email',
+      'Failed to update email address. Make sure this email address is not assigned to any other user'
+    );
+  }
+
   doAction(action, obj) {
-    if (action == 'profile') {
+    if (action == 'change_email') {
+      const new_email = prompt(
+        'Please enter new email for user: ' + obj.email,
+        obj.email
+      );
+      if (new_email) {
+        this.update_email(new_email, obj.id);
+      }
+
+      return;
+    } else if (action == 'profile') {
       this.props.dispatch(
         openModal({
           type: 'custom',
@@ -258,6 +281,17 @@ class AppUsers extends React.Component {
                                     }}
                                   >
                                     Profile Info
+                                  </a>
+                                </li>
+                                <li>
+                                  <a
+                                    href="#"
+                                    onClick={e => {
+                                      e.preventDefault();
+                                      this.doAction('change_email', u);
+                                    }}
+                                  >
+                                    Change Email
                                   </a>
                                 </li>
                                 <li>
