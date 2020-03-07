@@ -5776,7 +5776,7 @@ media query starts here
         margin-bottom: 1px;
     }
 
-    .profile-header-data-middle .btn {
+    .profile-header-data-middle .btn:not(.change_tname_r) {
         margin-top: 0;
         min-width: 100%;
     }
@@ -6640,12 +6640,17 @@ media query starts here
     .btn-primary:not([disabled]):hover {
         background: rgb(40, 72, 243) !important;
     }
-
+    input#new_team_name {
+        padding: 2px;
+        font-size: 11px;
+    }
     .team-profile-page .profile-header-data-middle > div:first-child h3 {
         font-size: 14px;
         margin-top: 10px;
         margin-bottom: 0;
-        line-height: 6px
+        line-height: 6px;
+        line-height: 19px
+
     }
 
     .team-profile-page .profile-header-data-middle > div:first-child span {

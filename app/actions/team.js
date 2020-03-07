@@ -1,5 +1,30 @@
 import {browserHistory} from 'react-router';
+export function changeTname(data, cb) {
+  return dispatch => {
+    dispatch({type: 'CLR_MSG'});
 
+    return fetch('/api/teams/changeName', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          if (json.ok) {
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else {
+            alert(json.msg);
+            cb && cb(false);
+          }
+        });
+      } else {
+        alert('Failed!');
+      }
+    });
+  };
+}
 export function createTeam(data, user) {
   return dispatch => {
     dispatch({

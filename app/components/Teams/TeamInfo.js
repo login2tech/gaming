@@ -7,6 +7,7 @@ import {
   approveRequest,
   teamPic,
   removeMembers,
+  changeTname,
   disband
 } from '../../actions/team';
 import Messages from '../Modules/Messages';
@@ -108,6 +109,43 @@ class TeamInfo extends React.Component {
 
   componentDidMount() {
     this.fetchTeam();
+  }
+
+  handleChangeTeamName(event) {
+    let val = event.target.value ? event.target.value : '';
+    // val = val.trim();
+    // val = val.toLowerCase();
+    // alert();
+    val = val.replace(/[^a-zA-Z0-9.-\s]/g, '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp('__', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    val = val.replace(new RegExp(' {2}', 'g'), '_');
+    if (
+      val[0] == '-' ||
+      val[0] == ' ' ||
+      val[0] == '_' ||
+      val[0] == '1' ||
+      val[0] == '2' ||
+      val[0] == '3' ||
+      val[0] == '4' ||
+      val[0] == '5' ||
+      val[0] == '6' ||
+      val[0] == '7' ||
+      val[0] == '8' ||
+      val[0] == '9' ||
+      val[0] == '0'
+    ) {
+      val = val.replace(val[0], '');
+    }
+
+    this.setState({[event.target.name]: val});
   }
 
   fetchTeam() {
@@ -270,6 +308,37 @@ class TeamInfo extends React.Component {
             obj.new_profile_pic_saved = true;
           }
           this.setState(obj);
+        }
+      )
+    );
+  }
+
+  changeUname(event, cb) {
+    if (this.state.saving_new_name) {
+      return false;
+    }
+    this.setState({
+      saving_new_name: true
+    });
+    event.preventDefault();
+    this.props.dispatch(
+      changeTname(
+        {
+          new_team_name: this.state.new_team_name,
+          team_id: this.state.team_info.id
+          // change_username_token: this.state.change_username_token
+        },
+        rep => {
+          if (!rep) {
+            const team = this.state.team_info;
+            team.title = this.state.new_team_name;
+            this.setState({
+              changing_tname: false,
+              team_info: team,
+              new_team_name: '',
+              saving_new_name: false
+            });
+          }
         }
       )
     );
@@ -613,8 +682,68 @@ class TeamInfo extends React.Component {
               game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
             }
           />
-          {this.state.team_info.title}
-          {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
+          {this.state.changing_tname ? (
+            <div className="change_uname_wrap">
+              <input
+                id="new_team_name"
+                name="new_team_name"
+                maxlen="20"
+                maxLength="20"
+                max="20"
+                autoFocus
+                className="form-control change_uname_field"
+                onChange={this.handleChangeTeamName.bind(this)}
+                value={this.state.new_team_name}
+              />
+              <button
+                className="btn bg-white mr-1 change_tname_r"
+                disabled={
+                  this.state.new_team_name == this.state.team_info.title
+                }
+                onClick={this.changeUname.bind(this)}
+              >
+                <span
+                  className={
+                    this.state.saving_new_name == true
+                      ? 'fa fa-spin fa-spinner'
+                      : 'fa fa-save'
+                  }
+                />
+              </button>
+              <button
+                className="text-danger btn  change_tname_r"
+                onClick={() => {
+                  this.setState({
+                    changing_tname: false
+                  });
+                }}
+              >
+                <span className="fa fa-times " />
+              </button>
+            </div>
+          ) : (
+            <>
+              {this.state.team_info.title}
+              {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
+              {this.state.team_info.team_creator == this.props.user.id &&
+              !this.state.team_info.removed ? (
+                <button
+                  onClick={event => {
+                    $(event.target).tooltip('hide');
+                    this.setState({
+                      changing_tname: true,
+                      new_team_name: this.state.team_info.title
+                    });
+                  }}
+                  className=" fa fa-edit btn bg-white  change_tname change_tname_r ml-1"
+                  title={'Edit team name'}
+                  data-toggle="tooltip"
+                />
+              ) : (
+                false
+              )}
+            </>
+          )}
         </h3>
         <span className="textcap d-md-none d-inline-block width-100 pl-2">
           {this.state.team_info.team_type == 'tournaments' ? (

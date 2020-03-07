@@ -6,7 +6,31 @@ const ObjName = 'Team';
 const Notif = require('../../models/Notification');
 const Match = require('../matches/Match');
 const matches = require('../matches/controller');
-
+exports.changeName = function(req, res, next) {
+  if (!req.body.new_team_name || !req.body.team_id) {
+    return res.status(400).send({ok: false, msg: 'Details missing'});
+  }
+  const item = new Item({id: req.body.team_id});
+  item.fetch().then(function(item) {
+    if (!item) {
+      return;
+    }
+    item
+      .save({title: req.body.new_team_name}, {method: 'update'})
+      .then(function(usr) {
+        res.send({
+          // item: user,
+          msg: 'Your Team name has been updated.'
+        });
+      })
+      .catch(function(err) {
+        // console.log(err);
+        res.status(400).send({
+          msg: 'Some error occoured'
+        });
+      });
+  });
+};
 exports.team_pic = function(req, res, next) {
   if (!req.body.profile_picture && !req.body.cover_picture) {
     return res.status(400).send({ok: false, msg: 'Image missing'});

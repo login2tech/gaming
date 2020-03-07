@@ -24,3 +24,4 @@ routes.post('/pics', u_ctrl.ensureAuthenticated, ctrl.team_pic);
 
 routes.post('/removeMembers', u_ctrl.ensureAuthenticated, ctrl.removeMembers);
 routes.post('/disband', u_ctrl.ensureAuthenticated, ctrl.disband);
+routes.post('/changeName', u_ctrl.ensureAuthenticated, ctrl.changeName);
