@@ -289,5 +289,298 @@
         }
       ]
     }
+  ],
+  "gears5": [
+    {
+      "type": "tab",
+      "title": "Gears 5 Rules",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "The following settings must be set to the following, unless specified otherwise in match settings:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Any private match lobby settings not listed should not be changed from the default state excluding game settings options in your match details.",
+            "The hosting player must ensure all game settings are correct. If the game settings are incorrect,  the hosting player will risk forfeiting the match if valid proof has been provided."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Execution",
+      "content": [
+        {
+          "type": "tab",
+          "title": "Execution Game Setup:",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Fill with Bots: OFF",
+                "Bot Difficulty: Default (Beginner)",
+                "Rounds to Win: 4",
+                "Round time limit: 4 Minutes",
+                "Classic Stalemates: ON",
+                "DBNO Time: 15",
+                "Friendly Fire: On ",
+                "Weapon Respawn: After Pick Up",
+                "Gameplay Tuning: Assist Disabled"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Starting Loadouts",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Lancer",
+                "Gnasher",
+                "Snub Pistol"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Map Rotation",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Training Grounds",
+                "District",
+                "Exhibit",
+                "Icebound",
+                "Asylum",
+                "Bunker",
+                "Vasgar"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Character Restrictions",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Each team may ONLY have one version of any character on their team per map.  Changing character skins do not make the character different, it will be considered the same character.  Example: “Ice Kait” is the same character as “Armored Kait” If any team is caught using two of the same characters in a map it will result in a forfeit for that map.",
+                "Any single COG team is only allowed to have two female characters.",
+                "Any single COG team is prohibited from one player using a Batista skin and another using Marcus skin. If Marcus and Batista are on the same team, Marcus MUST have default skin. (Example: If one player is using a Batista skin then Marcus must be default skin)"
+              ]
+            },
+            {
+              "type": "h2",
+              "value": "The following skins are banned from gameplay:"
+            },
+            {
+              "type": "list",
+              "list": [
+                "Terminator T-800 (Swarm)",
+                "Terminator Rev-9 (Swarm)"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Hosting Information",
+          "value": "The team with the most rounds won between the first two maps will host the 3rd map. If the rounds won are tied between map 1 and map 2, the higher ranked team will host the final map. "
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "King of the Hill",
+      "content": [
+        {
+          "type": "tab",
+          "title": "King of the Hill Game Setup:",
+          "content": [
+            {
+              "type": "paragraph_html",
+              "value": "<strong>ALL POWER WEAPONS ARE RESTRICTED FROM BEING PICKED UP AT ANY TIME DURING THE MATCH.</strong>"
+            },
+            {
+              "type": "list",
+              "list": [
+                "Fill With Bots: OFF",
+                "Bot Difficulty: Default (Beginner)",
+                "Rounds to win: 2 ",
+                "Round Score Limit: 210",
+                "Execution Rules: OFF",
+                "Respawn Time: 10",
+                "DBNO Time: 15",
+                "Friendly Fire: ON",
+                "Weapon Respawn: After Pickup",
+                "Gameplay Tuning: Assist Disabled "
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Weapon Substitutions",
+          "content": [
+            {
+              "type": "paragraph_html",
+              "value": "Every weapon listed under “Weapon Substitution” in the game settings should be set to <strong>NONE</strong>."
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Starting Loadout",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Lancer",
+                "Gnasher",
+                "Snub Pistol"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "King of the Hill Map Rotation",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "District",
+                "Asylum",
+                "Training Grounds"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Character Restrictions",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Each team may ONLY have one version of any character on their team per map.",
+                "Changing character skins do not make the character different, it will be considered the same character.  Example: “Ice Kait” is the same character as “Armored Kait” If any team is caught using two of the same characters in a map it will result in a forfeit for that map.",
+                "Any single COG team is only allowed to have two female characters.",
+                "Any single COG team is prohibited from one player using a Batista skin and another using Marcus skin. If Marcus and Batista are on the same team, Marcus MUST have default skin. (Example: If one player is using a Batista skin then Marcus must be default skin)"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Hosting Information",
+          "content": [
+            {
+              "type": "paragraph",
+              "value": [
+                "The team with the most rounds won between the first two maps will host the 3rd map. If the rounds won are tied between map 1 and map 2, the higher ranked team will host the final map. "
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Escalation",
+      "content": [
+        {
+          "type": "tab",
+          "title": "Escalation Game Setup:",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Fill With Bots: OFF",
+                "Bot Difficulty: Casual",
+                "Round Score Limit: 250",
+                "Respawn Escalation: -2 Seconds",
+                "Friendly Fire: ON",
+                "Weapon Respawns: After Pickup",
+                "Gameplay Tuning: Assist Disabled",
+                "Use Lives: ON",
+                "Initial Lives: 4",
+                "Max Lives: 4"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Weapon Substitutions:",
+          "value": "NONE"
+        },
+        {
+          "type": "tab",
+          "title": "Starting Loadout:",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Lancer",
+                "Gnasher",
+                "Snub Pistol"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Escalation Map Rotation:",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Training Grounds",
+                "Exhibit",
+                "District",
+                "Icebound",
+                "Asylum",
+                "Bunker",
+                "Vasgar"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Character Restrictions",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "Each team may ONLY have one version of any character on their team per map. Changing character skins do not make the character different, it will be considered the same character.  Example: “Ice Kait” is the same character as “Armored Kait” If any team is caught using two of the same characters in a map it will result in a forfeit for that map.",
+                "Each team may ONLY have one version of any character on their team per map.",
+                "Changing character skins do not make the character different, it will be considered the same character.  Example: “Ice Kait” is the same character as “Armored Kait” If any team is caught using two of the same characters in a map it will result in a forfeit for that map.",
+                "Any single COG team is only allowed to have two female characters.",
+                "Any single COG team is prohibited from one player using a Batista skin and another using Marcus skin. If Marcus and Batista are on the same team, Marcus MUST have default skin. (Example: If one player is using a Batista skin then Marcus must be default skin)"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Hosting Information",
+          "content": [
+            {
+              "type": "paragraph",
+              "value": "The team with the most rounds won between the first two maps will host the 3rd map. If the rounds won are tied between map 1 and map 2, the higher ranked team will host the final map."
+            }
+          ]
+        }
+      ]
+    }
   ]
 }
