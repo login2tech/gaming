@@ -18,7 +18,7 @@ exports.updateFaq = function(req, res, next) {
 
   req.assert('content', 'Content cannot be blank').notEmpty();
 
-  // req.assert('category' , 'Category cannot be blank').notEmpty();
+  req.assert('category', 'Category cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
   if (errors) {
@@ -30,7 +30,8 @@ exports.updateFaq = function(req, res, next) {
   faq.save({
     title: req.body.title,
 
-    content: req.body.content
+    content: req.body.content,
+    category: req.body.category
   });
 
   faq
@@ -49,6 +50,7 @@ exports.addFaq = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
 
   req.assert('content', 'Content cannot be blank').notEmpty();
+  req.assert('category', 'Category cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
 
@@ -58,6 +60,7 @@ exports.addFaq = function(req, res, next) {
 
   new Faq({
     title: req.body.title,
+    category: req.body.category,
     content: req.body.content
   })
     .save()
@@ -74,7 +77,8 @@ exports.addFaq = function(req, res, next) {
 
 exports.listFaq = function(req, res, next) {
   new Faq()
-    .orderBy('id', 'DESC')
+    .orderBy('id', 'ASC')
+    .orderBy('category', 'ASC')
     .fetchAll()
     .then(function(faqs) {
       if (!faqs) {
