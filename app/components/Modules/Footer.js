@@ -119,6 +119,8 @@ class Footer extends React.Component {
                         href="#"
                         onClick={e => {
                           e.preventDefault();
+                          tidioChatApi && tidioChatApi.open();
+
                         }}
                       >
                         Live Support Chat

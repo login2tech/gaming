@@ -6689,3 +6689,12 @@ media query starts here
     padding-left: 20px;
     margin-bottom:50px
 }
+
+.region_input label {
+    width: 100%;
+}
+
+.region_input label input {
+    margin-right: 5px;
+    margin-left: 5px;
+}

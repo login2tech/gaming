@@ -454,7 +454,7 @@ class newMatch extends React.Component {
     }
     // console.log(this.state.team_info.ladder, min, max, player_selection);
     return (
-      <section className="middle_part_login">
+      <section className="middle_part_login mt-4">
         <div className="container">
           <div className="row">
             <div className="col-md-8 offset-md-2">
@@ -586,9 +586,9 @@ class newMatch extends React.Component {
                         )}
                       </div>
 
-                      <div className="form-group col-md-12">
-                        <label htmlFor="title">Match Availability</label>
-                        <select
+                      <div className="form-group col-md-12 region_input">
+                        <label htmlFor="title">Match Region</label>
+                        {/*}  <select
                           required
                           onChange={this.handleSettingsChange.bind(this)}
                           className="form-control"
@@ -600,7 +600,46 @@ class newMatch extends React.Component {
                             {this.props.user.country}
                           </option>
                           <option value="All Regions">All Regions</option>
-                        </select>
+                        </select>*/}
+                        <label>
+                          <input
+                            type="radio"
+                            name="match_available"
+                            value={'North America'}
+                            checked={
+                              this.state.game_settings['match_available'] ===
+                              'North America'
+                            }
+                            onChange={this.handleSettingsChange.bind(this)}
+                          />{' '}
+                          North America
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="match_available"
+                            value={'Europe'}
+                            checked={
+                              this.state.game_settings['match_available'] ===
+                              'Europe'
+                            }
+                            onChange={this.handleSettingsChange.bind(this)}
+                          />{' '}
+                          Europe
+                        </label>
+                        <label>
+                          <input
+                            type="radio"
+                            name="match_available"
+                            value={'All Regions'}
+                            checked={
+                              this.state.game_settings['match_available'] ===
+                              'All Regions'
+                            }
+                            onChange={this.handleSettingsChange.bind(this)}
+                          />{' '}
+                          All Regions
+                        </label>
                       </div>
 
                       <div className="form-group col-md-12">
