@@ -67,7 +67,7 @@ class NewMatchTeamSelect extends React.Component {
       });
   }
 
-  checkIfPendingScore() {
+  getTeamArray() {
     let team_array = [];
     for (let i = 0; i < this.state.eligible_teams.length; i++) {
       const team_parent = this.state.eligible_teams[i];
@@ -77,6 +77,31 @@ class NewMatchTeamSelect extends React.Component {
       }
     }
     team_array = team_array.join(',');
+    return team_array;
+  }
+  checkIfPendingDispute() {
+    const team_array = this.getTeamArray();
+
+    fetch(
+      '/api/matches/pendingDisputesCount?uid=' +
+        this.props.user.id +
+        '&teams=' +
+        team_array
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          if (json.disputed_count >= 3) {
+            this.setState({
+              has_pending_disputes: true
+            });
+          }
+        }
+      });
+  }
+
+  checkIfPendingScore() {
+    const team_array = this.getTeamArray();
 
     fetch(
       '/api/matches/pendingScoreMatches?uid=' +
@@ -86,6 +111,7 @@ class NewMatchTeamSelect extends React.Component {
     )
       .then(res => res.json())
       .then(json => {
+        this.checkIfPendingDispute();
         if (json.ok) {
           if (json.any_pending) {
             this.setState({
@@ -93,6 +119,9 @@ class NewMatchTeamSelect extends React.Component {
             });
           }
         }
+      })
+      .catch(function(err) {
+        this.checkIfPendingDispute();
       });
   }
 
@@ -830,7 +859,8 @@ class NewMatchTeamSelect extends React.Component {
                           disabled={
                             !this.isEligible() ||
                             this.state.creating ||
-                            this.state.has_pending_match
+                            this.state.has_pending_match ||
+                            this.state.has_pending_disputes
                           }
                           className="btn btn-default bttn_submit"
                           type="submit"
@@ -843,6 +873,15 @@ class NewMatchTeamSelect extends React.Component {
                           <span className="text-danger">
                             You have a match awaiting score. Please provide
                             score of pending match before creating a new match.
+                          </span>
+                        ) : (
+                          false
+                        )}
+                        {this.state.has_pending_disputes ? (
+                          <span className="text-danger">
+                            You have high number of open disputes. You can only
+                            create a new match once your dispute count is less
+                            than 3
                           </span>
                         ) : (
                           false

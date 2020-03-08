@@ -999,7 +999,7 @@ exports.listSingleItem = function(req, res, next) {
       if (!team_ids) {
         team_ids = '';
       }
-      const new_t_id = [];
+      let new_t_id = [];
       team_ids = team_ids.split(',');
       for (let i = 0; i < team_ids.length; i++) {
         if (!team_ids[i]) {

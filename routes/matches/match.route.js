@@ -21,6 +21,11 @@ routes.get(
   // u_ctrl.ensureAuthenticated,
   ctrl.pendingScoreMatches
 );
+routes.get(
+  '/pendingDisputesCount',
+  // u_ctrl.ensureAuthenticated,
+  ctrl.pendingDisputesCount
+);
 
 routes.get(
   '/matches_of_team',
