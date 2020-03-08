@@ -65,7 +65,7 @@
         {
           "type": "paragraph",
           "value": "If you lose a match and believe that resulted because of your opponent interfering with your game play in a prohibited way, dispute the match by reporting you won. Then upload proof and explain in the dispute ticket exactly what happened. Video proof is the only valid proof considered. Proof must be clear for us to forfeit the other team for the match."
-        },
+        }
 
       ]
     },
@@ -118,7 +118,7 @@
       "content" : [
         {
           "type":"h2",
-          "value":"FIRST TEAM TO 5 WINS THE MAP!",
+          "value":"FIRST TEAM TO 5 WINS THE MAP!"
         },
         {
           "type": "paragraph_html",
