@@ -105,7 +105,7 @@ class FAQ extends React.Component {
             }
           })
           .catch(err => {
-            console.log(err);
+            // console.log(err);
             const msg = 'Failed to perform Action';
             this.props.dispatch({
               type: 'FAILURE',
@@ -186,6 +186,7 @@ class FAQ extends React.Component {
                 <thead>
                   <tr>
                     <th>ID</th>
+                    <th>Category</th>
                     <th>Title</th>
                     <th>Actions</th>
                   </tr>
@@ -196,6 +197,7 @@ class FAQ extends React.Component {
                       return (
                         <tr key={u.id}>
                           <td>{u.id}</td>
+                          <td>{u.category}</td>
                           <td>{u.title}</td>
                           <td>
                             <button
@@ -247,6 +249,7 @@ class FAQ extends React.Component {
             />
           </div>
         </div>
+        <link rel="stylesheet" href="/libStyles/trix/dist/trix.css" />
       </div>
     );
   }

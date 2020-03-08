@@ -80,6 +80,8 @@ function scrollToTop()
         selector : '[data-toggle="tooltip"]',
         html: true,
       });
+  $('body').on('click','[data-toggle="tooltip"]',function (e) {jQuery(this).tooltip("hide");});
+
 
     var ulNav= "#nav", openNav= "activeNav";
 
@@ -93,3 +95,5 @@ function scrollToTop()
     });
   });
 })(jQuery);
+
+ 

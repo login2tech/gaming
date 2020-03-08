@@ -87,7 +87,10 @@ class FAQ extends React.Component {
                           }
                         >
                           <div className="card-body">
-                            <p className=" text-white">{faq.content}</p>
+                            <div
+                              className="trix-content  text-white"
+                              dangerouslySetInnerHTML={{__html: faq.content}}
+                            />
                           </div>
                         </div>
                       </div>

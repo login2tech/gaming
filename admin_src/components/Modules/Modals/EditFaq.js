@@ -11,21 +11,60 @@ class EditFaq extends React.Component {
     this.state = {
       loaded: true,
       title: '',
-      content: ''
+      content: '',
+      category: ''
     };
+    this.handleChangeTrix = this._handleChangeTrix.bind(this);
+    this.handleInitTrix = this._handleInitTrix.bind(this);
   }
 
   componentDidMount() {
+    this._editor = document.getElementById('trix_edit');
+    this._editor.addEventListener('trix-initialize', this.handleInitTrix);
+    this._editor.addEventListener('trix-change', this.handleChangeTrix);
     this.process();
   }
+
+  _handleChangeTrix(event, is_init) {
+    const obj = {content: event.target.innerHTML};
+    this.setState(obj);
+  }
+
+  _handleInitTrix(event) {
+    this._handleChangeTrix(event, true);
+    const a = document.getElementsByTagName('trix-toolbar');
+    if (a.length > 0) {
+      const b = a[0].getElementsByTagName('button');
+      for (let i = 0; i < b.length; i++) {
+        b[i].tabIndex = -1;
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    if (typeof window !== 'undefined') {
+      this._editor.removeEventListener('trix-initialize', this.handleInitTrix);
+      this._editor.removeEventListener('trix-change', this.handleChangeTrix);
+    }
+  }
+
   process() {
     const dt = this.props.data;
     if (this.props.data) {
-      this.setState({
-        title: dt.title,
-        content: dt.content,
-        id: dt.id
-      });
+      this.setState(
+        {
+          title: dt.title,
+          content: dt.content,
+          category: dt.category,
+          id: dt.id
+        },
+        () => {
+          setTimeout(function() {
+            const element = document.getElementById('trix_edit');
+            element.editor.loadHTML(dt.content);
+          }, 1000);
+        }
+      );
     }
   }
 
@@ -46,6 +85,7 @@ class EditFaq extends React.Component {
     Fetcher.post('/api/faq/edit', {
       title: this.state.title,
       content: this.state.content,
+      category: this.state.category,
       id: this.state.id
     })
       .then(resp => {
@@ -122,16 +162,36 @@ class EditFaq extends React.Component {
               </div>
               <br />
               <div className="input-control">
-                <label>FAQ Content</label>
-                <textarea
+                <label>FAQ Category</label>
+                <input
                   type="text"
                   required
                   className="form-control"
-                  name="content"
+                  name="category"
                   onChange={this.handleChange.bind(this)}
-                  id="content"
-                  value={this.state.content}
+                  id="category"
+                  value={this.state.category}
                 />
+              </div>
+              <br />
+              <div className="input-control">
+                <label>FAQ Content</label>
+                <div className="form-group trix-container">
+                  <input
+                    id="content"
+                    name="content"
+                    className="form-control"
+                    hidden="true"
+                    type="hidden"
+                  />
+                  <trix-editor
+                    id="trix_edit"
+                    classname="trix-content"
+                    autofocus
+                    input="content"
+                    placeholder="Add more details here..."
+                  />
+                </div>
               </div>
 
               <br />
