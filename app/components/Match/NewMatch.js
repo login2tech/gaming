@@ -7,7 +7,7 @@ import game_user_ids from '../../../config/game_user_ids';
 import game_settings from '../Modules/game_settings.json';
 import {Link} from 'react-router';
 // import moment from 'moment';
-class NewTeam extends React.Component {
+class newMatch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -65,13 +65,15 @@ class NewTeam extends React.Component {
   }
   getTeamArray() {
     let team_array = [];
-    for (let i = 0; i < this.state.team_info.length; i++) {
-      const team_parent = this.state.team_info[i];
-      const team = team_parent.team_info ? team_parent.team_info : {};
+    // console.log(this.state.eligible_teams);
+    for (let i = 0; i < this.state.eligible_teams.length; i++) {
+      const team_parent = this.state.eligible_teams[i];
+      const team = team_parent.team_info ? team_parent.team_info : team_parent;
       if (team.id && team.team_type == 'matchfinder') {
         team_array.push(team.id);
       }
     }
+    // console.log(team_array);
     team_array = team_array.join(',');
     return team_array;
   }
@@ -96,6 +98,22 @@ class NewTeam extends React.Component {
       });
   }
 
+  loadTeams() {
+    fetch(
+      '/api/teams/team_of_user/?filter_actives=yes&uid=' + this.props.user.id
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          const obj = {
+            eligible_teams: json.teams ? json.teams : [],
+            eligible_teams_loaded: true
+          };
+          this.setState(obj, this.checkIfPendingScore);
+        }
+      });
+  }
+
   fetchGame() {
     fetch('/api/games/single/' + this.state.team_info.ladder.game_id)
       .then(res => res.json())
@@ -107,8 +125,8 @@ class NewTeam extends React.Component {
               game_info: json.item
             },
             () => {
-              this.checkIfPendingScore();
-              // this.fetchTeam();
+              // this.checkIfPendingScore();
+              this.loadTeams();
             }
           );
         }
@@ -837,4 +855,4 @@ const mapStateToProps = state => {
   };
 };
 // export default SingleThread;
-export default connect(mapStateToProps)(NewTeam);
+export default connect(mapStateToProps)(newMatch);
