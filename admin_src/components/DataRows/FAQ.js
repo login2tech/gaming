@@ -93,7 +93,7 @@ class FAQ extends React.Component {
         ['update_' + id]: true
       },
       () => {
-        Fetcher.post('/api/admin/delete/games', {id: id})
+        Fetcher.post('/api/admin/delete/faq', {id: id})
           .then(resp => {
             this.setState({
               ['update_' + id]: false
@@ -121,6 +121,9 @@ class FAQ extends React.Component {
   }
 
   addItem() {
+    this.props.dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
     this.props.dispatch(
       openModal({
         type: 'custom',
@@ -133,6 +136,9 @@ class FAQ extends React.Component {
   }
 
   editItem(id, data) {
+    this.props.dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
     this.props.dispatch(
       openModal({
         type: 'custom',

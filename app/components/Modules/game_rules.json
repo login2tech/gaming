@@ -34,6 +34,102 @@
           "value": "In general, you are prohibited to intentionally interfere with your opponents attempts to secure kills or move around the map. "
         }
       ]
+    },
+    {
+      "type": "list",
+      "title": "Not Allowed",
+      "list" : [
+        "Attracting other opponents by firing guns around your teammate(which is your OCG match opponent).",
+        "Causing your opponents to miss shots.",
+        "Building around or in front of your opponent (intentionally preventing their movement)"
+
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Allowed:",
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "Following your teammate (which is your OCG opponent).",
+            "Shooting down your own structures and launch pad (if you built them).",
+            "Boxing yourself in a loot crate or chest."
+
+          ]
+        },
+        {
+          "type": "paragraph",
+          "value": "Keep in mind that this is a list of examples and is not all-inclusive. There are other possibilities of interference. We do our very best to provide a consistent and fair experience for all players, but as previously mentioned all interference calls are strictly at the discretion of OCG admins."
+        },
+        {
+          "type": "paragraph",
+          "value": "If you lose a match and believe that resulted because of your opponent interfering with your game play in a prohibited way, dispute the match by reporting you won. Then upload proof and explain in the dispute ticket exactly what happened. Video proof is the only valid proof considered. Proof must be clear for us to forfeit the other team for the match."
+        },
+
+      ]
+    },
+    {
+      "type": "list",
+      "title": "Kill Race:",
+      "content": [
+        {
+          "type":"list",
+          "list" : [
+            "In OCG Kill Race matches the objective is to get more kills than your opponent in a public lobby of Fortnite. In a 1v1 match, you and your opponent will go together into a Duos lobby, in a 2v2 you go together into a Squads lobby and compete to see who can get the most kills. ",
+            "In a Best of 1 (1nD) match, if the scores result in being tied, the match must be replayed with the original host. ",
+            "In a Best of 3 match all maps must be plays and all kills will be added together to determine who had the most. The team with the most kills out of all three maps is the winner of the match. If there is a tie in the kills at the end of the three maps another map must be played. The team who did not host the previous map will host the final map this will occur until a winner is determined by leading in kills. ",
+            "Under any circumstances, if the score is tied you play again until a winner is determined by leading in kills. This also includes if the score is 0-0.",
+            "Kills While Downed: All kills will count."
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Disconnections",
+          "value": "If a player disconnects in the pre-game warm up, the game must be replayed. If a player disconnects once the game has started, it is considered a death. The player who disconnected score is equal to the number of kills at the time of disconnection. The opposing player may continue to finish playing the match after you disconnected."
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Survival Deathmatch",
+      "content" : [
+        {
+          "type":"list",
+          "list" : [
+            "In a 1v1, the hosting team will start a Battle Royale Duo match. In a 2v2 the hosting team will start a Battle Royale Squads match",
+            "In OCG Survival Deathmatch mode it is based on WHO LASTS THE LONGEST, the team that is the last standing or last to go down will receive the win.",
+            "If the game is won (Victory Royale) and both teams are still standing/alive the team that got the most kills for the match will win. ",
+            "If the match is won (Victory Royale) and the kills are TIED with both teams having a standing member, the map will be replayed to determine the winner.",
+            "Getting your opponent killed by drawing attention to them can result in a forfeit for that map if valid proof is submitted.",
+            "All kills received after death are considered a valid kill."
+          ]
+        },
+        {
+          "type" : "tab",
+          "title":"Disconnections",
+          "value":"If a player disconnects in the pre-game warm up, the game must be replayed. If a player disconnects once the game has started, it is considered a death. The player who disconnected score is equal to the number of kills at the time of disconnection. The opposing player may continue to finish playing the match after you disconnected."
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Box Fights",
+      "content" : [
+        {
+          "type":"h2",
+          "value":"FIRST TEAM TO 5 WINS THE MAP!",
+        },
+        {
+          "type": "paragraph_html",
+          "value":"<strong>Step 1:</strong> Players will enter creative mode with their opponent in the lobby, you can find your opponents EPIC ID in the match details page. "
+        },
+        {
+          "type": "paragraph_html",
+          "value":"<strong>Step 2:</strong> At the creative hub or before playing be sure to add the map code provided to you on your match details or through the link in the rules below. Ensure you are on the correct map/island as they are subject to possibly change. "
+        }
+      ]
     }
+
   ]
 }

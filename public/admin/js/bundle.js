@@ -2567,7 +2567,7 @@ function (_React$Component) {
       }
 
       this.setState(_defineProperty({}, 'update_' + id, true), function () {
-        _Fetcher.default.post('/api/admin/delete/games', {
+        _Fetcher.default.post('/api/admin/delete/faq', {
           id: id
         }).then(function (resp) {
           _this3.setState(_defineProperty({}, 'update_' + id, false));
@@ -2601,6 +2601,9 @@ function (_React$Component) {
   }, {
     key: "addItem",
     value: function addItem() {
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
       this.props.dispatch((0, _modals.openModal)({
         type: 'custom',
         id: 'newgame',
@@ -2614,6 +2617,9 @@ function (_React$Component) {
   }, {
     key: "editItem",
     value: function editItem(id, data) {
+      this.props.dispatch({
+        type: 'CLEAR_MESSAGES'
+      });
       this.props.dispatch((0, _modals.openModal)({
         type: 'custom',
         id: 'newgame',
