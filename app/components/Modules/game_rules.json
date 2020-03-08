@@ -582,5 +582,103 @@
         }
       ]
     }
+  ],
+  "fifa20": [
+    {
+      "type": "tab",
+      "title": "General",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "The following settings must be set to the following, unless specified otherwise in match settings:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Any private match lobby settings not listed should not be changed from the default state excluding game settings options in your match details.",
+            "The hosting player must ensure all game settings are correct. If the game settings are incorrect,  the hosting player will risk forfeiting the match if valid proof has been provided."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Settings",
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "Game Type: Friendlies Lobby ",
+            "Team Type: Any Teams",
+            "Half Length: 5 Minutes",
+            "Controls: Any",
+            "Squad Type: Online Squads Only",
+            "Custom Formations: Not Allowed",
+            "Weather: Off",
+            "Legacy Defending: Not Allowed"
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "Online Squads Only",
+          "content": [
+            {
+              "type": "paragraph",
+              "value": "ALL Matches must be played with ‘Online Squads’ only. If any user attempts to use Custom Squads or edited players, the user will forfeit the match and get the loss for that match."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Lag/Glitches",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "If a match is played out for over 2 minutes any complaints on lag will not be taken into consideration."
+        },
+        {
+          "type": "paragraph",
+          "value": "If any unplayable lag occurs record all proof of the match and how it affected you and was unplayable. A Support Ticket Admin will decide if you put enough effort into the dispute ticket and after the match our admin will decide which team wins or if match is cancelled."
+        },
+        {
+          "type": "tab",
+          "title": "In-game Glitches:",
+          "content": [
+            {
+              "type": "paragraph",
+              "value": "If there is any type of in-game glitch purposely being used by an opponent to give them an advantage it is up to the admin to decide to cancel the match based off the proof you submit. Play the match to completion and proof will be necessary and should be clear in-game DVR captured evidence."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Disconnections",
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "If a player disconnects during a match, the match must be restarted within 10 minutes from the time of disconnection. Once the match is restarted players continue with the amount of time that was remaining from disconnect. Players will use the same score from the time of disconnection. Users will play the remainder of the match in the first half and any remaining time in the second half, if needed. I.E, if the player disconnected at the 35th minute into the first half, then the new game when restarted should be played until the 55th minute. (First full half +10 minutes into the second half)",
+            "If a player disconnects during a pause timer match will be continued at the same score and time of the disconnection.",
+            "If a player disconnects in the first quarter, the match will be resumed with standing scores before the disconnect.",
+            "If a team is losing by 2 goals or more and disconnects in the second half that team who disconnected will forfeit the match.",
+            "If an opponent disconnects from a match and does not contact or invite you to lobby within 10 minutes that will result in a forfeit of the match."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Drawing/Ties of a Match",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "If a match ends in a tie, a new game must be started with the same teams as played in the first match and the first team to score wins the match. Player must leave immediately after scoring, if the player continues to play the match after scoring the first goal the final match results will stand."
+        }
+      ]
+    }
   ]
 }
