@@ -83,6 +83,7 @@ class GameRules extends React.Component {
     ttl = ttl.replace(new RegExp(' ', 'g'), '');
     ttl = ttl.replace(new RegExp('-', 'g'), '');
     ttl = ttl.replace(new RegExp('_', 'g'), '');
+    ttl = ttl.replace(new RegExp(':', 'g'), '');
     if (!game_settings[ttl]) {
       return false;
     }

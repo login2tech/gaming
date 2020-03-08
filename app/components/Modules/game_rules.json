@@ -680,5 +680,407 @@
         }
       ]
     }
+  ],
+  "callofdutymw": [
+    {
+      "type": "tab",
+      "title": "General",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "The following settings must be set to the following, unless specified otherwise in match settings: "
+        },
+        {
+          "type": "list",
+          "list": [
+            "Any private match lobby settings not listed should not be changed from the default state excluding game settings options in your match details.",
+            "The hosting player must ensure all game settings are correct. If the game settings are incorrect,  the hosting player will risk forfeiting the match if valid proof has been provided."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "OCG Search & Destroy",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "Only these settings need to be changed from their default setting. Changing settings that are not listed below will result in a forfeit for that map if the match is best of 1 it will result in a loss for the match."
+        },
+        {
+          "type": "h2",
+          "value": "ALL DLC ITEMS ARE BANNED"
+        },
+        {
+          "type": "paragraph",
+          "value": "Game"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Round time limit: 2 Minutes",
+            "Round Switch: Every Round",
+            "Skip Infil: Host’s choice"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "value": "Advanced"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Defuse time: 7.5 Seconds",
+            "Silent: Enabled",
+            "Reset Plant/Defuse Progress: Enabled "
+          ]
+        },
+        {
+          "type": "paragraph",
+          "value": "Team"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Friendly Fire: Enabled",
+            "Team Kill Punish Limit: Disabled ",
+            "Weapon Ping On Minimap: Enabled"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "value": "Gameplay"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Killstreaks: Disabled",
+            "Battle Chatter: Disabled"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "OCG Hardpoint",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "Only these settings need to be changed from their default setting. Changing settings that are not listed below will result in a forfeit for that map if the match is best of 1 it will result in a loss for the match."
+        },
+        {
+          "type": "h2",
+          "value": "Team:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "3rd Person Spectating: Disabled ",
+            "Weapon Ping on minimap: Enabled",
+            "Respawn Delay: 2 Seconds",
+            "Friendly Fire: Enabled ",
+            "Skip Infil: Host’s Choice "
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Gameplay:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Killstreaks: Disabled",
+            "Battlechatter: Disabled"
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Gunfight:"
+        },
+        {
+          "type": "paragraph",
+          "value": [
+            "No Changes needed, all settings will remain as their default settings for this game mode. "
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "OCG BANNED ITEM LIST:",
+      "content": [
+        {
+          "type": "h2",
+          "value": "Scorestreaks:"
+        },
+        {
+          "type": "paragraph",
+          "value": "All Killstreaks are banned"
+        },
+        {
+          "type": "h2",
+          "value": "Primary Weapons:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "ALL LMGS",
+            "All Marksman Rifles",
+            "All Shotguns",
+            "FAL",
+            "Riot Shield "
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Secondary Weapons:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "All Launchers",
+            "AKIMBO Pistols "
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Attachments:"
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Weapon Perks:</strong> Recon, Fast Melee, Frangibile Wounding, Heavy hitter, Mo’ Money, Burst Fire, and Frangible-Disabling. "
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Thermals: </strong>All thermals are banned"
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Ammunition:</strong> Snake Shot"
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Silencers: </strong>Tactical Suppressor, Monolithic Integral Suppressor, Monolithic Suppressor, Subsonic Integral Suppressor."
+        },
+        {
+          "type": "h2",
+          "value": "Lethals: "
+        },
+        {
+          "type": "list",
+          "list": [
+            "C4",
+            "Claymore",
+            "Throwing Knife",
+            "Proximity Mine",
+            "Molly",
+            "Thermite",
+            "Molotov Cocktail"
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Tacticals:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Snapshot Grenade ",
+            "Heartbeat Sensors",
+            "Slim",
+            "Gas Bomb",
+            "Decoy Grenades"
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Perk 1:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Overkill",
+            "Quick Fix"
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Perk 2:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Restock",
+            "High Alert"
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Perk 3:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Spotter",
+            "Tracker",
+            "Shrapnel "
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Field Orders"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Stopping Power",
+            "EMP Drone",
+            "Weapon Drop ",
+            "Tactical Insertion ",
+            "Deployable Cover "
+          ]
+        },
+        {
+          "type": "paragraph",
+          "value": "Snaking: Snaking is the act of rapidly switching from prone to stand/crouch making it incredibly difficult for opposing players to shoot them. Snaking is banned on OCG. If you suspect your opponent of snaking you must play out the match then get video proof and submit proof for our admins to review."
+        },
+        {
+          "type": "paragraph",
+          "value": "ALL franchised team character skin cosmetics are NOT allowed for use because an in-game bug makes character model go invisible."
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Maps",
+      "content": [
+        {
+          "type": "h2",
+          "value": "Search and Destroy:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Hackney Yard",
+            "Rammaza",
+            "Gunrunner",
+            "St Petrograd",
+            "Crash"
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Gunfight:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Speedball",
+            "Stack",
+            "King",
+            "Pine",
+            "Docks"
+          ]
+        },
+        {
+          "type": "h2",
+          "value": "Hardpoint:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Hackney Yard",
+            "Arklov",
+            "St Petrograd",
+            "Gun Runner ",
+            "Rammaza"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Official Comp Throwback: Search and Destroy ",
+      "content": [
+        {
+          "type": "h2",
+          "value": "Follow all rules above besides these will be only 2 maps played"
+        },
+        {
+          "type": "paragraph",
+          "value": "Crash"
+        },
+        {
+          "type": "paragraph",
+          "value": "Vacant"
+        },
+        {
+          "type": "h2",
+          "value": "Host:"
+        },
+        {
+          "type": "paragraph",
+          "value": "The host of each map is listed in the match details page, the non hosting team of the map gets to choose which team they begin on:"
+        },
+        {
+          "type": "paragraph",
+          "value": "Allegiance = Defense"
+        },
+        {
+          "type": "paragraph",
+          "value": "Coalition = Offense "
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Best of 1</strong> (1nD) the team with the best rank will host"
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Best of 3</strong> teams will play a series of maps, for best of 3 the best rank will host the first match and the other team will host the second map The third map will be decided by who won the most rounds of the previous map."
+        },
+        {
+          "type": "h2",
+          "value": "Lag/Disconnects:"
+        },
+        {
+          "type": "paragraph",
+          "value": "If there is an issue with lag, you must the game at the beginning of the next round (within 10 seconds) and request for your opponent to switch hosts. If opponents refuse to switch host, show your opponents valid proof of lagging host and if they still refuse switching host, provide as much valid proof possible in the support ticket of both lagging and opponents refusing to switch host. If the lag affected multiple rounds it is OCG Supports decision if the map is to forfeited or cancelled. Maps played out in full will be counted.  "
+        },
+        {
+          "type": "h2",
+          "value": "Wrong Rules:"
+        },
+        {
+          "type": "paragraph",
+          "value": "If the hosting team hosts the wrong rules, opposing team must submit in-game valid proof of the rules being wrong. If OCG Staff finds the rules to be wrong the hosting team will forfeit that map. "
+        },
+        {
+          "type": "paragraph",
+          "value": "If you are listed to host and decide to let the other team host and they host the wrong rules it is up to OCG Staff to issue a forfeit or cancel depending on the proof submitted. "
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Keyboarding: Keyboarding is NOT ALLOWED on any console If caught using a keyboard it is an automatic forfeit and subject to banned from OCG on the first offense. Players that suspect their opponents of keyboarding are to collect as much in-game proof as possible and report it to OCG staff. In-game proof is the only valid method for this offense. It is up to OCG Staff to forfeit the team, cancel the match, or continue out the match."
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>IN ALL CASES OF ACCUSING KEYBOARDING, PLAY THE MATCH OUT TO COMPLETION AND RECORD ALL POSSIBLE IN-GAME PROOF, THEN SUBMIT TO LIVE SUPPORT IN THE MATCH DISPUTE TICKET.</strong>"
+        },
+        {
+          "type": "h2",
+          "value": "Activision ID:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Your Activision ID must be exactly how it is on your Call of Duty profile.",
+            "If a match is played to completion on the incorrect Activision IDs, the result of the match will stand. ",
+            "Activision IDs MUST be correct, in the case that Gamertags/PSN does not match your match details or profile it is up to OCG Staff to decide if opposing team forfeits the match or plays man down. ",
+            "Activision IDs must only include english alphabet, numbers and characters only. Special characters such as emojis, faces or other foreign languages are not permitted.",
+            "The Activision account that was active when the match was generated,is the ID that will be listed in the match details. If a user changed their ID after the match generated it will not update in the match details. Users are responsible for playing with the ID that was displayed in the match details"
+          ]
+        }
+      ]
+    }
   ]
 }
