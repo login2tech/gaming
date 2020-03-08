@@ -36,18 +36,22 @@
       ]
     },
     {
-      "type": "list",
+      "type": "tab",
       "title": "Not Allowed",
-      "list" : [
-        "Attracting other opponents by firing guns around your teammate(which is your OCG match opponent).",
-        "Causing your opponents to miss shots.",
-        "Building around or in front of your opponent (intentionally preventing their movement)"
-
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "Attracting other opponents by firing guns around your teammate(which is your OCG match opponent).",
+            "Causing your opponents to miss shots.",
+            "Building around or in front of your opponent (intentionally preventing their movement)"
+          ]
+        }
       ]
     },
     {
       "type": "tab",
-      "title": "Allowed:",
+      "title": "Allowed",
       "content": [
         {
           "type": "list",
@@ -55,7 +59,6 @@
             "Following your teammate (which is your OCG opponent).",
             "Shooting down your own structures and launch pad (if you built them).",
             "Boxing yourself in a loot crate or chest."
-
           ]
         },
         {
@@ -66,16 +69,15 @@
           "type": "paragraph",
           "value": "If you lose a match and believe that resulted because of your opponent interfering with your game play in a prohibited way, dispute the match by reporting you won. Then upload proof and explain in the dispute ticket exactly what happened. Video proof is the only valid proof considered. Proof must be clear for us to forfeit the other team for the match."
         }
-
       ]
     },
     {
-      "type": "list",
-      "title": "Kill Race:",
+      "type": "tab",
+      "title": "Kill Race",
       "content": [
         {
-          "type":"list",
-          "list" : [
+          "type": "list",
+          "list": [
             "In OCG Kill Race matches the objective is to get more kills than your opponent in a public lobby of Fortnite. In a 1v1 match, you and your opponent will go together into a Duos lobby, in a 2v2 you go together into a Squads lobby and compete to see who can get the most kills. ",
             "In a Best of 1 (1nD) match, if the scores result in being tied, the match must be replayed with the original host. ",
             "In a Best of 3 match all maps must be plays and all kills will be added together to determine who had the most. The team with the most kills out of all three maps is the winner of the match. If there is a tie in the kills at the end of the three maps another map must be played. The team who did not host the previous map will host the final map this will occur until a winner is determined by leading in kills. ",
@@ -93,10 +95,10 @@
     {
       "type": "tab",
       "title": "Survival Deathmatch",
-      "content" : [
+      "content": [
         {
-          "type":"list",
-          "list" : [
+          "type": "list",
+          "list": [
             "In a 1v1, the hosting team will start a Battle Royale Duo match. In a 2v2 the hosting team will start a Battle Royale Squads match",
             "In OCG Survival Deathmatch mode it is based on WHO LASTS THE LONGEST, the team that is the last standing or last to go down will receive the win.",
             "If the game is won (Victory Royale) and both teams are still standing/alive the team that got the most kills for the match will win. ",
@@ -106,30 +108,186 @@
           ]
         },
         {
-          "type" : "tab",
-          "title":"Disconnections",
-          "value":"If a player disconnects in the pre-game warm up, the game must be replayed. If a player disconnects once the game has started, it is considered a death. The player who disconnected score is equal to the number of kills at the time of disconnection. The opposing player may continue to finish playing the match after you disconnected."
+          "type": "tab",
+          "title": "Disconnections",
+          "value": "If a player disconnects in the pre-game warm up, the game must be replayed. If a player disconnects once the game has started, it is considered a death. The player who disconnected score is equal to the number of kills at the time of disconnection. The opposing player may continue to finish playing the match after you disconnected."
         }
       ]
     },
     {
       "type": "tab",
       "title": "Box Fights",
-      "content" : [
+      "content": [
         {
-          "type":"h2",
-          "value":"FIRST TEAM TO 5 WINS THE MAP!"
+          "type": "h2",
+          "value": "FIRST TEAM TO 5 WINS THE MAP!"
         },
         {
           "type": "paragraph_html",
-          "value":"<strong>Step 1:</strong> Players will enter creative mode with their opponent in the lobby, you can find your opponents EPIC ID in the match details page. "
+          "value": "<strong>Step 1:</strong> Players will enter creative mode with their opponent in the lobby, you can find your opponents EPIC ID in the match details page. "
         },
         {
           "type": "paragraph_html",
-          "value":"<strong>Step 2:</strong> At the creative hub or before playing be sure to add the map code provided to you on your match details or through the link in the rules below. Ensure you are on the correct map/island as they are subject to possibly change. "
+          "value": "<strong>Step 2:</strong> At the creative hub or before playing be sure to add the map code provided to you on your match details or through the link in the rules below. Ensure you are on the correct map/island as they are subject to possibly change. "
         }
       ]
     }
-
+  ],
+  "madden20": [
+    {
+      "type": "tab",
+      "title": "General",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "The following settings must be set to the following, unless specified otherwise in match settings"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Any private match lobby settings not listed should not be changed from the default state excluding game settings options in your match details.",
+            "The hosting player must ensure all game settings are correct. If the game settings are incorrect,  the hosting player will risk forfeiting the match if valid proof has been provided."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Settings",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "Quarter Length: 4 Minutes"
+        },
+        {
+          "type": "paragraph",
+          "value": "Skill Level: (In Custom Match Details) "
+        },
+        {
+          "type": "paragraph",
+          "value": "Injuries: OFF "
+        },
+        {
+          "type": "paragraph",
+          "value": "Fatigue: ON"
+        },
+        {
+          "type": "paragraph",
+          "value": "Even Teams: OFF"
+        },
+        {
+          "type": "paragraph",
+          "value": "Game Speed: NORMAL "
+        },
+        {
+          "type": "paragraph",
+          "value": "Weather: OFF"
+        },
+        {
+          "type": "paragraph",
+          "value": "Play Clock: ON "
+        },
+        {
+          "type": "paragraph",
+          "value": "Allowed Teams: Any current 32 NFL 2019-2020 teams"
+        },
+        {
+          "type": "paragraph",
+          "value": "Game Mode: Head To Head "
+        },
+        {
+          "type": "paragraph",
+          "value": "Accelerated Clock: OFF"
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Allowed",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "Defensive playbooks: Any non-custom"
+        },
+        {
+          "type": "paragraph",
+          "value": "Offensive Playbooks: Any non-custom"
+        },
+        {
+          "type": "paragraph",
+          "value": "Fake field goals and punts"
+        },
+        {
+          "type": "paragraph",
+          "value": "Block field goals and punts"
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Not Allowed",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "Custom playbooks: Not Allowed Uniforms: May not be the same primary color as opponent, home team’s jersey must be darker then away the away team. If you do not exit the match within 60 seconds from beginning and experiencing the same color jerseys the match will stand."
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Lag/Glitches",
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "If a match is played out for over 2 minutes any complaints on lag will not be taken into consideration.",
+            " If any unplayable lag occurs record all proof of the match and how it affected you and was unplayable. A Support Ticket Admin will decide if you put enough effort into dispute ticket,after the match our  admin will decide which team wins or if match is cancelled."
+          ]
+        },
+        {
+          "type": "tab",
+          "title": "In-game Glitches",
+          "content": [
+            {
+              "type": "list",
+              "list": [
+                "If there is any type of in-game glitch purposely being used by an opponent to give them an advantage it is up to the admin to decide to cancel the match based off the proof you submit. Play the match to completion and proof will be necessary and should be clear in-game DVR captured evidence. "
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Disconnections",
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "If a player disconnects during a match, the match must be restarted within 10 minutes from the time of disconnection. Once the match is restarted players continue with the amount of time that was remaining from disconnect. Players will use the same score from the time of disconnection. Users will play the remainder of the match in the first half and any remaining time in the second half, if needed. I.E, If quarters are 5 minutes each and the player disconnected at 7 minutes into the first half then the players will start in the first half and play 3 minutes in the second half. This will add up to full game time of all four quarters. ",
+            "If a player disconnects during a pause timer match will be continued at the same score and time of the disconnection.",
+            "If a player disconnects in the first quarter, the match will be resumed with standing scores before the disconnect.",
+            "If a team is losing by 14 points or more and disconnects in the second half that team who disconnected will forfeit the match.",
+            "If an opponent disconnects from a match and does not contact or invite you to lobby within 10 minutes that will result in a forfeit of the match.",
+            "When continuing the match from a disconnection: players must use the same teams, time and score from previous match. If the match is played out to completion on the wrong teams the match will be valid."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Chew Clock/ Excessive Griefing",
+      "type": "tab",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "Chew clock is an IN-game option that is available to any team picking an offensive play. Chew will bring the play clock down after the offensive play is selected. It is ALLOWED to chew at any time and is not disputable. Any team that disputes for opponent chewing the clock will lose the dispute."
+        },
+        {
+          "type": "paragraph",
+          "value": "If you are “Kicked for Excessive Griefing” when the match is tied or you are losing a match, you automatically forfeit the match. If you are kicked when you are winning, the match will be cancelled. If either player is kicked prior to the first quarter and scores are tied, it will be considered not an issue and the match will be replayed."
+        }
+      ]
+    }
   ]
 }

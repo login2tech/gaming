@@ -6683,3 +6683,9 @@ media query starts here
   font-size: 14px;
   line-height: 23px;
 }
+
+.rule_list {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom:50px
+}

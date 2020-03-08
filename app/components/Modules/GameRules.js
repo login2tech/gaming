@@ -25,7 +25,20 @@ class GameRules extends React.Component {
           data-parent={'#' + PARENT}
         >
           <div className="accordian-box-body" id={cls + 'cardbody'}>
-            {item.value ? <p className="text-white">{item.value}</p> : ''}
+            {item.type == 'paragraph' || item.type == 'tab' ? (
+              <p className="text-white">{item.value}</p>
+            ) : (
+              ''
+            )}
+            {item.type == 'list' ? (
+              <ul className="list">
+                {item.list.map((list_item, i) => {
+                  return <li key={i}>{list_item}</li>;
+                })}
+              </ul>
+            ) : (
+              ''
+            )}
             {item.content &&
               item.content.map((itm, i) => {
                 return itm.type == 'tab' ? (
@@ -34,6 +47,24 @@ class GameRules extends React.Component {
                   <p className="text-white" key={'k_' + i}>
                     {itm.value}
                   </p>
+                ) : itm.type == 'h2' ? (
+                  <h4 className="text-white mb-1" key={'k_' + i}>
+                    {itm.value}
+                  </h4>
+                ) : itm.type == 'list' ? (
+                  <ul className="list text-white rule_list" key={'k_' + i}>
+                    {itm.list.map((list_item, i) => {
+                      return <li key={i}>{list_item}</li>;
+                    })}
+                  </ul>
+                ) : itm.type == 'paragraph_html' ? (
+                  <p
+                    key={'k_' + i}
+                    className="text-white"
+                    dangerouslySetInnerHTML={{
+                      __html: itm.value
+                    }}
+                  />
                 ) : (
                   false
                 );
