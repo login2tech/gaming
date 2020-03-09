@@ -453,11 +453,11 @@ class Profile extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="dob">Country</label>
+                <label htmlFor="country">Region</label>
                 <input
                   type="text"
                   // name="dob"
-                  // id="dob"
+                  id="country"
                   className="form-control"
                   disabled
                   value={this.state.country}

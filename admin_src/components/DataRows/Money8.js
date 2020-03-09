@@ -403,7 +403,7 @@ class MatchFinder extends React.Component {
                                   </a>
                                 </li>
 
-                                {u.result == 'disputed' ? (
+                                {u.status == 'disputed' ? (
                                   <li>
                                     <a
                                       href="#"
@@ -419,7 +419,7 @@ class MatchFinder extends React.Component {
                                   false
                                 )}
 
-                                {u.result == 'disputed' ? (
+                                {u.status == 'disputed' ? (
                                   <li>
                                     <a
                                       href="#"
@@ -434,7 +434,7 @@ class MatchFinder extends React.Component {
                                 ) : (
                                   false
                                 )}
-                                {u.result == 'disputed' ? (
+                                {u.status == 'disputed' ? (
                                   <li>
                                     <a
                                       href="#"

@@ -232,13 +232,13 @@ class Signup extends React.Component {
                         <select
                           required
                           className="form-control"
-                          placeholder="Country"
+                          placeholder="Region"
                           id="country"
                           name="country"
                           value={this.state.country}
                           onChange={this.handleChange.bind(this)}
                         >
-                          <option value="">Check Country</option>
+                          <option value="">Select Region</option>
                           {countries.map((state, i) => {
                             return (
                               <option value={state} key={state}>
@@ -259,7 +259,7 @@ class Signup extends React.Component {
                             value={this.state.state}
                             onChange={this.handleChange.bind(this)}
                           >
-                            <option value="">Check State</option>
+                            <option value="">Select State</option>
                             {states.map((state, i) => {
                               return (
                                 <option value={state} key={state}>

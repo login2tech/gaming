@@ -751,12 +751,12 @@ class NewMatchTeamSelect extends React.Component {
                             <option value="60|minutes">In 1 hour</option>
                             <option value="120|minutes">In 2 hours</option>
                             <option value="5|hours">In 5 hours</option>
-                            <option value="10|hours">In 10 hours</option>
-                            <option value="1|day">In 1 day</option>
-                            <option value="2|days">In 2 days</option>
-                            <option value="3|days">In 3 days</option>
-                            <option value="7|days">In 1 week</option>
-                            {/*<input
+
+                            {/*  <option value="10|hours">In 10 hours</option>
+                              <option value="1|day">In 1 day</option>
+                              <option value="2|days">In 2 days</option>
+                              <option value="3|days">In 3 days</option>
+                              <option value="7|days">In 1 week</option><input
                           type="text"
                           id="starts_at_time"
                           className="form-control"
@@ -885,7 +885,9 @@ class NewMatchTeamSelect extends React.Component {
                         <div className="form-group col-md-12">
                           <label htmlFor="match_fee">Match Entry Fee</label>
                           <input
-                            type="text"
+                            type="number"
+                            min="1"
+                            step="0.1"
                             id="match_fee"
                             className="form-control"
                             onChange={this.handleChange.bind(this)}
@@ -893,6 +895,14 @@ class NewMatchTeamSelect extends React.Component {
                             placeholder="Match Fees"
                             name="match_fee"
                           />
+                          {
+                            (this.state.match_type == 'credits' ||
+                            this.state.match_type == 'cash') && this.state.match_fee && this.state.match_fee < 1?<div class="text-danger">
+                            Match fee can not be less than {
+                              this.state.match_type == 'credits'?" 1 credits":' $1.00'
+                            }
+                            </div>:false
+                          }
                         </div>
                       ) : (
                         false
