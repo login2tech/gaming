@@ -55,6 +55,7 @@ class NewMoney8 extends React.Component {
     // ttl = this.state.game_info.title;
     ttl = ttl.toLowerCase();
     ttl = ttl.replace(new RegExp(' ', 'g'), '');
+    ttl = ttl.replace(new RegExp(':', 'g'), '');
     ttl = ttl.replace(new RegExp('-', 'g'), '');
     ttl = ttl.replace(new RegExp('_', 'g'), '');
     if (!game_settings[ttl]) {

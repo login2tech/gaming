@@ -105,7 +105,10 @@ class FAQ extends React.Component {
                                   <div
                                     className="trix-content  text-white"
                                     dangerouslySetInnerHTML={{
-                                      __html: faq.content
+                                      __html: faq.content.replace(
+                                        'www.onlycompgaming.com',
+                                        'ocg-5ms.herokuapp.com'
+                                      )
                                     }}
                                   />
                                 </div>
