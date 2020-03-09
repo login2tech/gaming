@@ -887,7 +887,7 @@ class TeamInfo extends React.Component {
                   {this.props.user &&
                   this.state.team_info.team_creator == this.props.user.id &&
                   !this.state.team_info.removed &&
-                  this.state.team_info.team_type == 'matchfinder' ? (
+                  this.state.team_info.team_type == 'matchfinder' ? (<>
                     <Link
                       to={
                         '/matchfinder/new/' +
@@ -900,9 +900,24 @@ class TeamInfo extends React.Component {
                     >
                       Create a match
                     </Link>
+                         <Link
+                            to={'/matchfinder/'}
+                            className="btn btn-default bttn_submit mw_200"
+                            style={{margin: '0 auto'}}
+                          >
+                            Find a match
+                          </Link>
+                    </>
                   ) : (
                     false
                   )}
+                  {!this.meInTeam() && this.state.team_info.team_type == 'matchfinder' ?     <Link
+                        to={'/matchfinder/'}
+                        className="btn btn-default bttn_submit mw_200"
+                        style={{margin: '0 auto'}}
+                      >
+                        Challenge
+                      </Link>:false}
                   {this.state.team_info &&
                   this.state.team_info.team_type == 'tournaments' ? (
                     <Link
@@ -913,13 +928,7 @@ class TeamInfo extends React.Component {
                       View Tournament
                     </Link>
                   ) : (
-                    <Link
-                      to={'/matchfinder/'}
-                      className="btn btn-default bttn_submit mw_200"
-                      style={{margin: '0 auto'}}
-                    >
-                      Find a match
-                    </Link>
+                    false
                   )}
                 </div>
               </div>

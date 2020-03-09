@@ -676,10 +676,10 @@ class Profile extends React.Component {
                           </p>
                         </div>
                         <div className="col-md-3 col-6">
-                          <span> COUNTRY </span>
+                          <span> REGION </span>
                           <p>
                             {this.state.user_info.country
-                              ? this.state.user_info.country
+                              ? (this.state.user_info.country =="United States" || this.state.user_info.country =='Canada' )?'North America' : this.state.user_info.country
                               : '-'}
                           </p>
                         </div>{' '}
