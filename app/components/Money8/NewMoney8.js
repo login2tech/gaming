@@ -480,6 +480,11 @@ class NewMoney8 extends React.Component {
                         ) : (
                           <option value="8">8</option>
                         )}
+                        {this.state.hide_gt_4 ? (
+                            false
+                          ) : (
+                            <option value="10">10</option>
+                          )}
                       </select>
                     </div>
 

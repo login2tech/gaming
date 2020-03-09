@@ -1082,5 +1082,66 @@
         }
       ]
     }
+  ],
+  "nba2k20": [
+    {
+      "type": "tab",
+      "title": "General",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "The following settings must be set to the following, unless specified otherwise in match settings:"
+        },
+        {
+          "type": "list",
+          "list": [
+            "Any private match lobby settings not listed should not be changed from the default state  excluding game settings options in your match details.",
+            "The hosting player must ensure all game settings are correct. If the game settings are incorrect,  the hosting player will risk forfeiting the match if valid proof has been provided."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Game Settings",
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "Game Mode: Private Match",
+            "Quarter Lengths: 5 Minutes",
+            "Match Difficulty: Hall of Fame",
+            "Teams: Current NBA Teams (2019-2020)"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Disconnections",
+      "content": [
+        {
+          "type": "list",
+          "list": [
+            "If a player disconnects during a match, the match must be restarted within 10 minutes from the time of disconnection. Once the match is restarted players continue with the amount of time that was remaining from disconnect. Players will use the same score from the time of disconnection. Users will play the remainder of the match in the first half and any remaining time in the second half, if needed. I.E, If quarters are 5 minutes each and the player disconnected at 7 minutes into the first half then the players will start in the first half and play 3 minutes in the second half. This will add up to full game time of all four quarters.",
+            "If a player disconnects during a pause timer match will be continued at the same score and time of the disconnection.",
+            "If a player disconnects in the first quarter, the match will be resumed with standing scores before the disconnect.",
+            "If a team is losing by 15 points or more and disconnects in the second half that team who disconnected will forfeit the match.",
+            "If an opponent disconnects from a match and does not contact or invite you to lobby within 10 minutes that will result in a forfeit of the match.",
+            "When continuing the match from a disconnection: players must use the same teams, time and score from previous match. If the match is played out to completion on the wrong teams the match will be valid."
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Lag",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "If a match if played out for over 2 minutes any complaints on lag will not be taken into consideration."
+        }
+      ]
+    }
   ]
 }
