@@ -176,16 +176,21 @@ class Profile extends React.Component {
   }
 
   fetchUserInfo(forward) {
-  let yes= 'yes';  if(forward)
+    // console.log('forward: ', forward);
+  let yesno = 'yes';
+  if(forward)
     {
-      let yes= 'yes';
+       yesno = 'yes';
     }else{
-      let yes= 'no';
+       yesno = 'no';
     }
-    fetch('/api/user_info?addViews='+yes+'&uid=' + this.props.params.username)
+    fetch('/api/user_info?addViews='+yesno+'&uid=' + this.props.params.username)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
+          if(forward){
+            json.user_info.profile_views++;
+          }
           this.setState(
             {
               is_loaded: true,

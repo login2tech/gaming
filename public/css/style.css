@@ -5414,6 +5414,81 @@ span.capitalize {
   background-image: url('/assets/icons/ocg_member_silver.png')
 }
 
+.col-md-12.blue-border-top {
+    border-top: 1px solid rgb(17, 74, 251);
+    padding-top: 50px;
+    margin-top: 50px;
+}
+
+.paypal-logo{font-family:Verdana,Tahoma;font-weight:700;font-size:26px}
+.paypal-logo i:first-child{color:#253b80}
+.paypal-logo i:last-child{color:#179bd7}
+.paypal-button{cursor: pointer;padding:7px 15px;margin-top:10px;border:1px solid #f93;border-radius:5px;background-image:linear-gradient(#fff0a8,#f9b421);margin:0 auto;display:block;min-width:138px;position:relative}
+.paypal-button-title{font-size:14px;color:#505050;vertical-align:baseline;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.paypal-button .paypal-logo{display:inline-block;text-shadow:0 1px 0 rgba(255,255,255,.6);font-size:20px}
+
+.navbar-nav a:hover {
+    text-shadow: -1px 0px 13px rgba(17, 74, 251,1), 2px 1px 13px rgba(17, 74, 251,1), 0px 1px 13px rgba(17, 74, 251,1);
+}
+
+.profile_drop ul li a{
+  padding: 6px 30px;
+  font-size: 14px;
+  line-height: 23px;
+}
+
+.rule_list {
+    list-style: disc;
+    padding-left: 20px;
+    margin-bottom:50px
+}
+
+.region_input label {
+    width: 100%;
+}
+
+.region_input label input {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+a.menu_btn.bg-white.text-black {
+  color: rgb(0, 0, 0);
+box-shadow: 0 0 5px 3px #2847f3;
+}
+
+a.menu_btn.bg-white.text-black:hover {
+    color: rgb(17, 74, 251) !important;
+}
+
+.flag_ico {
+    width: 26px;
+    margin-left: 5px;
+}
+
+span.crossplatform_ico {
+    letter-spacing: -10px;
+    display: inline-block;
+}
+
+span.crossplatform_ico .fa-xbox {
+    margin-top: 15px;
+    display: inline-block;
+    font-size: 26px;
+}
+
+span.crossplatform_ico .fa-playstation {
+    display: inline-block;
+    vertical-align: top;
+    color: rgb(255, 255, 255);
+}
+
+td .pf_icon.actision_logo {
+    width: 30px;
+    height: 40px;
+    background-position: bottom;
+    margin-bottom: -14px;
+}
 
 
 /* media queries starts here
@@ -6660,73 +6735,8 @@ font-size: 50px !important;
     .is_prime_cell{
       background-size: 22px;
     }
-}
-
-.col-md-12.blue-border-top {
-    border-top: 1px solid rgb(17, 74, 251);
-    padding-top: 50px;
-    margin-top: 50px;
-}
-
-.paypal-logo{font-family:Verdana,Tahoma;font-weight:700;font-size:26px}
-.paypal-logo i:first-child{color:#253b80}
-.paypal-logo i:last-child{color:#179bd7}
-.paypal-button{cursor: pointer;padding:7px 15px;margin-top:10px;border:1px solid #f93;border-radius:5px;background-image:linear-gradient(#fff0a8,#f9b421);margin:0 auto;display:block;min-width:138px;position:relative}
-.paypal-button-title{font-size:14px;color:#505050;vertical-align:baseline;text-shadow:0 1px 0 rgba(255,255,255,.6)}
-.paypal-button .paypal-logo{display:inline-block;text-shadow:0 1px 0 rgba(255,255,255,.6);font-size:20px}
-
-.navbar-nav a:hover {
-    text-shadow: -1px 0px 13px rgba(17, 74, 251,1), 2px 1px 13px rgba(17, 74, 251,1), 0px 1px 13px rgba(17, 74, 251,1);
-}
-
-.profile_drop ul li a{
-  padding: 6px 30px;
-  font-size: 14px;
-  line-height: 23px;
-}
-
-.rule_list {
-    list-style: disc;
-    padding-left: 20px;
-    margin-bottom:50px
-}
-
-.region_input label {
-    width: 100%;
-}
-
-.region_input label input {
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-a.menu_btn.bg-white.text-black {
-  color: rgb(0, 0, 0);
-box-shadow: 0 0 5px 3px #2847f3;
-}
-
-a.menu_btn.bg-white.text-black:hover {
-    color: rgb(17, 74, 251) !important;
-}
-
-.flag_ico {
-    width: 26px;
-    margin-left: 5px;
-}
-
-span.crossplatform_ico {
-    letter-spacing: -10px;
-    display: inline-block;
-}
-
-span.crossplatform_ico .fa-xbox {
-    margin-top: 15px;
-    display: inline-block;
-    font-size: 26px;
-}
-
-span.crossplatform_ico .fa-playstation {
-    display: inline-block;
-    vertical-align: top;
-    color: rgb(255, 255, 255);
+    td .pf_icon.actision_logo {
+      width: 20px;
+      height: 34px;
+    }
 }
