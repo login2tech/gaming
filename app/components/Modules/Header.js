@@ -357,21 +357,26 @@ class Header extends React.Component {
                 </ul>
               </li>
             ]
-          : [
+          : [  <li key={3}>
+                <Link to="/faq" className=" menu_btn bg-white text-black" onClick={this.closeSide}>
+                  HOW IT WORKS
+                </Link>
+              </li>,
               <li key={2}>
                 <Link
                   onClick={this.closeSide}
-                  className="menu_btn"
+                  className="menu_btn mr-1"
                   to="/signup"
                 >
                   Join Free
                 </Link>
               </li>,
               <li key={1}>
-                <Link to="/login" className="menu_btn" onClick={this.closeSide}>
+                <Link to="/login" className="menu_btn mr-1" onClick={this.closeSide}>
                   LOGIN
                 </Link>
               </li>
+
             ]}
       </>
     );

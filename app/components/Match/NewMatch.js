@@ -15,7 +15,9 @@ class newMatch extends React.Component {
       ladder: '',
       creating: false,
       games: [],
-      game_settings: {},
+      game_settings: {
+        match_available : 'All Regions'
+      },
       match_players: '',
       team_info: {ladder: {title: ''}, team_users: [], title: ''},
       game_info: {title: ''},
@@ -613,7 +615,7 @@ class newMatch extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          North America
+                          North America <img src={'/images/icons/flag_us.png' } class="flag_ico" />  <img src={'/images/icons/flag_canada.png' } class="flag_ico" />
                         </label>
                         <label>
                           <input
@@ -626,7 +628,7 @@ class newMatch extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          Europe
+                          Europe  <img src={'/images/icons/flag_europe.png' } class="flag_ico" />
                         </label>
                         <label>
                           <input
@@ -639,7 +641,7 @@ class newMatch extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          All Regions
+                          All Regions <span className='fa fa-globe'> </span>
                         </label>
                       </div>
 

@@ -30,6 +30,10 @@ const SingleMatch = props => {
       show_cancel = true;
     }
   }
+  if(typeof match.game_settings === 'string')
+  {
+    match.game_settings = JSON.parse(match.game_settings);
+  }
 
   return (
     <div className="live-wager-block">
@@ -54,6 +58,11 @@ const SingleMatch = props => {
         <div className="wager-team-size d-none d-md-flex">
           {match.match_players}v{match.match_players}
         </div>
+
+                <div className="wager-region d-none d-md-flex">
+                  {utils.getCountryImage(match.game_settings['match_available'])}
+                </div>
+
 
         <div className="wager-region d-none d-md-flex">
           {utils.platform_icon(match.ladder.platform)}
@@ -134,6 +143,7 @@ const SingleMatch = props => {
 
               <strong>Team Size</strong>
               <strong>Platform</strong>
+              <strong>Region</strong>
             </div>
             <div className="info-block-right">
               <span className="starts-in">
@@ -146,6 +156,7 @@ const SingleMatch = props => {
                 {match.match_players}v{match.match_players}
               </span>
               <span>{utils.platform_icon(match.ladder.platform)}</span>
+              <span>{utils.getCountryImage(match.game_settings['match_available'])}</span>
             </div>
           </div>
           <div className="wager-mobile-actions">

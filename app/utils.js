@@ -18,7 +18,26 @@ const utils = {
     }
     return false;
   },
+  getCountryImage : function(country){
+    country = country.toLowerCase()
+    switch(country){
+      case 'united states':
+        return  <img src="/images/icons/flag_us.png" class="flag_ico" />;
+        break;
+      case 'europe':
+          return  <img src="/images/icons/flag_eu.png" class="flag_ico" />;
+      case 'europe':
+          return  <img src="/images/icons/flag_canada.png" class="flag_ico" />;
 
+      case 'north america':
+          return  <span><img src="/images/icons/flag_us.png" class="flag_ico mr-1" /><img src="/images/icons/flag_canada.png" class="flag_img" /></span>;
+      case 'all regions' :
+      return <i class="fa fa-globe" />;
+
+      break;
+    }
+    return false;
+  },
   getMeterPercent: function(xp) {
     if (xp < 0) {
       xp = 0;

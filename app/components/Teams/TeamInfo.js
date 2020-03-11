@@ -28,6 +28,20 @@ class TeamInfo extends React.Component {
     };
   }
 
+  meInTeam(){
+    let me = this.props.user.id
+    if(this.state.team_info.team_users)
+    {
+      let tu  = this.state.team_info.team_users;
+      // console.log(tu)
+      for(let i = 0 ; i<tu.length;i++)
+      {
+        if(me == tu[i].user_id)return true;
+      }
+    }
+return false;
+  }
+
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.params.team_id != prevState.team_id) {
       return {team_id: nextProps.params.team_id};

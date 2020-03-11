@@ -6,6 +6,7 @@ import {join_match, saveScores, leave_match} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
 import GameRules from '../Modules/GameRules';
+import utils from '../../utils';
 class MatchInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -734,6 +735,7 @@ class MatchInfo extends React.Component {
                     </div>
 
                     <div className="col-12 col-md-7 pt-3">
+
                       <span className="vs_match">
                         <Link to={'/teams/view/' + match.team_1_info.id}>
                           {match.team_1_info.title}
@@ -763,6 +765,11 @@ class MatchInfo extends React.Component {
                           ? ''
                           : '  (' + moment(match.starts_at).fromNow() + ')'}
                       </div>
+                      <span class="flat_right">
+                      <strong>Region: </strong>{
+                        game_settings && game_settings['match_available'] ?
+                        utils.getCountryImage(game_settings['match_available']) : ''
+                      }</span>
                     </div>
                   </div>
                   <div className="list_pad">
@@ -798,11 +805,12 @@ class MatchInfo extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
+                        if(m == 'match_available')
+                          return false;
                         let m = k.replace(new RegExp('_', 'g'), ' ');
-
-                        if (m.toLowerCase() === 'match available') {
-                          m = 'Match Region';
-                        }
+                        // if (m.toLowerCase() === 'match available') {
+                        //   m = 'Match Region';
+                        // }
                         return (
                           <div className="col-md-4 col-6 textcap" key={k}>
                             <span>{m}</span>

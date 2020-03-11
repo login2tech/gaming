@@ -8,6 +8,7 @@ import PaymentModal from '../Modules/Modals/PaymentModal';
 import ProfileHeader from './ProfileHeader';
 import ProfileHeaderMobile from './ProfileHeaderMobile';
 import MyTeamsModule from './Modules/MyTeamsModule';
+import utils from '../../utils'; 
 
 import ReactPaginate from 'react-paginate';
 
@@ -681,9 +682,10 @@ class Profile extends React.Component {
                             {this.state.user_info.country
                               ? (this.state.user_info.country =="United States" || this.state.user_info.country =='Canada' )?'North America' : this.state.user_info.country
                               : '-'}
+                              {utils.getCountryImage(this.state.user_info.country)}
                           </p>
                         </div>{' '}
-                        <div className="col-md-3 col-6">
+                      {/*}  <div className="col-md-3 col-6">
                           <span> STATE </span>
                           <p>
                             {this.state.user_info.state
@@ -691,7 +693,7 @@ class Profile extends React.Component {
                               : '-'}
                           </p>
                         </div>
-                        {/*}<div className="col-md-4">
+                        <div className="col-md-4">
                           <span>Rank</span>
                           <p>-</p>
                         </div>*/}

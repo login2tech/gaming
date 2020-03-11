@@ -5689,7 +5689,7 @@ media query starts here
     .single-finder-match {
         background-color: rgba(0,0,0, 0.1);
         background-position: top center !important;
-        max-height: 184px;
+        max-height: 209px;
         background-size: cover !important;
         margin-bottom: 150px;
         padding-top: 7px;
@@ -6113,7 +6113,8 @@ media query starts here
     }
 
     .pf_icon_big {
-        padding-top: 0;
+      padding-top: 5px;
+font-size: 50px !important;
     }
 
     .mh190 {
@@ -6696,5 +6697,19 @@ media query starts here
 
 .region_input label input {
     margin-right: 5px;
+    margin-left: 5px;
+}
+
+a.menu_btn.bg-white.text-black {
+  color: rgb(0, 0, 0);
+box-shadow: 0 0 5px 3px #2847f3;
+}
+
+a.menu_btn.bg-white.text-black:hover {
+    color: rgb(17, 74, 251) !important;
+}
+
+.flag_ico {
+    width: 26px;
     margin-left: 5px;
 }

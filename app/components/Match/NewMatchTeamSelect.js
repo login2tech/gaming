@@ -16,7 +16,9 @@ class NewMatchTeamSelect extends React.Component {
       ladder: '',
       creating: false,
       games: [],
-      game_settings: {},
+      game_settings: {
+        match_available : 'All Regions'
+      },
       ladder_obj: {
         title: ''
       },
@@ -815,7 +817,7 @@ class NewMatchTeamSelect extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          North America
+                          North America <img src={'/images/icons/flag_us.png' } class="flag_ico" />  <img src={'/images/icons/flag_canada.png' } class="flag_ico" />
                         </label>
                         <label>
                           <input
@@ -828,7 +830,7 @@ class NewMatchTeamSelect extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          Europe
+                          Europe <img src={'/images/icons/flag_eu.png' } class="flag_ico" />
                         </label>
                         <label>
                           <input
@@ -841,7 +843,7 @@ class NewMatchTeamSelect extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          All Regions
+                          All Regions <i class="fa fa-globe" />
                         </label>
                       </div>
 
