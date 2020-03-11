@@ -14,8 +14,9 @@ const utils = {
     } else if (name.indexOf('pc') > -1) {
       return <span className="fa fa-desktop" />;
     } else if (name.indexOf('crossplatform') > -1) {
-      return <span className="fa fa-cubes" />;
+      return (<span class="crossplatform_ico"><span className="fab fa-playstation" /><span className="fab fa-xbox" /></span>);
     }
+
     return false;
   },
   getCountryImage : function(country){

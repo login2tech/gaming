@@ -5063,7 +5063,7 @@ p.tour-name small {
     letter-spacing: normal;
     text-align: left;
     color: rgb(255, 255, 255);
-    width: calc(100% - 35px);
+    width: calc(100% - 70px);
     margin-bottom: 2px;
     max-height: 48px;
     overflow-y: hidden;
@@ -6712,4 +6712,21 @@ a.menu_btn.bg-white.text-black:hover {
 .flag_ico {
     width: 26px;
     margin-left: 5px;
+}
+
+span.crossplatform_ico {
+    letter-spacing: -10px;
+    display: inline-block;
+}
+
+span.crossplatform_ico .fa-xbox {
+    margin-top: 15px;
+    display: inline-block;
+    font-size: 26px;
+}
+
+span.crossplatform_ico .fa-playstation {
+    display: inline-block;
+    vertical-align: top;
+    color: rgb(255, 255, 255);
 }
