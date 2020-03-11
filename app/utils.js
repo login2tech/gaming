@@ -14,28 +14,38 @@ const utils = {
     } else if (name.indexOf('pc') > -1) {
       return <span className="fa fa-desktop" />;
     } else if (name.indexOf('crossplatform') > -1) {
-      return (<span class="crossplatform_ico"><span className="fab fa-playstation" /><span className="fab fa-xbox" /></span>);
+      return (
+        <span className="crossplatform_ico">
+          <span className="fab fa-playstation" />
+          <span className="fab fa-xbox" />
+        </span>
+      );
     }
 
     return false;
   },
-  getCountryImage : function(country){
-    country = country.toLowerCase()
-    switch(country){
+  getCountryImage: function(country) {
+    country = country.toLowerCase();
+    switch (country) {
       case 'united states':
-        return  <img src="/images/icons/flag_us.png" class="flag_ico" />;
+        return <img src="/images/icons/flag_us.png" className="flag_ico" />;
         break;
       case 'europe':
-          return  <img src="/images/icons/flag_eu.png" class="flag_ico" />;
-      case 'europe':
-          return  <img src="/images/icons/flag_canada.png" class="flag_ico" />;
+        return <img src="/images/icons/flag_eu.png" className="flag_ico" />;
+      case 'canada':
+        return <img src="/images/icons/flag_canada.png" className="flag_ico" />;
 
       case 'north america':
-          return  <span><img src="/images/icons/flag_us.png" class="flag_ico mr-1" /><img src="/images/icons/flag_canada.png" class="flag_ico" /></span>;
-      case 'all regions' :
-      return <i class="fa fa-globe" />;
+        return (
+          <span>
+            <img src="/images/icons/flag_us.png" className="flag_ico mr-1" />
+            <img src="/images/icons/flag_canada.png" className="flag_ico" />
+          </span>
+        );
+      case 'all regions':
+        return <i className="fa fa-globe" />;
 
-      break;
+        break;
     }
     return false;
   },

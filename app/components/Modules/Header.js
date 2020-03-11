@@ -357,8 +357,13 @@ class Header extends React.Component {
                 </ul>
               </li>
             ]
-          : [  <li key={3}>
-                <Link to="/faq" className=" menu_btn bg-white text-black" onClick={this.closeSide}>
+          : [
+              <li key={3}>
+                <Link
+                  to="/faq"
+                  className=" menu_btn bg-white text-black"
+                  onClick={this.closeSide}
+                >
                   HOW IT WORKS
                 </Link>
               </li>,
@@ -372,11 +377,14 @@ class Header extends React.Component {
                 </Link>
               </li>,
               <li key={1}>
-                <Link to="/login" className="menu_btn mr-1" onClick={this.closeSide}>
+                <Link
+                  to="/login"
+                  className="menu_btn mr-1"
+                  onClick={this.closeSide}
+                >
                   LOGIN
                 </Link>
               </li>
-
             ]}
       </>
     );

@@ -453,8 +453,20 @@ class Profile extends React.Component {
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="country">Region
-              </label>   <img src={'/images/icons/'+(this.state.country=='United States' ? 'flag_us.png' : this.state.country=='Canada'?'flag_canada.png' : this.state.country == 'Europe'  ? 'flag_eu.png' :'')} class="flag_ico" />
+                <label htmlFor="country">Region</label>{' '}
+                <img
+                  src={
+                    '/images/icons/' +
+                    (this.state.country == 'United States'
+                      ? 'flag_us.png'
+                      : this.state.country == 'Canada'
+                      ? 'flag_canada.png'
+                      : this.state.country == 'Europe'
+                      ? 'flag_eu.png'
+                      : '')
+                  }
+                  className="flag_ico"
+                />
                 <input
                   type="text"
                   // name="dob"

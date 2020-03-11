@@ -17,7 +17,7 @@ class NewMatchTeamSelect extends React.Component {
       creating: false,
       games: [],
       game_settings: {
-        match_available : 'All Regions'
+        match_available: 'All Regions'
       },
       ladder_obj: {
         title: ''
@@ -339,7 +339,7 @@ class NewMatchTeamSelect extends React.Component {
     return true;
   }
   handleSettingsChange(event) {
-    console.log(event, event.target)
+    console.log(event, event.target);
     const game_settings = this.state.game_settings;
     game_settings[event.target.name] = event.target.value;
     this.setState({
@@ -786,7 +786,7 @@ class NewMatchTeamSelect extends React.Component {
                           ''
                         )}
                       </div>
-{/*}
+                      {/*}
                       <div className="form-group col-md-12">
                         <label htmlFor="title">Match Availability</label>
                         <select
@@ -817,7 +817,15 @@ class NewMatchTeamSelect extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          North America <img src={'/images/icons/flag_us.png' } class="flag_ico" />  <img src={'/images/icons/flag_canada.png' } class="flag_ico" />
+                          North America{' '}
+                          <img
+                            src={'/images/icons/flag_us.png'}
+                            className="flag_ico"
+                          />{' '}
+                          <img
+                            src={'/images/icons/flag_canada.png'}
+                            className="flag_ico"
+                          />
                         </label>
                         <label>
                           <input
@@ -830,7 +838,11 @@ class NewMatchTeamSelect extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          Europe <img src={'/images/icons/flag_eu.png' } class="flag_ico" />
+                          Europe{' '}
+                          <img
+                            src={'/images/icons/flag_eu.png'}
+                            className="flag_ico"
+                          />
                         </label>
                         <label>
                           <input
@@ -843,7 +855,7 @@ class NewMatchTeamSelect extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          All Regions <i class="fa fa-globe" />
+                          All Regions <i className="fa fa-globe" />
                         </label>
                       </div>
 
@@ -898,14 +910,19 @@ class NewMatchTeamSelect extends React.Component {
                             placeholder="Match Fees"
                             name="match_fee"
                           />
-                          {
-                            (this.state.match_type == 'credits' ||
-                            this.state.match_type == 'cash') && this.state.match_fee && this.state.match_fee < 1?<div class="text-danger">
-                            Match fee can not be less than {
-                              this.state.match_type == 'credits'?" 1 credits":' $1.00'
-                            }
-                            </div>:false
-                          }
+                          {(this.state.match_type == 'credits' ||
+                            this.state.match_type == 'cash') &&
+                          this.state.match_fee &&
+                          this.state.match_fee < 1 ? (
+                            <div className="text-danger">
+                              Match fee can not be less than{' '}
+                              {this.state.match_type == 'credits'
+                                ? ' 1 credits'
+                                : ' $1.00'}
+                            </div>
+                          ) : (
+                            false
+                          )}
                         </div>
                       ) : (
                         false

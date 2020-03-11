@@ -735,7 +735,6 @@ class MatchInfo extends React.Component {
                     </div>
 
                     <div className="col-12 col-md-7 pt-3">
-
                       <span className="vs_match">
                         <Link to={'/teams/view/' + match.team_1_info.id}>
                           {match.team_1_info.title}
@@ -765,11 +764,13 @@ class MatchInfo extends React.Component {
                           ? ''
                           : '  (' + moment(match.starts_at).fromNow() + ')'}
                       </div>
-                      <span class="flat_right">
-                        <strong>Region: </strong>{
-                          game_settings && game_settings['match_available'] ?
-                          utils.getCountryImage(game_settings['match_available']) : ''
-                        }
+                      <span className="flat_right">
+                        <strong>Region: </strong>
+                        {game_settings && game_settings['match_available']
+                          ? utils.getCountryImage(
+                              game_settings['match_available']
+                            )
+                          : ''}
                       </span>
                     </div>
                   </div>
@@ -806,9 +807,10 @@ class MatchInfo extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
-                        if(k == 'match_available')
+                        if (k == 'match_available') {
                           return false;
-                        let m = k.replace(new RegExp('_', 'g'), ' ');
+                        }
+                        const m = k.replace(new RegExp('_', 'g'), ' ');
                         // if (m.toLowerCase() === 'match available') {
                         //   m = 'Match Region';
                         // }

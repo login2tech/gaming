@@ -25,6 +25,7 @@
         "scrolltoTop": true,
         "linkHashTags": true,
         "scrollToTop": true,
-        "FooTable" : true
+        "FooTable" : true,
+        "tidioChatApi" : true
     }
 }

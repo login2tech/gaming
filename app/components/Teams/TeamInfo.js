@@ -28,18 +28,18 @@ class TeamInfo extends React.Component {
     };
   }
 
-  meInTeam(){
-    let me = this.props.user.id
-    if(this.state.team_info.team_users)
-    {
-      let tu  = this.state.team_info.team_users;
+  meInTeam() {
+    const me = this.props.user.id;
+    if (this.state.team_info.team_users) {
+      const tu = this.state.team_info.team_users;
       // console.log(tu)
-      for(let i = 0 ; i<tu.length;i++)
-      {
-        if(me == tu[i].user_id)return true;
+      for (let i = 0; i < tu.length; i++) {
+        if (me == tu[i].user_id) {
+          return true;
+        }
       }
     }
-return false;
+    return false;
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -901,37 +901,43 @@ return false;
                   {this.props.user &&
                   this.state.team_info.team_creator == this.props.user.id &&
                   !this.state.team_info.removed &&
-                  this.state.team_info.team_type == 'matchfinder' ? (<>
-                    <Link
-                      to={
-                        '/matchfinder/new/' +
-                        this.state.team_info.ladder.id +
-                        '/' +
-                        this.state.team_info.id
-                      }
-                      className="btn btn-default bttn_submit mw_200 mr-1"
-                      style={{margin: '0 auto'}}
-                    >
-                      Create a match
-                    </Link>
-                         <Link
-                            to={'/matchfinder/'}
-                            className="btn btn-default bttn_submit mw_200"
-                            style={{margin: '0 auto'}}
-                          >
-                            Find a match
-                          </Link>
-                    </>
-                  ) : (
-                    false
-                  )}
-                  {!this.meInTeam() && this.state.team_info.team_type == 'matchfinder' ?     <Link
+                  this.state.team_info.team_type == 'matchfinder' ? (
+                    <>
+                      <Link
+                        to={
+                          '/matchfinder/new/' +
+                          this.state.team_info.ladder.id +
+                          '/' +
+                          this.state.team_info.id
+                        }
+                        className="btn btn-default bttn_submit mw_200 mr-1"
+                        style={{margin: '0 auto'}}
+                      >
+                        Create a match
+                      </Link>
+                      <Link
                         to={'/matchfinder/'}
                         className="btn btn-default bttn_submit mw_200"
                         style={{margin: '0 auto'}}
                       >
-                        Challenge
-                      </Link>:false}
+                        Find a match
+                      </Link>
+                    </>
+                  ) : (
+                    false
+                  )}
+                  {!this.meInTeam() &&
+                  this.state.team_info.team_type == 'matchfinder' ? (
+                    <Link
+                      to={'/matchfinder/'}
+                      className="btn btn-default bttn_submit mw_200"
+                      style={{margin: '0 auto'}}
+                    >
+                      Challenge
+                    </Link>
+                  ) : (
+                    false
+                  )}
                   {this.state.team_info &&
                   this.state.team_info.team_type == 'tournaments' ? (
                     <Link

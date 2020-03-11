@@ -17,7 +17,7 @@ class NewMoney8 extends React.Component {
       games: [],
       players_total: '',
       game_settings: {
-        match_available : 'All Regions'
+        match_available: 'All Regions'
       },
       players: [props.user],
       expires_in: '',
@@ -408,7 +408,15 @@ class NewMoney8 extends React.Component {
                           }
                           onChange={this.handleSettingsChange.bind(this)}
                         />{' '}
-                        North America  <img src={'/images/icons/flag_us.png' } class="flag_ico" />  <img src={'/images/icons/flag_canada.png' } class="flag_ico" />
+                        North America{' '}
+                        <img
+                          src={'/images/icons/flag_us.png'}
+                          className="flag_ico"
+                        />{' '}
+                        <img
+                          src={'/images/icons/flag_canada.png'}
+                          className="flag_ico"
+                        />
                       </label>
                       <label>
                         <input
@@ -421,7 +429,11 @@ class NewMoney8 extends React.Component {
                           }
                           onChange={this.handleSettingsChange.bind(this)}
                         />{' '}
-                        Europe <img src={'/images/icons/flag_eu.png' } class="flag_ico" />
+                        Europe{' '}
+                        <img
+                          src={'/images/icons/flag_eu.png'}
+                          className="flag_ico"
+                        />
                       </label>
                       <label>
                         <input
@@ -434,7 +446,7 @@ class NewMoney8 extends React.Component {
                           }
                           onChange={this.handleSettingsChange.bind(this)}
                         />{' '}
-                        All Regions <span className='fa fa-globe'> </span>
+                        All Regions <span className="fa fa-globe"> </span>
                       </label>
                     </div>
                     <div className="form-group col-md-12">
@@ -483,10 +495,10 @@ class NewMoney8 extends React.Component {
                           <option value="8">8</option>
                         )}
                         {this.state.hide_gt_4 ? (
-                            false
-                          ) : (
-                            <option value="10">10</option>
-                          )}
+                          false
+                        ) : (
+                          <option value="10">10</option>
+                        )}
                       </select>
                     </div>
 

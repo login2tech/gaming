@@ -144,13 +144,17 @@ class MatchFinder extends React.Component {
                                 Region
                               </div>
                               <div className="wager-region d-none d-md-flex">
-                                  Platform
-                                </div>
+                                Platform
+                              </div>
                               <div className="start-time d-none d-md-flex">
                                 Starting
                               </div>
-                              <div className="wager-actions d-none d-md-flex" style={{
-                              minWidth: 165}} />
+                              <div
+                                className="wager-actions d-none d-md-flex"
+                                style={{
+                                  minWidth: 165
+                                }}
+                              />
                             </div>
                             {this.state.matches[game_id].map((match, i) => {
                               return (

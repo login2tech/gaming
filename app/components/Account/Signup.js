@@ -161,13 +161,11 @@ class Signup extends React.Component {
                   <h4 className="mb-2">Create Account</h4>
                 </div>
                 <p className="text-center foo_login">
-                  Already a member? <Link href="/login">
-                    Sign In{' '}
-
-                  </Link>   <i
-                      className="fa fa-long-arrow-right m-l-5"
-                      aria-hidden="true"
-                    />
+                  Already a member? <Link href="/login">Sign In </Link>{' '}
+                  <i
+                    className="fa fa-long-arrow-right m-l-5"
+                    aria-hidden="true"
+                  />
                 </p>
                 <div className="field_form authorize_form">
                   <Messages messages={this.props.messages} />
@@ -540,13 +538,11 @@ class Signup extends React.Component {
                       </button>
                     </div>
                     <p className="text-center foo_login">
-                          Already member?   <Link href="/login">
-                  Sign In{' '}
-
-                      </Link>   <i
-                          className="fa fa-long-arrow-right m-l-5"
-                          aria-hidden="true"
-                        />
+                      Already member? <Link href="/login">Sign In </Link>{' '}
+                      <i
+                        className="fa fa-long-arrow-right m-l-5"
+                        aria-hidden="true"
+                      />
                     </p>
                   </form>
                 </div>

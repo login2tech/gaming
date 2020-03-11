@@ -125,10 +125,7 @@ class Login extends React.Component {
         </div>
 
         <div className="create_account_link">
-          Not a member <Link to="/signup">
-            {' Join Now?'}
-
-          </Link>
+          Not a member <Link to="/signup">{' Join Now?'}</Link>
           <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true" />
         </div>
       </>
