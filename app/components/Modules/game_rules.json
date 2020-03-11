@@ -129,6 +129,42 @@
         {
           "type": "paragraph_html",
           "value": "<strong>Step 2:</strong> At the creative hub or before playing be sure to add the map code provided to you on your match details or through the link in the rules below. Ensure you are on the correct map/island as they are subject to possibly change. "
+        },
+        {
+          "type": "tab",
+          "title": "Box Fight Map",
+          "content": [
+            {
+              "type": "h2",
+              "value": "MAP CODE: 3080-7809-4388"
+            },
+            {
+              "type": "paragraph_html",
+              "value": "<strong>Step 3:</strong> All players step into the Island Portal of the correct map together, once loaded in, the hosting team starts the match. It is recommended that you record the full video of this and turn on replay capture for the creative mode in the settings."
+            },
+            {
+              "type": "paragraph_html",
+              "value": "<strong>Step 4:</strong> Match will begin, you must defeat your opponent 5 times to win (5 rounds). Ensure you capture proof of your win in case of a dispute. If you lose the match report the loss or you will risk being banned. "
+            },
+            {
+              "type": "paragraph",
+              "value": "If the match is a Best of 1 then the player that wins 5 rounds will be the winner of the entire match. If a match is a Best of 3 then you must play another map, the player that wins 2 maps is the winner of the entire match."
+            },
+            {
+              "type": "paragraph",
+              "value": "The hosting team of the final map is the team that won the most rounds in the first 2 maps. If the rounds are tied then the team that hosted the first map will then host again."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Liability",
+      "content": [
+        {
+          "type": "paragraph",
+          "value": "OCG and your opponents are not liable for members that cannot make it to their match on time for ANY reason. It is solely the responsibility of each member to play their match by the scheduled time. These issues include but are not limited to; issues with game updates, network connection, power outages, server outages, subscriptions deactivations, or emergencies. For any issues, please visit live support or create a ticket in the support tab. It is up to OCG admins discretion to issue a refund or replay."
         }
       ]
     }
@@ -1007,17 +1043,18 @@
           "value": "Follow all rules above besides these will be only 2 maps played"
         },
         {
-          "type": "paragraph",
-          "value": "Crash"
-        },
-        {
-          "type": "paragraph",
-          "value": "Vacant"
-        },
-        {
-          "type": "h2",
-          "value": "Host:"
-        },
+          "type": "list",
+          "list": [
+            "Crash",
+            "Vacant"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Host:",
+      "content": [
         {
           "type": "paragraph",
           "value": "The host of each map is listed in the match details page, the non hosting team of the map gets to choose which team they begin on:"
@@ -1037,19 +1074,23 @@
         {
           "type": "paragraph_html",
           "value": "<strong>Best of 3</strong> teams will play a series of maps, for best of 3 the best rank will host the first match and the other team will host the second map The third map will be decided by who won the most rounds of the previous map."
-        },
-        {
-          "type": "h2",
-          "value": "Lag/Disconnects:"
-        },
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Lag/Disconnects:",
+      "content": [
         {
           "type": "paragraph",
           "value": "If there is an issue with lag, you must the game at the beginning of the next round (within 10 seconds) and request for your opponent to switch hosts. If opponents refuse to switch host, show your opponents valid proof of lagging host and if they still refuse switching host, provide as much valid proof possible in the support ticket of both lagging and opponents refusing to switch host. If the lag affected multiple rounds it is OCG Supports decision if the map is to forfeited or cancelled. Maps played out in full will be counted.  "
-        },
-        {
-          "type": "h2",
-          "value": "Wrong Rules:"
-        },
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Wrong Rules:",
+      "content": [
         {
           "type": "paragraph",
           "value": "If the hosting team hosts the wrong rules, opposing team must submit in-game valid proof of the rules being wrong. If OCG Staff finds the rules to be wrong the hosting team will forfeit that map. "
@@ -1057,19 +1098,27 @@
         {
           "type": "paragraph",
           "value": "If you are listed to host and decide to let the other team host and they host the wrong rules it is up to OCG Staff to issue a forfeit or cancel depending on the proof submitted. "
-        },
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Keyboarding:",
+      "content": [
         {
-          "type": "paragraph_html",
-          "value": "<strong>Keyboarding: Keyboarding is NOT ALLOWED on any console If caught using a keyboard it is an automatic forfeit and subject to banned from OCG on the first offense. Players that suspect their opponents of keyboarding are to collect as much in-game proof as possible and report it to OCG staff. In-game proof is the only valid method for this offense. It is up to OCG Staff to forfeit the team, cancel the match, or continue out the match."
+          "type": "paragraph",
+          "value": "Keyboarding is NOT ALLOWED on any console If caught using a keyboard it is an automatic forfeit and subject to banned from OCG on the first offense. Players that suspect their opponents of keyboarding are to collect as much in-game proof as possible and report it to OCG staff. In-game proof is the only valid method for this offense. It is up to OCG Staff to forfeit the team, cancel the match, or continue out the match."
         },
         {
           "type": "paragraph_html",
           "value": "<strong>IN ALL CASES OF ACCUSING KEYBOARDING, PLAY THE MATCH OUT TO COMPLETION AND RECORD ALL POSSIBLE IN-GAME PROOF, THEN SUBMIT TO LIVE SUPPORT IN THE MATCH DISPUTE TICKET.</strong>"
-        },
-        {
-          "type": "h2",
-          "value": "Activision ID:"
-        },
+        }
+      ]
+    },
+    {
+      "type": "tab",
+      "title": "Activision ID:",
+      "content": [
         {
           "type": "list",
           "list": [
