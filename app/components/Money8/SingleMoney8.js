@@ -31,6 +31,10 @@ const SingleMoney8 = props => {
       }
     }
   }
+  if(typeof match.game_settings === 'string')
+  {
+    match.game_settings = JSON.parse(match.game_settings);
+  }
 
   return (
     <div className="col-xs-12 col-sm-12 col-md-6 padding-tournament">
@@ -47,8 +51,15 @@ const SingleMoney8 = props => {
           <div className="col-9">
             <div className="tour-description-block">
               <div className="name-block">
-                <div className="tour-platform">
+                <div className="tour-platform text-right">
+                  <div class="mb-1">
+                  {
+                    match.game_settings && match.game_settings['match_available']?
+                    utils.getCountryImage(match.game_settings['match_available']) : false
+                  }</div>
+                  <div>
                   {utils.platform_icon(match.ladder.platform)}
+                  </div>
                 </div>
                 <p className="tour-name" tabIndex="0">
                   {match.game.title}

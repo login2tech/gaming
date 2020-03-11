@@ -30,7 +30,7 @@ const utils = {
           return  <img src="/images/icons/flag_canada.png" class="flag_ico" />;
 
       case 'north america':
-          return  <span><img src="/images/icons/flag_us.png" class="flag_ico mr-1" /><img src="/images/icons/flag_canada.png" class="flag_img" /></span>;
+          return  <span><img src="/images/icons/flag_us.png" class="flag_ico mr-1" /><img src="/images/icons/flag_canada.png" class="flag_ico" /></span>;
       case 'all regions' :
       return <i class="fa fa-globe" />;
 

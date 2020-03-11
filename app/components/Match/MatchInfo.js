@@ -766,10 +766,11 @@ class MatchInfo extends React.Component {
                           : '  (' + moment(match.starts_at).fromNow() + ')'}
                       </div>
                       <span class="flat_right">
-                      <strong>Region: </strong>{
-                        game_settings && game_settings['match_available'] ?
-                        utils.getCountryImage(game_settings['match_available']) : ''
-                      }</span>
+                        <strong>Region: </strong>{
+                          game_settings && game_settings['match_available'] ?
+                          utils.getCountryImage(game_settings['match_available']) : ''
+                        }
+                      </span>
                     </div>
                   </div>
                   <div className="list_pad">
@@ -805,7 +806,7 @@ class MatchInfo extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
-                        if(m == 'match_available')
+                        if(k == 'match_available')
                           return false;
                         let m = k.replace(new RegExp('_', 'g'), ' ');
                         // if (m.toLowerCase() === 'match available') {

@@ -6,6 +6,7 @@ import {join_match, saveScores, leave_match} from '../../actions/match8';
 import game_user_ids from '../../../config/game_user_ids';
 import GameRules from '../Modules/GameRules';
 import Messages from '../Modules/Messages';
+import utils from '../../utils';
 
 class Money8Info extends React.Component {
   constructor(props) {
@@ -670,6 +671,12 @@ class Money8Info extends React.Component {
                         </strong>{' '}
                         joined the mix-and-match pool
                       </div>
+                      <span class=" match_start_date flat_right">
+                        <strong>Region: </strong>{
+                          game_settings && game_settings['match_available'] ?
+                          utils.getCountryImage(game_settings['match_available']) : ''
+                        }
+                      </span>
                     </div>
                   </div>
 
@@ -706,6 +713,8 @@ class Money8Info extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
+                        if(k == 'match_available' || k == 'match_regions')
+                          return false;
                         let m = k.replace(new RegExp('_', 'g'), ' ');
                         if (m.toLowerCase() === 'match available') {
                           m = 'Match Region';

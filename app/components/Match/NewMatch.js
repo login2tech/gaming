@@ -628,7 +628,7 @@ class newMatch extends React.Component {
                             }
                             onChange={this.handleSettingsChange.bind(this)}
                           />{' '}
-                          Europe  <img src={'/images/icons/flag_europe.png' } class="flag_ico" />
+                          Europe  <img src={'/images/icons/flag_eu.png' } class="flag_ico" />
                         </label>
                         <label>
                           <input

@@ -16,7 +16,9 @@ class NewMoney8 extends React.Component {
       ladder: false,
       games: [],
       players_total: '',
-      game_settings: {},
+      game_settings: {
+        match_available : 'All Regions'
+      },
       players: [props.user],
       expires_in: '',
       match_type: '',
@@ -406,7 +408,7 @@ class NewMoney8 extends React.Component {
                           }
                           onChange={this.handleSettingsChange.bind(this)}
                         />{' '}
-                        North America
+                        North America  <img src={'/images/icons/flag_us.png' } class="flag_ico" />  <img src={'/images/icons/flag_canada.png' } class="flag_ico" />
                       </label>
                       <label>
                         <input
@@ -419,7 +421,7 @@ class NewMoney8 extends React.Component {
                           }
                           onChange={this.handleSettingsChange.bind(this)}
                         />{' '}
-                        Europe
+                        Europe <img src={'/images/icons/flag_eu.png' } class="flag_ico" />
                       </label>
                       <label>
                         <input
@@ -432,7 +434,7 @@ class NewMoney8 extends React.Component {
                           }
                           onChange={this.handleSettingsChange.bind(this)}
                         />{' '}
-                        All Regions
+                        All Regions <span className='fa fa-globe'> </span>
                       </label>
                     </div>
                     <div className="form-group col-md-12">
