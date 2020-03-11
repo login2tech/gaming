@@ -41,8 +41,10 @@ export function createTeam(data, user) {
             type: 'SUCCESS',
             messages: Array.isArray(json) ? json : [json]
           });
+setTimeout(()=>{
+  browserHistory.push('/u/' + user.username + '/teams/' + json.team.id);
+}, 1000);
 
-          browserHistory.push('/u/' + user.username + '/teams/' + json.team.id);
         });
       } else {
         return response.json().then(json => {

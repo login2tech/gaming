@@ -28,19 +28,48 @@ const getTeamWpForWinner = function() {
 const getTeamWpForLooser = function() {
   return 7;
 };
-const checkifeligibleforcredits = function(usr, prev_xp, new_xp) {
+const checkifeligibleforcredits = function(usr, prev_xp, new_xp, obj) {
   const thresholds = [0, 50, 200, 500, 750, 1000, 1500, 2000, 3000, 3500, 4000];
   let award = false;
+  let threshold_passed = false;
   for (let i = 0; i < thresholds.length; i++) {
     if (prev_xp <= thresholds[i] && new_xp > thresholds[i]) {
       // console.log(thresholds[i]);
+      threshold_passed =  thresholds[i];
       award = true;
       break;
     }
   }
   if (award) {
     // add credits = 1
-    utils.giveCreditsToUser(usr.id, 1, 'Free reward for prime member', null);
+  //
+    if(obj)
+    {
+      let awarded = obj.get('awarded');
+      if(!awarded)
+      {
+        awarded = [];
+      }else{
+        awarded = JSON.parse(awarded);
+      }
+      if(awarded.indexOf(threshold_passed) > -1)
+      {
+        return;
+      }
+      awarded.push(threshold_passed);
+      utils.giveCreditsToUser(usr.id, 1, 'Free reward for prime member', null);
+      obj.save({
+        awarded : JSON.stringify(awarded)
+      }, {
+        method:'update'
+      }).then(function(){
+        //
+      }).catch(function(err){
+        Raven.captureException(err);
+
+      })
+
+    }
   }
 };
 
@@ -91,7 +120,7 @@ const giveXpToMember = function(uid, match_id, match_type, force_xp_to_add) {
                 })
                 .then(function(o) {
                   if (usr.get('prime')) {
-                    checkifeligibleforcredits(usr, prev_xp, new_xp);
+                    checkifeligibleforcredits(usr, prev_xp, new_xp, xpObj);
                   }
                 })
                 .catch(function(err) {
@@ -107,7 +136,7 @@ const giveXpToMember = function(uid, match_id, match_type, force_xp_to_add) {
                 })
                 .then(function(o) {
                   if (usr.get('prime')) {
-                    checkifeligibleforcredits(usr, 0, xP_to_add);
+                    checkifeligibleforcredits(usr, 0, xP_to_add, o);
                   }
                 })
                 .catch(function(err) {

@@ -806,8 +806,8 @@ class Money8Info extends React.Component {
                 <br />
               </div>
             </div>
+            <GameRules title={this.state.match.game.title} />
           </div>
-          <GameRules title={this.state.match.game.title} />
         </section>
       </div>
     );

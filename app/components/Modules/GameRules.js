@@ -90,7 +90,7 @@ class GameRules extends React.Component {
     const rules = game_settings[ttl];
 
     return (
-      <div id="accordion">
+      <div id="accordion" class="mt-3">
         {rules.map((item, i) => {
           return item.type == 'tab' ? this.renderTab(item, 'accordion') : false;
         })}

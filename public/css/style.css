@@ -5483,7 +5483,7 @@ span.crossplatform_ico .fa-playstation {
     color: rgb(255, 255, 255);
 }
 
-td .pf_icon.actision_logo {
+td .pf_icon.actision_logo, th .pf_icon.actision_logo {
     width: 30px;
     height: 40px;
     background-position: bottom;
@@ -6739,4 +6739,9 @@ font-size: 50px !important;
       width: 20px;
       height: 34px;
     }
+}
+
+.alert-sm{
+  padding:  0px 14px;
+  fontSize: 13px
 }

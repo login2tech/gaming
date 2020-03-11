@@ -578,12 +578,16 @@ class newMatch extends React.Component {
                           </select>
                         </div>
                         {this.state.match_starts_in == '61|minutes' ? (
-                          <span>
+                          <div className="alert alert-info"
+                          style={{
+                            padding: '0px 14px',
+                            fontSize: 13
+                          }}>
                             This match will remain active for 1 hour or until
                             the match gets acceepted. Once your match is
                             accepted, it will be scheduled for nearest 10 minute
                             mark.
-                          </span>
+                          </div>
                         ) : (
                           ''
                         )}

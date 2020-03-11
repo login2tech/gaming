@@ -135,7 +135,8 @@ class MatchInfo extends React.Component {
     }
     if (!team_u.user_info['gamer_tag_' + this.state.match.ladder.gamer_tag]) {
       return (
-        <span className="text-danger">
+        <span className="text-danger"   data-toggle="tooltip"
+          title="GamerTag does not exist">
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -153,9 +154,21 @@ class MatchInfo extends React.Component {
 
     const amount = parseFloat(this.state.match.match_fee);
 
-    if (parseFloat(team_u.user_info.cash_balance) < amount) {
+    if (this.state.match_type == 'cash' && parseFloat(team_u.user_info.cash_balance) < amount) {
       return (
-        <span className="text-danger">
+        <span className="text-danger"  data-toggle="tooltip"
+          title="Not Enough OCG Cash Balance">
+          <img src="/images/controller-red.svg" className="icon_size" /> Not
+          Eligible
+        </span>
+      );
+    }
+
+    if (this.state.match_type == 'credits' && parseFloat(team_u.user_info.credit_balance) < amount) {
+      return (
+        <span className="text-danger"  data-toggle="tooltip"
+          title="Not Enough OCG Cash Balance"  data-toggle="tooltip"
+            title="Not Enough Credit Balance">
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -1196,6 +1209,7 @@ class MatchInfo extends React.Component {
                 )}
               </div>
             </div>
+
             <GameRules title={this.state.match.game.title} />
           </div>
         </section>
