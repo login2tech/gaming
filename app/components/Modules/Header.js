@@ -370,7 +370,7 @@ class Header extends React.Component {
               <li key={2}>
                 <Link
                   onClick={this.closeSide}
-                  className="menu_btn mr-1"
+                  className="menu_btn mr-3"
                   to="/signup"
                 >
                   Join Free
@@ -379,7 +379,7 @@ class Header extends React.Component {
               <li key={1}>
                 <Link
                   to="/login"
-                  className="menu_btn mr-1"
+                  className="menu_btn mr-3"
                   onClick={this.closeSide}
                 >
                   LOGIN
@@ -487,6 +487,11 @@ class Header extends React.Component {
             <li>
               <Link onClick={this.closeSide} to="/clip_of_the_week_month">
                 Clip of the week/month
+              </Link>
+            </li>
+            <li>
+              <Link onClick={this.closeSide} to="/faqs">
+                FAQs
               </Link>
             </li>
           </ul>

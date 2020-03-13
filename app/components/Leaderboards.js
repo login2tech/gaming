@@ -176,7 +176,7 @@ class Leaderboards extends React.Component {
                             ) : (
                               false
                             )}
-                            Earning
+                            Earnings
                           </th>
                           <th>Career Record</th>
                           <th className="d-none d-md-table-cell">Win Rate</th>

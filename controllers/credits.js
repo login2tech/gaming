@@ -24,7 +24,7 @@ const addMembershipLog = function(plan, action, uid) {
   } else if (action == 'stop_at_month_end') {
     msg = 'OCG' + plan + ' membership renewal cancelled';
   } else if (action == 'stop') {
-    msg = 'OCG' + plan + ' membership stopped';
+    msg = 'OCG' + plan + ' membership expired';
   }
   new MembershipLog().save({
     user_id: uid,
