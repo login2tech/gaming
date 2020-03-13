@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
+import cookie from 'react-cookie';
 import {
   inviteToTeam,
   approveRequest,
@@ -929,7 +930,15 @@ class TeamInfo extends React.Component {
                   {!this.meInTeam() &&
                   this.state.team_info.team_type == 'matchfinder' ? (
                     <Link
-                      to={'/matchfinder/'}
+                      to={'/challenge/new/g/'+this.state.team_info.ladder.game_id+'/l/'+this.state.team_info.ladder.id+'/t/'+this.state.team_info.id}
+                      onClick={()=>{
+                        cookie.save('challenging_team', this.state.team_info.title, {
+                          path: '/',
+                          expires: moment()
+                            .add(1, 'month')
+                            .toDate()
+                        });
+                      }}
                       className="btn btn-default bttn_submit mw_200"
                       style={{margin: '0 auto'}}
                     >

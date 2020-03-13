@@ -48,6 +48,7 @@ import Tickets from './components/Tickets/MyTickets';
 
 import NewMatch from './components/Match/NewMatch';
 import NewMatchTeamSelect from './components/Match/NewMatchTeamSelect';
+import NewChallenge from './components/Challenge/NewChallenge';
 import MatchFinder from './components/Match/MatchFinder';
 import MatchInfo from './components/Match/MatchInfo';
 
@@ -244,6 +245,12 @@ export default function getRoutes(store) {
       <Route
         path="/match/new/:type/:id"
         component={NewMatchTeamSelect}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+      <Route
+        path="/challenge/new/:type/:game_id/l/:ladder_id/t/:team_id"
+        component={NewChallenge}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />

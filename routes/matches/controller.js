@@ -12,6 +12,8 @@ const XPTransactions = require('../../models/XPTransactions');
 const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
 const Ticket = require('../tickets/Ticket');
+const Team = require('../teams/Team');
+const TeamUser = require('../teams/TeamUser');
 const utils = require('../utils');
 
 const Raven = require('raven');
@@ -28,6 +30,8 @@ const getTeamWpForWinner = function() {
 const getTeamWpForLooser = function() {
   return 7;
 };
+
+
 const checkifeligibleforcredits = function(usr, prev_xp, new_xp, obj) {
   const thresholds = [0, 50, 200, 500, 750, 1000, 1500, 2000, 3000, 3500, 4000];
   let award = false;
@@ -1873,3 +1877,27 @@ exports.leave_match = function(req, res, next) {
       });
     });
 };
+
+
+// exports.createNewChallenge = function(req, res, nex){
+//   let me = req.user.id;
+//   let team_to_challenge = req.query.team_id;
+//   //
+//   new TeamUser().where({user_id : me }).fetch({withRelated:['team_info', 'ladder']}).then(function(team_user_obj){
+//     if(team_user_obj)
+//     {
+//       let team_user_obj = team_user_obj.toJSON();
+//       console.log(team_user_obj);
+//       res.status(200).send('done');
+//       // new Team().where({})
+//       return;
+//     }
+//     //return res.status(200).send('No such team exists');
+//     res.redirect('/');
+//
+//
+//   }).catch(function(err){
+//     Raven.captureException(err);
+//     res.redirect('/');
+//   })
+// }

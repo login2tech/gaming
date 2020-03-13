@@ -47,3 +47,5 @@ routes.post(
   u_ctrl.ensureAuthenticated,
   ctrl.resolveDisputeWrap
 );
+
+// routes.get('/newChallenge/team', u_ctrl.ensureAuthenticated, ctrl.createNewChallenge);
