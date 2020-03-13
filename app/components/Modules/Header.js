@@ -490,7 +490,12 @@ class Header extends React.Component {
               </Link>
             </li>
             <li>
-              <Link onClick={this.closeSide} to="/faqs">
+              <Link onClick={this.closeSide} to="/general-rules">
+                General Rules
+              </Link>
+            </li>
+            <li>
+              <Link onClick={this.closeSide} to="/faq">
                 FAQs
               </Link>
             </li>

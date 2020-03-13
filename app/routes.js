@@ -101,6 +101,7 @@ export default function getRoutes(store) {
         component={AdvertiseWithUs}
         onLeave={clearMessages}
       />
+      <Route path="/general-rules" component={FAQ} />
       <Route onLeave={clearMessages} path="/faq" component={FAQ} />
       <Route onLeave={clearMessages} path="/p/:slug" component={CMSPage} />
       <Route
