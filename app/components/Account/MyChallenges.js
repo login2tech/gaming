@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
-import HeaderBox from '../modules/HeaderBox';
+import HeaderBox from '../Modules/HeaderBox';
 class MyChallenges extends React.Component {
   constructor(props) {
     super(props);
