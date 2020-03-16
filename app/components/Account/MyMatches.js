@@ -64,7 +64,7 @@ class MyMatches extends React.Component {
     fetch(
       '/api/matches/matches_of_user?only_pending=yes&page=' +
         this.state.matchfinder_page +
-        '&skipchallenge=yes&uid=' +
+        '&uid=' +
         this.state.user_info.id +
         '&teams=' +
         team_array
@@ -197,6 +197,9 @@ class MyMatches extends React.Component {
                       </thead>
                       <tbody>
                         {this.state.match_played.map((match, i) => {
+                          if(match.is_challenge && match.status == 'pending'){
+                            return false;
+                          }
                           const teams = this.getTeams(match);
                           let is_win = false;
                           let is_loss = false;

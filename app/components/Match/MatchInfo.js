@@ -209,7 +209,10 @@ class MatchInfo extends React.Component {
               match: json.item
             },
             () => {
-              // this.fetchTeams();
+              if(json.item.is_challenge)
+              {
+                this.loadTeams();
+              }
             }
           );
         }
@@ -249,6 +252,21 @@ class MatchInfo extends React.Component {
     val.id = this.state.match.id;
     //console.log(val);
     this.props.dispatch(saveScores(val, this.props.user));
+  }
+
+  loadTeams() {
+    fetch(
+      '/api/teams/team_of_user/?filter_actives=yes&uid=' + this.props.user.id
+    )
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          const obj = {
+            eligible_teams: json.teams ? json.teams : [],
+          };
+          this.setState(obj);
+        }
+      });
   }
 
   showMatch() {
@@ -528,8 +546,27 @@ class MatchInfo extends React.Component {
         return false;
       }
     }
-    //
+    if(this.state.match.is_challenge){
+      if(this.state.eligible_teams)
+      {
+        // console.log(this.state.eligible_teams)
+        let my_team_ids  = this.state.eligible_teams.map(function(item){
+          return item.id
+        });
+        if(my_team_ids.indexOf(this.state.match.challenge_for) > -1)
+        {
+          //
+        }else{
+          return false;
+        }
+        // console.log(my_team_ids)
+      }
+    }else{
+      return false;
+    }
+
     return (
+      <>
       <button
         type="button"
         onClick={() => {
@@ -542,10 +579,14 @@ class MatchInfo extends React.Component {
             }
           );
         }}
-        className="btn btn-default bttn_submit mw_200"
+        className="btn btn-default bttn_submit mw_200 dib mr-2"
       >
-        Accept Match
+        Accept {this.state.match.is_challenge ? 'challenge': 'match'}
       </button>
+      {
+        this.state.match.is_challenge ?<button type="button" className="btn btn-danger mt-4 mw_200" >Reject</button> :   false
+      }
+      </>
     );
   }
 
@@ -1191,7 +1232,7 @@ class MatchInfo extends React.Component {
                       <br />
                       <label>
                         <input type="checkbox" required /> I agree to the terms
-                        to accept this match.
+                        to accept this {match.is_challenge ? 'challenge': 'match'}.
                       </label>
                       <br />
                       <br />
@@ -1202,7 +1243,7 @@ class MatchInfo extends React.Component {
                         // disable={!this.isEligible.bind(this)}
                         className="btn btn-primary max-width-300"
                       >
-                        Accept Match
+                        Accept {match.is_challenge ? 'challenge': 'match'}
                       </button>
                     </form>
                   </div>
