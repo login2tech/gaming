@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeaderBox = props => {
+export default  HeaderBox = props => {
   console.log(props);
   return (
     <section className="page_title_bar noblend">
@@ -17,4 +17,3 @@ const HeaderBox = props => {
     </section>
   );
 };
-export default HeaderBox;
