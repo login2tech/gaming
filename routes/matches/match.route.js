@@ -34,6 +34,8 @@ routes.get(
 );
 
 routes.post('/leave_match', ctrl.leave_match);
+routes.post('/rejectChallenge', ctrl.rejectChallenge);
+
 // routes.post('/approve', u_ctrl.ensureAuthenticated, ctrl.approve);
 routes.get('/user_info', ctrl.listItem);
 // routes.get('/listPaged', ctrl.listPaged);

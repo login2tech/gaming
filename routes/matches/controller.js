@@ -1724,6 +1724,76 @@ exports.listSingleItem = function(req, res, next) {
     });
 };
 
+exports.rejectChallenge = function(req, res, next)
+{
+  if (!req.body.match_id) {
+    res.status(400).send({ok: false, msg: 'Please enter Match ID'});
+    return;
+  }
+  new Item({id: req.body.match_id})
+    .fetch()
+    .then(function(match) {
+      if (!match) {
+        res.status(400).send({
+          ok: false,
+          msg: "Match doesn't exist"
+        });
+        return;
+      }
+      if (
+        match.get('status') != 'pending'
+      ) {
+        return res
+          .status(400)
+          .send({ok: false, msg: 'Challenge can not be cancelled at this stage.'});
+      }
+      return match
+        .save({
+          status : 'cancelled'
+        }).then(function(match){
+          notify = match.get('team_1_players');
+        }).catch(function(err){
+          return res
+            .status(200)
+            .send({ok: true, msg: 'Challenge cancelled.'});
+          notify = ('' + notify)
+            .split('|')
+            .filter(function(item) {
+              if (item != '') {
+                return true;
+              }
+              return false;
+            })
+            .map(function(item) {
+              return parseInt(item);
+            });
+          for (let i = 0; i < notify.length; i++) {
+            new Notif()
+              .save({
+                user_id: notify[i],
+                description:
+                  'Challenge has been rejected by other team',
+                type: 'match',
+                object_id: match.id
+              })
+              .then(function() {
+                //
+              })
+              .catch(function() {
+                //
+              });
+          }
+        })
+      }).catch(function(err){
+        return res
+          .status(400)
+          .send({ok: false, msg: 'Failed to reject challenge'});
+      })
+
+
+
+}
+
 exports.leave_match = function(req, res, next) {
   if (!req.body.match_id) {
     res.status(400).send({ok: false, msg: 'Please enter Match ID'});

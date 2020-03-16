@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
-import {join_match, saveScores, leave_match} from '../../actions/match';
+import {join_match, saveScores, leave_match, rejectChallenge} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
 import GameRules from '../Modules/GameRules';
@@ -59,6 +59,20 @@ class MatchInfo extends React.Component {
     );
 
     // diptach
+  }
+
+  rejectChallenge(event){
+    event.preventDefault();
+
+    this.props.dispatch(
+      rejectChallenge(
+        {
+
+          match_id: this.state.match.id
+        },
+        this.props.user
+      )
+    );
   }
 
   isEligible() {
@@ -584,7 +598,9 @@ class MatchInfo extends React.Component {
         Accept {this.state.match.is_challenge ? 'challenge': 'match'}
       </button>
       {
-        this.state.match.is_challenge ?<button type="button" className="btn btn-danger mt-4 mw_200" >Reject</button> :   false
+        this.state.match.is_challenge ?<button onClick={()=>{
+          this.rejectChallenge()
+        }} type="button" className="btn btn-danger mt-4 mw_200" >Reject</button> :   false
       }
       </>
     );
