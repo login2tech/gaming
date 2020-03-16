@@ -14,6 +14,7 @@ import Records from './components/Account/Records';
 import MyTeams from './components/Account/MyTeams';
 import MyBank from './components/Account/MyBank';
 import MyMatches from './components/Account/MyMatches';
+import MyChallenges from './components/Account/MyChallenges';
 import Transactions from './components/Transactions';
 import Login from './components/Account/Login';
 import Signup from './components/Account/Signup';
@@ -133,6 +134,13 @@ export default function getRoutes(store) {
         path="/my_matches"
         component={MyMatches}
       />
+      <Route
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+        path="/my-challenges"
+        component={MyChallenges}
+      />
+
       <Route path="/leaderboards" component={Leaderboards} />
       <Route
         onEnter={ensureAuthenticated}

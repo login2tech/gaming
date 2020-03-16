@@ -25,6 +25,9 @@ const Match = bookshelf.Model.extend({
   },
   team_2_info: function() {
     return this.belongsTo('Team', 'team_2_id');
+  },
+  challenge_team_info : function(){
+    return this.belongsTo('Team', 'challenge_for');
   }
 });
 // module.exports = Team;

@@ -25,6 +25,8 @@ const utils = {
     return false;
   },
   getCountryImage: function(country) {
+    if(!country)
+      country  = '';
     country = country.toLowerCase();
     switch (country) {
       case 'united states':

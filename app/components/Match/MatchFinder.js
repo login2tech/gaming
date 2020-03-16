@@ -26,9 +26,9 @@ class MatchFinder extends React.Component {
   componentDidMount() {
     let str = '';
     if (this.props.params && this.props.params.id) {
-      str = '?&filter_id=' + this.props.params.id;
+      str = '&filter_id=' + this.props.params.id;
     }
-    fetch('/api/matches/upcoming' + str)
+    fetch('/api/matches/upcoming?nochallenge=yes' + str)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {

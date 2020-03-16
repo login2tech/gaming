@@ -5,6 +5,7 @@ import Messages from '../Modules/Messages';
 import {createMatch} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
 import game_settings from '../Modules/game_settings.json';
+import cookie from 'react-cookie';
 
 import {Link} from 'react-router';
 // import moment from 'moment';
@@ -12,7 +13,7 @@ class NewMatchTeamSelect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      challenging : 'TESTING',
+      challenging: cookie.load('challenging_team'),
       title: '',
       ladder: '',
       creating: false,
@@ -40,7 +41,7 @@ class NewMatchTeamSelect extends React.Component {
       match_type: '',
       using_users: [],
       match_fee: 0,
-      match_starts_in: '61|minutes'
+      match_starts_in: '24|hours'
     };
   }
 
@@ -186,18 +187,6 @@ class NewMatchTeamSelect extends React.Component {
       });
   }
 
-  newDate(a, b, c) {
-    this.setState({
-      starts_at: b
-    });
-  }
-
-  newDateTime(a, b, c) {
-    this.setState({
-      starts_at_time: b
-    });
-  }
-
   componentDidMount() {
     this.fetchGame();
   }
@@ -215,11 +204,11 @@ class NewMatchTeamSelect extends React.Component {
     this.props.dispatch(
       createMatch(
         {
+          is_challenge: true,
           team_1_id: this.state.selected_team.id,
+          challenge_for_team_id: this.props.params.team_id,
           game_id: this.state.ladder_obj.game_id,
           ladder_id: this.state.ladder_obj.id,
-          // starts_at:
-          // '' + this.state.starts_at + ' ' + this.state.starts_at_time,
           match_starts_in: this.state.match_starts_in,
           match_type: this.state.match_type,
           match_players: this.state.match_players,
@@ -535,10 +524,13 @@ class NewMatchTeamSelect extends React.Component {
 
                       <div className="form-group col-md-12">
                         <label htmlFor="team_id">Challenging Team</label>
-                        <input type="text" class="form-control" disabled value={this.state.challenging} />
+                        <input
+                          type="text"
+                          className="form-control"
+                          disabled
+                          value={this.state.challenging}
+                        />
                       </div>
-
-
 
                       <div className="form-group col-md-12">
                         <label htmlFor="team_id">Your Team</label>
@@ -762,11 +754,13 @@ class NewMatchTeamSelect extends React.Component {
                           <select
                             className="form-control nobrd"
                             name="match_starts_in"
+                            disabled
                             id="match_starts_in"
                             onChange={this.handleChange.bind(this)}
+                            value={this.state.match_starts_in}
                           >
                             <option value="">{'Select'}</option>
-                            <option value="61|minutes">Available Now</option>
+                            <option value="24|hours">Available Now</option>
                             {/*     <option value="10|minutes">In 10 minutes</option>
                             <option value="15|minutes">In 15 minutes</option>
                             <option value="30|minutes">In 30 minutes</option>
@@ -795,12 +789,12 @@ class NewMatchTeamSelect extends React.Component {
                         </span>*/}
                           </select>
                         </div>
-                        {this.state.match_starts_in == '61|minutes' ? (
+                        {this.state.match_starts_in == '24|hours' ? (
                           <span>
-                            This challenge will remain active for 1 hour or until
-                            the challenge gets acceepted. Once your challenge is
-                            accepted, it will be scheduled for nearest 10 minute
-                            mark.
+                            This challenge will remain active for 1 day for
+                            other team to accept or reject the challenge. If the
+                            other team fails to accept it, the challenge will be
+                            automatically cancelled.
                           </span>
                         ) : (
                           ''
@@ -966,7 +960,8 @@ class NewMatchTeamSelect extends React.Component {
                         {this.state.has_pending_match ? (
                           <span className="text-danger">
                             You have a match awaiting score. Please provide
-                            score of pending match before creating a new challenge.
+                            score of pending match before creating a new
+                            challenge.
                           </span>
                         ) : (
                           false
@@ -974,8 +969,8 @@ class NewMatchTeamSelect extends React.Component {
                         {this.state.has_pending_disputes ? (
                           <span className="text-danger">
                             You have high number of open disputes. You can only
-                            create a new challenge once your dispute count is less
-                            than 3
+                            create a new challenge once your dispute count is
+                            less than 3
                           </span>
                         ) : (
                           false

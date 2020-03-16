@@ -521,7 +521,7 @@ class NewMoney8 extends React.Component {
                         <option value="60|minutes">1 hour</option>
                         <option value="120|minutes">2 hours</option>
                         <option value="5|hours">5 hours</option>
-                      {/*}  <option value="10|hours">10 hours</option>
+                        {/*}  <option value="10|hours">10 hours</option>
                         <option value="1|day">1 day</option>
                         <option value="2|days">2 days</option>
                         <option value="3|days">3 days</option>

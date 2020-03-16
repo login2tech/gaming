@@ -930,14 +930,25 @@ class TeamInfo extends React.Component {
                   {!this.meInTeam() &&
                   this.state.team_info.team_type == 'matchfinder' ? (
                     <Link
-                      to={'/challenge/new/g/'+this.state.team_info.ladder.game_id+'/l/'+this.state.team_info.ladder.id+'/t/'+this.state.team_info.id}
-                      onClick={()=>{
-                        cookie.save('challenging_team', this.state.team_info.title, {
-                          path: '/',
-                          expires: moment()
-                            .add(1, 'month')
-                            .toDate()
-                        });
+                      to={
+                        '/challenge/new/g/' +
+                        this.state.team_info.ladder.game_id +
+                        '/l/' +
+                        this.state.team_info.ladder.id +
+                        '/t/' +
+                        this.state.team_info.id
+                      }
+                      onClick={() => {
+                        cookie.save(
+                          'challenging_team',
+                          this.state.team_info.title,
+                          {
+                            path: '/',
+                            expires: moment()
+                              .add(1, 'day')
+                              .toDate()
+                          }
+                        );
                       }}
                       className="btn btn-default bttn_submit mw_200"
                       style={{margin: '0 auto'}}

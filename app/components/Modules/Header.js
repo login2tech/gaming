@@ -58,7 +58,6 @@ class Header extends React.Component {
       this.fetchNotifications();
     }, 1000 * 60 * 3);
   }
-
   fetchSuggestions() {
     fetch('/api/user_suggest?q=' + this.state.searchString)
       .then(res => res.json())
@@ -70,7 +69,6 @@ class Header extends React.Component {
         }
       });
   }
-
   deleteNotif(id, link) {
     fetch('/notifs/delete?id=' + id)
       .then(res => res.json())
@@ -81,7 +79,6 @@ class Header extends React.Component {
         window.location.href = link;
       });
   }
-
   fetchNotifications() {
     if (!this.props.user) {
       this.runQuery();
@@ -98,7 +95,6 @@ class Header extends React.Component {
         this.runQuery();
       });
   }
-
   renderProfileLinks() {
     const props = this.props;
     return (
@@ -317,6 +313,15 @@ class Header extends React.Component {
                       My Matches
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      onClick={this.closeSide}
+                      to="/my-challenges"
+                      className="profile_menu_item"
+                    >
+                      My Challenges
+                    </Link>
+                  </li>
 
                   <li>
                     <Link
@@ -514,7 +519,6 @@ class Header extends React.Component {
       </>
     );
   }
-
   render() {
     const props = this.props;
     return (

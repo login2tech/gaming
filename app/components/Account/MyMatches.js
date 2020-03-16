@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
 import ReactPaginate from 'react-paginate';
+import HeaderBox from '../modules/HeaderBox';
 class MyMatches extends React.Component {
   constructor(props) {
     super(props);
@@ -63,7 +64,7 @@ class MyMatches extends React.Component {
     fetch(
       '/api/matches/matches_of_user?only_pending=yes&page=' +
         this.state.matchfinder_page +
-        '&uid=' +
+        '&skipchallenge=yes&uid=' +
         this.state.user_info.id +
         '&teams=' +
         team_array
@@ -174,20 +175,7 @@ class MyMatches extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar noblend">
-          <div className="container-fluid half">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
-                  <h3 className="no-case-change  lil-small">
-                    Upcoming Matches
-                  </h3>
-                  <br />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeaderBox title="Upcoming Matches" />
 
         <section className="contet_part mb-3">
           <div className="container">

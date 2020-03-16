@@ -8,15 +8,14 @@ exports.up = function(knex, Promise) {
       table.integer('team_2_id').references('teams.id');
       table.string('status').defaultTo('pending');
       table.datetime('starts_at');
-
       table.string('match_type');
       table.string('match_fee');
-
       table.string('team_1_result').defaultTo('');
       table.string('team_2_result').defaultTo('');
-
       table.datetime('started_at');
       table.text('result');
+      table.boolean('is_challenge').defaultTo(false);
+      table.integer('challenge_for').references('teams.id');
       table.timestamps();
     })
   ]);

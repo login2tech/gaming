@@ -134,16 +134,7 @@ class newMatch extends React.Component {
         }
       });
   }
-  newDate(a, b, c) {
-    this.setState({
-      starts_at: b
-    });
-  }
-  newDateTime(a, b, c) {
-    this.setState({
-      starts_at_time: b
-    });
-  }
+
   componentDidMount() {
     fetch('/api/teams/single/' + this.props.params.id)
       .then(res => res.json())
@@ -160,31 +151,6 @@ class newMatch extends React.Component {
           );
         }
       });
-    setTimeout(() => {
-      // $('#starts_at').flatpickr({
-      //   enableTime: false,
-      //   dateFormat: 'Y-m-d',
-      //   // stepMinute: 10, //intervals of minutes
-      //   minDate: this.state.starts_at,
-      //   defaultDate: this.state.starts_at,
-      //   // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
-      //   minuteIncrement: 10,
-      //   maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
-      //   onChange: this.newDate.bind(this)
-      // });
-      // $('#starts_at_time').flatpickr({
-      //   enableTime: true,
-      //   dateFormat: ' H:i',
-      //   noCalendar: true,
-      //   stepMinute: 10, //intervals of minutes
-      //   // minDate: this.state.starts_at,
-      //   // defaultDate: this.state.starts_at,
-      //   // minDateTime: new Date(new Date().getTime() + 10 * 60 * 1000), //number of minutes
-      //   minuteIncrement: 10,
-      //   // maxDate: new Date(new Date().getTime() + 5 * 24 * 60 * 60 * 1000),
-      //   onChange: this.newDateTime.bind(this)
-      // });
-    }, 2000);
   }
 
   handleCreation(event) {
@@ -439,7 +405,7 @@ class newMatch extends React.Component {
     '',
     'Xbox Live Gamertag',
     'PSN',
-    'Epic Games Username',
+    'Username',
     'Steam Username',
     'Battletag'
   ];
@@ -578,11 +544,13 @@ class newMatch extends React.Component {
                           </select>
                         </div>
                         {this.state.match_starts_in == '61|minutes' ? (
-                          <div className="alert alert-info"
-                          style={{
-                            padding: '0px 14px',
-                            fontSize: 13
-                          }}>
+                          <div
+                            className="alert alert-info"
+                            style={{
+                              padding: '0px 14px',
+                              fontSize: 13
+                            }}
+                          >
                             This match will remain active for 1 hour or until
                             the match gets acceepted. Once your match is
                             accepted, it will be scheduled for nearest 10 minute

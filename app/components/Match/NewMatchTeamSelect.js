@@ -185,18 +185,6 @@ class NewMatchTeamSelect extends React.Component {
       });
   }
 
-  newDate(a, b, c) {
-    this.setState({
-      starts_at: b
-    });
-  }
-
-  newDateTime(a, b, c) {
-    this.setState({
-      starts_at_time: b
-    });
-  }
-
   componentDidMount() {
     this.fetchGame();
   }

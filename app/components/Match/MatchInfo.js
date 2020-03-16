@@ -135,8 +135,11 @@ class MatchInfo extends React.Component {
     }
     if (!team_u.user_info['gamer_tag_' + this.state.match.ladder.gamer_tag]) {
       return (
-        <span className="text-danger"   data-toggle="tooltip"
-          title="GamerTag does not exist">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="GamerTag does not exist"
+        >
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -154,21 +157,34 @@ class MatchInfo extends React.Component {
 
     const amount = parseFloat(this.state.match.match_fee);
 
-    if (this.state.match_type == 'cash' && parseFloat(team_u.user_info.cash_balance) < amount) {
+    if (
+      this.state.match_type == 'cash' &&
+      parseFloat(team_u.user_info.cash_balance) < amount
+    ) {
       return (
-        <span className="text-danger"  data-toggle="tooltip"
-          title="Not Enough OCG Cash Balance">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="Not Enough OCG Cash Balance"
+        >
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
       );
     }
 
-    if (this.state.match_type == 'credits' && parseFloat(team_u.user_info.credit_balance) < amount) {
+    if (
+      this.state.match_type == 'credits' &&
+      parseFloat(team_u.user_info.credit_balance) < amount
+    ) {
       return (
-        <span className="text-danger"  data-toggle="tooltip"
-          title="Not Enough OCG Cash Balance"  data-toggle="tooltip"
-            title="Not Enough Credit Balance">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="Not Enough OCG Cash Balance"
+          data-toggle="tooltip"
+          title="Not Enough Credit Balance"
+        >
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -740,7 +756,7 @@ class MatchInfo extends React.Component {
                     </div>
                     <div className="col col-md-3">
                       <div className="match_heading">
-                        <h4>Match</h4>
+                        <h4>{match.is_challenge ? 'Challenge' : 'Match'}</h4>
                       </div>
                       <div className="twovstwo">
                         {match.match_players} VS {match.match_players} MATCH
@@ -757,6 +773,8 @@ class MatchInfo extends React.Component {
                           <Link to={'/teams/view/' + match.team_2_info.id}>
                             {match.team_2_info.title}
                           </Link>
+                        ) : match.is_challenge ? (
+                          <span className="text-grey">Waiting Acceptance</span>
                         ) : (
                           <span className="text-grey">Pending Team</span>
                         )}
@@ -1067,7 +1085,9 @@ class MatchInfo extends React.Component {
                     </>
                   ) : (
                     <div className="alert alert-info">
-                      Team details will be visible once the match is accepted.
+                      {match.is_challenge
+                        ? 'Team details will be visible once the challenge is accepted.'
+                        : 'Team details will be visible once the match is accepted.'}
                     </div>
                   )}
                 </div>

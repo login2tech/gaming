@@ -13,7 +13,7 @@ const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
 const Ticket = require('../tickets/Ticket');
 const Team = require('../teams/Team');
-const TeamUser = require('../teams/TeamUser');
+//const TeamUser = require('../teams/TeamUser');
 const utils = require('../utils');
 
 const Raven = require('raven');
@@ -39,7 +39,7 @@ const checkifeligibleforcredits = function(usr, prev_xp, new_xp, obj) {
   for (let i = 0; i < thresholds.length; i++) {
     if (prev_xp <= thresholds[i] && new_xp > thresholds[i]) {
       // console.log(thresholds[i]);
-      threshold_passed =  thresholds[i];
+      threshold_passed = thresholds[i];
       award = true;
       break;
     }
@@ -47,8 +47,7 @@ const checkifeligibleforcredits = function(usr, prev_xp, new_xp, obj) {
   if (award) {
     // add credits = 1
   //
-    if(obj)
-    {
+    if (obj) {
       let awarded = obj.get('awarded');
       if(!awarded)
       {
@@ -1249,25 +1248,34 @@ exports.addItem = function(req, res, next) {
   }
   let starts_at = req.body.match_starts_in;
   starts_at = starts_at.split('|');
-  new Item({
+  let match_obj = {
     team_1_id: req.body.team_1_id,
     game_id: req.body.game_id,
     ladder_id: req.body.ladder_id,
     starts_at: moment().add(starts_at[0], starts_at[1]),
     match_type: req.body.match_type,
-    is_available_now: req.body.match_starts_in == '61|minutes' ? true : false,
+    is_available_now: req.body.match_starts_in == '61|minutes' | req.body.match_starts_in == '24|hours' ? true : false,
     game_settings: req.body.game_settings
       ? JSON.stringify(req.body.game_settings)
       : '{}',
     match_players: req.body.match_players,
     match_fee: req.body.match_fee,
-    team_1_players: req.body.using_users.join('|')
-  })
+    team_1_players: req.body.using_users.join('|'),
+    is_challenge : false
+  }
+
+  if(req.body.is_challenge)
+  {
+    match_obj.is_challenge = true;
+    match_obj.challenge_for = req.body.challenge_for_team_id;
+  }
+
+  new Item(match_obj)
     .save()
     .then(function(item) {
       res.send({
         ok: true,
-        msg: 'New Match has been created successfully.',
+        msg: 'Team Challenged successfully.',
         match: item.toJSON()
       });
       if (req.body.match_type == 'credits' || req.body.match_type == 'cash') {
@@ -1283,13 +1291,38 @@ exports.addItem = function(req, res, next) {
         new Notif()
           .save({
             user_id: req.body.using_users[i],
-            description: 'You have a pending match',
+            description: 'Your team created a new Challenge',
             type: 'match',
             object_id: item.id
           })
           .then(function() {})
           .catch(function(err) {
             Raven.captureException(err);
+          });
+      }
+      if(req.body.is_challenge)
+      {
+        new Team().where({
+          id : req.body.challenge_for_team_id
+        }).fetch({
+          withRelated:['team_users']
+        }).then(function(team){
+          team = team.toJSON();
+          let team_creator = team.team_creator;
+          new Notif()
+            .save({
+              user_id: team_creator,
+              description: 'Your have a new challenge',
+              type: 'challenge',
+              object_id: item.id
+            })
+            .then(function() {})
+            .catch(function(err) {
+              Raven.captureException(err);
+            });
+        })  .catch(function(err) {
+            Raven.captureException(err);
+
           });
       }
     })
@@ -1466,13 +1499,27 @@ exports.matches_of_user = function(req, res, next) {
   let mdl = new Item();
   mdl = mdl.orderBy('created_at', 'DESC');
 
+  let related = [
+    'ladder', 'game', 'team_1_info', 'team_2_info'
+  ];
   // console.log(teams);
 
-  mdl = mdl.query(function(qb) {
-    qb.where(function(qb) {
-      qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+
+  if (req.query.onlychallenge == 'yes') {
+    mdl = mdl.query(function(qb) {
+      qb.where(function(qb) {
+        qb.where('challenge_for', 'in', teams);
+      });
     });
-  });
+    related.push( 'challenge_team_info' )
+  }else{
+    mdl = mdl.query(function(qb) {
+      qb.where(function(qb) {
+        qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);
+      });
+    });
+
+  }
 
   if (req.query.exclude_pending == 'yes') {
     // console.log('yesysey');
@@ -1482,12 +1529,18 @@ exports.matches_of_user = function(req, res, next) {
   if (req.query.only_pending == 'yes') {
     mdl = mdl.where('status', 'in', ['pending', 'accepted']);
   }
+  if (req.query.onlychallenge == 'yes') {
+    mdl = mdl.where('is_challenge', '=', true);
+  }else if (req.query.skipchallenge == 'yes') {
+    mdl = mdl.where('is_challenge', '=', false);
+  }
+
 
   mdl
     .fetchPage({
       page: req.query.page ? req.query.page : 1,
       pageSize: 5,
-      withRelated: ['ladder', 'game', 'team_1_info', 'team_2_info']
+      withRelated: related
     })
 
     .then(function(item) {
@@ -1507,7 +1560,6 @@ exports.matches_of_user = function(req, res, next) {
 exports.listupcoming = function(req, res, next) {
   let a = new Item()
     .orderBy('game_id', 'DESC')
-    // .orderBy('created_at', 'DESC')
     .where('starts_at', '>', moment())
     .where('status', '=', 'pending');
 
@@ -1519,6 +1571,12 @@ exports.listupcoming = function(req, res, next) {
   if (req.query.filter_ladder) {
     a = a.where({
       ladder_id: req.query.filter_ladder
+    });
+  }
+  if(req.query.nochallenge && req.query.nochallenge  == 'yes')
+  {
+    a = a.where({
+      is_challenge: false
     });
   }
 
