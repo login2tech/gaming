@@ -543,6 +543,9 @@ class MatchInfo extends React.Component {
     if (this.state.match.team_2_id) {
       return false;
     }
+    if (this.state.match.status == 'cancelled') {
+      return false;
+    }
 
     if (!this.props.user) {
       return false;
@@ -561,19 +564,31 @@ class MatchInfo extends React.Component {
       }
     }
     if(this.state.match.is_challenge){
-      if(this.state.eligible_teams)
+      if(this.state.match.challenge_type == 't' )
       {
-        // console.log(this.state.eligible_teams)
-        let my_team_ids  = this.state.eligible_teams.map(function(item){
-          return item.id
-        });
-        if(my_team_ids.indexOf(this.state.match.challenge_for) > -1)
+
+
+        if(this.state.eligible_teams)
         {
+          // console.log(this.state.eligible_teams)
+          let my_team_ids  = this.state.eligible_teams.map(function(item){
+            return item.id
+          });
+          if(my_team_ids.indexOf(this.state.match.challenge_for) > -1)
+          {
+            //
+          }else{
+            return false;
+          }
+          // console.log(my_team_ids)
+        }
+      }else  if(this.state.match.challenge_type == 'u' )
+      {
+        if( this.state.match.challenge_for_u == this.props.user.id ){
           //
         }else{
           return false;
         }
-        // console.log(my_team_ids)
       }
     }else{
       return false;
@@ -599,7 +614,7 @@ class MatchInfo extends React.Component {
       </button>
       {
         this.state.match.is_challenge ?<button onClick={()=>{
-          this.rejectChallenge()
+          this.rejectChallenge(event)
         }} type="button" className="btn btn-danger mt-4 mw_200" >Reject</button> :   false
       }
       </>

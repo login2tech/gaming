@@ -172,14 +172,17 @@ class MyChallenges extends React.Component {
                                 <Link to={'/m/' + match.id}>#{match.id}</Link>
                               </td>
                               <td>
-                                <Link to={'/teams/view/' + teams[0].id}>
-                                  {teams[0].title}
+                                <Link to={'/teams/view/' + (teams && teams[0]&& teams[0].id)}>
+                                  {teams && teams[0] && teams[0].title}
+                                  {
+                                    match.challenge_type == 'u' ?  '@'+this.props.user.username : ''
+                                  }
                                 </Link>
                               </td>
                               <td>
                                 {teams[1] ? (
-                                  <Link to={'/teams/view/' + teams[0].id}>
-                                    {teams[1].title}
+                                  <Link to={'/teams/view/' + (teams && teams[0] && teams[0].id)}>
+                                    {teams && teams[1] && teams[1].title}
                                   </Link>
                                 ) : (
                                   ' '
