@@ -19,7 +19,7 @@ class NewMatchTeamSelect extends React.Component {
       creating: false,
       games: [],
       game_settings: {
-        // match_available: 'All Regions'
+        match_available: 'All Regions'
       },
       ladder_obj: {
         title: ''
@@ -818,7 +818,7 @@ class NewMatchTeamSelect extends React.Component {
                           <option value="All Regions">All Regions</option>
                         </select>
                       </div>*/}
-                      {/* <div className="form-group col-md-12 region_input">
+                      <div className="form-group col-md-12 region_input">
                         <label htmlFor="title">Match Region</label>
 
                         <label>
@@ -873,7 +873,7 @@ class NewMatchTeamSelect extends React.Component {
                           All Regions <i className="fa fa-globe" />
                         </label>
                       </div>
-                      */}
+                       
                       <div className="form-group col-md-12">
                         <label htmlFor="title">Match Players</label>
                         <select
