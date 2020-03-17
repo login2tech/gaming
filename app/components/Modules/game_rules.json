@@ -131,31 +131,26 @@
           "value": "<strong>Step 2:</strong> At the creative hub or before playing be sure to add the map code provided to you on your match details or through the link in the rules below. Ensure you are on the correct map/island as they are subject to possibly change. "
         },
         {
-          "type": "tab",
-          "title": "Box Fight Map",
-          "content": [
-            {
-              "type": "h2",
-              "value": "MAP CODE: 3080-7809-4388"
-            },
-            {
-              "type": "paragraph_html",
-              "value": "<strong>Step 3:</strong> All players step into the Island Portal of the correct map together, once loaded in, the hosting team starts the match. It is recommended that you record the full video of this and turn on replay capture for the creative mode in the settings."
-            },
-            {
-              "type": "paragraph_html",
-              "value": "<strong>Step 4:</strong> Match will begin, you must defeat your opponent 5 times to win (5 rounds). Ensure you capture proof of your win in case of a dispute. If you lose the match report the loss or you will risk being banned. "
-            },
-            {
-              "type": "paragraph",
-              "value": "If the match is a Best of 1 then the player that wins 5 rounds will be the winner of the entire match. If a match is a Best of 3 then you must play another map, the player that wins 2 maps is the winner of the entire match."
-            },
-            {
-              "type": "paragraph",
-              "value": "The hosting team of the final map is the team that won the most rounds in the first 2 maps. If the rounds are tied then the team that hosted the first map will then host again."
-            }
-          ]
+          "type": "paragraph_html",
+          "value": "<strong>Step 3:</strong> All players step into the Island Portal of the correct map together, once loaded in, the hosting team starts the match. It is recommended that you record the full video of this and turn on replay capture for the creative mode in the settings."
+        },
+        {
+          "type": "paragraph_html",
+          "value": "<strong>Step 4:</strong> Match will begin, you must defeat your opponent 5 times to win (5 rounds). Ensure you capture proof of your win in case of a dispute. If you lose the match report the loss or you will risk being banned. "
+        },
+        {
+          "type": "paragraph",
+          "value": "If the match is a Best of 1 then the player that wins 5 rounds will be the winner of the entire match. If a match is a Best of 3 then you must play another map, the player that wins 2 maps is the winner of the entire match."
+        },
+        {
+          "type": "paragraph",
+          "value": "The hosting team of the final map is the team that won the most rounds in the first 2 maps. If the rounds are tied then the team that hosted the first map will then host again."
+        },
+        {
+          "type": "h2",
+          "value": "MAP CODE: 3080-7809-4388"
         }
+       
       ]
     },
     {

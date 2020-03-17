@@ -873,7 +873,7 @@ class NewMatchTeamSelect extends React.Component {
                           All Regions <i className="fa fa-globe" />
                         </label>
                       </div>
-                       
+
                       <div className="form-group col-md-12">
                         <label htmlFor="title">Match Players</label>
                         <select
