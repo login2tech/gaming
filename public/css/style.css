@@ -6745,3 +6745,8 @@ font-size: 50px !important;
   padding:  0px 14px;
   fontSize: 13px
 }
+
+.profbtn{
+  width: 100%;
+  min-width: 0px;
+}

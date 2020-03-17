@@ -75,7 +75,6 @@ class Game extends React.Component {
 
   componentDidMount() {
     this.fetchGame();
-    //
   }
 
   fetchGame() {

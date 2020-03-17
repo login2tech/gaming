@@ -258,7 +258,7 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route
-        path="/challenge/new/:type/:game_id/l/:ladder_id/t/:team_id"
+        path="/challenge/new/:type/:game_id/l/:ladder_id/:ctype/:team_id"
         component={NewChallenge}
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}

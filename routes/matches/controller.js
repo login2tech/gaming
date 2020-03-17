@@ -1267,8 +1267,17 @@ exports.addItem = function(req, res, next) {
   if(req.body.is_challenge)
   {
     match_obj.is_challenge = true;
-    match_obj.challenge_for = req.body.challenge_for_team_id;
+    // match_obj.challenge_for = req.body.challenge_for_team_id;
+    match_obj.challenge_type = req.body.challenge_type;
+    if(req.body.challenge_type == 'u')
+    {
+      match_obj.challenge_for_u = req.body.challenge_for_team_id;
+    }else{
+      match_obj.challenge_for = req.body.challenge_for_team_id;
+
+    }
   }
+  console.log(match_obj);
 
   new Item(match_obj)
     .save()
@@ -1291,17 +1300,34 @@ exports.addItem = function(req, res, next) {
         new Notif()
           .save({
             user_id: req.body.using_users[i],
-            description: 'Your team created a new Challenge',
+            description: 'Your created a new Challenge',
             type: 'match',
             object_id: item.id
           })
           .then(function() {})
-          .catch(function(err) {
+          .catch(function(err) {console.log(err);
             Raven.captureException(err);
           });
       }
       if(req.body.is_challenge)
       {
+        if(req.body.challenge_type == 'u')
+        {
+
+          new Notif()
+            .save({
+              user_id: req.body.challenge_for_team_id,
+              description: 'Your have a new challenge',
+              type: 'm',
+              object_id: item.id
+            })
+            .then(function() {})
+            .catch(function(err) {
+              Raven.captureException(err);
+            });
+        }else{
+
+
         new Team().where({
           id : req.body.challenge_for_team_id
         }).fetch({
@@ -1313,7 +1339,7 @@ exports.addItem = function(req, res, next) {
             .save({
               user_id: team_creator,
               description: 'Your have a new challenge',
-              type: 'challenge',
+              type: 'm',
               object_id: item.id
             })
             .then(function() {})
@@ -1324,9 +1350,11 @@ exports.addItem = function(req, res, next) {
             Raven.captureException(err);
 
           });
+        }
       }
     })
     .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       return res
         .status(400)
