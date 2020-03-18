@@ -50,7 +50,9 @@ const SingleTournament = props => {
               <div className="region-block">
                 <div className="region-content">
                   <span className="countdown-timer">
-                    <span>Starts </span>{' '}
+                    <span>{
+                      moment(tour.starts_at).isAfter(moment()) ? 'Starts'  : 'Started'
+                    } </span>{' '}
                     <span>{moment(tour.starts_at).fromNow()}</span>
                   </span>
                 </div>

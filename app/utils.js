@@ -24,9 +24,10 @@ const utils = {
 
     return false;
   },
-  feeIcon: function(type){
-    if(!type)
-      type  = '';
+  feeIcon: function(type) {
+    if (!type) {
+      type = '';
+    }
     type = type.toLowerCase();
     switch (type) {
       case 'credits':
@@ -42,8 +43,9 @@ const utils = {
     return false;
   },
   getCountryImage: function(country) {
-    if(!country)
-      country  = '';
+    if (!country) {
+      country = '';
+    }
     country = country.toLowerCase();
     switch (country) {
       case 'united states':

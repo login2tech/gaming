@@ -4,6 +4,8 @@ import axios from 'axios';
 import Fetcher from '../../../actions/Fetcher';
 import Messages from '../../Messages';
 import React from 'react';
+import game_settings from '../../../../app/components/Modules/game_settings.json';
+
 class NewTournament extends React.Component {
   constructor(props) {
     super(props);
@@ -19,11 +21,22 @@ class NewTournament extends React.Component {
       rules: '',
       max_players: '',
       games: [],
+      game_settings: {
+        match_available: 'All Regions'
+      },
+
       ladders: []
     };
     this.banner_url_ref = React.createRef();
   }
 
+  handleSettingsChange(event) {
+    const game_settings = this.state.game_settings;
+    game_settings[event.target.name] = event.target.value;
+    this.setState({
+      game_settings: game_settings
+    });
+  }
   doClose() {
     this.props.dispatch({
       type: 'CLEAR_MESSAGES'
@@ -169,6 +182,8 @@ class NewTournament extends React.Component {
 
   onSubmit(e) {
     e.preventDefault();
+    if(this.state.loaded==false)
+      return false;
     this.setState(
       {
         loaded: false
@@ -180,7 +195,7 @@ class NewTournament extends React.Component {
   }
 
   finalSubmit() {
-    this.setState({
+     this.setState({
       loaded: false
     });
 
@@ -200,6 +215,7 @@ class NewTournament extends React.Component {
       ).toUTCString(),
       entry_fee: this.state.entry_fee,
       first_winner_price: this.state.first_winner_price,
+      game_settings : this.state.game_settings,
       second_winner_price: this.state.second_winner_price,
       third_winner_price: this.state.third_winner_price,
       banner_url: this.state.banner_url
@@ -238,6 +254,65 @@ class NewTournament extends React.Component {
       this.loadLadder(event.target.value);
     }
   }
+
+    renderGameSettings() {
+      if (!this.state.game_id) {
+        return false;
+      }
+      let sel_gam = this.state.games.filter( (game, i)=>{
+        return game.id == this.state.game_id ? true:false;
+      });
+      if(!sel_gam ||sel_gam.length < 1){
+        return false;
+      }
+      let ttl =sel_gam[0].title
+      ttl = ttl.toLowerCase();
+      ttl = ttl.replace(new RegExp(' ', 'g'), '');
+      ttl = ttl.replace(new RegExp(':', 'g'), '');
+      ttl = ttl.replace(new RegExp('-', 'g'), '');
+      ttl = ttl.replace(new RegExp('_', 'g'), '');
+      if (!game_settings[ttl]) {
+        return false;
+      }
+      const settings = game_settings[ttl];
+      return (
+        <div>
+          {settings.map((setting, i) => {
+            if (setting.type != 'select') {
+              return false;
+            }
+            // console.log('is a setting');
+            const id = setting.label
+              .replace(new RegExp(' ', 'g'), '_')
+              .toLowerCase();
+            return (
+              <div className="form-group col-md-12" key={setting.label}>
+                <label htmlFor={id}>{setting.label}</label>
+                <select
+                  id={id}
+                  className="form-control"
+                  onChange={this.handleSettingsChange.bind(this)}
+                  required
+                  value={this.state.game_settings[id]}
+                  name={id}
+                >
+                  <option value="">Select</option>
+                  {setting.options.map((opt, i) => {
+                    return (
+                      <option value={opt} key={opt}>
+                        {opt}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+            );
+          })}
+        </div>
+      );
+    }
+
+
 
   render() {
     return (
@@ -368,10 +443,71 @@ class NewTournament extends React.Component {
                 </select>
               </div>
 
+
+              <div className="form-group col-md-12 region_input">
+                <label htmlFor="title">Match Region</label>
+
+                <label>
+                  <input
+                    type="radio"
+                    name="match_available"
+                    value={'North America'}
+                    checked={
+                      this.state.game_settings['match_available'] ===
+                      'North America'
+                    }
+                    onChange={this.handleSettingsChange.bind(this)}
+                  />{' '}
+                  North America{' '}
+                  <img
+                    src={'/images/icons/flag_us.png'}
+                    className="flag_ico"
+                  />{' '}
+                  <img
+                    src={'/images/icons/flag_canada.png'}
+                    className="flag_ico"
+                  />
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="match_available"
+                    value={'Europe'}
+                    checked={
+                      this.state.game_settings['match_available'] ===
+                      'Europe'
+                    }
+                    onChange={this.handleSettingsChange.bind(this)}
+                  />{' '}
+                  Europe{' '}
+                  <img
+                    src={'/images/icons/flag_eu.png'}
+                    className="flag_ico"
+                  />
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="match_available"
+                    value={'All Regions'}
+                    checked={
+                      this.state.game_settings['match_available'] ===
+                      'All Regions'
+                    }
+                    onChange={this.handleSettingsChange.bind(this)}
+                  />{' '}
+                  All Regions <span className="fa fa-globe"> </span>
+                </label>
+              </div>
+
+
               <div className="form-group">
                 <label>Tournament Starts On</label>
                 <input
                   type="datetime-local"
+                  min={()=>{
+                    return new Date();
+                  }}
                   name="starts_at"
                   onChange={this.handleChange.bind(this)}
                   id="starts_at"
@@ -387,6 +523,9 @@ class NewTournament extends React.Component {
                 <input
                   type="datetime-local"
                   name="registration_start_at"
+                  min={()=>{
+                    return new Date();
+                  }}
                   onChange={this.handleChange.bind(this)}
                   id="registration_start_at"
                   value={this.state.registration_start_at}
@@ -401,6 +540,9 @@ class NewTournament extends React.Component {
                 <input
                   type="datetime-local"
                   name="registration_end_at"
+                  min={()=>{
+                    return new Date();
+                  }}
                   onChange={this.handleChange.bind(this)}
                   id="registration_end_at"
                   value={this.state.registration_end_at}
@@ -465,6 +607,11 @@ class NewTournament extends React.Component {
                   className="form-control"
                 />
               </div>
+
+                {this.renderGameSettings()}
+
+
+
               <div className="input-control">
                 <label>Tournament Banner</label>
                 <input
@@ -486,6 +633,7 @@ class NewTournament extends React.Component {
               <input
                 value="Create Tournament"
                 type="submit"
+                disabled={this.state.loaded ? false:true}
                 className="btn btn-primary"
               />
             </form>

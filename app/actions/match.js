@@ -94,9 +94,6 @@ export function rejectChallenge(data, user) {
   };
 }
 
-
-
-
 export function join_match(data, user) {
   return dispatch => {
     dispatch({

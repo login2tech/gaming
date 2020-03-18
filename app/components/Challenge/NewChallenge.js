@@ -206,8 +206,8 @@ class NewMatchTeamSelect extends React.Component {
         {
           is_challenge: true,
           team_1_id: this.state.selected_team.id,
-          challenge_for_team_id:  this.props.params.team_id,
-          challenge_type : this.props.params.ctype,
+          challenge_for_team_id: this.props.params.team_id,
+          challenge_type: this.props.params.ctype,
           game_id: this.state.ladder_obj.game_id,
           ladder_id: this.state.ladder_obj.id,
           match_starts_in: this.state.match_starts_in,
@@ -524,7 +524,10 @@ class NewMatchTeamSelect extends React.Component {
                       */}
 
                       <div className="form-group col-md-12">
-                        <label htmlFor="team_id">Challenging {this.props.params.ctype == 'u' ? "user": 'team'}</label>
+                        <label htmlFor="team_id">
+                          Challenging{' '}
+                          {this.props.params.ctype == 'u' ? 'user' : 'team'}
+                        </label>
                         <input
                           type="text"
                           className="form-control"

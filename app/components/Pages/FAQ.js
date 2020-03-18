@@ -38,8 +38,7 @@ class FAQ extends React.Component {
   render() {
     return (
       <div>
-
-        <HeaderBox title={'404 Not Found'} cls='all_t_heading' />
+        <HeaderBox title={'404 Not Found'} cls="all_t_heading" />
 
         <section className="faq-section mb-5">
           <div className="container mb-5">

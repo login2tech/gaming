@@ -197,7 +197,7 @@ class MyMatches extends React.Component {
                       </thead>
                       <tbody>
                         {this.state.match_played.map((match, i) => {
-                          if(match.is_challenge && match.status == 'pending'){
+                          if (match.is_challenge && match.status == 'pending') {
                             return false;
                           }
                           const teams = this.getTeams(match);

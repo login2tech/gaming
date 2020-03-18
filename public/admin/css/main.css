@@ -355,3 +355,13 @@ div#modal_orders .modal-dialog {
   overflow-y: visible;
   min-height: 400px;
 }
+
+.region_input, .region_input label{
+  width: 100%
+}
+
+
+.flag_ico {
+    width: 26px;
+    margin-left: 5px;
+}

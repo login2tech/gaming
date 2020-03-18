@@ -11,7 +11,7 @@ class Header extends React.Component {
       games: [],
       userSuggestions: [],
       notifications: [],
-      messages : [{read:false}]
+      messages: [{read: false}]
       // posts_page: 1
     };
     this.closeSide = this._closeCollapse.bind(this);
@@ -172,7 +172,11 @@ class Header extends React.Component {
                     let lnk = '';
                     if (notif.type == 'money-8') {
                       lnk = '/mix-and-match/' + notif.object_id;
-                    } else if (notif.type == 'match') {
+                    } else if (
+                      notif.type == 'match' ||
+                      notif.type == 'm' ||
+                      notif.type == 'challenge'
+                    ) {
                       lnk = '/m/' + notif.object_id;
                     } else if (notif.type == 'team_invite') {
                       lnk = '/teams/view/' + notif.object_id;
@@ -220,23 +224,22 @@ class Header extends React.Component {
                 </ul>
               </li>,
               <li key={50} className="sm_on_mob has_children_m mr-4 ml-3">
-              <Link
-                className="profile_menu_item"
-                href="/messages"
-                onClick={() => {
-                  window.location.href = '/messages';
-                }}
-              >
-                <i className="fa fa-envelope" />
-                {this.state.messages &&
-                this.state.messages.length ? (
-                  <span className="dot notif_dot">
-                    {this.notifCount(this.state.messages)}
-                  </span>
-                ) : (
-                  false
-                )}
-              </Link>
+                <Link
+                  className="profile_menu_item"
+                  href="/messages"
+                  onClick={() => {
+                    window.location.href = '/messages';
+                  }}
+                >
+                  <i className="fa fa-envelope" />
+                  {this.state.messages && this.state.messages.length ? (
+                    <span className="dot notif_dot">
+                      {this.notifCount(this.state.messages)}
+                    </span>
+                  ) : (
+                    false
+                  )}
+                </Link>
               </li>,
 
               <li key={4} className="has_children_m profile_drop">

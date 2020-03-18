@@ -2,7 +2,7 @@ import React from 'react';
 // import {connect} from 'react-redux';
 import moment from 'moment';
 // import { resetPassword } from '../../actions/auth';
-// import Messages from 'Messages';
+import HeaderBox from './Modules/HeaderBox';
 
 // import NotFound from './Pages/NotFound';
 
@@ -42,18 +42,7 @@ class Notifications extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar noblend">
-          <div className="container-fluid half">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
-                  <h3>Notifications</h3>
-                  <br />
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeaderBox title="Notifications" />
 
         <section className="contet_part">
           <div className="container">
@@ -74,7 +63,11 @@ class Notifications extends React.Component {
                     let lnk = '';
                     if (notif.type == 'money-8') {
                       lnk = '/mix-and-match/' + notif.object_id;
-                    } else if (notif.type == 'match') {
+                    } else if (
+                      notif.type == 'match' ||
+                      notif.type == 'm' ||
+                      notif.type == 'challenge'
+                    ) {
                       lnk = '/m/' + notif.object_id;
                     } else if (notif.type == 'team_invite') {
                       lnk = '/teams/view/' + notif.object_id;

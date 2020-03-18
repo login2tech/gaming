@@ -288,7 +288,7 @@ class EditGame extends React.Component {
               </div>
               <br />
               <div className="input-control">
-                <label>Game Image</label>
+                <label>Game Image [ mobile and desktop] [ portrait image]</label>
                 <input
                   type="file"
                   className="form-control"
@@ -302,7 +302,7 @@ class EditGame extends React.Component {
               </div>
               <br />
               <div className="input-control">
-                <label>Game Banner</label>
+                <label>Desktop Game Banner [ for game page - desktop]</label>
                 <input
                   type="file"
                   className="form-control"
@@ -315,7 +315,7 @@ class EditGame extends React.Component {
                 />
               </div>
               <div className="input-control">
-                <label>Mobile Banner</label>
+                <label>Mobile Banner [ for game page and match pages - mobile]</label>
                 <input
                   type="file"
                   className="form-control"
@@ -328,7 +328,7 @@ class EditGame extends React.Component {
                 />
               </div>
               <div className="input-control">
-                <label> Banner 2</label>
+                <label>Desktop Game Banner [for match pages - desktop]</label>
                 <input
                   type="file"
                   className="form-control"
@@ -340,7 +340,7 @@ class EditGame extends React.Component {
                   // value={this.state.title}
                 />
               </div>
-               
+
               <br />
 
               <input

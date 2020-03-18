@@ -2,7 +2,12 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 const moment = require('moment');
-import {join_match, saveScores, leave_match, rejectChallenge} from '../../actions/match';
+import {
+  join_match,
+  saveScores,
+  leave_match,
+  rejectChallenge
+} from '../../actions/match';
 import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
 import GameRules from '../Modules/GameRules';
@@ -61,13 +66,12 @@ class MatchInfo extends React.Component {
     // diptach
   }
 
-  rejectChallenge(event){
+  rejectChallenge(event) {
     event.preventDefault();
 
     this.props.dispatch(
       rejectChallenge(
         {
-
           match_id: this.state.match.id
         },
         this.props.user
@@ -223,8 +227,7 @@ class MatchInfo extends React.Component {
               match: json.item
             },
             () => {
-              if(json.item.is_challenge)
-              {
+              if (json.item.is_challenge) {
                 this.loadTeams();
               }
             }
@@ -276,7 +279,7 @@ class MatchInfo extends React.Component {
       .then(json => {
         if (json.ok) {
           const obj = {
-            eligible_teams: json.teams ? json.teams : [],
+            eligible_teams: json.teams ? json.teams : []
           };
           this.setState(obj);
         }
@@ -307,8 +310,9 @@ class MatchInfo extends React.Component {
                 json.teams[i].removed ||
                 !json.teams[i].team_info ||
                 json.teams[i].team_info.removed ||
-                json.teams[i].team_info.ladder_id != this.state.match.ladder_id ||
-                json.teams[i].team_info.team_type !='matchfinder'
+                json.teams[i].team_info.ladder_id !=
+                  this.state.match.ladder_id ||
+                json.teams[i].team_info.team_type != 'matchfinder'
               ) {
                 continue;
               }
@@ -564,60 +568,62 @@ class MatchInfo extends React.Component {
         return false;
       }
     }
-    if(this.state.match.is_challenge){
-      if(this.state.match.challenge_type == 't' )
-      {
-
-
-        if(this.state.eligible_teams)
-        {
+    if (this.state.match.is_challenge) {
+      if (this.state.match.challenge_type == 't') {
+        if (this.state.eligible_teams) {
           // console.log(this.state.eligible_teams)
-          let my_team_ids  = this.state.eligible_teams.map(function(item){
-            return item.id
+          const my_team_ids = this.state.eligible_teams.map(function(item) {
+            return item.id;
           });
-          if(my_team_ids.indexOf(this.state.match.challenge_for) > -1)
-          {
+          if (my_team_ids.indexOf(this.state.match.challenge_for) > -1) {
             //
-          }else{
+          } else {
             return false;
           }
           // console.log(my_team_ids)
         }
-      }else  if(this.state.match.challenge_type == 'u' )
-      {
-        if( this.state.match.challenge_for_u == this.props.user.id ){
+      } else if (this.state.match.challenge_type == 'u') {
+        if (this.state.match.challenge_for_u == this.props.user.id) {
           //
-        }else{
+        } else {
           return false;
         }
       }
-    }else{
+    } else {
       return false;
     }
 
     return (
       <>
-      <button
-        type="button"
-        onClick={() => {
-          this.setState(
-            {
-              clicked: true
-            },
-            () => {
-              this.showMatch();
-            }
-          );
-        }}
-        className="btn btn-default bttn_submit mw_200 dib mr-2"
-      >
-        Accept {this.state.match.is_challenge ? 'challenge': 'match'}
-      </button>
-      {
-        this.state.match.is_challenge ?<button onClick={()=>{
-          this.rejectChallenge(event)
-        }} type="button" className="btn btn-danger mt-4 mw_200" >Reject</button> :   false
-      }
+        <button
+          type="button"
+          onClick={() => {
+            this.setState(
+              {
+                clicked: true
+              },
+              () => {
+                this.showMatch();
+              }
+            );
+          }}
+          className="btn btn-default bttn_submit mw_200 dib mr-2"
+        >
+          Accept {this.state.match.is_challenge ? 'challenge' : 'match'}
+        </button>
+        {this.state.match.is_challenge ? (
+          <button
+            onClick={() => {
+              this.rejectChallenge(event);
+            }}
+            type="button"
+            className="btn btn-danger mt-4 mw_200"
+          >
+            Reject
+          </button>
+        ) : (
+          false
+        )}
       </>
     );
   }
@@ -906,9 +912,7 @@ class MatchInfo extends React.Component {
                                   ? '' + match.match_fee + '$'
                                   : '' + match.match_fee + ' credits') +
                                 ')'}
-                                {
-                                  utils.feeIcon(match.match_type )
-                                }
+                              {utils.feeIcon(match.match_type)}
                             </span>
                           )}
                         </p>
@@ -1267,7 +1271,8 @@ class MatchInfo extends React.Component {
                       <br />
                       <label>
                         <input type="checkbox" required /> I agree to the terms
-                        to accept this {match.is_challenge ? 'challenge': 'match'}.
+                        to accept this{' '}
+                        {match.is_challenge ? 'challenge' : 'match'}.
                       </label>
                       <br />
                       <br />
@@ -1278,7 +1283,7 @@ class MatchInfo extends React.Component {
                         // disable={!this.isEligible.bind(this)}
                         className="btn btn-primary max-width-300"
                       >
-                        Accept {match.is_challenge ? 'challenge': 'match'}
+                        Accept {match.is_challenge ? 'challenge' : 'match'}
                       </button>
                     </form>
                   </div>

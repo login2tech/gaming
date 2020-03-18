@@ -707,7 +707,7 @@ class TournamentInfo extends React.Component {
                         <td>
                           <span className="hc-trophy-icon">
                             <img
-                              src="/images/goldtrophy.png"
+                              src="/assets/icons/gold.png"
                               style={{width: '40px'}}
                             />
                           </span>
@@ -738,7 +738,7 @@ class TournamentInfo extends React.Component {
                         <td>
                           <span className="hc-trophy-icon">
                             <img
-                              src="/images/silvertrophy.png"
+                              src="/assets/icons/silver.png"
                               style={{width: '40px'}}
                             />
                           </span>
@@ -769,7 +769,7 @@ class TournamentInfo extends React.Component {
                         <td>
                           <span className="hc-trophy-icon">
                             <img
-                              src="/images/bronzetrophy.png"
+                              src="/assets/icons/bronze.png"
                               style={{width: '40px'}}
                             />
                           </span>
@@ -810,13 +810,6 @@ class TournamentInfo extends React.Component {
               <div className="tourn-info-title">Ladder</div>
               <div className="tourn-info-box tourn-info-game ico_no_fl">
                 {this.state.tournament.ladder.title}{' '}
-                <span
-                  className={
-                    game_user_ids.tag_icons[
-                      this.state.tournament.ladder.gamer_tag
-                    ]
-                  }
-                />
               </div>
             </div>
           </div>

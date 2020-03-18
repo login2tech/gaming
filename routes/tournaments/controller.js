@@ -1168,6 +1168,7 @@ exports.addItem = function(req, res, next) {
     registration_start_at: req.body.registration_start_at,
     registration_end_at: req.body.registration_end_at,
     total_teams: req.body.total_teams,
+    game_settings : JSON.stringify(req.body.game_settings),
     entry_fee: req.body.entry_fee,
     first_winner_price: req.body.first_winner_price,
     member_tournament: req.body.member_tournament == 'yes' ? true : false,
