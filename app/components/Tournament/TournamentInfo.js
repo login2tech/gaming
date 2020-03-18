@@ -99,8 +99,7 @@ class TournamentInfo extends React.Component {
       return (
         '<a href="/tournament-match/' +
         items[0].id +
-        '">Match - ' +
-        cnt +
+        '">View Match Details'+
         '</a>'
       );
     }
@@ -162,6 +161,35 @@ class TournamentInfo extends React.Component {
         round_titles.push('Round ' + (i + 1));
       }
     }
+
+    // console.log(rounds_c,brackets.total_rounds)
+    if(rounds_c < brackets.total_rounds)
+    {
+      for(let k = rounds_c ; k< brackets.total_rounds;k++)
+      {
+        let final_round_data = [];
+
+
+
+            let add = rounds[k-1].length ;
+            add = add/2;
+            console.log('this round: ', k, 'has ', add, 'matches');
+            for(let m = 0 ; m<add;m++)
+            {
+
+              final_round_data.push({
+                empty : true,
+                match_title:  ' ',
+                player1: {name:'',empty:true, ID:'', url:'', winner: '' },
+                player2: {name:'',empty:true, ID:'', url:'', winner: ''  }
+              });
+
+            }
+
+          rounds.push(final_round_data);
+        // final_round_data.p
+         }
+    }
     // console.log(brackets.winner);
     if (brackets.winner) {
       // team_1 = teams[team_1 - 1];
@@ -180,6 +208,17 @@ class TournamentInfo extends React.Component {
         }
       ]);
       round_titles.push('Winner');
+    }
+    else{
+          rounds.push([
+            {
+        empty : true,
+          class: 'winner_round',
+          is_winner: true,
+          match_title: ' ',
+            player1: {name:'',empty:true, ID:'', url:'', winner: '' },
+        }]);
+        round_titles.push('Winner');
     }
     // debugger;
     // console.log(rounds);
@@ -334,7 +373,8 @@ class TournamentInfo extends React.Component {
       !team_u.user_info['gamer_tag_' + this.state.tournament.ladder.gamer_tag]
     ) {
       return (
-        <span className="text-danger">
+        <span className="text-danger"   data-toggle="tooltip"
+          title="Gamer Tag not Set">
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -345,7 +385,8 @@ class TournamentInfo extends React.Component {
 
     if (parseFloat(team_u.user_info.credit_balance) < amount) {
       return (
-        <span className="text-danger">
+        <span className="text-danger"   data-toggle="tooltip"
+          title="Not Enough Credit Balance">
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -353,7 +394,8 @@ class TournamentInfo extends React.Component {
     }
     if (this.state.tournament.member_tournament && !team_u.user_info.prime) {
       return (
-        <span className="text-danger">
+        <span className="text-danger"   data-toggle="tooltip"
+          title="Not a prime member">
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
