@@ -471,7 +471,7 @@ class NewMatchTeamSelect extends React.Component {
     '',
     'Xbox Live Gamertag',
     'PSN',
-    'Epic Games Username',
+    'Username',
     'Steam Username',
     'Battletag'
   ];

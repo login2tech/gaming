@@ -341,7 +341,9 @@ li.logo {
     padding: 70px 0px;
     box-shadow: 0 0 5px 2px #2847f3
 }
-
+.has-shadow{
+  box-shadow: 0 0 5px 2px #2847f3
+}
 .contact-col-2 {
     margin-left: 20%;
 }
@@ -5465,6 +5467,10 @@ a.menu_btn.bg-white.text-black:hover {
     width: 26px;
     margin-left: 5px;
 }
+.flag_ico_m{
+  width: 33px;
+  margin-left: 5px;
+}
 
 span.crossplatform_ico {
     letter-spacing: -10px;
@@ -5503,7 +5509,7 @@ media query starts here
     }
 
     .fl-2 {
-        width: 25%;
+        width: 28%;
     }
 
     .fl-1 {

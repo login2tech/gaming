@@ -55,7 +55,9 @@ class CMSPage extends React.Component {
         <section className="contet_part">
           <div className="container">
             <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
+              <div className={
+                this.props.params.slug=='about' || this.props.params.slug =='about-us' ? 'has-shadow col-md-6 offset-md-3 p-5 col-sm-12 col-xs-12'  :   "col-md-12 col-sm-12 col-xs-12"
+              }>
                 <div dangerouslySetInnerHTML={{__html: this.state.content}} />
               </div>
             </div>

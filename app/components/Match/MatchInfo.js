@@ -307,7 +307,8 @@ class MatchInfo extends React.Component {
                 json.teams[i].removed ||
                 !json.teams[i].team_info ||
                 json.teams[i].team_info.removed ||
-                json.teams[i].team_info.ladder_id != this.state.match.ladder_id
+                json.teams[i].team_info.ladder_id != this.state.match.ladder_id ||
+                json.teams[i].team_info.team_type !='matchfinder'
               ) {
                 continue;
               }
@@ -905,6 +906,9 @@ class MatchInfo extends React.Component {
                                   ? '' + match.match_fee + '$'
                                   : '' + match.match_fee + ' credits') +
                                 ')'}
+                                {
+                                  utils.feeIcon(match.match_type )
+                                }
                             </span>
                           )}
                         </p>

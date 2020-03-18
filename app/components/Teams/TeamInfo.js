@@ -1394,7 +1394,7 @@ class TeamInfo extends React.Component {
                   false
                 )}
                 <div className="content_box">
-                  <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
+                  <h5 className="prizes_desclaimer">RECENT MATCHES</h5>
 
                   <div className="table_wrapper">
                     {this.state.team_info.team_type == 'matchfinder' ? (

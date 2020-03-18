@@ -18,6 +18,7 @@ class Money8Info extends React.Component {
       match: {
         team_1: '',
         team_2: '',
+        match_fee:  '',
         game: {},
         ladder: {},
         players: '[]'
@@ -710,6 +711,9 @@ class Money8Info extends React.Component {
                                     this.state.match.match_fee +
                                     ' credits') +
                                 ')'}
+                                {
+                                  utils.feeIcon(this.state.match.match_type )
+                                }
                             </span>
                           )}
                         </p>

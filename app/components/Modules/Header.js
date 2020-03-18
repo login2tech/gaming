@@ -10,7 +10,8 @@ class Header extends React.Component {
       searchString: '',
       games: [],
       userSuggestions: [],
-      notifications: []
+      notifications: [],
+      messages : [{read:false}]
       // posts_page: 1
     };
     this.closeSide = this._closeCollapse.bind(this);
@@ -217,6 +218,25 @@ class Header extends React.Component {
                     </Link>
                   </li>
                 </ul>
+              </li>,
+              <li key={50} className="sm_on_mob has_children_m mr-4 ml-3">
+              <Link
+                className="profile_menu_item"
+                href="/messages"
+                onClick={() => {
+                  window.location.href = '/messages';
+                }}
+              >
+                <i className="fa fa-envelope" />
+                {this.state.messages &&
+                this.state.messages.length ? (
+                  <span className="dot notif_dot">
+                    {this.notifCount(this.state.messages)}
+                  </span>
+                ) : (
+                  false
+                )}
+              </Link>
               </li>,
 
               <li key={4} className="has_children_m profile_drop">
@@ -619,12 +639,12 @@ class Header extends React.Component {
               )}
             </div>
 
-            <div className="collapse navbar-collapse mr-3 fl-3" id="menu">
+            <div className="collapse navbar-collapse mr-1 fl-3" id="menu">
               <ul className=" navbar-nav nav-list">{this.renderLinks()}</ul>
             </div>
             <div
               className={
-                'collapse navbar-collapse ml-3 fl-2 justify-content-end ' +
+                'collapse navbar-collapse ml-1 fl-2 justify-content-end ' +
                 (this.props.user && this.props.token
                   ? ' is_logged_in'
                   : 'is_not_logged_in')

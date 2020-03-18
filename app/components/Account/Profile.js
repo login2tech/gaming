@@ -755,7 +755,7 @@ class Profile extends React.Component {
                   </div>
 
                   <div className="content_box">
-                    <h5 className="prizes_desclaimer">RECORD BY MATCHES</h5>
+                    <h5 className="prizes_desclaimer">RECENT MATCHES</h5>
 
                     <div className="table_wrapper">
                       <table className="table table-striped table-ongray table-hover">

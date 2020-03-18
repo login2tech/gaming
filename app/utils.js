@@ -24,6 +24,23 @@ const utils = {
 
     return false;
   },
+  feeIcon: function(type){
+    if(!type)
+      type  = '';
+    type = type.toLowerCase();
+    switch (type) {
+      case 'credits':
+      case 'credit':
+        return <img src="/assets/icons/coin-01.png" className="flag_ico_m" />;
+        break;
+      case 'cash':
+      case 'ocg':
+      case 'ocgcash':
+        return <img src="/assets/icons/money-01.png" className="flag_ico_m" />;
+        break;
+    }
+    return false;
+  },
   getCountryImage: function(country) {
     if(!country)
       country  = '';

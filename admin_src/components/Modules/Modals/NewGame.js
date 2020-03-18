@@ -22,7 +22,7 @@ class NewGame extends React.Component {
     this.image_url_ref = React.createRef();
     this.banner_url_ref = React.createRef();
     this.banner_2_url_ref = React.createRef();
-    this.mobile_banner_url = React.createRef();
+    this.mobile_banner_url_ref = React.createRef();
   }
 
   doClose() {
@@ -108,7 +108,7 @@ class NewGame extends React.Component {
   uploadFile3() {
     const data = new FormData();
 
-    const node = this.mobile_banner_ref.current;
+    const node = this.mobile_banner_url_ref.current;
 
     const file_1 = node.files[0];
     if (!file_1) {
@@ -291,7 +291,7 @@ class NewGame extends React.Component {
                   className="form-control"
                   name="mobile_banner_url"
                   required
-                  ref={this.mobile_banner_ref}
+                  ref={this.mobile_banner_url_ref}
                   // onChange={this.handleChange.bind(this)}
                   id="mobile_banner_url"
                   // value={this.state.title}
