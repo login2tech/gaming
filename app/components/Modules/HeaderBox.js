@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-class Header extends React.Component {
+class HeaderBox extends React.Component {
 
   render(){
     return (
@@ -20,6 +20,6 @@ class Header extends React.Component {
       </section>
     );
   }
-  
+
 }
-export default Header;
+export default HeaderBox;

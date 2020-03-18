@@ -18,6 +18,7 @@ import Money8 from './components/DataRows/Money8';
 import Tournaments from './components/DataRows/Tournaments';
 import Games from './components/DataRows/Games';
 import FAQ from './components/DataRows/FAQ';
+import GenRules from './components/DataRows/GenRules';
 import Ladders from './components/DataRows/Ladders';
 import Topics from './components/DataRows/Topics';
 import Posts from './components/DataRows/Posts';
@@ -114,6 +115,17 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
+
+      <Route
+        path="/general-rules"
+        component={GenRules}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+
+
+
+
       <Route
         path="/teams/:uid"
         component={Teams}

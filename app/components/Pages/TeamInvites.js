@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router';
 import moment from 'moment';
 import {approveRequest} from '../../actions/team';
+import HeaderBox from '../Modules/HeaderBox';
 class TeamInvites extends React.Component {
   constructor(props) {
     super(props);
@@ -50,19 +51,10 @@ class TeamInvites extends React.Component {
     // if (this.state.is_loaded && !this.state.is_page) {
     //   return <NotFound />;
     // }
+
     return (
       <div>
-        <section className="page_title_bar noblend">
-          <div className="container-fluid half">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
-                  <h3>My Team Invites</h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <HeaderBox title={'404 Not Found'} cls='all_t_heading' />
 
         <section className="contet_part">
           <div className="container">

@@ -55,7 +55,7 @@ const creditsController = require('./controllers/credits');
 // const topicsController = require('./controllers/topics');
 
 const faqController = require('./controllers/faq');
-const genrulesController = require('./controllers/genrulesController');
+const genrulesController = require('./controllers/grules');
 const langController = require('./controllers/language');
 const settingsController = require('./controllers/settings');
 const notifController = require('./controllers/notif');

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 // import {Translate, withLocalize} from 'react-localize-redux';
-
+import HeaderBox from '../Modules/HeaderBox';
 class FAQ extends React.Component {
   constructor(props) {
     super(props);
@@ -36,17 +36,8 @@ class FAQ extends React.Component {
   render() {
     return (
       <div>
-        <section className="page_title_bar noblend">
-          <div className="container-fluid half">
-            <div className="row">
-              <div className="col-md-12">
-                <div className="section-headline white-headline text-left">
-                  <div className="all_t_heading">F.A.Q.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      <HeaderBox title={'General Rules'} cls='all_t_heading' />
+
 
         <section className="faq-section mb-5">
           <div className="container mb-5">

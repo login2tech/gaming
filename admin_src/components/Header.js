@@ -272,6 +272,16 @@ class Header extends React.Component {
                   <Link onClick={this.closeSide} to="/faq">
                     FAQs
                   </Link>
+
+                  <ul className="dropdown-menu">
+                    <li>
+                    <Link onClick={this.closeSide} to="/general-rules">
+                      List General Rules
+                    </Link>
+
+                  </li>
+                  </ul>
+
                 </li>
                 <li>
                   <Link
