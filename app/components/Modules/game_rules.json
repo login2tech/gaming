@@ -150,7 +150,7 @@
           "type": "h2",
           "value": "MAP CODE: 3080-7809-4388"
         }
-       
+
       ]
     },
     {
@@ -823,11 +823,13 @@
             "Killstreaks: Disabled",
             "Battlechatter: Disabled"
           ]
-        },
-        {
-          "type": "h2",
-          "value": "Gunfight:"
-        },
+        }
+      ]
+    },
+    {
+      "type" : "tab",
+      "title": "Gunfight",
+      "content" : [
         {
           "type": "paragraph",
           "value": [
