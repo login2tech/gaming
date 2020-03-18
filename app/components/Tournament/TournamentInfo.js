@@ -107,58 +107,75 @@ class TournamentInfo extends React.Component {
   }
 
   cnt = 1;
+  rounc(a){
+    a=parseInt(a);
+    if(a==4)return 2;
+    if(a==8)return 3;
+    if(a==16)return 4;
+    if(a==32)return 5;
 
+  }
   createBrackets() {
     this.cnt = 0;
     let brackets = this.state.tournament.brackets;
 
     if (!brackets) {
-      return;
+      brackets=
+        {
+          rounds_calculated : 0,
+          total_rounds :  this.rounc(this.state.tournament.total_teams),
+
+        }
+        brackets=JSON.stringify(brackets);
+
+      // return;
     }
     let teams = this.state.tournament.team_ids;
+    if(!teams)teams='';
     teams = teams.split(',');
     brackets = JSON.parse(brackets);
     const rounds_c = brackets.rounds_calculated;
 
     const rounds = [];
     const round_titles = [];
+    if(rounds_c > 0){
+      for (let i = 0; i < rounds_c; i++) {
+        const round_data = brackets['round_' + (i + 1)];
+        // console.log(round_data);
+        // if()
+        const final_round_data = [];
+        for (let j = 0; j < round_data.length; j++) {
+          let team_1 = round_data[j][0];
+          team_1 = teams[team_1 - 1];
 
-    for (let i = 0; i < rounds_c; i++) {
-      const round_data = brackets['round_' + (i + 1)];
-      // console.log(round_data);
-      // if()
-      const final_round_data = [];
-      for (let j = 0; j < round_data.length; j++) {
-        let team_1 = round_data[j][0];
-        team_1 = teams[team_1 - 1];
-
-        let team_2 = round_data[j][1];
-        team_2 = teams[team_2 - 1];
-        // console.log(team_1, team_2);
-        const team_1_name = this.get_team_name(team_1);
-        const team_2_name = this.get_team_name(team_2);
-        this.cnt++;
-        final_round_data.push({
-          match_title: this.getMatchName(i + 1, team_1, team_2, this.cnt),
-          player1: {
-            name: team_1_name,
-            ID: team_1,
-            url: '/teams/view/' + team_1,
-            winner: this.getMatchWinner(i + 1, team_1, team_2, team_1),
-            looser: this.getMatchLooser(i + 1, team_1, team_2, team_1)
-          },
-          player2: {
-            name: team_2_name,
-            ID: team_2,
-            url: '/teams/view/' + team_2,
-            winner: this.getMatchWinner(i + 1, team_1, team_2, team_2),
-            looser: this.getMatchLooser(i + 1, team_1, team_2, team_2)
-          }
-        });
-      }
-      if (final_round_data.length) {
-        rounds.push(final_round_data);
-        round_titles.push('Round ' + (i + 1));
+          let team_2 = round_data[j][1];
+          team_2 = teams[team_2 - 1];
+          // console.log(team_1, team_2);
+          const team_1_name = this.get_team_name(team_1);
+          const team_2_name = this.get_team_name(team_2);
+          this.cnt++;
+          final_round_data.push({
+            match_title: this.getMatchName(i + 1, team_1, team_2, this.cnt),
+            player1: {
+              name: team_1_name,
+              ID: team_1,
+              url: '/teams/view/' + team_1,
+              winner: this.getMatchWinner(i + 1, team_1, team_2, team_1),
+              looser: this.getMatchLooser(i + 1, team_1, team_2, team_1)
+            },
+            player2: {
+              name: team_2_name,
+              ID: team_2,
+              url: '/teams/view/' + team_2,
+              winner: this.getMatchWinner(i + 1, team_1, team_2, team_2),
+              looser: this.getMatchLooser(i + 1, team_1, team_2, team_2)
+            }
+          });
+        }
+        if (final_round_data.length) {
+          rounds.push(final_round_data);
+          round_titles.push('Round ' + (i + 1));
+        }
       }
     }
 
@@ -169,9 +186,13 @@ class TournamentInfo extends React.Component {
       {
         let final_round_data = [];
 
+          let add;
+            if(k==0){
+                add = this.state.tournament.total_teams;
+            }else{
+                add = rounds[k-1].length ;
+            }
 
-
-            let add = rounds[k-1].length ;
             add = add/2;
             console.log('this round: ', k, 'has ', add, 'matches');
             for(let m = 0 ; m<add;m++)
@@ -973,15 +994,15 @@ class TournamentInfo extends React.Component {
 
   renderBrackets() {
     const brackets = this.state.tournament.brackets;
-    if (!brackets) {
-      return (
-        <div className="col-md-12">
-          <div className="alert alert-warning">
-            Brackets are yet not generated
-          </div>
-        </div>
-      );
-    }
+    // if (!brackets) {
+    //   return (
+    //     <div className="col-md-12">
+    //       <div className="alert alert-warning">
+    //         Brackets are yet not generated
+    //       </div>
+    //     </div>
+    //   );
+    // }
     return (
       <div className="col-md-12">
         <div className="brackets" style={{zoom: this.state.zoom}} />
