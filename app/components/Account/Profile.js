@@ -671,8 +671,8 @@ class Profile extends React.Component {
                     </h5>
 
                     <div className="list_pad prof_abt">
-                      <div className="row">
-                        <div className="col-md-5 pl-md-5">
+                      <div className="row" style={{ padding: '20px' }}>
+                        <div className="col-md-4 pl-md-5">
                           <span> MEMBER SINCE</span>
                           <p>
                             {moment(this.state.user_info.created_at).format(
@@ -688,7 +688,7 @@ class Profile extends React.Component {
                               : '-'}
                           </p>
                         </div>
-                        <div className="col-md-3 col-6  ">
+                        <div className="col-md-4 col-6  ">
                           <span> REGION </span>
                           <p>
                             {this.state.user_info.country

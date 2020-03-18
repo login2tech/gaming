@@ -6,6 +6,7 @@ const moment = require('moment');
 import {join_tournament, saveScores} from '../../actions/tournament';
 import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
+import utils from '../../utils';
 
 class TournamentInfo extends React.Component {
   constructor(props) {
@@ -1384,6 +1385,13 @@ class TournamentInfo extends React.Component {
 
   render() {
     const {tournament} = this.state;
+
+    let game_settings =
+      tournament && tournament.game_settings ? JSON.parse(tournament.game_settings) : {};
+    if (!game_settings) {
+      game_settings = {};
+    }
+    const game_settings_keys = Object.keys(game_settings);
     return (
       <div>
         <section
@@ -1445,6 +1453,15 @@ class TournamentInfo extends React.Component {
                           : 'Registration Ends'}{' '}
                         {moment(tournament.registration_end_at).fromNow()}
                       </div>
+                      <div>
+                        <strong>Region: </strong>
+                        {game_settings && game_settings['match_available']
+                          ? utils.getCountryImage(
+                              game_settings['match_available']
+                            )
+                          : ''}
+                      </div>
+
                     </div>
                     <div className="col-12 col-md"> </div>
                   </div>
@@ -1474,6 +1491,21 @@ class TournamentInfo extends React.Component {
                           {' / ' + tournament.total_teams}
                         </p>
                       </div>
+                      {game_settings_keys.map((k, i) => {
+                        if (k == 'match_available') {
+                          return false;
+                        }
+                        const m = k.replace(new RegExp('_', 'g'), ' ');
+                        // if (m.toLowerCase() === 'match available') {
+                        //   m = 'Match Region';
+                        // }
+                        return (
+                          <div className="col-md-4 col-6 textcap" key={k}>
+                            <span>{m}</span>
+                            <p>{game_settings[k]}</p>
+                          </div>
+                        );
+                      })}
                     </div>
                     {this.renderJoin()}
                   </div>

@@ -5,6 +5,9 @@ const moment = require('moment');
 
 const SingleTournament = props => {
   const {tour} = props;
+  if (typeof tour.game_settings === 'string') {
+    tour.game_settings = JSON.parse(tour.game_settings);
+  }
 
   return (
     <div className="col-xs-12 col-sm-12 col-md-6 padding-tournament">
@@ -38,8 +41,18 @@ const SingleTournament = props => {
             <div className="tour-description-block">
               <div className="name-block">
                 <div className="tour-platform">
-                  {utils.platform_icon(tour.ladder.platform)}
+
+
+                <div className="mb-1">
+                  {tour.game_settings &&
+                  tour.game_settings['match_available']
+                    ? utils.getCountryImage(
+                        tour.game_settings['match_available']
+                      )
+                    : false}
                 </div>
+                <div>{utils.platform_icon(tour.ladder.platform)}</div>
+ </div>
                 <p className="tour-name" tabIndex="0">
                   {tour.title} <br />
                   <small>
