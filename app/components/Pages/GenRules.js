@@ -6,8 +6,7 @@ class FAQ extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      faqs: {},
-      faq_c: []
+      faqs: [],
     };
   }
 
@@ -19,21 +18,15 @@ class FAQ extends React.Component {
     fetch('/api/genrules/list').then(res => {
       if (res) {
         res.json().then(obj => {
-          const faqs = {};
-          for (let i = 0; i < obj.faqs.length; i++) {
-            const faq = obj.faqs[i];
-            if (!faqs[faq.category]) {
-              faqs[faq.category] = [];
-            }
-            faqs[faq.category].push(faq);
-          }
-          this.setState({faqs: faqs, faq_c: Object.keys(faqs)});
+
+          this.setState({faqs: obj.faqs });
         });
       }
     });
   }
 
   render() {
+    let j = 1;
     return (
       <div>
       <HeaderBox title={'General Rules'} cls='all_t_heading' />
@@ -43,12 +36,9 @@ class FAQ extends React.Component {
           <div className="container mb-5">
             <div className="row mb-5">
               <div className="col-md-12 mb-5">
-                {this.state.faq_c.map((faqc, j) => {
-                  return (
-                    <>
-                      <h2>{faqc}</h2>
+
                       <div className="faq  mb-5" id={'accordion_' + j}>
-                        {this.state.faqs[faqc].map((faq, i) => {
+                        {this.state.faqs.map((faq, i) => {
                           return (
                             <div
                               className={
@@ -108,9 +98,7 @@ class FAQ extends React.Component {
                           );
                         })}
                       </div>
-                    </>
-                  );
-                })}
+
               </div>
             </div>
           </div>

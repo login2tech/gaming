@@ -400,6 +400,28 @@ app.post(
   faqController.deleteFaq
 );
 
+
+
+app.post(
+  '/api/genrule/add',
+  userController.ensureAuthenticated,
+  userController.isAdmin,
+  genrulesController.addFaq
+);
+app.post(
+  '/api/genrule/edit',
+  userController.ensureAuthenticated,
+  userController.isAdmin,
+  genrulesController.updateFaq
+);
+app.post(
+  '/api/genrule/delete',
+  userController.ensureAuthenticated,
+  userController.isAdmin,
+  genrulesController.deleteFaq
+);
+
+
 const gamesRoutes = require('./routes/games/games.route.js');
 app.use('/api/games', gamesRoutes);
 

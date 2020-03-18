@@ -140,9 +140,20 @@ class Header extends React.Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                   >
-                    Matches
+                    Games & Matches
                   </Link>
                   <ul className="dropdown-menu">
+                  <li>
+                    <Link onClick={this.closeSide} to="/games">
+                      List Games
+                    </Link>
+                  </li>
+                  <li style={{borderBottom:'1px solid black'}}>
+                    <Link onClick={this.closeSide} to="/ladders">
+                      List Ladders
+                    </Link>
+                  </li>
+
                     <li>
                       <a
                         // onClick={this.closeSide}
@@ -179,32 +190,10 @@ class Header extends React.Component {
                         Tournaments
                       </a>
                     </li>
+
                   </ul>
                 </li>
 
-                <li>
-                  <Link
-                    className="dropdown-toggle"
-                    data-toggle="dropdown"
-                    role="button"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Games & Ladders
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link onClick={this.closeSide} to="/games">
-                        List Games
-                      </Link>
-                    </li>
-                    <li>
-                      <Link onClick={this.closeSide} to="/ladders">
-                        List Ladders
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
 
                 <li>
                   <Link
@@ -268,21 +257,37 @@ class Header extends React.Component {
                     Settings
                   </Link>
                 </li>
+
+
+
+
                 <li>
-                  <Link onClick={this.closeSide} to="/faq">
-                    FAQs
+                  <Link
+                    className="dropdown-toggle"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    FAQs & more
                   </Link>
-
                   <ul className="dropdown-menu">
-                    <li>
-                    <Link onClick={this.closeSide} to="/general-rules">
-                      List General Rules
-                    </Link>
+                        <li>
+                        <Link onClick={this.closeSide} to="/faq">
+                          Faqs
+                        </Link>
 
-                  </li>
+                      </li>
+                      <li>
+                      <Link onClick={this.closeSide} to="/general-rules">
+                        List General Rules
+                      </Link>
+
+                    </li>
                   </ul>
-
                 </li>
+
+
                 <li>
                   <Link
                     className="dropdown-toggle"

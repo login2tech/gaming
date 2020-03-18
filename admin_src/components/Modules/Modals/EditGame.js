@@ -16,7 +16,7 @@ class EditGame extends React.Component {
       banner_url: '',
       mobile_banner_url: '',
       banner_2_url: '',
-      rules: ''
+      rules: '-'
     };
     this.image_url_ref = React.createRef();
     this.banner_url_ref = React.createRef();
@@ -340,16 +340,7 @@ class EditGame extends React.Component {
                   // value={this.state.title}
                 />
               </div>
-              <div className="input-control">
-                <label>Rules</label>
-                <textarea
-                  className="form-control"
-                  name="rules"
-                  onChange={this.handleChange.bind(this)}
-                  id="rules"
-                  value={this.state.rules}
-                />
-              </div>
+               
               <br />
 
               <input

@@ -41,6 +41,9 @@ const fixateModel = function(req, res, next) {
         next();
         return;
         case 'genrules':
+        req.Mdl = GenRules;
+        next();
+        return;
       case 'genrule':
         req.Mdl = GenRules;
         next();

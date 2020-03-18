@@ -178,10 +178,10 @@ class GenRules extends React.Component {
                 className="btn btn-success btn-xs"
                 onClick={this.addItem.bind(this)}
               >
-                <span className="fa fa-plus" /> Add new faq
+                <span className="fa fa-plus" /> Add new general rule
               </button>
             </div>
-            <h2 style={{padding: 0, margin: 0}}>FAQs</h2>
+            <h2 style={{padding: 0, margin: 0}}>General Rules</h2>
           </div>
         </div>
         <div className="panel">
@@ -269,4 +269,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(FAQ);
+export default connect(mapStateToProps)(GenRules);

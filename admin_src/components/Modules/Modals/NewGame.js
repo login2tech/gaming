@@ -13,7 +13,7 @@ class NewGame extends React.Component {
       title: '',
       image_url: '',
 
-      rules: '',
+      rules: '-',
 
       banner_url: '',
       mobile_banner_url: '',
@@ -310,16 +310,7 @@ class NewGame extends React.Component {
                   // value={this.state.title}
                 />
               </div>
-              <div className="input-control">
-                <label>Rules</label>
-                <textarea
-                  className="form-control"
-                  name="rules"
-                  onChange={this.handleChange.bind(this)}
-                  id="rules"
-                  value={this.state.rules}
-                />
-              </div>
+             
               <br />
               <input
                 value="Create Game"

@@ -18,7 +18,7 @@ exports.updateFaq = function(req, res, next) {
 
   req.assert('content', 'Content cannot be blank').notEmpty();
 
-  req.assert('category', 'Category cannot be blank').notEmpty();
+  // req.assert('category', 'Category cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
   if (errors) {
@@ -31,7 +31,7 @@ exports.updateFaq = function(req, res, next) {
     title: req.body.title,
 
     content: req.body.content,
-    category: req.body.category
+    // category: req.body.category
   });
 
   faq
@@ -50,7 +50,7 @@ exports.addFaq = function(req, res, next) {
   req.assert('title', 'Title cannot be blank').notEmpty();
 
   req.assert('content', 'Content cannot be blank').notEmpty();
-  req.assert('category', 'Category cannot be blank').notEmpty();
+  // req.assert('category', 'Category cannot be blank').notEmpty();
 
   const errors = req.validationErrors();
 
@@ -60,15 +60,15 @@ exports.addFaq = function(req, res, next) {
 
   new Faq({
     title: req.body.title,
-    category: req.body.category,
+    // category: req.body.category,
     content: req.body.content
   })
     .save()
     .then(function(user) {
-      res.send({ok: true, msg: 'New FAQ item has been created successfully.'});
+      res.send({ok: true, msg: 'New rule item has been created successfully.'});
     })
     .catch(function(err) {
-      // console.log(err);
+      console.log(err);
       return res
         .status(400)
         .send({msg: 'Something went wrong while created a new FAQ item'});
@@ -78,7 +78,7 @@ exports.addFaq = function(req, res, next) {
 exports.listFaq = function(req, res, next) {
   new Faq()
     .orderBy('id', 'ASC')
-    .orderBy('category', 'ASC')
+    // .orderBy('category', 'ASC')
     .fetchAll()
     .then(function(faqs) {
       if (!faqs) {
@@ -87,7 +87,7 @@ exports.listFaq = function(req, res, next) {
       return res.status(200).send({ok: true, faqs: faqs.toJSON()});
     })
     .catch(function(err) {
-      return res.status(200).send([]);
+      return res.status(200).send({ok:false, faqs:[]});
     });
 };
 
