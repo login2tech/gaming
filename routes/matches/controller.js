@@ -1300,7 +1300,7 @@ exports.addItem = function(req, res, next) {
         new Notif()
           .save({
             user_id: req.body.using_users[i],
-            description: 'Your created a new Challenge',
+            description: 'You created a new Challenge',
             type: 'match',
             object_id: item.id
           })

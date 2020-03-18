@@ -22,6 +22,7 @@ import Profile from './components/Account/Profile';
 import Timeline from './components/Account/Timeline';
 import SinglePost from './components/Social/SinglePost';
 import FAQ from './components/Pages/FAQ';
+import GenRules from './components/Pages/GenRules';
 import Dashboard from './components/Account/Dashboard';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
@@ -102,7 +103,7 @@ export default function getRoutes(store) {
         component={AdvertiseWithUs}
         onLeave={clearMessages}
       />
-      <Route path="/general-rules" component={FAQ} />
+      <Route path="/general-rules" component={GenRules} />
       <Route onLeave={clearMessages} path="/faq" component={FAQ} />
       <Route onLeave={clearMessages} path="/p/:slug" component={CMSPage} />
       <Route

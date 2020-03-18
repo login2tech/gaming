@@ -22,6 +22,7 @@ const FormAdvertise = require('../../models/FormAdvertise');
 const FormStaffApplication = require('../../models/FormStaffApplication');
 const FormSubscribe = require('../../models/FormSubscribe');
 const FAQ = require('../../models/Faq');
+const GenRules = require('../../models/GenRules');
 
 const CashTransactions = require('../../models/CashTransactions');
 const CreditTransactions = require('../../models/CreditTransactions');
@@ -35,10 +36,15 @@ const fixateModel = function(req, res, next) {
       req.Mdl = User;
       next();
       return;
-    case 'faq':
-      req.Mdl = FAQ;
-      next();
-      return;
+      case 'faq':
+        req.Mdl = FAQ;
+        next();
+        return;
+        case 'genrules':
+      case 'genrule':
+        req.Mdl = GenRules;
+        next();
+        return;
     case 'games':
       req.Mdl = Game;
       next();

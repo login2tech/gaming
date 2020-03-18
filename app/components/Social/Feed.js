@@ -280,7 +280,7 @@ class Feed extends React.Component {
                               }
                             );
                           }}
-                          className="btn-outline text-white"
+                          className="btn-outline text-white m-auto"
                         >
                           load more <span className="fa fa-angle-right" />
                         </button>

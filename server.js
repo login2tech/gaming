@@ -55,6 +55,7 @@ const creditsController = require('./controllers/credits');
 // const topicsController = require('./controllers/topics');
 
 const faqController = require('./controllers/faq');
+const genrulesController = require('./controllers/genrulesController');
 const langController = require('./controllers/language');
 const settingsController = require('./controllers/settings');
 const notifController = require('./controllers/notif');
@@ -378,6 +379,7 @@ app.post(
 );
 
 app.get('/api/faq/list', faqController.listFaq);
+app.get('/api/genrules/list', genrulesController.listFaq);
 app.get('/api/faq/single/:id', faqController.listSingleFaq);
 app.post(
   '/api/faq/add',
