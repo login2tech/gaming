@@ -590,7 +590,7 @@ class MatchInfo extends React.Component {
         }
       }
     } else {
-      return false;
+      // return false;
     }
 
     return (
