@@ -48,10 +48,14 @@ class NewMatchTeamSelect extends React.Component {
     if (event.target.name == 'ladder') {
       vl = parseInt(vl);
     }
+    else if(event.target.name == 'match_fee'){
+      vl = ""+(parseInt(vl));
+    }
     this.setState({[event.target.name]: vl}, () => {
       this.setLadderObj();
     });
   }
+
 
   loadTeams() {
     fetch(
@@ -890,8 +894,9 @@ class NewMatchTeamSelect extends React.Component {
                           <input
                             type="number"
                             min="1"
-                            step="0.1"
+                            step="1"
                             id="match_fee"
+                            value={this.state.match_fee}
                             className="form-control"
                             onChange={this.handleChange.bind(this)}
                             required

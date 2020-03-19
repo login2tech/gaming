@@ -6756,3 +6756,11 @@ font-size: 50px !important;
   width: 100%;
   min-width: 0px;
 }
+
+.accordian-box-header.card-header {
+  padding : 0
+}
+
+.accordian-box-header.card-header h5{
+  padding: 11px 19px 10px 19px
+}

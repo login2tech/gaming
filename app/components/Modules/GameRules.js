@@ -6,7 +6,7 @@ class GameRules extends React.Component {
     let cls = Math.floor(Math.random() * 10000 + 1);
     cls = 'cls_' + cls;
     return (
-      <div className="accordian_box card">
+      <div className="accordian_box card" key={cls}>
         <div className="accordian-box-header card-header " id={cls + 'heading'}>
           <h5
             className="mb-0 accordian_click text-white "

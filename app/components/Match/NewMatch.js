@@ -31,7 +31,11 @@ class newMatch extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
+    let a = event.target.value;
+    if(event.target.name == 'match_fee'){
+      a = ""+(parseInt(a));
+    }
+    this.setState({[event.target.name]: a});
   }
 
   handleSettingsChange(event) {
@@ -672,13 +676,14 @@ class newMatch extends React.Component {
                           <input
                             type="number"
                             min="1"
-                            step="0.1"
+                            step="1"
                             id="match_fee"
                             className="form-control"
                             onChange={this.handleChange.bind(this)}
                             required
                             placeholder="Match Fees"
                             name="match_fee"
+                            value={this.state.match_fee}
                           />
                           {(this.state.match_type == 'credits' ||
                             this.state.match_type == 'cash') &&
