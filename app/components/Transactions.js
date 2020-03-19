@@ -189,7 +189,7 @@ class Transaction extends React.Component {
                                       $ {k.qty}
                                     </td>
                                     <td className="d-none d-md-table-cell" >
-                                      {k.balance} credits
+                                      {k.balance ? '$ '+k.balance : ''}
                                     </td>
                                     <td className="d-md-none">
                                       <button
@@ -228,7 +228,7 @@ class Transaction extends React.Component {
                                             </tr>
                                             <tr>
                                               <td>Balance</td>
-                                              <td>{k.balance}</td>
+                                              <td>{k.balance ? '$ '+k.balance : ''}</td>
                                             </tr>
                                           </tbody>
                                         </table>
@@ -322,7 +322,7 @@ class Transaction extends React.Component {
                                     </td>
                                     <td className="d-none d-md-table-cell"
                                     >
-                                      {k.balance} credits
+                                      {k.balance ? ''+k.balance + ' credits' : ''}
                                     </td>
                                     <td className="d-md-none">
                                       <button
@@ -361,7 +361,7 @@ class Transaction extends React.Component {
                                             </tr>
                                             <tr>
                                               <td>Description</td>
-                                              <td>{k.balance}</td>
+                                              <td>{k.balance ? ''+k.balance + ' credits' : ''}</td>
                                             </tr>
                                           </tbody>
                                         </table>
