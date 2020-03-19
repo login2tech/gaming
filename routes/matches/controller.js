@@ -1284,7 +1284,7 @@ exports.addItem = function(req, res, next) {
     .then(function(item) {
       res.send({
         ok: true,
-        msg: 'Team Challenged successfully.',
+        msg: req.body.is_challenge ? 'Team Challenged successfully.' : 'Match Created successfully',
         match: item.toJSON()
       });
       if (req.body.match_type == 'credits' || req.body.match_type == 'cash') {
@@ -1300,7 +1300,7 @@ exports.addItem = function(req, res, next) {
         new Notif()
           .save({
             user_id: req.body.using_users[i],
-            description: 'You created a new Challenge',
+            description: req.body.is_challenge ? 'You created a new challenge' : 'You created a new match',
             type: 'match',
             object_id: item.id
           })
