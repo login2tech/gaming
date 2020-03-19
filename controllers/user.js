@@ -177,6 +177,7 @@ exports.signupPost = function(req, res, next) {
     gender: req.body.gender,
     dob: req.body.dob,
     role: 'user',
+    timezone : req.body.timezone, 
     ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     state: req.body.state ? req.body.state : '',
     country: req.body.country ? req.body.country : '',

@@ -121,6 +121,7 @@ class Signup extends React.Component {
           password: this.state.password,
           state: this.state.country == 'United States' ? this.state.state : '-',
           country: this.state.country,
+          timezone  :this.state.timezone,
           password_confirm: this.state.password_confirm
         },
         () => {
@@ -250,7 +251,6 @@ class Signup extends React.Component {
                           onChange={this.handleChange.bind(this)}
                         />
                       </div>
-
                       <div className="form-group col-md-12">
                         <select
                           required
