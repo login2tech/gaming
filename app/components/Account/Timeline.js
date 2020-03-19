@@ -153,6 +153,7 @@ class Profile extends React.Component {
                     this.props.user.id == this.state.user_info.id ? (
                       <NewPost
                         user_info={this.state.user_info}
+
                         onSubmit={post => {
                           const posts = this.state.posts;
                           posts.unshift(post);
@@ -174,6 +175,7 @@ class Profile extends React.Component {
                       <NewPost
                         user_info={this.state.user_info}
                         is_in_timeline
+                        forceusername={this.state.user_info.username}
                         onSubmit={post => {
                           const posts = this.state.posts;
                           posts.unshift(post);
