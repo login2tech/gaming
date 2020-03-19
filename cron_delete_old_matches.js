@@ -84,7 +84,7 @@ const delete_tournament = function(tid, tour) {
     .then(function(d) {
       // console.log('ye');
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
     });
 };
@@ -144,7 +144,7 @@ const delete_match = function(ta, match) {
     .then(function(d) {
       //
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
     });
 };
@@ -176,7 +176,7 @@ const delete_money8 = function(ta, match) {
     .then(function(d) {
       //
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
     });
 };
@@ -194,7 +194,7 @@ const updateUserRank = function(uid, rank) {
     .then(function(d) {
       //
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
     });
 };
@@ -220,7 +220,7 @@ const unresponsive_match = function(m_id, match) {
       .then(function() {
         //
       })
-      .catch(function(err) {
+      .catch(function(err) {console.log(err)
         // console.log(err);
         Raven.captureException(err);
       });
@@ -249,7 +249,7 @@ const unresponsive_match_money8 = function(m_id, match) {
       .then(function() {
         //
       })
-      .catch(function(err) {
+      .catch(function(err) {console.log(err)
         // console.log(err);
         Raven.captureException(err);
       });
@@ -293,7 +293,7 @@ const unresponsive_tour_match = function(m_id, match) {
       .then(function() {
         //
       })
-      .catch(function(err) {
+      .catch(function(err) {console.log(err)
         // console.log(err);
         Raven.captureException(err);
       });
@@ -318,7 +318,7 @@ const process_8 = function() {
       // setTimeout(process_8, 4000);
       //
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -344,7 +344,7 @@ const process_7 = function() {
       setTimeout(process_8, 4000);
       //
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -370,7 +370,7 @@ const process_6 = function() {
       setTimeout(process_7, 4000);
       //
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -399,7 +399,7 @@ const process_5 = function() {
       setTimeout(process_6, 6000);
       // return res.status(200).send({ok: true, items: usrs.toJSON()});
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -424,7 +424,7 @@ const process_4 = function() {
       reset_ticker();
       setTimeout(process_5, 6000);
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_5, 6000);
@@ -452,6 +452,7 @@ const process_3 = function() {
       setTimeout(process_4, 6000);
     })
     .catch(function(err) {
+      console.log(err)
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_4, 6000);
@@ -477,7 +478,7 @@ const process_2 = function() {
       setTimeout(process_3, 6000);
       reset_ticker();
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_3, 6000);
@@ -502,7 +503,7 @@ const process_1 = function() {
       reset_ticker();
       setTimeout(process_2, 6000);
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_2, 6000);
