@@ -85,7 +85,8 @@ const SingleMoney8 = props => {
                     ? match.match_fee + ' credits'
                     : match.match_type == 'cash'
                     ? '$' + match.match_fee
-                    : ' '}
+                    : ' '}{' '}{utils.feeIcon(match.match_type)}
+
                 </p>
               </div>
 
