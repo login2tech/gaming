@@ -29,7 +29,8 @@ const giveCashOrCreditsToUser = function(typ, user_id, amount, descr, obj) {
                 user_id: user_id,
                 obj_type: obj,
                 details: descr,
-                qty: amount
+                qty: amount,
+                balance :typ_balance
               })
               .then(function(o) {
                 //
@@ -72,7 +73,8 @@ const takeCashOrCreditsFromUser = function(typ, user_id, amount, descr, obj) {
               user_id: user_id,
               obj_type: obj,
               details: descr,
-              qty: -amount
+              qty: -amount,
+              balance :typ_balance
             })
               .then(function(o) {})
               .catch(function(err) {

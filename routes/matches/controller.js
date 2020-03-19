@@ -372,7 +372,8 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
               user_id: uid,
               obj_type: 'm_' + match_id,
               details: 'Credit for winning match #' + match_id,
-              qty: val
+              qty: val,
+              bal : cash_balance
             })
               .then(function(o) {})
               .catch(function(err) {
@@ -400,15 +401,17 @@ const takeMoneyFromMember = function(uid, input_val, match_id, type) {
 
         let obj;
         // cash_balance -= parseFloat(input_val);
-
+        let bal;
         if (type == 'cash') {
           let cash_balance = usr.get('cash_balance');
           cash_balance -= parseFloat(input_val);
           obj = {cash_balance: cash_balance};
+          bal = cash_balance;
         } else if (type == 'credits') {
           let credit_balance = usr.get('credit_balance');
           credit_balance -= parseFloat(input_val);
           obj = {credit_balance: credit_balance};
+          bal : credit_balance;
         }
 
         // console.log(cash_balance);
@@ -424,7 +427,9 @@ const takeMoneyFromMember = function(uid, input_val, match_id, type) {
             ct.save({
               user_id: uid,
               details: type + ' debit for joining match #' + match_id,
-              qty: -parseFloat(input_val)
+              qty: -parseFloat(input_val),
+              balance: bal
+
             })
               .then(function(o) {})
               .catch(function(err) {

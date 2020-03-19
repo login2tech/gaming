@@ -44,7 +44,8 @@ const giveCashToUser = function(uid, input_val, match_id) {
                 obj_type: 't_' + match_id,
                 details:
                   'Cash added for prize money of  tournament #' + match_id,
-                qty: parseFloat(input_val)
+                qty: parseFloat(input_val),
+                balance : cash_balance
               })
               .then(function(o) {})
               .catch(function(err) {
