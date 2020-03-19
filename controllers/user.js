@@ -804,7 +804,7 @@ exports.activateUser = function(req, res, next) {
                   maxdob: 90000000,
                   httpOnly: false
                 });
-                res.redirect('/plans');
+                res.redirect('/');
               } else {
                 res.redirect('/login');
               }

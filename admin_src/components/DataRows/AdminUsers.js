@@ -160,6 +160,7 @@ class AdminUsers extends React.Component {
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Username</th>
                     <th>Email</th>
                     <th>Active</th>
                     <th>Actions</th>
@@ -174,6 +175,7 @@ class AdminUsers extends React.Component {
                           <td>
                             {u.first_name} {u.last_name}
                           </td>
+                          <td>{u.username}</td>
                           <td>{u.email}</td>
                           <td>
                             {u.status ? (

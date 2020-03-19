@@ -241,7 +241,9 @@ class AppUsers extends React.Component {
                         }
                       }
                       return (
-                        <tr key={u.id}>
+                        <tr key={u.id} style={
+                          u.email_verified ? {}:{background:'rgb(255, 121, 121)'}
+                        }>
                           <td>{u.id}</td>
                           <td>
                             {u.first_name} {u.last_name}
