@@ -161,6 +161,7 @@ class Transaction extends React.Component {
                                 Description
                               </th>
                               <th style={{width: '13%'}}>OCG Cash</th>
+                              <th style={{width: '13%'}} className="d-none d-md-table-cell">Balance</th>
                               <th style={{width: '5%'}} className="d-md-none" />
                             </tr>
                           </thead>
@@ -186,6 +187,9 @@ class Transaction extends React.Component {
                                       }
                                     >
                                       $ {k.qty}
+                                    </td>
+                                    <td className="d-none d-md-table-cell" >
+                                      {k.balance} credits
                                     </td>
                                     <td className="d-md-none">
                                       <button
@@ -221,6 +225,10 @@ class Transaction extends React.Component {
                                             <tr>
                                               <td>Description</td>
                                               <td>{k.details}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Balance</td>
+                                              <td>{k.balance}</td>
                                             </tr>
                                           </tbody>
                                         </table>
@@ -283,6 +291,7 @@ class Transaction extends React.Component {
                                 Description
                               </th>
                               <th style={{width: '13%'}}>Credits</th>
+                              <th style={{width: '13%'}} className="d-none d-md-table-cell">Balance</th>
                               <th style={{width: '5%'}} className="d-md-none" />
                             </tr>
                           </thead>
@@ -310,6 +319,10 @@ class Transaction extends React.Component {
                                       }
                                     >
                                       {k.qty} credits
+                                    </td>
+                                    <td className="d-none d-md-table-cell"
+                                    >
+                                      {k.balance} credits
                                     </td>
                                     <td className="d-md-none">
                                       <button
@@ -345,6 +358,10 @@ class Transaction extends React.Component {
                                             <tr>
                                               <td>Description</td>
                                               <td>{k.details}</td>
+                                            </tr>
+                                            <tr>
+                                              <td>Description</td>
+                                              <td>{k.balance}</td>
                                             </tr>
                                           </tbody>
                                         </table>
