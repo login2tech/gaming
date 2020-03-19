@@ -39,7 +39,7 @@ const tzs = {
     {label: 'Mountain', value: 'Mountain'},
     {label: 'Pacific', value: 'Pacific'}
   ],
-  'United Kingdom': [
+  'Europe': [
     {label: 'Azores', value: 'Azores'},
     {label: 'Irish', value: 'Irish'},
     {label: 'Green which mean', value: 'Green which mean'},

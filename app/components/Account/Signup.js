@@ -2,10 +2,14 @@ import React from 'react';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {signup} from '../../actions/auth';
+import timezones from '../Modules/timezones';
 // import {facebookLogin} from '../../actions/oauth';
 import Messages from '../Modules/Messages';
 import states from '../Modules/states';
-const countries = ['United States', 'Canada', 'Europe'];
+const countries = [
+  'United States',
+  'Canada',
+  'Europe'];
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -26,6 +30,18 @@ class Signup extends React.Component {
   }
 
   handleChange(event) {
+    if(event.target.name =='country_2')
+    {
+      let val = event.target.value.split('|');
+      if(val.length  < 2){
+        val.push('');
+      }
+      this.setState({
+        country: val[0],
+        timezone : val[1]
+      });
+      return;
+    }
     this.setState({[event.target.name]: event.target.value});
   }
 
@@ -240,17 +256,24 @@ class Signup extends React.Component {
                           required
                           className="form-control"
                           placeholder="Region"
-                          id="country"
-                          name="country"
-                          value={this.state.country}
+                          id="country_2"
+                          name="country_2"
+                          value={this.state.country_2}
                           onChange={this.handleChange.bind(this)}
                         >
                           <option value="">Select Region</option>
                           {countries.map((state, i) => {
                             return (
-                              <option value={state} key={state}>
-                                {state}
-                              </option>
+                              <optgroup  key={state} label={state}>
+                              {timezones[state] &&
+                                timezones[state].map((timezone, i) => {
+                                  return (
+                                    <option value={state+'|'+timezone.value} key={timezone.label}>
+                                      {timezone.label}
+                                    </option>
+                                  );
+                                })}
+                              </optgroup>
                             );
                           })}
                         </select>
