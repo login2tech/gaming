@@ -10,6 +10,7 @@ import ProfileHeaderMobile from './ProfileHeaderMobile';
 import MyTeamsModule from './Modules/MyTeamsModule';
 import utils from '../../utils';
 
+import SendMessage from '../Modules/Modals/SendMessage';
 import ReactPaginate from 'react-paginate';
 
 class Profile extends React.Component {
@@ -332,6 +333,22 @@ class Profile extends React.Component {
     });
   };
 
+  startChat(e){
+    e.preventDefault();
+      this.props.dispatch(
+        openModal({
+          type: 'custom',
+          id: 'chat_',
+          zIndex: 534,
+          heading: 'Send Direct Message',
+
+          content: <SendMessage data={this.state.user_info.id} />
+        })
+      );
+
+
+  }
+
   render() {
     return (
       <div>
@@ -340,12 +357,14 @@ class Profile extends React.Component {
           is_loaded={this.state.is_loaded}
           fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="profile"
+          onChat={(e)=>{ this.startChat(e);}}
         />
         <ProfileHeaderMobile
           user_info={this.state.user_info}
           is_loaded={this.state.is_loaded}
           fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="profile"
+          onChat={(e)=>{ this.startChat(e);}}
         />
         <section
           className="contet_part single_match_details"

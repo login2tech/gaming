@@ -24,6 +24,7 @@ import SinglePost from './components/Social/SinglePost';
 import FAQ from './components/Pages/FAQ';
 import GenRules from './components/Pages/GenRules';
 import Dashboard from './components/Account/Dashboard';
+import Chat from './components/Chat';
 import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
 import Game from './components/Game';
@@ -359,6 +360,12 @@ export default function getRoutes(store) {
         onLeave={clearMessages}
       />
       <Route
+        path="/messages"
+        component={Chat}
+        onEnter={ensureAuthenticated}
+        onLeave={clearMessages}
+      />
+        <Route
         path="/dashboard"
         component={Dashboard}
         onEnter={ensureAuthenticated}

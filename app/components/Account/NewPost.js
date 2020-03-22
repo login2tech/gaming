@@ -19,8 +19,7 @@ class NewPost extends React.Component {
   {
     this.setState({
         new_post_content: this.props.forceusername && this.props.user.username != this.props.forceusername ? '@('+this.props.forceusername+')'  :''
-    })
-
+    });
   }
 
   handleChange(event) {

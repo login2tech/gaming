@@ -197,8 +197,9 @@ select.form-control:not([size]):not([multiple]) {
     padding: 0px 0px;
     font-weight: 500;
 }
-.nav-list li:not(.logo)>a span{
-  color:#fff
+
+.nav-list li:not(.logo)>a span {
+    color: #fff
 }
 
 .nav-list li:not(.logo)>a:after {
@@ -341,9 +342,11 @@ li.logo {
     padding: 70px 0px;
     box-shadow: 0 0 5px 2px #2847f3
 }
-.has-shadow{
-  box-shadow: 0 0 5px 2px #2847f3
+
+.has-shadow {
+    box-shadow: 0 0 5px 2px #2847f3
 }
+
 .contact-col-2 {
     margin-left: 20%;
 }
@@ -549,7 +552,6 @@ li.logo {
     background-color: #16329e;
     color: #ffffff;
     border-radius: 50%;
-
     bottom: 10px;
     display: inline-block;
     font-size: 20px;
@@ -4905,7 +4907,7 @@ a.post_image.post_image_smaller.post_video:after {
 
 .container-brackets .separator-brackets.rd-3 .line {
     height: 345px !important;
-        margin-bottom: 457px!important;
+    margin-bottom: 457px!important;
 }
 
 .container-brackets .round.rd-4 {
@@ -5312,7 +5314,7 @@ th.act_pr6 .actision_logo {
     min-height: 250px;
 }
 
-section.page_title_bar .col-md-12, section.page_title_bar .col-md-8  {
+section.page_title_bar .col-md-12, section.page_title_bar .col-md-8 {
     position: static;
 }
 
@@ -5340,7 +5342,6 @@ span.profile_menu_item_inner.small_avat {
 .btn-default.full_width, .full_width > .btn-default {
     min-width: 100%;
 }
-
 
 .tourinfo .container {
     position: relative;
@@ -5377,10 +5378,10 @@ span.capitalize {
     padding-right: 200px;
 }
 
-
-.single-trofy a.reset_rep{
-  right: 100px
+.single-trofy a.reset_rep {
+    right: 100px
 }
+
 .badge-primary {
     background-color: rgb(14, 55, 193);
 }
@@ -5388,33 +5389,37 @@ span.capitalize {
 #accordion .card {
     border-radius: 0 !important;
 }
+
 #accordion .card-header {
     padding-bottom: 10px;
     cursor: pointer;
 }
 
 .is_opened .card-header {
-  border-bottom: 1px solid rgb(29, 49, 176);
+    border-bottom: 1px solid rgb(29, 49, 176);
 }
+
 .open .card-header {
-  border-bottom: 1px solid rgb(29, 49, 176);
+    border-bottom: 1px solid rgb(29, 49, 176);
 }
 
-
-.team_header_mobile .update_btn{
-  bottom: auto;top: 10px
+.team_header_mobile .update_btn {
+    bottom: auto;
+    top: 10px
 }
 
-.is_prime_cell{
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: contain;
+.is_prime_cell {
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: contain;
 }
-.is_prime_cell.is_prime_type_gold{
-  background-image: url('/assets/icons/ocg_member_gold.png')
+
+.is_prime_cell.is_prime_type_gold {
+    background-image: url('/assets/icons/ocg_member_gold.png')
 }
-.is_prime_cell.is_prime_type_silver{
-  background-image: url('/assets/icons/ocg_member_silver.png')
+
+.is_prime_cell.is_prime_type_silver {
+    background-image: url('/assets/icons/ocg_member_silver.png')
 }
 
 .col-md-12.blue-border-top {
@@ -5423,27 +5428,60 @@ span.capitalize {
     margin-top: 50px;
 }
 
-.paypal-logo{font-family:Verdana,Tahoma;font-weight:700;font-size:26px}
-.paypal-logo i:first-child{color:#253b80}
-.paypal-logo i:last-child{color:#179bd7}
-.paypal-button{cursor: pointer;padding:7px 15px;margin-top:10px;border:1px solid #f93;border-radius:5px;background-image:linear-gradient(#fff0a8,#f9b421);margin:0 auto;display:block;min-width:138px;position:relative}
-.paypal-button-title{font-size:14px;color:#505050;vertical-align:baseline;text-shadow:0 1px 0 rgba(255,255,255,.6)}
-.paypal-button .paypal-logo{display:inline-block;text-shadow:0 1px 0 rgba(255,255,255,.6);font-size:20px}
+.paypal-logo {
+    font-family: Verdana,Tahoma;
+    font-weight: 700;
+    font-size: 26px
+}
+
+.paypal-logo i:first-child {
+    color: #253b80
+}
+
+.paypal-logo i:last-child {
+    color: #179bd7
+}
+
+.paypal-button {
+    cursor: pointer;
+    padding: 7px 15px;
+    margin-top: 10px;
+    border: 1px solid #f93;
+    border-radius: 5px;
+    background-image: linear-gradient(#fff0a8,#f9b421);
+    margin: 0 auto;
+    display: block;
+    min-width: 138px;
+    position: relative
+}
+
+.paypal-button-title {
+    font-size: 14px;
+    color: #505050;
+    vertical-align: baseline;
+    text-shadow: 0 1px 0 rgba(255,255,255,.6)
+}
+
+.paypal-button .paypal-logo {
+    display: inline-block;
+    text-shadow: 0 1px 0 rgba(255,255,255,.6);
+    font-size: 20px
+}
 
 .navbar-nav a:hover {
     text-shadow: -1px 0px 13px rgba(17, 74, 251,1), 2px 1px 13px rgba(17, 74, 251,1), 0px 1px 13px rgba(17, 74, 251,1);
 }
 
-.profile_drop ul li a{
-  padding: 6px 30px;
-  font-size: 14px;
-  line-height: 23px;
+.profile_drop ul li a {
+    padding: 6px 30px;
+    font-size: 14px;
+    line-height: 23px;
 }
 
 .rule_list {
     list-style: disc;
     padding-left: 20px;
-    margin-bottom:50px
+    margin-bottom: 50px
 }
 
 .region_input label {
@@ -5456,8 +5494,8 @@ span.capitalize {
 }
 
 a.menu_btn.bg-white.text-black {
-  color: rgb(0, 0, 0);
-box-shadow: 0 0 5px 3px #2847f3;
+    color: rgb(0, 0, 0);
+    box-shadow: 0 0 5px 3px #2847f3;
 }
 
 a.menu_btn.bg-white.text-black:hover {
@@ -5468,9 +5506,10 @@ a.menu_btn.bg-white.text-black:hover {
     width: 26px;
     margin-left: 5px;
 }
-.flag_ico_m{
-  width: 33px;
-  margin-left: 5px;
+
+.flag_ico_m {
+    width: 33px;
+    margin-left: 5px;
 }
 
 span.crossplatform_ico {
@@ -5497,13 +5536,318 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
     margin-bottom: -14px;
 }
 
+.alert-sm {
+    padding: 0px 14px;
+    fontSize: 13px
+}
+
+.profbtn {
+    width: 100%;
+    min-width: 0px;
+}
+
+.accordian-box-header.card-header {
+    padding : 0
+}
+
+.accordian-box-header.card-header h5 {
+    padding: 11px 19px 10px 19px
+}
+
+.inbox_people {
+    background: #222 none repeat scroll 0 0;
+    float: left;
+    overflow: hidden;
+    width: 30%;
+    border-right: 1px solid #c4c4c4;
+}
+
+.inbox_msg {
+    border: 1px solid #000;
+    clear: both;
+    overflow: hidden;
+}
+
+.top_spac {
+    margin: 20px 0 0;
+}
+
+.recent_heading {
+    float: left;
+    width: 40%;
+}
+
+.srch_bar {
+    display: inline-block;
+    text-align: right;
+    width: 60%;
+}
+
+.headind_srch {
+    padding: 10px 29px 10px 20px;
+    overflow: hidden;
+    border-bottom: 1px solid #114afb;
+}
+
+.recent_heading h4 {
+    color: #05728f;
+    font-size: 21px;
+    margin: auto;
+}
+
+/*
+.srch_bar input {
+    border: 1px solid #cdcdcd;
+    border-width: 0 0 1px 0;
+    width: 80%;
+    padding: 2px 0 4px 6px;
+    background: none;
+} */
+.srch_bar .input-group-addon button {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    padding: 0;
+    color: #707070;
+    font-size: 18px;
+}
+
+.srch_bar .input-group-addon {
+    margin: 0 0 0 -27px;
+}
+
+.chat_ib h5 {
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    margin: 0 0 8px 0;
+}
+
+.chat_ib h5 span {
+    font-size: 13px;
+    float: right;
+}
+
+.chat_ib p {
+    font-size: 14px;
+    color: #989898;
+    margin: auto
+}
+
+.chat_img {
+    float: left;
+    width: 17%;
+}
+
+.chat_img img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.chat_ib {
+    float: left;
+    padding: 0 0 0 15px;
+    width: 83%;
+    padding-top: 10px;
+}
+
+.chat_people {
+    overflow: hidden;
+    clear: both;
+}
+
+.chat_list {
+    border-bottom: 1px solid #114afb;
+    margin: 0;
+    padding: 10px 16px 10px;
+    background: #000;
+}
+
+.inbox_chat {
+    height: 550px;
+    overflow-y: auto;
+}
+
+.active.chat_list {
+    background: rgb(17, 74, 251);
+}
+
+.incoming_msg_img {
+    display: inline-block;
+    width: 6%;
+}
+
+.received_msg {
+    display: inline-block;
+    padding: 0 0 0 10px;
+    vertical-align: top;
+    width: 92%;
+}
+
+.received_withd_msg p {
+    background: #ebebeb none repeat scroll 0 0;
+    border-radius: 3px;
+    color: #646464;
+    font-size: 14px;
+    margin: 0;
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+}
+
+.time_date {
+    color: #747474;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+.received_withd_msg {
+    width: 57%;
+}
+
+.mesgs {
+    float: left;
+    padding: 30px 15px 0 25px;
+    width: 70%;
+}
+
+.sent_msg p {
+    background: rgb(17, 74, 251) none repeat scroll 0 0;
+    border-radius: 3px;
+    font-size: 14px;
+    margin: 0;
+    color: #fff;
+    padding: 5px 10px 5px 12px;
+    width: 100%;
+}
+
+.outgoing_msg {
+    overflow: hidden;
+    margin: 26px 0 26px;
+}
+
+.sent_msg {
+    float: right;
+    width: 46%;
+}
+
+.input_msg_write input {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: medium none;
+    color: #4c4c4c;
+    font-size: 15px;
+    min-height: 48px;
+    width: 100%;
+    padding-left: 10px;
+}
+
+.type_msg {
+    border-top: 1px solid #c4c4c4;
+    position: relative;
+}
+
+.msg_send_btn {
+    background: #05728f none repeat scroll 0 0;
+    border: medium none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    font-size: 17px;
+    height: 33px;
+    right: 0;
+    top: 11px;
+    width: 33px;
+}
+
+.msg_send_btn[disabled] {
+    cursor: not-allowed;
+    background: grey;
+}
+
+.messaging {
+    padding: 0 0 50px 0;
+    margin-bottom: 100px;
+    margin-top: 40px;
+}
+
+.msg_history {
+    height: 516px;
+    overflow-y: auto;
+}
+
+.chat_ib h5 {
+    font-weight: bold;
+    margin: 0;
+}
+
+.chat_ib span {
+    color: rgb(89, 180, 211);
+    font-size: 12px;
+    margin-top: -4px;
+    display: block;
+}
+
+button.msg_send_btn {
+    text-align: center;
+    padding: 7px;
+    font-size: 16px;
+    line-height: 13px;
+}
+
+.input_msg_write input, .input_msg_write button {
+    outline: none;
+}
+
+.incoming_msg_img img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.mh190 {
+    min-height: 190px
+}
+
+.left-navi {
+    position: sticky;
+    top: 0
+}
+
+a.collapsed.menu_collapse span.fa-chevron-down , .renttype:not(.collapsed) span.fa-chevron-right {
+    display: none;
+}
+
+a.menu_collapse:not(.collapsed) span.fa-chevron-right, .renttype.collapsed span.fa-chevron-down {
+    display: none;
+}
+
+a.menu_collapse span.fa, .renttype span.fa {
+    float : right;
+    padding-top: 5px
+}
+
+ul.main_cat_list.pr {
+    margin: 0;
+}
+
+.home-list-price {
+    min-height: 73px;
+}
+
+.messaging {
+    padding: 0px;
+    box-shadow: 0 0 5px 2px #2847f3;
+    min-height: 78vh;
+    margin-bottom: 100px;
+}
+
+.cht_send_btn[disabled] {
+    background: rgb(51, 50, 93);
+}
 
 /* media queries starts here
 media starts here
 media ends here
 media query starts here
 */
-
 @media screen and (min-width: 993px) {
     .fl-3 {
         flex:3
@@ -5946,12 +6290,12 @@ media query starts here
     }
 
     .update_btn label, .update_btn button {
-      font-size: 14px;
-      padding: 1px 2px;
-      height: 21px;
-      width: 21px;
-      line-height: 20px;
-      text-align: center;
+        font-size: 14px;
+        padding: 1px 2px;
+        height: 21px;
+        width: 21px;
+        line-height: 20px;
+        text-align: center;
     }
 
     .team_actions {
@@ -5997,11 +6341,10 @@ media query starts here
         margin-top: 10px;
     }
 
-
-            .star_img.big {
-                width: 150px;
-                height: auto;
-            }
+    .star_img.big {
+        width: 150px;
+        height: auto;
+    }
 }
 
 @media screen and (max-width: 690px) {
@@ -6009,11 +6352,10 @@ media query starts here
         border:0;
     }
 
-
-        .star_img.big {
-            width: 100px;
-            height: auto;
-        }
+    .star_img.big {
+        width: 100px;
+        height: auto;
+    }
 
     .header_container {
         width: 100%;
@@ -6106,8 +6448,9 @@ media query starts here
         margin-top: 20px;
         width: 100%;
     }
-    .trophy-info a.reset_rep{
-      right:auto !important
+
+    .trophy-info a.reset_rep {
+        right: auto !important
     }
 
     .usr_obj:nth-child(even) {
@@ -6150,31 +6493,41 @@ media query starts here
 }
 
 @media screen and (max-width: 576px) {
-    .tlist_pad .col{
-      padding-left:5px;
-      padding-right:5px;
+    .inbox_people {
+        width: 100%;
+        border: 0;
     }
-    .tlist_pad span{
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 11px;
+
+    .tlist_pad .col {
+        padding-left: 5px;
+        padding-right: 5px;
     }
-    .tlist_pad p{
-      font-size: 13px;
-      font-weight: 600;
-      line-height: 11px;
+
+    .tlist_pad span {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 11px;
+    }
+
+    .tlist_pad p {
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 11px;
     }
 
     .match_heading.tmheading {
-      padding-right: 38px;
+        padding-right: 38px;
     }
-    .match_heading.tmheading h4{
-      font-size:12px  ;padding-top:10px
+
+    .match_heading.tmheading h4 {
+        font-size: 12px ;
+        padding-top: 10px
     }
+
     .recordentr .link_alt {
-          background: #000 !important;
-          padding-top: 10px;
-          padding-bottom: 15px;
+        background: #000 !important;
+        padding-top: 10px;
+        padding-bottom: 15px;
     }
 
     .recordentr .reset_rep {
@@ -6195,8 +6548,8 @@ media query starts here
     }
 
     .pf_icon_big {
-      padding-top: 5px;
-font-size: 50px !important;
+        padding-top: 5px;
+        font-size: 50px !important;
     }
 
     .mh190 {
@@ -6723,44 +7076,70 @@ font-size: 50px !important;
     .btn-primary:not([disabled]):hover {
         background: rgb(40, 72, 243) !important;
     }
+
     input#new_team_name {
         padding: 2px;
         font-size: 11px;
     }
+
     .team-profile-page .profile-header-data-middle > div:first-child h3 {
         font-size: 14px;
         margin-top: 10px;
         margin-bottom: 0;
         line-height: 6px;
         line-height: 19px
-
     }
+
     .team-profile-page .profile-header-data-middle > div:first-child span {
         font-size: 10px !important;
     }
-    .is_prime_cell{
-      background-size: 22px;
+
+    .is_prime_cell {
+        background-size: 22px;
     }
+
     td .pf_icon.actision_logo {
-      width: 20px;
-      height: 34px;
+        width: 20px;
+        height: 34px;
+    }
+
+    .mesgs {
+        display: none;
+    }
+
+    .messaging.showing_chat .mesgs {
+        display: block !important;
+    }
+
+    .messaging.showing_chat .inbox_people {
+        display: none;
+    }
+
+    .messaging.showing_chat .mesgs {
+        width: 100%;
+        float: none;
+    }
+
+    .close_chat {
+        position: absolute;
+        top: 0;
+        background: rgb(17, 74, 251);
+        left: 0;
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        width: calc(100% - 20px);
+        top: -20px;
+    }
+
+    .close_chat a {
+        color: #ffffff;
+        display: inline-block;
+        width: 100%;
+        padding: 5px 0px;
     }
 }
 
-.alert-sm{
-  padding:  0px 14px;
-  fontSize: 13px
-}
-
-.profbtn{
-  width: 100%;
-  min-width: 0px;
-}
-
-.accordian-box-header.card-header {
-  padding : 0
-}
-
-.accordian-box-header.card-header h5{
-  padding: 11px 19px 10px 19px
+.type_msg {
+    height: 50px
 }

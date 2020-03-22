@@ -195,7 +195,7 @@ class ProfileHeader extends React.Component {
           this.props.is_loaded &&
           this.props.user.id != user_info.id &&
           user_info.followers.length < 1 ? (
-            <div className="col-6 pl-1 pr-1">
+            <div className="col-4 pl-1 pr-1">
               <Link
                 onClick={event => {
                   this.addFriend(event);
@@ -213,7 +213,7 @@ class ProfileHeader extends React.Component {
           this.props.is_loaded &&
           this.props.user.id != user_info.id &&
           user_info.followers.length > 0 ? (
-            <div className="col-6 pl-1 pr-1">
+            <div className="col-4 pl-1 pr-1">
               <Link
                 onClick={event => {
                   this.addFriend(event);
@@ -229,7 +229,7 @@ class ProfileHeader extends React.Component {
           {this.props.user &&
           this.props.is_loaded &&
           this.props.user.id != user_info.id ? (
-            <div className="col-6 pl-1 pr-1">
+            <div className="col-4 pl-1 pr-1">
               <div className={'dropdown fl-right profbtn'}>
                 <button
                   className="btn btn-default bttn_submit dropdown-toggle profbtn"
@@ -239,7 +239,7 @@ class ProfileHeader extends React.Component {
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  Challenge User
+                  Challenge
                 </button>
                 <div
                   className="dropdown-menu"
@@ -286,6 +286,26 @@ class ProfileHeader extends React.Component {
                     })}
                 </div>
               </div>
+
+            </div>
+          ) : (
+            false
+          )}
+
+          {this.props.user &&
+          this.props.is_loaded &&
+          this.props.user.id != user_info.id ? (
+            <div className="col-4 pl-1 pr-1">
+
+              <button
+                className="btn btn-default bttn_submit  profbtn"
+                type="button"
+                onClick={ (e)=>{
+                  this.props.onChat(e);
+                }}
+              >
+                Send DM
+              </button>
             </div>
           ) : (
             false
