@@ -9,7 +9,7 @@ import {sendDM} from '../actions/orders';
 import {Link} from 'react-router';
 // import price_list from '../Modules/price_list.js';
 // const price_types_labels = price_list.keyed;
-import HeaderBox from './modules/HeaderBox'
+import HeaderBox from './Modules/HeaderBox'
 class SingleListing extends React.Component {
   constructor(props) {
     super(props);
