@@ -111,14 +111,14 @@ exports.listGroups = function(req, res, next) {
         items: grps.toJSON()
       });
       if (req.query.clear_too && req.query.clear_too == 'yes') {
-        new Notification()
-          .where({
-            user_id: req.user.id,
-            type: 'm_new'
-          })
-          .destroy()
-          .then(function() {})
-          .catch(function(err) {});
+        // new Notification()
+        //   .where({
+        //     user_id: req.user.id,
+        //     type: 'm_new'
+        //   })
+        //   .destroy()
+        //   .then(function() {})
+        //   .catch(function(err) {});
       }
       // new Messages().
     })
@@ -180,7 +180,7 @@ exports.newMsg = function(req, res, next) {
     .then(function() {
       res.status(200).send({
         ok: true,
-        msg: 'Nachricht gesendet!'
+        msg: 'Message Sent!'
       });
 
       let u_1 = req.user.id;
@@ -248,32 +248,12 @@ exports.newMsg = function(req, res, next) {
       new User({id: req.body.to_id}).fetch().then(function(usr) {
         const email = usr.get('email');
 
-        new Notification().save({
-          user_id: u_2,
-          type: 'm_new'
-        });
+        // new Notification().save({
+        //   user_id: u_2,
+        //   type: 'm_new'
+        // });
 
-        let email_pref = usr.get('email_pref');
-        email_pref = JSON.parse(email_pref);
-        if (email_pref && email_pref.em_2) {
-          const site_url = process.env.SITE_URL || 'http://lumido.ch';
-          const lnk = site_url + '/messages';
-          mailer.doMail(
-            email,
-            false,
-            false,
-            'Neue Nachricht',
-            'Hallo<br /><br />Sie haben eine neue Nachricht von ' +
-              req.user.first_name +
-              ' ' +
-              req.user.last_name +
-              '. erhalten. Melden Sie sich an, um die Nachricht zu lesen.<br /><a href="' +
-              lnk +
-              '" target="_blank">' +
-              lnk +
-              '</a><br /><br />Liebe Grüsse'
-          );
-        }
+
       });
     })
     .catch(function(err) {
