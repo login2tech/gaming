@@ -185,7 +185,7 @@ class SingleListing extends React.Component {
                         this.props.user.id == item.user_2_id
                           ? item.user_1
                           : item.user_2;
-                      const name = other.first_name + ' ' + other.last_name;
+                      const name = '@' + other.username;
                       if (
                         this.state.chat_search &&
                         name
@@ -271,12 +271,24 @@ class SingleListing extends React.Component {
 
                       if (cls == ' outgoing_msg ') {
                         return (
+                          <div className={cls} key={chat.id}>
+
                           <div className="outgoing_msg" key={chat.id}>
                             <div className="sent_msg">
                               <p>{chat.message}</p>
                               <span className="time_date">
                                 {moment(chat.created_at).fromNow()}
                               </span>
+                            </div>
+                            </div>
+                            <div className={cls + '_img'}>
+                              <img
+                                src={
+                                  'https://ui-avatars.com/api/?background=ec6b33&color=fff&name=' +
+                                  name
+                                }
+                                //src="https://ptetutorials.com/images/user-profile.png"
+                              />
                             </div>
                           </div>
                         );
