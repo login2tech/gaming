@@ -196,8 +196,7 @@ class SingleListing extends React.Component {
                       ) {
                         return false;
                       }
-                      const img = other.profile_picture ? other.profile_picture  : 'https://ui-avatars.com/api/?background=ec6b33&color=fff&name=' +
-                      name;
+                      const img =  other.profile_picture  ||  other.gravatar;
                       return (
                         <div
                           className={
@@ -262,35 +261,34 @@ class SingleListing extends React.Component {
                     {this.state.chats.map((chat, i) => {
                       const cls =
                         chat.from_id == this.props.user.id
-                          ? ' outgoing_msg '
+                          ? ' outgoing_msg'
                           : 'incoming_msg';
                       const name =
-                        this.state.other.first_name +
-                        ' ' +
-                        this.state.other.last_name;
+                        this.state.other.username;
+                        const other_image  = this.state.other.profile_picture || this.state.other.gravatar;
+                        const this_image  = this.props.user.profile_picture || this.props.user.gravatar;
 
-                      if (cls == ' outgoing_msg ') {
+                      if (cls == ' outgoing_msg') {
                         return (
                           <div className={cls} key={chat.id}>
 
-                          <div className="outgoing_msg" key={chat.id}>
+                          <div className={cls + '_img'}>
+                            <img
+                              src={
+                                this_image
+                              }
+                              //src="https://ptetutorials.com/images/user-profile.png"
+                            />
+                          </div>
                             <div className="sent_msg">
                               <p>{chat.message}</p>
                               <span className="time_date">
                                 {moment(chat.created_at).fromNow()}
                               </span>
                             </div>
-                            </div>
-                            <div className={cls + '_img'}>
-                              <img
-                                src={
-                                  'https://ui-avatars.com/api/?background=ec6b33&color=fff&name=' +
-                                  name
-                                }
-                                //src="https://ptetutorials.com/images/user-profile.png"
-                              />
-                            </div>
-                          </div>
+
+
+                              </div>
                         );
                       }
                       return (
@@ -298,8 +296,7 @@ class SingleListing extends React.Component {
                           <div className={cls + '_img'}>
                             <img
                               src={
-                                'https://ui-avatars.com/api/?background=ec6b33&color=fff&name=' +
-                                name
+                                other_image
                               }
                               //src="https://ptetutorials.com/images/user-profile.png"
                             />
