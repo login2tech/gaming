@@ -195,7 +195,7 @@ select.form-control:not([size]):not([multiple]) {
     font-family: 'Segoe UI Light', sans-serif;
     font-size: 15px;
     padding: 0px 0px;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .nav-list li:not(.logo)>a span {
@@ -5748,6 +5748,7 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
 .sent_msg {
     float: right;
     width: 46%;margin-right:0;
+    padding: 0 10px 0 0px;
 }
 
 .input_msg_write input {
