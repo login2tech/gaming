@@ -350,9 +350,17 @@ class MatchFinder extends React.Component {
                             )}
                           </td>
                           <td>
-                            {u.match_type == 'paid'
-                              ? '' + u.match_fee + '/- OCG CASH'
-                              : 'FREE'}
+                              {u.match_type == 'free' ? (
+                                'FREE'
+                              ) : (
+                                <span>
+                                  {'PAID (' +
+                                    (u.match_type == 'cash'
+                                      ? '' + u.match_fee + '$'
+                                      : '' + u.match_fee + ' credits') +
+                                    ')'}
+                                </span>
+                              )}
                           </td>
                           <td>{u.team_1_result}</td>
 
