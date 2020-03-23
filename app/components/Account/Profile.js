@@ -868,9 +868,7 @@ class Profile extends React.Component {
                                     ) : (
                                       match.result
                                     )
-                                  ) : (
-                                    match.status
-                                  )}
+                                  ) : match.status =='accepted'  ?'pending' : match.accepted }
                                 </td>
                                 {/* <td>{''}</td> */}
                                 <td>
@@ -906,7 +904,7 @@ class Profile extends React.Component {
                   </div>
 
                   <div className="content_box">
-                    <h5 className="prizes_desclaimer">MIX & MATCH MATCHES</h5>
+                    <h5 className="prizes_desclaimer">RECENT MIX & MATCHES</h5>
 
                     <div className="table_wrapper">
                       <table className="table table-striped table-ongray table-hover">

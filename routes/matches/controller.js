@@ -1322,7 +1322,7 @@ exports.addItem = function(req, res, next) {
           new Notif()
             .save({
               user_id: req.body.challenge_for_team_id,
-              description: 'Your have a new challenge',
+              description: 'You have a new challenge',
               type: 'm',
               object_id: item.id
             })
@@ -1343,7 +1343,7 @@ exports.addItem = function(req, res, next) {
           new Notif()
             .save({
               user_id: team_creator,
-              description: 'Your have a new challenge',
+              description: 'You have a new challenge',
               type: 'm',
               object_id: item.id
             })

@@ -177,7 +177,7 @@ exports.signupPost = function(req, res, next) {
     gender: req.body.gender,
     dob: req.body.dob,
     role: 'user',
-    timezone : req.body.timezone, 
+    timezone : req.body.timezone,
     ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
     state: req.body.state ? req.body.state : '',
     country: req.body.country ? req.body.country : '',
@@ -633,9 +633,9 @@ exports.singleUser_info = function(req, res, next) {
   const cur_u = req.user ? req.user.id : 99999999;
   // console.log(cur_u);
   new User()
-    .where({
-      username: req.query.uid
-    })
+    .where(
+      username, 'ILIKE', req.query.uid
+    )
     .fetch({
       withRelated: [
         'teamuser',
