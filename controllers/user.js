@@ -634,7 +634,7 @@ exports.singleUser_info = function(req, res, next) {
   // console.log(cur_u);
   new User()
     .where(
-      username, 'ILIKE', req.query.uid
+      'username', 'ILIKE', req.query.uid
     )
     .fetch({
       withRelated: [
