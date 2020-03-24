@@ -12,6 +12,7 @@ class HeaderBox extends React.Component {
                   {this.props.title}
                 </h3>
                 <br />
+                {this.props.children}
               </div>
             </div>
           </div>

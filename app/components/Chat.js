@@ -212,7 +212,7 @@ class SingleListing extends React.Component {
         <HeaderBox title={'Chat'} cls="all_t_heading" >
           <div className="banner_actions">
             <Link
-              to={'/u/' + this.props.params.username}
+              to={'/u/' + this.props.user.username}
               className="pt-3 pb-3 dib"
             >
               <span className="fa fa-arrow-left" /> back to profile
