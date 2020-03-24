@@ -143,14 +143,8 @@ class SingleListing extends React.Component {
 
     // Whenever the server emits 'login', log the login message
     socket.on('login', (data) => {
-      // connected = true;
-      // Display the welcome message
       var message = "Welcome to Socket.IO Chat – ";
-      console.log(message);
-      // log(message, {
-      //   prepend: true
-      // });
-      // addParticipantsMessage(data);
+
     });
 
     socket.emit('add user', this.props.user.username);
@@ -174,18 +168,12 @@ class SingleListing extends React.Component {
 
     // Whenever the server emits 'new dm', update the chat body
     socket.on('new dm', (data) => {
-      console.log('dm received')
-      console.log(data);
-      console.log(data.to_id , this.props.user.id)
-      console.log(data.from_id ,  this.state.currently_showing)
       if(data.to_id != this.props.user.id)
         return;
         if(data.from_id != this.state.currently_showing){
           this.runQry(false);
           return;
         }
-
-      console.log(this.state);
       this.loadChatFor(this.state.to_id,  this.state.currently_showing, this.state.other);
     });
 

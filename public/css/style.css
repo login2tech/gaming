@@ -7174,3 +7174,45 @@ media query starts here
 .type_msg {
     height: 50px
 }
+
+.match_chat_box {
+    position: fixed;
+    bottom: 0;
+    max-height: 350px;
+    min-height: 350px;
+    width: 300px;
+    background: #000;
+    z-index: 99;
+    border: 3px solid #114afb;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    right: 150px;
+    overflow: hidden;
+    bottom: 0;
+}
+
+.match_chat_box_header {
+    background: rgb(17, 74, 251);
+    text-align: center;
+    padding: 7px 3px;
+    height: 40px;
+}
+
+.match_chat_box_footer {
+    height: 51px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
+}
+
+.match_chat_box_body {
+    height: calc(350px - 105px);
+    display: inline-block;
+    width: 100%;
+}
+
+.match_chat_box_footer button.cht_send_btn {
+    margin-top: 3px;
+    margin-right: 3px;
+}

@@ -12,6 +12,7 @@ import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
 import GameRules from '../Modules/GameRules';
 import utils from '../../utils';
+import MatchChat from '../Modules/MatchChat'
 class MatchInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -272,6 +273,11 @@ class MatchInfo extends React.Component {
   }
 
   loadTeams() {
+    if(!this.props.user){
+      this.setState({
+           eligible_teams:  [] });
+           return;
+  }
     fetch(
       '/api/teams/team_of_user/?filter_actives=yes&uid=' + this.props.user.id
     )
@@ -1316,6 +1322,8 @@ class MatchInfo extends React.Component {
             <GameRules title={this.state.match.game.title} />
           </div>
         </section>
+        <MatchChat team_1={this.state.match.team_1_players}
+        team_2={this.state.match.team_2_players} />
       </div>
     );
   }
