@@ -9,7 +9,10 @@ import {sendDM} from '../actions/orders';
 import {Link} from 'react-router';
 // import price_list from '../Modules/price_list.js';
 // const price_types_labels = price_list.keyed;
-import HeaderBox from './Modules/HeaderBox'
+import HeaderBox from './Modules/HeaderBox';
+
+let socket;
+const log = function(a){console.log(a)}
 class SingleListing extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +26,7 @@ class SingleListing extends React.Component {
       new_msg: ''
     };
   }
+
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value});
   }
@@ -41,6 +45,20 @@ class SingleListing extends React.Component {
             this.state.currently_showing,
             this.state.other
           );
+          // addChatMessage({
+          //    username: username,
+          //    message: message
+          //  });
+           // tell server to execute 'new message' and send along one parameter
+           socket.emit(
+             'new dm', {
+               from_id : this.state.currently_showing,
+               to_id : this.state.to_id
+             }
+           );
+           this.setState({
+             new_msg : ''
+           })
         }
       )
     );
@@ -86,6 +104,8 @@ class SingleListing extends React.Component {
     });
   }
 
+
+
   loadChatFor(id, e_id, other) {
     this.setState({
       ['grp_' + e_id + '_unread']: 0
@@ -118,8 +138,64 @@ class SingleListing extends React.Component {
 
   componentDidMount() {
     this.runQry();
+
+     socket = io();
+
+    // Whenever the server emits 'login', log the login message
+    socket.on('login', (data) => {
+      // connected = true;
+      // Display the welcome message
+      var message = "Welcome to Socket.IO Chat – ";
+      console.log(message);
+      // log(message, {
+      //   prepend: true
+      // });
+      // addParticipantsMessage(data);
+    });
+
+    socket.emit('add user', this.props.user.username);
+
+
+
+    socket.on('disconnect', () => {
+      log('you have been disconnected');
+    });
+
+    socket.on('reconnect', () => {
+      log('you have been reconnected');
+      // if (username) {
+        socket.emit('add user', this.props.user.username);
+      // }
+    });
+
+    socket.on('reconnect_error', () => {
+      log('attempt to reconnect has failed');
+    });
+
+    // Whenever the server emits 'new dm', update the chat body
+    socket.on('new dm', (data) => {
+      console.log('dm received')
+      console.log(data);
+      console.log(data.to_id , this.props.user.id)
+      console.log(data.from_id ,  this.state.currently_showing)
+      if(data.to_id != this.props.user.id)
+        return;
+        if(data.from_id != this.state.currently_showing){
+          this.runQry(false);
+          return;
+        }
+
+      console.log(this.state);
+      this.loadChatFor(this.state.to_id,  this.state.currently_showing, this.state.other);
+    });
+
+
+
   }
 
+  componentWillUnmount(){
+    socket.disconnect();
+  }
   render() {
     if (!this.state.is_loaded) {
       return (
@@ -133,7 +209,16 @@ class SingleListing extends React.Component {
     return (
 
       <div>
-        <HeaderBox title={'Chat'} cls="all_t_heading" />
+        <HeaderBox title={'Chat'} cls="all_t_heading" >
+          <div className="banner_actions">
+            <Link
+              to={'/u/' + this.props.params.username}
+              className="pt-3 pb-3 dib"
+            >
+              <span className="fa fa-arrow-left" /> back to profile
+            </Link>
+            </div>
+          </HeaderBox>
 
         <section className="faq-section mb-5">
           <div className="container mb-5">
@@ -371,10 +456,7 @@ class SingleListing extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    token: state.auth.token,
-    user: state.auth.user,
-    settings: state.settings,
-    messages: state.messages
+    user: state.auth.user
   };
 };
 

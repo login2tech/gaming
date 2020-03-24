@@ -5670,33 +5670,35 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
     background: rgb(17, 74, 251);
 }
 
-.incoming_msg_img , .outgoing_msg_img{
+.incoming_msg_img , .outgoing_msg_img {
     display: inline-block;
-
-    width: 6%;
+    width: 46px;
+    height: 46px;
+    overflow: hidden;
 }
 
-
-.incoming_msg_img  img, .outgoing_msg_img img{
+.incoming_msg_img img, .outgoing_msg_img img {
     border: 2px solid rgb(17, 74, 251);
-
 }
-
 
 .outgoing_msg_img {
     float: right;
 }
 
-.incoming_msg_img{
+.incoming_msg_img {
     margin-left: 5px;
 }
+
 .outgoing_msg_img {
-    float: right;margin-right:5px
+    float: right;
+    margin-right: 5px
 }
+
 .received_msg {
     display: inline-block;
     padding: 0 0 0 10px;
-    vertical-align: top;margin-left:5px;
+    vertical-align: top;
+    margin-left: 5px;
     width: 92%;
 }
 
@@ -5737,9 +5739,11 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
     padding: 5px 10px 5px 12px;
     width: 100%;
 }
+
 .incoming_msg {
     margin: 15px 0 15px;
 }
+
 .outgoing_msg {
     overflow: hidden;
     margin: 15px 0 15px;
@@ -5747,14 +5751,15 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
 
 .sent_msg {
     float: right;
-    width: 46%;margin-right:0;
+    width: 46%;
+    margin-right: 0;
     padding: 0 10px 0 0px;
 }
 
 .input_msg_write input {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: medium none;
-    color: #4c4c4c;
+    color: #fff;
     font-size: 15px;
     min-height: 48px;
     width: 100%;
@@ -5802,10 +5807,14 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
 }
 
 .chat_ib span {
-    color: rgb(89, 180, 211);
+    color: rgb(17, 74, 251);
     font-size: 12px;
     margin-top: -4px;
     display: block;
+}
+
+.active.chat_list .chat_ib span {
+    color: #fff
 }
 
 button.msg_send_btn {
@@ -5819,7 +5828,7 @@ button.msg_send_btn {
     outline: none;
 }
 
-.incoming_msg_img img , .outgoing_msg img{
+.incoming_msg_img img , .outgoing_msg img {
     width: 100%;
     border-radius: 50%;
 }

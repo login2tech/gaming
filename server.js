@@ -636,17 +636,15 @@ app.post('/api/*', function(req, res, next) {
 
 
 
-
+let numUsers = 0;
 io.on('connection', (socket) => {
   var addedUser = false;
 
   // when the client emits 'new message', this listens and executes
-  socket.on('new message', (data) => {
+  socket.on('new dm', (data) => {
+    console.log('dm received')
     // we tell the client to execute 'new message'
-    socket.broadcast.emit('new message', {
-      username: socket.username,
-      message: data
-    });
+    socket.broadcast.emit('new dm', data);
   });
 
   // when the client emits 'add user', this listens and executes
@@ -661,27 +659,12 @@ io.on('connection', (socket) => {
       numUsers: numUsers
     });
     // echo globally (all clients) that a person has connected
-    socket.broadcast.emit('user joined', {
-      username: socket.username,
-      numUsers: numUsers
-    });
+    // socket.broadcast.emit('user joined', {
+    //   username: socket.username,
+    //   numUsers: numUsers
+    // });
   });
 
-  // when the client emits 'typing', we broadcast it to others
-  socket.on('typing', () => {
-    socket.broadcast.emit('typing', {
-      username: socket.username
-    });
-  });
-
-  // when the client emits 'stop typing', we broadcast it to others
-  socket.on('stop typing', () => {
-    socket.broadcast.emit('stop typing', {
-      username: socket.username
-    });
-  });
-
-  // when the user disconnects.. perform this
   socket.on('disconnect', () => {
     if (addedUser) {
       --numUsers;
@@ -693,6 +676,8 @@ io.on('connection', (socket) => {
       });
     }
   });
+
+
 });
 
 
