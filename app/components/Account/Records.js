@@ -230,10 +230,13 @@ class Records extends React.Component {
         parseInt(i.year) == parseInt(y) && parseInt(i.season) == parseInt(s)
       );
     });
+    let  xp;
     if (!f || !f.length) {
-      return false;
+      xp = 0;
+    }else{
+     xp = f[0].xp;
     }
-    const xp = f[0].xp;
+
     return (
       <img
         className="  img-fluid "

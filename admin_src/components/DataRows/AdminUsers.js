@@ -178,15 +178,19 @@ class AdminUsers extends React.Component {
                           <td>{u.username}</td>
                           <td>{u.email}</td>
                           <td>
-                            {u.status ? (
-                              <span className="label label-primary">
-                                Active
-                              </span>
-                            ) : (
-                              <span className="label label-danger">
-                                In-Active
-                              </span>
-                            )}
+                          {!u.status ? (
+                            <span className="label label-danger">
+                              Banned
+                            </span>
+                          ) : ! u.email_verified ? (
+                            <span className="label label-danger">
+                              Email Verification Pending
+                            </span>
+                          ) : (
+                            <span className="label label-primary">
+                              Active
+                            </span>
+                          )}
                           </td>
                           <td>
                             {u.status ? (

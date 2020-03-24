@@ -160,6 +160,42 @@ class AppUsers extends React.Component {
         })
       );
       return;
+    }else if(action == 'delete')
+    {
+      let id = obj.id
+      const r = confirm('Are you sure you want to delete the user? ');
+      if (r == true) {
+        //
+      } else {
+        return;
+      }
+      this.setState(
+        {
+          ['update_' + id]: true
+        },
+        () => {
+          Fetcher.post('/api/admin/delete/users', {id: id})
+            .then(resp => {
+              this.setState({
+                ['update_' + id]: false
+              });
+              if (resp.ok) {
+                this.loadUsers();
+              } else {
+                this.props.dispatch({type: 'FAILURE', messages: [resp]});
+              }
+            })
+            .catch(err => {
+              console.log(err);
+              const msg = 'Failed to perform Action';
+              this.props.dispatch({
+                type: 'FAILURE',
+                messages: [{msg: msg}]
+              });
+            });
+        }
+      );
+      return;
     }
 
     // alert(action + ' ' + obj.id);
@@ -242,7 +278,9 @@ class AppUsers extends React.Component {
                       }
                       return (
                         <tr key={u.id} style={
-                          u.email_verified ? {}:{background:'rgb(255, 121, 121)'}
+                          u.email_verified ?
+                            !u.status ? {background:'rgb(249, 249, 165)' } : {}
+                          :{background:'rgb(255, 121, 121)'}
                         }>
                           <td>{u.id}</td>
                           <td>
@@ -252,9 +290,13 @@ class AppUsers extends React.Component {
                           <td>{u.email}</td>
 
                           <td>
-                            {u.banned ? (
+                            {!u.status ? (
                               <span className="label label-danger">
-                                In-Active
+                                Banned
+                              </span>
+                            ) : ! u.email_verified ? (
+                              <span className="label label-danger">
+                                Email Verification Pending
                               </span>
                             ) : (
                               <span className="label label-primary">
@@ -337,6 +379,21 @@ class AppUsers extends React.Component {
                                 <li>
                                   <Link to={'/teams/' + u.id}>Teams</Link>
                                 </li>
+                                {
+                                  ! u.email_verified  ? (
+                                    <li>
+                                      <a
+                                        href="#"
+                                        onClick={e => {
+                                          e.preventDefault();
+                                          this.doAction('delete', u);
+                                        }}
+                                      >
+                                        Delete User
+                                      </a>
+                                    </li>
+                                  ):false
+                                }
                               </ul>
                             </div>
                           </td>
