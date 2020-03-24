@@ -138,7 +138,8 @@ class NewMatchTeamSelect extends React.Component {
       for (let j = 0; j < tmp_game.ladders.length; j++) {
         if (tmp_game.ladders[j].id == this.state.ladder) {
           this.setState({
-            ladder_obj: tmp_game.ladders[j]
+            ladder_obj: tmp_game.ladders[j],
+            games_obj  : tmp_game
           });
         }
       }
@@ -209,8 +210,7 @@ class NewMatchTeamSelect extends React.Component {
           team_1_id: this.state.selected_team.id,
           game_id: this.state.ladder_obj.game_id,
           ladder_id: this.state.ladder_obj.id,
-          // starts_at:
-          // '' + this.state.starts_at + ' ' + this.state.starts_at_time,
+          game_title: this.state.games_obj.title,
           match_starts_in: this.state.match_starts_in,
           match_type: this.state.match_type,
           match_players: this.state.match_players,

@@ -121,7 +121,7 @@ class NewMoney8 extends React.Component {
     }
     this.setState({[event.target.name]: a});
   }
-  
+
   handleChangeLadder(event) {
     const value = event.target.value;
     this.setState({[event.target.name]: event.target.value}, () => {
@@ -130,12 +130,14 @@ class NewMoney8 extends React.Component {
 
       const game_id = parseInt(p[0]);
       const ladder_id = parseInt(p[1]);
+      let game;
 
       for (let i = 0; i < this.state.games.length; i++) {
         if (this.state.games[i].id == game_id) {
           if (!this.state.games[i].ladders) {
             continue;
           }
+          game = this.state.games[i];
           for (let j = 0; j < this.state.games[i].ladders.length; j++) {
             // game = this.state.games;
             if (this.state.games[i].ladders[j].id == ladder_id) {
@@ -151,13 +153,15 @@ class NewMoney8 extends React.Component {
           this.setState({
             players_total: '4',
             hide_gt_4: true,
+            selected_game : game,
             hide_eq_4: false
           });
         } else {
           this.setState({
             players_total: '6',
             hide_gt_4: false,
-            hide_eq_4: true
+            hide_eq_4: true,
+            selected_game : game,
           });
         }
       }
@@ -207,6 +211,7 @@ class NewMoney8 extends React.Component {
           match_type: this.state.match_type,
           players_total: this.state.players_total,
           // match_players: this.state.player,
+          game_title: this.state.selected_game.title,
           game_id: game_id,
           game_settings: this.state.game_settings,
           ladder_id: ladder_id,

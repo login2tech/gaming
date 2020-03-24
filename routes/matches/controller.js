@@ -13,7 +13,7 @@ const Score = require('../../models/Score');
 const TeamScore = require('../../models/TeamScore');
 const Ticket = require('../tickets/Ticket');
 const Team = require('../teams/Team');
-//const TeamUser = require('../teams/TeamUser');
+
 const utils = require('../utils');
 
 const Raven = require('raven');
@@ -1245,7 +1245,108 @@ exports.addItem = function(req, res, next) {
   req.assert('match_players', 'Match Players cannot be blank').notEmpty();
   req.assert('using_users', 'Match Players cannot be blank').notEmpty();
 
-  // console.log(req.body.game_settings);
+  console.log(req.body);
+  let game_settings = req.body.game_settings ? req.body.game_settings : {};
+  if(
+    req.body.game_title.toLowerCase()=='call of duty: mw'
+    || req.body.game_title.toLowerCase()=='call of duty mw'
+    || req.body.game_title.toLowerCase()=='call of duty: modern warfare'
+  )
+  {
+    let set_1 = [
+      'Hackney Yard',
+      'Rammaza',
+      'Gunrunner',
+      'St Petrograd',
+      'Crash',
+    ];
+    let set_2 = [
+      'Speedball',
+      'Stack',
+      'King',
+      'Pine',
+      'Docks',
+    ]
+    let set_3 = [
+      'Hackney Yard',
+      'Arklov',
+      'St Petrograd',
+      'Gun Runner',
+      'Rammaza',
+    ]
+    let map_1_host ;
+    let tp = req.body.game_settings.game_mode.toLowerCase();
+    let use_set;
+    if(tp.indexOf('search and destroy') || tp.indexOf('search & destroy'))
+    {
+      let use_set =  set_1;
+    }else
+    if(tp.indexOf('gunfight') || tp.indexOf('gun fight'))
+    {
+      let use_set =  set_2;
+    }else
+    if(tp.indexOf('hardpoint') || tp.indexOf('hardpoint'))
+    {
+      let use_set =  set_3;
+    }
+
+    game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+    if(game_settings.match_length == 'Best Of 3')
+    {
+      game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+      game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+    }
+
+
+  }else if(req.body.game_title.toLowerCase()=='gears 5')
+  {
+    let set_1 = [
+      'Training Grounds',
+      'District',
+      'Exhibit',
+      'Icebound',
+      'Asylum',
+      'Bunker',
+      'Vasgar',
+    ]
+    let set_2 = [
+      'District',
+      'Asylum',
+      'Training Grounds',
+    ]
+    let set_3 = [
+      'Training Grounds',
+      'Exhibit',
+      'District',
+      'Icebound',
+      'Asylum',
+      'Bunker',
+      'Vasgar',
+    ]
+    let map_1_host ;
+    let tp = req.body.game_settings.game_mode.toLowerCase();
+    let use_set;
+    if(tp.indexOf('Execution')  )
+    {
+      let use_set =  set_1;
+    }else
+    if(tp.indexOf('king of the hill') || tp.indexOf('king of hill'))
+    {
+      let use_set =  set_2;
+    }else
+    if(tp.indexOf('escalation')  )
+    {
+      let use_set =  set_3;
+    }
+
+    game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+    if(game_settings.match_length == 'Best Of 3')
+    {
+      game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+      game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+    }
+
+  }
 
   const errors = req.validationErrors();
   if (errors) {
@@ -1260,8 +1361,8 @@ exports.addItem = function(req, res, next) {
     starts_at: moment().add(starts_at[0], starts_at[1]),
     match_type: req.body.match_type,
     is_available_now: req.body.match_starts_in == '61|minutes' | req.body.match_starts_in == '24|hours' ? true : false,
-    game_settings: req.body.game_settings
-      ? JSON.stringify(req.body.game_settings)
+    game_settings: game_settings
+      ? JSON.stringify(game_settings)
       : '{}',
     match_players: req.body.match_players,
     match_fee: req.body.match_fee,

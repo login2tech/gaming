@@ -844,14 +844,16 @@ class MatchInfo extends React.Component {
 
                     <div className="col-12 col-md-7 pt-3">
                       <span className="vs_match">
-                        <Link to={'/teams/view/' + match.team_1_info.id}>
-                          {match.team_1_info.title}
-                        </Link>{' '}
-                        VS{' '}
-                        {match.team_2_id ? (
+
+                        {match.team_2_id ? (<>
+                          <Link to={'/teams/view/' + match.team_1_info.id}>
+                            {match.team_1_info.title}
+                          </Link>{' '}
+                          VS{' '}
                           <Link to={'/teams/view/' + match.team_2_info.id}>
                             {match.team_2_info.title}
                           </Link>
+                          </>
                         ) : match.is_challenge ? (
                           <span className="text-grey">Waiting Acceptance</span>
                         ) : (

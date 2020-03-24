@@ -170,6 +170,7 @@ class newMatch extends React.Component {
         {
           team_1_id: this.props.params.id,
           game_id: this.state.game_info.id,
+          game_title: this.state.game_info.title,
           ladder_id: this.state.team_info.ladder_id,
           // starts_at:
           // '' + this.state.starts_at + ' ' + this.state.starts_at_time,
@@ -183,6 +184,7 @@ class newMatch extends React.Component {
               : '',
           using_users: this.state.using_users,
           game_settings: this.state.game_settings
+
         },
         this.props.user
       )
