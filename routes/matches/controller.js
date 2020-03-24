@@ -1245,8 +1245,7 @@ exports.addItem = function(req, res, next) {
   req.assert('match_players', 'Match Players cannot be blank').notEmpty();
   req.assert('using_users', 'Match Players cannot be blank').notEmpty();
 
-  console.log(req.body);
-  let game_settings = req.body.game_settings ? req.body.game_settings : {};
+   let game_settings = req.body.game_settings ? req.body.game_settings : {};
   if(
     req.body.game_title.toLowerCase()=='call of duty: mw'
     || req.body.game_title.toLowerCase()=='call of duty mw'
@@ -1277,24 +1276,25 @@ exports.addItem = function(req, res, next) {
     let map_1_host ;
     let tp = req.body.game_settings.game_mode.toLowerCase();
     let use_set;
-    if(tp.indexOf('search and destroy') || tp.indexOf('search & destroy'))
+    if(tp.indexOf('search and destroy') > -1  || tp.indexOf('search & destroy') > -1)
     {
-      let use_set =  set_1;
+      use_set =  set_1;
     }else
-    if(tp.indexOf('gunfight') || tp.indexOf('gun fight'))
+    if(tp.indexOf('gunfight')  > -1 || tp.indexOf('gun fight') > -1)
     {
-      let use_set =  set_2;
+      use_set =  set_2;
     }else
-    if(tp.indexOf('hardpoint') || tp.indexOf('hardpoint'))
+    if(tp.indexOf('hardpoint')  > -1 || tp.indexOf('hardpoint') > -1)
     {
-      let use_set =  set_3;
+      use_set =  set_3;
     }
-
-    game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
-    if(game_settings.match_length == 'Best Of 3')
-    {
-      game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
-      game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+    if(use_set){
+      game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+      if(game_settings.match_length == 'Best Of 3')
+      {
+        game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+        game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+      }
     }
 
 
@@ -1324,26 +1324,31 @@ exports.addItem = function(req, res, next) {
       'Vasgar',
     ]
     let map_1_host ;
-    let tp = req.body.game_settings.game_mode.toLowerCase();
-    let use_set;
-    if(tp.indexOf('Execution')  )
+    let tp = req.body.game_settings.game_type.toLowerCase();
+     let use_set;
+
+    if(tp.indexOf('execution')  > -1 )
     {
-      let use_set =  set_1;
+       use_set =  set_1;
     }else
-    if(tp.indexOf('king of the hill') || tp.indexOf('king of hill'))
+    if(tp.indexOf('king of the hill') > -1 || tp.indexOf('king of hill') > -1)
     {
-      let use_set =  set_2;
+       use_set =  set_2;
     }else
-    if(tp.indexOf('escalation')  )
+    if(tp.indexOf('escalation') > -1)
     {
-      let use_set =  set_3;
+       use_set =  set_3;
     }
 
-    game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
-    if(game_settings.match_length == 'Best Of 3')
-    {
-      game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
-      game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+    if(use_set){
+
+      game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+      if(game_settings.match_length == 'Best Of 3')
+      {
+        game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+        game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+      }
+
     }
 
   }

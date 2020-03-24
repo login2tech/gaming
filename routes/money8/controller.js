@@ -1027,12 +1027,126 @@ exports.addItem = function(req, res, next) {
   let expires_in = req.body.expires_in;
 
   expires_in = expires_in.split('|');
+
+
+ 
+  let game_settings = req.body.game_settings ? req.body.game_settings : {};
+  if(
+    req.body.game_title.toLowerCase()=='call of duty: mw'
+    || req.body.game_title.toLowerCase()=='call of duty mw'
+    || req.body.game_title.toLowerCase()=='call of duty: modern warfare'
+  )
+  {
+    let set_1 = [
+      'Hackney Yard',
+      'Rammaza',
+      'Gunrunner',
+      'St Petrograd',
+      'Crash',
+    ];
+    let set_2 = [
+      'Speedball',
+      'Stack',
+      'King',
+      'Pine',
+      'Docks',
+    ]
+    let set_3 = [
+      'Hackney Yard',
+      'Arklov',
+      'St Petrograd',
+      'Gun Runner',
+      'Rammaza',
+    ]
+    let map_1_host ;
+    let tp = req.body.game_settings.game_mode.toLowerCase();
+    let use_set;
+    if(tp.indexOf('search and destroy') > -1  || tp.indexOf('search & destroy') > -1)
+    {
+      use_set =  set_1;
+    }else
+    if(tp.indexOf('gunfight')  > -1 || tp.indexOf('gun fight') > -1)
+    {
+      use_set =  set_2;
+    }else
+    if(tp.indexOf('hardpoint')  > -1 || tp.indexOf('hardpoint') > -1)
+    {
+      use_set =  set_3;
+    }
+    if(use_set){
+      game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+      if(game_settings.match_length == 'Best Of 3')
+      {
+        game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+        game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+      }
+    }
+
+
+  }else if(req.body.game_title.toLowerCase()=='gears 5')
+  {
+    let set_1 = [
+      'Training Grounds',
+      'District',
+      'Exhibit',
+      'Icebound',
+      'Asylum',
+      'Bunker',
+      'Vasgar',
+    ]
+    let set_2 = [
+      'District',
+      'Asylum',
+      'Training Grounds',
+    ]
+    let set_3 = [
+      'Training Grounds',
+      'Exhibit',
+      'District',
+      'Icebound',
+      'Asylum',
+      'Bunker',
+      'Vasgar',
+    ]
+    let map_1_host ;
+    let tp = req.body.game_settings.game_type.toLowerCase();
+     let use_set;
+
+    if(tp.indexOf('execution')  > -1 )
+    {
+       use_set =  set_1;
+    }else
+    if(tp.indexOf('king of the hill') > -1 || tp.indexOf('king of hill') > -1)
+    {
+       use_set =  set_2;
+    }else
+    if(tp.indexOf('escalation') > -1)
+    {
+       use_set =  set_3;
+    }
+
+    if(use_set){
+
+      game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+      if(game_settings.match_length == 'Best Of 3')
+      {
+        game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+        game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+      }
+
+    }
+
+  }
+
+
+
+
   new Item({
     match_type: req.body.match_type,
     players_total: req.body.players_total,
     game_id: req.body.game_id,
-    game_settings: req.body.game_settings
-      ? JSON.stringify(req.body.game_settings)
+    game_settings: game_settings
+      ? JSON.stringify(game_settings)
       : '{}',
     ladder_id: req.body.ladder_id,
     expires_in: moment().add(expires_in[0], expires_in[1]),
