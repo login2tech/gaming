@@ -7239,3 +7239,9 @@ margin-bottom: 10px;
     width: 30px;
     height: 30px;
 }
+
+
+.gm_hed.section.page_title_bar,
+ .gm_hed .is_single_game_header_desk {
+    min-height: 350px !important;
+} 

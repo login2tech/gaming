@@ -558,7 +558,7 @@ class Game extends React.Component {
         </section>
 
         <section
-          className={'d-none d-md-block page_title_bar  gm noblend'}
+          className={'d-none d-md-block page_title_bar gm_hed  gm noblend'}
           style={{minHeight: 250, padding: 0}}
         >
           <div className="container-fluid">

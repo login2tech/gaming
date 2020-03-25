@@ -320,7 +320,7 @@ class EditGame extends React.Component {
                   type="file"
                   className="form-control"
                   name="mobile_banner_url"
-                  required
+                   
                   ref={this.mobile_banner_url_ref}
                   // onChange={this.handleChange.bind(this)}
                   id="mobile_banner_url"
@@ -333,7 +333,7 @@ class EditGame extends React.Component {
                   type="file"
                   className="form-control"
                   name="banner_2_url"
-                  required
+
                   ref={this.banner_2_url_ref}
                   // onChange={this.handleChange.bind(this)}
                   id="banner_2_url"
