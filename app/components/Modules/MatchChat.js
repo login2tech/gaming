@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {sendMatchMsg} from '../../actions/orders';
+import {Link} from 'react-router';
 let socket;
 class MatchChat extends React.Component {
 
@@ -154,8 +155,16 @@ class MatchChat extends React.Component {
         <div class="msg_lst">
         {
           this.state.chats && this.state.chats.map((k,i)=>{
-            return <div key={k.id} class="row"><div class="col-3">
-            <img src={k.from.profile_picture||k.from.gravatar} /></div><div class="col-9">{k.message}</div></div>
+            return <div key={k.id} class="row mchat_row no-gutters">
+              <div class="col-2">
+              <div className={'incoming_msg' + '_img'}>
+                <img src={k.from.profile_picture||k.from.gravatar} />
+                </div>
+              </div>
+              <div class="col-10 chtm">
+              <Link to={'/u/'+k.from.username}>@{k.from.username}</Link><br />
+              {k.message}
+              </div></div>
           })
         }</div>
       </div>
