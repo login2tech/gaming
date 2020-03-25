@@ -31,6 +31,39 @@ export function sendMsg(data, cb) {
   };
 }
 
+
+export function sendMatchMsg(msg,
+match_id,
+match_type, cb) {
+  return dispatch => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/api/dm/newMatchChat', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        msg: msg,
+        match_id: match_id,
+        match_type: match_type
+      })
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          cb && cb(json);
+        });
+      } else {
+        return response.json().then(json => {
+          dispatch({
+            type: 'CONTACT_FORM_FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  };
+}
+
 export function sendDM(msg, id, cs, cb) {
   return dispatch => {
     dispatch({

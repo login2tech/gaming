@@ -409,8 +409,9 @@ class SingleListing extends React.Component {
                           name="new_msg"
                           onChange={this.handleChange.bind(this)}
                         />
-                        <button type="submit"                            disabled={!this.state.currently_showing}
- className="cht_send_btn  ">
+                        <button type="submit"
+                         disabled={!this.state.currently_showing}
+                         className="cht_send_btn" >
                           Send
                         </button>
 

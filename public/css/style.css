@@ -7216,3 +7216,9 @@ media query starts here
     margin-top: 3px;
     margin-right: 3px;
 }
+
+.msg_lst {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

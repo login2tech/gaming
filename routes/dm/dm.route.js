@@ -26,3 +26,18 @@ routes.get(
   u_ctrl.isAdmin,
   ctrl.allMsgs
 );
+
+
+routes.get(
+  '/chatForMatch',
+  u_ctrl.ensureAuthenticated,
+  ctrl.chatForMatch
+);
+
+routes.post(
+  '/newMatchChat',
+  u_ctrl.ensureAuthenticated,
+  ctrl.newMatchChat
+);
+
+ 

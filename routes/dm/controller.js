@@ -1,5 +1,6 @@
 const Groups = require('./Groups');
 const Message = require('./DM');
+const MatchChat = require('./MatchChat');
 const mailer = require('../../controllers/mailer');
 // const Notification = require('../../models/Notification');
 
@@ -258,6 +259,59 @@ exports.newMsg = function(req, res, next) {
     })
     .catch(function(err) {
       // console.log(err);
+      res.status(400).send({
+        ok: false
+      });
+    });
+};
+
+
+
+exports.chatForMatch = function(req, res, next) {
+  const usr = req.user.id;
+  new MatchChat()
+    .where({
+      match_type: req.query.match_type,
+      match_id: req.query.match_id
+    })
+    .orderBy('id', 'ASC')
+    .fetchAll({
+      withRelated: [{
+        from:function(qb){
+          qb.column( 'id', 'username', 'profile_picture' );
+        }
+      }]
+    })
+    .then(function(grps) {
+      res.status(200).send({
+        ok: true,
+        items: grps.toJSON()
+      });
+
+    })
+    .catch(function(err) {console.log(err);
+       res.status(400).send({
+        ok: false,
+        items: []
+      });
+    });
+};
+
+exports.newMatchChat = function(req, res, next) {
+  new MatchChat()
+    .save({
+      message: req.body.msg,
+      match_type : req.body.match_type,
+      match_id : req.body.match_id,
+      from_id: req.user.id
+    })
+    .then(function() {
+      res.status(200).send({
+        ok: true,
+        msg: 'Message Sent!'
+      });
+    })
+    .catch(function(err) {
       res.status(400).send({
         ok: false
       });
