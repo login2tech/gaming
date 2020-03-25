@@ -5874,6 +5874,85 @@ ul.main_cat_list.pr {
     background: rgb(51, 50, 93);
 }
 
+
+
+.type_msg {
+    height: 50px
+}
+
+.match_chat_box {
+    position: fixed;
+    bottom: 0;
+    max-height: 350px;
+    min-height: 350px;
+    width: 300px;
+    background: #000;
+    z-index: 99;
+    border: 3px solid #114afb;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    right: 150px;
+    overflow: hidden;
+    bottom: 0;
+}
+
+.match_chat_box_header {
+    background: rgb(17, 74, 251);
+    text-align: center;
+    padding: 7px 3px;
+    height: 40px;
+}
+
+.match_chat_box_footer {
+    height: 51px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 5px;
+}
+
+.match_chat_box_body {
+    height: calc(350px - 105px);
+    display: inline-block;
+    width: 100%;
+}
+
+.match_chat_box_footer button.cht_send_btn {
+    margin-top: 3px;
+    margin-right: 3px;
+}
+
+.msg_lst {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.mchat_row{
+  border-bottom: 1px solid rgb(128, 128, 128);
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.mchat_row .chtm{
+
+    line-height: 15px;
+    font-size: 12px;
+}
+
+.mchat_row .incoming_msg_img {
+    width: 30px;
+    height: 30px;
+}
+
+
+.gm_hed.section.page_title_bar,
+ .gm_hed .is_single_game_header_desk {
+    min-height: 350px !important;
+}
+
+
+
 /* media queries starts here
 media starts here
 media ends here
@@ -5899,9 +5978,10 @@ media query starts here
 
 @media screen and (max-width: 992px) {
     .sm_on_mob {
-        width: 50% !important;
-        display: inline-block;
-        text-align: center;
+      width: 31% !important;
+      display: inline-block;
+      text-align: center;
+      margin: 0 !important;
     }
 
     .menu_btn {
@@ -7169,79 +7249,11 @@ media query starts here
         width: 100%;
         padding: 5px 0px;
     }
+    #sidebar ul.submenu li ul.submenu {
+      margin-top: 20px;
+      margin: 0;
+      left: 0;
+      position: relative;
+      top: 0;
+  }
 }
-
-.type_msg {
-    height: 50px
-}
-
-.match_chat_box {
-    position: fixed;
-    bottom: 0;
-    max-height: 350px;
-    min-height: 350px;
-    width: 300px;
-    background: #000;
-    z-index: 99;
-    border: 3px solid #114afb;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    right: 150px;
-    overflow: hidden;
-    bottom: 0;
-}
-
-.match_chat_box_header {
-    background: rgb(17, 74, 251);
-    text-align: center;
-    padding: 7px 3px;
-    height: 40px;
-}
-
-.match_chat_box_footer {
-    height: 51px;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-    padding: 5px;
-}
-
-.match_chat_box_body {
-    height: calc(350px - 105px);
-    display: inline-block;
-    width: 100%;
-}
-
-.match_chat_box_footer button.cht_send_btn {
-    margin-top: 3px;
-    margin-right: 3px;
-}
-
-.msg_lst {
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.mchat_row{
-  border-bottom: 1px solid rgb(128, 128, 128);
-padding-bottom: 10px;
-margin-bottom: 10px;
-}
-
-.mchat_row .chtm{
-
-    line-height: 15px;
-    font-size: 12px;
-}
-
-.mchat_row .incoming_msg_img {
-    width: 30px;
-    height: 30px;
-}
-
-
-.gm_hed.section.page_title_bar,
- .gm_hed .is_single_game_header_desk {
-    min-height: 350px !important;
-} 
