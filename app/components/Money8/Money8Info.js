@@ -810,9 +810,10 @@ class Money8Info extends React.Component {
             </div>
             <GameRules title={this.state.match.game.title} />
           </div>
-        </section>
+        </section>  {
+            this.state.match.status=='accepted'||  this.state.match.status=='started' ?
         <MatchChat team_1={this.state.match.team_1_players}
-        team_2={this.state.match.team_2_players} match_type='matchfinder' match_id={this.state.match.id} />
+        team_2={this.state.match.team_2_players} match_type='money8' match_id={this.state.match.id} />:false}
       </div>
     );
   }

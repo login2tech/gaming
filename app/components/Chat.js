@@ -258,7 +258,8 @@ class SingleListing extends React.Component {
                         this.props.user.id == item.user_2_id
                           ? item.user_1
                           : item.user_2;
-                      const name = '@' + other.username;
+                          const name = '@' + other.username;
+                      const uname = other.username;
                       if (
                         this.state.chat_search &&
                         name
@@ -289,15 +290,17 @@ class SingleListing extends React.Component {
                           >
                             <div className="chat_people">
                               <div className="chat_img">
-                                <img
-                                  src={
-                                    img
-                                  }
-                                  alt={name}
-                                />
+                                <Link to={'/u/' + uname}>
+                                  <img
+                                    src={
+                                      img
+                                    }
+                                    alt={name}
+                                  />
+                                </Link>
                               </div>
                               <div className="chat_ib">
-                                <h5>{name}</h5>
+                                <h5><Link to={'/u/'+uname}>{name}</Link></h5>
                                 {parseInt(
                                   this.state['grp_' + item.id + '_unread']
                                 ) > 0 ? (

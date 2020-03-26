@@ -5874,8 +5874,6 @@ ul.main_cat_list.pr {
     background: rgb(51, 50, 93);
 }
 
-
-
 .type_msg {
     height: 50px
 }
@@ -5904,22 +5902,22 @@ ul.main_cat_list.pr {
 }
 
 .match_chat_box_footer {
-    height: 51px;
+    height: 38px;
     width: 100%;
     overflow: hidden;
     position: relative;
-    padding: 5px;
+    padding: 0;
 }
 
 .match_chat_box_body {
-    height: calc(350px - 105px);
+    height: calc(350px - 92px);
     display: inline-block;
     width: 100%;
 }
 
 .match_chat_box_footer button.cht_send_btn {
-    margin-top: 3px;
-    margin-right: 3px;
+    margin-top: 0;
+    margin-right: 0;
 }
 
 .msg_lst {
@@ -5928,14 +5926,15 @@ ul.main_cat_list.pr {
     overflow-x: hidden;
 }
 
-.mchat_row{
-  border-bottom: 1px solid rgb(128, 128, 128);
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+.mchat_row {
+    border-bottom: 1px solid rgb(128, 128, 128);
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    margin-top: 5px;
 }
 
-.mchat_row .chtm{
-
+.mchat_row .chtm {
     line-height: 15px;
     font-size: 12px;
 }
@@ -5945,13 +5944,9 @@ ul.main_cat_list.pr {
     height: 30px;
 }
 
-
-.gm_hed.section.page_title_bar,
- .gm_hed .is_single_game_header_desk {
+.gm_hed.section.page_title_bar, .gm_hed .is_single_game_header_desk {
     min-height: 350px !important;
 }
-
-
 
 /* media queries starts here
 media starts here
@@ -5978,10 +5973,10 @@ media query starts here
 
 @media screen and (max-width: 992px) {
     .sm_on_mob {
-      width: 31% !important;
-      display: inline-block;
-      text-align: center;
-      margin: 0 !important;
+        width: 31% !important;
+        display: inline-block;
+        text-align: center;
+        margin: 0 !important;
     }
 
     .menu_btn {
@@ -7232,15 +7227,17 @@ media query starts here
     }
 
     .close_chat {
-        position: absolute;
-        top: 0;
-        background: rgb(17, 74, 251);
-        left: 0;
-        text-align: center;
-        margin-left: 10px;
-        margin-right: 10px;
-        width: calc(100% - 20px);
-        top: -20px;
+      position: absolute;
+      top: 0;
+      background: rgb(17, 74, 251);
+      left: 0;
+      text-align: center;
+      margin-left: 15px;
+      margin-right: 15px;
+      width: calc(100% - 30px);
+      top: 4px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
     }
 
     .close_chat a {
@@ -7249,11 +7246,31 @@ media query starts here
         width: 100%;
         padding: 5px 0px;
     }
+
     #sidebar ul.submenu li ul.submenu {
-      margin-top: 20px;
-      margin: 0;
-      left: 0;
-      position: relative;
-      top: 0;
-  }
+        margin-top: 20px;
+        margin: 0;
+        left: 0;
+        position: relative;
+        top: 0;
+    }
+}
+
+button.m_chtclose_btn.btn-outline {
+    min-width: 0;
+    position: absolute;
+    right: 9px;
+    top: 5px;
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 0;
+    padding: 10px;
+    height: 29px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.match_chat_box.chtcollapsed {
+    min-height: 40px;
+    max-height: 40px;
 }

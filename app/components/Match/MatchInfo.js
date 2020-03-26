@@ -1322,8 +1322,11 @@ class MatchInfo extends React.Component {
             <GameRules title={this.state.match.game.title} />
           </div>
         </section>
-        <MatchChat team_1={this.state.match.team_1_players}
-        team_2={this.state.match.team_2_players} match_type='matchfinder' match_id={this.state.match.id} />
+        {
+          this.state.match.status=='accepted' ? <MatchChat team_1={this.state.match.team_1_players}
+          team_2={this.state.match.team_2_players} match_type='matchfinder' match_id={this.state.match.id} />:false
+        }
+
       </div>
     );
   }

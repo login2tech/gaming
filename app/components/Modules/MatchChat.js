@@ -5,7 +5,7 @@ import {Link} from 'react-router';
 let socket;
 class MatchChat extends React.Component {
 
-  state ={new_msg:'' }
+  state ={new_msg:'' , chat_visible : false}
 
   componentDidMount() {
 
@@ -148,17 +148,28 @@ class MatchChat extends React.Component {
       return false;
     }
     return (
-      <div class="match_chat_box">
+      <div class={"match_chat_box " + (this.state.chat_visible ? ' ' : 'chtcollapsed')}>
       <div class="match_chat_box_header">Match Chat
+        <button class="m_chtclose_btn btn-outline" onClick={
+          ()=>{
+            this.setState({
+              chat_visible :!this.state.chat_visible
+            })
+          }
+        }>{
+        this.state.chat_visible  ? <span class="fa fa-chevron-down" /> : <span class="fa fa-chevron-up" />
+        }</button>
       </div>
-      <div class="match_chat_box_body">
+      <div class={"match_chat_box_body " + (this.state.chat_visible ? ' ' : 'd-none')}>
         <div class="msg_lst">
         {
           this.state.chats && this.state.chats.map((k,i)=>{
             return <div key={k.id} class="row mchat_row no-gutters">
               <div class="col-2">
               <div className={'incoming_msg' + '_img'}>
-                <img src={k.from.profile_picture||k.from.gravatar} />
+                  <Link to={'/u/'+k.from.username}>
+                  <img src={k.from.profile_picture||k.from.gravatar} />
+                  </Link>
                 </div>
               </div>
               <div class="col-10 chtm">
@@ -168,7 +179,7 @@ class MatchChat extends React.Component {
           })
         }</div>
       </div>
-      <div class="match_chat_box_footer">
+      <div class={"match_chat_box_footer " +   (this.state.chat_visible ? ' ' : 'd-none')}>
       <form
         onSubmit={e => {
           e.preventDefault();

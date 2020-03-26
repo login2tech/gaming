@@ -221,7 +221,8 @@ class NewMatchTeamSelect extends React.Component {
               ? this.state.match_fee
               : '',
           game_settings: this.state.game_settings,
-          using_users: this.state.using_users
+          using_users: this.state.using_users,
+          game_title: this.state.game.title
         },
         this.props.user
       )
@@ -556,17 +557,37 @@ class NewMatchTeamSelect extends React.Component {
                               }
                               return false;
                             });
+
+
                             if (m.length) {
                               m = m[0];
                             } else {
                               m = null;
                             }
+                            // const game_id = this.state.ladder_obj.game_id;
+                            // // console.log(game_id, this.state.games);
+                            // let ttl = '';
+                            let game  = {};
+                            // if(m){
+                            //   console.log(m)
+                            //   for (let i = 0; i < this.state.games.length; i++) {
+                            //     if (m.team_info.game_id == game_id) {
+                            //       game = this.state.games[i];
+                            //       break;
+                            //     }
+                            //   }
+                            // }
+                            if(m){
+                              game = m.team_info.ladder.game_info
+                            }
 
+                            console.log(game)
                             this.setState({
                               selected_team_data: m,
                               selected_team: m ? m.team_info : [],
                               ladder: m ? m.team_info.ladder_id : null,
-                              using_users: []
+                              using_users: [],
+                              game : game
                             });
                           }}
                         >
