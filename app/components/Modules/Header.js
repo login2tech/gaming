@@ -500,11 +500,7 @@ class Header extends React.Component {
           </Link>
           <button className="btn btn-exp-menu">+</button>
           <ul className="submenu">
-            <li>
-              <Link onClick={this.closeSide} to="/forums">
-                Forums
-              </Link>
-            </li>
+
 
             <li>
               <Link onClick={this.closeSide} to="/leaderboards">
@@ -525,6 +521,11 @@ class Header extends React.Component {
             <li>
               <Link onClick={this.closeSide} to="/faq">
                 FAQs
+              </Link>
+            </li>
+            <li>
+              <Link onClick={this.closeSide} to="/forums">
+                Forums
               </Link>
             </li>
           </ul>
