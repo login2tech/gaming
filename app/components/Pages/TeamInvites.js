@@ -54,7 +54,7 @@ class TeamInvites extends React.Component {
 
     return (
       <div>
-        <HeaderBox title={'404 Not Found'} cls="all_t_heading" />
+        <HeaderBox title={'My Team Invites'} cls="all_t_heading" />
 
         <section className="contet_part">
           <div className="container">
