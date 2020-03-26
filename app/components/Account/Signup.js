@@ -6,10 +6,7 @@ import timezones from '../Modules/timezones';
 // import {facebookLogin} from '../../actions/oauth';
 import Messages from '../Modules/Messages';
 import states from '../Modules/states';
-const countries = [
-  'United States',
-  'Canada',
-  'Europe'];
+const countries = ['United States', 'Canada', 'Europe'];
 class Signup extends React.Component {
   constructor(props) {
     super(props);
@@ -30,15 +27,14 @@ class Signup extends React.Component {
   }
 
   handleChange(event) {
-    if(event.target.name =='country_2')
-    {
-      let val = event.target.value.split('|');
-      if(val.length  < 2){
+    if (event.target.name == 'country_2') {
+      const val = event.target.value.split('|');
+      if (val.length < 2) {
         val.push('');
       }
       this.setState({
         country: val[0],
-        timezone : val[1]
+        timezone: val[1]
       });
       return;
     }
@@ -121,7 +117,7 @@ class Signup extends React.Component {
           password: this.state.password,
           state: this.state.country == 'United States' ? this.state.state : '-',
           country: this.state.country,
-          timezone  :this.state.timezone,
+          timezone: this.state.timezone,
           password_confirm: this.state.password_confirm
         },
         () => {
@@ -264,15 +260,18 @@ class Signup extends React.Component {
                           <option value="">Select Region</option>
                           {countries.map((state, i) => {
                             return (
-                              <optgroup  key={state} label={state}>
-                              {timezones[state] &&
-                                timezones[state].map((timezone, i) => {
-                                  return (
-                                    <option value={state+'|'+timezone.value} key={timezone.label}>
-                                      {timezone.label}
-                                    </option>
-                                  );
-                                })}
+                              <optgroup key={state} label={state}>
+                                {timezones[state] &&
+                                  timezones[state].map((timezone, i) => {
+                                    return (
+                                      <option
+                                        value={state + '|' + timezone.value}
+                                        key={timezone.label}
+                                      >
+                                        {timezone.label}
+                                      </option>
+                                    );
+                                  })}
                               </optgroup>
                             );
                           })}

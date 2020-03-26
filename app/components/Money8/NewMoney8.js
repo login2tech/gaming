@@ -116,8 +116,8 @@ class NewMoney8 extends React.Component {
 
   handleChange(event) {
     let a = event.target.value;
-    if(event.target.name == 'match_fee'){
-      a = ""+(parseInt(a));
+    if (event.target.name == 'match_fee') {
+      a = '' + parseInt(a);
     }
     this.setState({[event.target.name]: a});
   }
@@ -153,7 +153,7 @@ class NewMoney8 extends React.Component {
           this.setState({
             players_total: '4',
             hide_gt_4: true,
-            selected_game : game,
+            selected_game: game,
             hide_eq_4: false
           });
         } else {
@@ -161,7 +161,7 @@ class NewMoney8 extends React.Component {
             players_total: '6',
             hide_gt_4: false,
             hide_eq_4: true,
-            selected_game : game,
+            selected_game: game
           });
         }
       }

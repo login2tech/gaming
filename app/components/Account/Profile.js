@@ -333,20 +333,18 @@ class Profile extends React.Component {
     });
   };
 
-  startChat(e){
+  startChat(e) {
     e.preventDefault();
-      this.props.dispatch(
-        openModal({
-          type: 'custom',
-          id: 'chat_',
-          zIndex: 534,
-          heading: 'Send Direct Message',
+    this.props.dispatch(
+      openModal({
+        type: 'custom',
+        id: 'chat_',
+        zIndex: 534,
+        heading: 'Send Direct Message',
 
-          content: <SendMessage data={this.state.user_info.id} />
-        })
-      );
-
-
+        content: <SendMessage data={this.state.user_info.id} />
+      })
+    );
   }
 
   render() {
@@ -357,14 +355,18 @@ class Profile extends React.Component {
           is_loaded={this.state.is_loaded}
           fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="profile"
-          onChat={(e)=>{ this.startChat(e);}}
+          onChat={e => {
+            this.startChat(e);
+          }}
         />
         <ProfileHeaderMobile
           user_info={this.state.user_info}
           is_loaded={this.state.is_loaded}
           fetchUserInfo={this.fetchUserInfo.bind(this)}
           current_tab="profile"
-          onChat={(e)=>{ this.startChat(e);}}
+          onChat={e => {
+            this.startChat(e);
+          }}
         />
         <section
           className="contet_part single_match_details"
@@ -690,7 +692,7 @@ class Profile extends React.Component {
                     </h5>
 
                     <div className="list_pad prof_abt">
-                      <div className="row" style={{ padding: '20px' }}>
+                      <div className="row" style={{padding: '20px'}}>
                         <div className="col-md-4 pl-md-5">
                           <span> MEMBER SINCE</span>
                           <p>
@@ -868,7 +870,11 @@ class Profile extends React.Component {
                                     ) : (
                                       match.result
                                     )
-                                  ) : match.status =='accepted'  ?'pending' : match.accepted }
+                                  ) : match.status == 'accepted' ? (
+                                    'pending'
+                                  ) : (
+                                    match.accepted
+                                  )}
                                 </td>
                                 {/* <td>{''}</td> */}
                                 <td>

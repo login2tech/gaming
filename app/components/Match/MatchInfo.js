@@ -12,7 +12,7 @@ import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
 import GameRules from '../Modules/GameRules';
 import utils from '../../utils';
-import MatchChat from '../Modules/MatchChat'
+import MatchChat from '../Modules/MatchChat';
 class MatchInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -201,8 +201,6 @@ class MatchInfo extends React.Component {
           className="text-danger"
           data-toggle="tooltip"
           title="Not Enough OCG Cash Balance"
-          data-toggle="tooltip"
-          title="Not Enough Credit Balance"
         >
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
@@ -273,11 +271,12 @@ class MatchInfo extends React.Component {
   }
 
   loadTeams() {
-    if(!this.props.user){
+    if (!this.props.user) {
       this.setState({
-           eligible_teams:  [] });
-           return;
-  }
+        eligible_teams: []
+      });
+      return;
+    }
     fetch(
       '/api/teams/team_of_user/?filter_actives=yes&uid=' + this.props.user.id
     )
@@ -850,15 +849,15 @@ class MatchInfo extends React.Component {
 
                     <div className="col-12 col-md-7 pt-3">
                       <span className="vs_match">
-
-                        {match.team_2_id ? (<>
-                          <Link to={'/teams/view/' + match.team_1_info.id}>
-                            {match.team_1_info.title}
-                          </Link>{' '}
-                          VS{' '}
-                          <Link to={'/teams/view/' + match.team_2_info.id}>
-                            {match.team_2_info.title}
-                          </Link>
+                        {match.team_2_id ? (
+                          <>
+                            <Link to={'/teams/view/' + match.team_1_info.id}>
+                              {match.team_1_info.title}
+                            </Link>{' '}
+                            VS{' '}
+                            <Link to={'/teams/view/' + match.team_2_info.id}>
+                              {match.team_2_info.title}
+                            </Link>
                           </>
                         ) : match.is_challenge ? (
                           <span className="text-grey">Waiting Acceptance</span>
@@ -1322,11 +1321,16 @@ class MatchInfo extends React.Component {
             <GameRules title={this.state.match.game.title} />
           </div>
         </section>
-        {
-          this.state.match.status=='accepted' ? <MatchChat team_1={this.state.match.team_1_players}
-          team_2={this.state.match.team_2_players} match_type='matchfinder' match_id={this.state.match.id} />:false
-        }
-
+        {this.state.match.status == 'accepted' ? (
+          <MatchChat
+            team_1={this.state.match.team_1_players}
+            team_2={this.state.match.team_2_players}
+            match_type="matchfinder"
+            match_id={this.state.match.id}
+          />
+        ) : (
+          false
+        )}
       </div>
     );
   }

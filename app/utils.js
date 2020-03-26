@@ -33,12 +33,10 @@ const utils = {
       case 'credits':
       case 'credit':
         return <img src="/assets/icons/coin-01.png" className="flag_ico_m" />;
-        break;
       case 'cash':
       case 'ocg':
       case 'ocgcash':
         return <img src="/assets/icons/money-01.png" className="flag_ico_m" />;
-        break;
     }
     return false;
   },
@@ -50,7 +48,7 @@ const utils = {
     switch (country) {
       case 'united states':
         return <img src="/images/icons/flag_us.png" className="flag_ico" />;
-        break;
+      // break;
       case 'europe':
         return <img src="/images/icons/flag_eu.png" className="flag_ico" />;
       case 'canada':
@@ -65,8 +63,7 @@ const utils = {
         );
       case 'all regions':
         return <i className="fa fa-globe" />;
-
-        break;
+      // break;
     }
     return false;
   },

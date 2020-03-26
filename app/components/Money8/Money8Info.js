@@ -6,6 +6,7 @@ import {join_match, saveScores, leave_match} from '../../actions/match8';
 import game_user_ids from '../../../config/game_user_ids';
 import GameRules from '../Modules/GameRules';
 import Messages from '../Modules/Messages';
+import MatchChat from '../Modules/MatchChat';
 import utils from '../../utils';
 
 class Money8Info extends React.Component {
@@ -740,7 +741,6 @@ class Money8Info extends React.Component {
             </div>
           </div>
         </section>
-
         <section className="contet_part single_match_details">
           <div className="container">
             <div className="row">
@@ -810,10 +810,18 @@ class Money8Info extends React.Component {
             </div>
             <GameRules title={this.state.match.game.title} />
           </div>
-        </section>  {
-            this.state.match.status=='accepted'||  this.state.match.status=='started' ?
-        <MatchChat team_1={this.state.match.team_1_players}
-        team_2={this.state.match.team_2_players} match_type='money8' match_id={this.state.match.id} />:false}
+        </section>{' '}
+        {this.state.match.status == 'accepted' ||
+        this.state.match.status == 'started' ? (
+          <MatchChat
+            team_1={this.state.match.team_1_players}
+            team_2={this.state.match.team_2_players}
+            match_type="money8"
+            match_id={this.state.match.id}
+          />
+        ) : (
+          false
+        )}
       </div>
     );
   }

@@ -51,8 +51,8 @@ const SingleMatch = props => {
               ? match.match_fee + ' credits'
               : match.match_type == 'cash'
               ? '$' + match.match_fee
-              : ' '}{' '}{utils.feeIcon(match.match_type)}
-
+              : ' '}{' '}
+            {utils.feeIcon(match.match_type)}
           </span>
         </div>
         <div className="wager-team-size d-none d-md-flex">

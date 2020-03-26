@@ -365,7 +365,7 @@ export default function getRoutes(store) {
         onEnter={ensureAuthenticated}
         onLeave={clearMessages}
       />
-        <Route
+      <Route
         path="/dashboard"
         component={Dashboard}
         onEnter={ensureAuthenticated}

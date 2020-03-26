@@ -59,7 +59,11 @@ class Modal extends React.Component {
         <div id={'snack_' + this.props.item.id} className="snackbar">
           {this.props.item.content}{' '}
           {this.props.item.link ? (
-            <a href={this.props.item.link} target="_blank">
+            <a
+              href={this.props.item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {this.props.item.link_label}
             </a>
           ) : (

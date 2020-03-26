@@ -12,7 +12,9 @@ import {Link} from 'react-router';
 import HeaderBox from './Modules/HeaderBox';
 
 let socket;
-const log = function(a){console.log(a)}
+const log = function(a) {
+  console.log(a);
+};
 class SingleListing extends React.Component {
   constructor(props) {
     super(props);
@@ -49,16 +51,14 @@ class SingleListing extends React.Component {
           //    username: username,
           //    message: message
           //  });
-           // tell server to execute 'new message' and send along one parameter
-           socket.emit(
-             'new dm', {
-               from_id : this.state.currently_showing,
-               to_id : this.state.to_id
-             }
-           );
-           this.setState({
-             new_msg : ''
-           })
+          // tell server to execute 'new message' and send along one parameter
+          socket.emit('new dm', {
+            from_id: this.state.currently_showing,
+            to_id: this.state.to_id
+          });
+          this.setState({
+            new_msg: ''
+          });
         }
       )
     );
@@ -104,8 +104,6 @@ class SingleListing extends React.Component {
     });
   }
 
-
-
   loadChatFor(id, e_id, other) {
     this.setState({
       ['grp_' + e_id + '_unread']: 0
@@ -139,17 +137,14 @@ class SingleListing extends React.Component {
   componentDidMount() {
     this.runQry();
 
-     socket = io();
+    socket = io();
 
     // Whenever the server emits 'login', log the login message
-    socket.on('login', (data) => {
-      var message = "Welcome to Socket.IO Chat – ";
-
+    socket.on('login', data => {
+      const message = 'Welcome to Socket.IO Chat – ';
     });
 
     socket.emit('add user', this.props.user.username);
-
-
 
     socket.on('disconnect', () => {
       log('you have been disconnected');
@@ -158,7 +153,7 @@ class SingleListing extends React.Component {
     socket.on('reconnect', () => {
       log('you have been reconnected');
       // if (username) {
-        socket.emit('add user', this.props.user.username);
+      socket.emit('add user', this.props.user.username);
       // }
     });
 
@@ -167,21 +162,23 @@ class SingleListing extends React.Component {
     });
 
     // Whenever the server emits 'new dm', update the chat body
-    socket.on('new dm', (data) => {
-      if(data.to_id != this.props.user.id)
+    socket.on('new dm', data => {
+      if (data.to_id != this.props.user.id) {
         return;
-        if(data.from_id != this.state.currently_showing){
-          this.runQry(false);
-          return;
-        }
-      this.loadChatFor(this.state.to_id,  this.state.currently_showing, this.state.other);
+      }
+      if (data.from_id != this.state.currently_showing) {
+        this.runQry(false);
+        return;
+      }
+      this.loadChatFor(
+        this.state.to_id,
+        this.state.currently_showing,
+        this.state.other
+      );
     });
-
-
-
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     socket.disconnect();
   }
   render() {
@@ -195,9 +192,8 @@ class SingleListing extends React.Component {
     // const {obj} = this.state;
     // const price_obj = JSON.parse(obj.price_obj);
     return (
-
       <div>
-        <HeaderBox title={'Chat'} cls="all_t_heading" >
+        <HeaderBox title={'Chat'} cls="all_t_heading">
           <div className="banner_actions">
             <Link
               to={'/u/' + this.props.user.username}
@@ -205,239 +201,244 @@ class SingleListing extends React.Component {
             >
               <span className="fa fa-arrow-left" /> back to profile
             </Link>
-            </div>
-          </HeaderBox>
+          </div>
+        </HeaderBox>
 
         <section className="faq-section mb-5">
           <div className="container mb-5">
             <div className="row mb-5">
               <div className="col-md-12 mb-5">
-
-
-            <div
-              className={
-                'messaging' +
-                (this.state.currently_showing ? ' showing_chat' : ' ')
-              }
-              style={{padding: 0, minHeight: '78vh'}}
-            >
-              <div
-                className="inbox_msg"
-                style={{borderTop: 0, borderBottom: 0, minHeight: '78vh'}}
-              >
-                <div className="inbox_people" style={{minHeight: '78vh'}}>
-                  <div className="headind_srch" style={{height: '70px'}}>
-                    <div className="recent_heading">
-                      <h4>&nbsp;</h4>
-                    </div>
-                    <div className="srch_bar">
-                      <div className="stylish-input-group">
-                        <input
-                          type="text"
-                          className="search-bar form-control dib m-0"
-                          value={this.state.chat_search}
-                          id="chat_search"
-                          name="chat_search"
-                          onChange={this.handleChange.bind(this)}
-                          placeholder="Search"
-                        />
-                        <span className="input-group-addon">
-                          <button type="button">
-                            <i className="fa fa-search" aria-hidden="true" />
-                          </button>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
+                <div
+                  className={
+                    'messaging' +
+                    (this.state.currently_showing ? ' showing_chat' : ' ')
+                  }
+                  style={{padding: 0, minHeight: '78vh'}}
+                >
                   <div
-                    className="inbox_chat"
-                    style={{padding: 0, height: 'auto', minHeight: 'calc(73vh - 70px)'}}
+                    className="inbox_msg"
+                    style={{borderTop: 0, borderBottom: 0, minHeight: '78vh'}}
                   >
-                    {this.state.groups.map((item, i) => {
-                      const other =
-                        this.props.user.id == item.user_2_id
-                          ? item.user_1
-                          : item.user_2;
+                    <div className="inbox_people" style={{minHeight: '78vh'}}>
+                      <div className="headind_srch" style={{height: '70px'}}>
+                        <div className="recent_heading">
+                          <h4>&nbsp;</h4>
+                        </div>
+                        <div className="srch_bar">
+                          <div className="stylish-input-group">
+                            <input
+                              type="text"
+                              className="search-bar form-control dib m-0"
+                              value={this.state.chat_search}
+                              id="chat_search"
+                              name="chat_search"
+                              onChange={this.handleChange.bind(this)}
+                              placeholder="Search"
+                            />
+                            <span className="input-group-addon">
+                              <button type="button">
+                                <i
+                                  className="fa fa-search"
+                                  aria-hidden="true"
+                                />
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="inbox_chat"
+                        style={{
+                          padding: 0,
+                          height: 'auto',
+                          minHeight: 'calc(73vh - 70px)'
+                        }}
+                      >
+                        {this.state.groups.map((item, i) => {
+                          const other =
+                            this.props.user.id == item.user_2_id
+                              ? item.user_1
+                              : item.user_2;
                           const name = '@' + other.username;
-                      const uname = other.username;
-                      if (
-                        this.state.chat_search &&
-                        name
-                          .toLowerCase()
-                          .indexOf(
-                            this.state.chat_search.toLowerCase().trim()
-                          ) < 0
-                      ) {
-                        return false;
-                      }
-                      const img =  other.profile_picture  ||  other.gravatar;
-                      return (
-                        <div
-                          className={
-                            (this.state.currently_showing == item.id
-                              ? ' active '
-                              : ' ') + 'chat_list'
+                          const uname = other.username;
+                          if (
+                            this.state.chat_search &&
+                            name
+                              .toLowerCase()
+                              .indexOf(
+                                this.state.chat_search.toLowerCase().trim()
+                              ) < 0
+                          ) {
+                            return false;
                           }
-                          key={item.id}
-                        >
-                          <Link
-                            className="chat_avatar"
-                            href="#"
-                            onClick={e => {
-                              e.preventDefault();
-                              this.loadChatFor(other.id, item.id, other);
-                            }}
-                          >
-                            <div className="chat_people">
-                              <div className="chat_img">
-                                <Link to={'/u/' + uname}>
-                                  <img
-                                    src={
-                                      img
-                                    }
-                                    alt={name}
-                                  />
-                                </Link>
-                              </div>
-                              <div className="chat_ib">
-                                <h5><Link to={'/u/'+uname}>{name}</Link></h5>
-                                {parseInt(
-                                  this.state['grp_' + item.id + '_unread']
-                                ) > 0 ? (
-                                  <span
-                                    className="badge badge-success"
-                                    style={{
-                                      width: 'auto',
-                                      float: 'right',
-                                      color: '#fff'
-                                    }}
-                                  >
-                                    New
-                                  </span>
-                                ) : (
-                                  false
-                                )}
-                                <span className="chat_date">
-                                  {moment(item.created_at).fromNow()}
-                                </span>
-                                {/* <p>
+                          const img = other.profile_picture || other.gravatar;
+                          return (
+                            <div
+                              className={
+                                (this.state.currently_showing == item.id
+                                  ? ' active '
+                                  : ' ') + 'chat_list'
+                              }
+                              key={item.id}
+                            >
+                              <Link
+                                className="chat_avatar"
+                                href="#"
+                                onClick={e => {
+                                  e.preventDefault();
+                                  this.loadChatFor(other.id, item.id, other);
+                                }}
+                              >
+                                <div className="chat_people">
+                                  <div className="chat_img">
+                                    <Link to={'/u/' + uname}>
+                                      <img src={img} alt={name} />
+                                    </Link>
+                                  </div>
+                                  <div className="chat_ib">
+                                    <h5>
+                                      <Link to={'/u/' + uname}>{name}</Link>
+                                    </h5>
+                                    {parseInt(
+                                      this.state['grp_' + item.id + '_unread']
+                                    ) > 0 ? (
+                                      <span
+                                        className="badge badge-success"
+                                        style={{
+                                          width: 'auto',
+                                          float: 'right',
+                                          color: '#fff'
+                                        }}
+                                      >
+                                        New
+                                      </span>
+                                    ) : (
+                                      false
+                                    )}
+                                    <span className="chat_date">
+                                      {moment(item.created_at).fromNow()}
+                                    </span>
+                                    {/* <p>
                                   Test, which is a new approach to have all solutions
                                   astrology under one roof.
                                 </p> */}
-                              </div>
+                                  </div>
+                                </div>
+                              </Link>
                             </div>
-                          </Link>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div className="mesgs" style={{padding: '1px' ,     height: '78vh'}}>
-                  <div className="msg_history" style={{height: 'calc(78vh - 50px)'}}>
-                    {this.state.chats.map((chat, i) => {
-                      const cls =
-                        chat.from_id == this.props.user.id
-                          ? ' outgoing_msg'
-                          : 'incoming_msg';
-                      const name =
-                        this.state.other.username;
-                        const other_image  = this.state.other.profile_picture || this.state.other.gravatar;
-                        const this_image  = this.props.user.profile_picture || this.props.user.gravatar;
-
-                      if (cls == ' outgoing_msg') {
-                        return (
-                          <div className={cls} key={chat.id}>
-
-                          <div className={cls + '_img'}>
-                            <img
-                              src={
-                                this_image
-                              }
-                              //src="https://ptetutorials.com/images/user-profile.png"
-                            />
-                          </div>
-                            <div className="sent_msg">
-                              <p>{chat.message}</p>
-                              <span className="time_date">
-                                {moment(chat.created_at).fromNow()}
-                              </span>
-                            </div>
-
-
-                              </div>
-                        );
-                      }
-                      return (
-                        <div className={cls} key={chat.id}>
-                          <div className={cls + '_img'}>
-                            <img
-                              src={
-                                other_image
-                              }
-                              //src="https://ptetutorials.com/images/user-profile.png"
-                            />
-                          </div>
-                          <div className="received_msg">
-                            <div className="received_withd_msg">
-                              <p>{chat.message}</p>
-                              <span className="time_date">
-                                {moment(chat.created_at).fromNow()}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <div className="type_msg">
-                    <div className="input_msg_write">
-                      <form
-                        onSubmit={e => {
-                          e.preventDefault();
-                          this.sendMsg();
-                        }}
-                      >
-                        <input
-                          type="text"
-                          className="write_msg"
-                          autoFocus
-                          placeholder={
-                            this.state.currently_showing
-                              ? 'Write a message'
-                              : 'Choose username to start a chat.'
-                          }
-                          value={this.state.new_msg}
-                          disabled={!this.state.currently_showing}
-                          id="new_msg"
-                          name="new_msg"
-                          onChange={this.handleChange.bind(this)}
-                        />
-                        <button type="submit"
-                         disabled={!this.state.currently_showing}
-                         className="cht_send_btn" >
-                          Send
-                        </button>
-
-                      </form>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                  <div className="close_chat d-md-none d-lg-none d-inline-block">
-                    <Link
-                      href="#"
-                      onClick={e => {
-                        e.preventDefault();
-                        this.setState({
-                          currently_showing: false
-                        });
-                      }}
+                    <div
+                      className="mesgs"
+                      style={{padding: '1px', height: '78vh'}}
                     >
-                      <span className="fa fa-chevron-left" /> All Chats
-                    </Link>
+                      <div
+                        className="msg_history"
+                        style={{height: 'calc(78vh - 50px)'}}
+                      >
+                        {this.state.chats.map((chat, i) => {
+                          const cls =
+                            chat.from_id == this.props.user.id
+                              ? ' outgoing_msg'
+                              : 'incoming_msg';
+                          const name = this.state.other.username;
+                          const other_image =
+                            this.state.other.profile_picture ||
+                            this.state.other.gravatar;
+                          const this_image =
+                            this.props.user.profile_picture ||
+                            this.props.user.gravatar;
+
+                          if (cls == ' outgoing_msg') {
+                            return (
+                              <div className={cls} key={chat.id}>
+                                <div className={cls + '_img'}>
+                                  <img
+                                    src={this_image}
+                                    //src="https://ptetutorials.com/images/user-profile.png"
+                                  />
+                                </div>
+                                <div className="sent_msg">
+                                  <p>{chat.message}</p>
+                                  <span className="time_date">
+                                    {moment(chat.created_at).fromNow()}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          }
+                          return (
+                            <div className={cls} key={chat.id}>
+                              <div className={cls + '_img'}>
+                                <img
+                                  src={other_image}
+                                  //src="https://ptetutorials.com/images/user-profile.png"
+                                />
+                              </div>
+                              <div className="received_msg">
+                                <div className="received_withd_msg">
+                                  <p>{chat.message}</p>
+                                  <span className="time_date">
+                                    {moment(chat.created_at).fromNow()}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      <div className="type_msg">
+                        <div className="input_msg_write">
+                          <form
+                            onSubmit={e => {
+                              e.preventDefault();
+                              this.sendMsg();
+                            }}
+                          >
+                            <input
+                              type="text"
+                              className="write_msg"
+                              autoFocus
+                              placeholder={
+                                this.state.currently_showing
+                                  ? 'Write a message'
+                                  : 'Choose username to start a chat.'
+                              }
+                              value={this.state.new_msg}
+                              disabled={!this.state.currently_showing}
+                              id="new_msg"
+                              name="new_msg"
+                              onChange={this.handleChange.bind(this)}
+                            />
+                            <button
+                              type="submit"
+                              disabled={!this.state.currently_showing}
+                              className="cht_send_btn"
+                            >
+                              Send
+                            </button>
+                          </form>
+                        </div>
+                      </div>
+                      <div className="close_chat d-md-none d-lg-none d-inline-block">
+                        <Link
+                          href="#"
+                          onClick={e => {
+                            e.preventDefault();
+                            this.setState({
+                              currently_showing: false
+                            });
+                          }}
+                        >
+                          <span className="fa fa-chevron-left" /> All Chats
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            </div>
             </div>
           </div>
         </section>

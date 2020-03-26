@@ -47,15 +47,13 @@ class NewMatchTeamSelect extends React.Component {
     let vl = event.target.value;
     if (event.target.name == 'ladder') {
       vl = parseInt(vl);
-    }
-    else if(event.target.name == 'match_fee'){
-      vl = ""+(parseInt(vl));
+    } else if (event.target.name == 'match_fee') {
+      vl = '' + parseInt(vl);
     }
     this.setState({[event.target.name]: vl}, () => {
       this.setLadderObj();
     });
   }
-
 
   loadTeams() {
     fetch(
@@ -139,7 +137,7 @@ class NewMatchTeamSelect extends React.Component {
         if (tmp_game.ladders[j].id == this.state.ladder) {
           this.setState({
             ladder_obj: tmp_game.ladders[j],
-            games_obj  : tmp_game
+            games_obj: tmp_game
           });
         }
       }
@@ -331,7 +329,7 @@ class NewMatchTeamSelect extends React.Component {
     return true;
   }
   handleSettingsChange(event) {
-    console.log(event, event.target);
+    // console.log(event, event.target);
     const game_settings = this.state.game_settings;
     game_settings[event.target.name] = event.target.value;
     this.setState({

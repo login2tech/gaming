@@ -275,9 +275,11 @@ class MyMatches extends React.Component {
                                   ) : (
                                     match.result
                                   )
-                                ) :
-                                  match.status =='accepted'  ?'pending' : match.accepted 
-                                }
+                                ) : match.status == 'accepted' ? (
+                                  'pending'
+                                ) : (
+                                  match.accepted
+                                )}
                               </td>
                               {/* <td>{''}</td> */}
                               <td>{moment(match.starts_at).fromNow()}</td>

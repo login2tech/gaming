@@ -49,8 +49,8 @@ class NewMatchTeamSelect extends React.Component {
     let vl = event.target.value;
     if (event.target.name == 'ladder') {
       vl = parseInt(vl);
-    }else if (event.target.name == 'match_fee') {
-      vl = ""+ parseInt(vl);
+    } else if (event.target.name == 'match_fee') {
+      vl = '' + parseInt(vl);
     }
     this.setState({[event.target.name]: vl}, () => {
       this.setLadderObj();
@@ -558,7 +558,6 @@ class NewMatchTeamSelect extends React.Component {
                               return false;
                             });
 
-
                             if (m.length) {
                               m = m[0];
                             } else {
@@ -567,7 +566,7 @@ class NewMatchTeamSelect extends React.Component {
                             // const game_id = this.state.ladder_obj.game_id;
                             // // console.log(game_id, this.state.games);
                             // let ttl = '';
-                            let game  = {};
+                            let game = {};
                             // if(m){
                             //   console.log(m)
                             //   for (let i = 0; i < this.state.games.length; i++) {
@@ -577,17 +576,17 @@ class NewMatchTeamSelect extends React.Component {
                             //     }
                             //   }
                             // }
-                            if(m){
-                              game = m.team_info.ladder.game_info
+                            if (m) {
+                              game = m.team_info.ladder.game_info;
                             }
 
-                            console.log(game)
+                            // console.log(game);
                             this.setState({
                               selected_team_data: m,
                               selected_team: m ? m.team_info : [],
                               ladder: m ? m.team_info.ladder_id : null,
                               using_users: [],
-                              game : game
+                              game: game
                             });
                           }}
                         >

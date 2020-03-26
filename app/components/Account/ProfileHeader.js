@@ -286,7 +286,6 @@ class ProfileHeader extends React.Component {
                     })}
                 </div>
               </div>
-
             </div>
           ) : (
             false
@@ -296,11 +295,10 @@ class ProfileHeader extends React.Component {
           this.props.is_loaded &&
           this.props.user.id != user_info.id ? (
             <div className="col-4 pl-1 pr-1">
-
               <button
                 className="btn btn-default bttn_submit  profbtn"
                 type="button"
-                onClick={ (e)=>{
+                onClick={e => {
                   this.props.onChat(e);
                 }}
               >
@@ -483,7 +481,12 @@ class ProfileHeader extends React.Component {
                 className={this.props.current_tab == 'timeline' ? 'active' : ''}
               >
                 <Link to={'/u/' + user_info.username + '/timeline'}>
-                  { this.props.user && user_info && user_info.id == this.props.user.id ? 'MY' :''} TIMELINE
+                  {this.props.user &&
+                  user_info &&
+                  user_info.id == this.props.user.id
+                    ? 'MY'
+                    : ''}{' '}
+                  TIMELINE
                 </Link>
               </li>
             </ul>

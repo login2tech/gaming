@@ -41,18 +41,15 @@ const SingleTournament = props => {
             <div className="tour-description-block">
               <div className="name-block">
                 <div className="tour-platform">
-
-
-                <div className="mb-1">
-                  {tour.game_settings &&
-                  tour.game_settings['match_available']
-                    ? utils.getCountryImage(
-                        tour.game_settings['match_available']
-                      )
-                    : false}
+                  <div className="mb-1">
+                    {tour.game_settings && tour.game_settings['match_available']
+                      ? utils.getCountryImage(
+                          tour.game_settings['match_available']
+                        )
+                      : false}
+                  </div>
+                  <div>{utils.platform_icon(tour.ladder.platform)}</div>
                 </div>
-                <div>{utils.platform_icon(tour.ladder.platform)}</div>
- </div>
                 <p className="tour-name" tabIndex="0">
                   {tour.title} <br />
                   <small>
@@ -63,9 +60,11 @@ const SingleTournament = props => {
               <div className="region-block">
                 <div className="region-content">
                   <span className="countdown-timer">
-                    <span>{
-                      moment(tour.starts_at).isAfter(moment()) ? 'Starts'  : 'Started'
-                    } </span>{' '}
+                    <span>
+                      {moment(tour.starts_at).isAfter(moment())
+                        ? 'Starts'
+                        : 'Started'}{' '}
+                    </span>{' '}
                     <span>{moment(tour.starts_at).fromNow()}</span>
                   </span>
                 </div>

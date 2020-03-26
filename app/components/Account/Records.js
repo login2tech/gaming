@@ -230,11 +230,11 @@ class Records extends React.Component {
         parseInt(i.year) == parseInt(y) && parseInt(i.season) == parseInt(s)
       );
     });
-    let  xp;
+    let xp;
     if (!f || !f.length) {
       xp = 0;
-    }else{
-     xp = f[0].xp;
+    } else {
+      xp = f[0].xp;
     }
 
     return (

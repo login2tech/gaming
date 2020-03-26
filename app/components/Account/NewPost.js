@@ -10,15 +10,16 @@ class NewPost extends React.Component {
     new_post_type: 'text',
     new_post_content: '',
     new_post_image: '',
-    new_post_video: '',
-
+    new_post_video: ''
   };
 
-
-  componentDidMount()
-  {
+  componentDidMount() {
     this.setState({
-        new_post_content: this.props.forceusername && this.props.user.username != this.props.forceusername ? '@('+this.props.forceusername+')'  :''
+      new_post_content:
+        this.props.forceusername &&
+        this.props.user.username != this.props.forceusername
+          ? '@(' + this.props.forceusername + ')'
+          : ''
     });
   }
 
@@ -342,21 +343,35 @@ class NewPost extends React.Component {
                       onChange={(ev, newValue) => {
                         // console.log(ev);
                         // console.log(newValue);
-                        newValue  = newValue.substr(0, 150)
-                        if(this.props.forceusername)
-                        {
-                          if(this.props.user.username != this.props.forceusername)
-                          {
-                            if(newValue.indexOf('@('+this.props.forceusername+')') < 0){
-                              if( ('@('+this.props.forceusername+')').indexOf(newValue) > -1)
-                              {
-                                newValue = '@('+this.props.forceusername+')';
-                              }else
-                              newValue = '@('+this.props.forceusername+')'+' '+newValue;
+                        newValue = newValue.substr(0, 150);
+                        if (this.props.forceusername) {
+                          if (
+                            this.props.user.username != this.props.forceusername
+                          ) {
+                            if (
+                              newValue.indexOf(
+                                '@(' + this.props.forceusername + ')'
+                              ) < 0
+                            ) {
+                              if (
+                                ('@(' + this.props.forceusername + ')').indexOf(
+                                  newValue
+                                ) > -1
+                              ) {
+                                newValue =
+                                  '@(' + this.props.forceusername + ')';
+                              } else {
+                                newValue =
+                                  '@(' +
+                                  this.props.forceusername +
+                                  ')' +
+                                  ' ' +
+                                  newValue;
+                              }
                             }
                           }
                         }
-                        newValue  = newValue.substr(0, 150)
+                        newValue = newValue.substr(0, 150);
                         this.setState({
                           new_post_content: newValue
                         });

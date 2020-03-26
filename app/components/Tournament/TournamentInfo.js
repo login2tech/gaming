@@ -99,7 +99,7 @@ class TournamentInfo extends React.Component {
       return (
         '<a href="/tournament-match/' +
         items[0].id +
-        '">View Match Details'+
+        '">View Match Details' +
         '</a>'
       );
     }
@@ -107,38 +107,45 @@ class TournamentInfo extends React.Component {
   }
 
   cnt = 1;
-  rounc(a){
-    a=parseInt(a);
-    if(a==4)return 2;
-    if(a==8)return 3;
-    if(a==16)return 4;
-    if(a==32)return 5;
-
+  rounc(a) {
+    a = parseInt(a);
+    if (a == 4) {
+      return 2;
+    }
+    if (a == 8) {
+      return 3;
+    }
+    if (a == 16) {
+      return 4;
+    }
+    if (a == 32) {
+      return 5;
+    }
   }
   createBrackets() {
     this.cnt = 0;
     let brackets = this.state.tournament.brackets;
 
     if (!brackets) {
-      brackets=
-        {
-          rounds_calculated : 0,
-          total_rounds :  this.rounc(this.state.tournament.total_teams),
-
-        }
-        brackets=JSON.stringify(brackets);
+      brackets = {
+        rounds_calculated: 0,
+        total_rounds: this.rounc(this.state.tournament.total_teams)
+      };
+      brackets = JSON.stringify(brackets);
 
       // return;
     }
     let teams = this.state.tournament.team_ids;
-    if(!teams)teams='';
+    if (!teams) {
+      teams = '';
+    }
     teams = teams.split(',');
     brackets = JSON.parse(brackets);
     const rounds_c = brackets.rounds_calculated;
 
     const rounds = [];
     const round_titles = [];
-    if(rounds_c > 0){
+    if (rounds_c > 0) {
       for (let i = 0; i < rounds_c; i++) {
         const round_data = brackets['round_' + (i + 1)];
         // console.log(round_data);
@@ -180,36 +187,31 @@ class TournamentInfo extends React.Component {
     }
 
     // console.log(rounds_c,brackets.total_rounds)
-    if(rounds_c < brackets.total_rounds)
-    {
-      for(let k = rounds_c ; k< brackets.total_rounds;k++)
-      {
-        let final_round_data = [];
+    if (rounds_c < brackets.total_rounds) {
+      for (let k = rounds_c; k < brackets.total_rounds; k++) {
+        const final_round_data = [];
 
-          let add;
-            if(k==0){
-                add = this.state.tournament.total_teams;
-            }else{
-                add = rounds[k-1].length ;
-            }
+        let add;
+        if (k == 0) {
+          add = this.state.tournament.total_teams;
+        } else {
+          add = rounds[k - 1].length;
+        }
 
-            add = add/2;
-            console.log('this round: ', k, 'has ', add, 'matches');
-            for(let m = 0 ; m<add;m++)
-            {
+        add = add / 2;
+        console.log('this round: ', k, 'has ', add, 'matches');
+        for (let m = 0; m < add; m++) {
+          final_round_data.push({
+            empty: true,
+            match_title: ' ',
+            player1: {name: '', empty: true, ID: '', url: '', winner: ''},
+            player2: {name: '', empty: true, ID: '', url: '', winner: ''}
+          });
+        }
 
-              final_round_data.push({
-                empty : true,
-                match_title:  ' ',
-                player1: {name:'',empty:true, ID:'', url:'', winner: '' },
-                player2: {name:'',empty:true, ID:'', url:'', winner: ''  }
-              });
-
-            }
-
-          rounds.push(final_round_data);
+        rounds.push(final_round_data);
         // final_round_data.p
-         }
+      }
     }
     // console.log(brackets.winner);
     if (brackets.winner) {
@@ -229,17 +231,17 @@ class TournamentInfo extends React.Component {
         }
       ]);
       round_titles.push('Winner');
-    }
-    else{
-          rounds.push([
-            {
-        empty : true,
+    } else {
+      rounds.push([
+        {
+          empty: true,
           class: 'winner_round',
           is_winner: true,
           match_title: ' ',
-            player1: {name:'',empty:true, ID:'', url:'', winner: '' },
-        }]);
-        round_titles.push('Winner');
+          player1: {name: '', empty: true, ID: '', url: '', winner: ''}
+        }
+      ]);
+      round_titles.push('Winner');
     }
     // debugger;
     // console.log(rounds);
@@ -394,8 +396,11 @@ class TournamentInfo extends React.Component {
       !team_u.user_info['gamer_tag_' + this.state.tournament.ladder.gamer_tag]
     ) {
       return (
-        <span className="text-danger"   data-toggle="tooltip"
-          title="Gamer Tag not Set">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="Gamer Tag not Set"
+        >
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -406,8 +411,11 @@ class TournamentInfo extends React.Component {
 
     if (parseFloat(team_u.user_info.credit_balance) < amount) {
       return (
-        <span className="text-danger"   data-toggle="tooltip"
-          title="Not Enough Credit Balance">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="Not Enough Credit Balance"
+        >
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -415,8 +423,11 @@ class TournamentInfo extends React.Component {
     }
     if (this.state.tournament.member_tournament && !team_u.user_info.prime) {
       return (
-        <span className="text-danger"   data-toggle="tooltip"
-          title="Not a prime member">
+        <span
+          className="text-danger"
+          data-toggle="tooltip"
+          title="Not a prime member"
+        >
           <img src="/images/controller-red.svg" className="icon_size" /> Not
           Eligible
         </span>
@@ -1272,7 +1283,7 @@ class TournamentInfo extends React.Component {
       return (
         <div className="alert alert-warning width-100">
           You need to be a prime member to join OCG Members Tournament.
-          <a target="_blank" href={'/shop'}>
+          <a target="_blank" href={'/shop'} rel="noopener noreferrer">
             Click here to purchase Membership
           </a>
         </div>
@@ -1430,6 +1441,7 @@ class TournamentInfo extends React.Component {
               You do not have a tournament team for this tournament. Click{' '}
               <a
                 target="_blank"
+                rel="noopener noreferrer"
                 href={
                   '/u/' +
                   this.props.user.username +
@@ -1450,7 +1462,9 @@ class TournamentInfo extends React.Component {
     const {tournament} = this.state;
 
     let game_settings =
-      tournament && tournament.game_settings ? JSON.parse(tournament.game_settings) : {};
+      tournament && tournament.game_settings
+        ? JSON.parse(tournament.game_settings)
+        : {};
     if (!game_settings) {
       game_settings = {};
     }
@@ -1524,7 +1538,6 @@ class TournamentInfo extends React.Component {
                             )
                           : ''}
                       </div>
-
                     </div>
                     <div className="col-12 col-md"> </div>
                   </div>

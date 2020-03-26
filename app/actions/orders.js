@@ -31,7 +31,6 @@ export function sendMsg(data, cb) {
   };
 }
 
-
 export function sendMatchMsg(msg, match_id, match_type, cb) {
   return dispatch => {
     dispatch({

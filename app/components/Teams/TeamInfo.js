@@ -467,7 +467,9 @@ class TeamInfo extends React.Component {
         st => {
           if (st) {
             this.fetchTeam();
-            alert('Team has been disbanded. All matches for team have been automatically processed. Members in roster have been automatically removed from the team.');
+            alert(
+              'Team has been disbanded. All matches for team have been automatically processed. Members in roster have been automatically removed from the team.'
+            );
             window.location.reload();
           }
         }

@@ -32,8 +32,8 @@ class newMatch extends React.Component {
 
   handleChange(event) {
     let a = event.target.value;
-    if(event.target.name == 'match_fee'){
-      a = ""+(parseInt(a));
+    if (event.target.name == 'match_fee') {
+      a = '' + parseInt(a);
     }
     this.setState({[event.target.name]: a});
   }
@@ -184,7 +184,6 @@ class newMatch extends React.Component {
               : '',
           using_users: this.state.using_users,
           game_settings: this.state.game_settings
-
         },
         this.props.user
       )

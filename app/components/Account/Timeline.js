@@ -153,7 +153,6 @@ class Profile extends React.Component {
                     this.props.user.id == this.state.user_info.id ? (
                       <NewPost
                         user_info={this.state.user_info}
-
                         onSubmit={post => {
                           const posts = this.state.posts;
                           posts.unshift(post);

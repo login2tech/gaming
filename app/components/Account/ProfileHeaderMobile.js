@@ -309,8 +309,12 @@ class ProfileHeader extends React.Component {
                 className={this.props.current_tab == 'timeline' ? 'active' : ''}
               >
                 <Link to={'/u/' + user_info.username + '/timeline'}>
-                  {
-                    this.props.user && user_info && user_info.id == this.props.user.id ? 'MY ' :''} TIMELINE
+                  {this.props.user &&
+                  user_info &&
+                  user_info.id == this.props.user.id
+                    ? 'MY '
+                    : ''}{' '}
+                  TIMELINE
                 </Link>
               </li>
             </ul>
