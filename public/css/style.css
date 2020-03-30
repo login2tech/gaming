@@ -5685,11 +5685,12 @@ td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
     display: inline-block;
     width: 46px;
     height: 46px;
-    overflow: hidden;
+    overflow: hidden;    border-radius: 50%;
+      border: 2px solid rgb(17, 74, 251);
 }
 
 .incoming_msg_img img, .outgoing_msg_img img {
-    border: 2px solid rgb(17, 74, 251);
+
 }
 
 .outgoing_msg_img {
@@ -5840,8 +5841,10 @@ button.msg_send_btn {
 }
 
 .incoming_msg_img img , .outgoing_msg img {
-    width: 100%;
-    border-radius: 50%;
+  width: 100%;
+object-fit: cover;
+height: auto;
+border: 0;
 }
 
 .mh190 {
