@@ -364,18 +364,20 @@ class ProfileHeader extends React.Component {
               {this.renderProfilePicture()}
               {this.renderNameAndFollow('mobile')}
             </div>
-            <div className="col-md-1 d-none d-md-block text-center" />
-            <div className="col-md-3 col-6 text-center">
+            {/*}
+              <div className="col-md-1 d-none d-md-block text-center" />
+            */}
+            <div className="col-md-5 col-6 text-center">
               {prime_type ? (
                 <img
                   src={'/assets/icons/ocg_member_' + prime_type + '.png'}
-                  className="img-fluid"
+                  className="img-fluid width50per"
                 />
               ) : (
                 false
               )}
             </div>
-            <div className="col-md-1 text-center" />
+            {/*}<div className="col-md-1 text-center" />*/}
             <div className="col-md-4 justify-content-end d-flex flex-column">
               <div> </div>
               <div>
@@ -410,61 +412,64 @@ class ProfileHeader extends React.Component {
             <div className="col-md-3">
               {this.renderNameAndFollow('desktop')}
             </div>
-            <div className="col-md-1 " />
+            {/*}<div className="col-md-1 " />*/}
             <div className=" order-md-last col-md-4">
               <div className="row">
                 <div className="col-md-1" />
                 <div className="col-md-11">{this.renderXPMeter()}</div>
               </div>
             </div>
-            <div className="col-6 col-md-2 following_btn text-bold text-center">
-              <span>
-                <a
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.showFollowing(user_info.id);
-                  }}
-                >
-                  Following
-                </a>
-              </span>
-              <p className="text-center">
-                <a
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.showFollowing(user_info.id);
-                  }}
-                >
-                  {user_info.followingCount}
-                </a>
-              </p>
-            </div>
-
-            <div className="col-6 col-md-2 following_btn text-bold text-center">
-              <span>
-                <a
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.showFollowers(user_info.id);
-                  }}
-                >
-                  Followers
-                </a>
-              </span>
-              <p className="text-center">
-                <a
-                  href="#"
-                  onClick={e => {
-                    e.preventDefault();
-                    this.showFollowers(user_info.id);
-                  }}
-                >
-                  {user_info.followerCount}
-                </a>
-              </p>
+            <div className="col-12 col-md-5 ">
+              <div className="row">
+                <div className="col-6 col-md-6 following_btn text-bold text-center">
+                  <span>
+                    <a
+                      href="#"
+                      onClick={e => {
+                        e.preventDefault();
+                        this.showFollowing(user_info.id);
+                      }}
+                    >
+                      Following
+                    </a>
+                  </span>
+                  <p className="text-center">
+                    <a
+                      href="#"
+                      onClick={e => {
+                        e.preventDefault();
+                        this.showFollowing(user_info.id);
+                      }}
+                    >
+                      {user_info.followingCount}
+                    </a>
+                  </p>
+                </div>
+                <div className="col-6 col-md-6 following_btn text-bold text-center">
+                  <span>
+                    <a
+                      href="#"
+                      onClick={e => {
+                        e.preventDefault();
+                        this.showFollowers(user_info.id);
+                      }}
+                    >
+                      Followers
+                    </a>
+                  </span>
+                  <p className="text-center">
+                    <a
+                      href="#"
+                      onClick={e => {
+                        e.preventDefault();
+                        this.showFollowers(user_info.id);
+                      }}
+                    >
+                      {user_info.followerCount}
+                    </a>
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

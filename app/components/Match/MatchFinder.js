@@ -105,7 +105,7 @@ class MatchFinder extends React.Component {
         </section>
 
         <section className="contet_part">
-          <div className="container">
+          <div className="container-fluid half">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="content">

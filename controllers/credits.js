@@ -45,7 +45,8 @@ const __addNewCreditPointTransaction = function(
   user_id,
   payment_id,
   points,
-  init_transaction_mode
+  init_transaction_mode,
+  balance
 ) {
   if (init_transaction_mode == 'credit') {
     new CreditTransactions()
@@ -53,7 +54,8 @@ const __addNewCreditPointTransaction = function(
         user_id: user_id,
         obj_type: 'shop',
         details: 'Credits bought.',
-        qty: points
+        qty: points,
+        balance: balance
       })
       .then(function(o) {})
       .catch(function(err) {});
@@ -63,7 +65,8 @@ const __addNewCreditPointTransaction = function(
         user_id: user_id,
         obj_type: 'shop',
         details: 'OCG Cash bought.',
-        qty: points
+        qty: points,
+        balance: balance
       })
       .then(function(o) {})
       .catch(function(err) {});
@@ -237,7 +240,8 @@ const __addNewCredit_points = function(
           user_id,
           payment_id,
           points,
-          init_transaction_mode
+          init_transaction_mode,
+          new_points
         );
       })
       .catch(function(err) {

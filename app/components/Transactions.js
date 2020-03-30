@@ -152,11 +152,11 @@ class Transaction extends React.Component {
                         <table className="table table-stripped">
                           <thead>
                             <tr>
-                              <th style={{width: '6%'}}>Id</th>
-                              <th style={{width: '24%'}}>Date</th>
+                              <th style={{width: '5%'}}>Id</th>
+                              <th style={{width: '20%'}}>Date</th>
                               <th
                                 className="d-none d-md-table-cell"
-                                style={{width: '55%'}}
+                                style={{width: '50%'}}
                               >
                                 Description
                               </th>
@@ -291,11 +291,11 @@ class Transaction extends React.Component {
                         <table className="table table-stripped">
                           <thead>
                             <tr>
-                              <th style={{width: '6%'}}>Id</th>
-                              <th style={{width: '24%'}}>Date</th>
+                              <th style={{width: '5%'}}>Id</th>
+                              <th style={{width: '20%'}}>Date</th>
                               <th
                                 className="d-none d-md-table-cell"
-                                style={{width: '55%'}}
+                                style={{width: '50%'}}
                               >
                                 Description
                               </th>

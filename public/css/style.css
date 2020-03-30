@@ -4299,10 +4299,12 @@ img.hover_img {
     width: 100%;
     min-width: 0px;
 }
-
+.flex-1{
+  flex:1
+}
 @media screen and (max-width: 768px) {
     .table_wrapper {
-        overflow-x: scroll;
+        overflow-x: auto;
     }
 
     .table td, .table th {
@@ -5534,8 +5536,17 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
     height: 40px;
     background-position: bottom;
     margin-bottom: -14px;
+    background-position: top;
 }
 
+
+td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
+    width: 86px;
+    background-position: bottom;
+  margin-bottom: 0;
+  background-position: center;
+
+}
 .alert-sm {
     padding: 0px 14px;
     fontSize: 13px
@@ -5948,6 +5959,20 @@ ul.main_cat_list.pr {
     min-height: 350px !important;
 }
 
+.width50per {
+  width:50%;
+  /* margin-left:25%; */
+}
+span.starts-in {
+    font-size: 15px;
+}
+
+.team_tbl_header thead th, .expndingtbl tr td:first-child{
+    line-height: 32px;
+}
+.pljy{
+  /* padding-left: 60px */
+}
 /* media queries starts here
 media starts here
 media ends here
@@ -6103,6 +6128,12 @@ media query starts here
 @media screen and (max-width: 768px) {
     .user-profile-trophies-container>div div.trophy-info .trophy-name {
         font-size: 12px;
+    }
+    td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
+        width: 50px;
+        background-position: bottom;
+        margin-bottom: 0;
+        background-position: center;
     }
 
     .tab-block .tab-mnu li {
@@ -6574,7 +6605,7 @@ media query starts here
     }
 
     img.inline-star, img.icon_size {
-        height: 20px !important;
+        height: 20px !important;    width: auto;
     }
 
     .middle_part_login {
@@ -7207,6 +7238,8 @@ media query starts here
     td .pf_icon.actision_logo {
         width: 20px;
         height: 34px;
+        float: left;
+        background-position: top;
     }
 
     .mesgs {
@@ -7273,4 +7306,10 @@ button.m_chtclose_btn.btn-outline {
 .match_chat_box.chtcollapsed {
     min-height: 40px;
     max-height: 40px;
+}
+.act_in_tbl{
+  float: left;
+    width: 80px;
+    height: 33px;
+    object-fit: cover;
 }

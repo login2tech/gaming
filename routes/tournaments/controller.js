@@ -217,7 +217,8 @@ const takeMoneyFromMember = function(uid, input_val, match_id) {
                 user_id: uid,
                 obj_type: 't_' + match_id,
                 details: 'Credits deducted for joining tournament #' + match_id,
-                qty: -parseFloat(input_val)
+                qty: -parseFloat(input_val),
+                balance: credit_balance
               })
               .then(function(o) {})
               .catch(function(err) {

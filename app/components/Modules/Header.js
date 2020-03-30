@@ -500,8 +500,6 @@ class Header extends React.Component {
           </Link>
           <button className="btn btn-exp-menu">+</button>
           <ul className="submenu">
-
-
             <li>
               <Link onClick={this.closeSide} to="/leaderboards">
                 Leaderboards

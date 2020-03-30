@@ -692,8 +692,8 @@ class Profile extends React.Component {
                     </h5>
 
                     <div className="list_pad prof_abt">
-                      <div className="row" style={{padding: '20px'}}>
-                        <div className="col-md-4 pl-md-5">
+                      <div className="row gamer_tags_profile pt-0">
+                        <div className="col-md-4 col mb-0 pljy">
                           <span> MEMBER SINCE</span>
                           <p>
                             {moment(this.state.user_info.created_at).format(
@@ -701,7 +701,7 @@ class Profile extends React.Component {
                             )}
                           </p>
                         </div>
-                        <div className="col-md-4 col-6">
+                        <div className="col-md-4 col-6 mb-0 pljy">
                           <span> TIME ZONE </span>
                           <p>
                             {this.state.user_info.timezone
@@ -709,7 +709,7 @@ class Profile extends React.Component {
                               : '-'}
                           </p>
                         </div>
-                        <div className="col-md-4 col-6  ">
+                        <div className="col-md-4 col-6 mb-0 pljy  ">
                           <span> REGION </span>
                           <p>
                             {this.state.user_info.country
@@ -723,22 +723,10 @@ class Profile extends React.Component {
                               this.state.user_info.country
                             )}
                           </p>
-                        </div>{' '}
-                        {/*}  <div className="col-md-3 col-6">
-                          <span> STATE </span>
-                          <p>
-                            {this.state.user_info.state
-                              ? this.state.user_info.state
-                              : '-'}
-                          </p>
                         </div>
-                        <div className="col-md-4">
-                          <span>Rank</span>
-                          <p>-</p>
-                        </div>*/}
                       </div>
 
-                      <div className="row gamer_tags_profile">
+                      <div className="row gamer_tags_profile pt-3">
                         <h4 className="d-md-none mb-4">GAME ID</h4>
                         {game_user_ids.tags.map((k, i) => {
                           if (

@@ -33,9 +33,24 @@ class newMatch extends React.Component {
   handleChange(event) {
     let a = event.target.value;
     if (event.target.name == 'match_fee') {
-      a = '' + parseInt(a);
+      if (
+        this.state.match_type == 'credits' ||
+        this.state.match_type == 'credit'
+      ) {
+        if (this.state.match_fee) {
+          a = '' + parseInt(a);
+        }
+      }
     }
-    this.setState({[event.target.name]: a});
+    const obj = {[event.target.name]: a};
+    if (
+      event.target.name == 'match_type' &&
+      a == 'credits' &&
+      this.state.match_fee
+    ) {
+      obj.match_fee = parseInt(this.state.match_fee);
+    }
+    this.setState(obj);
   }
 
   handleSettingsChange(event) {

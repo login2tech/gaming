@@ -247,6 +247,7 @@ class Credits extends React.Component {
       </div>
     );
   }
+
   render() {
     const {user} = this.props;
     return (

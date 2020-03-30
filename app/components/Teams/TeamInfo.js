@@ -64,12 +64,20 @@ class TeamInfo extends React.Component {
     const tg = game_user_ids.tag_names[this.state.team_info.ladder.gamer_tag];
     return (
       <>
-        <span
-          className={
-            game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
-          }
-        />
-        {tg == 'Activision ID' ? 'ID' : tg}
+      {
+        this.state.team_info.ladder.gamer_tag == 6 ?
+        <img class="act_in_tbl" src={  '/images/activision.svg'} />:  <span
+            className={
+              game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
+            }
+          />
+      }
+
+        <span>{tg == 'Activision ID'
+          ? 'ID'
+          : tg == 'Epic Games Username'
+          ? ' Username'
+          : tg}</span>
       </>
     );
   }
@@ -691,90 +699,82 @@ class TeamInfo extends React.Component {
     );
   }
 
-  renderNameAndFollow(renderWinL) {
-    return (
+  renderNameAndFollow(renderWinL, h2) {
+    const a = (
       <>
-        <h3>
-          <span
-            className={
-              game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
-            }
-          />
-          {this.state.changing_tname ? (
-            <div className="change_uname_wrap">
-              <input
-                id="new_team_name"
-                name="new_team_name"
-                maxlen="20"
-                maxLength="20"
-                max="20"
-                autoFocus
-                className="form-control change_uname_field"
-                onChange={this.handleChangeTeamName.bind(this)}
-                value={this.state.new_team_name}
-              />
-              <button
-                className="btn bg-white mr-1 change_tname_r"
-                disabled={
-                  this.state.new_team_name == this.state.team_info.title
+        <span
+          className={
+            game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
+          }
+        />
+        {this.state.changing_tname ? (
+          <div className="change_uname_wrap">
+            <input
+              id="new_team_name"
+              name="new_team_name"
+              maxlen="20"
+              maxLength="20"
+              max="20"
+              autoFocus
+              className="form-control change_uname_field"
+              onChange={this.handleChangeTeamName.bind(this)}
+              value={this.state.new_team_name}
+            />
+            <button
+              className="btn bg-white mr-1 change_tname_r"
+              disabled={this.state.new_team_name == this.state.team_info.title}
+              onClick={this.changeUname.bind(this)}
+            >
+              <span
+                className={
+                  this.state.saving_new_name == true
+                    ? 'fa fa-spin fa-spinner'
+                    : 'fa fa-save'
                 }
-                onClick={this.changeUname.bind(this)}
-              >
-                <span
-                  className={
-                    this.state.saving_new_name == true
-                      ? 'fa fa-spin fa-spinner'
-                      : 'fa fa-save'
-                  }
-                />
-              </button>
+              />
+            </button>
+            <button
+              className="text-danger btn  change_tname_r"
+              onClick={() => {
+                this.setState({
+                  changing_tname: false
+                });
+              }}
+            >
+              <span className="fa fa-times " />
+            </button>
+          </div>
+        ) : (
+          <>
+            {this.state.team_info.title}
+            {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
+            {this.state.team_info.team_creator == this.props.user.id &&
+            !this.state.team_info.removed ? (
               <button
-                className="text-danger btn  change_tname_r"
-                onClick={() => {
+                onClick={event => {
+                  $(event.target).tooltip('hide');
                   this.setState({
-                    changing_tname: false
+                    changing_tname: true,
+                    new_team_name: this.state.team_info.title
                   });
                 }}
-              >
-                <span className="fa fa-times " />
-              </button>
-            </div>
-          ) : (
-            <>
-              {this.state.team_info.title}
-              {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
-              {this.state.team_info.team_creator == this.props.user.id &&
-              !this.state.team_info.removed ? (
-                <button
-                  onClick={event => {
-                    $(event.target).tooltip('hide');
-                    this.setState({
-                      changing_tname: true,
-                      new_team_name: this.state.team_info.title
-                    });
-                  }}
-                  className=" fa fa-edit btn bg-white  change_tname change_tname_r ml-1"
-                  title={'Edit team name'}
-                  data-toggle="tooltip"
-                />
-              ) : (
-                false
-              )}
-            </>
-          )}
-        </h3>
-        <span className="textcap d-md-none d-inline-block width-100 pl-2">
-          {this.state.team_info.team_type == 'tournaments' ? (
-            <span className="trofy pt-2">
-              <span className="fa fa-trophy text-lg" />{' '}
-              {this.state.team_info.team_type}
-            </span>
-          ) : (
-            this.state.team_info.team_type
-          )}{' '}
-          team
-        </span>
-        {renderWinL ? this.renderWinLoss(34) : false}
+                className=" fa fa-edit btn bg-white  change_tname change_tname_r ml-1"
+                title={'Edit team name'}
+                data-toggle="tooltip"
+              />
+            ) : (
+              false
+            )}
+          </>
+        )}
+      </>
+    );
+    return (
+      <>
+        <div className="flex-1">{h2 == 'h3' ? <h3>{a}</h3> : <h2>{a}</h2>}</div>
+        <div className="flex-1 text-center">
+          {renderWinL ? this.renderWinLoss(34) : false}
+        </div>
       </>
     );
   }
@@ -846,6 +846,17 @@ class TeamInfo extends React.Component {
           <div className="container profile_container">
             <div className="row">
               <div className=" col-md-3 col-6 col-xs-12 dash-profh-wrap text-center">
+                <span className="textcap text-center d-md-block d-none">
+                  {this.state.team_info.team_type == 'tournaments' ? (
+                    <span className="trofy pt-2">
+                      <span className="fa fa-trophy text-lg" />{' '}
+                      {this.state.team_info.team_type}
+                    </span>
+                  ) : (
+                    this.state.team_info.team_type
+                  )}{' '}
+                  team
+                </span>
                 <div
                   className={
                     'game_pic_tournament profile_pic_outline  ' +
@@ -855,10 +866,10 @@ class TeamInfo extends React.Component {
                   {this.renderProfileImage()}
                 </div>
               </div>
-              <div className="col-md-3 col-12 p-m-t-20">
+              <div className="col-md-5 col-12 p-m-t-20 d-flex flex-column">
                 {this.renderNameAndFollow(true)}
               </div>
-              <div className="col-md-2  text-center d-md-block d-none" />
+              {/*}<div className="col-md-2  text-center d-md-block d-none" /> */}
               <div className="col-md-4  col-6 justify-content-end  flex-column d-md-flex">
                 <div> </div>
                 <div>
@@ -890,17 +901,6 @@ class TeamInfo extends React.Component {
 
             <div className="row">
               <div className="col-md-3 col-sm-3 col-xs-12 text-center mt-2">
-                <span className="textcap text-center d-md-block d-none">
-                  {this.state.team_info.team_type == 'tournaments' ? (
-                    <span className="trofy pt-2">
-                      <span className="fa fa-trophy text-lg" />{' '}
-                      {this.state.team_info.team_type}
-                    </span>
-                  ) : (
-                    this.state.team_info.team_type
-                  )}{' '}
-                  team
-                </span>
                 <div className="team_actions">
                   {this.props.user &&
                   this.state.team_info.team_creator == this.props.user.id &&
@@ -1076,12 +1076,23 @@ class TeamInfo extends React.Component {
           <div className="container profile-page-container">
             <div className="profile-header-data">
               <div className="profile-header-data-left">
+              <span className="textcap d-md-none d-inline-block width-100 pl-2">
+                {this.state.team_info.team_type == 'tournaments' ? (
+                  <span className="trofy pt-2">
+                    <span className="fa fa-trophy text-lg" />{' '}
+                    {this.state.team_info.team_type}
+                  </span>
+                ) : (
+                  this.state.team_info.team_type
+                )}{' '}
+                team
+              </span>
                 <div className="profile-avatar">
                   {this.renderProfileImage()}
                 </div>
               </div>
               <div className="profile-header-data-middle">
-                <div>{this.renderNameAndFollow(false)}</div>
+                <div>{this.renderNameAndFollow(false, 'h3')}</div>
                 <div>{this.renderWinLoss(0)}</div>
               </div>
             </div>
@@ -1155,6 +1166,7 @@ class TeamInfo extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="content_box">
                   <h5 className="prizes_desclaimer">
+                    <i className="fa fa-users" aria-hidden="true" /> SQUAD
                     <span className="pull-right">
                       {this.props.user &&
                         this.props.user.id ==
@@ -1172,25 +1184,24 @@ class TeamInfo extends React.Component {
                           </button>
                         )}
                     </span>
-                    <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
 
                   <div className="table_wrapper">
-                    <table className="table table-striped table-ongray table-hover">
+                    <table className="table table-striped table-ongray table-hover team_tbl_header">
                       <thead>
                         <tr>
                           {this.state.is_edit_mode && <th>{'remove'}</th>}
                           <th>Username</th>
                           <th>Role</th>
-                          <th
-                            className={
-                              'act_pr' + this.state.team_info.ladder.gamer_tag
-                            }
+                          <th   className={"d-none d-md-table-cell  act_pr" + this.state.team_info.ladder.gamer_tag}
+
                           >
                             {this.showGamerTag()}
                           </th>
                           <th>Eligible</th>
-                          <th>Date Joined</th>
+                          <th   className="d-none d-md-table-cell">Date Joined</th>
+                          <th style={{width: '5%'}} className="d-md-none" />
+
                         </tr>
                       </thead>
                       <tbody>
@@ -1200,7 +1211,9 @@ class TeamInfo extends React.Component {
                           }
                           // console.log(team_user.user_info.id, this.props.user.id);
                           return (
-                            <tr key={team_user.id}>
+                              <React.Fragment key={team_user.id}>
+                            <tr >
+
                               {this.state.is_edit_mode && (
                                 <td>
                                   {this.props.user &&
@@ -1256,7 +1269,7 @@ class TeamInfo extends React.Component {
                                   : 'Member'}
                               </td>
 
-                              <td>
+                              <td className="d-none d-md-table-cell">
                                 {this.state.team_info &&
                                 this.state.team_info.ladder &&
                                 this.state.team_info.ladder.gamer_tag
@@ -1292,7 +1305,7 @@ class TeamInfo extends React.Component {
                                   </span>
                                 )}
                               </td>
-                              <td>
+                              <td className="d-none d-md-table-cell">
                                 {team_user.accepted
                                   ? moment(team_user.created_at).format('lll')
                                   : 'Not Yet Accepted'}{' '}
@@ -1325,7 +1338,92 @@ class TeamInfo extends React.Component {
                                   false
                                 )}
                               </td>
+                              <td className="d-md-none">
+                                <button
+                                  className="btn btn-link"
+                                  onClick={() => {
+                                    this.setState({
+                                      expanded:
+                                        team_user.id == this.state.expand_id
+                                          ? !this.state.expanded
+                                          : true,
+                                      expand_id: team_user.id
+                                    });
+                                  }}
+                                >
+                                  <span
+                                    className={
+                                      this.state.expanded &&
+                                      this.state.expand_id == team_user.id
+                                        ? ' fa fa-minus'
+                                        : ' fa fa-plus '
+                                    }
+                                  />
+                                </button>
+                              </td>
                             </tr>
+
+                            {this.state.expanded &&
+                            this.state.expand_id == team_user.id ? (
+                              <tr>
+                                <td colSpan="4">
+                                  <table className="table expndingtbl">
+                                    <tbody>
+                                      <tr>
+                                        <td>{this.showGamerTag()}</td>
+                                        <td>{this.state.team_info &&
+                                        this.state.team_info.ladder &&
+                                        this.state.team_info.ladder.gamer_tag
+                                          ? team_user.user_info[
+                                              'gamer_tag_' +
+                                                this.state.team_info.ladder.gamer_tag
+                                            ]
+                                          : ''}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>Date Joined</td>
+                                        <td>
+                                        {team_user.accepted
+                                          ? moment(team_user.created_at).format('lll')
+                                          : 'Not Yet Accepted'}{' '}
+                                        {this.props.user &&
+                                        !team_user.accepted &&
+                                        team_user.user_id == this.props.user.id ? (
+                                          <button
+                                            className="btn btn-sm btn-success"
+                                            onClick={event => {
+                                              this.approveRequest(event);
+                                            }}
+                                          >
+                                            Accept
+                                          </button>
+                                        ) : (
+                                          false
+                                        )}
+                                        {this.props.user &&
+                                        !team_user.accepted &&
+                                        team_user.user_id == this.props.user.id ? (
+                                          <button
+                                            className="btn btn-sm btn-danger"
+                                            onClick={event => {
+                                              this.approveRequest(event, 'reject');
+                                            }}
+                                          >
+                                            Reject
+                                          </button>
+                                        ) : (
+                                          false
+                                        )}
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                </td>
+                              </tr>
+                            ) : (
+                              false
+                            )}
+                          </React.Fragment>
                           );
                         })}
                       </tbody>
