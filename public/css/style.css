@@ -4345,7 +4345,7 @@ img.img-fluid.team_avat {
 }
 
 .has_m .team_spn_m {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .col.team_spn_m span span {
@@ -4358,7 +4358,7 @@ img.img-fluid.team_avat {
 }
 
 .text-l {
-    font-size: 20px;
+    font-size: 18px;
     text-transform: uppercase;
 }
 
