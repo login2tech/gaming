@@ -333,6 +333,9 @@ class Home extends React.Component {
                       </div>
                     </div>
                     <div className="row">
+                      <div class="col text-center">VS </div>
+                    </div>
+                    <div className="row">
                       <div className="col-12 col-md team_spn_m ht2info">
                         {match.team_2_info ? (
                           <>
