@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {signup} from '../../actions/auth';
 import timezones from '../Modules/timezones';
+import moment from 'moment';
 // import {facebookLogin} from '../../actions/oauth';
 import Messages from '../Modules/Messages';
 import states from '../Modules/states';
@@ -24,6 +25,13 @@ class Signup extends React.Component {
       password: '',
       password_confirm: ''
     };
+  }
+
+    calcTime(  offset) {if(!offset)offset=0;
+    let d = new Date();
+    let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+    let nd = new Date(utc + (3600000*offset));
+    return moment(nd).format('HH:mm A');
   }
 
   handleChange(event) {
@@ -257,10 +265,10 @@ class Signup extends React.Component {
                           value={this.state.country_2}
                           onChange={this.handleChange.bind(this)}
                         >
-                          <option value="">Select Region</option>
+                          <option value="">Select Timezone</option>
                           {countries.map((state, i) => {
                             return (
-                              <optgroup key={state} label={state}>
+                              <optgroup key={state} label={state.toUpperCase()}>
                                 {timezones[state] &&
                                   timezones[state].map((timezone, i) => {
                                     return (
@@ -268,7 +276,7 @@ class Signup extends React.Component {
                                         value={state + '|' + timezone.value}
                                         key={timezone.label}
                                       >
-                                        {timezone.label}
+                                        [ {this.calcTime(timezone.offset)} ] {timezone.label}
                                       </option>
                                     );
                                   })}
