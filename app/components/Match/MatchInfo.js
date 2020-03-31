@@ -41,7 +41,11 @@ class MatchInfo extends React.Component {
         <span
           className={game_user_ids.tag_icons[this.state.match.ladder.gamer_tag]}
         />
-        {tg == 'Activision ID' ? 'ID' : tg}
+        <span>{tg == 'Activision ID'
+          ? 'ID'
+          : tg == 'Epic Games Username'
+          ? ' Username'
+          : tg}</span>
       </>
     );
   }

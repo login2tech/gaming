@@ -238,7 +238,7 @@ class TournamentInfo extends React.Component {
           class: 'winner_round',
           is_winner: true,
           match_title: ' ',
-          player1: {name: 'Winner', empty: true, ID: '', url: '', winner: ''}
+          player1: {name: ' WINNER', empty: true, ID: '', url: '', winner: ''}
         }
       ]);
       round_titles.push('Winner');

@@ -68,7 +68,19 @@ class Money8Info extends React.Component {
   }
 
   showGamerTag() {
-    return game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
+    const tg = game_user_ids.tag_names[this.state.match.ladder.gamer_tag];
+    return (
+      <>
+        <span
+          className={game_user_ids.tag_icons[this.state.match.ladder.gamer_tag]}
+        />
+        <span>{tg == 'Activision ID'
+          ? 'ID'
+          : tg == 'Epic Games Username'
+          ? ' Username'
+          : tg}</span>
+      </>
+    );
   }
 
   handleChange(event) {

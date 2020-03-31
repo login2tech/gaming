@@ -1246,18 +1246,12 @@ class TeamInfo extends React.Component {
                                     )}
                                 </td>
                               )}
-                              <td>
+                              <td class={  team_user.user_info.prime
+                                  ? ' is_prime_cell is_prime_type_' +
+                                    team_user.user_info.prime_type
+                                  : ''
+                              }}>
                                 <Link to={'/u/' + team_user.user_info.username}>
-                                  {team_user.user_info.prime && (
-                                    <img
-                                      src={
-                                        '/assets/icons/ocg_member_' +
-                                        team_user.user_info.prime_type +
-                                        '.png'
-                                      }
-                                      className="inline-star float-right"
-                                    />
-                                  )}
                                   {team_user.user_info.username}
                                 </Link>
                               </td>

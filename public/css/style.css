@@ -4918,9 +4918,14 @@ a.post_image.post_image_smaller.post_video:after {
 .container-brackets .round.rd-4 {
     margin-top: 310px !important;
 }
-
+.act_pr3 span:not(.pf_icon) {
+    line-height: 15px;
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 13px;
+}
 .brackets {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 
 .container-brackets .round.rd-4 .match .player:last-child {
