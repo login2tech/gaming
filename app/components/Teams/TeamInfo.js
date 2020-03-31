@@ -1250,7 +1250,7 @@ class TeamInfo extends React.Component {
                                   ? ' is_prime_cell is_prime_type_' +
                                     team_user.user_info.prime_type
                                   : ''
-                              }}>
+                              }>
                                 <Link to={'/u/' + team_user.user_info.username}>
                                   {team_user.user_info.username}
                                 </Link>
