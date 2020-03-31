@@ -4808,11 +4808,11 @@ ul.notices li:first-child {
 }
 
 .container-brackets .round.rd-2 .match .player:nth-child(2) {
-    margin-top: 33px;
+    margin-top: 12px;
 }
 
 .container-brackets .round.rd-2 .match .player:last-child {
-    margin-bottom: 11px;
+    margin-bottom: 18px;
 }
 
 .container-brackets .round.rd-2 .match {
@@ -4822,9 +4822,8 @@ ul.notices li:first-child {
 .container-brackets .round.rd-2 .match .player {
     margin: 159px 0;
 }
-
 .container-brackets .round.rd-2 {
-    margin-top: 0 !important;
+    margin-top: 20px !important;
 }
 
 .container-brackets .round.rd-3 {
@@ -4855,6 +4854,10 @@ ul.notices li:first-child {
 .container-brackets .round.rd-3 .match {
     margin-bottom: 330px;
 }
+.container-brackets .round.rd-3.winner_round {
+    margin-top: 147px !important;
+}
+
 
 .change_uname {
     position: absolute;
@@ -5417,11 +5420,13 @@ span.capitalize {
 }
 
 .is_prime_cell.is_prime_type_gold {
-    background-image: url('/assets/icons/ocg_member_gold.png')
+    background-image: url('/assets/icons/ocg_member_gold.png');
+    background-position-x: 85%;
 }
 
 .is_prime_cell.is_prime_type_silver {
-    background-image: url('/assets/icons/ocg_member_silver.png')
+    background-image: url('/assets/icons/ocg_member_silver.png');
+    background-position-x: 85%;
 }
 
 .col-md-12.blue-border-top {

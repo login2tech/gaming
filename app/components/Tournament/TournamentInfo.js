@@ -230,7 +230,7 @@ class TournamentInfo extends React.Component {
           }
         }
       ]);
-      round_titles.push('Winner');
+      round_titles.push(' ');
     } else {
       rounds.push([
         {
@@ -238,13 +238,33 @@ class TournamentInfo extends React.Component {
           class: 'winner_round',
           is_winner: true,
           match_title: ' ',
-          player1: {name: '', empty: true, ID: '', url: '', winner: ''}
+          player1: {name: 'Winner', empty: true, ID: '', url: '', winner: ''}
         }
       ]);
       round_titles.push('Winner');
     }
     // debugger;
     // console.log(rounds);
+    if(!$('.brackets').brackets)
+    {
+      setTimeout(function(){
+        $('.brackets').brackets({
+          // titles: round_titles,
+          rounds: rounds,
+          color_title: 'white',
+          titles: true,
+          border_color: 'rgb(41, 71, 244)',
+          color_player: 'white',
+          bg_player: 'rgb(41, 71, 244)',
+          color_player_hover: 'white',
+          bg_player_hover: 'rgb(0,0,0)',
+          border_radius_player: '4px',
+          border_radius_lines: '4px'
+        });
+      }, 5000);
+      return;
+    }
+
     $('.brackets').brackets({
       // titles: round_titles,
       rounds: rounds,
