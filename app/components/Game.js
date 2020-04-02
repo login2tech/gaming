@@ -481,6 +481,94 @@ class Game extends React.Component {
     );
   }
 
+  renderMatchfinder(){
+    const game_id = this.props.params.id;
+    return (<div className="table_wrapper">
+      <table className="table table-striped table-ongray table-hover">
+        <thead>
+          <tr>
+            <th className="h-o-p  d-none">Match</th>
+            <th>Starts At</th>
+            <th style={{width: '15%'}}>Fee</th>
+            <th>Players</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.matches &&
+            this.state.matches['game_' + game_id] &&
+            this.state.matches['game_' + game_id].map(
+              (match, i) => {
+                if (match.status == 'expired') {
+                  return false;
+                }
+
+                let txt1 = 'Accept';
+                let txt2 = 'Match';
+                let t1p = match.team_1_players;
+                if (!t1p) {
+                  t1p = '';
+                }
+                // let show_cancel = false;
+                t1p = t1p.split('|');
+                // console.log(t1p);
+                if (
+                  this.props.user &&
+                  t1p.indexOf('' + this.props.user.id) > -1
+                ) {
+                  txt1 = 'View';
+                  txt2 = 'Match';
+                  if (match.status == 'pending') {
+                    // show_cancel = true;
+                  }
+                }
+
+                return (
+                  <tr
+                    key={match.id}
+                    className="tournament-box"
+                    style={{background: '#27204d'}}
+                  >
+                    <td className="h-o-p  d-none">
+                      <Link
+                        to={this.matchLink('/m/' + match.id)}
+                        className="tournament-name"
+                      >
+                        {match.ladder.title}
+                      </Link>
+                    </td>
+                    <td>
+                      {moment(match.starts_at).format('lll')}
+                    </td>
+                    <td>
+                      {match.match_type == 'free'
+                        ? 'FREE'
+                        : match.match_type == 'credits' ||
+                          match.match_type == 'credit'
+                        ? match.match_fee + ' credits'
+                        : match.match_type == 'cash'
+                        ? '$' + match.match_fee
+                        : ' '}
+                    </td>
+
+                    <td className="col-item">
+                      {match.match_players}v{match.match_players}
+                    </td>
+                    <td>
+                      <Link to={this.matchLink('/m/' + match.id)}>
+                        {txt1}{' '}
+                        <span className="h-o-p">{txt2}</span>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
+        </tbody>
+      </table>
+    </div>)
+  }
+
   renderButtonSet2(cls) {
     return (
       <>
@@ -626,70 +714,7 @@ class Game extends React.Component {
                       <span className="fa fa-spin fa-spinner" />
                     </div>
                   )}
-                  <div className="table_wrapper">
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th className="h-o-p  d-none">Match</th>
-                          <th>Starts At</th>
-
-                          <th style={{width: '15%'}}>Fee</th>
-                          <th>Players</th>
-                          <th> </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.matches &&
-                          this.state.matches['game_' + game_id] &&
-                          this.state.matches['game_' + game_id].map(
-                            (match, i) => {
-                              if (match.status == 'expired') {
-                                return false;
-                              }
-                              return (
-                                <tr
-                                  key={match.id}
-                                  className="tournament-box"
-                                  style={{background: '#27204d'}}
-                                >
-                                  <td className="h-o-p  d-none">
-                                    <Link
-                                      to={this.matchLink('/m/' + match.id)}
-                                      className="tournament-name"
-                                    >
-                                      {match.ladder.title}
-                                    </Link>
-                                  </td>
-                                  <td>
-                                    {moment(match.starts_at).format('lll')}
-                                  </td>
-                                  <td>
-                                    {match.match_type == 'free'
-                                      ? 'FREE'
-                                      : match.match_type == 'credits' ||
-                                        match.match_type == 'credit'
-                                      ? match.match_fee + ' credits'
-                                      : match.match_type == 'cash'
-                                      ? '$' + match.match_fee
-                                      : ' '}
-                                  </td>
-
-                                  <td className="col-item">
-                                    {match.match_players}v{match.match_players}
-                                  </td>
-                                  <td>
-                                    <Link to={this.matchLink('/m/' + match.id)}>
-                                      Accept{' '}
-                                      <span className="h-o-p">Match</span>
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                      </tbody>
-                    </table>
-                  </div>
+                  {this.renderMatchfinder()}
                 </div>
               </div>
 
@@ -738,7 +763,7 @@ class Game extends React.Component {
                           className="form-control"
                           name="new_chat_msg"
                           id="new_chat_msg"
-                          placeholder="Type your message and press enter key to send a message.."
+                          placeholder="Type your message and press send"
                           value={this.state.new_chat_msg}
                           onChange={this.handleChange.bind(this)}
                         />
@@ -818,90 +843,7 @@ class Game extends React.Component {
                       <span className="fa fa-spin fa-spinner" />
                     </div>
                   )}
-                  <div className="table_wrapper">
-                    <table className="table table-striped table-ongray table-hover">
-                      <thead>
-                        <tr>
-                          <th className="h-o-p  d-none">Match</th>
-                          <th>Starts At</th>
-                          <th style={{width: '15%'}}>Fee</th>
-                          <th>Players</th>
-                          <th> </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.matches &&
-                          this.state.matches['game_' + game_id] &&
-                          this.state.matches['game_' + game_id].map(
-                            (match, i) => {
-                              if (match.status == 'expired') {
-                                return false;
-                              }
-
-                              let txt1 = 'Accept';
-                              let txt2 = 'Match';
-                              let t1p = match.team_1_players;
-                              if (!t1p) {
-                                t1p = '';
-                              }
-                              // let show_cancel = false;
-                              t1p = t1p.split('|');
-                              // console.log(t1p);
-                              if (
-                                this.props.user &&
-                                t1p.indexOf('' + this.props.user.id) > -1
-                              ) {
-                                txt1 = 'View';
-                                txt2 = 'Match';
-                                if (match.status == 'pending') {
-                                  // show_cancel = true;
-                                }
-                              }
-
-                              return (
-                                <tr
-                                  key={match.id}
-                                  className="tournament-box"
-                                  style={{background: '#27204d'}}
-                                >
-                                  <td className="h-o-p  d-none">
-                                    <Link
-                                      to={this.matchLink('/m/' + match.id)}
-                                      className="tournament-name"
-                                    >
-                                      {match.ladder.title}
-                                    </Link>
-                                  </td>
-                                  <td>
-                                    {moment(match.starts_at).format('lll')}
-                                  </td>
-                                  <td>
-                                    {match.match_type == 'free'
-                                      ? 'FREE'
-                                      : match.match_type == 'credits' ||
-                                        match.match_type == 'credit'
-                                      ? match.match_fee + ' credits'
-                                      : match.match_type == 'cash'
-                                      ? '$' + match.match_fee
-                                      : ' '}
-                                  </td>
-
-                                  <td className="col-item">
-                                    {match.match_players}v{match.match_players}
-                                  </td>
-                                  <td>
-                                    <Link to={this.matchLink('/m/' + match.id)}>
-                                      {txt1}{' '}
-                                      <span className="h-o-p">{txt2}</span>}
-                                    </Link>
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                      </tbody>
-                    </table>
-                  </div>
+                  {this.renderMatchfinder()}
                 </div>
               </div>
               <div className="col-md-6 col-sm-12 col-xs-12 pos-rel">

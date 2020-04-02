@@ -693,7 +693,7 @@ class Profile extends React.Component {
 
                     <div className="list_pad prof_abt">
                       <div className="row gamer_tags_profile pt-0">
-                        <div className="col-md-4 col mb-0 pljy">
+                        <div className="col-md-4 col-12 mb-0 pljy">
                           <span> MEMBER SINCE</span>
                           <p>
                             {moment(this.state.user_info.created_at).format(
@@ -701,7 +701,7 @@ class Profile extends React.Component {
                             )}
                           </p>
                         </div>
-                        <div className="col-md-4 col-6 mb-0 pljy">
+                        <div className="col-md-4 col-12 mb-0 pljy">
                           <span> TIME ZONE </span>
                           <p>
                             {this.state.user_info.timezone
@@ -709,7 +709,7 @@ class Profile extends React.Component {
                               : '-'}
                           </p>
                         </div>
-                        <div className="col-md-4 col-6 mb-0 pljy  ">
+                        <div className="col-md-4 col-12 mb-0 pljy  ">
                           <span> REGION </span>
                           <p>
                             {this.state.user_info.country

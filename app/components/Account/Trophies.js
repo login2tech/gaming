@@ -70,7 +70,7 @@ class Trophies extends React.Component {
                       : this.props.params.type}{' '}
                     Trophies
                   </h3>
-                  <div className="banner_actions">
+                  <div className="banner_actions justify-left">
                     <Link
                       className="pt-3 pb-3 dib"
                       to={'/u/' + this.props.params.username}

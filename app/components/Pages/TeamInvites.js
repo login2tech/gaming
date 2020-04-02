@@ -99,7 +99,7 @@ class TeamInvites extends React.Component {
                                 <tr>
                                   <td>{k.id}</td>
                                   <td>
-                                    <h5>
+                                    <h5 class="normal_sm">
                                       <Link to={'/teams/view/' + k.id}>
                                         {k.title}
                                       </Link>

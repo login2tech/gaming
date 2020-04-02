@@ -6966,7 +6966,7 @@ media query starts here
         height: 25px;
         font-size: 10px;
         font-weight: normal;
-        line-height: 10px;
+        line-height: 11px;
     }
 
     .page_title_bar {
@@ -7208,9 +7208,25 @@ media query starts here
     }
 
     #dropdownMenuButton {
-        width: 95%;
+        width: 100%;
         padding-left: 11px !important;
     }
+    .mobil-game-actions > div > a, .mobil-game-actions > div > div {
+        width: calc(50% - 10px) !important;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    .mobil-game-actions > div:first-child {
+        margin-left: 5px;
+    margin-right: 0;
+    }
+
+    .mobil-game-actions > div:last-child {
+        margin-right: 5px;
+    margin-left: 0;
+    }
+
 
     .match_start_date {
         font-size: 13px;
@@ -7267,12 +7283,16 @@ media query starts here
     .messaging.showing_chat .inbox_people {
         display: none;
     }
-
+    h5.prizes_desclaimer .fa.fa-user {
+        padding-left: 20px;
+    }
     .messaging.showing_chat .mesgs {
         width: 100%;
         float: none;
     }
-
+    .normal_sm{
+      font-size: 11px;
+    }
     .close_chat {
       position: absolute;
       top: 0;
@@ -7301,6 +7321,10 @@ media query starts here
         position: relative;
         top: 0;
     }
+    .ticket-sm-phone{
+      font-size: 10px;
+      margin-left: 10px;
+    }
 }
 
 button.m_chtclose_btn.btn-outline {
@@ -7326,4 +7350,13 @@ button.m_chtclose_btn.btn-outline {
     width: 80px;
     height: 33px;
     object-fit: cover;
+}
+.h-spacer{
+
+    line-height: 21px;
+    font-size: 22px;
+    font-weight: 200;
+    margin-left: 10px;
+    margin-right: 10px;
+
 }

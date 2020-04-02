@@ -370,7 +370,7 @@ class Records extends React.Component {
                     @{this.props.params.username}
                   </div>
 
-                  <div className="banner_actions">
+                  <div className="banner_actions justify-left">
                     <Link
                       to={'/u/' + this.props.params.username}
                       className="pt-3 pb-3 dib"
@@ -384,12 +384,14 @@ class Records extends React.Component {
                     rec.length > 0 &&
                     this.state.loaded ? (
                       <>
+                        <span class="d-md-none h-spacer"> | </span>
                         <a
                           href="#"
                           className="pt-3 pb-3 dib  text-lg"
                           onClick={this.resetOverall.bind(this)}
                         >
-                          <span className="fa fa-repeat" /> reset ($5)
+
+                          <span className="fa fa-repeat" /> Reset All ($5)
                         </a>
                       </>
                     ) : (
@@ -399,7 +401,7 @@ class Records extends React.Component {
                 </div>
               </div>
               <div className="col-md-4 col-sm-4 col-4 text-center">
-                <img
+                <img class=" mt-3 mt-md-0"
                   src={'/images/' + this.state.image_to_show}
                   style={{maxHeight: 200}}
                 />

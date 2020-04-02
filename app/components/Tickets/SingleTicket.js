@@ -267,15 +267,23 @@ class SingleTicket extends React.Component {
                     <h3>Not allowed to view this ticket</h3>
                   </div>
                 ) : this.state.page_loaded ? (
-                  <div className="section-headline white-headline text-left">
-                    <p>
-                      <strong>{this.state.ticket.title}</strong>
-                    </p>
-                    <p>
-                      Started {moment(this.state.ticket.created_at).fromNow()} |{' '}
-                      {this.state.ticket.type}
-                    </p>
-                  </div>
+                  <>
+                    <div className="section-headline white-headline text-left ">
+                      <p>
+                        <strong>{this.state.ticket.title}</strong>
+                      </p>
+                      <p className="d-none d-md-block">
+                        Started {moment(this.state.ticket.created_at).fromNow()} |{' '}
+                        {this.state.ticket.type}
+                      </p>
+                    </div>
+                    <div className="d-md-none banner_actions justify-left">
+                      <span class="ticket-sm-phone">
+                        Started {moment(this.state.ticket.created_at).fromNow()}<br />
+                        {this.state.ticket.type}
+                      </span>
+                    </div>
+                  </>
                 ) : (
                   false
                 )}

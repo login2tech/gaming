@@ -8,7 +8,26 @@ import Followers from '../Modules/Modals/Followers';
 import Following from '../Modules/Modals/Following';
 import utils from '../../utils';
 class ProfileHeader extends React.Component {
-  state = {};
+  state = {
+    games: []
+  };
+
+
+  componentDidMount() {
+    this.runQuery();
+  }
+
+  runQuery(prps) {
+    fetch('/api/games/list').then(res => {
+      if (res) {
+        res.json().then(obj => {
+          this.setState({games: obj.items});
+        });
+      }
+    });
+  }
+
+  
   addFriend(event) {
     event.preventDefault();
     this.props.dispatch(
@@ -182,6 +201,11 @@ class ProfileHeader extends React.Component {
           ) : (
             false
           )}
+
+
+
+
+
         </div>
         <div
           style={{
@@ -317,6 +341,89 @@ class ProfileHeader extends React.Component {
                   TIMELINE
                 </Link>
               </li>
+              {this.props.user &&
+              this.props.is_loaded &&
+              this.props.user.id != user_info.id ? (
+                <li class="float-right">
+                  <a
+
+
+                    onClick={e => {e.preventDefault()
+                      this.props.onChat(e);
+                    }}
+                  >
+                    Send DM
+                  </a>
+                </li>
+              ) : (
+                false
+              )}
+              {this.props.user &&
+              this.props.is_loaded &&
+              this.props.user.id != user_info.id ? (
+                <li class="float-right">
+                  <div className={'dropdown fl-right profbtn'}>
+                    <a
+                      // className="btn btn-default bttn_submit dropdown-toggle profbtn"
+                      // type="button"
+                      id="dropdownMenuButton"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      Challenge
+                    </a>
+                    <div
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton"
+                    >
+                      {this.state.games &&
+                        this.state.games.map((game, i) => {
+                          return (
+                            game.ladders &&
+                            game.ladders.map((ladder, i) => {
+                              if (ladder.min_players > 1) {
+                                return false;
+                              }
+                              return (
+                                <a
+                                  className={'dropdown-item'}
+                                  onClick={() => {
+                                    cookie.save(
+                                      'challenging_team',
+                                      '@' + this.props.user_info.username,
+                                      {
+                                        path: '/',
+                                        expires: moment()
+                                          .add(1, 'day')
+                                          .toDate()
+                                      }
+                                    );
+                                  }}
+                                  href={
+                                    '/challenge/new/g/' +
+                                    ladder.game_id +
+                                    '/l/' +
+                                    ladder.id +
+                                    '/u/' +
+                                    this.props.user_info.id
+                                  }
+                                  key={ladder.id}
+                                >
+                                  {game.title} - {ladder.title}
+                                </a>
+                              );
+                            })
+                          );
+                        })}
+                    </div>
+                  </div>
+                </li>
+              ) : (
+                false
+              )}
+
+
             </ul>
           </div>
         </div>
