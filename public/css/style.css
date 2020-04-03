@@ -7325,6 +7325,13 @@ media query starts here
       font-size: 10px;
       margin-left: 10px;
     }
+    .received_msg {
+        width: 69%;
+    }
+    .sent_msg{
+
+      width: 69%;
+    }
 }
 
 button.m_chtclose_btn.btn-outline {
