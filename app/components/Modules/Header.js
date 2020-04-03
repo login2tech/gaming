@@ -11,7 +11,7 @@ class Header extends React.Component {
       games: [],
       userSuggestions: [],
       notifications: [],
-      messages: [{read: false}]
+      messages: [ ]
       // posts_page: 1
     };
     this.closeSide = this._closeCollapse.bind(this);

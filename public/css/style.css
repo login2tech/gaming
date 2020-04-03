@@ -5968,9 +5968,10 @@ ul.main_cat_list.pr {
     width: 30px;
     height: 30px;
 }
-
-.gm_hed.section.page_title_bar, .gm_hed .is_single_game_header_desk {
-    /*min-height: 350px !important; */ /* commented in april from dell */
+@media screen and (max-width: 1900px){
+    .gm_hed.section.page_title_bar, .gm_hed .is_single_game_header_desk {
+        min-height: 350px !important; /* commented in april from dell */
+    }
 }
 
 .width50per {
