@@ -477,32 +477,23 @@ class newMatch extends React.Component {
                       <div className="form-group col-md-12">
                         <label htmlFor="title">Ladder</label>
                         <br />
-                        <strong>
-                          {this.state.game_info.title +
-                            ' - ' +
-                            this.state.team_info.ladder.title}
-                        </strong>{' '}
-                        <span
-                          className={
-                            game_user_ids.tag_icons[
-                              this.state.team_info.ladder.gamer_tag
-                            ]
-                          }
-                        />
+                        <div class="uid_det">
+                          <strong>
+                            {this.state.game_info.title +
+                              ' - ' +
+                              this.state.team_info.ladder.title}
+                          </strong>{' '}
+                          <span
+                            className={
+                              game_user_ids.tag_icons[
+                                this.state.team_info.ladder.gamer_tag
+                              ]
+                            }
+                          />
+                        </div>
                       </div>
                       <br />
-                      <div className="form-group col-md-12">
-                        <label htmlFor="title">User Id Required</label>
-                        <br />
-                        <strong>
-                          {
-                            this.tag_names[
-                              this.state.team_info.ladder.gamer_tag
-                            ]
-                          }
-                        </strong>
-                      </div>
-                      <br />
+
                       {/*}
                     <div className="form-group col-md-12">
                       <label htmlFor="title">Match Date</label>
@@ -770,8 +761,8 @@ class newMatch extends React.Component {
                               <thead>
                                 <tr>
                                   <th>Username</th>
-                                  <th>Role</th>
-                                  <th>
+                                  <th class="d-none t-md-table-cell">Role</th>
+                                  <th  className={'act_pr' + this.state.team_info.ladder.gamer_tag}>
                                     <span
                                       className={
                                         game_user_ids.tag_icons[
@@ -823,7 +814,7 @@ class newMatch extends React.Component {
                                           </Link>
                                         </td>
 
-                                        <td>
+                                        <td class="d-none t-md-table-cell">
                                           {team_user.user_id ==
                                           this.state.team_info.team_creator
                                             ? 'Leader'

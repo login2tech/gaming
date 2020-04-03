@@ -304,7 +304,7 @@ class NewTeam extends React.Component {
                     )}
                     <div className="form-group col-md-12">
                       <label htmlFor="title">User Id Required</label>
-                      <div>
+                      <div class="uid_det">
                         {!this.state.ladder ? ' - ' : this.showGamerTag()}
                       </div>
                     </div>

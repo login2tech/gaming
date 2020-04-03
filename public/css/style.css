@@ -6145,10 +6145,11 @@ media query starts here
         font-size: 12px;
     }
     td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
-        width: 50px;
-        background-position: bottom;
-        margin-bottom: 0;
-        background-position: center;
+           width: 50px;
+    background-position: bottom;
+    height: 30px;
+    background-position: center;
+    vertical-align: middle;
     }
 
     .tab-block .tab-mnu li {
@@ -7367,4 +7368,14 @@ button.m_chtclose_btn.btn-outline {
     margin-left: 10px;
     margin-right: 10px;
 
+}
+.uid_det span , .uid_det strong{
+    min-height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 39px;
+}
+
+th.act_pr6 {
+    padding-bottom: 3px;
 }

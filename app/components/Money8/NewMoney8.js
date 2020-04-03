@@ -490,6 +490,27 @@ class NewMoney8 extends React.Component {
                       </select>
                     </div>
 
+                     {this.state.match_type == 'credits' ||
+                    this.state.match_type == 'cash' ? (
+                      <div className="form-group col-md-12">
+                        <label htmlFor="match_fee">Match Entry Fee</label>
+                        <input
+                          type="number"
+                          min="1"
+                          step="1"
+                          id="match_fee"
+                          className="form-control"
+                          onChange={this.handleChange.bind(this)}
+                          required
+                          placeholder="Match Fees"
+                          name="match_fee"
+                          value={this.state.match_fee}
+                        />
+                      </div>
+                    ) : (
+                      false
+                    )}
+
                     <div className="form-group col-md-12">
                       <label htmlFor="players_total">
                         Total Players In mix-and-match Pool
@@ -553,26 +574,7 @@ class NewMoney8 extends React.Component {
                       </select>
                     </div>
 
-                    {this.state.match_type == 'credits' ||
-                    this.state.match_type == 'cash' ? (
-                      <div className="form-group col-md-12">
-                        <label htmlFor="match_fee">Match Entry Fee</label>
-                        <input
-                          type="number"
-                          min="1"
-                          step="1"
-                          id="match_fee"
-                          className="form-control"
-                          onChange={this.handleChange.bind(this)}
-                          required
-                          placeholder="Match Fees"
-                          name="match_fee"
-                          value={this.state.match_fee}
-                        />
-                      </div>
-                    ) : (
-                      false
-                    )}
+                   
                     {this.renderGameSettings()}
                     <div className="form-group col-md-12 text-center">
                       <button

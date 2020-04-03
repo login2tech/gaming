@@ -1588,7 +1588,27 @@ class TournamentInfo extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
-                        if (k == 'match_available') {
+                        if (k == 'match_available' || k =='map_2' || k == 'map_3') {
+                          return false;
+                        }
+                        if(k == "map_1" && this.state.tournament.status=='started')
+                        {
+                          
+                          return (
+                            <>
+                              <div className="col-md-4 col-6 textcap" key={k}>
+                                <span>{'Maps'}</span>
+                                <p>
+                                  <strong>Map 1: </strong>{game_settings["map_1"]}
+                                  {game_settings.map_2 ? <><br /><strong>Map 2: </strong>{game_settings["map_2"]}</> : false}
+                                  {game_settings.map_3 ? <><br /><strong>Map 3: </strong>{game_settings["map_3"]}</> : false}
+                                </p>
+                              </div>
+                               
+                            </>
+                          );
+                        }
+                        if (k == 'map_1') {
                           return false;
                         }
                         const m = k.replace(new RegExp('_', 'g'), ' ');

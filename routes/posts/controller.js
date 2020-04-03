@@ -440,8 +440,13 @@ exports.listItemMy = function(req, res, next) {
     .orderBy('id', 'DESC');
 
   n = n.query(function(qb) {
-    qb.where({
-      user_id: req.query.uid ? req.query.uid : 0
+    qb.where(function(ab){
+      ab.where({
+        user_id: req.query.uid ? req.query.uid : 0
+      });
+      ab.orWhere({
+        'in_timeline_of' : req.query.uid ? req.query.uid : 0
+      });
     });
     if (req.query.filter) {
       if (req.query.filter == 'images') {

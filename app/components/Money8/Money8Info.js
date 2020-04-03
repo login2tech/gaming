@@ -730,7 +730,34 @@ class Money8Info extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
-                        if (k == 'match_available' || k == 'match_regions') {
+                        if (k == 'match_available' || k == 'match_regions'  || k =='map_2' || k == 'map_3') {
+                          return false;
+                        }
+                        if(k == "map_1" && this.state.match.team_2 && this.state.match.team_2 !='')
+                        {
+                          
+                          return (
+                            <>
+                              <div className="col-md-4 col-6 textcap" key={k}>
+                                <span>{'Maps'}</span>
+                                <p>
+                                  <strong>Map 1: </strong>{game_settings["map_1"]}
+                                  {game_settings.map_2 ? <><br /><strong>Map 2: </strong>{game_settings["map_2"]}</> : false}
+                                  {game_settings.map_3 ? <><br /><strong>Map 3: </strong>{game_settings["map_3"]}</> : false}
+                                </p>
+                              </div>
+                              <div className="col-md-4 col-6 textcap" key={k}>
+                                <span>{'Map Host'}</span>
+                                <p>
+                                  <strong>Host 1: </strong>{'Team 1'}
+                                  {game_settings.map_2 ? <><br /><strong>Host 2: </strong>{'Team 2'}</> : false}
+                                  {game_settings.map_3 ? <><br /><strong>Host 3: </strong>TBD</> : false}
+                                </p>
+                              </div>
+                            </>
+                          );
+                        }
+                        if (k == 'map_1') {
                           return false;
                         }
                         let m = k.replace(new RegExp('_', 'g'), ' ');
