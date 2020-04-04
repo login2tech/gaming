@@ -323,6 +323,9 @@ class MatchInfo extends React.Component {
     )
       .then(res => res.json())
       .then(json => {
+
+        this.setState({clickProcessed : true})
+
         if (json.ok) {
           const obj = {
             eligible_teams: json.teams ? json.teams : [],
@@ -571,7 +574,10 @@ class MatchInfo extends React.Component {
 
   renderJoin() {
     if (this.state.clicked) {
-      return false;
+      if(!this.state.clickProcessed)
+        return 'please wait...';
+      else
+        return false;
     }
 
     if (!this.state.is_loaded) {

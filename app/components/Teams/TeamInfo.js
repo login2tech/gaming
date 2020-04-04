@@ -1121,42 +1121,76 @@ class TeamInfo extends React.Component {
 
           <div className="team_actions mt-4 ml-2 mr-2">
             {this.props.user &&
-            this.state.team_info.team_creator == this.props.user.id &&
-            !this.state.team_info.removed &&
-            this.state.team_info.team_type == 'matchfinder' ? (
-              <Link
-                to={
-                  '/matchfinder/new/' +
-                  this.state.team_info.ladder.id +
-                  '/' +
-                  this.state.team_info.id
-                }
-                className="btn btn-default bttn_submit mw_200 mr-1"
-                style={{margin: '0 auto'}}
-              >
-                Create a match
-              </Link>
-            ) : (
-              false
-            )}
-            {this.state.team_info &&
-            this.state.team_info.team_type == 'tournaments' ? (
-              <Link
-                to={'/t/' + this.state.team_info.team_t_id}
-                className="btn btn-default mt-2 bttn_submit mw_200"
-                style={{margin: '0 auto'}}
-              >
-                View Tournament
-              </Link>
-            ) : (
-              <Link
-                to={'/matchfinder/'}
-                className="btn btn-default bttn_submit mw_200"
-                style={{margin: '0 auto'}}
-              >
-                Find a match
-              </Link>
-            )}
+                  this.state.team_info.team_creator == this.props.user.id &&
+                  !this.state.team_info.removed &&
+                  this.state.team_info.team_type == 'matchfinder' ? (
+                    <>
+                      <Link
+                        to={
+                          '/matchfinder/new/' +
+                          this.state.team_info.ladder.id +
+                          '/' +
+                          this.state.team_info.id
+                        }
+                        className="btn btn-default bttn_submit mw_200 mr-1"
+                        style={{margin: '0 auto'}}
+                      >
+                        Create a match
+                      </Link>
+                      <Link
+                        to={'/matchfinder/'}
+                        className="btn btn-default bttn_submit mw_200"
+                        style={{margin: '0 auto'}}
+                      >
+                        Find a match
+                      </Link>
+                    </>
+                  ) : (
+                    false
+                  )}
+                  {!this.meInTeam() &&
+                  this.state.team_info.team_type == 'matchfinder' ? (
+                    <Link
+                      to={
+                        '/challenge/new/g/' +
+                        this.state.team_info.ladder.game_id +
+                        '/l/' +
+                        this.state.team_info.ladder.id +
+                        '/t/' +
+                        this.state.team_info.id
+                      }
+                      onClick={() => {
+                        cookie.save(
+                          'challenging_team',
+                          this.state.team_info.title,
+                          {
+                            path: '/',
+                            expires: moment()
+                              .add(1, 'day')
+                              .toDate()
+                          }
+                        );
+                      }}
+                      className="btn btn-default bttn_submit mw_200"
+                      style={{margin: '0 auto'}}
+                    >
+                      Challenge
+                    </Link>
+                  ) : (
+                    false
+                  )}
+                  {this.state.team_info &&
+                  this.state.team_info.team_type == 'tournaments' ? (
+                    <Link
+                      to={'/t/' + this.state.team_info.team_t_id}
+                      className="btn btn-default mt-2 bttn_submit mw_200"
+                      style={{margin: '0 auto'}}
+                    >
+                      View Tournament
+                    </Link>
+                  ) : (
+                    false
+                  )}
           </div>
         </div>
 

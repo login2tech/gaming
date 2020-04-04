@@ -149,10 +149,9 @@ class NewTeam extends React.Component {
                   game_user_ids.tag_icons[tmp_game.ladders[j].gamer_tag]
                 }
               />
-              {tg == 'Activision ID' ? 'ID' : tg}
+              <span>{tg == 'Activision ID' ? 'ID' : tg}</span>
 
-              <br />
-              <br />
+              <br /> 
             </>
           );
           // break;
