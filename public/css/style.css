@@ -6288,15 +6288,27 @@ media query starts here
         bottom: -140px;
     }
 
+    .nombbtm .bbt, .nombbtm .section-headline {
+            margin-bottom: 0;
+        }
+
     .single-finder-match {
         background-color: rgba(0,0,0, 0.1);
         background-position: top center !important;
         max-height: 209px;
         background-size: cover !important;
-        margin-bottom: 150px;
+        
         padding-top: 7px;
         min-height: 145px !important;
     }
+    .single-finder-match:not(.nombbtm)
+    {
+        margin-bottom: 150px;
+    }.ltrinmob {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
 
     .single-finder-match .btn {
         margin: 0;
@@ -6369,6 +6381,10 @@ media query starts here
         flex-direction: column;
         margin-top: -66px;
         margin-bottom: 16px;
+    }
+    .profile-header-data.forteam{
+
+        margin-top: -100px;
     }
 
     .profile-header-data .profile-header-data-left {
@@ -7357,6 +7373,13 @@ media query starts here
 
       width: 69%;
     }
+.list_pad [class^='col'] {
+    padding: 5px;
+}
+
+.list_pad > .row {
+    margin: 0;
+}
 
     .match_chat_box {
         right: auto;

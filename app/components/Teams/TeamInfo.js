@@ -1074,9 +1074,13 @@ class TeamInfo extends React.Component {
           )}
           <div className="profile-header" style={divStyle} />
           <div className="container profile-page-container">
-            <div className="profile-header-data">
+            <div className="profile-header-data forteam">
+
+              <div className="profile-header-data-middle">
+                <div>{this.renderNameAndFollow(false, 'h3')}</div> 
+              </div>
               <div className="profile-header-data-left">
-              <span className="textcap d-md-none d-inline-block width-100 pl-2">
+                <span className="textcap d-md-none d-inline-block width-100 pl-2">
                 {this.state.team_info.team_type == 'tournaments' ? (
                   <span className="trofy pt-2">
                     <span className="fa fa-trophy text-lg" />{' '}
@@ -1086,15 +1090,17 @@ class TeamInfo extends React.Component {
                   this.state.team_info.team_type
                 )}{' '}
                 team
-              </span>
+                </span>
                 <div className="profile-avatar">
                   {this.renderProfileImage()}
                 </div>
               </div>
+
               <div className="profile-header-data-middle">
-                <div>{this.renderNameAndFollow(false, 'h3')}</div>
+                
                 <div>{this.renderWinLoss(0)}</div>
               </div>
+              
             </div>
             <div className="row">
               <div className="user-rank-mobile row  rank_box_wrap">

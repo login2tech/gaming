@@ -821,110 +821,18 @@ class MatchInfo extends React.Component {
     );
   }
 
-  render() {
-    const {match} = this.state;
-
-    const divStyle =
-      match && match.game && match.game.banner_2_url
-        ? {
-            backgroundImage: 'url(' + match.game.banner_2_url + ')',
-            backgroundPosition: 'center',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            minHeight: '400px'
-          }
-        : {};
-
-    const team_1_players =
-      match && match.team_1_players ? match.team_1_players.split('|') : [];
-    const team_2_players =
-      match && match.team_2_players ? match.team_2_players.split('|') : [];
+  renderListPad(vtype)
+  {
+ const {match} = this.state;
+ 
     let game_settings =
       match && match.game_settings ? JSON.parse(match.game_settings) : {};
     if (!game_settings) {
       game_settings = {};
     }
     const game_settings_keys = Object.keys(game_settings);
-    if (!match.id) {
-      return (
-        <div className="text-center text-lg p-5">
-          <span className="fa fa-spin fa-spinner" style={{fontSize: 100}} />
-        </div>
-      );
-    }
     return (
-      <div>
-        <section
-          className="page_title_bar single-finder-match"
-          style={divStyle}
-        >
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
-                  <div className="row bbt">
-                    <div className="col col-md-1">
-                      <span
-                        className={
-                          game_user_ids.tag_icons[match.ladder.gamer_tag] +
-                          ' pf_icon_big'
-                        }
-                      />
-                    </div>
-                    <div className="col col-md-3">
-                      <div className="match_heading">
-                        <h4>{match.is_challenge ? 'Challenge' : 'Match'}</h4>
-                      </div>
-                      <div className="twovstwo">
-                        {match.match_players} VS {match.match_players} MATCH
-                      </div>
-                    </div>
-
-                    <div className="col-12 col-md-7 pt-3">
-                      <span className="vs_match">
-                        {match.team_2_id ? (
-                          <>
-                            <Link to={'/teams/view/' + match.team_1_info.id}>
-                              {match.team_1_info.title}
-                            </Link>{' '}
-                            VS{' '}
-                            <Link to={'/teams/view/' + match.team_2_info.id}>
-                              {match.team_2_info.title}
-                            </Link>
-                          </>
-                        ) : match.is_challenge ? (
-                          <span className="text-grey">Waiting Acceptance</span>
-                        ) : (
-                          <span className="text-grey">Pending Team</span>
-                        )}
-                      </span>
-                      <span className="game_station">
-                        {match.game.title} @ {match.ladder.title}
-                      </span>
-                      <div className="match_start_date">
-                        {match.is_available_now
-                          ? 'AVAILABLE NOW'
-                          : moment().isAfter(moment(match.starts_at))
-                          ? 'Match Started:'
-                          : 'Match Starts'}{' '}
-                        {match.is_available_now
-                          ? ' '
-                          : moment(match.starts_at).format('lll')}{' '}
-                        {match.is_available_now
-                          ? ''
-                          : '  (' + moment(match.starts_at).fromNow() + ')'}
-                      </div>
-                      <span className="flat_right">
-                        <strong>Region: </strong>
-                        {game_settings && game_settings['match_available']
-                          ? utils.getCountryImage(
-                              game_settings['match_available']
-                            )
-                          : ''}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="list_pad">
+     <div className={"list_pad " +(vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')}>
                     <div className="row">
                       <div className="col-4">
                         <span> MATCH ID</span>
@@ -1000,7 +908,113 @@ class MatchInfo extends React.Component {
                     {this.renderRequestCancel()}
                     {this.renderTicketCreate()}
                     {this.renderJoin()}
+                  </div>);
+  }
+
+  render() {
+    const {match} = this.state;
+
+    const divStyle =
+      match && match.game && match.game.banner_2_url
+        ? {
+            backgroundImage: 'url(' + match.game.banner_2_url + ')',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '400px'
+          }
+        : {};
+
+    const team_1_players =
+      match && match.team_1_players ? match.team_1_players.split('|') : [];
+    const team_2_players =
+      match && match.team_2_players ? match.team_2_players.split('|') : [];
+    let game_settings =
+      match && match.game_settings ? JSON.parse(match.game_settings) : {};
+    if (!game_settings) {
+      game_settings = {};
+    }
+ 
+    if (!match.id) {
+      return (
+        <div className="text-center text-lg p-5">
+          <span className="fa fa-spin fa-spinner" style={{fontSize: 100}} />
+        </div>
+      );
+    }
+    return (
+      <div>
+        <section
+          className="page_title_bar single-finder-match nombbtm"
+          style={divStyle}
+        >
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-left">
+                  <div className="row bbt">
+                    <div className="col-3 col-md-1">
+                      <span
+                        className={
+                          game_user_ids.tag_icons[match.ladder.gamer_tag] +
+                          ' pf_icon_big'
+                        }
+                      />
+                    </div>
+                    <div className="col-9 ltrinmob col-md-3">
+                      <div className="match_heading">
+                        <h4>{match.is_challenge ? 'Challenge' : 'Match'}</h4>
+                      </div>
+                      <div className="twovstwo">
+                        {match.match_players} VS {match.match_players} MATCH
+                      </div>
+                    </div>
+
+                    <div className="col-12 col-md-7 pt-3">
+                      <span className="vs_match">
+                        {match.team_2_id ? (
+                          <>
+                            <Link to={'/teams/view/' + match.team_1_info.id}>
+                              {match.team_1_info.title}
+                            </Link>{' '}
+                            VS{' '}
+                            <Link to={'/teams/view/' + match.team_2_info.id}>
+                              {match.team_2_info.title}
+                            </Link>
+                          </>
+                        ) : match.is_challenge ? (
+                          <span className="text-grey">Waiting Acceptance</span>
+                        ) : (
+                          <span className="text-grey">Pending Team</span>
+                        )}
+                      </span>
+                      <span className="game_station">
+                        {match.game.title} @ {match.ladder.title}
+                      </span>
+                      <div className="match_start_date">
+                        {match.is_available_now
+                          ? 'AVAILABLE NOW'
+                          : moment().isAfter(moment(match.starts_at))
+                          ? 'Match Started:'
+                          : 'Match Starts'}{' '}
+                        {match.is_available_now
+                          ? ' '
+                          : moment(match.starts_at).format('lll')}{' '}
+                        {match.is_available_now
+                          ? ''
+                          : '  (' + moment(match.starts_at).fromNow() + ')'}
+                      </div>
+                      <span className="flat_right">
+                        <strong>Region: </strong>
+                        {game_settings && game_settings['match_available']
+                          ? utils.getCountryImage(
+                              game_settings['match_available']
+                            )
+                          : ''}
+                      </span>
+                    </div>
                   </div>
+                 {this.renderListPad('desktop')}
                 </div>
               </div>
             </div>
@@ -1011,6 +1025,8 @@ class MatchInfo extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
+
+                {this.renderListPad('mobile')}
                 <Messages messages={this.props.messages} />
                 {this.renderScoreSubmit()}
 

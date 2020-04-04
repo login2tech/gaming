@@ -617,19 +617,9 @@ class Money8Info extends React.Component {
     );
   }
 
-  render() {
-    const divStyle =
-      this.state.match &&
-      this.state.match.game &&
-      this.state.match.game.banner_2_url
-        ? {
-            backgroundImage: 'url(' + this.state.match.game.banner_2_url + ')',
-            backgroundPosition: 'center',
-            backgroundSize: 'contain',
-            backgroundRepeat: 'no-repeat',
-            minHeight: '400px'
-          }
-        : {};
+  renderListPad(vtype)
+  {
+
     let game_settings =
       this.state.match && this.state.match.game_settings
         ? JSON.parse(this.state.match.game_settings)
@@ -638,65 +628,8 @@ class Money8Info extends React.Component {
       game_settings = {};
     }
     const game_settings_keys = Object.keys(game_settings);
-    return (
-      <div>
-        <section
-          className="page_title_bar single-finder-match"
-          style={divStyle}
-        >
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 col-sm-12 col-xs-12">
-                <div className="section-headline white-headline text-left">
-                  <div className="row bbt">
-                    <div className="col col-md-1">
-                      <span
-                        className={
-                          game_user_ids.tag_icons[
-                            this.state.match.ladder.gamer_tag
-                          ] + ' pf_icon_big '
-                        }
-                      />
-                    </div>
-                    <div className="col-8 col-md-4">
-                      <div className="match_heading">
-                        <h4>Mix & Match</h4>
-                      </div>
-                      <div className="twovstwo">
-                        {this.state.match.players_total / 2} VS{' '}
-                        {this.state.match.players_total / 2} MATCH
-                      </div>
-                    </div>
-
-                    <div className="col-10 col-md-6 pt-3">
-                      <span className="game_station">
-                        {this.state.match.game.title} @{' '}
-                        {this.state.match.ladder.title}
-                      </span>
-                      <div className="match_start_date">
-                        {/* {moment().isAfter(moment(this.state.match.starts_at))
-                      ? 'Match Started:'
-                      : 'Match Starts'}{' '}
-                    {moment(this.state.match.starts_at).format('lll')} ({' '}
-                    {moment(this.state.match.starts_at).fromNow()} ) */}
-                        <strong>
-                          {this.state.match.players_joined}/
-                          {this.state.match.players_total}
-                        </strong>{' '}
-                        joined the mix-and-match pool
-                      </div>
-                      <span className=" match_start_date flat_right">
-                        <strong>Region: </strong>
-                        {game_settings && game_settings['match_available']
-                          ? utils.getCountryImage(
-                              game_settings['match_available']
-                            )
-                          : ''}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="list_pad">
+    return(
+      <div className={"list_pad " +(vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')}>
                     <div className="row">
                       <div className="col-md-4 col-4">
                         <span> MATCH ID</span>
@@ -775,6 +708,88 @@ class Money8Info extends React.Component {
                     {this.renderJoin()}
                     {this.renderLeave()}
                   </div>
+                  )
+  }
+
+  render() {
+    const divStyle =
+      this.state.match &&
+      this.state.match.game &&
+      this.state.match.game.banner_2_url
+        ? {
+            backgroundImage: 'url(' + this.state.match.game.banner_2_url + ')',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '400px'
+          }
+        : {};
+    let game_settings =
+      this.state.match && this.state.match.game_settings
+        ? JSON.parse(this.state.match.game_settings)
+        : {};
+    if (!game_settings) {
+      game_settings = {};
+    }
+     return (
+      <div>
+        <section
+          className="page_title_bar single-finder-match"
+          style={divStyle}
+        >
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="section-headline white-headline text-left">
+                  <div className="row bbt">
+                    <div className="col col-md-1">
+                      <span
+                        className={
+                          game_user_ids.tag_icons[
+                            this.state.match.ladder.gamer_tag
+                          ] + ' pf_icon_big '
+                        }
+                      />
+                    </div>
+                    <div className="col-8 col-md-4">
+                      <div className="match_heading">
+                        <h4>Mix & Match</h4>
+                      </div>
+                      <div className="twovstwo">
+                        {this.state.match.players_total / 2} VS{' '}
+                        {this.state.match.players_total / 2} MATCH
+                      </div>
+                    </div>
+
+                    <div className="col-10 col-md-6 pt-3">
+                      <span className="game_station">
+                        {this.state.match.game.title} @{' '}
+                        {this.state.match.ladder.title}
+                      </span>
+                      <div className="match_start_date">
+                        {/* {moment().isAfter(moment(this.state.match.starts_at))
+                      ? 'Match Started:'
+                      : 'Match Starts'}{' '}
+                    {moment(this.state.match.starts_at).format('lll')} ({' '}
+                    {moment(this.state.match.starts_at).fromNow()} ) */}
+                        <strong>
+                          {this.state.match.players_joined}/
+                          {this.state.match.players_total}
+                        </strong>{' '}
+                        joined the mix-and-match pool
+                      </div>
+                      <span className=" match_start_date flat_right">
+                        <strong>Region: </strong>
+                        {game_settings && game_settings['match_available']
+                          ? utils.getCountryImage(
+                              game_settings['match_available']
+                            )
+                          : ''}
+                      </span>
+                    </div>
+                  </div>
+
+                  {this.renderListPad('desktop')}
                 </div>
               </div>
             </div>
@@ -784,6 +799,9 @@ class Money8Info extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
+              {
+                this.renderListPad('mobile')
+              }
                 {/*
                   this.state.match.players_joined <
                 this.state.match.players_total ? (
