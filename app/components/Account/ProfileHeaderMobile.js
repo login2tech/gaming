@@ -7,6 +7,7 @@ import Followers from '../Modules/Modals/Followers';
 // import moment from 'moment';
 import Following from '../Modules/Modals/Following';
 import utils from '../../utils';
+import cookie from 'react-cookie';
 class ProfileHeader extends React.Component {
   state = {
     games: []

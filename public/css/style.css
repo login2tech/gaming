@@ -6011,6 +6011,54 @@ span.starts-in {
 .vtt{
     vertical-align: top
 }
+
+
+
+button.m_chtclose_btn.btn-outline {
+    min-width: 0;
+    position: absolute;
+    right: 9px;
+    top: 5px;
+    background: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 0;
+    padding: 10px;
+    height: 29px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.match_chat_box.chtcollapsed {
+    min-height: 40px;
+    max-height: 40px;
+}
+.act_in_tbl{
+  float: left;
+    width: 80px;
+    height: 33px;
+    object-fit: cover;
+}
+.h-spacer{
+
+    line-height: 21px;
+    font-size: 22px;
+    font-weight: 200;
+    margin-left: 10px;
+    margin-right: 10px;
+
+}
+.uid_det span , .uid_det strong{
+    min-height: 40px;
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 39px;
+}
+
+th.act_pr6 {
+    padding-bottom: 3px;
+}
+
+
 /* media queries starts here
 media starts here
 media ends here
@@ -6170,7 +6218,7 @@ media query starts here
     td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
            width: 50px;
     background-position: bottom;
-    height: 30px;
+ 
     background-position: center;
     vertical-align: middle;
     }
@@ -7361,6 +7409,8 @@ media query starts here
         left: 0;
         position: relative;
         top: 0;
+    }.accordian_box.card {
+        padding: 0;
     }
     .ticket-sm-phone{
       font-size: 10px;
@@ -7373,70 +7423,28 @@ media query starts here
 
       width: 69%;
     }
-.list_pad [class^='col'] {
-    padding: 5px;
-}
+    .list_pad [class^='col'] {
+        padding: 5px;
+    }
 
-.list_pad > .row {
-    margin: 0;
-}
+    .list_pad > .row {
+        margin: 0;
+    }
 
     .match_chat_box {
         right: auto;
         left: 0
     }h5.faq-title span.badge {
-    display: inline-block;
-    width: 10%;
-}
+        display: inline-block;
+        width: 10%;
+    }span.crossplatform_ico .fa-xbox{
+        font-size: 14px;
+    }
 
-h5.faq-title span:not(.badge) {
-    display: inline-block;
-    float: right;
-    width: 88%;
-}
+    h5.faq-title span:not(.badge) {
+        display: inline-block;
+        float: right;
+        width: 88%;
+    }
 
-}
-
-button.m_chtclose_btn.btn-outline {
-    min-width: 0;
-    position: absolute;
-    right: 9px;
-    top: 5px;
-    background: rgb(0, 0, 0);
-    color: rgb(255, 255, 255);
-    border: 0;
-    padding: 10px;
-    height: 29px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.match_chat_box.chtcollapsed {
-    min-height: 40px;
-    max-height: 40px;
-}
-.act_in_tbl{
-  float: left;
-    width: 80px;
-    height: 33px;
-    object-fit: cover;
-}
-.h-spacer{
-
-    line-height: 21px;
-    font-size: 22px;
-    font-weight: 200;
-    margin-left: 10px;
-    margin-right: 10px;
-
-}
-.uid_det span , .uid_det strong{
-    min-height: 40px;
-    vertical-align: middle;
-    display: inline-block;
-    line-height: 39px;
-}
-
-th.act_pr6 {
-    padding-bottom: 3px;
 }

@@ -855,11 +855,11 @@ class MatchInfo extends React.Component {
                             'FREE'
                           ) : (
                             <span>
-                              {'PAID (' +
+                              {'' +
                                 (match.match_type == 'cash'
                                   ? '' + match.match_fee + '$'
                                   : '' + match.match_fee + ' credits') +
-                                ')'}
+                                ''}
                               {utils.feeIcon(match.match_type)}
                             </span>
                           )}
@@ -1034,7 +1034,7 @@ class MatchInfo extends React.Component {
                   <h5 className="prizes_desclaimer">
                     <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
-                  <br />
+              
                   {match.status != 'pending' ? (
                     <>
                       <h6 className="prizes_desclaimer">

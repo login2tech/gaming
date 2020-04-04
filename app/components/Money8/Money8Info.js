@@ -734,7 +734,7 @@ class Money8Info extends React.Component {
      return (
       <div>
         <section
-          className="page_title_bar single-finder-match"
+          className="page_title_bar single-finder-match nombbtm"
           style={divStyle}
         >
           <div className="container">
@@ -742,7 +742,7 @@ class Money8Info extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
                   <div className="row bbt">
-                    <div className="col col-md-1">
+                    <div className="col-3 col-md-1">
                       <span
                         className={
                           game_user_ids.tag_icons[
@@ -751,7 +751,7 @@ class Money8Info extends React.Component {
                         }
                       />
                     </div>
-                    <div className="col-8 col-md-4">
+                    <div className="col-9 ltrinmob col-md-3">
                       <div className="match_heading">
                         <h4>Mix & Match</h4>
                       </div>
