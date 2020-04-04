@@ -234,12 +234,12 @@ class Home extends React.Component {
 
             <div className="row">
               {this.state.tournaments.map((tour, i) => {
-                if (i == 0) {
+                if (i == 0 || i == 1) {
                   return <SingleTournament key={tour.id} tour={tour} />;
                 }
                 return false;
               })}
-              <div className="col-md-6">
+              {/*<div className="col-md-6">
                 <div className="row">
                   {this.state.tournaments.map((tour, i) => {
                     if (i == 0) {
@@ -248,7 +248,7 @@ class Home extends React.Component {
                     return <SingleTournamentSmall key={tour.id} tour={tour} />;
                   })}
                 </div>
-              </div>
+              </div>*/}
               {this.state.t_loaded && this.state.tournaments.length == 0 ? (
                 <div className="alert alert-warning">
                   There is no upcoming tournament. Check again later.

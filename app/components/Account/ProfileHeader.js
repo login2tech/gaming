@@ -367,9 +367,9 @@ class ProfileHeader extends React.Component {
             {/*}
               <div className="col-md-1 d-none d-md-block text-center" />
             */}
-            <div className="col-md-5 col-6 text-center">
+            <div className="col-md-5 col-6 text-center d-flex sdfss">
               {prime_type ? (
-                <img
+                <img 
                   src={'/assets/icons/ocg_member_' + prime_type + '.png'}
                   className="img-fluid width50per"
                 />
