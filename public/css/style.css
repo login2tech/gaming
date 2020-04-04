@@ -5313,6 +5313,11 @@ th.act_pr6 .actision_logo {
     /* bottom: 0 */
 }
 
+
+.banner_actions.bl {
+     bottom: -28px 
+}
+
 .dropdown-toggle > span {
     padding-left: 6px;
 }

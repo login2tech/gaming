@@ -76,7 +76,7 @@ class MatchFinder extends React.Component {
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="all_t_heading">Upcoming Matches</div>
                 <div className="t_big_heading">Play. Win. Collect.</div>
-                <div className="banner_actions">
+                <div className="banner_actions bl">
                   <Link
                     to={'/match/new'}
                     className="btn btn-default bttn_submit max-width-200 dib mr-2"
