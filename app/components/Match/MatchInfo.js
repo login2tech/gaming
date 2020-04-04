@@ -118,12 +118,24 @@ class MatchInfo extends React.Component {
         // this user is not playing, no need to check it's eligibility;
         continue;
       }
-      if (
-        parseFloat(
-          this.state.team_selected.team_users[i].user_info.cash_balance
-        ) < amount
-      ) {
-        return false;
+      if(this.state.match.match_type == 'cash'){
+        if (
+          parseFloat(
+            this.state.team_selected.team_users[i].user_info.cash_balance
+          ) < amount
+        ) {
+          return false;
+        }
+      }else if(this.state.match.match_type =='credits' || this.state.match.match_type =='credit')
+      {
+        if (
+          parseFloat(
+            this.state.team_selected.team_users[i].user_info.credit_balance
+          ) < amount
+        ) {
+          return false;
+        }
+
       }
     }
     return true;
@@ -146,7 +158,10 @@ class MatchInfo extends React.Component {
       return true;
     }
 
-    if (parseFloat(team_u.user_info.cash_balance) < amount) {
+    if ( this.state.match.match_type  == 'cash' && parseFloat(team_u.user_info.cash_balance) < amount) {
+      return false;
+    }
+      if ( this.state.match.match_type  == 'credits' && parseFloat(team_u.user_info.credit_balance) < amount) {
       return false;
     }
     return true;
@@ -181,7 +196,7 @@ class MatchInfo extends React.Component {
     const amount = parseFloat(this.state.match.match_fee);
 
     if (
-      this.state.match_type == 'cash' &&
+       this.state.match.match_type  == 'cash' &&
       parseFloat(team_u.user_info.cash_balance) < amount
     ) {
       return (
@@ -197,7 +212,7 @@ class MatchInfo extends React.Component {
     }
 
     if (
-      this.state.match_type == 'credits' &&
+      this.state.match.match_type == 'credits' &&
       parseFloat(team_u.user_info.credit_balance) < amount
     ) {
       return (
@@ -211,6 +226,7 @@ class MatchInfo extends React.Component {
         </span>
       );
     }
+    
     return (
       <span className="text-success">
         <img src="/images/controller-green.svg" className="icon_size" />{' '}
@@ -399,6 +415,13 @@ class MatchInfo extends React.Component {
     ) {
       return false;
     }
+
+    if( this.state.match.team_2_info.team_creator != this.props.user.id &&
+        this.state.match.team_1_info.team_creator != this.props.user.id)
+    {
+      return false;
+    }
+
     if (this.state.match.cancel_requested) {
       if (
         (this.state.match.cancel_requested_by == 'team_1' &&

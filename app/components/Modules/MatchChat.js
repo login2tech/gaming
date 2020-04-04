@@ -62,6 +62,7 @@ class MatchChat extends React.Component {
       if (data.match_id != this.props.match_id) {
         return;
       }
+      this.setState({chat_visible:true})
       this.loadChatFor();
     });
   }

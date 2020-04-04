@@ -371,7 +371,7 @@ li.logo {
 
 .social-contacts ul>li {
     float: left;
-    margin-right: 15px;
+    margin-right: 10px;
 }
 
 .social-contacts {
@@ -7333,6 +7333,11 @@ media query starts here
     .sent_msg{
 
       width: 69%;
+    }
+
+    .match_chat_box {
+        right: auto;
+        left: 0
     }
 }
 

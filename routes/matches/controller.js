@@ -373,19 +373,19 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
               obj_type: 'm_' + match_id,
               details: 'Credit for winning match #' + match_id,
               qty: val,
-              bal : cash_balance
+              balance : cash_balance
             })
               .then(function(o) {})
               .catch(function(err) {
                 Raven.captureException(err);
               });
           })
-          .catch(function(err) {
+          .catch(function(err) {console.log(err)
             Raven.captureException(err);
           });
       }
     })
-    .catch(function(err) {
+    .catch(function(err) {console.log(err)
       Raven.captureException(err);
     });
 };
@@ -411,7 +411,7 @@ const takeMoneyFromMember = function(uid, input_val, match_id, type) {
           let credit_balance = usr.get('credit_balance');
           credit_balance -= parseFloat(input_val);
           obj = {credit_balance: credit_balance};
-          bal : credit_balance;
+          bal = credit_balance;
         }
 
         // console.log(cash_balance);

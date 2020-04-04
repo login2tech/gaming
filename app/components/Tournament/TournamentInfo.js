@@ -397,9 +397,8 @@ class TournamentInfo extends React.Component {
     if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
       return false;
     }
-    if (this.state.match_type == '') {
-      return false;
-    }
+  
+  
     const amount = parseFloat(this.state.tournament.entry_fee);
 
     if (parseFloat(team_u.user_info.credit_balance) < amount) {
@@ -1341,7 +1340,7 @@ class TournamentInfo extends React.Component {
                       if (team_user.removed == 1) {
                         return false;
                       }
-                      if (team_user.acceepted == false) {
+                      if (team_user.accepted == false) {
                         return false;
                       }
                       return (

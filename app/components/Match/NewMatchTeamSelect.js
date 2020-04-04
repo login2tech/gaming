@@ -783,7 +783,7 @@ class NewMatchTeamSelect extends React.Component {
                         {this.state.match_starts_in == '61|minutes' ? (
                           <span>
                             This match will remain active for 1 hour or until
-                            the match gets acceepted. Once your match is
+                            the match gets accepted. Once your match is
                             accepted, it will be scheduled for nearest 10 minute
                             mark.
                           </span>
@@ -1011,7 +1011,7 @@ class NewMatchTeamSelect extends React.Component {
                                       if (team_user.removed == 1) {
                                         return false;
                                       }
-                                      if (team_user.acceepted == false) {
+                                      if (team_user.accepted == false) {
                                         return false;
                                       }
                                       return (

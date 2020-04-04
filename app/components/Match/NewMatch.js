@@ -786,7 +786,7 @@ class newMatch extends React.Component {
                                     if (team_user.removed == 1) {
                                       return false;
                                     }
-                                    if (team_user.acceepted == false) {
+                                    if (team_user.accepted == false) {
                                       return false;
                                     }
                                     return (

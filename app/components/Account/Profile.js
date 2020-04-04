@@ -387,7 +387,7 @@ class Profile extends React.Component {
                       </div>
                       <div className="col-6 col-md-3 usr_obj">
                         <div className="winnings-data">
-                          <div>WINNINGS</div>{' '}
+                          <div>EARNINGS</div>{' '}
                           <div>
                             $
                             {this.state.user_info.life_earning
