@@ -194,7 +194,7 @@ class SingleListing extends React.Component {
     return (
       <div>
         <HeaderBox title={'Chat'} cls="all_t_heading">
-          <div className="banner_actions">
+          <div className="banner_actions justify-left">
             <Link
               to={'/u/' + this.props.user.username}
               className="pt-3 pb-3 dib"

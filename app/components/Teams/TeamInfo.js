@@ -1311,7 +1311,7 @@ class TeamInfo extends React.Component {
                               <td>
                                 {this.state.team_info &&
                                 this.state.team_info.ladder &&
-                                this.state.team_info.ladder.gamer_tag &&
+                                this.state.team_info.ladder.gamer_tag && team_user.accepted &&
                                 team_user.user_info[
                                   'gamer_tag_' +
                                     this.state.team_info.ladder.gamer_tag
@@ -1413,7 +1413,7 @@ class TeamInfo extends React.Component {
                                         <td>
                                         {team_user.accepted
                                           ? moment(team_user.created_at).format('lll')
-                                          : 'Not Yet Accepted'}{' '}
+                                          : 'Not Yet Accepted'}{' '}<br />
                                         {this.props.user &&
                                         !team_user.accepted &&
                                         team_user.user_id == this.props.user.id ? (

@@ -18,7 +18,7 @@ class MyTeams extends React.Component {
                 <div className="section-headline white-headline text-left">
                   <h3 className="no-case-change">My Teams</h3>
 
-                  <div className="banner_actions">
+                  <div className="banner_actions justify-left">
                     <Link to={'/u/' + this.props.user.username + '/teams/new'}>
                       <span className="fa fa-plus" /> create a new team
                     </Link>

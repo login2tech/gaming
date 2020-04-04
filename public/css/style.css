@@ -57,7 +57,11 @@ body {
 }
 
 .btn-vote {
-    color: #000
+    color: #000;background: #fff;
+}
+.social_btns .btn.btn-sm
+{
+ color: #000;background: #fff;   
 }
 
 ul {
@@ -5297,7 +5301,10 @@ th.act_pr6 .actision_logo {
     right: auto;
     top: 0;
 }
-
+.max-width-100 {
+    max-width: 140px;
+    min-width: 140px;
+}
 .row.gamer_tags_profile {
     background: rgb(0, 0, 0);
     padding: 50px 20px;
@@ -7354,7 +7361,17 @@ media query starts here
     .match_chat_box {
         right: auto;
         left: 0
-    }
+    }h5.faq-title span.badge {
+    display: inline-block;
+    width: 10%;
+}
+
+h5.faq-title span:not(.badge) {
+    display: inline-block;
+    float: right;
+    width: 88%;
+}
+
 }
 
 button.m_chtclose_btn.btn-outline {
