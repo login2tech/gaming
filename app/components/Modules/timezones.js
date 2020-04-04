@@ -42,7 +42,7 @@ const tzs = {
     }
   ],
   Canada: [
-    {label: 'Newfoundland',offset: '-2:30', value: 'Newfoundland'},
+    {label: 'Newfoundland',offset: '-2.5', value: 'Newfoundland'},
     {label: 'Atlantic',offset: '-3', value: 'Atlantic'},
     {label: 'Mountain',offset: '-7', value: 'Mountain'},
     {label: 'Pacific',offset: '-7', value: 'Pacific'}

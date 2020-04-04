@@ -737,11 +737,13 @@ class Profile extends React.Component {
                           }
                           return (
                             <div className="col-md-4" key={k}>
-                              <span>
+                              <span className="dib ico_bxx">
                                 <span className={game_user_ids.tag_icons[k]} />
                               </span>
+                              <div class="dib vtt">
                               <span>{game_user_ids.tag_names[k]}</span>
                               <p>{this.state.user_info['gamer_tag_' + k]}</p>
+                              </div>
                             </div>
                           );
                         })}

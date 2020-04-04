@@ -5986,7 +5986,14 @@ span.starts-in {
     line-height: 32px;
 }
 .pljy{
-  /* padding-left: 60px */
+  padding-left: 75px 
+}
+.ico_bxx{
+
+    width: 60px;min-height: 60px;
+}
+.vtt{
+    vertical-align: top
 }
 /* media queries starts here
 media starts here
