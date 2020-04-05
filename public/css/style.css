@@ -57,11 +57,13 @@ body {
 }
 
 .btn-vote {
-    color: #000;background: #fff;
+    color: #000;
+    background: #fff;
 }
-.social_btns .btn.btn-sm
-{
- color: #000;background: #fff;   
+
+.social_btns .btn.btn-sm {
+    color: #000;
+    background: #fff;
 }
 
 ul {
@@ -4304,9 +4306,11 @@ img.hover_img {
     width: 100%;
     min-width: 0px;
 }
-.flex-1{
-  flex:1
+
+.flex-1 {
+    flex: 1
 }
+
 @media screen and (max-width: 768px) {
     .table_wrapper {
         overflow-x: auto;
@@ -4827,6 +4831,7 @@ ul.notices li:first-child {
 .container-brackets .round.rd-2 .match .player {
     margin: 159px 0;
 }
+
 .container-brackets .round.rd-2 {
     margin-top: 20px !important;
 }
@@ -4859,10 +4864,10 @@ ul.notices li:first-child {
 .container-brackets .round.rd-3 .match {
     margin-bottom: 330px;
 }
+
 .container-brackets .round.rd-3.winner_round {
     margin-top: 147px !important;
 }
-
 
 .change_uname {
     position: absolute;
@@ -4923,12 +4928,14 @@ a.post_image.post_image_smaller.post_video:after {
 .container-brackets .round.rd-4 {
     margin-top: 310px !important;
 }
+
 .act_pr3 span:not(.pf_icon) {
     line-height: 15px;
     display: inline-block;
     vertical-align: top;
     margin-top: 13px;
 }
+
 .brackets {
     overflow-x: auto;
 }
@@ -5301,10 +5308,12 @@ th.act_pr6 .actision_logo {
     right: auto;
     top: 0;
 }
+
 .max-width-100 {
     max-width: 140px;
     min-width: 140px;
 }
+
 .row.gamer_tags_profile {
     background: rgb(0, 0, 0);
     padding: 50px 20px;
@@ -5320,9 +5329,8 @@ th.act_pr6 .actision_logo {
     /* bottom: 0 */
 }
 
-
 .banner_actions.bl {
-     bottom: -28px 
+    bottom: -28px
 }
 
 .dropdown-toggle > span {
@@ -5442,10 +5450,12 @@ span.capitalize {
     background-position-x: 85%;
     background-size: 40px;
 }
-.sdfss{
+
+.sdfss {
     align-items: flex-end;
     justify-content: center;
 }
+
 .is_prime_cell.is_prime_type_silver {
     background-image: url('/assets/icons/ocg_member_silver.png');
     background-position-x: 85%;
@@ -5566,14 +5576,13 @@ td .pf_icon.actision_logo, th .pf_icon.actision_logo {
     background-position: top;
 }
 
-
 td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
     width: 86px;
     background-position: bottom;
-  margin-bottom: 0;
-  background-position: center;
-
+    margin-bottom: 0;
+    background-position: center;
 }
+
 .alert-sm {
     padding: 0px 14px;
     fontSize: 13px
@@ -5712,12 +5721,12 @@ td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
     display: inline-block;
     width: 46px;
     height: 46px;
-    overflow: hidden;    border-radius: 50%;
-      border: 2px solid rgb(17, 74, 251);
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid rgb(17, 74, 251);
 }
 
 .incoming_msg_img img, .outgoing_msg_img img {
-
 }
 
 .outgoing_msg_img {
@@ -5868,10 +5877,10 @@ button.msg_send_btn {
 }
 
 .incoming_msg_img img , .outgoing_msg img {
-  width: 100%;
-object-fit: cover;
-height: auto;
-border: 0;
+    width: 100%;
+    object-fit: cover;
+    height: auto;
+    border: 0;
 }
 
 .mh190 {
@@ -5984,35 +5993,39 @@ ul.main_cat_list.pr {
     width: 30px;
     height: 30px;
 }
-@media screen and (min-width: 1900px){
+
+@media screen and (min-width: 1900px) {
     .gm_hed.section.page_title_bar, .gm_hed .is_single_game_header_desk {
-        min-height: 350px !important; /* commented in april from dell */
+        min-height: 350px !important;
+        /* commented in april from dell */
     }
 }
 
 .width50per {
-  width:50%;
-  /* margin-left:25%; */
+    width: 50%;
+    /* margin-left:25%; */
 }
+
 span.starts-in {
     font-size: 15px;
 }
 
-.team_tbl_header thead th, .expndingtbl tr td:first-child{
+.team_tbl_header thead th, .expndingtbl tr td:first-child {
     line-height: 32px;
 }
-.pljy{
-  padding-left: 75px 
-}
-.ico_bxx{
 
-    width: 60px;min-height: 60px;
+.pljy {
+    padding-left: 75px
 }
-.vtt{
+
+.ico_bxx {
+    width: 60px;
+    min-height: 60px;
+}
+
+.vtt {
     vertical-align: top
 }
-
-
 
 button.m_chtclose_btn.btn-outline {
     min-width: 0;
@@ -6032,22 +6045,23 @@ button.m_chtclose_btn.btn-outline {
     min-height: 40px;
     max-height: 40px;
 }
-.act_in_tbl{
-  float: left;
+
+.act_in_tbl {
+    float: left;
     width: 80px;
     height: 33px;
     object-fit: cover;
 }
-.h-spacer{
 
+.h-spacer {
     line-height: 21px;
     font-size: 22px;
     font-weight: 200;
     margin-left: 10px;
     margin-right: 10px;
-
 }
-.uid_det span , .uid_det strong{
+
+.uid_det span , .uid_det strong {
     min-height: 40px;
     vertical-align: middle;
     display: inline-block;
@@ -6057,7 +6071,6 @@ button.m_chtclose_btn.btn-outline {
 th.act_pr6 {
     padding-bottom: 3px;
 }
-
 
 /* media queries starts here
 media starts here
@@ -6215,12 +6228,12 @@ media query starts here
     .user-profile-trophies-container>div div.trophy-info .trophy-name {
         font-size: 12px;
     }
+
     td .pf_icon.actision_logo:not(.epic), th .pf_icon.actision_logo:not(.epic) {
-           width: 50px;
-    background-position: bottom;
- 
-    background-position: center;
-    vertical-align: middle;
+        width: 50px;
+        background-position: bottom;
+        background-position: center;
+        vertical-align: middle;
     }
 
     .tab-block .tab-mnu li {
@@ -6337,26 +6350,27 @@ media query starts here
     }
 
     .nombbtm .bbt, .nombbtm .section-headline {
-            margin-bottom: 0;
-        }
+        margin-bottom: 0;
+    }
 
     .single-finder-match {
         background-color: rgba(0,0,0, 0.1);
         background-position: top center !important;
         max-height: 209px;
         background-size: cover !important;
-        
         padding-top: 7px;
         min-height: 145px !important;
     }
-    .single-finder-match:not(.nombbtm)
-    {
+
+    .single-finder-match:not(.nombbtm) {
         margin-bottom: 150px;
-    }.ltrinmob {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
+    }
+
+    .ltrinmob {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
 
     .single-finder-match .btn {
         margin: 0;
@@ -6430,8 +6444,8 @@ media query starts here
         margin-top: -66px;
         margin-bottom: 16px;
     }
-    .profile-header-data.forteam{
 
+    .profile-header-data.forteam {
         margin-top: -100px;
     }
 
@@ -6708,7 +6722,8 @@ media query starts here
     }
 
     img.inline-star, img.icon_size {
-        height: 20px !important;    width: auto;
+        height: 20px !important;
+        width: auto;
     }
 
     .middle_part_login {
@@ -7300,6 +7315,7 @@ media query starts here
         width: 100%;
         padding-left: 11px !important;
     }
+
     .mobil-game-actions > div > a, .mobil-game-actions > div > div {
         width: calc(50% - 10px) !important;
         margin-right: 5px;
@@ -7308,14 +7324,13 @@ media query starts here
 
     .mobil-game-actions > div:first-child {
         margin-left: 5px;
-    margin-right: 0;
+        margin-right: 0;
     }
 
     .mobil-game-actions > div:last-child {
         margin-right: 5px;
-    margin-left: 0;
+        margin-left: 0;
     }
-
 
     .match_start_date {
         font-size: 13px;
@@ -7372,28 +7387,32 @@ media query starts here
     .messaging.showing_chat .inbox_people {
         display: none;
     }
+
     h5.prizes_desclaimer .fa.fa-user {
         padding-left: 20px;
     }
+
     .messaging.showing_chat .mesgs {
         width: 100%;
         float: none;
     }
-    .normal_sm{
-      font-size: 11px;
+
+    .normal_sm {
+        font-size: 11px;
     }
+
     .close_chat {
-      position: absolute;
-      top: 0;
-      background: rgb(17, 74, 251);
-      left: 0;
-      text-align: center;
-      margin-left: 15px;
-      margin-right: 15px;
-      width: calc(100% - 30px);
-      top: 4px;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+        position: absolute;
+        top: 0;
+        background: rgb(17, 74, 251);
+        left: 0;
+        text-align: center;
+        margin-left: 15px;
+        margin-right: 15px;
+        width: calc(100% - 30px);
+        top: 4px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
     }
 
     .close_chat a {
@@ -7409,20 +7428,25 @@ media query starts here
         left: 0;
         position: relative;
         top: 0;
-    }.accordian_box.card {
+    }
+
+    .accordian_box.card {
         padding: 0;
     }
-    .ticket-sm-phone{
-      font-size: 10px;
-      margin-left: 10px;
+
+    .ticket-sm-phone {
+        font-size: 10px;
+        margin-left: 10px;
     }
+
     .received_msg {
         width: 69%;
     }
-    .sent_msg{
 
-      width: 69%;
+    .sent_msg {
+        width: 69%;
     }
+
     .list_pad [class^='col'] {
         padding: 5px;
     }
@@ -7434,10 +7458,14 @@ media query starts here
     .match_chat_box {
         right: auto;
         left: 0
-    }h5.faq-title span.badge {
+    }
+
+    h5.faq-title span.badge {
         display: inline-block;
         width: 10%;
-    }span.crossplatform_ico .fa-xbox{
+    }
+
+    span.crossplatform_ico .fa-xbox {
         font-size: 14px;
     }
 
@@ -7447,4 +7475,8 @@ media query starts here
         width: 88%;
     }
 
+    .fix_ico_in_phone span {
+        width: 81% !important;
+        font-size: 46px !important;
+    }
 }

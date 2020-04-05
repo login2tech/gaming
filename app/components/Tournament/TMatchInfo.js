@@ -480,7 +480,7 @@ class TMatchInfo extends React.Component {
                         }
                         if(k == "map_1" && this.state.match.team_2 && this.state.match.team_2 !='')
                         {
-                          
+
                           return (
                             <>
                               <div className="col-md-4 col-6 textcap" key={k}>
@@ -496,7 +496,7 @@ class TMatchInfo extends React.Component {
                                 <p>
                                   <strong>Host 1: </strong>{this.state.match.team_1_info.title}
                                   {game_settings.map_2 ? <><br /><strong>Host 2: </strong>{this.state.match.team_2_info.title}</> : false}
-                                  {game_settings.map_3 ? <><br /><strong>Host 3: </strong>TBD</> : false}
+                                  {game_settings.map_3 ? <><br /><strong>Host 3: </strong>{this.state.match.team_1_info.title}</> : false}
                                 </p>
                               </div>
                             </>

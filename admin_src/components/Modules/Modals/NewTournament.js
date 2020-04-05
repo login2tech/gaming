@@ -607,11 +607,7 @@ class NewTournament extends React.Component {
                   className="form-control"
                 />
               </div>
-
                 {this.renderGameSettings()}
-
-
-
               <div className="input-control">
                 <label>Tournament Banner</label>
                 <input

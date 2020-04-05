@@ -226,7 +226,7 @@ class MatchInfo extends React.Component {
         </span>
       );
     }
-    
+
     return (
       <span className="text-success">
         <img src="/images/controller-green.svg" className="icon_size" />{' '}
@@ -824,7 +824,7 @@ class MatchInfo extends React.Component {
   renderListPad(vtype)
   {
  const {match} = this.state;
- 
+
     let game_settings =
       match && match.game_settings ? JSON.parse(match.game_settings) : {};
     if (!game_settings) {
@@ -871,7 +871,7 @@ class MatchInfo extends React.Component {
                         }
                         if(k == "map_1" && this.state.match.team_2_id)
                         {
-                          
+
                           return (
                             <>
                               <div className="col-md-4 col-6 textcap" key={k}>
@@ -887,7 +887,7 @@ class MatchInfo extends React.Component {
                                 <p>
                                   <strong>Host 1: </strong>{this.state.match.team_1_info.title}
                                   {game_settings.map_2 ? <><br /><strong>Host 2: </strong>{this.state.match.team_2_info.title}</> : false}
-                                  {game_settings.map_3 ? <><br /><strong>Host 3: </strong>TBD</> : false}
+                                  {game_settings.map_3 ? <><br /><strong>Host 3: </strong>{this.state.match.team_1_info.title}</> : false}
                                 </p>
                               </div>
                             </>
@@ -934,7 +934,7 @@ class MatchInfo extends React.Component {
     if (!game_settings) {
       game_settings = {};
     }
- 
+
     if (!match.id) {
       return (
         <div className="text-center text-lg p-5">
@@ -1034,7 +1034,7 @@ class MatchInfo extends React.Component {
                   <h5 className="prizes_desclaimer">
                     <i className="fa fa-users" aria-hidden="true" /> SQUAD
                   </h5>
-              
+
                   {match.status != 'pending' ? (
                     <>
                       <h6 className="prizes_desclaimer">

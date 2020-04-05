@@ -737,7 +737,7 @@ class Profile extends React.Component {
                           }
                           return (
                             <div className="col-md-4" key={k}>
-                              <span className="dib ico_bxx">
+                              <span className="fix_ico_in_phone dib ico_bxx">
                                 <span className={game_user_ids.tag_icons[k]} />
                               </span>
                               <div class="dib vtt">

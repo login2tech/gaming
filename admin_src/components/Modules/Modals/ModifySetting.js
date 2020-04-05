@@ -1,6 +1,6 @@
 import {closeModal} from '../../../actions/modals';
 import {connect} from 'react-redux';
-// import moment from 'moment';
+import axios from 'axios';
 import Fetcher from '../../../actions/Fetcher';
 import Messages from '../../Messages';
 import React from 'react';
@@ -8,10 +8,11 @@ class ModifySetting extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loaded: false,
+      loaded: true,
       item: {},
       content: ''
     };
+    this.banner_url_ref = React.createRef();
   }
 
   process() {
@@ -38,30 +39,45 @@ class ModifySetting extends React.Component {
   }
 
   componentDidMount() {
-    this.loadData();
     this.process();
   }
-  loadData() {
-    Fetcher.get(
-      '/api/admin/listPaged/games?per_page=10000&page=' + this.state.page
-    )
+
+
+
+
+  finalSubmit() {
+     this.setState({
+      loaded: false
+    });
+
+    Fetcher.post('/api/admin/update/settings', {
+      id: this.state.item.id,
+      data: {
+        content: this.state.banner_url
+      }
+    })
       .then(resp => {
         if (resp.ok) {
+          this.props.dispatch({type: 'SUCCESS', messages: [resp]});
+          this.props.onComplete && this.props.onComplete();
+
+          this.doClose();
           this.setState({
-            loaded: true,
-            games: resp.items,
-            pagination: resp.pagination ? resp.pagination : {}
+            loaded: true
           });
         } else {
-          this.props.dispatch({
-            type: 'FAILURE',
-            messages: [resp]
+          this.setState({
+            loaded: true
           });
+          this.props.dispatch({type: 'FAILURE', messages: [resp]});
         }
       })
       .catch(err => {
         // console.log(err);
-        const msg = 'Failed to load users';
+        this.setState({
+          loaded: true
+        });
+        const msg = 'Failed to perform Action';
         this.props.dispatch({
           type: 'FAILURE',
           messages: [{msg: msg}]
@@ -69,11 +85,47 @@ class ModifySetting extends React.Component {
       });
   }
 
+
+
+
   onSubmit(e) {
     e.preventDefault();
     this.setState({
       loaded: false
     });
+    if(this.state.item.type == 'file')
+    {
+
+
+      const data = new FormData();
+      const node = this.banner_url_ref.current;
+      const file_1 = node.files[0];
+      data.append('file', file_1, file_1.name);
+      axios
+      .post('/upload', data, {
+        onUploadProgress: ProgressEvent => {
+          //
+        }
+      })
+      .then(res => {
+        this.setState(
+          {
+            banner_url: res.data.file
+          },
+          () => {
+            this.finalSubmit();
+          }
+        );
+      })
+      .catch(err => {
+        alert('some error occoured.');
+        this.setState({
+          loaded: true
+        });
+      });
+
+      return false;
+    }
 
     Fetcher.post('/api/admin/update/settings', {
       id: this.state.item.id,
@@ -138,14 +190,36 @@ class ModifySetting extends React.Component {
 
               <div className="input-control">
                 <label>{this.state.item.label}</label>
+                {
+
+                  (this.state.item.key == "clip_day_text" ||
+                  this.state.item.key == "clip_month_text" ||
+                  this.state.item.key == "clip_week_text" )
+                  ?
+
+                  <textarea
+                    className="form-control"
+                    name="content"
+                    onChange={this.handleChange.bind(this)}
+                    id="content"
+                    value={this.state.content}
+                  />
+
+                :
+
                 <input
                   type={this.state.item.type}
                   className="form-control"
                   name="content"
+                  ref={this.banner_url_ref}
                   onChange={this.handleChange.bind(this)}
                   id="content"
-                  value={this.state.content}
+                  value={this.state.item.type =='file' ? '' :this.state.content}
                 />
+
+
+                }
+
               </div>
               <br />
 
