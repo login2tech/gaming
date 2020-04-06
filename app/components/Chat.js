@@ -47,6 +47,7 @@ class SingleListing extends React.Component {
             this.state.currently_showing,
             this.state.other
           );
+
           // addChatMessage({
           //    username: username,
           //    message: message
@@ -111,7 +112,7 @@ class SingleListing extends React.Component {
     fetch('/api/dm/chatFor?other_id=' + id).then(res => {
       if (res) {
         res.json().then(obj => {
-          // if (obj.item) {
+          $(window).trigger('click_on_chat');
           this.setState(
             {
               is_loaded: true,

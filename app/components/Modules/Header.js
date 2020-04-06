@@ -11,7 +11,9 @@ class Header extends React.Component {
       games: [],
       userSuggestions: [],
       notifications: [],
-      messages: [ ]
+      messages: [ ],
+      message_counts : 0,
+      dms: []
       // posts_page: 1
     };
     this.closeSide = this._closeCollapse.bind(this);
@@ -56,8 +58,12 @@ class Header extends React.Component {
   componentDidMount() {
     this.fetchNotifications();
     setInterval(() => {
-      this.fetchNotifications();
-    }, 1000 * 60 * 3);
+      this.fetchNotifications(false);
+    }, 1000 * 60 * 1);
+    $(window).on('click_on_chat', ()=>{
+      console.log('click_on_chat')
+      this.fetchDMs(false);
+    })
   }
   fetchSuggestions() {
     fetch('/api/user_suggest?q=' + this.state.searchString)
@@ -80,9 +86,46 @@ class Header extends React.Component {
         window.location.href = link;
       });
   }
-  fetchNotifications() {
+  fetchDMs(forward){
     if (!this.props.user) {
-      this.runQuery();
+      if(forward) this.runQuery();
+      return;
+    }
+    fetch('/api/dm/mygroups')
+      .then(res => res.json())
+      .then(json => {
+        if (json.ok) {
+          this.setState({
+            dms: json.items,
+            message_count : 0
+          }, this.loadReads);
+        }
+        if(forward)
+          this.runQuery(forward);
+      });
+  }
+
+  loadReads() {
+    for (let i = 0; i < this.state.dms.length; i++) {
+      const grp_id = this.state.dms[i].id;
+      this.fetchCount(grp_id);
+    }
+  }
+
+  fetchCount(grp_id) {
+    fetch('/api/dm/group_has_unread?grp_id=' + grp_id).then(res => {
+      if (res) {
+        res.json().then(obj => {
+          this.setState({
+            message_count: this.state.message_count + parseInt(obj.count)
+          });
+        });
+      }
+    });
+  }
+  fetchNotifications(forward) {
+    if (!this.props.user) {
+      if(forward) this.runQuery();
       return;
     }
     fetch('/notifs/listMine')
@@ -93,7 +136,7 @@ class Header extends React.Component {
             notifications: json.notifs
           });
         }
-        this.runQuery();
+        this.fetchDMs(forward);
       });
   }
   renderProfileLinks() {
@@ -232,9 +275,9 @@ class Header extends React.Component {
                   }}
                 >
                   <i className="fa fa-envelope" />
-                  {this.state.messages && this.state.messages.length ? (
+                  {this.state.message_count ? (
                     <span className="dot notif_dot">
-                      {this.notifCount(this.state.messages)}
+                      {this.state.message_count}
                     </span>
                   ) : (
                     false
