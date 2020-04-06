@@ -13,7 +13,6 @@ class ProfileHeader extends React.Component {
     games: []
   };
 
-
   componentDidMount() {
     this.runQuery();
   }
@@ -28,7 +27,6 @@ class ProfileHeader extends React.Component {
     });
   }
 
-  
   addFriend(event) {
     event.preventDefault();
     this.props.dispatch(
@@ -164,25 +162,25 @@ class ProfileHeader extends React.Component {
     );
   }
 
-  renderNameAndFollow(for_m) {
+  renderNameAndFollow(for_m, type) {
     const {user_info} = this.props;
-    return (
-      <>
+    if (type == 2) {
+      return (
         <div>
           <div className="profile-header-name">@{user_info.username}</div>
-
+            <div class="row m-0">
           {this.props.user &&
           this.props.is_loaded &&
           this.props.user.id != user_info.id &&
           user_info.followers.length < 1 ? (
-            <Link
+             <div className="col-4 pl-1 pr-1"><Link
               onClick={event => {
                 this.addFriend(event);
               }}
               className="btn btn-primary bttn_submit btn-outline mw_200 "
             >
               Follow
-            </Link>
+            </Link></div>
           ) : (
             false
           )}
@@ -191,23 +189,104 @@ class ProfileHeader extends React.Component {
           this.props.is_loaded &&
           this.props.user.id != user_info.id &&
           user_info.followers.length > 0 ? (
-            <Link
+             <div className="col-4 pl-1 pr-1"><Link
               onClick={event => {
                 this.addFriend(event);
               }}
-              className="btn btn-primary bttn_submit btn-outline mw_200 "
+              className="btn btn-primary bttn_submit btn-outline mw_200 unflowbtn"
             >
               Unfollow
-            </Link>
+            </Link></div>
+          ) : (
+            false
+          )}
+          {this.props.user &&
+          this.props.is_loaded &&
+          this.props.user.id != user_info.id ? (
+            <div className="col-4 pl-1 pr-1">
+              <div className={'dropdown fl-right profbtn'}>
+                <button
+                  className="btn btn-default bttn_submit dropdown-toggle profbtn"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Challenge
+                </button>
+                <div
+                  className="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                >
+                  {this.state.games &&
+                    this.state.games.map((game, i) => {
+                      return (
+                        game.ladders &&
+                        game.ladders.map((ladder, i) => {
+                          if (ladder.min_players > 1) {
+                            return false;
+                          }
+                          return (
+                            <a
+                              className={'dropdown-item'}
+                              onClick={() => {
+                                cookie.save(
+                                  'challenging_team',
+                                  '@' + this.props.user_info.username,
+                                  {
+                                    path: '/',
+                                    expires: moment()
+                                      .add(1, 'day')
+                                      .toDate()
+                                  }
+                                );
+                              }}
+                              href={
+                                '/challenge/new/g/' +
+                                ladder.game_id +
+                                '/l/' +
+                                ladder.id +
+                                '/u/' +
+                                this.props.user_info.id
+                              }
+                              key={ladder.id}
+                            >
+                              {game.title} - {ladder.title}
+                            </a>
+                          );
+                        })
+                      );
+                    })}
+                </div>
+              </div>
+            </div>
           ) : (
             false
           )}
 
-
-
-
-
+          {this.props.user &&
+          this.props.is_loaded &&
+          this.props.user.id != user_info.id ? (
+            <div className="col-4 pl-1 pr-1">
+              <button
+                className="btn btn-default bttn_submit  profbtn"
+                type="button"
+                onClick={e => {
+                  this.props.onChat(e);
+                }}
+              >
+                Send DM
+              </button>
+            </div>
+          ) : (
+            false
+          )}
         </div>
+        </div>
+      );
+    } else {
+      return (
         <div
           style={{
             marginTop: -34
@@ -237,8 +316,8 @@ class ProfileHeader extends React.Component {
             </button>
           </div>
         </div>
-      </>
-    );
+      );
+    }
   }
 
   render() {
@@ -276,7 +355,7 @@ class ProfileHeader extends React.Component {
         </div>
         <div className="profile-header" style={divStyle} />
         <div className="container profile-page-container">
-          <div className="profile-header-data">
+          <div className="profile-header-data forteamf flwrap">
             <div className="profile-header-data-left">
               <div className="profile-avatar">
                 {user_info.profile_picture ? (
@@ -298,10 +377,14 @@ class ProfileHeader extends React.Component {
                 )}
               </div>
             </div>
-            <div className="profile-header-data-middle">
-              {this.renderNameAndFollow('desktop')}
+            <div className="profile-header-data-middle pt-4 mt-3">
+              {this.renderNameAndFollow('desktop', 1)}
             </div>
+          
           </div>
+            <div className="profile-header-data-middle mb-2">
+              {this.renderNameAndFollow('desktop', 2)}
+            </div>
           <div className="row">
             <div className="user-rank-mobile row  rank_box_wrap">
               <div className="col-3">
@@ -345,11 +428,10 @@ class ProfileHeader extends React.Component {
               {this.props.user &&
               this.props.is_loaded &&
               this.props.user.id != user_info.id ? (
-                <li class="float-right">
+                <li className="float-right">
                   <a
-
-
-                    onClick={e => {e.preventDefault()
+                    onClick={e => {
+                      e.preventDefault();
                       this.props.onChat(e);
                     }}
                   >
@@ -362,7 +444,7 @@ class ProfileHeader extends React.Component {
               {this.props.user &&
               this.props.is_loaded &&
               this.props.user.id != user_info.id ? (
-                <li class="float-right">
+                <li className="float-right">
                   <div className={'dropdown fl-right profbtn'}>
                     <a
                       // className="btn btn-default bttn_submit dropdown-toggle profbtn"
@@ -423,8 +505,6 @@ class ProfileHeader extends React.Component {
               ) : (
                 false
               )}
-
-
             </ul>
           </div>
         </div>

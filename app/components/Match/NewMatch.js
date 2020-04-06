@@ -477,7 +477,7 @@ class newMatch extends React.Component {
                       <div className="form-group col-md-12">
                         <label htmlFor="title">Ladder</label>
                         <br />
-                        <div class="uid_det">
+                        <div className="uid_det">
                           <strong>
                             {this.state.game_info.title +
                               ' - ' +
@@ -761,8 +761,15 @@ class newMatch extends React.Component {
                               <thead>
                                 <tr>
                                   <th>Username</th>
-                                  <th class="d-none t-md-table-cell">Role</th>
-                                  <th  className={'act_pr' + this.state.team_info.ladder.gamer_tag}>
+                                  <th className="d-none t-md-table-cell">
+                                    Role
+                                  </th>
+                                  <th
+                                    className={
+                                      'act_pr' +
+                                      this.state.team_info.ladder.gamer_tag
+                                    }
+                                  >
                                     <span
                                       className={
                                         game_user_ids.tag_icons[
@@ -814,7 +821,7 @@ class newMatch extends React.Component {
                                           </Link>
                                         </td>
 
-                                        <td class="d-none t-md-table-cell">
+                                        <td className="d-none t-md-table-cell">
                                           {team_user.user_id ==
                                           this.state.team_info.team_creator
                                             ? 'Leader'

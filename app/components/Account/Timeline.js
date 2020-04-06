@@ -257,7 +257,9 @@ class Profile extends React.Component {
                               expand_comments
                               post={post}
                               key={post.id}
-                              show_option_to_pin = {this.props.user.id == this.state.user_info.id}
+                              show_option_to_pin={
+                                this.props.user.id == this.state.user_info.id
+                              }
                             />
                           );
                         })}

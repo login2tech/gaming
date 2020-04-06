@@ -10,101 +10,83 @@ import {connect} from 'react-redux';
 class ClipOfTheWeek extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
+    this.state = {};
   }
 
-  componentDidMount() {
+  componentDidMount() {}
 
-  }
+  renderClipMonth() {
+    const {settings} = this.props;
 
-  renderClipMonth(){
-    let {settings} = this.props;
-
-     if (!settings.clip_month_video) {
+    if (!settings.clip_month_video) {
       return <div className="alert alert-warning">No clip available</div>;
     }
     return (
       <li className="comment">
-
         {settings.clip_month_video ? (
-
-            <div
-              className="embed-responsive embed-responsive-21by9"
-              style={{marginBottom: '10px'}}
-            >
-              <video controls>
-                <source src={settings.clip_month_video} type="video/mp4" />
-              </video>
-            </div>
-
+          <div
+            className="embed-responsive embed-responsive-21by9"
+            style={{marginBottom: '10px'}}
+          >
+            <video controls>
+              <source src={settings.clip_month_video} type="video/mp4" />
+            </video>
+          </div>
         ) : (
           false
         )}
-        <p className="feed_post_content">
-          {settings.clip_month_text}
-        </p>
+        <p className="feed_post_content">{settings.clip_month_text}</p>
       </li>
-
-      )
+    );
   }
 
-
-
-  renderClipWeek(){
-    let {settings} = this.props;
+  renderClipWeek() {
+    const {settings} = this.props;
     if (!settings.clip_week_video) {
       return <div className="alert alert-warning">No clip available</div>;
     }
     return (
-      <li  className="comment">
-        {settings.clip_week_video  ? (
-            <div
-              className="embed-responsive embed-responsive-21by9"
-              style={{marginBottom: '10px'}}
-            >
-              <video controls>
-                <source src={settings.clip_week_video} type="video/mp4" />
-              </video>
-            </div>
+      <li className="comment">
+        {settings.clip_week_video ? (
+          <div
+            className="embed-responsive embed-responsive-21by9"
+            style={{marginBottom: '10px'}}
+          >
+            <video controls>
+              <source src={settings.clip_week_video} type="video/mp4" />
+            </video>
+          </div>
         ) : (
           false
         )}
-        <p className="feed_post_content">
-          {settings.clip_week_text}
-        </p>
+        <p className="feed_post_content">{settings.clip_week_text}</p>
       </li>
-      )
+    );
   }
 
-
-  renderClipDay(){
-    let {settings} = this.props;
+  renderClipDay() {
+    const {settings} = this.props;
     if (!settings.clip_day_video) {
       return <div className="alert alert-warning">No clip available</div>;
     }
     return (
       <li className="comment">
-        {settings.clip_day_video  ? (
-            <div
-              className="embed-responsive embed-responsive-21by9"
-              style={{marginBottom: '10px'}}
-            >
-              <video controls>
-                <source src={settings.clip_day_video} type="video/mp4" />
-              </video>
-            </div>
+        {settings.clip_day_video ? (
+          <div
+            className="embed-responsive embed-responsive-21by9"
+            style={{marginBottom: '10px'}}
+          >
+            <video controls>
+              <source src={settings.clip_day_video} type="video/mp4" />
+            </video>
+          </div>
         ) : (
           false
         )}
-        <p className="feed_post_content">
-          {settings.clip_day_text}
-        </p>
+        <p className="feed_post_content">{settings.clip_day_text}</p>
       </li>
-      )
+    );
   }
-
 
   render() {
     // console.log(this.state);
@@ -118,37 +100,24 @@ class ClipOfTheWeek extends React.Component {
                   <h4>Clip of the day</h4>
                 </div>
 
-                  <ul className="timeline">
-                    { this.renderClipDay() }
-                  </ul>
-
+                <ul className="timeline">{this.renderClipDay()}</ul>
               </div>
 
-
-               <div className="authorize_box" style={{maxWidth: '100%'}}>
+              <div className="authorize_box" style={{maxWidth: '100%'}}>
                 <div className="title_default_dark title_border text-center">
                   <h4>Clip of the week</h4>
                 </div>
 
-                  <ul className="timeline">
-                    { this.renderClipWeek() }
-                  </ul>
-
+                <ul className="timeline">{this.renderClipWeek()}</ul>
               </div>
 
-
-
-               <div className="authorize_box" style={{maxWidth: '100%'}}>
+              <div className="authorize_box" style={{maxWidth: '100%'}}>
                 <div className="title_default_dark title_border text-center">
                   <h4>Clip of the month</h4>
                 </div>
 
-                  <ul className="timeline">
-                    { this.renderClipMonth() }
-                  </ul>
-
+                <ul className="timeline">{this.renderClipMonth()}</ul>
               </div>
-
             </div>
           </div>
         </div>
@@ -156,7 +125,6 @@ class ClipOfTheWeek extends React.Component {
     );
   }
 }
-
 
 const mapStateToProps = state => {
   return {
@@ -166,4 +134,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(ClipOfTheWeek);
-

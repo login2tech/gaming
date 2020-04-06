@@ -5449,10 +5449,13 @@ span.capitalize {
 
 .is_prime_cell.is_prime_type_gold {
     background-image: url('/assets/icons/ocg_member_gold.png');
-    background-position-x: 85%;
+    background-position-x: left;
     background-size: 40px;
+    padding-left : 50px;
 }
-
+.is_not_prime{
+    padding-left : 50px;
+}
 .sdfss {
     align-items: flex-end;
     justify-content: center;
@@ -5460,7 +5463,9 @@ span.capitalize {
 
 .is_prime_cell.is_prime_type_silver {
     background-image: url('/assets/icons/ocg_member_silver.png');
-    background-position-x: 85%;
+    background-position-x: left;
+    background-size: 40px;
+    padding-left : 50px;
 }
 
 .col-md-12.blue-border-top {
@@ -7480,5 +7485,23 @@ media query starts here
     .fix_ico_in_phone span {
         width: 81% !important;
         font-size: 46px !important;
+    }
+    .forteamf {
+        display: flex;
+        flex-direction: row;
+    }
+    .forteamf.flwrap{
+        flex-wrap: wrap;
+    }
+    .forteamf.flwrap .full-width{
+        width :100%;
+        flex:1;
+    flex-wrap: wrap;
+    min-width: 100vw;
+    }
+
+    .forteamf .profile-header-data-middle {
+        flex-direction: column;
+        padding-top: 25px;
     }
 }

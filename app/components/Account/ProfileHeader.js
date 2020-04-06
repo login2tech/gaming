@@ -218,7 +218,7 @@ class ProfileHeader extends React.Component {
                 onClick={event => {
                   this.addFriend(event);
                 }}
-                className="btn btn-primary bttn_submit btn-outline profbtn"
+                className="btn btn-primary bttn_submit btn-outline profbtn unflowbtn"
               >
                 Unfollow
               </Link>
@@ -369,7 +369,7 @@ class ProfileHeader extends React.Component {
             */}
             <div className="col-md-5 col-6 text-center d-flex sdfss">
               {prime_type ? (
-                <img 
+                <img
                   src={'/assets/icons/ocg_member_' + prime_type + '.png'}
                   className="img-fluid width50per"
                 />

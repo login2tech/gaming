@@ -80,7 +80,7 @@ class Trophies extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 col-sm-4 col-4 text-center">
+              <div className="col-md-4 col-sm-4 col-4 text-center  pt-4 pt-md-0">
                 <img
                   src={'/assets/icons/' + this.state.image_to_show}
                   style={{maxHeight: 200}}
@@ -94,9 +94,12 @@ class Trophies extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {this.state.loaded && this.state.items.length == 0 && (
-                  <div className="alert alert-warning">No trophies to show</div>
-                )}
+                {this.state.loaded &&
+                  this.state.items.length == 0 && (
+                    <div className="alert alert-warning">
+                      No trophies to show
+                    </div>
+                  )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container row">

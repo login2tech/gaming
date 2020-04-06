@@ -151,7 +151,7 @@ class NewTeam extends React.Component {
               />
               <span>{tg == 'Activision ID' ? 'ID' : tg}</span>
 
-              <br /> 
+              <br />
             </>
           );
           // break;
@@ -303,7 +303,7 @@ class NewTeam extends React.Component {
                     )}
                     <div className="form-group col-md-12">
                       <label htmlFor="title">User Id Required</label>
-                      <div class="uid_det">
+                      <div className="uid_det">
                         {!this.state.ladder ? ' - ' : this.showGamerTag()}
                       </div>
                     </div>

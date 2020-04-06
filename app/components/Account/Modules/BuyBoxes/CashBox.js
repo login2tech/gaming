@@ -238,10 +238,10 @@ class Credits extends React.Component {
                   {this.state.withdraw_method == 'paypal'
                     ? 'PayPal Id'
                     : this.state.withdraw_method == 'bank_transfer'
-                    ? 'Bank Account Details: '
-                    : this.state.withdraw_method == 'cheque'
-                    ? 'Bank acccount and shipping address:'
-                    : 'Withdrawal destination Details'}
+                      ? 'Bank Account Details: '
+                      : this.state.withdraw_method == 'cheque'
+                        ? 'Bank acccount and shipping address:'
+                        : 'Withdrawal destination Details'}
                 </label>
                 <textarea
                   required

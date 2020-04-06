@@ -740,9 +740,9 @@ class Profile extends React.Component {
                               <span className="fix_ico_in_phone dib ico_bxx">
                                 <span className={game_user_ids.tag_icons[k]} />
                               </span>
-                              <div class="dib vtt">
-                              <span>{game_user_ids.tag_names[k]}</span>
-                              <p>{this.state.user_info['gamer_tag_' + k]}</p>
+                              <div className="dib vtt">
+                                <span>{game_user_ids.tag_names[k]}</span>
+                                <p>{this.state.user_info['gamer_tag_' + k]}</p>
                               </div>
                             </div>
                           );

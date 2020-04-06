@@ -74,11 +74,13 @@ class Money8Info extends React.Component {
         <span
           className={game_user_ids.tag_icons[this.state.match.ladder.gamer_tag]}
         />
-        <span>{tg == 'Activision ID'
-          ? 'ID'
-          : tg == 'Epic Games Username'
-          ? ' Username'
-          : tg}</span>
+        <span>
+          {tg == 'Activision ID'
+            ? 'ID'
+            : tg == 'Epic Games Username'
+              ? ' Username'
+              : tg}
+        </span>
       </>
     );
   }
@@ -512,7 +514,7 @@ class Money8Info extends React.Component {
                             team_user.prime
                               ? ' is_prime_cell is_prime_type_' +
                                 team_user.prime_type
-                              : ''
+                              : ' is_not_prime '
                           }
                         >
                           <Link target="_blank" to={'/u/' + team_user.username}>
@@ -586,7 +588,7 @@ class Money8Info extends React.Component {
                             team_user.prime
                               ? ' is_prime_cell is_prime_type_' +
                                 team_user.prime_type
-                              : ''
+                              : ' is_not_prime '
                           }
                         >
                           <Link target="_blank" to={'/u/' + team_user.username}>
@@ -617,9 +619,7 @@ class Money8Info extends React.Component {
     );
   }
 
-  renderListPad(vtype)
-  {
-
+  renderListPad(vtype) {
     let game_settings =
       this.state.match && this.state.match.game_settings
         ? JSON.parse(this.state.match.game_settings)
@@ -628,87 +628,128 @@ class Money8Info extends React.Component {
       game_settings = {};
     }
     const game_settings_keys = Object.keys(game_settings);
-    return(
-      <div className={"list_pad " +(vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')}>
-                    <div className="row">
-                      <div className="col-md-4 col-4">
-                        <span> MATCH ID</span>
-                        <p>#{this.state.match.id}</p>
-                      </div>
+    return (
+      <div
+        className={
+          'list_pad ' + (vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')
+        }
+      >
+        <div className="row">
+          <div className="col-md-4 col-4">
+            <span> MATCH ID</span>
+            <p>#{this.state.match.id}</p>
+          </div>
 
-                      <div className="col-md-4 col-4">
-                        <span> STATUS</span>
-                        <p>{this.dynamicStatus(this.state.match.status)}</p>
-                      </div>
+          <div className="col-md-4 col-4">
+            <span> STATUS</span>
+            <p>{this.dynamicStatus(this.state.match.status)}</p>
+          </div>
 
-                      <div className="col-md-4 col-4">
-                        <span>TYPE</span>
-                        <p>
-                          {this.state.match.match_type == 'free' ? (
-                            'FREE'
-                          ) : (
-                            <span>
-                              {'PAID (' +
-                                (this.state.match.match_type == 'cash'
-                                  ? '' +
-                                    this.state.match.match_fee +
-                                    ' OCG Cash'
-                                  : '' +
-                                    this.state.match.match_fee +
-                                    ' credits') +
-                                ')'}
-                              {utils.feeIcon(this.state.match.match_type)}
-                            </span>
-                          )}
-                        </p>
-                      </div>
-                      {game_settings_keys.map((k, i) => {
-                        if (k == 'match_available' || k == 'match_regions'  || k =='map_2' || k == 'map_3') {
-                          return false;
-                        }
-                        if(k == "map_1" && this.state.match.team_2 && this.state.match.team_2 !='')
-                        {
-
-                          return (
-                            <>
-                              <div className="col-md-4 col-6 textcap" key={k}>
-                                <span>{'Maps'}</span>
-                                <p>
-                                  <strong>Map 1: </strong>{game_settings["map_1"]}
-                                  {game_settings.map_2 ? <><br /><strong>Map 2: </strong>{game_settings["map_2"]}</> : false}
-                                  {game_settings.map_3 ? <><br /><strong>Map 3: </strong>{game_settings["map_3"]}</> : false}
-                                </p>
-                              </div>
-                              <div className="col-md-4 col-6 textcap" key={k}>
-                                <span>{'Map Host'}</span>
-                                <p>
-                                  <strong>Host 1: </strong>{'Team 1'}
-                                  {game_settings.map_2 ? <><br /><strong>Host 2: </strong>{'Team 2'}</> : false}
-                                  {game_settings.map_3 ? <><br /><strong>Host 3: </strong>Team 1</> : false}
-                                </p>
-                              </div>
-                            </>
-                          );
-                        }
-                        if (k == 'map_1') {
-                          return false;
-                        }
-                        let m = k.replace(new RegExp('_', 'g'), ' ');
-                        if (m.toLowerCase() === 'match available') {
-                          m = 'Match Region';
-                        }
-                        return (
-                          <div className="col-md-4 col-6 textcap" key={k}>
-                            <span>{m}</span>
-                            <p>{game_settings[k]}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {this.renderJoin()}
-                    {this.renderLeave()}
+          <div className="col-md-4 col-4">
+            <span>TYPE</span>
+            <p>
+              {this.state.match.match_type == 'free' ? (
+                'FREE'
+              ) : (
+                <span>
+                  {'PAID (' +
+                    (this.state.match.match_type == 'cash'
+                      ? '' + this.state.match.match_fee + ' OCG Cash'
+                      : '' + this.state.match.match_fee + ' credits') +
+                    ')'}
+                  {utils.feeIcon(this.state.match.match_type)}
+                </span>
+              )}
+            </p>
+          </div>
+          {game_settings_keys.map((k, i) => {
+            if (
+              k == 'match_available' ||
+              k == 'match_regions' ||
+              k == 'map_2' ||
+              k == 'map_3'
+            ) {
+              return false;
+            }
+            if (
+              k == 'map_1' &&
+              this.state.match.team_2 &&
+              this.state.match.team_2 != ''
+            ) {
+              return (
+                <>
+                  <div className="col-md-4 col-6 textcap" key={k}>
+                    <span>{'Maps'}</span>
+                    <p>
+                      <strong>Map 1: </strong>
+                      {game_settings.map_1}
+                      {game_settings.map_2 ? (
+                        <>
+                          <br />
+                          <strong>Map 2: </strong>
+                          {game_settings.map_2}
+                        </>
+                      ) : (
+                        false
+                      )}
+                      {game_settings.map_3 ? (
+                        <>
+                          <br />
+                          <strong>Map 3: </strong>
+                          {game_settings.map_3}
+                        </>
+                      ) : (
+                        false
+                      )}
+                    </p>
                   </div>
-                  )
+                  <div className="col-md-4 col-6 textcap" key={k}>
+                    <span>{'Map Host'}</span>
+                    <p>
+                      <strong>Host 1: </strong>
+                      {'Team 1'}
+                      {game_settings.map_2 ? (
+                        <>
+                          <br />
+                          <strong>Host 2: </strong>
+                          {'Team 2'}
+                        </>
+                      ) : (
+                        false
+                      )}
+                      {game_settings.map_3 ? (
+                        <>
+                          <br />
+                          <strong>Host 3: </strong>
+                          Team 1
+                        </>
+                      ) : (
+                        false
+                      )}
+                    </p>
+                  </div>
+                </>
+              );
+            }
+            if (k == 'map_1') {
+              return false;
+            }
+            let m = k.replace(new RegExp('_', 'g'), ' ');
+            if (m.toLowerCase() === 'match available') {
+              m = 'Match Region';
+            }
+            return (
+              <div className="col-md-4 col-6 textcap" key={k}>
+                <span>{m}</span>
+                <p>{game_settings[k]}</p>
+              </div>
+            );
+          })}
+        </div>
+        {this.renderJoin()}
+        {this.renderLeave()}
+      </div>
+    );
   }
 
   render() {
@@ -731,7 +772,7 @@ class Money8Info extends React.Component {
     if (!game_settings) {
       game_settings = {};
     }
-     return (
+    return (
       <div>
         <section
           className="page_title_bar single-finder-match nombbtm"
@@ -799,9 +840,7 @@ class Money8Info extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-              {
-                this.renderListPad('mobile')
-              }
+                {this.renderListPad('mobile')}
                 {/*
                   this.state.match.players_joined <
                 this.state.match.players_total ? (

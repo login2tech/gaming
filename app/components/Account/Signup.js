@@ -27,10 +27,13 @@ class Signup extends React.Component {
     };
   }
 
-    calcTime(  offset) {if(!offset)offset=0;
-    let d = new Date();
-    let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-    let nd = new Date(utc + (3600000*offset));
+  calcTime(offset) {
+    if (!offset) {
+      offset = 0;
+    }
+    const d = new Date();
+    const utc = d.getTime() + d.getTimezoneOffset() * 60000;
+    const nd = new Date(utc + 3600000 * offset);
     return moment(nd).format('HH:mm A');
   }
 
@@ -276,7 +279,8 @@ class Signup extends React.Component {
                                         value={state + '|' + timezone.value}
                                         key={timezone.label}
                                       >
-                                        [ {this.calcTime(timezone.offset)} ] {timezone.label}
+                                        [ {this.calcTime(timezone.offset)} ]{' '}
+                                        {timezone.label}
                                       </option>
                                     );
                                   })}

@@ -191,10 +191,9 @@ class Transaction extends React.Component {
                                           : 'text-danger'
                                       }
                                     >
-                                      {
-                                        parseFloat(k.qty) >= 0 ? '+ $'+ k.qty  :  '- $'+ Math.abs(k.qty  )
-
-                                      }
+                                      {parseFloat(k.qty) >= 0
+                                        ? '+ $' + k.qty
+                                        : '- $' + Math.abs(k.qty)}
                                     </td>
                                     <td className="d-none d-md-table-cell">
                                       {k.balance ? '$ ' + k.balance : ''}
@@ -335,8 +334,8 @@ class Transaction extends React.Component {
                                           : 'text-danger'
                                       }
                                     >
-                                      { parseFloat(k.qty) >= 0 ? '+' :  '-' } { Math.abs(k.qty  )} credits
-
+                                      {parseFloat(k.qty) >= 0 ? '+' : '-'}{' '}
+                                      {Math.abs(k.qty)} credits
                                     </td>
                                     <td className="d-none d-md-table-cell">
                                       {k.balance

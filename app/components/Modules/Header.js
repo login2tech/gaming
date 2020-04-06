@@ -11,8 +11,8 @@ class Header extends React.Component {
       games: [],
       userSuggestions: [],
       notifications: [],
-      messages: [ ],
-      message_counts : 0,
+      messages: [],
+      message_counts: 0,
       dms: []
       // posts_page: 1
     };
@@ -56,15 +56,14 @@ class Header extends React.Component {
     );
   }
   componentDidMount() {
-
     this.runQuery();
     setInterval(() => {
       this.fetchNotifications(false);
     }, 1000 * 60 * 1);
-    $(window).on('click_on_chat', ()=>{
-      console.log('click_on_chat')
+    $(window).on('click_on_chat', () => {
+      console.log('click_on_chat');
       this.fetchDMs(false);
-    })
+    });
   }
   fetchSuggestions() {
     fetch('/api/user_suggest?q=' + this.state.searchString)
@@ -87,21 +86,22 @@ class Header extends React.Component {
         window.location.href = link;
       });
   }
-  fetchDMs(forward){
+  fetchDMs(forward) {
     if (!this.props.user) {
-
       return;
     }
     fetch('/api/dm/mygroups')
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
-          this.setState({
-            dms: json.items,
-            message_count : 0
-          }, this.loadReads);
+          this.setState(
+            {
+              dms: json.items,
+              message_count: 0
+            },
+            this.loadReads
+          );
         }
-
       });
   }
 
@@ -125,7 +125,9 @@ class Header extends React.Component {
   }
   fetchNotifications(forward) {
     if (!this.props.user) {
-      if(forward) this.runQuery();
+      if (forward) {
+        this.runQuery();
+      }
       return;
     }
     fetch('/notifs/listMine')

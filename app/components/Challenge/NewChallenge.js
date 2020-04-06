@@ -174,8 +174,8 @@ class NewMatchTeamSelect extends React.Component {
                 className={
                   game_user_ids.tag_icons[tmp_game.ladders[j].gamer_tag]
                 }
-              /><span>
-              {tg == 'Activision ID' ? 'ID' : tg}</span>
+              />
+              <span>{tg == 'Activision ID' ? 'ID' : tg}</span>
               <br />
             </>
           );
@@ -735,7 +735,7 @@ class NewMatchTeamSelect extends React.Component {
                       <br />
                       <div className="form-group col-md-12">
                         <label htmlFor="title">User Id Required</label>
-                        <div  class="uid_det">
+                        <div className="uid_det">
                           {!this.state.ladder ? ' - ' : this.showGamerTag()}
                         </div>
                       </div>
@@ -1034,8 +1034,14 @@ class NewMatchTeamSelect extends React.Component {
                               <thead>
                                 <tr>
                                   <th>Username</th>
-                                  <th  className="d-none t-md-table-cell">Role</th>
-                                  <th  className={'act_pr' + this.state.ladder_obj.gamer_tag}>
+                                  <th className="d-none t-md-table-cell">
+                                    Role
+                                  </th>
+                                  <th
+                                    className={
+                                      'act_pr' + this.state.ladder_obj.gamer_tag
+                                    }
+                                  >
                                     <span
                                       className={
                                         game_user_ids.tag_icons[
@@ -1089,7 +1095,7 @@ class NewMatchTeamSelect extends React.Component {
                                             </Link>
                                           </td>
 
-                                          <td   className="d-none t-md-table-cell">
+                                          <td className="d-none t-md-table-cell">
                                             {team_user.user_id ==
                                             this.state.selected_team
                                               .team_creator

@@ -273,13 +273,14 @@ class SingleTicket extends React.Component {
                         <strong>{this.state.ticket.title}</strong>
                       </p>
                       <p className="d-none d-md-block">
-                        Started {moment(this.state.ticket.created_at).fromNow()} |{' '}
-                        {this.state.ticket.type}
+                        Started {moment(this.state.ticket.created_at).fromNow()}{' '}
+                        | {this.state.ticket.type}
                       </p>
                     </div>
                     <div className="d-md-none banner_actions justify-left">
-                      <span class="ticket-sm-phone">
-                        Started {moment(this.state.ticket.created_at).fromNow()}<br />
+                      <span className="ticket-sm-phone">
+                        Started {moment(this.state.ticket.created_at).fromNow()}
+                        <br />
                         {this.state.ticket.type}
                       </span>
                     </div>

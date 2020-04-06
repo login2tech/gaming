@@ -21,8 +21,8 @@ class NewTicket extends React.Component {
         props.params.type && props.params.type == 'disputed'
           ? 'Match Support - Match Dispute'
           : props.params.via && props.params.username
-          ? 'Customer Support - Dispute Account Ban'
-          : '',
+            ? 'Customer Support - Dispute Account Ban'
+            : '',
       ticket_title: '',
       upload_started: false,
       ticket_description: '',

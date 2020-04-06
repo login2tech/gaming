@@ -41,11 +41,13 @@ class MatchInfo extends React.Component {
         <span
           className={game_user_ids.tag_icons[this.state.match.ladder.gamer_tag]}
         />
-        <span>{tg == 'Activision ID'
-          ? 'ID'
-          : tg == 'Epic Games Username'
-          ? ' Username'
-          : tg}</span>
+        <span>
+          {tg == 'Activision ID'
+            ? 'ID'
+            : tg == 'Epic Games Username'
+              ? ' Username'
+              : tg}
+        </span>
       </>
     );
   }
@@ -118,7 +120,7 @@ class MatchInfo extends React.Component {
         // this user is not playing, no need to check it's eligibility;
         continue;
       }
-      if(this.state.match.match_type == 'cash'){
+      if (this.state.match.match_type == 'cash') {
         if (
           parseFloat(
             this.state.team_selected.team_users[i].user_info.cash_balance
@@ -126,8 +128,10 @@ class MatchInfo extends React.Component {
         ) {
           return false;
         }
-      }else if(this.state.match.match_type =='credits' || this.state.match.match_type =='credit')
-      {
+      } else if (
+        this.state.match.match_type == 'credits' ||
+        this.state.match.match_type == 'credit'
+      ) {
         if (
           parseFloat(
             this.state.team_selected.team_users[i].user_info.credit_balance
@@ -135,7 +139,6 @@ class MatchInfo extends React.Component {
         ) {
           return false;
         }
-
       }
     }
     return true;
@@ -158,10 +161,16 @@ class MatchInfo extends React.Component {
       return true;
     }
 
-    if ( this.state.match.match_type  == 'cash' && parseFloat(team_u.user_info.cash_balance) < amount) {
+    if (
+      this.state.match.match_type == 'cash' &&
+      parseFloat(team_u.user_info.cash_balance) < amount
+    ) {
       return false;
     }
-      if ( this.state.match.match_type  == 'credits' && parseFloat(team_u.user_info.credit_balance) < amount) {
+    if (
+      this.state.match.match_type == 'credits' &&
+      parseFloat(team_u.user_info.credit_balance) < amount
+    ) {
       return false;
     }
     return true;
@@ -196,7 +205,7 @@ class MatchInfo extends React.Component {
     const amount = parseFloat(this.state.match.match_fee);
 
     if (
-       this.state.match.match_type  == 'cash' &&
+      this.state.match.match_type == 'cash' &&
       parseFloat(team_u.user_info.cash_balance) < amount
     ) {
       return (
@@ -323,8 +332,7 @@ class MatchInfo extends React.Component {
     )
       .then(res => res.json())
       .then(json => {
-
-        this.setState({clickProcessed : true})
+        this.setState({clickProcessed: true});
 
         if (json.ok) {
           const obj = {
@@ -419,9 +427,10 @@ class MatchInfo extends React.Component {
       return false;
     }
 
-    if( this.state.match.team_2_info.team_creator != this.props.user.id &&
-        this.state.match.team_1_info.team_creator != this.props.user.id)
-    {
+    if (
+      this.state.match.team_2_info.team_creator != this.props.user.id &&
+      this.state.match.team_1_info.team_creator != this.props.user.id
+    ) {
       return false;
     }
 
@@ -574,10 +583,11 @@ class MatchInfo extends React.Component {
 
   renderJoin() {
     if (this.state.clicked) {
-      if(!this.state.clickProcessed)
+      if (!this.state.clickProcessed) {
         return 'please wait...';
-      else
+      } else {
         return false;
+      }
     }
 
     if (!this.state.is_loaded) {
@@ -821,9 +831,8 @@ class MatchInfo extends React.Component {
     );
   }
 
-  renderListPad(vtype)
-  {
- const {match} = this.state;
+  renderListPad(vtype) {
+    const {match} = this.state;
 
     let game_settings =
       match && match.game_settings ? JSON.parse(match.game_settings) : {};
@@ -832,83 +841,120 @@ class MatchInfo extends React.Component {
     }
     const game_settings_keys = Object.keys(game_settings);
     return (
-     <div className={"list_pad " +(vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')}>
-                    <div className="row">
-                      <div className="col-4">
-                        <span> MATCH ID</span>
-                        <p>#{match.id}</p>
-                      </div>
+      <div
+        className={
+          'list_pad ' + (vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')
+        }
+      >
+        <div className="row">
+          <div className="col-4">
+            <span> MATCH ID</span>
+            <p>#{match.id}</p>
+          </div>
 
-                      <div className="col-4">
-                        <span> STATUS</span>
-                        <p className={'m_status status_' + match.status}>
-                          {moment().isAfter(moment(match.starts_at))
-                            ? this.dynamicStatus()
-                            : match.status}
-                        </p>
-                      </div>
+          <div className="col-4">
+            <span> STATUS</span>
+            <p className={'m_status status_' + match.status}>
+              {moment().isAfter(moment(match.starts_at))
+                ? this.dynamicStatus()
+                : match.status}
+            </p>
+          </div>
 
-                      <div className="col-4">
-                        <span>MATCH FEE</span>
-                        <p>
-                          {match.match_type == 'free' ? (
-                            'FREE'
-                          ) : (
-                            <span>
-                              {'' +
-                                (match.match_type == 'cash'
-                                  ? '' + match.match_fee + '$'
-                                  : '' + match.match_fee + ' credits') +
-                                ''}
-                              {utils.feeIcon(match.match_type)}
-                            </span>
-                          )}
-                        </p>
-                      </div>
-                      {game_settings_keys.map((k, i) => {
-                        if (k == 'match_available' || k =='map_2' || k == 'map_3') {
-                          return false;
-                        }
-                        if(k == "map_1" && this.state.match.team_2_id)
-                        {
-
-                          return (
-                            <>
-                              <div className="col-md-4 col-6 textcap" key={k}>
-                                <span>{'Maps'}</span>
-                                <p>
-                                  <strong>Map 1: </strong>{game_settings["map_1"]}
-                                  {game_settings.map_2 ? <><br /><strong>Map 2: </strong>{game_settings["map_2"]}</> : false}
-                                  {game_settings.map_3 ? <><br /><strong>Map 3: </strong>{game_settings["map_3"]}</> : false}
-                                </p>
-                              </div>
-                              <div className="col-md-4 col-6 textcap" key={k}>
-                                <span>{'Map Host'}</span>
-                                <p>
-                                  <strong>Host 1: </strong>{this.state.match.team_1_info.title}
-                                  {game_settings.map_2 ? <><br /><strong>Host 2: </strong>{this.state.match.team_2_info.title}</> : false}
-                                  {game_settings.map_3 ? <><br /><strong>Host 3: </strong>{this.state.match.team_1_info.title}</> : false}
-                                </p>
-                              </div>
-                            </>
-                          );
-                        }
-                        if (k == 'map_1') {
-                          return false;
-                        }
-                        const m = k.replace(new RegExp('_', 'g'), ' ');
-                        return (
-                          <div className="col-md-4 col-6 textcap" key={k}>
-                            <span>{m}</span>
-                            <p>{game_settings[k]}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {this.renderRequestCancel()}
-                    {this.renderTicketCreate()}
-                    {this.renderJoin()}
-                  </div>);
+          <div className="col-4">
+            <span>MATCH FEE</span>
+            <p>
+              {match.match_type == 'free' ? (
+                'FREE'
+              ) : (
+                <span>
+                  {'' +
+                    (match.match_type == 'cash'
+                      ? '' + match.match_fee + '$'
+                      : '' + match.match_fee + ' credits') +
+                    ''}
+                  {utils.feeIcon(match.match_type)}
+                </span>
+              )}
+            </p>
+          </div>
+          {game_settings_keys.map((k, i) => {
+            if (k == 'match_available' || k == 'map_2' || k == 'map_3') {
+              return false;
+            }
+            if (k == 'map_1' && this.state.match.team_2_id) {
+              return (
+                <>
+                  <div className="col-md-4 col-6 textcap" key={k}>
+                    <span>{'Maps'}</span>
+                    <p>
+                      <strong>Map 1: </strong>
+                      {game_settings.map_1}
+                      {game_settings.map_2 ? (
+                        <>
+                          <br />
+                          <strong>Map 2: </strong>
+                          {game_settings.map_2}
+                        </>
+                      ) : (
+                        false
+                      )}
+                      {game_settings.map_3 ? (
+                        <>
+                          <br />
+                          <strong>Map 3: </strong>
+                          {game_settings.map_3}
+                        </>
+                      ) : (
+                        false
+                      )}
+                    </p>
+                  </div>
+                  <div className="col-md-4 col-6 textcap" key={k}>
+                    <span>{'Map Host'}</span>
+                    <p>
+                      <strong>Host 1: </strong>
+                      {this.state.match.team_1_info.title}
+                      {game_settings.map_2 ? (
+                        <>
+                          <br />
+                          <strong>Host 2: </strong>
+                          {this.state.match.team_2_info.title}
+                        </>
+                      ) : (
+                        false
+                      )}
+                      {game_settings.map_3 ? (
+                        <>
+                          <br />
+                          <strong>Host 3: </strong>
+                          {this.state.match.team_1_info.title}
+                        </>
+                      ) : (
+                        false
+                      )}
+                    </p>
+                  </div>
+                </>
+              );
+            }
+            if (k == 'map_1') {
+              return false;
+            }
+            const m = k.replace(new RegExp('_', 'g'), ' ');
+            return (
+              <div className="col-md-4 col-6 textcap" key={k}>
+                <span>{m}</span>
+                <p>{game_settings[k]}</p>
+              </div>
+            );
+          })}
+        </div>
+        {this.renderRequestCancel()}
+        {this.renderTicketCreate()}
+        {this.renderJoin()}
+      </div>
+    );
   }
 
   render() {
@@ -995,8 +1041,8 @@ class MatchInfo extends React.Component {
                         {match.is_available_now
                           ? 'AVAILABLE NOW'
                           : moment().isAfter(moment(match.starts_at))
-                          ? 'Match Started:'
-                          : 'Match Starts'}{' '}
+                            ? 'Match Started:'
+                            : 'Match Starts'}{' '}
                         {match.is_available_now
                           ? ' '
                           : moment(match.starts_at).format('lll')}{' '}
@@ -1014,7 +1060,7 @@ class MatchInfo extends React.Component {
                       </span>
                     </div>
                   </div>
-                 {this.renderListPad('desktop')}
+                  {this.renderListPad('desktop')}
                 </div>
               </div>
             </div>
@@ -1025,7 +1071,6 @@ class MatchInfo extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-
                 {this.renderListPad('mobile')}
                 <Messages messages={this.props.messages} />
                 {this.renderScoreSubmit()}
@@ -1095,7 +1140,7 @@ class MatchInfo extends React.Component {
                                         team_user.user_info.prime
                                           ? ' is_prime_cell is_prime_type_' +
                                             team_user.user_info.prime_type
-                                          : ''
+                                          : ' is_not_prime '
                                       }
                                     >
                                       <Link
@@ -1198,7 +1243,7 @@ class MatchInfo extends React.Component {
                                             team_user.user_info.prime
                                               ? ' is_prime_cell is_prime_type_' +
                                                 team_user.user_info.prime_type
-                                              : ''
+                                              : '  is_not_prime '
                                           }
                                         >
                                           <Link
@@ -1371,23 +1416,24 @@ class MatchInfo extends React.Component {
                   false
                 )}
 
-                {this.state.eligible_teams_loaded && !this.state.team_selected && (
-                  <div className="alert alert-warning" id="tlst">
-                    You dont have a team for this ladder. Click{' '}
-                    <Link
-                      target="_blank"
-                      to={
-                        '/u/' +
-                        this.props.user.username +
-                        '/teams/new/l/' +
-                        match.ladder.id
-                      }
-                    >
-                      here
-                    </Link>{' '}
-                    to create a team.
-                  </div>
-                )}
+                {this.state.eligible_teams_loaded &&
+                  !this.state.team_selected && (
+                    <div className="alert alert-warning" id="tlst">
+                      You dont have a team for this ladder. Click{' '}
+                      <Link
+                        target="_blank"
+                        to={
+                          '/u/' +
+                          this.props.user.username +
+                          '/teams/new/l/' +
+                          match.ladder.id
+                        }
+                      >
+                        here
+                      </Link>{' '}
+                      to create a team.
+                    </div>
+                  )}
               </div>
             </div>
 

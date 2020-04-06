@@ -490,7 +490,7 @@ class NewMoney8 extends React.Component {
                       </select>
                     </div>
 
-                     {this.state.match_type == 'credits' ||
+                    {this.state.match_type == 'credits' ||
                     this.state.match_type == 'cash' ? (
                       <div className="form-group col-md-12">
                         <label htmlFor="match_fee">Match Entry Fee</label>
@@ -574,7 +574,6 @@ class NewMoney8 extends React.Component {
                       </select>
                     </div>
 
-                   
                     {this.renderGameSettings()}
                     <div className="form-group col-md-12 text-center">
                       <button
@@ -652,9 +651,9 @@ class NewMoney8 extends React.Component {
                                       'waiting' ? (
                                         ' -- '
                                       ) : this.amIEligible(
-                                          team_user,
-                                          ladder
-                                        ) ? (
+                                        team_user,
+                                        ladder
+                                      ) ? (
                                         <span className="text-success">
                                           <img
                                             className="icon_size"

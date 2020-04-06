@@ -460,10 +460,10 @@ class Profile extends React.Component {
                     (this.state.country == 'United States'
                       ? 'flag_us.png'
                       : this.state.country == 'Canada'
-                      ? 'flag_canada.png'
-                      : this.state.country == 'Europe'
-                      ? 'flag_eu.png'
-                      : '')
+                        ? 'flag_canada.png'
+                        : this.state.country == 'Europe'
+                          ? 'flag_eu.png'
+                          : '')
                   }
                   className="flag_ico"
                 />
@@ -808,10 +808,10 @@ class Profile extends React.Component {
           backgroundImage: 'url(' + this.state.new_cover_pic + ')'
         }
       : this.props.user.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.props.user.cover_picture + ')'
-        }
-      : {};
+        ? {
+            backgroundImage: 'url(' + this.props.user.cover_picture + ')'
+          }
+        : {};
 
     return (
       <div>

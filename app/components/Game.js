@@ -481,24 +481,24 @@ class Game extends React.Component {
     );
   }
 
-  renderMatchfinder(){
+  renderMatchfinder() {
     const game_id = this.props.params.id;
-    return (<div className="table_wrapper">
-      <table className="table table-striped table-ongray table-hover">
-        <thead>
-          <tr>
-            <th className="h-o-p  d-none">Match</th>
-            <th>Starts At</th>
-            <th style={{width: '15%'}}>Fee</th>
-            <th>Players</th>
-            <th> </th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.matches &&
-            this.state.matches['game_' + game_id] &&
-            this.state.matches['game_' + game_id].map(
-              (match, i) => {
+    return (
+      <div className="table_wrapper">
+        <table className="table table-striped table-ongray table-hover">
+          <thead>
+            <tr>
+              <th className="h-o-p  d-none">Match</th>
+              <th>Starts At</th>
+              <th style={{width: '15%'}}>Fee</th>
+              <th>Players</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.matches &&
+              this.state.matches['game_' + game_id] &&
+              this.state.matches['game_' + game_id].map((match, i) => {
                 if (match.status == 'expired') {
                   return false;
                 }
@@ -537,18 +537,16 @@ class Game extends React.Component {
                         {match.ladder.title}
                       </Link>
                     </td>
-                    <td>
-                      {moment(match.starts_at).format('lll')}
-                    </td>
+                    <td>{moment(match.starts_at).format('lll')}</td>
                     <td>
                       {match.match_type == 'free'
                         ? 'FREE'
                         : match.match_type == 'credits' ||
                           match.match_type == 'credit'
-                        ? match.match_fee + ' credits'
-                        : match.match_type == 'cash'
-                        ? '$' + match.match_fee
-                        : ' '}
+                          ? match.match_fee + ' credits'
+                          : match.match_type == 'cash'
+                            ? '$' + match.match_fee
+                            : ' '}
                     </td>
 
                     <td className="col-item">
@@ -556,17 +554,16 @@ class Game extends React.Component {
                     </td>
                     <td>
                       <Link to={this.matchLink('/m/' + match.id)}>
-                        {txt1}{' '}
-                        <span className="h-o-p">{txt2}</span>
+                        {txt1} <span className="h-o-p">{txt2}</span>
                       </Link>
                     </td>
                   </tr>
                 );
-              }
-            )}
-        </tbody>
-      </table>
-    </div>)
+              })}
+          </tbody>
+        </table>
+      </div>
+    );
   }
 
   renderButtonSet2(cls) {

@@ -245,9 +245,8 @@ class TournamentInfo extends React.Component {
     }
     // debugger;
     // console.log(rounds);
-    if(!$('.brackets').brackets)
-    {
-      setTimeout(function(){
+    if (!$('.brackets').brackets) {
+      setTimeout(function() {
         $('.brackets').brackets({
           // titles: round_titles,
           rounds: rounds,
@@ -397,8 +396,7 @@ class TournamentInfo extends React.Component {
     if (!team_u.user_info['gamer_tag_' + gamer_tag]) {
       return false;
     }
-  
-  
+
     const amount = parseFloat(this.state.tournament.entry_fee);
 
     if (parseFloat(team_u.user_info.credit_balance) < amount) {
@@ -1496,8 +1494,8 @@ class TournamentInfo extends React.Component {
             backgroundImage: tournament.banner_url
               ? 'url(' + tournament.banner_url + ')'
               : tournament.game.banner_url
-              ? 'url(' + tournament.game.banner_url + ')'
-              : "url('images/thumbnail_tournament.jpg')"
+                ? 'url(' + tournament.game.banner_url + ')'
+                : "url('images/thumbnail_tournament.jpg')"
           }}
         >
           <div className="container tcontainer">
@@ -1587,23 +1585,44 @@ class TournamentInfo extends React.Component {
                         </p>
                       </div>
                       {game_settings_keys.map((k, i) => {
-                        if (k == 'match_available' || k =='map_2' || k == 'map_3') {
+                        if (
+                          k == 'match_available' ||
+                          k == 'map_2' ||
+                          k == 'map_3'
+                        ) {
                           return false;
                         }
-                        if(k == "map_1" && this.state.tournament.status=='started')
-                        {
-                          
+                        if (
+                          k == 'map_1' &&
+                          this.state.tournament.status == 'started'
+                        ) {
                           return (
                             <>
                               <div className="col-md-4 col-6 textcap" key={k}>
                                 <span>{'Maps'}</span>
                                 <p>
-                                  <strong>Map 1: </strong>{game_settings["map_1"]}
-                                  {game_settings.map_2 ? <><br /><strong>Map 2: </strong>{game_settings["map_2"]}</> : false}
-                                  {game_settings.map_3 ? <><br /><strong>Map 3: </strong>{game_settings["map_3"]}</> : false}
+                                  <strong>Map 1: </strong>
+                                  {game_settings.map_1}
+                                  {game_settings.map_2 ? (
+                                    <>
+                                      <br />
+                                      <strong>Map 2: </strong>
+                                      {game_settings.map_2}
+                                    </>
+                                  ) : (
+                                    false
+                                  )}
+                                  {game_settings.map_3 ? (
+                                    <>
+                                      <br />
+                                      <strong>Map 3: </strong>
+                                      {game_settings.map_3}
+                                    </>
+                                  ) : (
+                                    false
+                                  )}
                                 </p>
                               </div>
-                               
                             </>
                           );
                         }

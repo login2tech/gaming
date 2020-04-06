@@ -41,6 +41,16 @@ const SingleMatch = props => {
           <div className="game-cover-block">
             <img className="game-logo float-left" src={match.game.image_url} />{' '}
             {match.game.title} - {match.ladder.title}
+            {match.game_settings && match.game_settings.game_mode ? (
+              <>
+                <br />
+                <span className="text-primary">
+                  {match.game_settings.game_mode}
+                </span>
+              </>
+            ) : (
+              false
+            )}
           </div>
         </div>
         <div className="wager-cost">
@@ -48,10 +58,10 @@ const SingleMatch = props => {
             {match.match_type == 'free'
               ? 'FREE'
               : match.match_type == 'credits' || match.match_type == 'credit'
-              ? match.match_fee + ' credits'
-              : match.match_type == 'cash'
-              ? '$' + match.match_fee
-              : ' '}{' '}
+                ? match.match_fee + ' credits'
+                : match.match_type == 'cash'
+                  ? '$' + match.match_fee
+                  : ' '}{' '}
             {utils.feeIcon(match.match_type)}
           </span>
         </div>
@@ -82,7 +92,7 @@ const SingleMatch = props => {
             {txt}
           </Link>
 
-          {show_cancel ? 
+          {show_cancel ? (
             showCancelInit ? (
               <div>
                 <button
@@ -102,7 +112,7 @@ const SingleMatch = props => {
                   x
                 </button>
               </div>
-            ) : match.team_1_info.team_creator ==  props.user.id ? (
+            ) : match.team_1_info.team_creator == props.user.id ? (
               <button
                 onClick={() => {
                   setShowCancelInit(true);
@@ -111,8 +121,10 @@ const SingleMatch = props => {
               >
                 Cancel Match
               </button>
-            ) : false
-           : (
+            ) : (
+              false
+            )
+          ) : (
             false
           )}
         </div>
@@ -167,7 +179,7 @@ const SingleMatch = props => {
             >
               <span className="wager-hide-tablet">Accept</span>
             </Link>
-            {show_cancel ?  
+            {show_cancel ? (
               showCancelInit ? (
                 <div>
                   <button
@@ -187,7 +199,7 @@ const SingleMatch = props => {
                     x
                   </button>
                 </div>
-              ) :   match.team_1_info.team_creator ==  props.user.id ? (
+              ) : match.team_1_info.team_creator == props.user.id ? (
                 <button
                   onClick={() => {
                     setShowCancelInit(true);
@@ -196,8 +208,10 @@ const SingleMatch = props => {
                 >
                   Cancel Match
                 </button>
-              ):false
-             : (
+              ) : (
+                false
+              )
+            ) : (
               false
             )}
           </div>

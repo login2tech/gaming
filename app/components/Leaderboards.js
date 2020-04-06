@@ -157,7 +157,7 @@ class Leaderboards extends React.Component {
                         <tr>
                           <th>Rank</th>
                           <th>User</th>
-                          <th  className="d-none d-md-table-cell">&nbsp;</th>
+                          <th className="d-none d-md-table-cell">&nbsp;</th>
                           <th data-breakpoints={showing == 'xp' ? '' : 'xs sm'}>
                             {showing == 'xp' ? (
                               <span className="text-blue fa fa-arrow-down m-r-10" />
@@ -178,9 +178,11 @@ class Leaderboards extends React.Component {
                             )}
                             Earnings
                           </th>
-                          <th    className="d-none d-md-table-cell">Career Record</th>
-                          <th  className="d-none d-md-table-cell">Win Rate</th>
-                            <th style={{width: '5%'}} className="d-md-none" />
+                          <th className="d-none d-md-table-cell">
+                            Career Record
+                          </th>
+                          <th className="d-none d-md-table-cell">Win Rate</th>
+                          <th style={{width: '5%'}} className="d-md-none" />
                         </tr>
                       </thead>
                       <tbody>
@@ -194,121 +196,129 @@ class Leaderboards extends React.Component {
                                 (k ? k.last_name : '') +
                                 '&color=124afb&background=fff';
 
-                          return ( <React.Fragment key={k.id}>
-                            <tr>
-                              <td>{i + 1}</td>
-                              <td >
-                                <Link
-                                  className=" avatar_img_r"
-                                  to={k ? '/u/' + k.username : '#'}
-                                >
-                                  <img src={image_url} />
-                                  {k.username}
-                                </Link>
-                              </td>
-                              <td  className="d-none d-md-table-cell">
-                                <img
-                                  className="img-fluid mw-100p mw-50p-mob"
-                                  src={
-                                    '/assets/rank/' +
-                                    this.image_based_on_i(k.life_xp) +
-                                    '.png'
-                                  }
-                                />
-                              </td>
-                              <td>{k.life_xp}</td>
-                              <td>${k.life_earning}</td>
-                              <td  className="d-none d-md-table-cell">
-                                <span className="text-success">
-                                  {k.wins ? k.wins : '0'} W
-                                </span>{' '}
-                                -{' '}
-                                <span className="text-danger">
-                                  {k.loss ? k.loss : '0'} L
-                                </span>
-                              </td>
-                              <td  className="d-none d-md-table-cell">
-                                {k.wins + k.loss == 0
-                                  ? 100
-                                  : (
-                                      (k.wins * 100) /
-                                      (k.wins + k.loss)
-                                    ).toFixed(2)}
-                                %
-                              </td>
-                               <td className="d-md-none">
-                                      <button
-                                        className="btn btn-link"
-                                        onClick={() => {
-                                          this.setState({
-                                            expanded:
-                                              k.id == this.state.expand_id
-                                                ? !this.state.expanded
-                                                : true,
-                                            expand_id: k.id
-                                          });
-                                        }}
-                                      >
-                                        <span
-                                          className={
-                                            this.state.expanded &&
-                                            this.state.expand_id == k.id
-                                              ? ' fa fa-minus'
-                                              : ' fa fa-plus '
-                                          }
-                                        />
-                                      </button>
-                                    </td>
-                            </tr>
-                             {this.state.expanded &&
-                                  this.state.expand_id == k.id ? (
-                                    <tr>
-                                      <td colSpan="4">
-                                        <table className="table">
-                                          <tbody>
-                                           <tr>
-                                              <td colspan="2" class="text-center"><img
-                                  className="img-fluid max-width-100"
-                                  src={
-                                    '/assets/rank/' +
-                                    this.image_based_on_i(k.life_xp) +
-                                    '.png'
-                                  }
-                                /></td>
-                                               
-                                            </tr>
-                                            <tr>
-                                              <td>Career Record</td>
-                                              <td> <span className="text-success">
-                                  {k.wins ? k.wins : '0'} W
-                                </span>{' '}
-                                -{' '}
-                                <span className="text-danger">
-                                  {k.loss ? k.loss : '0'} L
-                                </span>
- </td>
-                                            </tr>
-                                            <tr>
-                                              <td>Win Rate</td>
-                                              <td>
-                                                
- {k.wins + k.loss == 0
-                                  ? 100
-                                  : (
-                                      (k.wins * 100) /
-                                      (k.wins + k.loss)
-                                    ).toFixed(2)}
-                                %
-                                              </td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
-                                      </td>
-                                    </tr>
-                                  ) : (
-                                    false
-                                  )}
-                                </React.Fragment>
+                          return (
+                            <React.Fragment key={k.id}>
+                              <tr>
+                                <td>{i + 1}</td>
+                                <td>
+                                  <Link
+                                    className=" avatar_img_r"
+                                    to={k ? '/u/' + k.username : '#'}
+                                  >
+                                    <img src={image_url} />
+                                    {k.username}
+                                  </Link>
+                                </td>
+                                <td className="d-none d-md-table-cell">
+                                  <img
+                                    className="img-fluid mw-100p mw-50p-mob"
+                                    src={
+                                      '/assets/rank/' +
+                                      this.image_based_on_i(k.life_xp) +
+                                      '.png'
+                                    }
+                                  />
+                                </td>
+                                <td>{k.life_xp}</td>
+                                <td>${k.life_earning}</td>
+                                <td className="d-none d-md-table-cell">
+                                  <span className="text-success">
+                                    {k.wins ? k.wins : '0'} W
+                                  </span>{' '}
+                                  -{' '}
+                                  <span className="text-danger">
+                                    {k.loss ? k.loss : '0'} L
+                                  </span>
+                                </td>
+                                <td className="d-none d-md-table-cell">
+                                  {k.wins + k.loss == 0
+                                    ? 100
+                                    : (
+                                        (k.wins * 100) /
+                                        (k.wins + k.loss)
+                                      ).toFixed(2)}
+                                  %
+                                </td>
+                                <td className="d-md-none">
+                                  <button
+                                    className="btn btn-link"
+                                    onClick={() => {
+                                      this.setState({
+                                        expanded:
+                                          k.id == this.state.expand_id
+                                            ? !this.state.expanded
+                                            : true,
+                                        expand_id: k.id
+                                      });
+                                    }}
+                                  >
+                                    <span
+                                      className={
+                                        this.state.expanded &&
+                                        this.state.expand_id == k.id
+                                          ? ' fa fa-minus'
+                                          : ' fa fa-plus '
+                                      }
+                                    />
+                                  </button>
+                                </td>
+                              </tr>
+                              {this.state.expanded &&
+                              this.state.expand_id == k.id ? (
+                                <tr>
+                                  <td colSpan="4">
+                                    <table className="table">
+                                      <tbody>
+                                        <tr>
+                                          <td
+                                            colSpan="2"
+                                            className="text-center"
+                                          >
+                                            <img
+                                              className="img-fluid max-width-100"
+                                              src={
+                                                '/assets/rank/' +
+                                                this.image_based_on_i(
+                                                  k.life_xp
+                                                ) +
+                                                '.png'
+                                              }
+                                            />
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>Career Record</td>
+                                          <td>
+                                            {' '}
+                                            <span className="text-success">
+                                              {k.wins ? k.wins : '0'} W
+                                            </span>{' '}
+                                            -{' '}
+                                            <span className="text-danger">
+                                              {k.loss ? k.loss : '0'} L
+                                            </span>
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>Win Rate</td>
+                                          <td>
+                                            {k.wins + k.loss == 0
+                                              ? 100
+                                              : (
+                                                  (k.wins * 100) /
+                                                  (k.wins + k.loss)
+                                                ).toFixed(2)}
+                                            %
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              ) : (
+                                false
+                              )}
+                            </React.Fragment>
                           );
                         })}
                       </tbody>

@@ -384,13 +384,12 @@ class Records extends React.Component {
                     rec.length > 0 &&
                     this.state.loaded ? (
                       <>
-                        <span class="d-md-none h-spacer"> | </span>
+                        <span className="d-md-none h-spacer"> | </span>
                         <a
                           href="#"
                           className="pt-3 pb-3 dib  text-lg"
                           onClick={this.resetOverall.bind(this)}
                         >
-
                           <span className="fa fa-repeat" /> Reset All ($5)
                         </a>
                       </>
@@ -400,8 +399,9 @@ class Records extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className="col-md-4 col-sm-4 col-4 text-center">
-                <img class=" mt-3 mt-md-0"
+              <div className="col-md-4 col-sm-4 col-4 text-center  pt-4 pt-md-0">
+                <img
+                  className=" mt-3 mt-md-0"
                   src={'/images/' + this.state.image_to_show}
                   style={{maxHeight: 200}}
                 />
@@ -414,9 +414,12 @@ class Records extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
-                {rec.length == 0 && this.state.loaded && (
-                  <div className="alert alert-warning">No records to show</div>
-                )}
+                {rec.length == 0 &&
+                  this.state.loaded && (
+                    <div className="alert alert-warning">
+                      No records to show
+                    </div>
+                  )}
 
                 <div className="user-profile-trophies-wrapper">
                   <div className="user-profile-trophies-container row">

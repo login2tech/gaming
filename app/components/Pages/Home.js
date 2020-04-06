@@ -333,7 +333,7 @@ class Home extends React.Component {
                       </div>
                     </div>
                     <div className="row d-none d-md-flex mb-3">
-                      <div class="col-6 text-center">VS </div>
+                      <div className="col-6 text-center">VS </div>
                     </div>
                     <div className="row">
                       <div className="col-12 col-md team_spn_m ht2info">

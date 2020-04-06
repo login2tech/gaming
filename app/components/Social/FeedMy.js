@@ -225,7 +225,7 @@ class FeedMy extends React.Component {
                       {this.state.loading ? (
                         <span className="fa fa-spin fa-spinner text-white" />
                       ) : this.state.pagination.pageCount >
-                        this.state.posts_page ? (
+                      this.state.posts_page ? (
                         <button
                           onClick={() => {
                             this.setState(

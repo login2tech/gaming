@@ -64,20 +64,23 @@ class TeamInfo extends React.Component {
     const tg = game_user_ids.tag_names[this.state.team_info.ladder.gamer_tag];
     return (
       <>
-      {
-        this.state.team_info.ladder.gamer_tag == 6 ?
-        <img class="act_in_tbl" src={  '/images/activision.svg'} />:  <span
+        {this.state.team_info.ladder.gamer_tag == 6 ? (
+          <img className="act_in_tbl" src={'/images/activision.svg'} />
+        ) : (
+          <span
             className={
               game_user_ids.tag_icons[this.state.team_info.ladder.gamer_tag]
             }
           />
-      }
+        )}
 
-        <span>{tg == 'Activision ID'
-          ? 'ID'
-          : tg == 'Epic Games Username'
-          ? ' Username'
-          : tg}</span>
+        <span>
+          {tg == 'Activision ID'
+            ? 'ID'
+            : tg == 'Epic Games Username'
+              ? ' Username'
+              : tg}
+        </span>
       </>
     );
   }
@@ -771,7 +774,7 @@ class TeamInfo extends React.Component {
     );
     return (
       <>
-        <div className="flex-1">{h2 == 'h3' ? <h3>{a}</h3> : <h2>{a}</h2>}</div>
+        <div className="flex-1">{h2 == 'h3' ? <h2>{a}</h2> : <h2>{a}</h2>}</div>
         <div className="flex-1">
           {renderWinL ? this.renderWinLoss(34) : false}
         </div>
@@ -786,13 +789,13 @@ class TeamInfo extends React.Component {
           paddingBottom: 30
         }
       : this.state.team_info && this.state.team_info.cover_picture
-      ? {
-          backgroundImage: 'url(' + this.state.team_info.cover_picture + ')',
-          paddingBottom: 30
-        }
-      : {
-          paddingBottom: 30
-        };
+        ? {
+            backgroundImage: 'url(' + this.state.team_info.cover_picture + ')',
+            paddingBottom: 30
+          }
+        : {
+            paddingBottom: 30
+          };
 
     return (
       <div>
@@ -1075,19 +1078,17 @@ class TeamInfo extends React.Component {
           <div className="profile-header" style={divStyle} />
           <div className="container profile-page-container">
             <div className="profile-header-data forteamf">
-
-          
               <div className="profile-header-data-left">
                 <span className="textcap d-md-none d-inline-block width-100 pl-2">
-                {this.state.team_info.team_type == 'tournaments' ? (
-                  <span className="trofy pt-2">
-                    <span className="fa fa-trophy text-lg" />{' '}
-                    {this.state.team_info.team_type}
-                  </span>
-                ) : (
-                  this.state.team_info.team_type
-                )}{' '}
-                team
+                  {this.state.team_info.team_type == 'tournaments' ? (
+                    <span className="trofy pt-2">
+                      <span className="fa fa-trophy text-lg" />{' '}
+                      {this.state.team_info.team_type}
+                    </span>
+                  ) : (
+                    this.state.team_info.team_type
+                  )}{' '}
+                  team
                 </span>
                 <div className="profile-avatar">
                   {this.renderProfileImage()}
@@ -1095,11 +1096,9 @@ class TeamInfo extends React.Component {
               </div>
 
               <div className="profile-header-data-middle">
-                
-                <div>{this.renderNameAndFollow(false, 'h3')}</div> 
+                <div>{this.renderNameAndFollow(false, 'h3')}</div>
                 <div>{this.renderWinLoss(0)}</div>
               </div>
-              
             </div>
             <div className="row">
               <div className="user-rank-mobile row  rank_box_wrap">
@@ -1126,76 +1125,72 @@ class TeamInfo extends React.Component {
 
           <div className="team_actions mt-4 ml-2 mr-2">
             {this.props.user &&
-                  this.state.team_info.team_creator == this.props.user.id &&
-                  !this.state.team_info.removed &&
-                  this.state.team_info.team_type == 'matchfinder' ? (
-                    <>
-                      <Link
-                        to={
-                          '/matchfinder/new/' +
-                          this.state.team_info.ladder.id +
-                          '/' +
-                          this.state.team_info.id
-                        }
-                        className="btn btn-default bttn_submit mw_200 mr-1"
-                        style={{margin: '0 auto'}}
-                      >
-                        Create a match
-                      </Link>
-                      <Link
-                        to={'/matchfinder/'}
-                        className="btn btn-default bttn_submit mw_200"
-                        style={{margin: '0 auto'}}
-                      >
-                        Find a match
-                      </Link>
-                    </>
-                  ) : (
-                    false
-                  )}
-                  {!this.meInTeam() &&
-                  this.state.team_info.team_type == 'matchfinder' ? (
-                    <Link
-                      to={
-                        '/challenge/new/g/' +
-                        this.state.team_info.ladder.game_id +
-                        '/l/' +
-                        this.state.team_info.ladder.id +
-                        '/t/' +
-                        this.state.team_info.id
-                      }
-                      onClick={() => {
-                        cookie.save(
-                          'challenging_team',
-                          this.state.team_info.title,
-                          {
-                            path: '/',
-                            expires: moment()
-                              .add(1, 'day')
-                              .toDate()
-                          }
-                        );
-                      }}
-                      className="btn btn-default bttn_submit mw_200"
-                      style={{margin: '0 auto'}}
-                    >
-                      Challenge
-                    </Link>
-                  ) : (
-                    false
-                  )}
-                  {this.state.team_info &&
-                  this.state.team_info.team_type == 'tournaments' ? (
-                    <Link
-                      to={'/t/' + this.state.team_info.team_t_id}
-                      className="btn btn-default mt-2 bttn_submit mw_200"
-                      style={{margin: '0 auto'}}
-                    >
-                      View Tournament
-                    </Link>
-                  ) : (
-                    false
-                  )}
+            this.state.team_info.team_creator == this.props.user.id &&
+            !this.state.team_info.removed &&
+            this.state.team_info.team_type == 'matchfinder' ? (
+              <>
+                <Link
+                  to={
+                    '/matchfinder/new/' +
+                    this.state.team_info.ladder.id +
+                    '/' +
+                    this.state.team_info.id
+                  }
+                  className="btn btn-default bttn_submit mw_200 mr-1"
+                  style={{margin: '0 auto'}}
+                >
+                  Create a match
+                </Link>
+                <Link
+                  to={'/matchfinder/'}
+                  className="btn btn-default bttn_submit mw_200"
+                  style={{margin: '0 auto'}}
+                >
+                  Find a match
+                </Link>
+              </>
+            ) : (
+              false
+            )}
+            {!this.meInTeam() &&
+            this.state.team_info.team_type == 'matchfinder' ? (
+              <Link
+                to={
+                  '/challenge/new/g/' +
+                  this.state.team_info.ladder.game_id +
+                  '/l/' +
+                  this.state.team_info.ladder.id +
+                  '/t/' +
+                  this.state.team_info.id
+                }
+                onClick={() => {
+                  cookie.save('challenging_team', this.state.team_info.title, {
+                    path: '/',
+                    expires: moment()
+                      .add(1, 'day')
+                      .toDate()
+                  });
+                }}
+                className="btn btn-default bttn_submit mw_200"
+                style={{margin: '0 auto'}}
+              >
+                Challenge
+              </Link>
+            ) : (
+              false
+            )}
+            {this.state.team_info &&
+            this.state.team_info.team_type == 'tournaments' ? (
+              <Link
+                to={'/t/' + this.state.team_info.team_t_id}
+                className="btn btn-default mt-2 bttn_submit mw_200"
+                style={{margin: '0 auto'}}
+              >
+                View Tournament
+              </Link>
+            ) : (
+              false
+            )}
           </div>
         </div>
 
@@ -1232,15 +1227,19 @@ class TeamInfo extends React.Component {
                           {this.state.is_edit_mode && <th>{'remove'}</th>}
                           <th>Username</th>
                           <th>Role</th>
-                          <th   className={"d-none d-md-table-cell  act_pr" + this.state.team_info.ladder.gamer_tag}
-
+                          <th
+                            className={
+                              'd-none d-md-table-cell  act_pr' +
+                              this.state.team_info.ladder.gamer_tag
+                            }
                           >
                             {this.showGamerTag()}
                           </th>
                           <th>Eligible</th>
-                          <th   className="d-none d-md-table-cell">Date Joined</th>
+                          <th className="d-none d-md-table-cell">
+                            Date Joined
+                          </th>
                           <th style={{width: '5%'}} className="d-md-none" />
-
                         </tr>
                       </thead>
                       <tbody>
@@ -1250,213 +1249,231 @@ class TeamInfo extends React.Component {
                           }
                           // console.log(team_user.user_info.id, this.props.user.id);
                           return (
-                              <React.Fragment key={team_user.id}>
-                            <tr >
-
-                              {this.state.is_edit_mode && (
-                                <td>
-                                  {this.props.user &&
-                                    team_user.user_info.id !=
-                                      this.props.user.id && (
-                                      <input
-                                        type="checkbox"
-                                        checked={
-                                          this.state.removing.indexOf(
-                                            team_user.user_info.id
-                                          ) > -1
-                                        }
-                                        onChange={() => {
-                                          const removing = this.state.removing;
-                                          const idx = removing.indexOf(
-                                            team_user.user_info.id
-                                          );
-                                          if (idx > -1) {
-                                            removing.splice(idx, 1);
-                                          } else {
-                                            removing.push(
+                            <React.Fragment key={team_user.id}>
+                              <tr>
+                                {this.state.is_edit_mode && (
+                                  <td>
+                                    {this.props.user &&
+                                      team_user.user_info.id !=
+                                        this.props.user.id && (
+                                        <input
+                                          type="checkbox"
+                                          checked={
+                                            this.state.removing.indexOf(
+                                              team_user.user_info.id
+                                            ) > -1
+                                          }
+                                          onChange={() => {
+                                            const removing = this.state
+                                              .removing;
+                                            const idx = removing.indexOf(
                                               team_user.user_info.id
                                             );
-                                          }
-                                          this.setState({
-                                            removing: removing
-                                          });
-                                        }}
-                                      />
-                                    )}
-                                </td>
-                              )}
-                              <td class={  team_user.user_info.prime
-                                  ? ' is_prime_cell is_prime_type_' +
-                                    team_user.user_info.prime_type
-                                  : ''
-                              }>
-                                <Link to={'/u/' + team_user.user_info.username}>
-                                  {team_user.user_info.username}
-                                </Link>
-                              </td>
-
-                              <td>
-                                {team_user.user_id ==
-                                this.state.team_info.team_creator
-                                  ? 'Leader'
-                                  : 'Member'}
-                              </td>
-
-                              <td className="d-none d-md-table-cell">
-                                {this.state.team_info &&
-                                this.state.team_info.ladder &&
-                                this.state.team_info.ladder.gamer_tag
-                                  ? team_user.user_info[
-                                      'gamer_tag_' +
-                                        this.state.team_info.ladder.gamer_tag
-                                    ]
-                                  : ''}
-                              </td>
-
-                              <td>
-                                {this.state.team_info &&
-                                this.state.team_info.ladder &&
-                                this.state.team_info.ladder.gamer_tag && team_user.accepted &&
-                                team_user.user_info[
-                                  'gamer_tag_' +
-                                    this.state.team_info.ladder.gamer_tag
-                                ] ? (
-                                  <span className="text-success">
-                                    <img
-                                      className="icon_size"
-                                      src="/images/controller-green.svg"
-                                    />{' '}
-                                    Eligible
-                                  </span>
-                                ) : (
-                                  <span className="text-danger">
-                                    <img
-                                      className="icon_size"
-                                      src="/images/controller-red.svg"
-                                    />{' '}
-                                    Not Eligible
-                                  </span>
+                                            if (idx > -1) {
+                                              removing.splice(idx, 1);
+                                            } else {
+                                              removing.push(
+                                                team_user.user_info.id
+                                              );
+                                            }
+                                            this.setState({
+                                              removing: removing
+                                            });
+                                          }}
+                                        />
+                                      )}
+                                  </td>
                                 )}
-                              </td>
-                              <td className="d-none d-md-table-cell">
-                                {team_user.accepted
-                                  ? moment(team_user.created_at).format('lll')
-                                  : 'Not Yet Accepted'}{' '}
-                                {this.props.user &&
-                                !team_user.accepted &&
-                                team_user.user_id == this.props.user.id ? (
-                                  <button
-                                    className="btn btn-sm btn-success"
-                                    onClick={event => {
-                                      this.approveRequest(event);
-                                    }}
-                                  >
-                                    Accept
-                                  </button>
-                                ) : (
-                                  false
-                                )}
-                                {this.props.user &&
-                                !team_user.accepted &&
-                                team_user.user_id == this.props.user.id ? (
-                                  <button
-                                    className="btn btn-sm btn-danger"
-                                    onClick={event => {
-                                      this.approveRequest(event, 'reject');
-                                    }}
-                                  >
-                                    Reject
-                                  </button>
-                                ) : (
-                                  false
-                                )}
-                              </td>
-                              <td className="d-md-none">
-                                <button
-                                  className="btn btn-link"
-                                  onClick={() => {
-                                    this.setState({
-                                      expanded:
-                                        team_user.id == this.state.expand_id
-                                          ? !this.state.expanded
-                                          : true,
-                                      expand_id: team_user.id
-                                    });
-                                  }}
+                                <td
+                                  className={
+                                    team_user.user_info.prime
+                                      ? ' is_prime_cell is_prime_type_' +
+                                        team_user.user_info.prime_type
+                                      : ' is_not_prime '
+                                  }
                                 >
-                                  <span
-                                    className={
-                                      this.state.expanded &&
-                                      this.state.expand_id == team_user.id
-                                        ? ' fa fa-minus'
-                                        : ' fa fa-plus '
-                                    }
-                                  />
-                                </button>
-                              </td>
-                            </tr>
+                                  <Link
+                                    to={'/u/' + team_user.user_info.username}
+                                  >
+                                    {team_user.user_info.username}
+                                  </Link>
+                                </td>
 
-                            {this.state.expanded &&
-                            this.state.expand_id == team_user.id ? (
-                              <tr>
-                                <td colSpan="4">
-                                  <table className="table expndingtbl">
-                                    <tbody>
-                                      <tr>
-                                        <td>{this.showGamerTag()}</td>
-                                        <td>{this.state.team_info &&
-                                        this.state.team_info.ladder &&
-                                        this.state.team_info.ladder.gamer_tag
-                                          ? team_user.user_info[
-                                              'gamer_tag_' +
-                                                this.state.team_info.ladder.gamer_tag
-                                            ]
-                                          : ''}</td>
-                                      </tr>
-                                      <tr>
-                                        <td>Date Joined</td>
-                                        <td>
-                                        {team_user.accepted
-                                          ? moment(team_user.created_at).format('lll')
-                                          : 'Not Yet Accepted'}{' '}<br />
-                                        {this.props.user &&
-                                        !team_user.accepted &&
-                                        team_user.user_id == this.props.user.id ? (
-                                          <button
-                                            className="btn btn-sm btn-success"
-                                            onClick={event => {
-                                              this.approveRequest(event);
-                                            }}
-                                          >
-                                            Accept
-                                          </button>
-                                        ) : (
-                                          false
-                                        )}
-                                        {this.props.user &&
-                                        !team_user.accepted &&
-                                        team_user.user_id == this.props.user.id ? (
-                                          <button
-                                            className="btn btn-sm btn-danger"
-                                            onClick={event => {
-                                              this.approveRequest(event, 'reject');
-                                            }}
-                                          >
-                                            Reject
-                                          </button>
-                                        ) : (
-                                          false
-                                        )}
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
+                                <td>
+                                  {team_user.user_id ==
+                                  this.state.team_info.team_creator
+                                    ? 'Leader'
+                                    : 'Member'}
+                                </td>
+
+                                <td className="d-none d-md-table-cell">
+                                  {this.state.team_info &&
+                                  this.state.team_info.ladder &&
+                                  this.state.team_info.ladder.gamer_tag
+                                    ? team_user.user_info[
+                                        'gamer_tag_' +
+                                          this.state.team_info.ladder.gamer_tag
+                                      ]
+                                    : ''}
+                                </td>
+
+                                <td>
+                                  {this.state.team_info &&
+                                  this.state.team_info.ladder &&
+                                  this.state.team_info.ladder.gamer_tag &&
+                                  team_user.accepted &&
+                                  team_user.user_info[
+                                    'gamer_tag_' +
+                                      this.state.team_info.ladder.gamer_tag
+                                  ] ? (
+                                    <span className="text-success">
+                                      <img
+                                        className="icon_size"
+                                        src="/images/controller-green.svg"
+                                      />{' '}
+                                      Eligible
+                                    </span>
+                                  ) : (
+                                    <span className="text-danger">
+                                      <img
+                                        className="icon_size"
+                                        src="/images/controller-red.svg"
+                                      />{' '}
+                                      Not Eligible
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="d-none d-md-table-cell">
+                                  {team_user.accepted
+                                    ? moment(team_user.created_at).format('lll')
+                                    : 'Not Yet Accepted'}{' '}
+                                  {this.props.user &&
+                                  !team_user.accepted &&
+                                  team_user.user_id == this.props.user.id ? (
+                                    <button
+                                      className="btn btn-sm btn-success"
+                                      onClick={event => {
+                                        this.approveRequest(event);
+                                      }}
+                                    >
+                                      Accept
+                                    </button>
+                                  ) : (
+                                    false
+                                  )}
+                                  {this.props.user &&
+                                  !team_user.accepted &&
+                                  team_user.user_id == this.props.user.id ? (
+                                    <button
+                                      className="btn btn-sm btn-danger"
+                                      onClick={event => {
+                                        this.approveRequest(event, 'reject');
+                                      }}
+                                    >
+                                      Reject
+                                    </button>
+                                  ) : (
+                                    false
+                                  )}
+                                </td>
+                                <td className="d-md-none">
+                                  <button
+                                    className="btn btn-link"
+                                    onClick={() => {
+                                      this.setState({
+                                        expanded:
+                                          team_user.id == this.state.expand_id
+                                            ? !this.state.expanded
+                                            : true,
+                                        expand_id: team_user.id
+                                      });
+                                    }}
+                                  >
+                                    <span
+                                      className={
+                                        this.state.expanded &&
+                                        this.state.expand_id == team_user.id
+                                          ? ' fa fa-minus'
+                                          : ' fa fa-plus '
+                                      }
+                                    />
+                                  </button>
                                 </td>
                               </tr>
-                            ) : (
-                              false
-                            )}
-                          </React.Fragment>
+
+                              {this.state.expanded &&
+                              this.state.expand_id == team_user.id ? (
+                                <tr>
+                                  <td colSpan="4">
+                                    <table className="table expndingtbl">
+                                      <tbody>
+                                        <tr>
+                                          <td>{this.showGamerTag()}</td>
+                                          <td>
+                                            {this.state.team_info &&
+                                            this.state.team_info.ladder &&
+                                            this.state.team_info.ladder
+                                              .gamer_tag
+                                              ? team_user.user_info[
+                                                  'gamer_tag_' +
+                                                    this.state.team_info.ladder
+                                                      .gamer_tag
+                                                ]
+                                              : ''}
+                                          </td>
+                                        </tr>
+                                        <tr>
+                                          <td>Date Joined</td>
+                                          <td>
+                                            {team_user.accepted
+                                              ? moment(
+                                                  team_user.created_at
+                                                ).format('lll')
+                                              : 'Not Yet Accepted'}{' '}
+                                            <br />
+                                            {this.props.user &&
+                                            !team_user.accepted &&
+                                            team_user.user_id ==
+                                              this.props.user.id ? (
+                                              <button
+                                                className="btn btn-sm btn-success"
+                                                onClick={event => {
+                                                  this.approveRequest(event);
+                                                }}
+                                              >
+                                                Accept
+                                              </button>
+                                            ) : (
+                                              false
+                                            )}
+                                            {this.props.user &&
+                                            !team_user.accepted &&
+                                            team_user.user_id ==
+                                              this.props.user.id ? (
+                                              <button
+                                                className="btn btn-sm btn-danger"
+                                                onClick={event => {
+                                                  this.approveRequest(
+                                                    event,
+                                                    'reject'
+                                                  );
+                                                }}
+                                              >
+                                                Reject
+                                              </button>
+                                            ) : (
+                                              false
+                                            )}
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              ) : (
+                                false
+                              )}
+                            </React.Fragment>
                           );
                         })}
                       </tbody>

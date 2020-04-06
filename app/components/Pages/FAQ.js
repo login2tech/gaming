@@ -77,10 +77,12 @@ class FAQ extends React.Component {
                                     <span className="badge badge-primary">
                                       {i + 1}
                                     </span>{' '}
-                                    <span>{this.props.activeLanguage &&
-                                    this.props.activeLanguage.code == 'fr'
-                                      ? faq.title_second_language
-                                      : faq.title}</span>
+                                    <span>
+                                      {this.props.activeLanguage &&
+                                      this.props.activeLanguage.code == 'fr'
+                                        ? faq.title_second_language
+                                        : faq.title}
+                                    </span>
                                   </h5>
                                 </div>
                               </div>
