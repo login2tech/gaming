@@ -31,7 +31,7 @@ class Header extends React.Component {
           this.setState({games: obj.items});
         });
       }
-      // this.runQuery2();
+      this.fetchNotifications(true);
     });
   }
   handleLogout = event => {
@@ -56,7 +56,8 @@ class Header extends React.Component {
     );
   }
   componentDidMount() {
-    this.fetchNotifications(true);
+
+    this.runQuery();
     setInterval(() => {
       this.fetchNotifications(false);
     }, 1000 * 60 * 1);
@@ -88,7 +89,7 @@ class Header extends React.Component {
   }
   fetchDMs(forward){
     if (!this.props.user) {
-      if(forward) this.runQuery();
+
       return;
     }
     fetch('/api/dm/mygroups')
@@ -100,8 +101,7 @@ class Header extends React.Component {
             message_count : 0
           }, this.loadReads);
         }
-        if(forward)
-          this.runQuery(forward);
+
       });
   }
 
