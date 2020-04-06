@@ -218,7 +218,7 @@ class ProfileHeader extends React.Component {
                 onClick={event => {
                   this.addFriend(event);
                 }}
-                className="btn btn-primary bttn_submit btn-outline profbtn unflowbtn"
+                className="btn    bttn_submit btn-outline profbtn unflowbtn"
               >
                 Unfollow
               </Link>

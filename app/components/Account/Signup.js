@@ -289,7 +289,10 @@ class Signup extends React.Component {
                           })}
                         </select>
                       </div>
-                      {this.state.country == 'United States' && 0 ? (
+                      {
+                        this.state.country
+                      }
+                      {this.state.country == 'United States'  ? (
                         <div className="form-group col-md-12">
                           <select
                             required

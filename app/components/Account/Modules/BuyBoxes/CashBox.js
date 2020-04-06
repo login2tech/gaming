@@ -188,7 +188,7 @@ class Credits extends React.Component {
                 </label>
                 <input
                   type="number"
-                  min="1"
+                  min="10"
                   step="0.1"
                   max={this.props.user.cash_balance}
                   required

@@ -483,6 +483,7 @@ class Profile extends React.Component {
                 <div className="form-group">
                   <label htmlFor="state">State</label>
                   <select
+                  readOnly disabled
                     required
                     className="form-control"
                     placeholder="State"

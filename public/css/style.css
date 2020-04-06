@@ -4348,9 +4348,16 @@ img.img-fluid.team_avat {
     display: flex;
     align-items: center;
 }
-
+.unflowbtn, .unflowbtn:hover {
+    background: #fff !important;
+    color: #000 !important;
+    text-shadow: none;
+    font-weight: bold !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
 .team_spn_m:not(.no-just) {
-    justify-content: flex-start;
+    justify-content: flex-start;align-items: flex-start;
 }
 
 .has_m .team_spn_m {
@@ -7504,4 +7511,9 @@ media query starts here
         flex-direction: column;
         padding-top: 25px;
     }
+}
+
+
+.text-xl {
+    font-size: 25px;
 }
