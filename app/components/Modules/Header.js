@@ -56,7 +56,7 @@ class Header extends React.Component {
     );
   }
   componentDidMount() {
-    this.fetchNotifications();
+    this.fetchNotifications(true);
     setInterval(() => {
       this.fetchNotifications(false);
     }, 1000 * 60 * 1);
