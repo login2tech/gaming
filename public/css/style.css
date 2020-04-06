@@ -5312,6 +5312,8 @@ th.act_pr6 .actision_logo {
 .max-width-100 {
     max-width: 140px;
     min-width: 140px;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
 }
 
 .row.gamer_tags_profile {
