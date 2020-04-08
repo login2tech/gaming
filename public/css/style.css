@@ -3373,6 +3373,9 @@ ul.submenu li a {
     font-size: 1.25rem;
     line-height: 1.25rem;
 }
+.t-prizes-place.tr{
+    height: 90px;
+}
 
 .t-prizes-place.p1 {
     border-left: 0.4375rem solid #ecd370;
@@ -7516,4 +7519,7 @@ media query starts here
 
 .text-xl {
     font-size: 25px;
+}
+span.hc-trophy-icon {
+    margin-right: 30px;
 }

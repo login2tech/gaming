@@ -791,7 +791,7 @@ class TournamentInfo extends React.Component {
         <div className="row">
           <div className="col-md-4 col-12">
             <div className="t-prizes">
-              <div className="t-prizes-place p1">
+              <div className="t-prizes-place p1 tr">
                 <div className="table_wrapper">
                   <table>
                     <tbody>
@@ -800,7 +800,7 @@ class TournamentInfo extends React.Component {
                           <span className="hc-trophy-icon">
                             <img
                               src="/assets/icons/gold.png"
-                              style={{width: '40px'}}
+                              style={{width: '80px'}}
                             />
                           </span>
                         </td>
