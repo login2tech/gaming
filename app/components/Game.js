@@ -490,6 +490,7 @@ class Game extends React.Component {
             <tr>
               <th className="h-o-p  d-none">Match</th>
               <th>Starts At</th>
+              <th  style={{width: '25%'}}>Game Mode</th>
               <th style={{width: '15%'}}>Fee</th>
               <th>Players</th>
               <th> </th>
@@ -522,6 +523,9 @@ class Game extends React.Component {
                     // show_cancel = true;
                   }
                 }
+                if (typeof match.game_settings === 'string') {
+                  match.game_settings = JSON.parse(match.game_settings);
+                }
 
                 return (
                   <tr
@@ -537,7 +541,8 @@ class Game extends React.Component {
                         {match.ladder.title}
                       </Link>
                     </td>
-                    <td>{moment(match.starts_at).format('lll')}</td>
+                    <td>{moment(match.starts_at).fromNow()}</td>
+                    <td>{match.game_settings.game_mode ? match.game_settings.game_mode : match.game_settings.match_type ? match.game_settings.match_type : ''}</td>
                     <td>
                       {match.match_type == 'free'
                         ? 'FREE'
@@ -554,7 +559,7 @@ class Game extends React.Component {
                     </td>
                     <td>
                       <Link to={this.matchLink('/m/' + match.id)}>
-                        {txt1} <span className="h-o-p">{txt2}</span>
+                        {txt1}  
                       </Link>
                     </td>
                   </tr>
