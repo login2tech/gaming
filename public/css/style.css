@@ -7555,6 +7555,14 @@ media query starts here
         background-size: 30px;
         background-position-y: center;
     }
+    .login-ph-btn span:first-child {
+        font-size: 12px;
+        border-bottom: 2px solid #000;
+    }
+
+    button.navbar-toggler.float-right.collapsed.login-ph-btn.text-white {
+        padding: 0;
+    }
 }
 
 
