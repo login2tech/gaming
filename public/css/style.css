@@ -5958,7 +5958,8 @@ ul.main_cat_list.pr {
     border-top-right-radius: 5px;
     right: 150px;
     overflow: hidden;
-    bottom: 0;
+    bottom: 0;left: calc(50% - 150px);
+    right: auto;
 }
 
 .match_chat_box_header {

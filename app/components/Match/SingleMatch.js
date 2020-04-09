@@ -45,7 +45,7 @@ const SingleMatch = props => {
               <>
                 <br />
                 <span className="text-primary">
-                  {match.game_settings.game_mode}
+                  {match.game_settings.game_mode ? match.game_settings.game_mode : match.game_settings.match_type ? match.game_settings.match_type : ''}
                 </span>
               </>
             ) : (
