@@ -174,6 +174,7 @@ class Profile extends React.Component {
                       <NewPost
                         user_info={this.state.user_info}
                         is_in_timeline
+                        is_private
                         forceusername={this.state.user_info.username}
                         onSubmit={post => {
                           const posts = this.state.posts;

@@ -279,7 +279,7 @@ class Home extends React.Component {
                 return (
                   <div className={cls} key={match.id}>
                     <div className="row has_m">
-                      <div className="col-12 col-md team_spn_m ht1info">
+                      <div className="col-12d col-6 col-md team_spn_m ht1info">
                         {match.team_1_info ? (
                           <>
                             <Link
@@ -315,7 +315,7 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col-6 col-md team_spn_m no-just mldr">
+                      <div className="col-6 col-md team_spn_m no-just mldr ">
                         <span>
                           <span className="text-l">
                             {match.ladder.game_info.title}
@@ -323,7 +323,7 @@ class Home extends React.Component {
                           <span className="text-m">{match.ladder.title}</span>
                         </span>
                       </div>
-                      <div className="col-6 col-md-5 team_spn_m no-just d-md-none mldrpr">
+                      <div className="col-6 col-md-5 team_spn_m no-just d-md-noned d-none mldrpr">
                         <span>
                           <span className="text-l  text-success">
                             ${match.match_fee ? match.match_fee : '0'}
@@ -332,11 +332,11 @@ class Home extends React.Component {
                         </span>
                       </div>
                     </div>
-                    <div className="row d-none d-md-flex mb-4">
+                    <div className="row d-noneed d-md-flex mb-4">
                       <div className="col-6 text-center text-xl">VS</div>
                     </div>
                     <div className="row">
-                      <div className="col-12 col-md team_spn_m ht2info">
+                      <div className="col-6 col-md team_spn_m ht2info">
                         {match.team_2_info ? (
                           <>
                             <Link
@@ -372,7 +372,7 @@ class Home extends React.Component {
                           false
                         )}
                       </div>
-                      <div className="col-12 col-md team_spn_m no-just d-none d-md-flex">
+                      <div className="col-6 col-md team_spn_m no-just d-noned d-flex d-md-flex">
                         <span>
                           <span className="text-l  text-success">
                             ${match.match_fee ? match.match_fee : '0'}

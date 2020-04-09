@@ -1440,7 +1440,7 @@ class MatchInfo extends React.Component {
             <GameRules title={this.state.match.game.title} />
           </div>
         </section>
-        {this.state.match.status == 'accepted' ? (
+        {this.state.match.status == 'accepted' || 1? (
           <MatchChat
             team_1={this.state.match.team_1_players}
             team_2={this.state.match.team_2_players}

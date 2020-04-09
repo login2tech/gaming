@@ -6916,25 +6916,26 @@ media query starts here
     }
 
     .has_m .team_spn_m {
-        margin-bottom: 0px
+        /*margin-bottom: 0px*/
     }
 
     .sm_btn_on_mob_wrap {
         top: auto;
         padding: 0;
-        bottom: 19px;
+        bottom: 25px;
     }
 
     .sm_btn_on_mob {
         margin: 0;
         border-radius: 5px;
-        padding-bottom: 5px;
-        line-height: 20px;
-        height: 30px;
-        padding-top: 5px;
+        padding-bottom: 3px;
+        line-height: 14px;
+        height: 20px;
+        padding-top: 3px;
         padding-left: 10px;
         padding-right: 10px;
         min-width: 0px !important;
+        font-size: 12px;
     }
 
     .section-headline {
@@ -7331,6 +7332,7 @@ media query starts here
     #dropdownMenuButton {
         width: 100%;
         padding-left: 11px !important;
+        padding-right: 11px !important;
     }
 
     .mobil-game-actions > div > a, .mobil-game-actions > div > div {
@@ -7506,13 +7508,46 @@ media query starts here
     .forteamf.flwrap .full-width{
         width :100%;
         flex:1;
-    flex-wrap: wrap;
-    min-width: 100vw;
+        flex-wrap: wrap;
+        min-width: 100vw;
     }
 
     .forteamf .profile-header-data-middle {
         flex-direction: column;
         padding-top: 25px;
+    }
+
+    .login-ph-btn 
+    {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .login-ph-btn span {
+        display: block;
+        font-size: 16px;
+        line-height: 41px;
+    }
+    .user_sugggestions span.text-sm {
+        color: #fff;
+    }
+    .profmoblfix{
+        margin-bottom: 16px;
+        padding-left: 20px;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    .match_chat_box.chtcollapsed {
+        width: 191px;
+        left: calc(50% - 95px);
+    }
+    .game-cover-block {
+        line-height: 19px;
+    }
+    .live-wager-row>div.game-logo-container {
+        text-align: center !important;
+        justify-content: center;
+        align-items: center !important;
     }
 }
 

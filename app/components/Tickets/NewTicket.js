@@ -226,7 +226,7 @@ class NewTicket extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="section-headline white-headline text-left">
-                  <h3>Create a New Ticket</h3>
+                  <h3 className="lil-small">Create a New Ticket</h3>
                 </div>
               </div>
             </div>

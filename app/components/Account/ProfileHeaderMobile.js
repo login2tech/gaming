@@ -167,7 +167,7 @@ class ProfileHeader extends React.Component {
     if (type == 2) {
       return (
         <div>
-          <div className="profile-header-name">@{user_info.username}</div>
+          <div className="profile-header-name profmoblfix">@{user_info.username}</div>
             <div class="row m-0">
           {this.props.user &&
           this.props.is_loaded &&
@@ -288,11 +288,12 @@ class ProfileHeader extends React.Component {
     } else {
       return (
         <div
+          className="row"
           style={{
-            marginTop: -34
+                alignItems: 'flex-end'
           }}
         >
-          <div className="profile-header-text">
+          <div className="profile-header-text col-6">
             <button
               className="btn btn-default bg-transparent text-white"
               onClick={e => {
@@ -303,8 +304,7 @@ class ProfileHeader extends React.Component {
               Followers: {user_info.followerCount}
             </button>
           </div>
-
-          <div className="profile-header-text">
+          <div className="profile-header-text col-6">
             <button
               className="btn btn-default bg-transparent text-white"
               onClick={e => {
@@ -425,86 +425,7 @@ class ProfileHeader extends React.Component {
                   TIMELINE
                 </Link>
               </li>
-              {this.props.user &&
-              this.props.is_loaded &&
-              this.props.user.id != user_info.id ? (
-                <li className="float-right">
-                  <a
-                    onClick={e => {
-                      e.preventDefault();
-                      this.props.onChat(e);
-                    }}
-                  >
-                    Send DM
-                  </a>
-                </li>
-              ) : (
-                false
-              )}
-              {this.props.user &&
-              this.props.is_loaded &&
-              this.props.user.id != user_info.id ? (
-                <li className="float-right">
-                  <div className={'dropdown fl-right profbtn'}>
-                    <a
-                      // className="btn btn-default bttn_submit dropdown-toggle profbtn"
-                      // type="button"
-                      id="dropdownMenuButton"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      Challenge
-                    </a>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenuButton"
-                    >
-                      {this.state.games &&
-                        this.state.games.map((game, i) => {
-                          return (
-                            game.ladders &&
-                            game.ladders.map((ladder, i) => {
-                              if (ladder.min_players > 1) {
-                                return false;
-                              }
-                              return (
-                                <a
-                                  className={'dropdown-item'}
-                                  onClick={() => {
-                                    cookie.save(
-                                      'challenging_team',
-                                      '@' + this.props.user_info.username,
-                                      {
-                                        path: '/',
-                                        expires: moment()
-                                          .add(1, 'day')
-                                          .toDate()
-                                      }
-                                    );
-                                  }}
-                                  href={
-                                    '/challenge/new/g/' +
-                                    ladder.game_id +
-                                    '/l/' +
-                                    ladder.id +
-                                    '/u/' +
-                                    this.props.user_info.id
-                                  }
-                                  key={ladder.id}
-                                >
-                                  {game.title} - {ladder.title}
-                                </a>
-                              );
-                            })
-                          );
-                        })}
-                    </div>
-                  </div>
-                </li>
-              ) : (
-                false
-              )}
+               
             </ul>
           </div>
         </div>

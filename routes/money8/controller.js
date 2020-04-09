@@ -1084,7 +1084,7 @@ exports.addItem = function(req, res, next) {
           game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
         }
         game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
-        while(  game_settings.map_2 == game_settings.map_1  || game_settings.map_2 == game_settings.map_3  )
+        while(  game_settings.map_3 == game_settings.map_1  || game_settings.map_2 == game_settings.map_3  )
         {
             game_settings.map_3 = use_set[ Math.floor( Math.random() * use_set.length ) ];
         }

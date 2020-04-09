@@ -302,7 +302,7 @@ class EditGame extends React.Component {
               </div>
               <br />
               <div className="input-control">
-                <label>Desktop Game Banner [ for game page - desktop]</label>
+                <label>Desktop Game Banner [ for game page - desktop] [1440 x 365]</label>
                 <input
                   type="file"
                   className="form-control"
@@ -315,7 +315,7 @@ class EditGame extends React.Component {
                 />
               </div>
               <div className="input-control">
-                <label>Mobile Banner [ for game page and match pages - mobile]</label>
+                <label>Mobile Banner [ for game page and match pages - mobile] [550 x 300]</label>
                 <input
                   type="file"
                   className="form-control"
@@ -328,7 +328,7 @@ class EditGame extends React.Component {
                 />
               </div>
               <div className="input-control">
-                <label>Desktop Game Banner [for match pages - desktop]</label>
+                <label>Desktop Game Banner [for match pages - desktop] [2000 x 500]</label>
                 <input
                   type="file"
                   className="form-control"

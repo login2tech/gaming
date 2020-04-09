@@ -681,7 +681,8 @@ class Header extends React.Component {
                   aria-expanded="false"
                   aria-label="Toggle login sidebar"
                 >
-                  LOGIN
+                  <span>JOIN FREE</span>
+                  <span>LOGIN</span>
                 </button>
               )}
             </div>

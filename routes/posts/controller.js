@@ -444,6 +444,7 @@ exports.listItemMy = function(req, res, next) {
       ab.where({
         user_id: req.query.uid ? req.query.uid : 0
       });
+      if(  req.user.id == req.query.uid)
       ab.orWhere({
         'in_timeline_of' : req.query.uid ? req.query.uid : 0
       });
@@ -532,7 +533,7 @@ exports.listItemMy = function(req, res, next) {
       return res.status(200).send({ok: true, items: items});
     })
     .catch(function(err) {
-      // console.log(err);
+       console.log(err);
       return res.status(200).send({ok: true, items: []});
     });
 };
@@ -541,11 +542,14 @@ exports.listItemAll = function(req, res, next) {
   const cur_u = req.user && req.user.id ? req.user.id : 99999;
 
   let n = new Item().orderBy('id', 'DESC');
-  // console.log(req.query);
   n = n.query(function(qb) {
     qb.where({is_private: false});
+    qb.where(
+      'created_at',
+      '>',
+      moment().subtract(48, 'hours')
+    );
     if (req.query.hastag) {
-      // console.log('qhere');
       qb.andWhere('post', 'LIKE', '%#' + req.query.hastag + '%');
     }
     if (req.query.filter) {
