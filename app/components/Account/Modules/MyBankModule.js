@@ -13,11 +13,41 @@ class MyBankModule extends React.Component {
     return (
       <div className="tab-pane  text-center" data-tab="tab3">
         <div className="row mb-3">
-          <CreditsBox class="col-md-6" />
-          <CashBox class="col-md-6" />
+          <CreditsBox
+
+            disabled={
+              this.props.user && (
+                this.props.user.state == 'Arizona' ||
+                this.props.user.state == 'Connecticut' ||
+                this.props.user.state == 'Iowa' 
+              )
+            }
+             class="col-md-6"
+          />
+          <CashBox
+
+            disabled={
+              this.props.user && (
+                this.props.user.state == 'Arizona' ||
+                this.props.user.state == 'Connecticut' ||
+                this.props.user.state == 'Iowa' 
+              )
+            }
+             class="col-md-6"
+          />
         </div>
         <div className="row">
-          <DoubleXPBox class="col-md-6  offset-md-3" />
+          <DoubleXPBox
+
+            disabled={
+              this.props.user && (
+                this.props.user.state == 'Arizona' ||
+                this.props.user.state == 'Connecticut' ||
+                this.props.user.state == 'Iowa' 
+              )
+            }
+             class="col-md-6  offset-md-3"
+          />
         </div>
       </div>
     );

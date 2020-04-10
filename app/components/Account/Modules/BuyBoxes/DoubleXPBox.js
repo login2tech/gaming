@@ -111,6 +111,7 @@ class Credits extends React.Component {
           <div className=" col-12 col-md m-2">
             <button
               type="button"
+              disabled={this.props.disabled}
               className="btn btn-primary m-0 width-100"
               onClick={this.submitInitForm.bind(this)}
             >
@@ -120,7 +121,7 @@ class Credits extends React.Component {
           <div className=" col-12 col-md m-2 width-100">
             <button
               type="button"
-              disabled={user.double_xp_tokens < 1}
+              disabled={this.props.disabled || user.double_xp_tokens < 1}
               className="btn btn-primary m-0"
               onClick={this.initActivate.bind(this)}
             >

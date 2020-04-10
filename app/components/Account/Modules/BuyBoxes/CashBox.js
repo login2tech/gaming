@@ -99,6 +99,7 @@ class Credits extends React.Component {
           <div className="  col-12 col-md m-2 lpb">
             <button
               type="button"
+              disabled={this.props.disabled}
               className="btn btn-primary m-0 width-100"
               onClick={this.initAdd.bind(this)}
             >
@@ -108,7 +109,7 @@ class Credits extends React.Component {
           <div className="    col-12 col-md m-2 lpb">
             <button
               type="button"
-              disabled={user.cash_balance <= 0.1}
+              disabled={this.props.disabled || user.cash_balance <= 0.1}
               className="btn btn-primary m-0  width-100"
               onClick={this.initTransfer.bind(this)}
             >

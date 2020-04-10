@@ -26,14 +26,48 @@ class Shop extends React.Component {
           <Messages messages={this.props.messages} />
 
           <MyMembershipModule
+            disabled={
+              this.props.user && (
+                this.props.user.state == 'Arizona' ||
+                this.props.user.state == 'Connecticut' ||
+                this.props.user.state == 'Iowa'
+              )
+            }
             id={this.props.user ? this.props.user.id : null}
             user_info={this.props.user}
           />
 
           <div className="row shop_row" style={{marginBottom: '20px'}}>
-            <CreditsBox class="col-md-4" />
-            <CashBox class="col-md-4" />
-            <DoubleXPBox class="col-md-4" />
+            <CreditsBox
+              disabled={
+                this.props.user && (
+                  this.props.user.state == 'Arizona' ||
+                  this.props.user.state == 'Connecticut' ||
+                  this.props.user.state == 'Iowa'
+                )
+              }
+              class="col-md-4"
+            />
+            <CashBox
+              disabled={
+                this.props.user && (
+                  this.props.user.state == 'Arizona' ||
+                  this.props.user.state == 'Connecticut' ||
+                  this.props.user.state == 'Iowa'
+                )
+              }
+              class="col-md-4"
+            />
+            <DoubleXPBox
+              disabled={
+                this.props.user && (
+                  this.props.user.state == 'Arizona' ||
+                  this.props.user.state == 'Connecticut' ||
+                  this.props.user.state == 'Iowa'
+                )
+              }
+              class="col-md-4"
+            />
           </div>
         </div>
       </section>

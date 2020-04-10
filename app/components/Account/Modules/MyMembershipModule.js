@@ -231,6 +231,7 @@ class MyMembershipModule extends React.Component {
                       <input
                         type="submit"
                         value="Buy Official Comp Gold Membership"
+                        disabled={this.props.disabled}
                         onClick={() => {
                           this.processMembership('gold');
                         }}
@@ -351,6 +352,7 @@ class MyMembershipModule extends React.Component {
                       <input
                         type="submit"
                         value="Buy Official Comp Silver Membership"
+                        disabled={this.props.disabled}
                         onClick={() => {
                           this.processMembership('silver');
                         }}
