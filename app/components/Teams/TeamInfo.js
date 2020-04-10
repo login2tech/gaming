@@ -774,7 +774,7 @@ class TeamInfo extends React.Component {
     );
     return (
       <>
-        <div className="flex-1">{h2 == 'h3' ? <h2>{a}</h2> : <h2>{a}</h2>}</div>
+        <div className="flex-1">{h2 == 'h3' ? <h3 className="team_name">{a}</h3> : <h2>{a}</h2>}</div>
         <div className="flex-1">
           {renderWinL ? this.renderWinLoss(34) : false}
         </div>

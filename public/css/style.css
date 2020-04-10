@@ -7520,7 +7520,7 @@ media query starts here
         width : 100%;
         flex: 1;
         flex-wrap: wrap;
-        min-width: 100vw;
+        min-width: 100%;
     }
 
     .forteamf .profile-header-data-middle {
@@ -7600,6 +7600,11 @@ media query starts here
     .game-cover-block {
       text-align:left;
     }
+    .team_name span{
+          width: 40px;
+    }.team_name {
+    word-break: break-all;
+  }
 }
 
 .text-xl {
