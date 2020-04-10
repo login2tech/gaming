@@ -186,9 +186,7 @@ class Footer extends React.Component {
                     &copy; 2020 Only Comp Gaming
                     <br />
                     <small>
-                      All content, games titles, trade names and/or trade dress,
-                      trademarks, artwork and associated imagery are trademarks
-                      and/or copyright material of their respective owners.
+                      Only Comp Gaming is not endorsed by, directly affiliated with, maintained or sponsored by Activision Blizzard, Take-Two Interactive, Apple Inc, Electronic Arts, Microsoft, Sony, Xbox, Playstation or Epic Games. All content, games titles, trade names and/or trade dress, trademarks, artwork and associated imagery are trademarks and/or copyright material of their respective owners.
                     </small>
                   </p>
                 </div>
