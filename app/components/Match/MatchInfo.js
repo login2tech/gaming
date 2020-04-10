@@ -960,16 +960,28 @@ class MatchInfo extends React.Component {
   render() {
     const {match} = this.state;
 
-    const divStyle =
-      match && match.game && match.game.banner_2_url
-        ? {
+
+    let divStyle =  {};
+    if(match && match.game){
+      if( typeof window !=='undefined'  && window.innerWidth < 600 )
+      {
+        divStyle = {
+            backgroundImage: 'url(' + match.game.mobile_banner_url + ')',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '400px'
+          }
+      }else{
+        divStyle = {
             backgroundImage: 'url(' + match.game.banner_2_url + ')',
             backgroundPosition: 'center',
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
             minHeight: '400px'
           }
-        : {};
+      }
+    }
 
     const team_1_players =
       match && match.team_1_players ? match.team_1_players.split('|') : [];

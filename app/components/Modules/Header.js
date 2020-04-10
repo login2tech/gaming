@@ -25,7 +25,6 @@ class Header extends React.Component {
     $('#sidebar2').collapse('hide');
   }
   runQuery(prps) {
-    // console.log('-----')
     fetch('/api/games/listPaged').then(res => {
       if (res) {
         res.json().then(obj => {
@@ -127,9 +126,7 @@ class Header extends React.Component {
   }
   fetchNotifications(forward) {
     if (!this.props.user) {
-      if (forward) {
-        // this.runQuery();
-      }
+      
       return;
     }
     fetch('/notifs/listMine')

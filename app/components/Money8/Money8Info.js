@@ -753,18 +753,33 @@ class Money8Info extends React.Component {
   }
 
   render() {
-    const divStyle =
-      this.state.match &&
-      this.state.match.game &&
-      this.state.match.game.banner_2_url
-        ? {
-            backgroundImage: 'url(' + this.state.match.game.banner_2_url + ')',
+
+    const {match} = this.state;
+
+
+    let divStyle =  {};
+    if(match && match.game){
+      if( typeof window !=='undefined'  && window.innerWidth < 600 )
+      {
+        divStyle = {
+            backgroundImage: 'url(' + match.game.mobile_banner_url + ')',
             backgroundPosition: 'center',
             backgroundSize: 'contain',
             backgroundRepeat: 'no-repeat',
             minHeight: '400px'
           }
-        : {};
+      }else{
+        divStyle = {
+            backgroundImage: 'url(' + match.game.banner_2_url + ')',
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat',
+            minHeight: '400px'
+          }
+      }
+    }
+
+
     let game_settings =
       this.state.match && this.state.match.game_settings
         ? JSON.parse(this.state.match.game_settings)

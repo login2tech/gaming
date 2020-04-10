@@ -516,13 +516,31 @@ class TMatchInfo extends React.Component {
 
   render() {
     const {match} = this.state;
+
+
     const tournament = match.tournament;
-    const divStyle =
-      tournament.game && tournament.game.banner_url
-        ? {
-            backgroundImage: 'url(' + tournament.game.banner_url + ')'
+
+
+
+    let divStyle =  {};
+    if(tournament && tournament.game){
+      if( typeof window !=='undefined'  && window.innerWidth < 600 )
+      {
+        if(tournament.game.mobile_banner_url)
+          divStyle = {
+            backgroundImage: 'url(' +  tournament.game.mobile_banner_url + ')'
           }
-        : {};
+      }else{
+        if(tournament.game.banner_2_url)
+          divStyle = {
+            backgroundImage: 'url(' +  tournament.game.banner_2_url + ')'
+          }
+      }
+    }
+
+
+
+
 
     const team_1_players =
       match && match.team_1_players ? match.team_1_players.split('|') : [];
