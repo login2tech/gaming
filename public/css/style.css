@@ -7601,7 +7601,7 @@ media query starts here
       text-align:left;
     }
     .team_name span{
-          width: 40px;
+          width: 40px;background-position: top !important;
     }.team_name {
     word-break: break-all;
   }
