@@ -25,13 +25,14 @@ class Header extends React.Component {
     $('#sidebar2').collapse('hide');
   }
   runQuery(prps) {
+    // console.log('-----')
     fetch('/api/games/listPaged').then(res => {
       if (res) {
         res.json().then(obj => {
           this.setState({games: obj.items});
         });
       }
-      this.fetchNotifications(true);
+      // this.fetchNotifications(true);
     });
   }
   handleLogout = event => {
@@ -56,6 +57,7 @@ class Header extends React.Component {
     );
   }
   componentDidMount() {
+    // console.log('-----')
     this.runQuery();
     setInterval(() => {
       this.fetchNotifications(false);
@@ -126,7 +128,7 @@ class Header extends React.Component {
   fetchNotifications(forward) {
     if (!this.props.user) {
       if (forward) {
-        this.runQuery();
+        // this.runQuery();
       }
       return;
     }

@@ -83,21 +83,13 @@ class MatchFinder extends React.Component {
                   >
                     Create a match
                   </Link>
-                  {this.props.user ? (
-                    <Link
-                      to={'/u/' + this.props.user.username + '/teams/new'}
-                      className="btn btn-default bttn_submit max-width-100 dib"
-                    >
-                      Create a team
-                    </Link>
-                  ) : (
-                    <Link
-                      to={'/login'}
-                      className="btn btn-default bttn_submit max-width-200 dib"
-                    >
-                      Create a team
-                    </Link>
-                  )}
+                  <Link
+                    to={this.props.user ? '/u/' + this.props.user.username + '/teams/new' : '/login'}
+                    className="btn btn-default bttn_submit max-width-100 dib"
+                  >
+                    Create a team
+                  </Link>
+
                 </div>
               </div>
             </div>

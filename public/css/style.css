@@ -3373,7 +3373,8 @@ ul.submenu li a {
     font-size: 1.25rem;
     line-height: 1.25rem;
 }
-.t-prizes-place.tr{
+
+.t-prizes-place.tr {
     height: 90px;
 }
 
@@ -4351,6 +4352,7 @@ img.img-fluid.team_avat {
     display: flex;
     align-items: center;
 }
+
 .unflowbtn, .unflowbtn:hover {
     background: #fff !important;
     color: #000 !important;
@@ -4359,8 +4361,10 @@ img.img-fluid.team_avat {
     padding-left: 10px !important;
     padding-right: 10px !important;
 }
+
 .team_spn_m:not(.no-just) {
-    justify-content: flex-start;align-items: flex-start;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .has_m .team_spn_m {
@@ -5463,9 +5467,11 @@ span.capitalize {
     background-size: 40px;
     padding-left : 50px;
 }
-.is_not_prime{
+
+.is_not_prime {
     padding-left : 50px;
 }
+
 .sdfss {
     align-items: flex-end;
     justify-content: center;
@@ -5958,7 +5964,8 @@ ul.main_cat_list.pr {
     border-top-right-radius: 5px;
     right: 150px;
     overflow: hidden;
-    bottom: 0;left: calc(50% - 150px);
+    bottom: 0;
+    left: calc(50% - 150px);
     right: auto;
 }
 
@@ -6364,7 +6371,7 @@ media query starts here
     }
 
     .tourinfo .baris {
-        bottom: -140px;
+        bottom: -48px;
     }
 
     .nombbtm .bbt, .nombbtm .section-headline {
@@ -6406,7 +6413,7 @@ media query starts here
 
     .user-status-mobile {
         position: absolute;
-        top: 100px;
+        top: 109px;
         right: 68px;
         z-index: 1;
     }
@@ -7499,16 +7506,19 @@ media query starts here
         width: 81% !important;
         font-size: 46px !important;
     }
+
     .forteamf {
         display: flex;
         flex-direction: row;
     }
-    .forteamf.flwrap{
+
+    .forteamf.flwrap {
         flex-wrap: wrap;
     }
-    .forteamf.flwrap .full-width{
-        width :100%;
-        flex:1;
+
+    .forteamf.flwrap .full-width {
+        width : 100%;
+        flex: 1;
         flex-wrap: wrap;
         min-width: 100vw;
     }
@@ -7518,8 +7528,7 @@ media query starts here
         padding-top: 25px;
     }
 
-    .login-ph-btn
-    {
+    .login-ph-btn {
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -7529,22 +7538,27 @@ media query starts here
         font-size: 16px;
         line-height: 41px;
     }
+
     .user_sugggestions span.text-sm {
         color: #fff;
     }
-    .profmoblfix{
+
+    .profmoblfix {
         margin-bottom: 16px;
         padding-left: 20px;
         font-weight: bold;
         font-size: 18px;
     }
+
     .match_chat_box.chtcollapsed {
         width: 191px;
         left: calc(50% - 95px);
     }
+
     .game-cover-block {
         line-height: 19px;
     }
+
     .live-wager-row>div.game-logo-container {
         text-align: center !important;
         justify-content: center;
@@ -7555,6 +7569,7 @@ media query starts here
         background-size: 30px;
         background-position-y: center;
     }
+
     .login-ph-btn span:first-child {
         font-size: 12px;
         border-bottom: 2px solid #000;
@@ -7562,24 +7577,48 @@ media query starts here
 
     button.navbar-toggler.float-right.collapsed.login-ph-btn.text-white {
         padding: 0;
+        border: 1px solid goldenrod;
+    }
+
+    section.page_title_bar.tourinfo.single-finder-match.nombbtm.single-tournament-info {
+        max-height: none;
+        margin-bottom : 50px;
+        border: 0;
+    }
+
+    .tourinfo .baris {
+        bottom: -48px;
+    }
+    .fllwbtns{
+      font-size: 17px;
+    }
+    .game_img_mfndr{
+      min-height: 60px;
+      float: left;
+
+    }
+    .game-cover-block {
+      text-align:left;
     }
 }
-
 
 .text-xl {
     font-size: 25px;
 }
+
 span.hc-trophy-icon {
     margin-right: 30px;
 }
+
 p.feed_post_content iframe {
     width: 100%;
     height: auto;
 }
 
-.timeline.no_pding:before{
-  display: none;
+.timeline.no_pding:before {
+    display: none;
 }
-.timeline.no_pding{
-  padding : 0
+
+.timeline.no_pding {
+    padding : 0
 }

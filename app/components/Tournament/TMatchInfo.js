@@ -375,6 +375,145 @@ class TMatchInfo extends React.Component {
     );
   }
 
+  renderListPad(vtype)
+  {
+
+    const {match} = this.state;
+    const tournament = match.tournament;
+    const divStyle =
+      tournament.game && tournament.game.banner_url
+        ? {
+            backgroundImage: 'url(' + tournament.game.banner_url + ')'
+          }
+        : {};
+
+    const team_1_players =
+      match && match.team_1_players ? match.team_1_players.split('|') : [];
+    const team_2_players =
+      match && match.team_2_players ? match.team_2_players.split('|') : [];
+    let game_settings = tournament.game_settings
+      ? JSON.parse(tournament.game_settings)
+      : {};
+    if (!game_settings) {
+      game_settings = {};
+    }
+    const game_settings_keys = Object.keys(game_settings);
+
+    return(
+      <div className={
+        'list_pad ' + (vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')
+      }>
+        <div className="row">
+          <div className="col-md-4 col-4">
+            <span> MATCH ID</span>
+            <p>#{match.id}</p>
+          </div>
+
+          <div className="col-md-4 col-4">
+            <span> STATUS</span>
+            <p className={'m_status status_' + match.status}>
+              {moment().isAfter(moment(match.starts_at))
+                ? this.dynamicStatus()
+                : match.status}
+            </p>
+          </div>
+
+          <div className="col-md-4 col-4">
+            <span>TOURNAMENT</span>
+            <p>
+              <Link to={'/t/' + tournament.id}>
+                {tournament.title}
+              </Link>
+            </p>
+          </div>
+          {game_settings_keys.map((k, i) => {
+            if (
+              k == 'match_available' ||
+              k == 'match_regions' ||
+              k == 'map_2' ||
+              k == 'map_3'
+            ) {
+              return false;
+            }
+            if (
+              k == 'map_1' &&
+              this.state.match.team_2 &&
+              this.state.match.team_2 != ''
+            ) {
+              return (
+                <>
+                  <div className="col-md-4 col-6 textcap" key={k}>
+                    <span>{'Maps'}</span>
+                    <p>
+                      <strong>Map 1: </strong>
+                      {game_settings.map_1}
+                      {game_settings.map_2 ? (
+                        <>
+                          <br />
+                          <strong>Map 2: </strong>
+                          {game_settings.map_2}
+                        </>
+                      ) : (
+                        false
+                      )}
+                      {game_settings.map_3 ? (
+                        <>
+                          <br />
+                          <strong>Map 3: </strong>
+                          {game_settings.map_3}
+                        </>
+                      ) : (
+                        false
+                      )}
+                    </p>
+                  </div>
+                  <div className="col-md-4 col-6 textcap" key={k}>
+                    <span>{'Map Host'}</span>
+                    <p>
+                      <strong>Host 1: </strong>
+                      {this.state.match.team_1_info.title}
+                      {game_settings.map_2 ? (
+                        <>
+                          <br />
+                          <strong>Host 2: </strong>
+                          {this.state.match.team_2_info.title}
+                        </>
+                      ) : (
+                        false
+                      )}
+                      {game_settings.map_3 ? (
+                        <>
+                          <br />
+                          <strong>Host 3: </strong>
+                          {this.state.match.team_1_info.title}
+                        </>
+                      ) : (
+                        false
+                      )}
+                    </p>
+                  </div>
+                </>
+              );
+            }
+            if (k == 'map_1') {
+              return false;
+            }
+            const m = k.replace(new RegExp('_', 'g'), ' ');
+            return (
+              <div className="col-md-4 col-6 textcap" key={k}>
+                <span>{m}</span>
+                <p>{game_settings[k]}</p>
+              </div>
+            );
+          })}
+        </div>
+        {this.renderTicketCreate()}
+      </div>
+
+    )
+
+  }
+
   render() {
     const {match} = this.state;
     const tournament = match.tournament;
@@ -399,7 +538,7 @@ class TMatchInfo extends React.Component {
     return (
       <div>
         <section
-          className="page_title_bar single-finder-match"
+          className="page_title_bar single-finder-match nombbtm"
           style={divStyle}
         >
           <div className="container">
@@ -451,113 +590,10 @@ class TMatchInfo extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="list_pad">
-                    <div className="row">
-                      <div className="col-md-4 col-4">
-                        <span> MATCH ID</span>
-                        <p>#{match.id}</p>
-                      </div>
 
-                      <div className="col-md-4 col-4">
-                        <span> STATUS</span>
-                        <p className={'m_status status_' + match.status}>
-                          {moment().isAfter(moment(match.starts_at))
-                            ? this.dynamicStatus()
-                            : match.status}
-                        </p>
-                      </div>
-
-                      <div className="col-md-4 col-4">
-                        <span>TOURNAMENT</span>
-                        <p>
-                          <Link to={'/t/' + tournament.id}>
-                            {tournament.title}
-                          </Link>
-                        </p>
-                      </div>
-                      {game_settings_keys.map((k, i) => {
-                        if (
-                          k == 'match_available' ||
-                          k == 'match_regions' ||
-                          k == 'map_2' ||
-                          k == 'map_3'
-                        ) {
-                          return false;
-                        }
-                        if (
-                          k == 'map_1' &&
-                          this.state.match.team_2 &&
-                          this.state.match.team_2 != ''
-                        ) {
-                          return (
-                            <>
-                              <div className="col-md-4 col-6 textcap" key={k}>
-                                <span>{'Maps'}</span>
-                                <p>
-                                  <strong>Map 1: </strong>
-                                  {game_settings.map_1}
-                                  {game_settings.map_2 ? (
-                                    <>
-                                      <br />
-                                      <strong>Map 2: </strong>
-                                      {game_settings.map_2}
-                                    </>
-                                  ) : (
-                                    false
-                                  )}
-                                  {game_settings.map_3 ? (
-                                    <>
-                                      <br />
-                                      <strong>Map 3: </strong>
-                                      {game_settings.map_3}
-                                    </>
-                                  ) : (
-                                    false
-                                  )}
-                                </p>
-                              </div>
-                              <div className="col-md-4 col-6 textcap" key={k}>
-                                <span>{'Map Host'}</span>
-                                <p>
-                                  <strong>Host 1: </strong>
-                                  {this.state.match.team_1_info.title}
-                                  {game_settings.map_2 ? (
-                                    <>
-                                      <br />
-                                      <strong>Host 2: </strong>
-                                      {this.state.match.team_2_info.title}
-                                    </>
-                                  ) : (
-                                    false
-                                  )}
-                                  {game_settings.map_3 ? (
-                                    <>
-                                      <br />
-                                      <strong>Host 3: </strong>
-                                      {this.state.match.team_1_info.title}
-                                    </>
-                                  ) : (
-                                    false
-                                  )}
-                                </p>
-                              </div>
-                            </>
-                          );
-                        }
-                        if (k == 'map_1') {
-                          return false;
-                        }
-                        const m = k.replace(new RegExp('_', 'g'), ' ');
-                        return (
-                          <div className="col-md-4 col-6 textcap" key={k}>
-                            <span>{m}</span>
-                            <p>{game_settings[k]}</p>
-                          </div>
-                        );
-                      })}
-                    </div>
-                    {this.renderTicketCreate()}
-                  </div>
+                  {
+                    this.renderListPad('desktop')
+                  }
                 </div>
               </div>
             </div>
@@ -568,6 +604,9 @@ class TMatchInfo extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
+              {
+                this.renderListPad('mobile')
+              }
                 <Messages messages={this.props.messages} />
                 {this.renderScoreSubmit()}
 

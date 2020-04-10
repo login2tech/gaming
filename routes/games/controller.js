@@ -26,10 +26,13 @@ exports.leaderboards = function(req, res, next) {
           ladder: function(qb) {
             qb.select('id', 'title');
           },
+        },{
           team: function(qb) {
             qb.select('id', 'title', 'profile_picture');
-          }
-        }
+          },
+
+        },
+        'team.xp_obj'
       ]
     })
     .then(function(items) {

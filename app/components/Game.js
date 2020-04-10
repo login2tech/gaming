@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 const moment = require('moment');
 import {Link} from 'react-router';
 import {sendMsg} from '../actions/orders';
-
+import ReactPaginate from 'react-paginate';
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +16,12 @@ class Game extends React.Component {
       leaderboards: {},
       first_load_done: false,
       is_loaded_4: false,
-      is_loaded_1: false
+      is_loaded_1: false,
+      leaderboard_pagination: {
+        pageCount : 1
+      },
+      leaderboard_page: 1,
+
     };
   }
 
@@ -125,6 +130,16 @@ class Game extends React.Component {
       });
   }
 
+  totalXp(itms){
+    let count = 0 ;
+    for(let i = 0 ; i < itms.length;i++)
+    {
+      count+= itms[i].xp;
+    }
+    return count;
+
+  }
+
   fetchLeaderBoards() {
     let str = '';
     // str;
@@ -159,14 +174,51 @@ class Game extends React.Component {
             leaderboards['u_' + item.team_id].loss += item.loss ? item.loss : 0;
           }
           k = 'l_' + this.state.selected_ladder;
+
+          // alert(leaderboards.length)
           this.setState(
             {
               is_loaded_4: true,
               loading_3: false,
               leaderboards: leaderboards,
+              leaderboard_page : 1,
               active_leaderboard: k
             },
-            () => {}
+            () => {
+              const {leaderboards} = this.state;
+              if (!leaderboards) {
+                return false;
+              }
+              console.log(this.state.leaderboards)
+              const data = [];
+              const keys = Object.keys(leaderboards);
+              for (let i = 0; i < keys.length; i++) {
+                const team = keys[i];
+                if (team == 'ladder') {
+                  continue;
+                }
+                data.push({
+                  idx: i,
+                  id: leaderboards[team].team.id,
+                  username: leaderboards[team].team.title,
+                  profile_picture: leaderboards[team].team.profile_picture,
+                  wins: leaderboards[team].wins,
+                  loss: leaderboards[team].loss,
+                  rate: parseFloat(
+                    (100 * leaderboards[team].wins) /
+                      (leaderboards[team].loss + leaderboards[team].wins)
+                  ),
+                  xp_count : this.totalXp(leaderboards[team].team.xp_obj)
+                });
+              }
+              data.sort(this.compareByRate);
+              this.setState({
+                leaderboard_data : data,
+                leaderboard_pagination : {
+                  pageCount : data ?  Math.ceil ( data.length /  10) : 1
+                }
+              })
+            }
           );
         }
       });
@@ -244,44 +296,27 @@ class Game extends React.Component {
   }
 
   compareByRate(a, b) {
-    if (a.rate < b.rate) {
+    if (a.xp_count < b.xp_count) {
       return 1;
     }
-    if (a.rate > b.rate) {
+    if (a.xp_count > b.xp_count) {
       return -1;
     }
     return 0;
   }
 
   renderLeaderBoard() {
-    const {leaderboards} = this.state;
-    if (!leaderboards) {
+    let {leaderboard_data} = this.state;
+    if(!leaderboard_data)
       return false;
-    }
-    const data = [];
-    const keys = Object.keys(leaderboards);
-    for (let i = 0; i < keys.length; i++) {
-      const team = keys[i];
-      if (team == 'ladder') {
-        continue;
-      }
-      data.push({
-        idx: i,
-        id: leaderboards[team].team.id,
-        username: leaderboards[team].team.title,
-        profile_picture: leaderboards[team].team.profile_picture,
-        wins: leaderboards[team].wins,
-        loss: leaderboards[team].loss,
-        rate: parseFloat(
-          (100 * leaderboards[team].wins) /
-            (leaderboards[team].loss + leaderboards[team].wins)
-        )
-      });
-    }
-    data.sort(this.compareByRate);
+
+    let min = (this.state.leaderboard_page - 1) * 10;
+    let max = (this.state.leaderboard_page * 10) - 1;
     return (
       <tbody>
-        {data.map((item, idx) => {
+        {leaderboard_data.map((item, idx) => {
+
+          if(idx < min || idx > max) return false;
           const image_url =
             item && item.profile_picture
               ? item.profile_picture
@@ -559,7 +594,7 @@ class Game extends React.Component {
                     </td>
                     <td>
                       <Link to={this.matchLink('/m/' + match.id)}>
-                        {txt1}  
+                        {txt1}
                       </Link>
                     </td>
                   </tr>
@@ -821,6 +856,23 @@ class Game extends React.Component {
                       </thead>
                       {this.renderLeaderBoard()}
                     </table>
+
+                    <ReactPaginate
+                      previousLabel={'previous'}
+                      nextLabel={'next'}
+                      breakLabel={'...'}
+                      breakClassName={'break-me'}
+                      pageCount={this.state.leaderboard_pagination.pageCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={data => {
+                        const selected = parseInt(data.selected) + 1;
+                        this.setState({ leaderboard_page : selected});
+                      }}
+                      containerClassName={'pagination'}
+                      subContainerClassName={'pages pagination'}
+                      activeClassName={'active'}
+                    />
                   </div>
                 </div>
               </div>
@@ -873,6 +925,7 @@ class Game extends React.Component {
                       </thead>
                       <tbody>
                         {this.state.done_matches.map((match, i) => {
+                          if(i> 9)return false;
                           if (match.status == 'expired') {
                             return false;
                           }

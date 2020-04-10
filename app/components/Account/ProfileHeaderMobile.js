@@ -377,14 +377,16 @@ class ProfileHeader extends React.Component {
                 )}
               </div>
             </div>
-            <div className="profile-header-data-middle pt-4 mt-3">
-              {this.renderNameAndFollow('desktop', 1)}
-            </div>
-          
-          </div>
-            <div className="profile-header-data-middle mb-2">
+
+
+
+            <div className="profile-header-data-middle mb-1 full-width">
               {this.renderNameAndFollow('desktop', 2)}
             </div>
+            <div className="profile-header-data-middle pt-1 mt-1 fllwbtns"  >
+              {this.renderNameAndFollow('desktop', 1)}
+            </div>
+          </div>
           <div className="row">
             <div className="user-rank-mobile row  rank_box_wrap">
               <div className="col-3">
@@ -425,7 +427,7 @@ class ProfileHeader extends React.Component {
                   TIMELINE
                 </Link>
               </li>
-               
+
             </ul>
           </div>
         </div>
