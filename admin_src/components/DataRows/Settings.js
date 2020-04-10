@@ -36,6 +36,33 @@ class Settings extends React.Component {
     );
     return;
   }
+  doActionEmpty(obj){
+    this.props.dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    let data = {
+      content : ''
+    }
+    Fetcher.post('/api/admin/update/settings', {id: obj.id, data: data})
+      .then(resp => {
+
+        if (resp.ok) {
+          this.loadData();
+        } else {
+          msg = msg ? msg : 'Failed to perform Action';
+          this.props.dispatch({type: 'FAILURE', messages: [{msg: msg}]});
+        }
+      })
+      .catch(err => {
+        // console.log(err);
+        msg = msg ? msg : 'Failed to perform Action';
+        this.props.dispatch({
+          type: 'FAILURE',
+          messages: [{msg: msg}]
+        });
+      });
+    return;
+  }
 
   handlePageClick = data => {
     // console.log(data)
@@ -160,6 +187,15 @@ class Settings extends React.Component {
                             }}
                           >
                             Modify
+                          </button>{' '}
+                          <button
+                            className="btn btn-primary btn-xs"
+                            onClick={e => {
+                              e.preventDefault();
+                              this.doActionEmpty(u);
+                            }}
+                          >
+                            Empty
                           </button>
                         </td>
                       </tr>

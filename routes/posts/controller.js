@@ -6,7 +6,61 @@ const ItemComments = require('./PostComments');
 const UsereFollower = require('../../models/UserFollower');
 const moment = require('moment');
 const Notif = require('../../models/Notification');
+exports.doMakeFeatured = function(req, res, next)
+{
+  // console.log(req.query);
+  if(req.user.role !='admin')
+  {
+    return res.status(400).send({ok: true, items: []});
+  }
+  new Item()
+  .where({featured_type : req.query.type})
+  .save(
+    {
+      featured_type : ''
+    }, {
+      method:'update'
+    }
+  )
+  .then(function(items) {
 
+      new Item()
+      .where({id  :req.query.pid})
+      .save({
+        featured_type : req.query.type
+      }, {
+        method : 'update'
+      })
+      .then(function(items) {
+        res.status(200).send({ok:true, msg: 'done'})
+      })
+      .catch(function(err) {
+        // console.log(err);
+        res.status(400).send({ok: true, items: []});
+      });
+    // if (items) {
+    //   res.status(200).send({ok: true, items: items.toJSON()});
+    // } else {
+    //   res.status(200).send({ok: true, items: []});
+    // }
+  })
+  .catch(function(err) {
+    new Item()
+    .where({id  :req.query.pid})
+    .save({
+      featured_type : req.query.type
+    }, {
+      method : 'update'
+    })
+    .then(function(items) {
+      res.status(200).send({ok:true, msg: 'done'})
+    })
+    .catch(function(err) {
+      console.log(err);
+      res.status(400).send({ok: true, items: []});
+    });
+  });
+}
 exports.reactionsList = function(req, res, next) {
   new ItemUpvotes()
     .where({
@@ -649,11 +703,11 @@ exports.listItemAll = function(req, res, next) {
 exports.famousWeek = function(req, res, next) {
   const cur_u = req.user && req.user.id ? req.user.id : 99999;
   const n = new Item()
-    .orderBy('id', 'DESC')
-    .where('created_at', '>=', moment().subtract(7, 'days'))
-    .where('video_url', '!=', '');
+    .where({
+    'featured_type' : 'week'
+  });
 
-  n.fetchAll({
+  n.fetch({
     withRelated: [
       {
         user: function(qb) {
@@ -702,30 +756,21 @@ exports.famousWeek = function(req, res, next) {
       'comments'
     ]
   })
-    .then(function(items) {
-      if (!items) {
-        return res.status(200).send({ok: true, items: []});
+    .then(function(item) {
+      if (!item) {
+        req.week_famous = false;
+        next();
+        return;
       }
-      items = items.toJSON();
-      let max = 0;
-      let max_item = {};
-      for (let i = 0; i < items.length; i++) {
-        const like_count = items[i].like_count.length;
-        const comment_count = items[i].comments.length;
-
-        if (max < like_count + comment_count) {
-          max = like_count + comment_count;
-          max_item = items[i];
-        }
-      }
-      req.week_famous = max_item;
+      req.week_famous = item.toJSON();
       next();
       return;
       // return res.status(200).send({ok: true, items: items});
     })
     .catch(function(err) {
-      // console.log(err);
-      return res.status(200).send({ok: true, items: []});
+      req.week_famous = false;
+      next();
+      return;
     });
 };
 
@@ -815,11 +860,10 @@ exports.famousDay = function(req, res, next) {
 exports.famousMonth = function(req, res, next) {
   const cur_u = req.user && req.user.id ? req.user.id : 99999;
   const n = new Item()
-    .orderBy('id', 'DESC')
-    .where('created_at', '>=', moment().subtract(30, 'days'))
-    .where('video_url', '!=', '');
-
-  n.fetchAll({
+    .where({
+    'featured_type' : 'month'
+  });
+  n.fetch({
     withRelated: [
       {
         user: function(qb) {
@@ -868,25 +912,18 @@ exports.famousMonth = function(req, res, next) {
       'comments'
     ]
   })
-    .then(function(items) {
-      if (!items) {
-        return res.status(200).send({ok: true, items: []});
-      }
-      items = items.toJSON();
-      let max = 0;
-      let max_item = {};
-      for (let i = 0; i < items.length; i++) {
-        const like_count = items[i].like_count.length;
-        const comment_count = items[i].comments.length;
+    .then(function(item) {
+      if (!item) {
+        req.month_famous = false;
+        return res.status(200).send({
+          ok: true,
+          week_famous: req.week_famous,
+          month_famous: req.month_famous
+        });
 
-        if (max < like_count + comment_count) {
-          max = like_count + comment_count;
-          max_item = items[i];
-        }
       }
-      req.month_famous = max_item;
-      // next();
 
+      req.month_famous = item.toJSON();
       return res.status(200).send({
         ok: true,
         week_famous: req.week_famous,
@@ -894,8 +931,12 @@ exports.famousMonth = function(req, res, next) {
       });
     })
     .catch(function(err) {
-      // console.log(err);
-      return res.status(200).send({ok: true, items: []});
+      req.month_famous = false;
+      return res.status(200).send({
+        ok: true,
+        week_famous: req.week_famous,
+        month_famous: req.month_famous
+      });
     });
 };
 

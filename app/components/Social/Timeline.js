@@ -49,7 +49,22 @@ class Timeline extends React.Component {
       }
     });
   }
+  doFeature(id, type){
+    if( this.props.user.role != 'admin' )
+      return false;
+      return fetch('/api/posts/doMakeFeatured?pid='+id+'&type='+type, {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({post_id: id})
+      }).then(response => {
+        if (response.ok) {
+          alert('Action Performed!');
+        }else{
+          alert("Failed to perform action.")
+        }
+      });
 
+  }
   doPin(id, is_pinned) {
     if (this.props.post.user_id != this.props.user.id) {
       return;
@@ -165,6 +180,40 @@ class Timeline extends React.Component {
                 <i className="fa fa-thumbtack" />
               </button>
             )}
+            { this.props.user.role == 'admin' && !this.props.disableSet ?
+              <div className={'dropdown dib  mr-2'}>
+                <button
+                  className="btn m-0 btn-default bttn_submit dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  Set as Clip of
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+               
+                  <a
+                    className={ 'dropdown-item'  }
+                    href="#"
+                    onClick={e => {
+                      e.preventDefault();
+                      this.doFeature(post.id, 'week')
+                    }}
+                  >Week</a>
+                  <a
+                    className={ 'dropdown-item'  }
+                    href="#"
+                    onClick={e => {
+                      e.preventDefault();
+                      this.doFeature(post.id, 'month')
+                    }}
+                  >Month</a>
+                </div>
+              </div>
+              : false
+            }
             {this.props.show_option_to_pin && (
               <button
                 onClick={() => {
@@ -175,6 +224,7 @@ class Timeline extends React.Component {
                 <i className="fa fa-trash" />
               </button>
             )}
+
           </span>
           <span className="">
             <Link
@@ -258,7 +308,7 @@ class Timeline extends React.Component {
         )}
         <p
           className="feed_post_content"
-          dangerouslySetInnerHTML={{__html: linkHashTags(post.post)}}
+          dangerouslySetInnerHTML={{__html: typeof linkHashTags !=='undefined'  ? linkHashTags(post.post) : post.post}}
         />
         <span className="text-date" />
         <span className="social_btns">

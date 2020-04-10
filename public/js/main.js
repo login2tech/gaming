@@ -19,6 +19,8 @@ if(!String.linkify) {
 
 
 function linkHashTags(txt){
+  if(!txt)
+    return '';
   txt= txt.replace(/#(\S+)/g,'<a href="/feed/hashtag/$1" title="Find more posts tagged with #$1">#$1</a>');
   txt= txt.replace(/@(\S+)/g,'<a href="/u/$1" title="User profile of #$1">@$1</a>');
 

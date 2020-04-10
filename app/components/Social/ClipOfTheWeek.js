@@ -9,84 +9,84 @@ import {connect} from 'react-redux';
 
 class ClipOfTheWeek extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount() {}
-
-  renderClipMonth() {
-    const {settings} = this.props;
-
-    if (!settings.clip_month_video) {
-      return <div className="alert alert-warning">No clip available</div>;
+      super(props);
+      this.state = {
+        week_famous: {},
+        month_famous: {}
+      };
     }
-    return (
-      <li className="comment">
-        {settings.clip_month_video ? (
-          <div
-            className="embed-responsive embed-responsive-21by9"
-            style={{marginBottom: '10px'}}
-          >
-            <video controls>
-              <source src={settings.clip_month_video} type="video/mp4" />
-            </video>
-          </div>
-        ) : (
-          false
-        )}
-        <p className="feed_post_content">{settings.clip_month_text}</p>
-      </li>
-    );
-  }
+  componentDidMount() {
+     fetch('/api/posts/famous')
+       .then(res => res.json())
+       .then(json => {
+         if (json.ok) {
+           this.setState({
+             is_loaded: true,
+             week_famous: json.week_famous,
+             month_famous: json.month_famous
+           });
+         }
+       });
+   }
+
+
+
+     renderClipMonth() {
+       const {settings} = this.props;
+       return (
+         <>
+           {settings.clip_month_video ? (
+              <li className="comment">
+               <div
+                 className="embed-responsive embed-responsive-21by9"
+                 style={{marginBottom: '10px'}}
+               >
+                 <video controls>
+                   <source src={settings.clip_month_video} type="video/mp4" />
+                 </video>
+               </div>
+               <p className="feed_post_content">{settings.clip_month_text}</p>
+              </li>
+           ) : this.state.month_famous ? <Timeline disableSet post={this.state.month_famous} /> :
+           (
+             <div class="alert alert-warning">Clip not available.</div>
+           )}
+           </>
+
+
+       );
+     }
+
+
+
+
+
 
   renderClipWeek() {
     const {settings} = this.props;
-    if (!settings.clip_week_video) {
-      return <div className="alert alert-warning">No clip available</div>;
-    }
     return (
-      <li className="comment">
+      <>
         {settings.clip_week_video ? (
-          <div
-            className="embed-responsive embed-responsive-21by9"
-            style={{marginBottom: '10px'}}
-          >
-            <video controls>
-              <source src={settings.clip_week_video} type="video/mp4" />
-            </video>
-          </div>
-        ) : (
-          false
+          <li className="comment">
+            <div
+              className="embed-responsive embed-responsive-21by9"
+              style={{marginBottom: '10px'}}
+            >
+              <video controls>
+                <source src={settings.clip_week_video} type="video/mp4" />
+              </video>
+            </div>
+            <p className="feed_post_content">{settings.clip_week_text}</p>
+           </li>
+        ) : this.state.week_famous ? <Timeline disableSet post={this.state.week_famous} /> :
+        (
+          <div class="alert alert-warning">Clip not available.</div>
         )}
-        <p className="feed_post_content">{settings.clip_week_text}</p>
-      </li>
+        </>
     );
   }
 
-  renderClipDay() {
-    const {settings} = this.props;
-    if (!settings.clip_day_video) {
-      return <div className="alert alert-warning">No clip available</div>;
-    }
-    return (
-      <li className="comment">
-        {settings.clip_day_video ? (
-          <div
-            className="embed-responsive embed-responsive-21by9"
-            style={{marginBottom: '10px'}}
-          >
-            <video controls>
-              <source src={settings.clip_day_video} type="video/mp4" />
-            </video>
-          </div>
-        ) : (
-          false
-        )}
-        <p className="feed_post_content">{settings.clip_day_text}</p>
-      </li>
-    );
-  }
+
 
   render() {
     // console.log(this.state);
@@ -95,29 +95,22 @@ class ClipOfTheWeek extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 offset-md-2 ">
-              <div className="authorize_box" style={{maxWidth: '100%'}}>
-                <div className="title_default_dark title_border text-center">
-                  <h4>Clip of the day</h4>
-                </div>
-
-                <ul className="timeline">{this.renderClipDay()}</ul>
-              </div>
 
               <div className="authorize_box" style={{maxWidth: '100%'}}>
                 <div className="title_default_dark title_border text-center">
                   <h4>Clip of the week</h4>
                 </div>
-
-                <ul className="timeline">{this.renderClipWeek()}</ul>
+                <ul className="timeline no_pding">{this.renderClipWeek()}</ul>
               </div>
 
               <div className="authorize_box" style={{maxWidth: '100%'}}>
                 <div className="title_default_dark title_border text-center">
                   <h4>Clip of the month</h4>
                 </div>
-
-                <ul className="timeline">{this.renderClipMonth()}</ul>
+                <ul className="timeline no_pding">{this.renderClipMonth()}</ul>
               </div>
+
+
             </div>
           </div>
         </div>
