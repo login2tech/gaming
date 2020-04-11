@@ -7568,6 +7568,7 @@ media query starts here
     .is_prime_cell.is_prime_type_gold , .is_prime_cell.is_prime_type_silver {
         background-size: 30px;
         background-position-y: center;
+        padding-left: 37px;
     }
 
     .login-ph-btn span:first-child {

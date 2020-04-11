@@ -1049,14 +1049,14 @@ class NewMatchTeamSelect extends React.Component {
                                         ]
                                       }
                                     />
-                                    {
+                                    <span class="d-none d-md-inline-block">{
                                       this.tag_names[
                                         this.state.ladder_obj.gamer_tag
                                       ]
-                                    }
+                                    }</span>
                                   </th>
                                   <th>Eligibility</th>
-                                  <th>Include</th>
+                                  <th><span class="d-none d-md-inline-block">Include</span></th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -1071,18 +1071,13 @@ class NewMatchTeamSelect extends React.Component {
                                       }
                                       return (
                                         <tr key={team_user.id}>
-                                          <td>
-                                            {team_user.user_info.prime && (
-                                              <img
-                                                src={
-                                                  '/assets/icons/ocg_member_' +
-                                                  team_user.user_info
-                                                    .prime_type +
-                                                  '.png'
-                                                }
-                                                className="inline-star"
-                                              />
-                                            )}
+                                        <td className={
+                                          team_user.user_info.prime
+                                            ? ' is_prime_cell is_prime_type_' +
+                                              team_user.user_info.prime_type
+                                            : ' is_not_prime '
+                                        }>
+
                                             <Link
                                               to={
                                                 team_user.user_info
