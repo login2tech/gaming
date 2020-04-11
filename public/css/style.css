@@ -3375,7 +3375,7 @@ ul.submenu li a {
 }
 
 .t-prizes-place.tr {
-    height: 90px;
+    height: 100px;
 }
 
 .t-prizes-place.p1 {
@@ -6371,7 +6371,7 @@ media query starts here
     }
 
     .tourinfo .baris {
-        bottom: -48px;
+        bottom: -96px;
     }
 
     .nombbtm .bbt, .nombbtm .section-headline {
@@ -7577,7 +7577,7 @@ media query starts here
 
     button.navbar-toggler.float-right.collapsed.login-ph-btn.text-white {
         padding: 0;
-        border: 1px solid goldenrod;
+        /* border: 1px solid goldenrod; */
     }
 
     section.page_title_bar.tourinfo.single-finder-match.nombbtm.single-tournament-info {
@@ -7587,7 +7587,7 @@ media query starts here
     }
 
     .tourinfo .baris {
-        bottom: -48px;
+        bottom: -96px;
     }
     .fllwbtns{
       font-size: 17px;

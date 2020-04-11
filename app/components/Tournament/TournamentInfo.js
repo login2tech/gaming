@@ -791,7 +791,7 @@ class TournamentInfo extends React.Component {
             <div className="tourn-flags" />
           </div>
         </div> */}
-        <div className="row">
+        <div className="row ">
           <div className="col-md-4 col-12">
             <div className="t-prizes">
               <div className="t-prizes-place p1 tr">
@@ -825,7 +825,7 @@ class TournamentInfo extends React.Component {
           </div>
           <div className="col-md-4 col-12">
             <div className="t-prizes">
-              <div className="t-prizes-place p2">
+              <div className="t-prizes-place p2 tr">
                 <div className="table_wrapper">
                   <table>
                     <tbody>
@@ -834,7 +834,7 @@ class TournamentInfo extends React.Component {
                           <span className="hc-trophy-icon">
                             <img
                               src="/assets/icons/silver.png"
-                              style={{width: '40px'}}
+                              style={{width: '80px'}}
                             />
                           </span>
                         </td>
@@ -856,7 +856,7 @@ class TournamentInfo extends React.Component {
           </div>
           <div className="col-md-4 col-12">
             <div className="t-prizes">
-              <div className="t-prizes-place p3">
+              <div className="t-prizes-place p3 tr">
                 <div className="table_wrapper">
                   <table>
                     <tbody>
@@ -865,7 +865,7 @@ class TournamentInfo extends React.Component {
                           <span className="hc-trophy-icon">
                             <img
                               src="/assets/icons/bronze.png"
-                              style={{width: '40px'}}
+                              style={{width: '80px'}}
                             />
                           </span>
                         </td>
@@ -1765,7 +1765,7 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
         </section>
-        <section className= { "contet_part single_match_details" +(this.state.renderTab == 'overview' ? ' pt-0 ' :  ' ')}>
+        <section className= { "contet_part single_match_details" +(this.state.renderTab == 'overview' ? ' dpt-0 ' :  ' ')}>
           <div
             className={
               this.state.renderTab == 'brackets'
