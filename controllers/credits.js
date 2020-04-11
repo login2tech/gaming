@@ -33,8 +33,8 @@ const addMembershipLog = function(plan, action, uid) {
 };
 // TODO: Change plan ids for production. not using env vars here.
 const stripe_plans = {
-  gold: 'prime-monthly',
-  silver: 'prime-monthly'
+  gold: 'ocg_gold',
+  silver: 'ocg_silver'
 };
 
 const getDoubleXPAmount = function() {

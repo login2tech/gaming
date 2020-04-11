@@ -139,8 +139,9 @@ class Footer extends React.Component {
                   </ul>
                 </div>
               </div>
-              <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <img src="/images/payments.png" alt="accepted payment" />
+              <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
+              <img src="/images/payments.png" alt="accepted payment" />
+                <img src="/assets/comodo.png" alt="comodo secure" />
               </div>
 
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
