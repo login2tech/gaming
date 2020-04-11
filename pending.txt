@@ -1,39 +1,5 @@
 
-[PARTIALLY DONE]
-  2. paypal
-[SAVE DONE, SHOW ON UI PENDING]
-  3. team records get seperate column for record of that last season need to see tested
-
-maps
-
-
-create match, time gaps if existing scheduled
 [GOLIVE] - stripe, make it live
 [GOLIVE] - stripe create plans in stripe dashboard
 [GOLIVE] - hooks url change
 [GOLIVE] - change url in faq
-[GO-LIVE-TASK]- delete all testing images?
-[DONE] - live chat
-[DONE] - game rules
-[DONE] - Responsive: tournament page
-[DONE] - Responsive: tournament match page
-[DONE] - admin responsive
-[DONE] - admin panel responsive
-[DONE] - Admin, add name of the tournament
-[DONE] - New actions on social feel - edit post, delete post.
-[DONE] - Fix: edit team's photo when logged out
-[DONE] - Team profile
-[DONE] - Remove Footable [not working on profile. partially done]
-[DONE] - Show brackets in tournaments
-[DONE] - Show tournament matches
-[DONE] - Internet explorer
-[DONE] - Undo tournament matches
-[DONE] - Season dates
-[DONE] - mails
-[DONE] 1 credits on rank up
-
-[skipped] - chat on match page
-[skipped] - ending balance on each transaction
-[DEPRECIATED] - notification in matches
-[DEPRECIATED] - tournament notification matches
-[DONE] 1 credits on rank up
