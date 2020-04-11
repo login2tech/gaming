@@ -36,11 +36,17 @@ class TournamentInfo extends React.Component {
   }
 
   get_team_name(id) {
+    if(!id || (""+id).indexOf('BYE_')> -1)
+    {
+      return "BYE";
+    }
+
     const {tournament} = this.state;
     const teams = tournament.teams;
     if (!teams) {
       return '';
     }
+
     for (let i = teams.length - 1; i >= 0; i--) {
       if (teams[i].id == id) {
         return teams[i].title;
@@ -49,6 +55,10 @@ class TournamentInfo extends React.Component {
   }
 
   getM(round, t1, t2) {
+    if((""+t1).indexOf('BYE_') > -1)
+    {t1 = null}
+    if((""+t2).indexOf('BYE_') > -1)
+    {t2 = null}
     return this.state.tournament.matches.filter(function(item) {
       return item.match_round == round &&
         ((item.team_1_id == t1 && item.team_2_id == t2) ||
@@ -173,7 +183,7 @@ class TournamentInfo extends React.Component {
             player2: {
               name: team_2_name,
               ID: team_2,
-              url: '/teams/view/' + team_2,
+              url: team_2_name =='BYE'? '#' : '/teams/view/' + team_2,
               winner: this.getMatchWinner(i + 1, team_1, team_2, team_2),
               looser: this.getMatchLooser(i + 1, team_1, team_2, team_2)
             }
@@ -1103,14 +1113,14 @@ class TournamentInfo extends React.Component {
   }
 
   dynamicStatus_match(match) {
+    if (match.status == 'complete') {
+      return 'Complete';
+    }
     if (!match.team_2_id) {
       return 'Expired';
     }
     if (match.status == 'disputed') {
       return 'Disputed';
-    }
-    if (match.status == 'complete') {
-      return 'Complete';
     }
     if (!match.team_1_result && !match.team_2_result) {
       return 'Pending Results';
@@ -1144,7 +1154,10 @@ class TournamentInfo extends React.Component {
       <React.Fragment key={match.id}>
         <tr key={match.id}>
           <td>
-            <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link>{' '}
+          {
+            teams[0] ?   <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link> : <span class="text-primary">BYE</span>
+          }
+          {' '}
             {match.result == 'team_1' ? (
               <span className="text-success">W</span>
             ) : match.result == 'team_2' ? (
@@ -1154,7 +1167,10 @@ class TournamentInfo extends React.Component {
             )}
           </td>
           <td>
-            <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>{' '}
+          {
+            teams[1] ? <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>:<span class="text-primary">BYE</span>
+          }
+            {' '}
             {match.result == 'team_2' ? (
               <span className="text-success">W</span>
             ) : match.result == 'team_1' ? (

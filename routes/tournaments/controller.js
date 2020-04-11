@@ -179,6 +179,58 @@ const getBracket = function(participants) {
 };
 
 const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
+  if(team_1.indexOf('BYE_') > -1 || team_2.indexOf('BYE_') > -1)
+  {
+    console.log('creating a bye match');
+    if(team_1.indexOf('BYE_') > -1  &&  team_2.indexOf('BYE_') > -1)
+    {
+      console.log('something went wrong');
+      return;
+    }
+    console.log('creating a bye match inner');
+    let winner;
+    let team_1_id;
+    let team_2_id;
+    let team_1_players ;
+    let team_2_players;
+    if(team_1.indexOf('BYE_') > -1 )
+    {
+      winner = 'team_2';
+      team_2_id = team_2;
+      team_1_id = null;
+      team_1_players = null;
+      team_2_players = t_2_u.join('|')
+
+    }else {
+
+        winner = 'team_1';
+        team_2_id = null;
+        team_1_id = team_1;
+        team_1_players = t_1_u.join('|')
+        team_2_players = null;
+
+    }
+    new TournamentMatch()
+      .save({
+        tournament_id: t_id,
+        match_round: round,
+        team_1_id: team_1_id,
+        team_2_id: team_2_id,
+        starts_at: moment(),
+        team_1_players: team_1_players,
+        team_2_players: team_2_players,
+        status: 'complete',
+        result : winner
+      })
+      .then(function() {
+
+      })
+      .catch(function(err) {
+        console.log(err);
+        Raven.captureException(err);
+      });
+    return;
+  }
   new TournamentMatch()
     .save({
       tournament_id: t_id,
@@ -194,6 +246,7 @@ const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
       // llgg('match created');
     })
     .catch(function(err) {
+      console.log(err)
       Raven.captureException(err);
     });
 };
@@ -739,9 +792,10 @@ const createRoundMatches = function(match) {
       // llgg('brackets updated');
     })
     .catch(function(err) {
-      //
+      console.log(err);
       Raven.captureException(err);
     });
+
 
   for (let i = 0; i < brackets_round.length; i++) {
     const team_set = brackets_round[i];
@@ -753,7 +807,13 @@ const createRoundMatches = function(match) {
     // team_set[0] = team_set[0] ? team_set[0]  : 0 ;
     team_1 = teams[team_1 - 1];
     team_2 = teams[team_2 - 1];
-
+    console.log(  team_1,
+      team_2,
+      team_set[0] ? teams_obj['team_' + team_1] : null,
+      team_set[1] ? teams_obj['team_' + team_2] : null,
+      match.id,
+      1,
+      match.get('starts_at'))
     createMatch(
       team_1,
       team_2,
@@ -765,7 +825,7 @@ const createRoundMatches = function(match) {
     );
   }
 };
-
+exports.createRoundMatches_cron = createRoundMatches;
 exports.join = function(req, res, next) {
   if (!req.body.tournament_id) {
     res.status(400).send({ok: false, msg: 'Please enter Tournament ID'});
@@ -1009,6 +1069,7 @@ exports.listSingleItem = function(req, res, next) {
         if (!team_ids[i]) {
           continue;
         }
+        if(team_ids[i].indexOf("BYE_") > -1)continue;
         new_t_id.push(parseInt(team_ids[i]));
       }
       if (!new_t_id) {

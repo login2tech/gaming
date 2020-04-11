@@ -29,6 +29,82 @@ function reset_ticker() {
   // console.log('reseting..')
   TICKER = 0;
 }
+const delete_tournamentOrFixIt = function(tid, tour)
+{
+  if(tour.teams_registered < 3)
+  {
+    delete_tournament(tid, tour);
+    return;
+  }
+
+  let obj_to_save = {};
+
+  let total_teams = tour.total_teams;
+
+  let teams_joined = tour.teams_registered;
+  // teams_joined=  5;
+  let new_total_teams
+  if(teams_joined < 5){
+    new_total_teams = 4;
+  }else if(teams_joined < 9){
+    new_total_teams = 8;
+  }else if(teams_joined < 16){
+    new_total_teams = 16;
+  }
+  if(new_total_teams > total_teams)
+  {
+    new_total_teams = total_teams;
+  }
+  obj_to_save.total_teams = new_total_teams;
+  console.log(new_total_teams);
+  let dummy_teams = new_total_teams - teams_joined;
+
+  console.log(dummy_teams);
+  let team_ids = tour.team_ids;
+  let teams_obj = tour.teams_obj;
+  teams_obj = JSON.parse(teams_obj);
+  console.log(teams_obj)
+  team_ids=  team_ids.split(',');
+  // for(let i = 1 ; i < dummy_teams +1 ; i++)
+  // {
+  //   let team_id = 'BYE_T'+i;
+  //   team_ids.push(team_id);
+  //   teams_obj['team_'+team_id] = [ ];
+  // }
+
+  let insert_at = 1;
+  for(let i = 1 ; i < dummy_teams +1 ; i++){
+      let team_id = 'BYE_T'+i;
+    team_ids.splice(insert_at, 0, team_id);
+    // team_ids.push(team_id);
+    insert_at+=2;
+    teams_obj['team_'+team_id] = [ ];
+  }
+
+
+  obj_to_save.team_ids = team_ids.join(',');
+  obj_to_save.teams_obj = JSON.stringify(teams_obj);
+  obj_to_save.status = 'started';
+
+
+  new Tournament().where({id : tid})
+  .fetch().then(function(match){
+    match.save(obj_to_save, {
+      method:'update'
+    })
+    .then(function(match) {
+      tournamentController.createRoundMatches_cron(match);
+    });
+  })
+
+
+
+  // console.log(obj_to_save);
+
+
+
+  // console.log(tour);
+}
 const delete_tournament = function(tid, tour) {
   const tour_price = tour.entry_fee;
 
@@ -417,9 +493,10 @@ const process_4 = function() {
     })
     .fetchAll()
     .then(function(tournaments) {
+
       tournaments = tournaments.toJSON();
-      for (let i = 0; i < tournaments.length; i++) {
-        delete_tournament(tournaments[i].id, tournaments[i]);
+       for (let i = 0; i < tournaments.length; i++) {
+        delete_tournamentOrFixIt(tournaments[i].id, tournaments[i]);
       }
       reset_ticker();
       setTimeout(process_5, 6000);

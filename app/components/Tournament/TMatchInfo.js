@@ -216,15 +216,16 @@ class TMatchInfo extends React.Component {
 
   dynamicStatus() {
     const match = this.state.match;
+    if (match.status == 'complete') {
+      return 'Complete';
+    }
     if (!match.team_2_id) {
       return 'Expired';
     }
     if (match.result == 'disputed') {
       return 'Disputed';
     }
-    if (match.status == 'complete') {
-      return 'Complete';
-    }
+
     if (!match.team_1_result && !match.team_2_result) {
       return 'Pending Results';
     }
@@ -517,6 +518,13 @@ class TMatchInfo extends React.Component {
   render() {
     const {match} = this.state;
 
+    if(!match ||!match.id )
+    {
+      return <div className="text-center text-lg p-5">
+        <span className="fa fa-spin fa-spinner" style={{fontSize: 100}} />
+      </div>
+    }
+
 
     const tournament = match.tournament;
 
@@ -593,7 +601,7 @@ class TMatchInfo extends React.Component {
                             {match.team_2_info.title}
                           </Link>
                         ) : (
-                          <span className="text-grey">Pending Team</span>
+                          <span className="text-grey">BYE</span>
                         )}
                       </span>
                       <span className="game_station">
