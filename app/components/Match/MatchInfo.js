@@ -621,7 +621,7 @@ class MatchInfo extends React.Component {
         if (this.state.eligible_teams) {
           // console.log(this.state.eligible_teams)
           const my_team_ids = this.state.eligible_teams.map(function(item) {
-            return item.id;
+            return item.team_id;
           });
           if (my_team_ids.indexOf(this.state.match.challenge_for) > -1) {
             //
