@@ -31,7 +31,7 @@ class Header extends React.Component {
           this.setState({games: obj.items});
         });
       }
-      // this.fetchNotifications(true);
+      this.fetchNotifications(true);
     });
   }
   handleLogout = event => {
@@ -126,7 +126,7 @@ class Header extends React.Component {
   }
   fetchNotifications(forward) {
     if (!this.props.user) {
-      
+
       return;
     }
     fetch('/notifs/listMine')
