@@ -86,7 +86,7 @@ class Login extends React.Component {
         <div className="field_form authorize_form">
           <Messages messages={this.props.messages} />
           <br />
-          <form onSubmit={this.handleLogin.bind(this)}>
+          <form onSubmit={this.handleLogin.bind(this)} method="post">
             <div className="form-group col-md-12">
               <input
                 type="text"

@@ -194,7 +194,7 @@ class Signup extends React.Component {
                 <div className="field_form authorize_form">
                   <Messages messages={this.props.messages} />
                   <br />
-                  <form onSubmit={this.handleSignup.bind(this)}>
+                  <form onSubmit={this.handleSignup.bind(this)}  method="post">
                     <div className="row ">
                       <div className="form-group col-md-6 ">
                         <input

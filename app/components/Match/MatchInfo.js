@@ -25,6 +25,7 @@ class MatchInfo extends React.Component {
         team_1_info: {team_users: []},
         team_2_info: {team_users: []}
       },
+
       ladder: '',
       using_users: [],
       games: [],
@@ -402,16 +403,93 @@ class MatchInfo extends React.Component {
     );
   }
 
+
+  initCancelc(match) {
+    this.props.dispatch(
+      leave_match(
+        {
+          match_id: match.id,
+          do_cancel: false,
+          team: match.team_1_id
+        },
+        this.props.user
+      )
+    );
+  }
+
   renderRequestCancel() {
     if (this.state.clicked) {
       return false;
     }
-
+    let {match} = this.state;
     if (!this.state.is_loaded) {
       return false;
     }
     if (!this.state.match.team_2_id) {
-      return false;
+      // return false;
+      if(this.state.match.is_challenge)
+      {
+
+        let t1p = this.state.match.team_1_players;
+        if (!t1p) {
+          t1p = '';
+        }
+        let show_cancel = false;
+        t1p = t1p.split('|');
+        // console.log(t1p);
+        if (this.props.user && t1p.indexOf('' + this.props.user.id) > -1 && this.state.match.team_1_info.team_creator ==  this.props.user.id) {
+           if (match.status == 'pending') {
+            show_cancel = true;
+          }
+        }
+
+        return (
+          <>
+               {show_cancel ? this.state.showCancelInit ? (
+                <div>
+                  <button
+                    onClick={() => {
+                      this.initCancelc(match);
+                    }}
+                    className="btn-danger btn cnclMt width-auto"
+                  >
+                    SURE?
+                  </button>
+                  <button
+                    onClick={() => {
+                      this.setState({
+                        showCancelInit : false
+                      });
+                    }}
+                    className=" cancel_btn btn-danger btn cnclMt width-auto"
+                  >
+                    x
+                  </button>
+                </div>
+              ) : this.state.match.team_1_info.team_creator == this.props.user.id ? (
+                <button
+                  onClick={() => {
+                    this.setState({
+                      showCancelInit : true
+                    });
+                  }}
+                  className="btn-danger btn cnclMt"
+                >
+                  Cancel Match
+                </button>
+              ) : (
+                false
+              ): (
+                false
+              )}
+
+          </>
+        );
+
+      }else{
+          return false;
+      }
+
     }
     if (!this.props.user) {
       return false;
@@ -1040,7 +1118,7 @@ class MatchInfo extends React.Component {
                               {match.team_2_info.title}
                             </Link>
                           </>
-                        ) : match.is_challenge ? (
+                        ) : match.status=='cancelled'  ?  '': match.is_challenge ? (
                           <span className="text-grey">Waiting Acceptance</span>
                         ) : (
                           <span className="text-grey">Pending Team</span>

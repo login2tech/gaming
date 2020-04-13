@@ -24,7 +24,11 @@ const SingleMatch = props => {
   let show_cancel = false;
   t1p = t1p.split('|');
   // console.log(t1p);
-  if (props.user && t1p.indexOf('' + props.user.id) > -1) {
+  if (
+    props.user
+     && t1p.indexOf('' + props.user.id) > -1
+      &&  match.team_1_info.team_creator ==   props.user.id
+    ) {
     txt = 'View Match';
     if (match.status == 'pending') {
       show_cancel = true;
