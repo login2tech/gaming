@@ -6413,9 +6413,12 @@ media query starts here
 
     .user-status-mobile {
         position: absolute;
-        top: 109px;
+        top: 147px;
         right: 68px;
         z-index: 1;
+    }
+    .user-status-mobile img{
+      height: 60px;
     }
 
     div#profile-page-container {

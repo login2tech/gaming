@@ -111,14 +111,13 @@ class Game extends React.Component {
       str += '&filter_ladder=' + this.state.selected_ladder;
     }
 
-    fetch('/api/matches/upcoming?1' + str)
+    fetch('/api/matches/upcoming?nochallenge=yes&1' + str)
       .then(res => res.json())
       .then(json => {
         if (json.ok) {
           this.setState(
             {
               is_loaded_1: true,
-
               matches: json.items,
               total_upcoming: json.total_upcoming
             },

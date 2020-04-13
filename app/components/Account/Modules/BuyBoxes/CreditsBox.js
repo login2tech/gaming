@@ -52,7 +52,7 @@ class Credits extends React.Component {
 
   handleTransferSubmit(e) {
     e.preventDefault();
-    const form = document.getElementsById('handleTransferSubmit');
+    const form = document.getElementById('handleTransferSubmit');
 
     if (form.checkValidity() === false) {
       event.preventDefault();
