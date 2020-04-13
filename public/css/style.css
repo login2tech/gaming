@@ -4880,7 +4880,7 @@ ul.notices li:first-child {
 }
 
 .container-brackets .round.rd-3.winner_round {
-    margin-top: 147px !important;
+    margin-top: 138px !important;
 }
 
 .change_uname {
@@ -4927,7 +4927,7 @@ a.post_image.post_image_smaller.post_video:after {
 }
 
 .round.winner_round .match {
-    height: 46px !important;
+    height: 80px !important;
 }
 
 .container-brackets .separator-brackets.rd-3 .line:first-child {
@@ -4973,7 +4973,7 @@ a.post_image.post_image_smaller.post_video:after {
 }
 
 .round.winner_round span {
-    display: none !important;
+    /* display: none !important; */
 }
 
 .container-brackets .round.winner_round .match .player {
