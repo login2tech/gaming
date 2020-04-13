@@ -35,3 +35,11 @@ routes.get(
   // u_ctrl.ensureAuthenticated,
   ctrl.matches_of_user
 );
+
+
+
+routes.get(
+  '/matches_of_team',
+  u_ctrl.ensureAuthenticated,
+  ctrl.matches_of_team
+);

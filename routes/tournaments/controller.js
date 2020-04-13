@@ -1610,3 +1610,32 @@ exports.reverseMatch = function(req, res, next) {
       Raven.handleException();
     });
 };
+
+
+
+exports.matches_of_team = function(req, res, next) {
+  let mdl = new TournamentMatch();
+  mdl = mdl.orderBy('created_at', 'DESC');
+  if (req.query.exclude_pending == 'yes') {
+    mdl = mdl.where('status', 'NOT LIKE', 'pending');
+  }
+  mdl = mdl.query(function(qb) {
+    qb.where('team_1_id', req.query.team_id).orWhere(
+      'team_2_id',
+      req.query.team_id
+    );
+  });
+
+  mdl
+    .fetchAll({withRelated: ['ladder', 'game', 'team_1_info', 'team_2_info']})
+    .then(function(item) {
+      if (!item) {
+        return res.status(200).send({ok: true, items: []});
+      }
+      return res.status(200).send({ok: true, items: item.toJSON()});
+    })
+    .catch(function(err) {
+      Raven.captureException(err);
+      return res.status(200).send({ok: true, items: []});
+    });
+};
