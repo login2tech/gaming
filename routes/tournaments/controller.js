@@ -547,16 +547,26 @@ const proceed_to_next_round = function(t_id, t_round) {
               const team_set = brackets_round[i];
               llgg('---- -- - - - -----');
               llgg('team_set : ', team_set);
+
               const team_1 = team_set[0]
-                ? parseInt(  team_ids[team_set[0] - 1]   )
+                ? teams_obj_keys[team_set[0] - 1].replace('team_', '')
                 : null;
               const team_2 = team_set[1]
-                ? parseInt(  team_ids[team_set[1] - 1]   )
+                ? teams_obj_keys[team_set[1] - 1].replace('team_', '')
                 : null;
+
+                const team_1 = team_set[0]
+                  ? parseInt(  team_ids[team_set[0] - 1]   )
+                  : null;
+                const team_2 = team_set[1]
+                  ? parseInt(  team_ids[team_set[1] - 1]   )
+                  : null;
+
+
               if (team_1 && team_2) {
                 createMatch(
-                  team_1,
-                  team_2,
+                  "" + team_1,
+                  "" + team_2,
                   teams_obj['team_' + team_1],
                   teams_obj['team_' + team_2],
                   tournament.id,
