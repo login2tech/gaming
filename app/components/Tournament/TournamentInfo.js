@@ -238,7 +238,7 @@ class TournamentInfo extends React.Component {
         {
           class: 'winner_round',
           is_winner: true,
-          match_title: '',
+          match_title: 'Winner',
           player1: {
             name: this.get_team_name(brackets.winner),
             ID: '' + brackets.winner,
