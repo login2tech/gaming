@@ -44,8 +44,33 @@ class Credits extends React.Component {
       return false;
     }
     const credits_to_buy = this.state.add_new_bal_number;
-    this.openBuyPopup('credits_box', 'Buy Credits', credits_to_buy, {
+    let cost = credits_to_buy;
+    switch(parseInt(points_to_add))
+    {
+      case 1:
+        cost = 1;
+        break;
+      case 5:
+        cost = 3.75;
+        break;
+      case 10:
+        cost = 7.50;
+        break;
+      case 25:
+        cost = 18.75;
+        break;
+      case 50:
+        cost = 37.50;
+        break;
+      case 100:
+        cost = 75;
+        break;
+      default:
+        cost = points_to_add;
+    }
+    this.openBuyPopup('credits_box', 'Buy Credits', cost, {
       points: credits_to_buy,
+      show_amount : cost,
       type: 'credit'
     });
   }
@@ -138,13 +163,12 @@ class Credits extends React.Component {
             onChange={this.handleChange.bind(this)}
           >
             <option value="">Add Credits</option>
-            <option value="5">5 credits for $5</option>
-            <option value="10">10 credits for $10</option>
-            <option value="15">15 credits for $15</option>
-            <option value="25">25 credits for $25</option>
-            <option value="50">50 credits for $50</option>
-            <option value="75">75 credits for $75</option>
-            <option value="100">100 credits for $100</option>
+            <option value="1">1 credit1 for $1</option>
+            <option value="5">5 credits for $3.75</option>
+            <option value="10">10 credits for $7.50</option>
+            <option value="25">25 credits for $18.75</option>
+            <option value="50">50 credits for $37.50</option>
+            <option value="100">100 credits for $75</option>
           </select>
 
           <div className="input-group-append">

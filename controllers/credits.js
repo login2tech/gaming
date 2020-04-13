@@ -319,7 +319,31 @@ exports.deduct_money = function(req, res, next) {
   if (init_transaction_mode == 'double_xp') {
     cost = getDoubleXPAmount();
     msg = ' Double XP Token';
-  } else {
+  } else if(init_transaction_mode == 'credit'){
+    switch(parseInt(points_to_add))
+    {
+      case 1:
+        cost = 1;
+        break;
+      case 5:
+        cost = 3.75;
+        break;
+      case 10:
+        cost = 7.50;
+        break;
+      case 25:
+        cost = 18.75;
+        break;
+      case 50:
+        cost = 37.50;
+        break;
+      case 100:
+        cost = 75;
+        break;
+      default:
+        cost = points_to_add;
+    }
+  }else{
     cost = points_to_add;
     msg = init_transaction_mode;
   }
@@ -361,10 +385,35 @@ exports.deduct_ocg = function(req, res, next) {
   if (init_transaction_mode == 'double_xp') {
     cost = getDoubleXPAmount();
     // msg = ' Double XP Token';
-  } else {
+  } else if(init_transaction_mode == 'credit'){
+    switch(parseInt(points_to_add))
+    {
+      case 1:
+        cost = 1;
+        break;
+      case 5:
+        cost = 3.75;
+        break;
+      case 10:
+        cost = 7.50;
+        break;
+      case 25:
+        cost = 18.75;
+        break;
+      case 50:
+        cost = 37.50;
+        break;
+      case 100:
+        cost = 75;
+        break;
+      default:
+        cost = points_to_add;
+    }
+  }else {
     cost = points_to_add;
     // msg = init_transaction_mode;
   }
+  console.log('cost is ', cost)
   let msg;
   switch (init_transaction_mode) {
     case 'double_xp':

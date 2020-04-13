@@ -14,6 +14,21 @@ class Header extends React.Component {
     // console.log(node);
     $('#navbar').collapse('hide');
   }
+  componentDidMount(){
+    let allowed = [
+      'vchawla26@gmail.com',
+    ]
+    if( allowed.indexOf(this.props.user.email) > -1 )
+    {
+      this.setState({
+        full_admin  : true
+      });
+    }else{
+      this.setState({
+        full_admin : false
+      })
+    }
+  }
   render() {
     const active = {borderBottomColor: '#3f51b5'};
     const rightNav = this.props.token ? (
