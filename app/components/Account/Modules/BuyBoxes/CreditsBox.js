@@ -163,7 +163,7 @@ class Credits extends React.Component {
             onChange={this.handleChange.bind(this)}
           >
             <option value="">Add Credits</option>
-            <option value="1">1 credit1 for $1</option>
+            <option value="1">1 credit for $1</option>
             <option value="5">5 credits for $3.75</option>
             <option value="10">10 credits for $7.50</option>
             <option value="25">25 credits for $18.75</option>
