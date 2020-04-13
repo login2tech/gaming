@@ -1627,7 +1627,7 @@ exports.matches_of_team = function(req, res, next) {
   });
 
   mdl
-    .fetchAll({withRelated: ['ladder', 'game', 'team_1_info', 'team_2_info']})
+    .fetchAll({withRelated: [ 'tournament', 'tournament.ladder', 'tournament.game', 'team_1_info', 'team_2_info']})
     .then(function(item) {
       if (!item) {
         return res.status(200).send({ok: true, items: []});

@@ -24,6 +24,7 @@ class TeamInfo extends React.Component {
       is_loaded: false,
       match_played: [],
       new_invite_user_name: '',
+      t_match_played : [],
       removing: [],
       is_edit_mode: false
     };
@@ -1611,7 +1612,6 @@ class TeamInfo extends React.Component {
                         <thead>
                           <tr>
                             <th className="h-o-p  d-none">Match</th>
-                            <th>Tournament</th>
                             <th>Opponent</th>
                             <th>Status</th>
 
@@ -1620,24 +1620,22 @@ class TeamInfo extends React.Component {
                           </tr>
                         </thead>
                         <tbody>
-                          {this.state.match_played.map((match, i) => {
+                          {this.state.t_match_played.map((match, i) => {
                             return (
                               <tr key={match.id}>
                                 <td className="h-o-p  d-none">
                                   <Link to={'/m/' + match.id}>#{match.id}</Link>
                                 </td>
-                                <td>
-                                  <Link to={'/m/' + match.id}>#{match.id}</Link>
-                                </td>
+
                                 <td>
                                   {match.team_1_id ==
-                                  this.state.team_info.id ? (
+                                  this.state.team_info.id ? match.team_2_id? (
                                     <Link to={'/teams/view/' + match.team_2_id}>
                                       {match.team_2_info
                                         ? match.team_2_info.title
                                         : ''}
                                     </Link>
-                                  ) : (
+                                  ) :'BYE': (
                                     <Link to={'/teams/view/' + match.team_1_id}>
                                       {match.team_1_info.title}
                                     </Link>
@@ -1657,13 +1655,16 @@ class TeamInfo extends React.Component {
                                   {moment(match.created_at).format('lll')}
                                 </td>
                                 <td>
-                                  <Link to={'/m/' + match.id}>
-                                    View <span className="h-o-p">Match</span>
-                                  </Link>
+                                <Link to={'/m/' + match.id}>
+                                  View <span className="h-o-p">Match</span>
+                                </Link><span  className="h-o-p">  <Link class="pl-3" to={'/t/' + match.tournament_id}>
+                                    View Tournament
+                                  </Link></span>
                                 </td>
                               </tr>
                             );
                           })}
+
                         </tbody>
                       </table>
                     )}
