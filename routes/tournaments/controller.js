@@ -473,13 +473,22 @@ const proceed_to_next_round = function(t_id, t_round) {
         })
         .fetch()
         .then(function(tournament) {
-          let teams_obj = tournament.get('teams_obj');
-          teams_obj = JSON.parse(teams_obj);
-          const teams_obj_keys = Object.keys(teams_obj);
+          // let teams_obj = tournament.get('teams_obj');
+          // teams_obj = JSON.parse(teams_obj);
+          // const teams_obj_keys = Object.keys(teams_obj);
+          // const participants = winner_teams.map(function(w_t_i_id) {
+          //   w_t_i_id = parseInt(w_t_i_id);
+          //   return teams_obj_keys.indexOf('team_' + w_t_i_id) + 1;
+          // });
+
+          let team_ids = tournament.get('team_ids');
+          team_ids = team_ids.split(',');
+          // const teams_obj_keys = Object.keys(teams_obj);
           const participants = winner_teams.map(function(w_t_i_id) {
             w_t_i_id = parseInt(w_t_i_id);
-            return teams_obj_keys.indexOf('team_' + w_t_i_id) + 1;
+            return team_ids.indexOf( ""+w_t_i_id) + 1;
           });
+ 
           participants.sort(sort_by_number);
           llgg('participants are : ', participants);
           let winner = false;

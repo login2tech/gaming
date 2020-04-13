@@ -56,9 +56,16 @@ class TournamentInfo extends React.Component {
 
   getM(round, t1, t2) {
     if((""+t1).indexOf('BYE_') > -1)
-    {t1 = null}
+    {t1 = null}else{
+      t1 = parseInt(t1);
+    }
     if((""+t2).indexOf('BYE_') > -1)
-    {t2 = null}
+    {t2 = null}else{
+      t2 = parseInt(t2);
+    }
+    // this.state.tournament.matches.map(function(item){
+    //   console.log( item.team_1_id, item.team_2_id, item.match_round, t1, t2 );
+    // })
     return this.state.tournament.matches.filter(function(item) {
       return item.match_round == round &&
         ((item.team_1_id == t1 && item.team_2_id == t2) ||
