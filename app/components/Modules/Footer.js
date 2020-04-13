@@ -148,7 +148,7 @@ class Footer extends React.Component {
 
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div className="contact-col-4 contact-inner">
-                  <h4>SUBSCRIBE</h4>
+                  <h4 class="text-center-on-phone">SUBSCRIBE</h4>
                   <p>Please subscribe for latest game updates.</p>
                   {this.state.subsribed_y ? (
                     <Messages messages={this.props.messages} />

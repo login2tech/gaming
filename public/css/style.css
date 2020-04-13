@@ -7609,6 +7609,9 @@ media query starts here
     }.team_name {
     word-break: break-all;
   }
+  .text-center-on-phone{
+    text-align: center;
+  }
 }
 
 .text-xl {

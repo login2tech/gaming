@@ -421,6 +421,8 @@ class MyMatches extends React.Component {
                           let team_1 = [];
                           let team_2 = [];
                           if (match.status != 'pending') {
+                            return false;
+                          }
                             team_1 = match.team_1_players
                               .split('|')
                               .map(function(a) {
@@ -432,7 +434,7 @@ class MyMatches extends React.Component {
                               .map(function(a) {
                                 return parseInt(a);
                               });
-                          }
+                          // }
                           if (
                             team_1.indexOf(this.props.user.id) < 0 &&
                             team_2.indexOf(this.props.user.id) < 0
