@@ -266,6 +266,7 @@ class ViewTicket extends React.Component {
                     </span>
                   </div>
                   <div className="col-sm-9 post-content">
+                    <h3>{this.state.ticket.title}</h3>
                     <div
                       dangerouslySetInnerHTML={{
                         __html: this.state.ticket.description
