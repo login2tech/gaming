@@ -548,12 +548,12 @@ const proceed_to_next_round = function(t_id, t_round) {
               llgg('---- -- - - - -----');
               llgg('team_set : ', team_set);
 
-              const team_1 = team_set[0]
-                ? teams_obj_keys[team_set[0] - 1].replace('team_', '')
-                : null;
-              const team_2 = team_set[1]
-                ? teams_obj_keys[team_set[1] - 1].replace('team_', '')
-                : null;
+              // const team_1 = team_set[0]
+              //   ? teams_obj_keys[team_set[0] - 1].replace('team_', '')
+              //   : null;
+              // const team_2 = team_set[1]
+              //   ? teams_obj_keys[team_set[1] - 1].replace('team_', '')
+              //   : null;
 
                 const team_1 = team_set[0]
                   ? parseInt(  team_ids[team_set[0] - 1]   )
