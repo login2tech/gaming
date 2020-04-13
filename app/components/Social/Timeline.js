@@ -50,7 +50,8 @@ class Timeline extends React.Component {
     });
   }
   doFeature(id, type){
-    if( this.props.user.role != 'admin' )
+    if(!this.props.user)return false;
+    if(this.props.user.role != 'admin' )
       return false;
       return fetch('/api/posts/doMakeFeatured?pid='+id+'&type='+type, {
         method: 'post',
@@ -180,7 +181,7 @@ class Timeline extends React.Component {
                 <i className="fa fa-thumbtack" />
               </button>
             )}
-            { this.props.user.role == 'admin' && !this.props.disableSet ?
+            { this.props.user && this.props.user.role == 'admin' && !this.props.disableSet ?
               <div className={'dropdown dib  mr-2'}>
                 <button
                   className="btn m-0 btn-default bttn_submit dropdown-toggle"
@@ -193,7 +194,7 @@ class Timeline extends React.Component {
                   Set as Clip of
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-               
+
                   <a
                     className={ 'dropdown-item'  }
                     href="#"

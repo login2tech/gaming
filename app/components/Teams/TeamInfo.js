@@ -751,7 +751,7 @@ class TeamInfo extends React.Component {
           <>
             {this.state.team_info.title}
             {this.state.team_info.removed ? ' - DELETED TEAM ' : ''}
-            {this.state.team_info.team_creator == this.props.user.id &&
+            {this.props.user && this.state.team_info.team_creator == this.props.user.id &&
             !this.state.team_info.removed ? (
               <button
                 onClick={event => {

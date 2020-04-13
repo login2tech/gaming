@@ -140,8 +140,10 @@ class Footer extends React.Component {
                 </div>
               </div>
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12 text-center">
-              <img src="/images/payments.png" alt="accepted payment" />
-                <img src="/assets/comodo.png" alt="comodo secure" />
+                <img src="/assets/comodo.png" alt="comodo secure" style={{
+                  width: "91%"
+                }} />
+                <img src="/images/payments.png" alt="accepted payment" />
               </div>
 
               <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
