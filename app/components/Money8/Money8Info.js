@@ -623,6 +623,54 @@ class Money8Info extends React.Component {
     );
   }
 
+
+
+  renderTicketCreate() {
+    if (this.state.match.status != 'disputed') {
+      return false;
+    }
+    let players = this.state.match.players;
+    let players_1 = this.state.match.team_1;
+    let players_2 = this.state.match.team_2;
+    players =JSON.parse(players);
+
+    if(!players_1)players_1 ='';
+    players_1 = players_1.split('|');
+
+    if(!players_2)players_2 ='';
+    players_2 = players_2.split('|');
+    let my_team_name = '';
+
+
+    if(players_1.indexOf(''+this.props.user.id) > -1 ){
+      my_team_name = "Team Mix"
+    }else if(players_2.indexOf(''+this.props.user.id) > -1 ){
+      my_team_name = "Team Match"
+    }else{
+      return false;
+    }
+    return (
+      <div>
+        <a
+
+          href={
+            '/support/tickets/create/mm/disputed/' +
+            this.state.match.id +
+            '/' +
+            my_team_name+
+            ''
+          }
+          className="btn btn-primary bttn_submit dib"
+          style={{width: 'auto'}}
+        >
+          Create Ticket to resolve dispute
+        </a>
+      </div>
+    );
+  }
+
+
+
   renderListPad(vtype) {
     let game_settings =
       this.state.match && this.state.match.game_settings
@@ -753,6 +801,7 @@ class Money8Info extends React.Component {
         </div>
         {this.renderJoin()}
         {this.renderLeave()}
+        {this.renderTicketCreate()}
       </div>
     );
   }
