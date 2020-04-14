@@ -472,7 +472,7 @@ class Money8Info extends React.Component {
 
         <h5 className="prizes_desclaimer">
           <i className="fa fa-users" aria-hidden="true" /> Mix{' '}   <span className="text-primary">
-              {match.team_1_result}
+              {{this.state.match.team_1_result}
             </span>{' '}
           {this.state.match.status == 'complete' &&
           this.state.match.result == 'team_1' ? (
@@ -548,7 +548,7 @@ class Money8Info extends React.Component {
 
         <h5 className="prizes_desclaimer">
           <i className="fa fa-users" aria-hidden="true" /> Match{' '}  <span className="text-primary">
-              {match.team_2_result}
+              {this.state.match.team_2_result}
             </span>{' '}
           {this.state.match.status == 'complete' &&
           this.state.match.result == 'team_1' ? (
