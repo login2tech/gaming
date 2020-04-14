@@ -1003,7 +1003,7 @@ class MatchInfo extends React.Component {
               </div>
             );
           })}
-          <div className="col-md-4 col-6 textcap" key={k}>
+          <div className="col-md-4 col-6 textcap" >
             <span>{'Map Host'}</span>
             <p>
               <strong>Host 1: </strong>
