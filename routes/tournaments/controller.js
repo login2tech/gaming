@@ -315,13 +315,12 @@ const giveTrophy = function(type, tid, team_id, team_players) {
 };
 
 const giveWins = function(tid, tour) {
-  // console.log(tour);
   let brackets = tour.brackets;
-  // console.log(brackets);
   let teams_obj = tour.teams_obj;
-  // console.log(teams_obj);
+  let team_ids = tour.team_ids;
   brackets = typeof brackets == 'string' ? JSON.parse(brackets) : brackets;
   teams_obj = typeof teams_obj == 'string' ? JSON.parse(teams_obj) : teams_obj;
+  team_ids = typeof team_ids == 'string' ? team_ids.split(',') : team_ids;
   const total_rounds = brackets.total_rounds;
   const gold_team = brackets.winner;
   let gold_silver_teams = brackets['round_' + total_rounds];
@@ -330,10 +329,10 @@ const giveWins = function(tid, tour) {
 
   const team_obj_keys = Object.keys(teams_obj);
 
-  // console.log('gold_team_id is', gold_team);
+  console.log('gold_team_id is', gold_team);
 
-  const gold_team_loc = team_obj_keys.indexOf('team_' + gold_team) + 1;
-  // console.log('gold_team_loc is', gold_team_loc);
+  const gold_team_loc = team_ids.indexOf(""+gold_team) + 1;
+  console.log('gold_team_loc is', gold_team_loc);
 
   let silver_team;
   if (gold_team_loc == gold_silver_teams[0]) {
@@ -341,15 +340,19 @@ const giveWins = function(tid, tour) {
   } else {
     silver_team = gold_silver_teams[0];
   }
-  // console.log('silver_team_loc is', silver_team);
+  console.log('silver_team_loc is', silver_team);
   // gold_team;
   // gold_team = teams_obj['team_' + team_obj_keys[gold_team - 1]];
-  silver_team = parseInt(
-    ('' + team_obj_keys[silver_team - 1]).replace('team_', '')
-  );
+  // silver_team = parseInt(
+  //   ('' + team_obj_keys[silver_team - 1]).replace('team_', '')
+  // );
+
+  silver_team = parseInt( team_ids[ silver_team - 1 ] );
 
   // gold decided, silver decided
   const bronze_round = brackets['round_' + (total_rounds - 1)];
+
+  console.log(bronze_round);
 
   // [[1,4],[3,2]]
   let bronze_team = false;
@@ -362,20 +365,32 @@ const giveWins = function(tid, tour) {
   } else if (bronze_round[1][1] == gold_team_loc) {
     bronze_team = bronze_round[1][0];
   }
-  bronze_team = parseInt(
-    ('' + team_obj_keys[bronze_team - 1]).replace('team_', '')
-  );
+  console.log(bronze_team);
+  if((""+bronze_team).indexOf('BYE_') > 1)
+  {
+      bronze_team = false;
+  }else{
+    bronze_team = team_ids[ bronze_team - 1 ];
+    //
+    // bronze_team = parseInt(
+    //   ('' + team_obj_keys[bronze_team - 1]).replace('team_', '')
+    // );
+  }
+  console.log('here');
   // bronze_found
   const gold_players = teams_obj['team_' + gold_team];
   const silver_players = teams_obj['team_' + silver_team];
-  const bronze_players = teams_obj['team_' + bronze_team];
+  let bronze_players = false;
+  if(bronze_team)
+    bronze_players = teams_obj['team_' + bronze_team];
 
-  // console.log('gold team is ', gold_team);
-  // console.log('silver team is ', silver_team);
-  // console.log('bronze team is ', bronze_team);
-  // console.log('gold_players are ', gold_players);
-  // console.log('silver_players are ', silver_players);
-  // console.log('bronze_players are ', bronze_players);
+  console.log('==============================================================================');
+  console.log('gold team is ', gold_team);
+  console.log('silver team is ', silver_team);
+  console.log('bronze team is ', bronze_team);
+  console.log('gold_players are ', gold_players);
+  console.log('silver_players are ', silver_players);
+  console.log('bronze_players are ', bronze_players);
 
   matchController.giveXPtoTeam(gold_team, gold_players, tid, 't', 50);
   if (tour.member_tournament) {
@@ -388,15 +403,17 @@ const giveWins = function(tid, tour) {
   // giveCashToUser()
   giveCashToTeam(gold_team, tour.first_winner_price, gold_players, tid);
   giveCashToTeam(silver_team, tour.second_winner_price, silver_players, tid);
+  if(bronze_team)
   giveCashToTeam(bronze_team, tour.third_winner_price, bronze_players, tid);
 
   giveTrophy('silver', tid, silver_team, silver_players);
+  if(bronze_team)
   giveTrophy('bronze', tid, bronze_team, bronze_players);
 
-  // llgg('winners are: ');
-  // llgg('gold', gold_team, gold_players);
-  // llgg('silver', silver_team, silver_players);
-  // llgg('bronze', bronze_team, bronze_players);
+  llgg('winners are: ');
+  llgg('gold', gold_team, gold_players);
+  llgg('silver', silver_team, silver_players);
+  llgg('bronze', bronze_team, bronze_players);
   //
 };
 
@@ -474,7 +491,7 @@ const proceed_to_next_round = function(t_id, t_round) {
         .fetch()
         .then(function(tournament) {
           let teams_obj = tournament.get('teams_obj');
-          // teams_obj = JSON.parse(teams_obj);
+          teams_obj = JSON.parse(teams_obj);
           // const teams_obj_keys = Object.keys(teams_obj);
           // const participants = winner_teams.map(function(w_t_i_id) {
           //   w_t_i_id = parseInt(w_t_i_id);
@@ -566,7 +583,7 @@ const proceed_to_next_round = function(t_id, t_round) {
                   console.log(team_1);
                   console.log(team_2);
                   console.log(teams_obj['team_' + team_1]);
-console.log(teams_obj['team_' + team_2]);
+                  console.log(teams_obj['team_' + team_2]);
               if (team_1 && team_2) {
                 createMatch(
                   "" + team_1,

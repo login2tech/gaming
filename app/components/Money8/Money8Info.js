@@ -711,12 +711,12 @@ class Money8Info extends React.Component {
                     <span>{'Map Host'}</span>
                     <p>
                       <strong>Host 1: </strong>
-                      {'Team 1'}
+                      {'Team Mix'}
                       {game_settings.map_2 ? (
                         <>
                           <br />
                           <strong>Host 2: </strong>
-                          {'Team 2'}
+                          {'Team Match'}
                         </>
                       ) : (
                         false
@@ -725,7 +725,7 @@ class Money8Info extends React.Component {
                         <>
                           <br />
                           <strong>Host 3: </strong>
-                          Team 1
+                          Team Mix
                         </>
                       ) : (
                         false
