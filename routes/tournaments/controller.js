@@ -562,7 +562,11 @@ const proceed_to_next_round = function(t_id, t_round) {
                   ? parseInt(  team_ids[team_set[1] - 1]   )
                   : null;
 
-
+                  console.log(teams_obj);
+                  console.log(team_1);
+                  console.log(team_2);
+                  console.log(teams_obj['team_' + team_1]);
+console.log(teams_obj['team_' + team_2]);
               if (team_1 && team_2) {
                 createMatch(
                   "" + team_1,

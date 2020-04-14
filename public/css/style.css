@@ -7634,3 +7634,8 @@ p.feed_post_content iframe {
 .timeline.no_pding {
     padding : 0
 }
+
+.brackets-header .title {
+    font-size: 20px !important;
+    font-weight: bold !important;
+}
