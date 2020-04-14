@@ -684,7 +684,7 @@ class newMatch extends React.Component {
                             type="number"
                             min="1"
                             step={
-                              this.state.match_type == 'cash' : '0.1':'1'
+                              this.state.match_type == 'cash' ? '0.1':'1'
                             }
                             id="match_fee"
                             className="form-control"
