@@ -59,9 +59,9 @@ class TMatches extends React.Component {
   }
 
   dynamicStatus_match(match) {
-    if (!match.team_2_id) {
-      return 'Expired';
-    }
+    // if (!match.team_2_id) {
+    //   return 'Expired';
+    // }
     if (match.status == 'disputed') {
       return 'Disputed';
     }
