@@ -114,10 +114,12 @@ class TMatches extends React.Component {
             ''
           )}
         </td>
-        <td>
-          <a target="_blank" href={'/teams/view/' + teams[1].id}>
+        <td>{
+          teams[1] ? <a target="_blank" href={'/teams/view/' + teams[1].id}>
             {teams[1].title}
-          </a>{' '}
+          </a> : 'BYE'
+        }
+          {' '}
           {match.result == 'team_2' ? (
             <span className="text-success">W</span>
           ) : match.result == 'team_1' ? (
