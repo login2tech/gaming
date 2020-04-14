@@ -468,31 +468,7 @@ class TMatchInfo extends React.Component {
                       )}
                     </p>
                   </div>
-                  <div className="col-md-4 col-6 textcap" key={k}>
-                    <span>{'Map Host'}</span>
-                    <p>
-                      <strong>Host 1: </strong>
-                      {this.state.match.team_1_info.title}
-                      {game_settings.map_2 ? (
-                        <>
-                          <br />
-                          <strong>Host 2: </strong>
-                          {this.state.match.team_2_info.title}
-                        </>
-                      ) : (
-                        false
-                      )}
-                      {game_settings.map_3 ? (
-                        <>
-                          <br />
-                          <strong>Host 3: </strong>
-                          {this.state.match.team_1_info.title}
-                        </>
-                      ) : (
-                        false
-                      )}
-                    </p>
-                  </div>
+
                 </>
               );
             }
@@ -507,6 +483,31 @@ class TMatchInfo extends React.Component {
               </div>
             );
           })}
+          <div className="col-md-4 col-6 textcap" key={k}>
+            <span>{'Map Host'}</span>
+            <p>
+              <strong>Host 1: </strong>
+              {this.state.match.team_1_info.title}
+              {game_settings.match_length == 'Best Of 3' ? (
+                <>
+                  <br />
+                  <strong>Host 2: </strong>
+                  {this.state.match.team_2_info.title}
+                </>
+              ) : (
+                false
+              )}
+              {game_settings.match_length == 'Best Of 3' ? (
+                <>
+                  <br />
+                  <strong>Host 3: </strong>
+                  {this.state.match.team_1_info.title}
+                </>
+              ) : (
+                false
+              )}
+            </p>
+          </div>
         </div>
         {this.renderTicketCreate()}
       </div>
