@@ -471,7 +471,9 @@ class Money8Info extends React.Component {
         {this.renderScoreSubmit()}
 
         <h5 className="prizes_desclaimer">
-          <i className="fa fa-users" aria-hidden="true" /> Mix{' '}
+          <i className="fa fa-users" aria-hidden="true" /> Mix{' '}   <span className="text-primary">
+              {match.team_1_result}
+            </span>{' '}
           {this.state.match.status == 'complete' &&
           this.state.match.result == 'team_1' ? (
             <span>
@@ -545,7 +547,9 @@ class Money8Info extends React.Component {
         <br />
 
         <h5 className="prizes_desclaimer">
-          <i className="fa fa-users" aria-hidden="true" /> Match{' '}
+          <i className="fa fa-users" aria-hidden="true" /> Match{' '}  <span className="text-primary">
+              {match.team_2_result}
+            </span>{' '}
           {this.state.match.status == 'complete' &&
           this.state.match.result == 'team_1' ? (
             <span>
