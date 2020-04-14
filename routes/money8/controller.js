@@ -318,7 +318,7 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
         const prime = usr.get('prime');
         let val;
 
-        if (prime) {
+        if (prime  || typ == 'credit_balance') {
           val = parseFloat(input_val) + parseFloat(input_val);
           if (typ == 'cash_balance') {
             life_earning += parseFloat(input_val);
@@ -1029,7 +1029,7 @@ exports.addItem = function(req, res, next) {
   expires_in = expires_in.split('|');
 
 
- 
+
   let game_settings = req.body.game_settings ? req.body.game_settings : {};
   if(
     req.body.game_title.toLowerCase()=='call of duty: mw'

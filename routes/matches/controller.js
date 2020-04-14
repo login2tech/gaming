@@ -341,7 +341,9 @@ const giveMoneyToMember = function(uid, input_val, match_id, type) {
         const prime = usr.get('prime');
         let val;
 
-        if (prime) {
+        // no 10% deduction in case of credit balance.
+
+        if (prime || typ == 'credit_balance') {
           val = parseFloat(input_val) + parseFloat(input_val);
           if (typ == 'cash_balance') {
             life_earning += parseFloat(input_val);
@@ -1672,7 +1674,7 @@ exports.matches_of_user = function(req, res, next) {
         qb.where('challenge_for_u', req.user.id).andWhere('challenge_type','u');
       })
     });
-    
+
     related.push( 'challenge_team_info' );
 
   }else if(req.query.mychallenge=='yes'){
