@@ -1664,6 +1664,7 @@ exports.matches_of_user = function(req, res, next) {
 
 
   if (req.query.onlychallenge == 'yes') {
+
     mdl = mdl.query(function(qb) {
       qb.where(function(qb) {
         qb.where('challenge_for', 'in', teams).andWhere('challenge_type','t');
@@ -1671,8 +1672,20 @@ exports.matches_of_user = function(req, res, next) {
         qb.where('challenge_for_u', req.user.id).andWhere('challenge_type','u');
       })
     });
-    related.push( 'challenge_team_info' )
+    
+    related.push( 'challenge_team_info' );
+
+  }else if(req.query.mychallenge=='yes'){
+
+    mdl = mdl.query(function(qb) {
+      qb.where(function(qb) {
+        qb.where('team_1_id', 'in', teams)
+        .andWhere('is_challenge', true);
+      });
+    });
+
   }else{
+
     mdl = mdl.query(function(qb) {
       qb.where(function(qb) {
         qb.where('team_1_id', 'in', teams).orWhere('team_2_id', 'in', teams);

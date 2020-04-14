@@ -12,14 +12,14 @@ class MyChallenges extends React.Component {
       user_teams: [],
       is_loaded: false,
       match_played: [],
-      money8_played: [],
-      tournaments: [],
+      match_played_mine : [],
+
+
       matchfinder_page: 1,
-      money8_page: 1,
-      tour_page: 1,
-      pagination_matchfinder: {},
-      pagination_money8: {},
-      pagination_tour: {}
+      matchfinder2_page: 1,
+
+      pagination_matchfinder: {pageCount: 0},
+      pagination_matchfinder_min:{pageCount: 0}
     };
     // this.table = React.createRef(); // initi
   }
@@ -52,7 +52,7 @@ class MyChallenges extends React.Component {
       });
   }
 
-  fetchMatches(forward) {
+  fetchMatches( ) {
     let team_array = [];
     const me = this.props.user.id;
     for (let i = 0; i < this.state.user_teams.length; i++) {
@@ -84,17 +84,59 @@ class MyChallenges extends React.Component {
             pagination_matchfinder: json.pagination ? json.pagination : {}
           });
         }
+        this.fetchMatchesMine();
       });
   }
 
-  handlePageClick = (data, typ) => {
-    // console.log(data)
-    const selected = parseInt(data.selected) + 1;
-    this.setState({[typ + '_page']: selected}, () => {
-      if (typ == 'matchfinder') {
-        this.fetchMatches();
+
+    fetchMatchesMine( ) {
+      let team_array = [];
+      const me = this.props.user.id;
+      for (let i = 0; i < this.state.user_teams.length; i++) {
+        const team_parent = this.state.user_teams[i];
+        const team = team_parent.team_info ? team_parent.team_info : {};
+        if (
+          team.id &&
+          team.team_type == 'matchfinder' &&
+          team.team_creator == me
+        ) {
+          team_array.push(team.id);
+        }
       }
-    });
+      team_array = team_array.join(',');
+
+      fetch(
+        '/api/matches/matches_of_user?mychallenge=yes&only_pending=yes&page=' +
+          this.state.matchfinder2_page +
+          '&uid=' +
+          this.state.user_info.id +
+          '&teams=' +
+          team_array
+      )
+        .then(res => res.json())
+        .then(json => {
+          if (json.ok) {
+            this.setState({
+              match_played_mine: json.items,
+              pagination_matchfinder_min: json.pagination ? json.pagination : {}
+            });
+          }
+          // this.fetchMatchesMine();
+        });
+    }
+
+  handlePageClick = (data, typ) => {
+
+      const selected = parseInt(data.selected) + 1;
+      this.setState({[typ + '_page']: selected}, () => {
+        if (typ == 'matchfinder') {
+          this.fetchMatches();
+        }else{
+          this.fetchMatchesMine()
+        }
+      });
+
+
   };
 
   getTeams(match) {
@@ -113,6 +155,7 @@ class MyChallenges extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="mb-3 mt-3 pb-3">
+                  <h5 className="prizes_desclaimer">Challenges I received</h5>
                   <div className="table_wrapper">
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
@@ -243,6 +286,149 @@ class MyChallenges extends React.Component {
                     pageRangeDisplayed={5}
                     onPageChange={data => {
                       this.handlePageClick(data, 'matchfinder');
+                    }}
+                    containerClassName={'pagination'}
+                    subContainerClassName={'pages pagination'}
+                    activeClassName={'active'}
+                  />
+                </div>
+              </div>
+
+
+
+              <div className="col-md-12 col-sm-12 col-xs-12">
+                <div className="mb-3 mt-3 pb-3">
+                  <h5 className="prizes_desclaimer">Challenges I sent</h5>
+                  <div className="table_wrapper">
+                    <table className="table table-striped table-ongray table-hover">
+                      <thead>
+                        <tr>
+                          <th className="h-o-p d-none">Match</th>
+                          <th>Team</th>
+                          <th>Opponent</th>
+                          <th>Status</th>
+                          <th>Expiring</th>
+                          <th style={{width: '20%'}}>Info</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {this.state.match_played_mine.map((match, i) => {
+                          const teams = this.getTeams(match);
+                          let is_win = false;
+                          let is_loss = false;
+                          // is_status = true;
+                          if (match.result) {
+                            if (match.result == 'team_1') {
+                              if (teams[2] == 1) {
+                                is_win = true;
+                              } else {
+                                is_loss = false;
+                              }
+                            } else if (match.result == 'team_2') {
+                              if (teams[2] == 2) {
+                                is_win = true;
+                              } else {
+                                is_loss = false;
+                              }
+                            } else {
+                              // is_status = true;
+                            }
+                          }
+                          {
+                            is_win ? (
+                              <span className="text-success">W</span>
+                            ) : (
+                              false
+                            );
+                          }
+                          {
+                            is_loss ? (
+                              <span className="text-danger">L</span>
+                            ) : (
+                              false
+                            );
+                          }
+                          {
+                            !is_win && !is_loss ? match.status : false;
+                          }
+
+                          return (
+                            <tr key={match.id}>
+                              <td className="h-o-p  d-none">
+                                <Link to={'/m/' + match.id}>#{match.id}</Link>
+                              </td>
+                              <td>
+                                <Link
+                                  to={
+                                    '/teams/view/' +
+                                    (teams && teams[0] && teams[0].id)
+                                  }
+                                >
+                                  {teams && teams[0] && teams[0].title}
+                                  {match.challenge_type == 'u'
+                                    ? '@' + this.props.user.username
+                                    : ''}
+                                </Link>
+                              </td>
+                              <td>
+                                {teams[1] ? (
+                                  <Link
+                                    to={
+                                      '/teams/view/' +
+                                      (teams && teams[0] && teams[0].id)
+                                    }
+                                  >
+                                    {teams && teams[1] && teams[1].title}
+                                  </Link>
+                                ) : (
+                                  ' '
+                                )}
+                              </td>
+                              <td>
+                                {match.result ? (
+                                  match.result == 'team_1' ? (
+                                    teams[2] == 1 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : match.result == 'team_2' ? (
+                                    teams[2] == 2 ? (
+                                      <span className="text-success">W</span>
+                                    ) : (
+                                      <span className="text-danger">L</span>
+                                    )
+                                  ) : (
+                                    match.result
+                                  )
+                                ) : (
+                                  match.status
+                                )}
+                              </td>
+                              {/* <td>{''}</td> */}
+                              <td>{moment(match.starts_at).fromNow()}</td>
+                              <td>
+                                {' '}
+                                <Link to={'/m/' + match.id}>
+                                  View <span className="h-o-p">Challenge</span>
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  <ReactPaginate
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={this.state.pagination_matchfinder_min.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={data => {
+                      this.handlePageClick(data, 'matchfinder2');
                     }}
                     containerClassName={'pagination'}
                     subContainerClassName={'pages pagination'}
