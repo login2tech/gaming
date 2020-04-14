@@ -21,7 +21,12 @@ class Credits extends React.Component {
 
   handleChange(event) {
     event.preventDefault();
-    this.setState({[event.target.name]: event.target.value});
+    let val  = event.target.value;
+    if(event.target.name =='amount_to_transfer')
+    {
+      val = parseInt(val);
+    }
+    this.setState({[event.target.name]: val});
   }
 
   initAdd() {
