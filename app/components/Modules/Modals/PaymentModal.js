@@ -10,7 +10,26 @@ class PaymentModal extends React.Component {
       clicked: false
     };
   }
-
+  //
+  //
+  // {/*}
+  //                 <button
+  //                   type="button"
+  //                   className="paypal-button"
+  //                   onClick={() => {
+  //                     this.proceedWithPaypal(false);
+  //                   }}
+  //                 >
+  //                   <span className="paypal-button-title">
+  //                     Proceed now with&nbsp;{' '}
+  //                   </span>
+  //                   <span className="paypal-logo">
+  //                     <i>Pay</i>
+  //                     <i>Pal</i>
+  //                   </span>
+  //                 </button>*/}
+  //
+  //
   doClose() {
     this.props.dispatch(
       closeModal({
@@ -20,7 +39,55 @@ class PaymentModal extends React.Component {
   }
 
   componentDidMount() {
+    const amount_pending = this.props.amount;
+
     this.handleStripeCreation();
+    if(this.props.disable_paypal)
+    {
+
+      //
+    }else{
+      paypal.Buttons({
+        style: {
+            shape: 'pill',
+            color: 'gold',
+            layout: 'horizontal',
+            label: 'paypal',
+
+        },
+        createOrder:  (data, actions) =>{
+
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: (
+                  parseFloat(amount_pending) +
+                  (
+                    (amount_pending * 3) / 100
+                  )
+                ).toFixed(2)
+              }
+            }],
+            application_context: {
+              shipping_preference: 'NO_SHIPPING'
+            }
+          });
+        },
+        onApprove:  (data, actions)=> {
+          // This function captures the funds from the transaction.
+          return actions.order.capture().then( (details) =>{
+            // This function shows a transaction success message to your buyer.
+            // alert('Transaction completed by ' + details.payer.name.given_name);
+            this.props.onGetToken &&
+              this.props.onGetToken(
+                'USE_PAYPAL',
+                this.props.returnDataToEvent ? this.props.returnDataToEvent : {}
+              );
+          });
+        }
+      }).render('#paypal-button-container');
+
+    }
   }
 
   handleChange(event) {
@@ -221,21 +288,8 @@ class PaymentModal extends React.Component {
               {this.props.disable_paypal ? (
                 false
               ) : (
-                <button
-                  type="button"
-                  className="paypal-button"
-                  onClick={() => {
-                    this.proceedWithPaypal(false);
-                  }}
-                >
-                  <span className="paypal-button-title">
-                    Proceed now with&nbsp;{' '}
-                  </span>
-                  <span className="paypal-logo">
-                    <i>Pay</i>
-                    <i>Pal</i>
-                  </span>
-                </button>
+                <div id="paypal-button-container"></div>
+
               )}
               <div className="text-center mt-3">
                 {this.props.disable_ocg ? (

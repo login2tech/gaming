@@ -50,7 +50,7 @@ class Credits extends React.Component {
     }
     const credits_to_buy = this.state.add_new_bal_number;
     let cost = credits_to_buy;
-    switch(parseInt(points_to_add))
+    switch(parseInt(credits_to_buy))
     {
       case 1:
         cost = 1;
@@ -71,7 +71,7 @@ class Credits extends React.Component {
         cost = 75;
         break;
       default:
-        cost = points_to_add;
+        cost = credits_to_buy;
     }
     this.openBuyPopup('credits_box', 'Buy Credits', cost, {
       points: credits_to_buy,

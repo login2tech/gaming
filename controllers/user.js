@@ -998,9 +998,11 @@ exports.deduct_money = function(req, res, next) {
 };
 exports.deduct_paypal = function(req, res, next) {
   if (req.body.stripe_token == 'USE_PAYPAL') {
-    return res
-      .status(200)
-      .send({ok: false, msg: 'failed to transact with paypal'});
+    next();
+    return;
+    // return res
+    //   .status(200)
+    //   .send({ok: false, msg: 'failed to transact with paypal'});
     // const rnd = Math.random() * (10000000 - 1000000) + 1000000;
     //
     // paypal.pay(
