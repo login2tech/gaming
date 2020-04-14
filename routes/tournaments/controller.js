@@ -30,13 +30,16 @@ const giveCashToUser = function(uid, input_val, match_id) {
     .then(function(usr) {
       if (usr) {
         let cash_balance = usr.get('cash_balance');
+        let life_earning = usr.get('life_earning');
 
         // llgg(cash_balance);
         cash_balance += parseFloat(input_val);
+        life_earning += parseFloat(input_val);
+
 
         // llgg(cash_balance);
         usr
-          .save({cash_balance: cash_balance}, {patch: true})
+          .save({cash_balance: cash_balance, life_earning: life_earning}, {patch: true})
           .then(function(usr) {
             new CashTransactions()
               .save({
@@ -340,7 +343,7 @@ const giveWins = function(tid, tour) {
   } else {
     silver_team = gold_silver_teams[0];
   }
-  console.log('silver_team_loc is', silver_team);
+  // console.log('silver_team_loc is', silver_team);
   // gold_team;
   // gold_team = teams_obj['team_' + team_obj_keys[gold_team - 1]];
   // silver_team = parseInt(
@@ -352,7 +355,7 @@ const giveWins = function(tid, tour) {
   // gold decided, silver decided
   const bronze_round = brackets['round_' + (total_rounds - 1)];
 
-  console.log(bronze_round);
+  // console.log(bronze_round);
 
   // [[1,4],[3,2]]
   let bronze_team = false;
@@ -376,7 +379,7 @@ const giveWins = function(tid, tour) {
     //   ('' + team_obj_keys[bronze_team - 1]).replace('team_', '')
     // );
   }
-  console.log('here');
+  // console.log('here');
   // bronze_found
   const gold_players = teams_obj['team_' + gold_team];
   const silver_players = teams_obj['team_' + silver_team];

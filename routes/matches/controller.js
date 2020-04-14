@@ -1305,7 +1305,7 @@ exports.addItem = function(req, res, next) {
         }
       }
     }
- 
+
 
   }else if(req.body.game_title.toLowerCase()=='gears 5')
   {
@@ -1354,7 +1354,7 @@ exports.addItem = function(req, res, next) {
       game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
       if(game_settings.match_length == 'Best Of 3')
       {
-         
+
       game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
 
         while(  game_settings.map_2 == game_settings.map_1 )
