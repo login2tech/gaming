@@ -227,12 +227,13 @@ class MatchFinder extends React.Component {
                     <th>Status</th>
                     <th>Result</th>
                     <th>Match type</th>
+
+                      <th>Mix</th>
+                      <th>Match</th>
                     <th>Actions</th>
 
-                    <th>Team 1</th>
-                    <th>Team 2</th>
-                    <th>Team 1 Result</th>
-                    <th>Team 2 Result</th>
+                    <th>Mix Result</th>
+                    <th>Match Result</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -276,9 +277,9 @@ class MatchFinder extends React.Component {
                           <td>
                             {u.result ? (
                               u.result == 'team_2' ? (
-                                'Team 2 Wins'
+                                'Match Wins'
                               ) : u.result == 'team_1' ? (
-                                'Team 1 Wins'
+                                'Mix Wins'
                               ) : u.result == 'dispute' ? (
                                 <span className="text-danger">Disputed</span>
                               ) : (
@@ -306,7 +307,7 @@ class MatchFinder extends React.Component {
                                   type="button"
                                   data-toggle="dropdown"
                                 >
-                                  Team 1 Users <span className="caret" />
+                                  Mix Users <span className="caret" />
                                 </button>
                                 <ul className="dropdown-menu">
                                   {team_1.map((id, i) => {
@@ -333,7 +334,7 @@ class MatchFinder extends React.Component {
                                   type="button"
                                   data-toggle="dropdown"
                                 >
-                                  Team 2 Users <span className="caret" />
+                                  Match Users <span className="caret" />
                                 </button>
                                 <ul className="dropdown-menu">
                                   {team_2.map((id, i) => {

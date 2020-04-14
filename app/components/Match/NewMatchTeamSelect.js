@@ -907,7 +907,9 @@ class NewMatchTeamSelect extends React.Component {
                           <input
                             type="number"
                             min="1"
-                            step="1"
+                            step={
+                              this.state.match_type == 'cash' : '0.1':'1'
+                            }
                             id="match_fee"
                             value={this.state.match_fee}
                             className="form-control"
@@ -1028,7 +1030,7 @@ class NewMatchTeamSelect extends React.Component {
                                               team_user.user_info.prime_type
                                             : ' is_not_prime '
                                         }>
-                                         
+
                                             <Link
                                               to={
                                                 team_user.user_info

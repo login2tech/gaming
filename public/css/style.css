@@ -7610,7 +7610,7 @@ media query starts here
     word-break: break-all;
   }
   .text-center-on-phone{
-    text-align: center;
+    text-align: center !important;
   }
 }
 
