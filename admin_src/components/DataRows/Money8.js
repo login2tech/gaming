@@ -312,7 +312,7 @@ class MatchFinder extends React.Component {
                                   {team_1.map((id, i) => {
                                     return (
                                       <li key={id}>
-                                        <a href={'/uid/' + id} target="_blank">
+                                        <a href={'/gotouser/' + id} target="_blank">
                                           @{id}
                                         </a>
                                       </li>
@@ -339,7 +339,7 @@ class MatchFinder extends React.Component {
                                   {team_2.map((id, i) => {
                                     return (
                                       <li key={id}>
-                                        <a href={'/uid/' + id} target="_blank">
+                                        <a href={'/gotouser/' + id} target="_blank">
                                           @{id}
                                         </a>
                                       </li>
