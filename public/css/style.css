@@ -7639,3 +7639,8 @@ p.feed_post_content iframe {
     font-size: 20px !important;
     font-weight: bold !important;
 }
+
+.tour-stats  .amnt{
+
+    font-size: 15px;
+}

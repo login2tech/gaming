@@ -78,7 +78,7 @@ const SingleMoney8 = props => {
             <div className="tour-stats-block">
               <div className="tour-stats flex-3">
                 <small>ENTRY PER PLAYER</small>{' '}
-                <p>
+                <p class="amnt">
                   {match.match_type == 'free'
                     ? 'FREE'
                     : match.match_type == 'credits'

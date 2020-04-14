@@ -4,9 +4,11 @@ import {Link} from 'react-router';
 const moment = require('moment');
 // import {join_match} from '../../actions/match';
 import {saveScores} from '../../actions/tournament';
+import GameRules from '../Modules/GameRules';
 
 import game_user_ids from '../../../config/game_user_ids';
 import Messages from '../Modules/Messages';
+import MatchChat from '../Modules/MatchChat';
 
 class TMatchInfo extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class TMatchInfo extends React.Component {
       is_loaded: false,
       match: {
         tournament: {
-          game: {},
+          game: {title: ''},
           ladder: {}
         },
         team_1_info: {team_users: []},
@@ -845,8 +847,19 @@ class TMatchInfo extends React.Component {
                 <br />
               </div>
             </div>
+            <GameRules title={this.state.match.tournament.game.title} />
           </div>
         </section>
+        {this.state.match.status == 'pending' ? (
+          <MatchChat
+            team_1={this.state.match.team_1_players}
+            team_2={this.state.match.team_2_players}
+            match_type="tournament"
+            match_id={this.state.match.id}
+          />
+        ) : (
+          false
+        )}
       </div>
     );
   }
