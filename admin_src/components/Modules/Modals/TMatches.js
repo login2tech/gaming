@@ -176,10 +176,11 @@ class TMatches extends React.Component {
 
     rounds = JSON.parse(rounds);
     const orig_rounds = rounds;
-    rounds = rounds.rounds_calculated;
     if (!rounds.winner) {
       can_modify = true;
     }
+    rounds = rounds.rounds_calculated;
+
 
     let can_modify_round = 0;
     if (orig_rounds && orig_rounds.rounds_calculated) {
