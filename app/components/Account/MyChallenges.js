@@ -155,7 +155,7 @@ class MyChallenges extends React.Component {
             <div className="row">
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="mb-3 mt-3 pb-3">
-                  <h5 className="prizes_desclaimer">Challenges I received</h5>
+                  <h5 className="prizes_desclaimer">Challenges I Received</h5>
                   <div className="table_wrapper">
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
@@ -298,7 +298,7 @@ class MyChallenges extends React.Component {
 
               <div className="col-md-12 col-sm-12 col-xs-12">
                 <div className="mb-3 mt-3 pb-3">
-                  <h5 className="prizes_desclaimer">Challenges I sent</h5>
+                  <h5 className="prizes_desclaimer">Challenges I Sent</h5>
                   <div className="table_wrapper">
                     <table className="table table-striped table-ongray table-hover">
                       <thead>
