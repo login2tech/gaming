@@ -7647,3 +7647,20 @@ p.feed_post_content iframe {
 .text-date span:not(.float-right) a {
     font-size: 18px;
 }
+
+.cms ul {
+    list-style: circle;
+    margin-left: 40px;
+}
+
+.cms strong {
+    font-size: 20px;
+}
+
+.cms .table-striped tbody tr:nth-of-type(odd) {
+    background: #272727;
+}
+
+.cms .table-bordered td,.cms .table-bordered th {
+    border: 1px solid #3e3e3e;
+}

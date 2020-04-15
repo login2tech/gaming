@@ -54,7 +54,7 @@ class CMSPage extends React.Component {
 
         <section className="contet_part">
           <div className="container">
-            <div className="row">
+            <div className="row cms">
               <div
                 className={
                   this.props.params.slug == 'about' ||
