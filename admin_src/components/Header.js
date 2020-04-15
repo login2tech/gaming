@@ -190,7 +190,7 @@ class Header extends React.Component {
                           window.location.reload();
                         }}
                       >
-                        Money 8
+                        Mix&Match
                       </a>
                     </li>
                     <li>
@@ -396,7 +396,7 @@ class Header extends React.Component {
                           window.location.reload();
                         }}
                       >
-                        money 8
+                        Mix&Match
                       </a>
                     </li>
                     <li>

@@ -201,7 +201,7 @@ class MatchFinder extends React.Component {
         <div className="panel">
           <div className="panel-body">
             <h2 style={{padding: 0, margin: 0}}>
-              Money 8 Matches{' '}
+              Mix&Match Matches{' '}
               {this.props.params && this.props.params.team_id
                 ? ' of team #' + this.props.params.team_id
                 : ''}
@@ -228,8 +228,8 @@ class MatchFinder extends React.Component {
                     <th>Result</th>
                     <th>Match type</th>
 
-                      <th>Mix</th>
-                      <th>Match</th>
+                      <th>Team Mix</th>
+                      <th>Team Match</th>
                     <th>Actions</th>
 
                     <th>Mix Result</th>
@@ -413,7 +413,7 @@ class MatchFinder extends React.Component {
                                         this.resolveDispute(u.id, 'team_1');
                                       }}
                                     >
-                                      Resolve dispute by giving win to team 1
+                                      Resolve dispute by giving win to Team Mix
                                     </a>
                                   </li>
                                 ) : (
@@ -429,7 +429,7 @@ class MatchFinder extends React.Component {
                                         this.resolveDispute(u.id, 'team_2');
                                       }}
                                     >
-                                      Resolve dispute by giving win to team 2
+                                      Resolve dispute by giving win to Team Match
                                     </a>
                                   </li>
                                 ) : (
