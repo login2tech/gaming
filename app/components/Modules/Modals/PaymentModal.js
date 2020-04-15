@@ -56,7 +56,8 @@ class PaymentModal extends React.Component {
 
         },
         createOrder:  (data, actions) =>{
-          let charge_amount = parseInt( (amount_pending + 0.30) * 100 / 97 );
+          let charge_amount = ((amount_pending + 0.30) * 100 / 97 );
+          // let charge_amount = parseInt( (amount_pending + 0.30) * 100 / 97 );
           return actions.order.create({
             purchase_units: [{
               amount: {
@@ -193,7 +194,7 @@ class PaymentModal extends React.Component {
     const amount_pending = this.props.amount;
     // parseFloat(data.invoice_amount ? data.invoice_amount : 0) -
     // parseFloat(data.paid_offline ? data.paid_offline : 0);
-  let charge_amount = parseInt( (amount_pending + 0.30) * 100 / 97 );
+  let charge_amount = ( (amount_pending + 0.30) * 100 / 97 ) - amount_pending;
     return (
       <div className="">
         <form onSubmit={this.handleCheckout.bind(this)} className="field_form">
