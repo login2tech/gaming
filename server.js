@@ -74,14 +74,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.set('port', process.env.PORT || 3000);
 const IS_PROD = process.env.IS_PROD || 'no';
-// const forceDomain = require('forcedomain');
+const forceDomain = require('forcedomain');
 
-if (IS_PROD == 'YES') {
-  // app.use(forceDomain({
-  //     hostname: 'www.thinkscademy.com',
-  //     protocol: 'https'
-  //   }));
-}
+// if (IS_PROD == 'YES') {
+app.use(forceDomain({
+  hostname: 'ocg-5ms.herokuapp.com',
+  protocol: 'https'
+}));
+// }
 app.use(compression());
 // app.use(logger('dev'));
 app.use(bodyParser.json());
