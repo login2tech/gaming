@@ -7643,3 +7643,7 @@ p.feed_post_content iframe {
 .text-bold{
   font-weight: bold;
 }
+
+.text-date span:not(.float-right) a {
+    font-size: 18px;
+}
