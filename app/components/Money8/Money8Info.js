@@ -344,6 +344,8 @@ class Money8Info extends React.Component {
     if (!this.state.is_loaded) {
       return false;
     }
+    if(!this.props.user)
+      return false;
     if (
       this.state.match.status == 'disputed' ||
       this.state.match.status == 'complete'
