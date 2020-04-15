@@ -417,7 +417,9 @@ class Money8Info extends React.Component {
                   <p>How many rounds did your team win?</p>
                   <input
                     className="form-control "
-                    type="text"
+                    type="number"
+                    max="3"
+                    min="0"
                     name="my_score"
                     id="my_score"
                     value={this.state.my_score}
@@ -433,7 +435,9 @@ class Money8Info extends React.Component {
                   <p>How many rounds did the oppenent team win?</p>
                   <input
                     className="form-control "
-                    type="text"
+                    type="number"
+                    max="3"
+                    min="0"
                     name="their_score"
                     id="their_score"
                     value={this.state.their_score}
