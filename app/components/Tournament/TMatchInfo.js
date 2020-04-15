@@ -494,7 +494,7 @@ class TMatchInfo extends React.Component {
                 <>
                   <br />
                   <strong>Host 2: </strong>
-                  {this.state.match.team_2_info.title}
+                  {this.state.match.team_2_info ? this.state.match.team_2_info.title  :'BYE'}
                 </>
               ) : (
                 false

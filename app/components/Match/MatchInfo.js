@@ -1003,31 +1003,34 @@ class MatchInfo extends React.Component {
               </div>
             );
           })}
-          <div className="col-md-4 col-6 textcap" >
-            <span>{'Map Host'}</span>
-            <p>
-              <strong>Host 1: </strong>
-              {this.state.match.team_1_info.title}
-              {game_settings.match_length == 'Best Of 3' ? (
-                <>
-                  <br />
-                  <strong>Host 2: </strong>
-                  {this.state.match.team_2_info.title}
-                </>
-              ) : (
-                false
-              )}
-              {game_settings.match_length == 'Best Of 3' ? (
-                <>
-                  <br />
-                  <strong>Host 3: </strong>
-                  {this.state.match.team_1_info.title}
-                </>
-              ) : (
-                false
-              )}
-            </p>
-          </div>
+          {
+            this.state.match.team_2_id ? <div className="col-md-4 col-6 textcap" >
+              <span>{'Map Host'}</span>
+              <p>
+                <strong>Host 1: </strong>
+                {this.state.match.team_1_info.title}
+                {game_settings.match_length == 'Best Of 3' ? (
+                  <>
+                    <br />
+                    <strong>Host 2: </strong>
+                    {this.state.match.team_2_info.title}
+                  </>
+                ) : (
+                  false
+                )}
+                {game_settings.match_length == 'Best Of 3' ? (
+                  <>
+                    <br />
+                    <strong>Host 3: </strong>
+                    {this.state.match.team_1_info.title}
+                  </>
+                ) : (
+                  false
+                )}
+              </p>
+            </div> : false
+          }
+
         </div>
         {this.renderRequestCancel()}
         {this.renderTicketCreate()}
