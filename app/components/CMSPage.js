@@ -25,6 +25,14 @@ class CMSPage extends React.Component {
             title: json.cms_page.title,
             content: json.cms_page.content
           });
+          setTimeout(function(){
+            if(window.location.hash && window.location.hash!='#')
+            if(document.getElementById(window.location.hash.replace('#', '')))document.getElementById(window.location.hash.replace('#', '')).scrollIntoView({
+              behavior: 'smooth',
+              block: 'end',
+              inline: 'nearest'
+            });
+          }, 200)
         } else {
           this.setState({
             is_page: false,
