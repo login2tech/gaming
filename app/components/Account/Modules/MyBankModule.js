@@ -18,8 +18,7 @@ class MyBankModule extends React.Component {
             disabled={
               this.props.user && (
                 this.props.user.state == 'Arizona' ||
-                this.props.user.state == 'Connecticut' ||
-                this.props.user.state == 'Iowa' 
+                this.props.user.state == 'Connecticut'
               )
             }
              class="col-md-6"
@@ -29,8 +28,7 @@ class MyBankModule extends React.Component {
             disabled={
               this.props.user && (
                 this.props.user.state == 'Arizona' ||
-                this.props.user.state == 'Connecticut' ||
-                this.props.user.state == 'Iowa' 
+                this.props.user.state == 'Connecticut'
               )
             }
              class="col-md-6"
@@ -42,8 +40,7 @@ class MyBankModule extends React.Component {
             disabled={
               this.props.user && (
                 this.props.user.state == 'Arizona' ||
-                this.props.user.state == 'Connecticut' ||
-                this.props.user.state == 'Iowa' 
+                this.props.user.state == 'Connecticut'  
               )
             }
              class="col-md-6  offset-md-3"

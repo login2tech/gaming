@@ -29,8 +29,7 @@ class Shop extends React.Component {
             disabled={
               this.props.user && (
                 this.props.user.state == 'Arizona' ||
-                this.props.user.state == 'Connecticut' ||
-                this.props.user.state == 'Iowa'
+                this.props.user.state == 'Connecticut'
               )
             }
             id={this.props.user ? this.props.user.id : null}
@@ -42,8 +41,7 @@ class Shop extends React.Component {
               disabled={
                 this.props.user && (
                   this.props.user.state == 'Arizona' ||
-                  this.props.user.state == 'Connecticut' ||
-                  this.props.user.state == 'Iowa'
+                  this.props.user.state == 'Connecticut'
                 )
               }
               class="col-md-4"
@@ -52,8 +50,7 @@ class Shop extends React.Component {
               disabled={
                 this.props.user && (
                   this.props.user.state == 'Arizona' ||
-                  this.props.user.state == 'Connecticut' ||
-                  this.props.user.state == 'Iowa'
+                  this.props.user.state == 'Connecticut'
                 )
               }
               class="col-md-4"
@@ -62,8 +59,7 @@ class Shop extends React.Component {
               disabled={
                 this.props.user && (
                   this.props.user.state == 'Arizona' ||
-                  this.props.user.state == 'Connecticut' ||
-                  this.props.user.state == 'Iowa'
+                  this.props.user.state == 'Connecticut'  
                 )
               }
               class="col-md-4"
