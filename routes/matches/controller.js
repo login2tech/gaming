@@ -961,11 +961,9 @@ exports.saveScore = function(req, res, next) {
         const team_2_score_reverse = team_2_score[1] + '-' + team_2_score[0];
         if (val.team_1_result != team_2_score_reverse) {
 
-
-
           let team_1_result_crt = parseInt( val.team_1_result.split('-')[0] ) > parseInt( val.team_1_result.split('-')[1] ) ? 'team_1' :'team_2';
-          let team_2_result_crt = parseInt( val.team_1_result.split('-')[1] ) > parseInt( val.team_1_result.split('-')[0] ) ? 'team_1' :'team_2';
-
+          let team_2_result_crt = parseInt( val.team_2_result.split('-')[1] ) > parseInt( val.team_2_result.split('-')[0] ) ? 'team_1' :'team_2';
+          console.log(team_1_result_crt, team_2_result_crt);
           if(team_1_result_crt ==  team_2_result_crt)
           {
             val.result = team_2_result_crt;
@@ -974,7 +972,6 @@ exports.saveScore = function(req, res, next) {
             val.status = 'disputed';
             val.result = 'disputed';
           }
-
 
         } else {
           const tmp = val.team_1_result.split('-');
