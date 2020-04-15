@@ -38,11 +38,12 @@ class PostComments extends React.Component {
         },
         (result, post) => {
           if (result) {
-            const posts = this.state.posts;
-            this.props.on_add && this.props.on_add();
-            posts.unshift(post);
+            // const posts = this.state.posts;
+            post.user = this.props.user;
+            this.props.on_add && this.props.on_add(post);
+            // posts.unshift(post);
             this.setState({
-              posts: posts,
+              // posts: posts,
               new_post_content: ''
             });
           }

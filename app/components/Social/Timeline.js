@@ -368,7 +368,13 @@ class Timeline extends React.Component {
             <PostComments
               comments={post.comments}
               post_id={post.id}
-              on_add={() => {
+              on_add={(cmnt) => {
+                if(post.comments)
+                {
+                  post.comments.unshift(cmnt);
+                }else{
+                  post.comments = [cmnt];
+                }
                 this.setState({added_comments: this.state.added_comments + 1});
               }}
               is_single={this.props.is_single}
