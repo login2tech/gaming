@@ -231,7 +231,7 @@ class Timeline extends React.Component {
             <Link
               to={
                 '/u/' +
-                (post.user ? post.user.username : this.props.user ? this.props.user ? this.props.user.username : '')
+                (post.user ? post.user.username : this.props.user ? this.props.user.username : '')
               }
             >
               @{post.user ? post.user.username : ''}
