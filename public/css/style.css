@@ -3160,7 +3160,7 @@ a.bttn_submit:hover {
 .bootstrap-datetimepicker-widget button[data-action] {
     padding: 6px !important;
 }
- 
+
 
 .baris {
     position: absolute;
@@ -7639,4 +7639,7 @@ p.feed_post_content iframe {
 .tour-stats  .amnt{
 
     font-size: 15px;
+}
+.text-bold{
+  font-weight: bold;
 }

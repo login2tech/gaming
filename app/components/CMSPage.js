@@ -59,7 +59,7 @@ class CMSPage extends React.Component {
                 className={
                   this.props.params.slug == 'about' ||
                   this.props.params.slug == 'about-us'
-                    ? 'has-shadow col-md-6 offset-md-3 p-5 col-sm-12 col-xs-12'
+                    ? 'has-shadow col-md-8 offset-md-2 p-5 col-sm-12 col-xs-12 text-center text-bold'
                     : 'col-md-12 col-sm-12 col-xs-12'
                 }
               >
