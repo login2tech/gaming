@@ -56,16 +56,11 @@ class PaymentModal extends React.Component {
 
         },
         createOrder:  (data, actions) =>{
-
+          let charge_amount = parseInt( (amount_pending + 0.30) * 100 / 97 );
           return actions.order.create({
             purchase_units: [{
               amount: {
-                value: (
-                  parseFloat(amount_pending) +
-                  (
-                    (amount_pending * 3) / 100
-                  )
-                ).toFixed(2)
+                value: charge_amount.toFixed(2)
               }
             }],
             application_context: {
@@ -198,7 +193,7 @@ class PaymentModal extends React.Component {
     const amount_pending = this.props.amount;
     // parseFloat(data.invoice_amount ? data.invoice_amount : 0) -
     // parseFloat(data.paid_offline ? data.paid_offline : 0);
-
+  let charge_amount = parseInt( (amount_pending + 0.30) * 100 / 97 );
     return (
       <div className="">
         <form onSubmit={this.handleCheckout.bind(this)} className="field_form">
@@ -213,7 +208,7 @@ class PaymentModal extends React.Component {
             <p>{this.props.msg}</p>
             <p>
               <strong>Amount:</strong> ${amount_pending} + $
-              {((amount_pending * 3) / 100).toFixed(2)} Service Charge
+              {charge_amount.toFixed(2)} Gateway Charge
             </p>
             <div className="form-group">
               <label htmlFor="name_on_card" className="  form-control-label  ">

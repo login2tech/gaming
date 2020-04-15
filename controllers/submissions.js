@@ -239,9 +239,12 @@ exports.newSubmission = function(req, res, next) {
         data.selected_plan = plan.plan_name;
         data.jury_size = plan.jury_count;
 
+        let charge_amount = parseInt(((plan.cost + 0.30) * 100 / 97 ) * 100);
+
+
         stripe.charges
           .create({
-            amount: plan.cost * 100 + parseInt(plan.cost * 3),
+            amount: charge_amount,
             currency: 'usd',
             description: 'Charge for Submission for plan ' + plan.plan_name,
             source: data.stripe_token

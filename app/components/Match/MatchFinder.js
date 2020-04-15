@@ -8,6 +8,7 @@ import SingleMatch from './SingleMatch';
 // import Messages from '../Modules/Messages';
 
 class MatchFinder extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {

@@ -977,9 +977,10 @@ exports.deduct_money = function(req, res, next) {
   ) {
     next();
   } else {
+    let charge_amount = parseInt(((cost + 0.30) * 100 / 97 ) * 100);
     stripe.charges.create(
       {
-        amount: amount * 100 + parseInt(amount * 3),
+        amount: charge_amount,
         currency: 'usd',
         source: req.body.stripe_token,
         description: 'Charge for Reset of  ' + req.body.duration

@@ -33,8 +33,8 @@ const addMembershipLog = function(plan, action, uid) {
 };
 // TODO: Change plan ids for production. not using env vars here.
 const stripe_plans = {
-  gold: 'ocg_gold',
-  silver: 'ocg_silver'
+  gold: 'ocg_gold_member',
+  silver: 'ocg_silver_member'
 };
 
 const getDoubleXPAmount = function() {
@@ -295,10 +295,10 @@ exports.getMoneyForUnameChange = function(req, res, next) {
     // return;
   }
   // use token to de
-
+  let charge_amount = parseInt(((cost + 0.30) * 100 / 97 ) * 100);
   stripe.charges.create(
     {
-      amount: cost * 100 + parseInt(cost * 3),
+      amount: charge_amount,
       currency: 'usd',
       source: req.body.change_username_token,
       description: 'Charge for Changing username by User Id #' + req.user.id
@@ -358,9 +358,10 @@ exports.deduct_money = function(req, res, next) {
   ) {
     next();
   } else {
+    let charge_amount = parseInt(((cost + 0.30) * 100 / 97 ) * 100);
     stripe.charges.create(
       {
-        amount: cost * 100 + parseInt(cost * 3),
+        amount: charge_amount,
         currency: 'usd',
         source: req.body.stripe_token,
         description: 'Charge for adding' + msg + ' by user Id #' + req.user.id
