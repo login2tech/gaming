@@ -157,7 +157,9 @@ class Feed extends React.Component {
                       Latest Posts
                       {hashtag ? ' - #' + hashtag.toLowerCase() : ''}
                     </h4>
-
+                    {
+                      this.props.user ?
+                    
                     <NewPost
                       user_info={this.props.user}
                       onSubmit={post => {
@@ -178,6 +180,9 @@ class Feed extends React.Component {
                         });
                       }}
                     />
+                    :  <div className="alert alert-warning">
+                      Login to submit a new post.
+                    </div> }
 
                     {this.state.loaded && this.state.posts.length == 0 ? (
                       <div className="alert alert-warning">

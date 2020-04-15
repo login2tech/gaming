@@ -31,6 +31,8 @@ class TeamInfo extends React.Component {
   }
 
   meInTeam() {
+    if(!this.props.user)
+    return false;
     const me = this.props.user.id;
     if (this.state.team_info.team_users) {
       const tu = this.state.team_info.team_users;
@@ -426,6 +428,8 @@ class TeamInfo extends React.Component {
   }
 
   currentUserInTeam() {
+    if(!this.props.user)
+    return false;
     return this.state.team_info.team_creator == this.props.user.id
       ? true
       : false;
