@@ -136,6 +136,13 @@ class Footer extends React.Component {
                     <li>
                       <Link to="/faq">FAQs</Link>
                     </li>
+                    <li>
+                      <Link to="/p/privacy">Privacy Policy</Link>
+                    </li>
+                    <li>
+                      <Link to="/p/terms">Terms of Use</Link>
+                    </li>
+
                   </ul>
                 </div>
               </div>
