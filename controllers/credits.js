@@ -348,7 +348,7 @@ exports.deduct_money = function(req, res, next) {
         cost = points_to_add;
     }
   }else{
-    cost = points_to_add;
+    cost = parseFloat(points_to_add);
     msg = init_transaction_mode;
   }
 
