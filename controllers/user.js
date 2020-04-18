@@ -330,7 +330,7 @@ exports.accountPic = function(req, res, next) {
         });
       })
       .catch(function(err) {
-        // console.log(err);
+        console.log(err);
         res.status(400).send({
           msg: 'Some error occoured'
         });
