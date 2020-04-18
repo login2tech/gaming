@@ -39,7 +39,8 @@ class PaymentModal extends React.Component {
   }
 
   componentDidMount() {
-    const amount_pending = this.props.amount;
+    let amount_pending = this.props.amount;
+    amount_pending=parseFloat(amount_pending)
 
     this.handleStripeCreation();
     if(this.props.disable_paypal)
@@ -191,7 +192,7 @@ class PaymentModal extends React.Component {
 
   render() {
     // const {data} = this.props;
-    const amount_pending = this.props.amount;
+    let amount_pending = this.props.amount;
     amount_pending = parseFloat(amount_pending);
     // parseFloat(data.invoice_amount ? data.invoice_amount : 0) -
     // parseFloat(data.paid_offline ? data.paid_offline : 0);
