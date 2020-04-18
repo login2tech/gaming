@@ -183,7 +183,7 @@ const SingleMatch = props => {
               to={matchLink('/m/' + match.id)}
               className="match-accept-link btn btn-primary"
             >
-              <span className="wager-hide-tablet">Accept</span>
+              <span className="wager-hide-tablet">{txt}</span>
             </Link>
             {show_cancel ? (
               showCancelInit ? (

@@ -143,7 +143,7 @@ class Footer extends React.Component {
                       <Link to="/p/privacy#ccpa">Privacy Policy - CCPA</Link>
                     </li>
                     <li>
-                      <Link to="/p/terms">Terms of Use</Link>
+                      <Link to="/p/terms">Terms of Service</Link>
                     </li>
 
                   </ul>
