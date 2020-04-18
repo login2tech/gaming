@@ -1633,7 +1633,7 @@ exports.pendingScoreMatches = function(req, res, next) {
         let players = [];
         let team_score = '';
         if (teams.indexOf(match.team_1_id) > -1) {
-          team_score = match.team_2_result;
+          team_score = match.team_1_result;
           console.log('team_1');
           players = match.team_1_players.split('|');
         } else if (teams.indexOf(match.team_2_id) > -1) {
