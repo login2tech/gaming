@@ -6669,7 +6669,7 @@ media query starts here
     }
 
     span.social_btns span {
-        display: inline-block;
+        display: inline-block;min-height: 50px
     }
 
     p.feed_post_content iframe {
@@ -7607,6 +7607,10 @@ media query starts here
   }
   .text-center-on-phone{
     text-align: center !important;
+  }
+  ul.timeline li.comment {
+      margin-right: 0;
+      margin-left: 0;
   }
 }
 

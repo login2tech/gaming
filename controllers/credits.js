@@ -776,7 +776,7 @@ exports.stripe_hook = function(req, res, next) {
               pndng_uname_changes: prime_obj.cancel_requested
                 ? usr.get('pndng_uname_changes')
                 : 1
-            })
+            }, {patch: true})
             .then(function() {
               if (prime_obj.cancel_requested) {
                 addMembershipLog(
@@ -824,7 +824,7 @@ exports.stripe_hook = function(req, res, next) {
               prime_obj: {},
               pndng_uname_changes: 0,
               prime_type: ''
-            })
+            }, {patch: true})
             .then(function() {
               //
               addMembershipLog(prime_type, 'stop', usr.get('id'));
@@ -887,7 +887,8 @@ exports.buyMembership = function(req, res, next) {
     new User()
       .where({id: req.user.id})
       .save(user_obj_to_save, {
-        method: 'update'
+        method: 'update',
+        patch:true
       })
       .then(function(user) {
         addMembershipLog(plan, 'add', req.user.id);

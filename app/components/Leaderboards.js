@@ -158,7 +158,7 @@ class Leaderboards extends React.Component {
                           <th>Rank</th>
                           <th>User</th>
                           <th className="d-none d-md-table-cell">&nbsp;</th>
-                          <th data-breakpoints={showing == 'xp' ? '' : 'xs sm'}>
+                          <th className={showing == 'xp' ? '' : 'd-none d-md-table-cell'}>
                             {showing == 'xp' ? (
                               <span className="text-blue fa fa-arrow-down m-r-10" />
                             ) : (
@@ -167,8 +167,8 @@ class Leaderboards extends React.Component {
                             XP Earned
                           </th>
                           <th
-                            data-breakpoints={
-                              showing == 'earnings' ? '' : 'xs sm'
+                            className={
+                              showing == 'earnings' ? '' : 'd-none d-md-table-cell'
                             }
                           >
                             {showing == 'earnings' ? (
@@ -219,8 +219,10 @@ class Leaderboards extends React.Component {
                                     }
                                   />
                                 </td>
-                                <td>{k.life_xp}</td>
-                                <td>${k.life_earning}</td>
+                                <td className={showing == 'xp' ? '' : 'd-none d-md-table-cell'}>{k.life_xp}</td>
+                                <td className={
+                                  showing == 'earnings' ? '' : 'd-none d-md-table-cell'
+                                }>${k.life_earning}</td>
                                 <td className="d-none d-md-table-cell">
                                   <span className="text-success">
                                     {k.wins ? k.wins : '0'} W
@@ -286,6 +288,21 @@ class Leaderboards extends React.Component {
                                             />
                                           </td>
                                         </tr>
+                                        <tr>
+                                          <td>
+                                          {
+                                            showing == 'xp' ?
+                                             'Earning' : 'Xp Earned'
+                                          }
+                                          </td>
+                                          <td>
+                                          {
+                                            showing == 'xp' ?
+                                             '$'+k.life_earning : k.life_xp
+                                          }
+                                         </td>
+                                        </tr>
+
                                         <tr>
                                           <td>Career Record</td>
                                           <td>
