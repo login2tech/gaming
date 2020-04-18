@@ -226,7 +226,7 @@ const __addNewCredit_points = function(
   // console.log(type);
   new User({id: user_id}).fetch().then(function(user) {
     const prev_points = user.get(type);
-    const new_points = parseFloat(prev_points) + parseFloat(points);
+    let new_points = parseFloat(prev_points) + parseFloat(points);
     if( init_transaction_mode == 'credit'  )
     {
       new_points = parseInt(new_points);
