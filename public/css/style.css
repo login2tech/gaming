@@ -6665,7 +6665,8 @@ media query starts here
     }
 
     span.social_btns button {
-        margin-bottom: 10px;
+        margin-bottom: 10px;    height: auto;
+    max-height: 28px;
     }
 
     span.social_btns span {

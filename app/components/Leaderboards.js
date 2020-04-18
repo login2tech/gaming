@@ -127,7 +127,7 @@ class Leaderboards extends React.Component {
                     XP
                   </a>
                 </li>
-                <li className={this.state.showing == 'earning' ? 'active' : ''}>
+                <li className={this.state.showing == 'earnings' ? 'active' : ''}>
                   <a
                     href="#"
                     onClick={e => {
