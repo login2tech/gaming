@@ -1567,10 +1567,10 @@ exports.pendingDisputesCount = function(req, res, next) {
         let players = [];
         let team_score = '';
         if (teams.indexOf(match.team_1_id) > -1) {
-          team_score = match.team_1_score;
+          team_score = match.team_1_result;
           players = match.team_1_players.split('|');
         } else if (teams.indexOf(match.team_2_id) > -1) {
-          team_score = match.team_2_score;
+          team_score = match.team_2_result;
           players = match.team_2_players.split('|');
         }
 
@@ -1627,17 +1627,23 @@ exports.pendingScoreMatches = function(req, res, next) {
         return res.status(200).send({ok: true, any_pending: false});
       }
       items = items.toJSON();
+      console.log(items);
       for (let i = 0; i < items.length; i++) {
         const match = items[i];
         let players = [];
         let team_score = '';
         if (teams.indexOf(match.team_1_id) > -1) {
           team_score = match.team_1_score;
+          console.log('team_1');
           players = match.team_1_players.split('|');
         } else if (teams.indexOf(match.team_2_id) > -1) {
           team_score = match.team_2_score;
+          console.log('team_2');
           players = match.team_2_players.split('|');
         }
+
+        console.log(team_score);
+        console.log(players);
 
         players = players.map(function(l) {
           return parseInt(l);

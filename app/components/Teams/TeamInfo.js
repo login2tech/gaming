@@ -1661,7 +1661,7 @@ class TeamInfo extends React.Component {
                                 <td>
                                 <Link to={'/tournament-match/' + match.id}>
                                   View <span className="h-o-p">Match</span>
-                                </Link><span  className="h-o-p">  <Link class="pl-3" to={'/t/' + match.tournament_id}>
+                                </Link><span  className="h-o-p">  <Link className="pl-3" to={'/t/' + match.tournament_id}>
                                     View Tournament
                                   </Link></span>
                                 </td>

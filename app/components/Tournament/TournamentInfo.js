@@ -1162,7 +1162,7 @@ class TournamentInfo extends React.Component {
         <tr key={match.id}>
           <td>
           {
-            teams[0] ?   <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link> : <span class="text-primary">BYE</span>
+            teams[0] ?   <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link> : <span className="text-primary">BYE</span>
           }
           {' '}
             {match.result == 'team_1' ? (
@@ -1175,7 +1175,7 @@ class TournamentInfo extends React.Component {
           </td>
           <td>
           {
-            teams[1] ? <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>:<span class="text-primary">BYE</span>
+            teams[1] ? <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>:<span className="text-primary">BYE</span>
           }
             {' '}
             {match.result == 'team_2' ? (

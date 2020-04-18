@@ -82,6 +82,10 @@ class Game extends React.Component {
     this.fetchGame();
   }
 
+componentWillUnmount(){
+  if(this.intr)
+  clearInterval(this.intr);
+}
   fetchGame() {
     fetch('/api/games/single/' + this.props.params.id)
       .then(res => res.json())
@@ -286,7 +290,7 @@ class Game extends React.Component {
               total_done: json.total_done
             },
             () => {
-              setInterval(this.reloadChats.bind(this), 2000);
+          this.intr =     setInterval(this.reloadChats.bind(this), 2000);
               this.fetchLeaderBoards();
             }
           );

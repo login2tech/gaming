@@ -168,7 +168,7 @@ class ProfileHeader extends React.Component {
       return (
         <div>
           <div className="profile-header-name profmoblfix">@{user_info.username}</div>
-            <div class="row m-0">
+            <div className="row m-0">
           {this.props.user &&
           this.props.is_loaded &&
           this.props.user.id != user_info.id &&

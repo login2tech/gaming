@@ -43,7 +43,7 @@ const SingleMatch = props => {
       <div className="live-wager-row">
         <div>
           <div className="game-cover-block">
-            <span class="game_img_mfndr">
+            <span className="game_img_mfndr">
               <img className="game-logo float-left" src={match.game.image_url} />
             </span>{' '}
             {match.game.title} - {match.ladder.title}

@@ -49,7 +49,7 @@ class ClipOfTheWeek extends React.Component {
               </li>
            ) : this.state.month_famous ? <Timeline disableSet post={this.state.month_famous} /> :
            (
-             <div class="alert alert-warning">Clip not available.</div>
+             <div className="alert alert-warning">Clip not available.</div>
            )}
            </>
 
@@ -80,7 +80,7 @@ class ClipOfTheWeek extends React.Component {
            </li>
         ) : this.state.week_famous ? <Timeline disableSet post={this.state.week_famous} /> :
         (
-          <div class="alert alert-warning">Clip not available.</div>
+          <div className="alert alert-warning">Clip not available.</div>
         )}
         </>
     );

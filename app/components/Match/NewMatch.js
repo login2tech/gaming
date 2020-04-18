@@ -779,14 +779,14 @@ class newMatch extends React.Component {
                                         ]
                                       }
                                     />
-                                    <span class="d-none d-md-inline-block">{
+                                    <span className="d-none d-md-inline-block">{
                                       this.tag_names[
                                         this.state.team_info.ladder.gamer_tag
                                       ]
                                     }</span>
                                   </th>
                                   <th>Eligibility</th>
-                                  <th><span class="d-none d-md-inline-block">Include</span></th>
+                                  <th><span className="d-none d-md-inline-block">Include</span></th>
                                 </tr>
                               </thead>
                               <tbody>
