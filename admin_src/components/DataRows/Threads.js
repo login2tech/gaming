@@ -28,7 +28,7 @@ class Threads extends React.Component {
 
   loadData() {
     Fetcher.get(
-      '/api/admin/listPaged/threads?related=topic&page=' + this.state.page
+      '/api/admin/listPaged/threads?page=' + this.state.page
     )
       .then(resp => {
         if (resp.ok) {
