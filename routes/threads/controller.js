@@ -11,7 +11,7 @@ exports.listItem = function(req, res, next) {
     withRelated: [
       {
         user: function(qb) {
-          qb.column(['id', 'username']);
+          qb.column(['id', 'username' , 'profile_picture']);
         }
       }
     ]
