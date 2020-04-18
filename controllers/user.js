@@ -977,7 +977,7 @@ exports.deduct_money = function(req, res, next) {
   ) {
     next();
   } else {
-    let charge_amount = parseInt(((cost + 0.30) * 100 / 97 ) * 100);
+    let charge_amount = parseInt(((amount + 0.30) * 100 / 97 ) * 100);
     stripe.charges.create(
       {
         amount: charge_amount,
