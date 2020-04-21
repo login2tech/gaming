@@ -75,7 +75,6 @@ const giveCashToTeam = function(team_id, input_val, team_members, match_id) {
   let team_members_count = team_members.length;
   let single_t  = team_members_count / input_val;
   single_t = parseFloat(parseFloat(single_t).toFixed(2));
-  money =
   for (let i = team_members.length - 1; i >= 0; i--) {
     giveCashToUser(parseInt(team_members[i]), single_t, match_id);
   }
