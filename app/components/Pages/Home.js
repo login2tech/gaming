@@ -108,7 +108,7 @@ class Home extends React.Component {
 
             <div className="row no-gutters">
               {this.state.games.map((games, i) => {
-                if (i > 6) {
+                if (i > 10) {
                   return false;
                 }
                 return (
