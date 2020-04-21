@@ -332,7 +332,7 @@ class Header extends React.Component {
                       to="/dashboard"
                       className="profile_menu_item"
                     >
-                      Dashboard
+                      Edit Profile
                     </Link>
                   </li>
                   <li>
