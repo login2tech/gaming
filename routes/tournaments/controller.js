@@ -183,7 +183,7 @@ const getBracket = function(participants) {
   return [matches, rounds, bracketSize, requiredByes];
 };
 
-const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, tournament) {
+const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, started_at, tournament) {
 
 
   let tour_game_settings = typeof tournament.game_settings == 'string' ? JSON.parse(tournament.game_settings) : tournament.game_settings;

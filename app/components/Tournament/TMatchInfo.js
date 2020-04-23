@@ -464,7 +464,7 @@ class TMatchInfo extends React.Component {
           {
             match_settings && match_settings.map_1 ?
             <>
-              <div className="col-md-4 col-6 textcap" key={k}>
+              <div className="col-md-4 col-6 textcap" >
                 <span>{'Maps'}</span>
                 <p>
                   <strong>Map 1: </strong>
