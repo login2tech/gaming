@@ -186,7 +186,7 @@ const getBracket = function(participants) {
 const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, tournament) {
 
 
-  let tour_game_settings = typeof tournament_game_settings == 'string' ? JSON.parse(tournament_game_settings) : tournament_game_settings;
+  let tour_game_settings = typeof tournament.game_settings == 'string' ? JSON.parse(tournament.game_settings) : tournament.game_settings;
   let match_game_settings = {};
   if(tournament.game_id == 3)
   {
