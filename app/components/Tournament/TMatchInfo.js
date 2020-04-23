@@ -406,6 +406,15 @@ class TMatchInfo extends React.Component {
     }
     const game_settings_keys = Object.keys(game_settings);
 
+
+    let match_settings = match.game_settings
+      ? JSON.parse(match.game_settings)
+      : {};
+    if (!match_settings) {
+      match_settings = {};
+    }
+    // const match_settings_keys = Object.keys(match_settings);
+
     return(
       <div className={
         'list_pad ' + (vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')
@@ -438,49 +447,11 @@ class TMatchInfo extends React.Component {
               k == 'match_available' ||
               k == 'match_regions' ||
               k == 'map_2' ||
-              k == 'map_3'
+              k == 'map_3' || k == 'map_1'
             ) {
               return false;
             }
-            if (
-              k == 'map_1' &&
-              this.state.match.team_2 &&
-              this.state.match.team_2 != ''
-            ) {
-              return (
-                <>
-                  <div className="col-md-4 col-6 textcap" key={k}>
-                    <span>{'Maps'}</span>
-                    <p>
-                      <strong>Map 1: </strong>
-                      {game_settings.map_1}
-                      {game_settings.map_2 ? (
-                        <>
-                          <br />
-                          <strong>Map 2: </strong>
-                          {game_settings.map_2}
-                        </>
-                      ) : (
-                        false
-                      )}
-                      {game_settings.map_3 ? (
-                        <>
-                          <br />
-                          <strong>Map 3: </strong>
-                          {game_settings.map_3}
-                        </>
-                      ) : (
-                        false
-                      )}
-                    </p>
-                  </div>
 
-                </>
-              );
-            }
-            if (k == 'map_1') {
-              return false;
-            }
             const m = k.replace(new RegExp('_', 'g'), ' ');
             return (
               <div className="col-md-4 col-6 textcap" key={k}>
@@ -489,6 +460,38 @@ class TMatchInfo extends React.Component {
               </div>
             );
           })}
+
+          {
+            match_settings && match_settings.map_1 ?
+            <>
+              <div className="col-md-4 col-6 textcap" key={k}>
+                <span>{'Maps'}</span>
+                <p>
+                  <strong>Map 1: </strong>
+                  {match_settings.map_1}
+                  {match_settings.map_2 ? (
+                    <>
+                      <br />
+                      <strong>Map 2: </strong>
+                      {match_settings.map_2}
+                    </>
+                  ) : (
+                    false
+                  )}
+                  {match_settings.map_3 ? (
+                    <>
+                      <br />
+                      <strong>Map 3: </strong>
+                      {match_settings.map_3}
+                    </>
+                  ) : (
+                    false
+                  )}
+                </p>
+              </div>
+            </>
+            : false
+          }
           <div className="col-md-4 col-6 textcap" >
             <span>{'Map Host'}</span>
             <p>

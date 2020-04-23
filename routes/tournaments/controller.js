@@ -32,7 +32,6 @@ const giveCashToUser = function(uid, input_val, match_id) {
         let cash_balance = usr.get('cash_balance');
         let life_earning = usr.get('life_earning');
 
-        // llgg(cash_balance);
         cash_balance += parseFloat(input_val);
         life_earning += parseFloat(input_val);
 
@@ -184,7 +183,135 @@ const getBracket = function(participants) {
   return [matches, rounds, bracketSize, requiredByes];
 };
 
-const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
+const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, tournament) {
+
+
+  let tour_game_settings = typeof tournament_game_settings == 'string' ? JSON.parse(tournament_game_settings) : tournament_game_settings;
+  let match_game_settings = {};
+  if(tournament.game_id == 3)
+  {
+   let set_1 = [
+     'Hackney Yard',
+     'Rammaza',
+     'Gunrunner',
+     'St Petrograd',
+     'Crash',
+   ];
+   let set_2 = [
+     'Speedball',
+     'Stack',
+     'King',
+     'Pine',
+     'Docks',
+   ]
+   let set_3 = [
+     'Hackney Yard',
+     'Arklov',
+     'St Petrograd',
+     'Gun Runner',
+     'Rammaza',
+   ]
+   let map_1_host ;
+   let tp = tour_game_settings.game_mode.toLowerCase();
+   let use_set;
+   if(tp.indexOf('search and destroy') > -1  || tp.indexOf('search & destroy') > -1)
+   {
+     use_set =  set_1;
+   }else
+   if(tp.indexOf('gunfight')  > -1 || tp.indexOf('gun fight') > -1)
+   {
+     use_set =  set_2;
+   }else
+   if(tp.indexOf('hardpoint')  > -1 || tp.indexOf('hardpoint') > -1)
+   {
+     use_set =  set_3;
+   }
+   if(use_set){
+     match_game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+     if(tour_game_settings.match_length == 'Best Of 3')
+     {
+       match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+
+       while(  match_game_settings.map_2 == match_game_settings.map_1 )
+       {
+         match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+       }
+       match_game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+       while(  match_game_settings.map_3 == match_game_settings.map_1  || match_game_settings.map_2 == match_game_settings.map_3  )
+       {
+           match_game_settings.map_3 = use_set[ Math.floor( Math.random() * use_set.length ) ];
+       }
+     }
+   }
+
+
+ }else if(tournament.game_id == 18)
+  {
+   let set_1 = [
+     'Training Grounds',
+     'District',
+     'Exhibit',
+     'Icebound',
+     'Asylum',
+     'Bunker',
+     'Vasgar',
+   ]
+   let set_2 = [
+     'District',
+     'Asylum',
+     'Training Grounds',
+   ]
+   let set_3 = [
+     'Training Grounds',
+     'Exhibit',
+     'District',
+     'Icebound',
+     'Asylum',
+     'Bunker',
+     'Vasgar',
+   ]
+   let map_1_host ;
+   let tp = tour_game_settings.game_type.toLowerCase();
+    let use_set;
+
+   if(tp.indexOf('execution')  > -1 )
+   {
+      use_set =  set_1;
+   }else
+   if(tp.indexOf('king of the hill') > -1 || tp.indexOf('king of hill') > -1)
+   {
+      use_set =  set_2;
+   }else
+   if(tp.indexOf('escalation') > -1)
+   {
+      use_set =  set_3;
+   }
+
+   if(use_set){
+
+     match_game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
+     if(tour_game_settings.match_length == 'Best Of 3')
+     {
+
+     match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+
+       while(  match_game_settings.map_2 == match_game_settings.map_1 )
+       {
+         match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
+       }
+       match_game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
+       while(  match_game_settings.map_3 == match_game_settings.map_1  || match_game_settings.map_2 == match_game_settings.map_3  )
+       {
+           match_game_settings.map_3 = use_set[ Math.floor( Math.random() * use_set.length ) ];
+       }
+     }
+
+   }
+
+  }
+
+
+
   if(team_1.indexOf('BYE_') > -1 || team_2.indexOf('BYE_') > -1)
   {
     console.log('creating a bye match');
@@ -226,7 +353,8 @@ const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round) {
         team_1_players: team_1_players,
         team_2_players: team_2_players,
         status: 'complete',
-        result : winner
+        result : winner,
+        game_settings : JSON.stringify(match_game_settings)
       })
       .then(function() {
 
@@ -585,11 +713,11 @@ const proceed_to_next_round = function(t_id, t_round) {
                   ? parseInt(  team_ids[team_set[1] - 1]   )
                   : null;
 
-                  console.log(teams_obj);
-                  console.log(team_1);
-                  console.log(team_2);
-                  console.log(teams_obj['team_' + team_1]);
-                  console.log(teams_obj['team_' + team_2]);
+                  // console.log(teams_obj);
+                  // console.log(team_1);
+                  // console.log(team_2);
+                  // console.log(teams_obj['team_' + team_1]);
+                  // console.log(teams_obj['team_' + team_2]);
               if (team_1 && team_2) {
                 createMatch(
                   "" + team_1,
@@ -598,7 +726,8 @@ const proceed_to_next_round = function(t_id, t_round) {
                   teams_obj['team_' + team_2],
                   tournament.id,
                   current_round,
-                  tournament.starts_at
+                  tournament.starts_at,
+                  tournament
                 );
               }
             }
@@ -884,7 +1013,8 @@ const createRoundMatches = function(match) {
       team_set[1] ? teams_obj['team_' + team_2] : null,
       match.id,
       1,
-      match.get('starts_at')
+      match.get('starts_at'),
+      match.toJSON()
     );
   }
 };
