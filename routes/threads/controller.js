@@ -4,7 +4,7 @@ const ObjName = 'Thread';
 exports.listItem = function(req, res, next) {
   let n = new Item().orderBy('id', 'DESC');
   if (req.query && req.query.topic) {
-    n = n.where({topic_id: req.query.topic_id});
+    n = n.where({topic_id: req.query.topic});
   }
   n = n.withCount('thread_replies');
   n.fetchAll({
