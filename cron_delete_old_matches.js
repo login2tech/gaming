@@ -29,42 +29,43 @@ function reset_ticker() {
   // console.log('reseting..')
   TICKER = 0;
 }
-const delete_tournamentOrFixIt = function(tid, tour)
-{
-  if(tour.teams_registered < 3)
-  {
+const delete_tournamentOrFixIt = function(tid, tour) {
+  if (tour.teams_registered < 3) {
     delete_tournament(tid, tour);
     return;
   }
 
-  let obj_to_save = {};
+  const obj_to_save = {};
 
-  let total_teams = tour.total_teams;
+  const total_teams = tour.total_teams;
 
-  let teams_joined = tour.teams_registered;
+  const teams_joined = tour.teams_registered;
   // teams_joined=  5;
-  let new_total_teams
-  if(teams_joined < 5){
+  let new_total_teams;
+  if (teams_joined < 5) {
     new_total_teams = 4;
-  }else if(teams_joined < 9){
+  } else if (teams_joined < 9) {
     new_total_teams = 8;
-  }else if(teams_joined < 16){
+  } else if (teams_joined < 16) {
     new_total_teams = 16;
+  } else if (teams_joined < 32) {
+    new_total_teams = 32;
+  } else if (teams_joined < 64) {
+    new_total_teams = 64;
   }
-  if(new_total_teams > total_teams)
-  {
+  if (new_total_teams > total_teams) {
     new_total_teams = total_teams;
   }
   obj_to_save.total_teams = new_total_teams;
   console.log(new_total_teams);
-  let dummy_teams = new_total_teams - teams_joined;
+  const dummy_teams = new_total_teams - teams_joined;
 
   console.log(dummy_teams);
   let team_ids = tour.team_ids;
   let teams_obj = tour.teams_obj;
   teams_obj = JSON.parse(teams_obj);
-  console.log(teams_obj)
-  team_ids=  team_ids.split(',');
+  console.log(teams_obj);
+  team_ids = team_ids.split(',');
   // for(let i = 1 ; i < dummy_teams +1 ; i++)
   // {
   //   let team_id = 'BYE_T'+i;
@@ -73,38 +74,35 @@ const delete_tournamentOrFixIt = function(tid, tour)
   // }
 
   let insert_at = 1;
-  for(let i = 1 ; i < dummy_teams +1 ; i++){
-      let team_id = 'BYE_T'+i;
+  for (let i = 1; i < dummy_teams + 1; i++) {
+    const team_id = 'BYE_T' + i;
     team_ids.splice(insert_at, 0, team_id);
     // team_ids.push(team_id);
-    insert_at+=2;
-    teams_obj['team_'+team_id] = [ ];
+    insert_at += 2;
+    teams_obj['team_' + team_id] = [];
   }
-
 
   obj_to_save.team_ids = team_ids.join(',');
   obj_to_save.teams_obj = JSON.stringify(teams_obj);
   obj_to_save.status = 'started';
 
-
-  new Tournament().where({id : tid})
-  .fetch().then(function(match){
-    match.save(obj_to_save, {
-      method:'update'
-    })
+  new Tournament()
+    .where({id: tid})
+    .fetch()
     .then(function(match) {
-      tournamentController.createRoundMatches_cron(match);
+      match
+        .save(obj_to_save, {
+          method: 'update'
+        })
+        .then(function(match) {
+          tournamentController.createRoundMatches_cron(match);
+        });
     });
-  })
-
-
 
   // console.log(obj_to_save);
 
-
-
   // console.log(tour);
-}
+};
 const delete_tournament = function(tid, tour) {
   const tour_price = tour.entry_fee;
 
@@ -160,7 +158,8 @@ const delete_tournament = function(tid, tour) {
     .then(function(d) {
       // console.log('ye');
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
     });
 };
@@ -220,7 +219,8 @@ const delete_match = function(ta, match) {
     .then(function(d) {
       //
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
     });
 };
@@ -252,7 +252,8 @@ const delete_money8 = function(ta, match) {
     .then(function(d) {
       //
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
     });
 };
@@ -270,7 +271,8 @@ const updateUserRank = function(uid, rank) {
     .then(function(d) {
       //
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
     });
 };
@@ -296,7 +298,8 @@ const unresponsive_match = function(m_id, match) {
       .then(function() {
         //
       })
-      .catch(function(err) {console.log(err)
+      .catch(function(err) {
+        console.log(err);
         // console.log(err);
         Raven.captureException(err);
       });
@@ -325,7 +328,8 @@ const unresponsive_match_money8 = function(m_id, match) {
       .then(function() {
         //
       })
-      .catch(function(err) {console.log(err)
+      .catch(function(err) {
+        console.log(err);
         // console.log(err);
         Raven.captureException(err);
       });
@@ -369,7 +373,8 @@ const unresponsive_tour_match = function(m_id, match) {
       .then(function() {
         //
       })
-      .catch(function(err) {console.log(err)
+      .catch(function(err) {
+        console.log(err);
         // console.log(err);
         Raven.captureException(err);
       });
@@ -394,7 +399,8 @@ const process_8 = function() {
       // setTimeout(process_8, 4000);
       //
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -420,7 +426,8 @@ const process_7 = function() {
       setTimeout(process_8, 4000);
       //
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -446,7 +453,8 @@ const process_6 = function() {
       setTimeout(process_7, 4000);
       //
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -475,7 +483,8 @@ const process_5 = function() {
       setTimeout(process_6, 6000);
       // return res.status(200).send({ok: true, items: usrs.toJSON()});
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       // return res.status(400).send({ok: false, items: []});
       reset_ticker();
@@ -493,15 +502,15 @@ const process_4 = function() {
     })
     .fetchAll()
     .then(function(tournaments) {
-
       tournaments = tournaments.toJSON();
-       for (let i = 0; i < tournaments.length; i++) {
+      for (let i = 0; i < tournaments.length; i++) {
         delete_tournamentOrFixIt(tournaments[i].id, tournaments[i]);
       }
       reset_ticker();
       setTimeout(process_5, 6000);
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_5, 6000);
@@ -529,7 +538,7 @@ const process_3 = function() {
       setTimeout(process_4, 6000);
     })
     .catch(function(err) {
-      console.log(err)
+      console.log(err);
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_4, 6000);
@@ -555,7 +564,8 @@ const process_2 = function() {
       setTimeout(process_3, 6000);
       reset_ticker();
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_3, 6000);
@@ -580,7 +590,8 @@ const process_1 = function() {
       reset_ticker();
       setTimeout(process_2, 6000);
     })
-    .catch(function(err) {console.log(err)
+    .catch(function(err) {
+      console.log(err);
       Raven.captureException(err);
       reset_ticker();
       setTimeout(process_2, 6000);

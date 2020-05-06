@@ -36,9 +36,8 @@ class TournamentInfo extends React.Component {
   }
 
   get_team_name(id) {
-    if(!id || (""+id).indexOf('BYE_')> -1)
-    {
-      return "BYE";
+    if (!id || ('' + id).indexOf('BYE_') > -1) {
+      return 'BYE';
     }
 
     const {tournament} = this.state;
@@ -55,12 +54,14 @@ class TournamentInfo extends React.Component {
   }
 
   getM(round, t1, t2) {
-    if((""+t1).indexOf('BYE_') > -1)
-    {t1 = null}else{
+    if (('' + t1).indexOf('BYE_') > -1) {
+      t1 = null;
+    } else {
       t1 = parseInt(t1);
     }
-    if((""+t2).indexOf('BYE_') > -1)
-    {t2 = null}else{
+    if (('' + t2).indexOf('BYE_') > -1) {
+      t2 = null;
+    } else {
       t2 = parseInt(t2);
     }
     // this.state.tournament.matches.map(function(item){
@@ -128,15 +129,14 @@ class TournamentInfo extends React.Component {
     a = parseInt(a);
     if (a == 4) {
       return 2;
-    }
-    if (a == 8) {
+    } else if (a == 8) {
       return 3;
-    }
-    if (a == 16) {
+    } else if (a == 16) {
       return 4;
-    }
-    if (a == 32) {
+    } else if (a == 32) {
       return 5;
+    } else if (a == 64) {
+      return 6;
     }
   }
   createBrackets() {
@@ -190,7 +190,7 @@ class TournamentInfo extends React.Component {
             player2: {
               name: team_2_name,
               ID: team_2,
-              url: team_2_name =='BYE'? '#' : '/teams/view/' + team_2,
+              url: team_2_name == 'BYE' ? '#' : '/teams/view/' + team_2,
               winner: this.getMatchWinner(i + 1, team_1, team_2, team_2),
               looser: this.getMatchLooser(i + 1, team_1, team_2, team_2)
             }
@@ -779,9 +779,7 @@ class TournamentInfo extends React.Component {
   renderOverview() {
     return (
       <div className="col-md-12">
-      {
-        this.renderListPad('mobile')
-      }
+        {this.renderListPad('mobile')}
         {/* <div className="row">
           <div className="col-sm-8">
             <div className="table_wrapper"><table className="t-page-title-table">
@@ -1161,10 +1159,11 @@ class TournamentInfo extends React.Component {
       <React.Fragment key={match.id}>
         <tr key={match.id}>
           <td>
-          {
-            teams[0] ?   <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link> : <span className="text-primary">BYE</span>
-          }
-          {' '}
+            {teams[0] ? (
+              <Link to={'/teams/view/' + teams[0].id}>{teams[0].title}</Link>
+            ) : (
+              <span className="text-primary">BYE</span>
+            )}{' '}
             {match.result == 'team_1' ? (
               <span className="text-success">W</span>
             ) : match.result == 'team_2' ? (
@@ -1174,10 +1173,11 @@ class TournamentInfo extends React.Component {
             )}
           </td>
           <td>
-          {
-            teams[1] ? <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>:<span className="text-primary">BYE</span>
-          }
-            {' '}
+            {teams[1] ? (
+              <Link to={'/teams/view/' + teams[1].id}>{teams[1].title}</Link>
+            ) : (
+              <span className="text-primary">BYE</span>
+            )}{' '}
             {match.result == 'team_2' ? (
               <span className="text-success">W</span>
             ) : match.result == 'team_1' ? (
@@ -1501,7 +1501,7 @@ class TournamentInfo extends React.Component {
     );
   }
 
-  renderListPad(vtype){
+  renderListPad(vtype) {
     const {tournament} = this.state;
 
     let game_settings =
@@ -1513,9 +1513,12 @@ class TournamentInfo extends React.Component {
     }
     const game_settings_keys = Object.keys(game_settings);
     return (
-      <div className={
-        'list_pad tlist_pad ' + (vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')
-      }>
+      <div
+        className={
+          'list_pad tlist_pad ' +
+          (vtype == 'desktop' ? 'd-none d-md-block' : 'd-md-none')
+        }
+      >
         <div className="row">
           <div className="col-md-4 col">
             <span> TOURNAMENT ID</span>
@@ -1534,24 +1537,15 @@ class TournamentInfo extends React.Component {
           <div className="col-md-4 col">
             <span>Registered</span>
             <p>
-              {tournament.teams_registered
-                ? tournament.teams_registered
-                : 0}
+              {tournament.teams_registered ? tournament.teams_registered : 0}
               {' / ' + tournament.total_teams}
             </p>
           </div>
           {game_settings_keys.map((k, i) => {
-            if (
-              k == 'match_available' ||
-              k == 'map_2' ||
-              k == 'map_3'
-            ) {
+            if (k == 'match_available' || k == 'map_2' || k == 'map_3') {
               return false;
             }
-            if (
-              k == 'map_1' &&
-              this.state.tournament.status == 'started'
-            ) {
+            if (k == 'map_1' && this.state.tournament.status == 'started') {
               return (
                 <>
                   <div className="col-md-4 col-6 textcap" key={k}>
@@ -1598,7 +1592,8 @@ class TournamentInfo extends React.Component {
           })}
         </div>
         {this.renderJoin()}
-      </div>)
+      </div>
+    );
   }
 
   render() {
@@ -1684,10 +1679,7 @@ class TournamentInfo extends React.Component {
                     <div className="col-12 col-md"> </div>
                   </div>
 
-
-                  {
-                    this.renderListPad('desktop')
-                  }
+                  {this.renderListPad('desktop')}
                 </div>
               </div>
             </div>
@@ -1788,7 +1780,12 @@ class TournamentInfo extends React.Component {
             </div>
           </div>
         </section>
-        <section className= { "contet_part single_match_details" +(this.state.renderTab == 'overview' ? ' dpt-0 ' :  ' ')}>
+        <section
+          className={
+            'contet_part single_match_details' +
+            (this.state.renderTab == 'overview' ? ' dpt-0 ' : ' ')
+          }
+        >
           <div
             className={
               this.state.renderTab == 'brackets'
