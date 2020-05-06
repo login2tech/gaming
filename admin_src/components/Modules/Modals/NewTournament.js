@@ -407,6 +407,8 @@ class NewTournament extends React.Component {
                   <option value="4">4 Teams</option>
                   <option value="8">8 Teams</option>
                   <option value="16">16 Teams</option>
+                  <option value="32">32 Teams</option>
+                  <option value="64">64 Teams</option>
                 </select>
               </div>
 

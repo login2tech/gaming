@@ -210,7 +210,7 @@ class Tournament extends React.Component {
         content: (
           <TBrackets
             matches={this.state.matches}
-            modal_class=" modal-lg"
+            modal_class="modal-lg"
             tournament={this.state.showing_tour}
           />
         )
@@ -231,6 +231,9 @@ class Tournament extends React.Component {
           <TMatches
             matches={this.state.matches}
             modal_class=" modal-lg"
+            onChange={() => {
+              this.loadData();
+            }}
             tournament={this.state.showing_tour}
           />
         )

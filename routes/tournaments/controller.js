@@ -35,10 +35,12 @@ const giveCashToUser = function(uid, input_val, match_id) {
         cash_balance += parseFloat(input_val);
         life_earning += parseFloat(input_val);
 
-
         // llgg(cash_balance);
         usr
-          .save({cash_balance: cash_balance, life_earning: life_earning}, {patch: true})
+          .save(
+            {cash_balance: cash_balance, life_earning: life_earning},
+            {patch: true}
+          )
           .then(function(usr) {
             new CashTransactions()
               .save({
@@ -47,7 +49,7 @@ const giveCashToUser = function(uid, input_val, match_id) {
                 details:
                   'Cash added for prize money of  tournament #' + match_id,
                 qty: parseFloat(input_val),
-                balance : cash_balance
+                balance: cash_balance
               })
               .then(function(o) {})
               .catch(function(err) {
@@ -71,8 +73,8 @@ const giveCashToUser = function(uid, input_val, match_id) {
 };
 
 const giveCashToTeam = function(team_id, input_val, team_members, match_id) {
-  let team_members_count = team_members.length;
-  let single_t  = input_val / team_members_count ;
+  const team_members_count = team_members.length;
+  let single_t = input_val / team_members_count;
   single_t = parseFloat(parseFloat(single_t).toFixed(2));
   for (let i = team_members.length - 1; i >= 0; i--) {
     giveCashToUser(parseInt(team_members[i]), single_t, match_id);
@@ -163,6 +165,74 @@ const getBracket = function(participants) {
     ];
   }
 
+  if (participantsCount == 32) {
+    return [
+      [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+        [7, 8],
+        [9, 10],
+        [11, 12],
+        [13, 14],
+        [15, 16],
+        [16, 17],
+        [18, 19],
+        [20, 21],
+        [22, 23],
+        [24, 25],
+        [26, 27],
+        [28, 29],
+        [30, 31]
+      ],
+      rounds,
+      bracketSize,
+      requiredByes
+    ];
+  }
+
+  if (participantsCount == 64) {
+    return [
+      [
+        [1, 2],
+        [3, 4],
+        [5, 6],
+        [7, 8],
+        [9, 10],
+        [11, 12],
+        [13, 14],
+        [15, 16],
+        [16, 17],
+        [18, 19],
+        [20, 21],
+        [22, 23],
+        [24, 25],
+        [26, 27],
+        [28, 29],
+        [30, 31],
+        [32, 33],
+        [34, 35],
+        [36, 37],
+        [38, 39],
+        [40, 41],
+        [42, 43],
+        [44, 45],
+        [46, 47],
+        [48, 49],
+        [50, 51],
+        [52, 53],
+        [54, 55],
+        [56, 57],
+        [58, 59],
+        [60, 61],
+        [62, 63]
+      ],
+      rounds,
+      bracketSize,
+      requiredByes
+    ];
+  }
+
   let matches = [[1, 2]];
 
   for (let round = 1; round < rounds; round++) {
@@ -183,140 +253,134 @@ const getBracket = function(participants) {
   return [matches, rounds, bracketSize, requiredByes];
 };
 
-const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, started_at, tournament) {
+const createMatch = function(
+  team_1,
+  team_2,
+  t_1_u,
+  t_2_u,
+  t_id,
+  round,
+  started_at,
+  tournament
+) {
+  const tour_game_settings =
+    typeof tournament.game_settings == 'string'
+      ? JSON.parse(tournament.game_settings)
+      : tournament.game_settings;
+  const match_game_settings = {};
+  if (tournament.game_id == 3) {
+    const set_1 = [
+      'Hackney Yard',
+      'Rammaza',
+      'Gunrunner',
+      'St Petrograd',
+      'Crash'
+    ];
+    const set_2 = ['Speedball', 'Stack', 'King', 'Pine', 'Docks'];
+    const set_3 = [
+      'Hackney Yard',
+      'Arklov',
+      'St Petrograd',
+      'Gun Runner',
+      'Rammaza'
+    ];
+    let map_1_host;
+    const tp = tour_game_settings.game_mode.toLowerCase();
+    let use_set;
+    if (
+      tp.indexOf('search and destroy') > -1 ||
+      tp.indexOf('search & destroy') > -1
+    ) {
+      use_set = set_1;
+    } else if (tp.indexOf('gunfight') > -1 || tp.indexOf('gun fight') > -1) {
+      use_set = set_2;
+    } else if (tp.indexOf('hardpoint') > -1 || tp.indexOf('hardpoint') > -1) {
+      use_set = set_3;
+    }
+    if (use_set) {
+      match_game_settings.map_1 =
+        use_set[Math.floor(Math.random() * use_set.length)];
+      if (tour_game_settings.match_length == 'Best Of 3') {
+        match_game_settings.map_2 =
+          use_set[Math.floor(Math.random() * use_set.length)];
 
-
-  let tour_game_settings = typeof tournament.game_settings == 'string' ? JSON.parse(tournament.game_settings) : tournament.game_settings;
-  let match_game_settings = {};
-  if(tournament.game_id == 3)
-  {
-   let set_1 = [
-     'Hackney Yard',
-     'Rammaza',
-     'Gunrunner',
-     'St Petrograd',
-     'Crash',
-   ];
-   let set_2 = [
-     'Speedball',
-     'Stack',
-     'King',
-     'Pine',
-     'Docks',
-   ]
-   let set_3 = [
-     'Hackney Yard',
-     'Arklov',
-     'St Petrograd',
-     'Gun Runner',
-     'Rammaza',
-   ]
-   let map_1_host ;
-   let tp = tour_game_settings.game_mode.toLowerCase();
-   let use_set;
-   if(tp.indexOf('search and destroy') > -1  || tp.indexOf('search & destroy') > -1)
-   {
-     use_set =  set_1;
-   }else
-   if(tp.indexOf('gunfight')  > -1 || tp.indexOf('gun fight') > -1)
-   {
-     use_set =  set_2;
-   }else
-   if(tp.indexOf('hardpoint')  > -1 || tp.indexOf('hardpoint') > -1)
-   {
-     use_set =  set_3;
-   }
-   if(use_set){
-     match_game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
-     if(tour_game_settings.match_length == 'Best Of 3')
-     {
-       match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
-
-       while(  match_game_settings.map_2 == match_game_settings.map_1 )
-       {
-         match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
-       }
-       match_game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
-       while(  match_game_settings.map_3 == match_game_settings.map_1  || match_game_settings.map_2 == match_game_settings.map_3  )
-       {
-           match_game_settings.map_3 = use_set[ Math.floor( Math.random() * use_set.length ) ];
-       }
-     }
-   }
-
-
- }else if(tournament.game_id == 18)
-  {
-   let set_1 = [
-     'Training Grounds',
-     'District',
-     'Exhibit',
-     'Icebound',
-     'Asylum',
-     'Bunker',
-     'Vasgar',
-   ]
-   let set_2 = [
-     'District',
-     'Asylum',
-     'Training Grounds',
-   ]
-   let set_3 = [
-     'Training Grounds',
-     'Exhibit',
-     'District',
-     'Icebound',
-     'Asylum',
-     'Bunker',
-     'Vasgar',
-   ]
-   let map_1_host ;
-   let tp = tour_game_settings.game_type.toLowerCase();
+        while (match_game_settings.map_2 == match_game_settings.map_1) {
+          match_game_settings.map_2 =
+            use_set[Math.floor(Math.random() * use_set.length)];
+        }
+        match_game_settings.map_3 =
+          use_set[Math.floor(Math.random() * use_set.length)];
+        while (
+          match_game_settings.map_3 == match_game_settings.map_1 ||
+          match_game_settings.map_2 == match_game_settings.map_3
+        ) {
+          match_game_settings.map_3 =
+            use_set[Math.floor(Math.random() * use_set.length)];
+        }
+      }
+    }
+  } else if (tournament.game_id == 18) {
+    const set_1 = [
+      'Training Grounds',
+      'District',
+      'Exhibit',
+      'Icebound',
+      'Asylum',
+      'Bunker',
+      'Vasgar'
+    ];
+    const set_2 = ['District', 'Asylum', 'Training Grounds'];
+    const set_3 = [
+      'Training Grounds',
+      'Exhibit',
+      'District',
+      'Icebound',
+      'Asylum',
+      'Bunker',
+      'Vasgar'
+    ];
+    let map_1_host;
+    const tp = tour_game_settings.game_type.toLowerCase();
     let use_set;
 
-   if(tp.indexOf('execution')  > -1 )
-   {
-      use_set =  set_1;
-   }else
-   if(tp.indexOf('king of the hill') > -1 || tp.indexOf('king of hill') > -1)
-   {
-      use_set =  set_2;
-   }else
-   if(tp.indexOf('escalation') > -1)
-   {
-      use_set =  set_3;
-   }
+    if (tp.indexOf('execution') > -1) {
+      use_set = set_1;
+    } else if (
+      tp.indexOf('king of the hill') > -1 ||
+      tp.indexOf('king of hill') > -1
+    ) {
+      use_set = set_2;
+    } else if (tp.indexOf('escalation') > -1) {
+      use_set = set_3;
+    }
 
-   if(use_set){
+    if (use_set) {
+      match_game_settings.map_1 =
+        use_set[Math.floor(Math.random() * use_set.length)];
+      if (tour_game_settings.match_length == 'Best Of 3') {
+        match_game_settings.map_2 =
+          use_set[Math.floor(Math.random() * use_set.length)];
 
-     match_game_settings.map_1 = use_set[Math.floor(Math.random()*use_set.length)];
-     if(tour_game_settings.match_length == 'Best Of 3')
-     {
-
-     match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
-
-       while(  match_game_settings.map_2 == match_game_settings.map_1 )
-       {
-         match_game_settings.map_2 = use_set[Math.floor(Math.random()*use_set.length)];
-       }
-       match_game_settings.map_3 = use_set[Math.floor(Math.random()*use_set.length)];
-       while(  match_game_settings.map_3 == match_game_settings.map_1  || match_game_settings.map_2 == match_game_settings.map_3  )
-       {
-           match_game_settings.map_3 = use_set[ Math.floor( Math.random() * use_set.length ) ];
-       }
-     }
-
-   }
-
+        while (match_game_settings.map_2 == match_game_settings.map_1) {
+          match_game_settings.map_2 =
+            use_set[Math.floor(Math.random() * use_set.length)];
+        }
+        match_game_settings.map_3 =
+          use_set[Math.floor(Math.random() * use_set.length)];
+        while (
+          match_game_settings.map_3 == match_game_settings.map_1 ||
+          match_game_settings.map_2 == match_game_settings.map_3
+        ) {
+          match_game_settings.map_3 =
+            use_set[Math.floor(Math.random() * use_set.length)];
+        }
+      }
+    }
   }
 
-
-
-  if(team_1.indexOf('BYE_') > -1 || team_2.indexOf('BYE_') > -1)
-  {
+  if (team_1.indexOf('BYE_') > -1 || team_2.indexOf('BYE_') > -1) {
     console.log('creating a bye match');
-    if(team_1.indexOf('BYE_') > -1  &&  team_2.indexOf('BYE_') > -1)
-    {
+    if (team_1.indexOf('BYE_') > -1 && team_2.indexOf('BYE_') > -1) {
       console.log('something went wrong');
       return;
     }
@@ -324,24 +388,20 @@ const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, started_
     let winner;
     let team_1_id;
     let team_2_id;
-    let team_1_players ;
+    let team_1_players;
     let team_2_players;
-    if(team_1.indexOf('BYE_') > -1 )
-    {
+    if (team_1.indexOf('BYE_') > -1) {
       winner = 'team_2';
       team_2_id = team_2;
       team_1_id = null;
       team_1_players = null;
-      team_2_players = t_2_u.join('|')
-
-    }else {
-
-        winner = 'team_1';
-        team_2_id = null;
-        team_1_id = team_1;
-        team_1_players = t_1_u.join('|')
-        team_2_players = null;
-
+      team_2_players = t_2_u.join('|');
+    } else {
+      winner = 'team_1';
+      team_2_id = null;
+      team_1_id = team_1;
+      team_1_players = t_1_u.join('|');
+      team_2_players = null;
     }
     new TournamentMatch()
       .save({
@@ -353,12 +413,10 @@ const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, started_
         team_1_players: team_1_players,
         team_2_players: team_2_players,
         status: 'complete',
-        result : winner,
-        game_settings : JSON.stringify(match_game_settings)
+        result: winner,
+        game_settings: JSON.stringify(match_game_settings)
       })
-      .then(function() {
-
-      })
+      .then(function() {})
       .catch(function(err) {
         console.log(err);
         Raven.captureException(err);
@@ -380,7 +438,7 @@ const createMatch = function(team_1, team_2, t_1_u, t_2_u, t_id, round, started_
       // llgg('match created');
     })
     .catch(function(err) {
-      console.log(err)
+      console.log(err);
       Raven.captureException(err);
     });
 };
@@ -465,7 +523,7 @@ const giveWins = function(tid, tour) {
 
   console.log('gold_team_id is', gold_team);
 
-  const gold_team_loc = team_ids.indexOf(""+gold_team) + 1;
+  const gold_team_loc = team_ids.indexOf('' + gold_team) + 1;
   console.log('gold_team_loc is', gold_team_loc);
 
   let silver_team;
@@ -481,7 +539,7 @@ const giveWins = function(tid, tour) {
   //   ('' + team_obj_keys[silver_team - 1]).replace('team_', '')
   // );
 
-  silver_team = parseInt( team_ids[ silver_team - 1 ] );
+  silver_team = parseInt(team_ids[silver_team - 1]);
 
   // gold decided, silver decided
   const bronze_round = brackets['round_' + (total_rounds - 1)];
@@ -500,11 +558,10 @@ const giveWins = function(tid, tour) {
     bronze_team = bronze_round[1][0];
   }
   console.log(bronze_team);
-  if((""+bronze_team).indexOf('BYE_') > 1)
-  {
-      bronze_team = false;
-  }else{
-    bronze_team = team_ids[ bronze_team - 1 ];
+  if (('' + bronze_team).indexOf('BYE_') > 1) {
+    bronze_team = false;
+  } else {
+    bronze_team = team_ids[bronze_team - 1];
     //
     // bronze_team = parseInt(
     //   ('' + team_obj_keys[bronze_team - 1]).replace('team_', '')
@@ -515,10 +572,13 @@ const giveWins = function(tid, tour) {
   const gold_players = teams_obj['team_' + gold_team];
   const silver_players = teams_obj['team_' + silver_team];
   let bronze_players = false;
-  if(bronze_team)
+  if (bronze_team) {
     bronze_players = teams_obj['team_' + bronze_team];
+  }
 
-  console.log('==============================================================================');
+  console.log(
+    '=============================================================================='
+  );
   console.log('gold team is ', gold_team);
   console.log('silver team is ', silver_team);
   console.log('bronze team is ', bronze_team);
@@ -537,12 +597,14 @@ const giveWins = function(tid, tour) {
   // giveCashToUser()
   giveCashToTeam(gold_team, tour.first_winner_price, gold_players, tid);
   giveCashToTeam(silver_team, tour.second_winner_price, silver_players, tid);
-  if(bronze_team)
-  giveCashToTeam(bronze_team, tour.third_winner_price, bronze_players, tid);
+  if (bronze_team) {
+    giveCashToTeam(bronze_team, tour.third_winner_price, bronze_players, tid);
+  }
 
   giveTrophy('silver', tid, silver_team, silver_players);
-  if(bronze_team)
-  giveTrophy('bronze', tid, bronze_team, bronze_players);
+  if (bronze_team) {
+    giveTrophy('bronze', tid, bronze_team, bronze_players);
+  }
 
   llgg('winners are: ');
   llgg('gold', gold_team, gold_players);
@@ -637,7 +699,7 @@ const proceed_to_next_round = function(t_id, t_round) {
           const teams_obj_keys = Object.keys(teams_obj);
           const participants = winner_teams.map(function(w_t_i_id) {
             w_t_i_id = parseInt(w_t_i_id);
-            return team_ids.indexOf( ""+w_t_i_id) + 1;
+            return team_ids.indexOf('' + w_t_i_id) + 1;
           });
 
           participants.sort(sort_by_number);
@@ -706,22 +768,22 @@ const proceed_to_next_round = function(t_id, t_round) {
               //   ? teams_obj_keys[team_set[1] - 1].replace('team_', '')
               //   : null;
 
-                const team_1 = team_set[0]
-                  ? parseInt(  team_ids[team_set[0] - 1]   )
-                  : null;
-                const team_2 = team_set[1]
-                  ? parseInt(  team_ids[team_set[1] - 1]   )
-                  : null;
+              const team_1 = team_set[0]
+                ? parseInt(team_ids[team_set[0] - 1])
+                : null;
+              const team_2 = team_set[1]
+                ? parseInt(team_ids[team_set[1] - 1])
+                : null;
 
-                  // console.log(teams_obj);
-                  // console.log(team_1);
-                  // console.log(team_2);
-                  // console.log(teams_obj['team_' + team_1]);
-                  // console.log(teams_obj['team_' + team_2]);
+              // console.log(teams_obj);
+              // console.log(team_1);
+              // console.log(team_2);
+              // console.log(teams_obj['team_' + team_1]);
+              // console.log(teams_obj['team_' + team_2]);
               if (team_1 && team_2) {
                 createMatch(
-                  "" + team_1,
-                  "" + team_2,
+                  '' + team_1,
+                  '' + team_2,
                   teams_obj['team_' + team_1],
                   teams_obj['team_' + team_2],
                   tournament.id,
@@ -775,22 +837,24 @@ exports.saveScore = function(req, res, next) {
           // val.status = 'disputed';
           // val.result = 'disputed';
 
-
-
-          let team_1_result_crt = parseInt( val.team_1_result.split('-')[0] ) > parseInt( val.team_1_result.split('-')[1] ) ? 'team_1' :'team_2';
-          let team_2_result_crt = parseInt( val.team_2_result.split('-')[1] ) > parseInt( val.team_2_result.split('-')[0] ) ? 'team_1' :'team_2';
+          const team_1_result_crt =
+            parseInt(val.team_1_result.split('-')[0]) >
+            parseInt(val.team_1_result.split('-')[1])
+              ? 'team_1'
+              : 'team_2';
+          const team_2_result_crt =
+            parseInt(val.team_2_result.split('-')[1]) >
+            parseInt(val.team_2_result.split('-')[0])
+              ? 'team_1'
+              : 'team_2';
           console.log(team_1_result_crt, team_2_result_crt);
-          if(team_1_result_crt ==  team_2_result_crt)
-          {
+          if (team_1_result_crt == team_2_result_crt) {
             val.result = team_2_result_crt;
             val.status = 'complete';
-          }else{
+          } else {
             val.status = 'disputed';
             val.result = 'disputed';
           }
-
-
-
         } else {
           const tmp = val.team_1_result.split('-');
           if (parseInt(tmp[0]) > parseInt(tmp[1])) {
@@ -988,7 +1052,6 @@ const createRoundMatches = function(match) {
       Raven.captureException(err);
     });
 
-
   for (let i = 0; i < brackets_round.length; i++) {
     const team_set = brackets_round[i];
     // llgg('---- -- - - - -----');
@@ -999,13 +1062,15 @@ const createRoundMatches = function(match) {
     // team_set[0] = team_set[0] ? team_set[0]  : 0 ;
     team_1 = teams[team_1 - 1];
     team_2 = teams[team_2 - 1];
-    console.log(  team_1,
+    console.log(
+      team_1,
       team_2,
       team_set[0] ? teams_obj['team_' + team_1] : null,
       team_set[1] ? teams_obj['team_' + team_2] : null,
       match.id,
       1,
-      match.get('starts_at'))
+      match.get('starts_at')
+    );
     createMatch(
       team_1,
       team_2,
@@ -1262,7 +1327,9 @@ exports.listSingleItem = function(req, res, next) {
         if (!team_ids[i]) {
           continue;
         }
-        if(team_ids[i].indexOf("BYE_") > -1)continue;
+        if (team_ids[i].indexOf('BYE_') > -1) {
+          continue;
+        }
         new_t_id.push(parseInt(team_ids[i]));
       }
       if (!new_t_id) {
@@ -1426,7 +1493,7 @@ exports.addItem = function(req, res, next) {
     registration_start_at: req.body.registration_start_at,
     registration_end_at: req.body.registration_end_at,
     total_teams: req.body.total_teams,
-    game_settings : JSON.stringify(req.body.game_settings),
+    game_settings: JSON.stringify(req.body.game_settings),
     entry_fee: req.body.entry_fee,
     first_winner_price: req.body.first_winner_price,
     member_tournament: req.body.member_tournament == 'yes' ? true : false,
@@ -1804,8 +1871,6 @@ exports.reverseMatch = function(req, res, next) {
     });
 };
 
-
-
 exports.matches_of_team = function(req, res, next) {
   let mdl = new TournamentMatch();
   mdl = mdl.orderBy('created_at', 'DESC');
@@ -1820,7 +1885,15 @@ exports.matches_of_team = function(req, res, next) {
   });
 
   mdl
-    .fetchAll({withRelated: [ 'tournament', 'tournament.ladder', 'tournament.game', 'team_1_info', 'team_2_info']})
+    .fetchAll({
+      withRelated: [
+        'tournament',
+        'tournament.ladder',
+        'tournament.game',
+        'team_1_info',
+        'team_2_info'
+      ]
+    })
     .then(function(item) {
       if (!item) {
         return res.status(200).send({ok: true, items: []});

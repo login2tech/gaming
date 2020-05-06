@@ -90,6 +90,50 @@ class TMatches extends React.Component {
     return 'Complete' + result;
   }
 
+  giveWinFree(m_id, win_given_to) {
+    this.setState({
+      loaded: false
+    });
+    const data = {
+      id: m_id
+    };
+    if (win_given_to == 'team_1') {
+      data.team_2_result = '0-1';
+    } else {
+      data.team_1_result = '0-1';
+    }
+
+    return fetch('/api/tournaments/saveScore', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    }).then(response => {
+      if (response.ok) {
+        return response.json().then(json => {
+          if (json.ok) {
+            // this.props.onComplete && this.props.onComplete();
+            // this.doClose();
+            this.setState({
+              loaded: true
+            });
+            this.props.loadData();
+            // console.log(resp);
+            this.props.dispatch({type: 'SUCCESS', messages: [{msg: json.msg}]});
+          } else {
+            this.props.dispatch({type: 'FAILURE', messages: [json]});
+          }
+        });
+      } else {
+        return response.json().then(json => {
+          this.props.dispatch({
+            type: 'FAILURE',
+            messages: Array.isArray(json) ? json : [json]
+          });
+        });
+      }
+    });
+  }
+
   getTeams(match) {
     return [match.team_1_info, match.team_2_info];
   }
@@ -114,12 +158,14 @@ class TMatches extends React.Component {
             ''
           )}
         </td>
-        <td>{
-          teams[1] ? <a target="_blank" href={'/teams/view/' + teams[1].id}>
-            {teams[1].title}
-          </a> : 'BYE'
-        }
-          {' '}
+        <td>
+          {teams[1] ? (
+            <a target="_blank" href={'/teams/view/' + teams[1].id}>
+              {teams[1].title}
+            </a>
+          ) : (
+            'BYE'
+          )}{' '}
           {match.result == 'team_2' ? (
             <span className="text-success">W</span>
           ) : match.result == 'team_1' ? (
@@ -141,6 +187,32 @@ class TMatches extends React.Component {
           <a target="_blank" href={'/tournament-match/' + match.id}>
             View <span className="h-o-p">Match</span>
           </a>{' '}
+          {!match.result ? (
+            <a
+              onClick={e => {
+                e.preventDefault();
+                this.giveWinFree(match.id, 'team_1');
+              }}
+              href="#"
+            >
+              Win to Team 1
+            </a>
+          ) : (
+            false
+          )}{' '}
+          {!match.result ? (
+            <a
+              onClick={e => {
+                e.preventDefault();
+                this.giveWinFree(match.id, 'team_2');
+              }}
+              href="#"
+            >
+              Win to team 2
+            </a>
+          ) : (
+            false
+          )}{' '}
           {can_modify &&
           can_modify_round == round &&
           match.result &&
@@ -180,7 +252,6 @@ class TMatches extends React.Component {
       can_modify = true;
     }
     rounds = rounds.rounds_calculated;
-
 
     let can_modify_round = 0;
     if (orig_rounds && orig_rounds.rounds_calculated) {
