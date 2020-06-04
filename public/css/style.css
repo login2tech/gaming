@@ -7704,7 +7704,7 @@ p.feed_post_content iframe {
 }
 
 .container-brackets .separator-brackets.rd-5 .line:first-child {
-    margin-top: 490px;
+    margin-top: 490px !important;
     height: 1804px !important;
     margin-bottom: 1400px !important;
 }
@@ -7756,9 +7756,9 @@ p.feed_post_content iframe {
 }
 
 .container-brackets .round.rd-5 .match .player {
-    margin-bottom: 253px;
+    margin-bottom: 253px !important;
 }
 
 .container-brackets .round.rd-5 .match .player:nth-child(2) {
-    margin-bottom: 1760px;
+    margin-bottom: 1760px !important;
 }
