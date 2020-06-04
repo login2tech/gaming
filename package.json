@@ -5,8 +5,8 @@
   "scripts": {
     "build": "browserify app/main.js -t [ babelify --presets [@babel/preset-env @babel/preset-react] --plugins [transform-class-properties]  ]  -t uglifyify -o public/js/bundle.js",
     "build_admin": "browserify admin_src/main.js -t [ babelify --presets [@babel/preset-env @babel/preset-react] --plugins [transform-class-properties]  ]  -t uglifyify -o public/admin/js/bundle.js",
-    "deploy": "npm test && git push heroku master",
-    "postinstall": "npm run build",
+    "deploy": "git push heroku master",
+    "postinstall": "npm run build;npm run build_admin",
     "start": "node server.js",
     "watch": "watchify app/main.js -t [ babelify --presets [@babel/preset-env @babel/preset-react] --plugins [transform-class-properties]  ] -v -o public/js/bundle.js",
     "watch_admin": "watchify admin_src/main.js -t [ babelify --presets [@babel/preset-env @babel/preset-react] --plugins [transform-class-properties]  ] -v -o public/admin/js/bundle.js",
