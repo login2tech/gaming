@@ -3161,7 +3161,6 @@ a.bttn_submit:hover {
     padding: 6px !important;
 }
 
-
 .baris {
     position: absolute;
     bottom: 0;
@@ -4961,6 +4960,9 @@ a.post_image.post_image_smaller.post_video:after {
 
 .container-brackets .separator-brackets.rd-4 .line:first-child {
     margin-top: 380px !important;
+}
+
+.container-brackets .separator-brackets.rd-4 .line {
     height: 750px !important;
 }
 
@@ -6413,8 +6415,9 @@ media query starts here
         right: 68px;
         z-index: 1;
     }
-    .user-status-mobile img{
-      height: 60px;
+
+    .user-status-mobile img {
+        height: 60px;
     }
 
     div#profile-page-container {
@@ -6665,12 +6668,14 @@ media query starts here
     }
 
     span.social_btns button {
-        margin-bottom: 10px;    height: auto;
-    max-height: 28px;
+        margin-bottom: 10px;
+        height: auto;
+        max-height: 28px;
     }
 
     span.social_btns span {
-        display: inline-block;min-height: 50px
+        display: inline-block;
+        min-height: 50px
     }
 
     p.feed_post_content iframe {
@@ -7590,29 +7595,37 @@ media query starts here
     .tourinfo .baris {
         bottom: -96px;
     }
-    .fllwbtns{
-      font-size: 17px;
-    }
-    .game_img_mfndr{
-      min-height: 60px;
-      float: left;
 
+    .fllwbtns {
+        font-size: 17px;
     }
+
+    .game_img_mfndr {
+        min-height: 60px;
+        float: left;
+    }
+
     .game-cover-block {
-      text-align:left;
+        text-align: left;
     }
-    .team_name span{
-          width: 40px;background-position: top !important;
-    }.team_name {
-    word-break: break-all;
-  }
-  .text-center-on-phone{
-    text-align: center !important;
-  }
-  ul.timeline li.comment {
-      margin-right: 0;
-      margin-left: 0;
-  }
+
+    .team_name span {
+        width: 40px;
+        background-position: top !important;
+    }
+
+    .team_name {
+        word-break: break-all;
+    }
+
+    .text-center-on-phone {
+        text-align: center !important;
+    }
+
+    ul.timeline li.comment {
+        margin-right: 0;
+        margin-left: 0;
+    }
 }
 
 .text-xl {
@@ -7641,12 +7654,12 @@ p.feed_post_content iframe {
     font-weight: bold !important;
 }
 
-.tour-stats  .amnt{
-
+.tour-stats .amnt {
     font-size: 15px;
 }
-.text-bold{
-  font-weight: bold;
+
+.text-bold {
+    font-weight: bold;
 }
 
 .text-date span:not(.float-right) a {
@@ -7669,6 +7682,7 @@ p.feed_post_content iframe {
 .cms .table-bordered td,.cms .table-bordered th {
     border: 1px solid #3e3e3e;
 }
+
 .container-brackets .round.rd-2 .match {
     margin-bottom: 83px;
 }
@@ -7686,18 +7700,18 @@ p.feed_post_content iframe {
 }
 
 .container-brackets .separator-brackets.rd-4 .line {
-    margin-bottom: 860px;
+    margin-bottom: 860px !important;
 }
 
 .container-brackets .separator-brackets.rd-5 .line:first-child {
-    margin-top: 479px;
-    height: 1850px;
-    margin-bottom: 1400px;
+    margin-top: 490px;
+    height: 1804px !important;
+    margin-bottom: 1400px !important;
 }
 
 .container-brackets .separator-brackets.rd-5 .line {
-    margin-bottom: 900px;
-    height: 1850px;
+    margin-bottom: 887px !important;
+    height: 1807px !important;
 }
 
 .container-brackets .round.rd-5 .match .player:first-child {
@@ -7709,7 +7723,7 @@ p.feed_post_content iframe {
 }
 
 .container-brackets .separator-brackets.rd-6 .line:first-child {
-    margin-top: 900px;
+    margin-top: 890px !important;
     height: 3440px;
 }
 
@@ -7731,4 +7745,20 @@ p.feed_post_content iframe {
 
 .container-brackets .round.rd-6 .match .player:nth-child(2) {
     margin-bottom: 3400px;
+}
+
+.container-brackets .round.rd-5 .match:first-child {
+    margin-top: 30px
+}
+
+.container-brackets .round.rd-5 .match {
+    margin-bottom: 1059px;
+}
+
+.container-brackets .round.rd-5 .match .player {
+    margin-bottom: 253px;
+}
+
+.container-brackets .round.rd-5 .match .player:nth-child(2) {
+    margin-bottom: 1760px;
 }
