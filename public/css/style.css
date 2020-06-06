@@ -7762,3 +7762,7 @@ p.feed_post_content iframe {
 .container-brackets .round.rd-5 .match .player:nth-child(2) {
     margin-bottom: 1760px !important;
 }
+.container-brackets .round.winner_round .match .player:nth-child(2), .container-brackets .round.winner_round.rd-3 .match .player:nth-child(2) {
+    margin-top: 0!important;
+    margin-bottom: 0!important;
+}
