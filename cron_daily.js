@@ -57,6 +57,11 @@ const stopDoubleXp = function(ta) {
 
 const checkForMembership = function(user) {
   let prime_obj = user.prime_obj;
+  let prime_obj_str = prime_obj;
+  if(!prime_obj_str)
+  {prime_obj_str = '';}else{
+    prime_obj_str = prime_obj_str.toLowerCase();
+  }
   let prime_type = user.prime_type;
   const obj_to_save = {};
   
@@ -67,8 +72,9 @@ const checkForMembership = function(user) {
     prime_type = prime_obj.prime_type;
   // }
 
-  if (prime_obj.bought_type == 'Stripe' || prime_obj.bought_type == 'stripe') {
+  if (prime_obj.bought_type == 'Stripe' || prime_obj.bought_type == 'stripe' || prime_obj_str.indexOf('stripe') > -1) {
     // let  it happen with stripe's webhooks
+    return;
   } else {
     if (prime_obj.cancel_requested) {
       obj_to_save.prime = false;
@@ -180,3 +186,5 @@ setInterval(function() {
   }
   TICKER++;
 }, 5000);
+
+
